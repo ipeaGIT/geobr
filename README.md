@@ -1,8 +1,18 @@
 ## shapefilesBR - Pacote em R para acessar Shapefiles para o Brasil em diferentes recortes, escalas geograficas e anos
 
 
-Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
+### Opções de nome para o pacote
+* mapsbrazil
+* geomsbrazil
+* mapsBR
+*  obs. ja existe um pacote (ruim) chamado `brazilmaps` [(link)](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf)
 
+
+
+
+## Dados para incluir
+
+Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 
 |Recorte|Anos|Fonte|Incluido no pacote?| Função de leitura|
