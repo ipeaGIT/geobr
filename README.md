@@ -1,11 +1,27 @@
-## shapefilesBR - Pacote em R para acessar Shapefiles para o Brasil em diferentes recortes, escalas geograficas e anos
+## mapsbrazil - Pacote em R para acessar Shapefiles para o Brasil em diferentes recortes, escalas geograficas e anos
 
 
 ### Opções de nome para o pacote
 * mapsbrazil
+* geobr
+* BrazilGeoData
 * geomsbrazil
-* mapsBR
-*  obs. ja existe um pacote (ruim) chamado `brazilmaps` [(link)](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf)
+* mapsBR , BRmaps
+* brmaps , mapsbr
+* MapscensusBR
+
+
+*  Other suggestions
+    *  shapefilesBR
+    *  VectorBrazil
+    *  Braps
+    *  mapsbR
+    *  MapsRBrazil
+    *  docentR
+    * MordorMaps
+    * Mapoeira
+    * theRealAmazonMapsAndVicinity
+    * obs. ja existe um pacote (ruim) chamado `brazilmaps` [(link)](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf)
 
 
 
@@ -29,8 +45,10 @@ Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp
 | Áreas de risco | 2010 | [IBGE/Cemaden](https://www.ibge.gov.br/geociencias-novoportal/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=downloads) | ... | ... |
 | Regioes Metropolitanas | ... | ... | ... | ... |
 | AMC* de municípios | ... | ... | ... | ... |
+| AMC* de microregiões | ... | ... | ... | ... |
+| AMC* de setores censitários | ... | ... | ... | ... |
 | ... | ... | ... | ... | ... |
 | ... | ... | ... | ... | ... |
-  
+
 '*' AMC - áreas mínimas comparáveis
 
