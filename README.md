@@ -3,13 +3,14 @@
 
 ### Opções de nome para o pacote
 * mapsbrazil
-* geobr
+* geobr, geoBR
 * BrazilGeoData
 * geomsbrazil
 * mapsBR , BRmaps
 * brmaps , mapsbr
 * MapscensusBR
 * BRasSF
+* BraGeo
 
 
 *  Other suggestions
