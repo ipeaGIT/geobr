@@ -23,7 +23,10 @@
     * MordorMaps
     * Mapoeira
     * theRealAmazonMapsAndVicinity
-    * obs. ja existe um pacote (ruim) chamado `brazilmaps` [(link)](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf)
+
+Pacotes semelhantes que ja existem
+* [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr)
+* [brazilmaps](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf)
 
 
 
