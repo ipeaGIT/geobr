@@ -6,12 +6,12 @@ library(magrittr)
 
 
 # Diretorio raiz
-root_dir <- "L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\municipio"
+root_dir <- "L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\meso_regiao"
 
 
-#### Função de Leitura para os shapes da mesoregião ####
+#### Função de Leitura para os shapes da mesorregião ####
 
-read_mesoregiao <- function(ano=NULL, cod_meso=NULL){
+read_mesorregiao <- function(ano=NULL, cod_meso=NULL){
   
   if(is.null(ano) || is.null(cod_meso)){ #testa se os parametros são nulos;
     stop("Error: Invalid value to argument ano or argument cod_meso.") 
@@ -31,7 +31,7 @@ read_mesoregiao <- function(ano=NULL, cod_meso=NULL){
       stop("Error: Invalid Value to argument cod_meso.")
     }
   } else{
-    stop(paste0("Error: Invalid Value to argument ano. It must be be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
+    stop(paste0("Error: Invalid Value to argument ano. It must be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
   }
 }
 
