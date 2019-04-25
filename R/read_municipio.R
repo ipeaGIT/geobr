@@ -12,11 +12,21 @@ root_dir <- "L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\municipio"
 
 read_municipio <- function(year=NULL, cod_mun=NULL){
 
-  if(is.null(year) || is.null(cod_mun)){ #testa se os parametros são nulos;
-    stop("Error: Invalid value to argument year or argument cod_mun.") 
+  # Test year input
+  if(is.null(year)){
+    year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
+    cat("Using data from latest year available:", year)
+  } else {
+    # test if year input exists
+    if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\MU_"), pattern = "[0-9]+"))){
+      stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
+    }
   }
-  if(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+")){ #testa se o year existe;
-    if(substr(x = cod_mun, 1, 2) %in% substr(list.files(paste0(root_dir, "\\MU_", year)), 1, 2)){ #testa se o estado existe;
+  
+  
+# testa se o estado existe;
+  
+  if(substr(x = cod_mun, 1, 2) %in% substr(list.files(paste0(root_dir, "\\MU_", year)), 1, 2)){ 
     
    shape <- readRDS(paste0(root_dir, "\\MU_", year, "\\", substr(x = cod_mun, 1, 2), "MU.rds")) 
     
