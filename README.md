@@ -1,19 +1,6 @@
 # geobr
 
-**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) as .
-
-
-The 
-
-tidycensus is an R package that allows users to interface with the US Census Bureau's decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included. Install from CRAN with the following command:
-
-Pacote em R para acessar Shapefiles para o Brasil em diferentes recortes, escalas geograficas e anos
-
-
-
-
-
-
+**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE). The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
 
 
 ## Available datasets:
