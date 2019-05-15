@@ -13,10 +13,10 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/municipio"
 read_municipio <- function(year=NULL, cod_mun=NULL){
 
   # Test year input
-  if(is.null(year)){
+  if(is.null(year) & !is.null(cod_mun)){
     year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
     cat("Using data from latest year available:", year, "\n")
-  } else {
+  } else if(!is.null(year)){
     # test if year input exists
       if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\MU_"), pattern = "[0-9]+"))){
         stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
