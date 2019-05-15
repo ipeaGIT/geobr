@@ -13,7 +13,7 @@ source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/sg.txt")
 
 #### Função de Leitura para os shapes da UF ----
 
-read_uf <- function(year=NULL, cod_uf=NULL, name_uf=NULL){
+read_uf <- function(year=NULL, cod_uf=NULL){
   
   # Test year input
   if(is.null(year)){
