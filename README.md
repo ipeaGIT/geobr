@@ -45,7 +45,8 @@ As of today, there are two other packges in R with similar functionalities. Thes
 
 
 
-
+### Credits
+The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. The package will soon be open for other contributions.
 
 
 
