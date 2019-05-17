@@ -1,4 +1,7 @@
-# geobr
+<img align="right" src="figure/ipea_logo.jpg" alt="ipea" width="250">
+
+geobr
+==============================
 
 **geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE). The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
 
