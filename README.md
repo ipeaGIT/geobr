@@ -1,25 +1,37 @@
-# geobr
+<img align="right" src="figure/ipea_logo.jpg" alt="ipea" width="250">
+
+geobr
+==============================
 
 **geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE). The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
 
 
 ## Available datasets:
 
-|Recorte|Anos|Fonte|Incluido no pacote?| Função de leitura|
-|-----|-----|-----|-----|-----|
-| Brasil | ... | ... | ... | ... |
-| UFs | ... | ... | ... | ... |
-| Macro região | ... | ... | ... | ... |
-| Meso região | ... | ... | ... | ... |
-| Micro região | ... | ... | ... | ... |
-| Município | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015 | [IBGE](https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais.html) | ... | ... | 
-| Área de ponderação | 2010 | [IBGE](ftp://geoftp.ibge.gov.br/recortes_para_fins_estatisticos/malha_de_areas_de_ponderacao/) | ... | ... |
-| Setor Censitário | 2000, 2007, 2010 | [IBGE](https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais.html) | ... | ... |
 
+|Function|Geography|Years available|
+|-----|-----|-----|
+|| Brasil | ... |
+|`read_uf`| UFs | ... | 
+|| Macro região | ... | 
+|`read_mesoregiao`| Meso região | ... |  
+|`read_microregiao`| Micro região | ... | 
+|`read_municipio`| Município | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015 |
+|`read_areaponderacao`| Área de ponderação | 2010 | 
+|| Setor Censitário | 2000, 2007, 2010 | 
 
+## Basic Usage
+````
+# Read specific municipality at a given year
+  mun <- read_municipio(cod_mun=1200179, year=2017)
+  
+  
+# Read all municipalities of a state at a given year
+  mun <- read_municipio(cod_mun=12, year=2010)
 
+````
 
-## Future development
+## Comming soon:
 
 |Recorte|Anos|Fonte|Incluido no pacote?| Função de leitura|
 |-----|-----|-----|-----|-----|
