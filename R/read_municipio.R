@@ -9,7 +9,7 @@ library(magrittr)
 root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/municipio"
 
 # Leitura das siglas dos estados
-source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/sg.txt")
+  source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/sg.txt")
 
 
 # Documentation
