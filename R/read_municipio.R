@@ -11,7 +11,29 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/municipio"
 # Leitura das siglas dos estados
 source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/sg.txt")
 
-#### Função de Leitura para os shapes do municipio ####
+
+# Documentation
+
+#' Download shape files of municipalities
+#'
+#' @param year the year of the data download (defaults to 2010)
+#' @param cod_mun 7-digit code of the municipality. If a the two-digit code of a state is used, 
+#' the function will load all munuciplaities of that state. If not informed, all municipalities will be loaded.
+#' @export
+#' @family general area functions
+#' @examples \dontrun{
+#' 
+#' library(geobr)
+#' 
+#' # Read specific municipality at a given year
+#'   mun <- read_municipio(cod_mun=1200179, year=2017)
+#'   
+#'# Read all municipalities of a state at a given year
+#'   mun <- read_municipio(cod_mun=12, year=2010)
+#'   
+#'}
+
+
 
 read_municipio <- function(year=NULL, cod_mun=NULL){
 
@@ -52,7 +74,3 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
       }
   }
 }
-  
-  
-
-    
