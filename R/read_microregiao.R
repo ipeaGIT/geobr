@@ -7,12 +7,12 @@ library(readr)
 
 
 # Diretorio raiz
-root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/meso_regiao"
+root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 
 
-#### Função de Leitura para os shapes da mesoregiao ----
+#### Função de Leitura para os shapes da microregiao ----
 
-read_mesorregiao <- function(year=NULL, cod_meso=NULL){
+read_microregiao <- function(year=NULL, cod_micro=NULL){
   
   # Test year input
   if(is.null(year)){
@@ -25,26 +25,26 @@ read_mesorregiao <- function(year=NULL, cod_meso=NULL){
     }
   }
   
-  # Test meso input
-  if(is.null(cod_meso)){ # if NULL, read the entire country
+  # Test micro input
+  if(is.null(cod_micro)){ # if NULL, read the entire country
     cat("Using data from entire country \n")
-    files <- list.files(paste0(root_dir, "\\ME_", year), full.names=T)
+    files <- list.files(paste0(root_dir, "\\MI_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
     return(shape)
   } 
   
-  if( !(substr(x = cod_meso, 1, 2) %in% substr(list.files(paste0(root_dir, "\\ME_", year)), start =  1, stop = 2))){
-    stop("Error: Invalid value to argument cod_meso.") 
+  if( !(substr(x = cod_micro, 1, 2) %in% substr(list.files(paste0(root_dir, "\\MI_", year)), start =  1, stop = 2))){
+    stop("Error: Invalid value to argument cod_micro.") 
     
   } else{
-    shape <- readRDS(paste0(root_dir, "\\ME_", year, "\\", substr(x = cod_meso, 1, 2), "ME.rds")) 
-    if(cod_meso %in% shape$cod_meso){ #testa se a mesoregiao existe;
-      cod_meso_auxiliar <- cod_meso
-      shape %<>% filter(cod_meso==cod_meso_auxiliar)
+    shape <- readRDS(paste0(root_dir, "\\MI_", year, "\\", substr(x = cod_micro, 1, 2), "MI.rds")) 
+    if(cod_micro %in% shape$cod_micro){ #testa se a microregiao existe;
+      cod_micro_auxiliar <- cod_micro
+      shape %<>% filter(cod_micro==cod_micro_auxiliar)
       return(shape)
       
-    } else{stop("Error: Invalid Value to argument cod_meso.")}
+    } else{stop("Error: Invalid Value to argument cod_micro.")}
   }
   
 }
