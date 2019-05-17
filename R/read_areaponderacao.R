@@ -58,7 +58,7 @@ read_areaponderacao <- function(CODE = NULL,year = NULL){
     if( !(CODE %in% substr(list.files(paste(dir.proj, year,substr(CODE,1,2),sep="\\")), start =  1, stop = 7))){
       stop(paste0("Invalid value to MUN.")) 
     }
-    return(readRDS(paste(paste(dir.proj,year,substr(CODE,1,2),CODE,sep="\\"),"_areaponderacao_2010.rds",sep="")))
+    return(readRDS(paste(paste(dir.proj,year,substr(CODE,1,2),CODE,sep="\\"),"_areaponderacao_",year,".rds",sep="")))
   }
   
   stop(paste0("Invalid value to CODE.")) 
