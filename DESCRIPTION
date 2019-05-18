@@ -9,21 +9,26 @@ Authors@R: c(
       person(given="Guilherme", family="Duarte Carvalho", email="guilherme.carvalho@ipea.gov.br", role=c("aut", "cre")),
       person(given="Paulo Henrique", family="Fernandes de Araujo", email="paulo.araujo@ipea.gov.br", role=c("aut", "cre")),
       person(given="Rodrigo", family="Almeida de Arruda", email="rodrigo.arruda@ipea.gov.br", role=c("aut", "cre")),
-      person(given="Igor", family="Nascimento", email="igor.ferreira.n@gmail.com", role="ctb")
-    )
+      person(given="Igor", family="Nascimento", email="igor.ferreira.n@gmail.com", role="ctb")), 
+      person(family = "Ipea - Institue for Applied Economic Research", role = "cph")      
+      )
 URL: https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
-Description: geobr provides easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and loads into R as 'sf' objects.
-             It includes a wide set of geographic datasets availabe at various geographic scales and for various years.
+Description: geobr provides easy access to shapefiles of the Brazilian 
+    Institute of Geography and Statistics (IBGE) and loads into R as 'sf' objects.
+    It includes a wide set of geographic datasets availabe at various geographic scales and for various years.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends: 
     R (>= 3.6.0)
+Suggests:
+    ggplot2,
+    mapview
 Imports:
-    stringr,
-    magrittr,
-    dplyr,
-    sf,
-    readr
+      dplyr,
+      magrittr,
+      readr,
+      sf,
+      stringr
 RoxygenNote: 6.1.1
