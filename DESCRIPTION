@@ -1,10 +1,17 @@
 Package: geobr
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: Georeferenciando bases base dados brasileiros
+Version: 0.0.0.0001
+Authors@R: c(
+    person("Igor", "Nascimento", email = "igor.ferreira.n@gmail.com",role = "aut"),
+    person("Rafael", "Pereira", email = "rafael@gmail.com",role = c("aut", "cre")),
+    person("Rodrigo", "Arruda", email = "rodrigo@gmail.com",role = "aut"),
+    person("Paulo", "Araújo", email = "paulo@gmail.com",role = "aut"),
+    person("Caio", "Vieira", email = "caio@gmail.com",role = "aut"))
+Description: Esse pacote auxilia o pesquisador a georeferenciar suas bases de dados.
 Depends: R (>= 3.6.0)
-License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
 RoxygenNote: 6.1.1
