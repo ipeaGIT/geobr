@@ -1,1 +1,11 @@
 .Rproj.user
+inst/doc
+*.doc
+*.tex
+*.aux
+*.idx
+*.ilg
+*.log
+*.out
+*.toc
+*.ind
