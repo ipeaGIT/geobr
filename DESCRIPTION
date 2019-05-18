@@ -1,10 +1,29 @@
 Package: geobr
-Title: What the Package Does (one line, title case)
+Type: Package
+Title: Loads shapefiles of the Brazilian Institute of Geography and Statistics (IBGE)
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.6.0)
-License: What license is it under?
+Date: 2019-05-17
+Authors@R: c(
+      person(given="Rafael H. M.", family="Pereira", email="rafael.pereira@ipea.gov.br", role=c("aut", "cre")),
+      person(given="Caio", family="Nogueira Gonçalves", email="caio.goncalves@ipea.gov.br", role=c("aut", "cre")),
+      person(given="Guilherme", family="Duarte Carvalho", email="guilherme.carvalho@ipea.gov.br", role=c("aut", "cre")),
+      person(given="Paulo Henrique", family="Fernandes de Araujo", email="paulo.araujo@ipea.gov.br", role=c("aut", "cre")),
+      person(given="Rodrigo", family="Almeida de Arruda", email="rodrigo.arruda@ipea.gov.br", role=c("aut", "cre")),
+      person(given="Igor", family="Nascimento", email="igor.ferreira.n@gmail.com", role="ctb")
+    )
+URL: https://github.com/ipeaGIT/geobr
+BugReports: https://github.com/ipeaGIT/geobr/issues 
+Description: geobr provides easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and loads into R as 'sf' objects.
+             It includes a wide set of geographic datasets availabe at various geographic scales and for various years.
+License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
+LazyData: TRUE
+Depends: 
+    R (>= 3.6.0)
+Imports:
+    stringr,
+    magrittr,
+    dplyr,
+    sf,
+    readr
 RoxygenNote: 6.1.1
