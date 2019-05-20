@@ -12,8 +12,6 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/municipio"
   # ("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/sg.txt")
 
 
-# Documentation
-
 #' Download shape files of municipalities
 #'
 #' @param year the year of the data download (defaults to 2010)
