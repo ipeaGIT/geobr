@@ -14,7 +14,7 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/meso_regiao"
 
 #' Title
 #'
-#' @param year
+#' @param year the year of the data download (defaults to 2010)
 #' @param cod_meso
 #'
 #' @return
