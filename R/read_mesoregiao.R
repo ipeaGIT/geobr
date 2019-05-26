@@ -48,8 +48,12 @@ read_mesorregiao <- function(year=NULL, cod_meso=NULL){
   }
 
   # Test meso input
-  if(is.null(cod_meso)){ # if NULL, read the entire country
-    cat("Using data from entire country \n")
+    if(is.null(cod_meso)){ stop("Error: Invalid value to argument cod_meso") }
+    
+    # if "all", read the entire country
+    else if(cod_meso=="all"){
+      
+    cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\ME_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
