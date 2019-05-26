@@ -47,10 +47,19 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
   }
 
   # Test if cod_mun input is null
-  if(is.null(cod_mun)){
-    stop("Error: Value to argument 'cod_mun' cannot be NULL")
-
-  } else if(toupper(cod_mun) %in% sg){
+    if(is.null(cod_mun)){ stop("Value to argument 'cod_mun' cannot be NULL") }
+    
+  # if "all", read the entire country
+    else if(cod_mun=="all"){ cat("Loading data for the whole country \n")
+      
+      files <- list.files(paste0(root_dir, "/MU_", year), full.names=T)
+      files <- lapply(X=files, FUN= readRDS)
+      shape <- do.call('rbind', files)
+      return(shape)
+    }
+  
+    
+   else if(toupper(cod_mun) %in% sg){
       source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/read_tab_sg.R")
       cod_uf <- read_tab(cod_mun)
       shape <- readRDS(paste0(root_dir, "/MU_", year, "/", substr(x = cod_uf, 1, 2), "MU.rds"))
