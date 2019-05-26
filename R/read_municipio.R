@@ -37,8 +37,8 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
 
   # Test year input
   if(is.null(year) & !is.null(cod_mun)){
-    year <- stringr::str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
   } else if(!is.null(year)){
     # test if year input exists
       if(!(year %in% stringr::str_extract(list.files(root_dir, pattern = ".*\\MU_"), pattern = "[0-9]+"))){

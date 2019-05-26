@@ -14,7 +14,7 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
 
 #### Função de Leitura para os shapes da UF ----
 
-#' Download shape files of state
+#' Download shape files of Brazilian states
 #'
 #' @param year the year of the data download (defaults to 2010)
 #' @param cod_uf 2-digit state code. If not informed, all states will be loaded.
@@ -25,18 +25,18 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
 #' library(geobr)
 #'
 #' # Read specific municipality at a given year
-#'   mun <- read_municipio(cod_uf=12, year=2017)
+#'   mun <- read_uf(cod_uf=12, year=2017)
 #'
-#'# Read al lstate at a given year
-#'   mun <- read_municipio(cod_mun=12, year=2010)
+#'# Read all states at a given year
+#'   mun <- read_uf(cod_uf="all", year=2010)
 #'
 #'}
 read_uf <- function(year=NULL, cod_uf=NULL){
 
   # Test year input
   if(is.null(year)){
-    year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
     } else {
       # test if year input exists
       if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
