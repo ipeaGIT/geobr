@@ -46,8 +46,8 @@ read_areaponderacao <- function(CODE = NULL,year = NULL){
   }
 
   if(is.null(year)){
-    year <- str_extract(list.files(dir.proj), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year)
+    year <- 2010
+    cat("Using data from year 2010")
   } else {
     # test if year input exists
     if(!(year %in% str_extract(list.files(dir.proj), pattern = "[0-9]+"))){

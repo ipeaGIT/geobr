@@ -25,8 +25,8 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
 
   # Test year input
   if(is.null(year)){
-    year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
   } else {
     # test if year input exists
     if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
