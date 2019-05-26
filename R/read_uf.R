@@ -17,7 +17,7 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
 #' Download shape files of Brazilian states
 #'
 #' @param year the year of the data download (defaults to 2010)
-#' @param cod_uf 2-digit state code. If not informed, all states will be loaded.
+#' @param cod_uf 2-digit code of a state. If cod_uf="all", all states will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
