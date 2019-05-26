@@ -45,7 +45,7 @@ read_uf <- function(year=NULL, cod_uf=NULL){
     }
 
   # Test UF input
-    if(is.null(cod_uf)){ stop("Error: Invalid value to argument cod_uf.") }
+    if(is.null(cod_uf)){ stop("Value to argument 'cod_uf' cannot be NULL") }
     
   # if "all", read the entire country
     else if(cod_uf=="all"){

@@ -47,7 +47,7 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
   }
 
   # Test micro input
-    if(is.null(cod_micro)){ stop("Error: Invalid value to argument cod_micro.") }
+    if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
      
     
   # if "all", read the entire country

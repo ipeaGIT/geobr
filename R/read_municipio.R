@@ -48,7 +48,7 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
 
   # Test if cod_mun input is null
   if(is.null(cod_mun)){
-    stop("Error: Value to argument 'cod_mun' can not be NULL")
+    stop("Error: Value to argument 'cod_mun' cannot be NULL")
 
   } else if(toupper(cod_mun) %in% sg){
       source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/read_tab_sg.R")
