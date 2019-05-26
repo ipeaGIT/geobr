@@ -45,13 +45,19 @@ read_uf <- function(year=NULL, cod_uf=NULL){
     }
 
   # Test UF input
-  if(is.null(cod_uf)){ # if NULL, read the entire country
-    cat("Using data from entire country \n")
+    if(is.null(cod_uf)){ stop("Error: Invalid value to argument cod_uf.") }
+    
+  # if "all", read the entire country
+    else if(cod_uf=="all"){
+   
+    cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\UF_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
     return(shape)
-  } else if(is.numeric(cod_uf)==TRUE){
+    }
+  
+    else if(is.numeric(cod_uf)==TRUE){
 
       if( !(cod_uf %in% substr(list.files(paste0(root_dir, "\\UF_", year)), start =  1, stop = 2))){
         stop("Error: Invalid value to argument cod_uf.")
