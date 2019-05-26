@@ -14,8 +14,9 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 
 #' Title
 #'
-#' @param year
-#' @param cod_micro
+#' @param year the year of the data download (defaults to 2010)
+#' @param cod_micro x-digit code of the micro region If a two-digit code of a state is passed,
+#' the function will load all micro regions of that state. If cod_micro="all", all micro regions will be loaded.
 #'
 #' @return
 #' @export
@@ -35,8 +36,13 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
   }
 
   # Test micro input
-  if(is.null(cod_micro)){ # if NULL, read the entire country
-    cat("Using data from entire country \n")
+    if(is.null(cod_micro)){ stop("Error: Invalid value to argument cod_micro.") }
+     
+    
+  # if "all", read the entire country
+    else if(cod_micro=="all"){
+    
+    cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\MI_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
