@@ -48,7 +48,7 @@ read_mesorregiao <- function(year=NULL, cod_meso=NULL){
   }
 
   # Test meso input
-    if(is.null(cod_meso)){ stop("Error: Invalid value to argument cod_meso") }
+    if(is.null(cod_meso)){ stop("Value to argument 'cod_meso' cannot be NULL") }
     
     # if "all", read the entire country
     else if(cod_meso=="all"){
