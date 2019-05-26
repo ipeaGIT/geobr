@@ -16,7 +16,7 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/municipio"
 #'
 #' @param year the year of the data download (defaults to 2010)
 #' @param cod_mun 7-digit code of the municipality. If a the two-digit code of a state is used,
-#' the function will load all munuciplaities of that state. If not informed, all municipalities will be loaded.
+#' the function will load all municipalities of that state. If not informed, all municipalities will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
