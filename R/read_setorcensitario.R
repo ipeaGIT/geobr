@@ -10,14 +10,14 @@
 #'
 #' @examples \dontrun{
 #' # Exemplos
-#'dados <- read_areaponderacao(year=2010)
-#'dados <- read_areaponderacao(3500000,2010)
-#'dados <- read_areaponderacao(123,2010)
-#'dados <- read_areaponderacao("df",2010)
-#'dados <- read_areaponderacao(1302603,2010)
-#'dados <- read_areaponderacao(35)
-#'dados <- read_areaponderacao(14,2010)
-#'dados <- read_areaponderacao()
+#'dados <- read_setorcensitario(year=2010)
+# dados <- read_setorcensitario(3500000,2010)
+#'dados <- read_setorcensitario(123,2010)
+#'dados <- read_setorcensitario("df",2010)
+#'dados <- read_setorcensitario(1302603,2010)
+#'dados <- read_setorcensitario(35)
+#'dados <- read_setorcensitario(14,2010)
+#'dados <- read_setorcensitario()
 #'
 #'# mapa
 #'library(mapview)
@@ -82,10 +82,14 @@ read_setorcensitario <- function(CODE = NULL,year = NULL){
   }
 
   if(nchar(CODE) == 7) {
-    if( !(CODE %in% substr(list.files(paste(dir.proj, year,substr(CODE,1,2),sep="\\")), start =  1, stop = 7))){
+    if( !(CODE %in% substr(list.files(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios",sep="\\")), start =  3, stop = 9))){
       stop(paste0("Invalid value to MUN."))
     }
-    return(readRDS(paste(paste(dir.proj,year,substr(CODE,1,2),CODE,sep="\\"),"_areaponderacao_",year,".rds",sep="")))
+    if (length(list.files(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".rds",sep="")))==1) {
+      return(readRDS(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".rds",sep="")))
+      } else {
+    return(readRDS(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".RDS",sep="")))
+        }
   }
 
   stop(paste0("Invalid value to CODE."))
