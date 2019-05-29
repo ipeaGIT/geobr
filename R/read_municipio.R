@@ -16,7 +16,7 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/municipio"
 #'
 #' @param year the year of the data download (defaults to 2010)
 #' @param cod_mun 7-digit code of the municipality. If a the two-digit code of a state is used,
-#' the function will load all munuciplaities of that state. If not informed, all municipalities will be loaded.
+#' the function will load all municipalities of that state. If not informed, all municipalities will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -37,8 +37,8 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
 
   # Test year input
   if(is.null(year) & !is.null(cod_mun)){
-    year <- stringr::str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
   } else if(!is.null(year)){
     # test if year input exists
       if(!(year %in% stringr::str_extract(list.files(root_dir, pattern = ".*\\MU_"), pattern = "[0-9]+"))){
@@ -47,10 +47,19 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
   }
 
   # Test if cod_mun input is null
-  if(is.null(cod_mun)){
-    stop("Error: Value to argument 'cod_mun' can not be NULL")
-
-  } else if(toupper(cod_mun) %in% sg){
+    if(is.null(cod_mun)){ stop("Value to argument 'cod_mun' cannot be NULL") }
+    
+  # if "all", read the entire country
+    else if(cod_mun=="all"){ cat("Loading data for the whole country \n")
+      
+      files <- list.files(paste0(root_dir, "/MU_", year), full.names=T)
+      files <- lapply(X=files, FUN= readRDS)
+      shape <- do.call('rbind', files)
+      return(shape)
+    }
+  
+    
+   else if(toupper(cod_mun) %in% sg){
       source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/read_tab_sg.R")
       cod_uf <- read_tab(cod_mun)
       shape <- readRDS(paste0(root_dir, "/MU_", year, "/", substr(x = cod_uf, 1, 2), "MU.rds"))

@@ -14,19 +14,31 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 
 #' Title
 #'
-#' @param year
-#' @param cod_micro
+#' @param year the year of the data download (defaults to 2010)
+#' @param cod_micro x-digit code of the micro region. If a two-digit code of a state is passed,
+#' the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.
 #'
-#' @return
 #' @export
+#' @family general area functions
+#' @examples \dontrun{
+#' 
+#' library(geobr)
 #'
-#' @examples
+#' # Read all micro regions of a state at a given year
+#'   micro <- read_microregiao(cod_micro=12, year=2017)
+#' 
+#'# Read all micro regions at a given year
+#'   micro <- read_microregiao(cod_micro="all", year=2010)
+#' }
+#' 
+#' 
+
 read_microregiao <- function(year=NULL, cod_micro=NULL){
 
   # Test year input
   if(is.null(year)){
-    year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
   } else {
     # test if year input exists
     if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
@@ -35,8 +47,13 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
   }
 
   # Test micro input
-  if(is.null(cod_micro)){ # if NULL, read the entire country
-    cat("Using data from entire country \n")
+    if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
+     
+    
+  # if "all", read the entire country
+    else if(cod_micro=="all"){
+    
+    cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\MI_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
