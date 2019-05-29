@@ -14,19 +14,32 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/meso_regiao"
 
 #' Title
 #'
-#' @param year
+#' @param year the year of the data download (defaults to 2010)
 #' @param cod_meso
-#'
-#' @return
+#' 
+#' @param cod_meso x-digit code of the meso region. If a two-digit code of a state is passed,
+#' the function will load all meso regions of that state. If cod_meso="all", all meso regions of the country are loaded.
+#' 
 #' @export
+#' @family general area functions
+#' @examples \dontrun{
+#' 
+#' library(geobr)
 #'
-#' @examples
+#' # Read all meso regions of a state at a given year
+#'   meso <- read_mesorregiao(cod_meso=12, year=2017)
+#' 
+#'# Read all meso regions of the country at a given year
+#'   meso <- read_mesorregiao(cod_meso="all", year=2010)
+#' }
+#' 
+
 read_mesorregiao <- function(year=NULL, cod_meso=NULL){
 
   # Test year input
   if(is.null(year)){
-    year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
   } else {
     # test if year input exists
     if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
@@ -35,8 +48,12 @@ read_mesorregiao <- function(year=NULL, cod_meso=NULL){
   }
 
   # Test meso input
-  if(is.null(cod_meso)){ # if NULL, read the entire country
-    cat("Using data from entire country \n")
+    if(is.null(cod_meso)){ stop("Value to argument 'cod_meso' cannot be NULL") }
+    
+    # if "all", read the entire country
+    else if(cod_meso=="all"){
+      
+    cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\ME_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)

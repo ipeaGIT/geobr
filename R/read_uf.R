@@ -14,10 +14,10 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
 
 #### Função de Leitura para os shapes da UF ----
 
-#' Download shape files of state
+#' Download shape files of Brazilian states
 #'
 #' @param year the year of the data download (defaults to 2010)
-#' @param cod_uf 2-digit state code. If not informed, all states will be loaded.
+#' @param cod_uf 2-digit code of a state. If cod_uf="all", all states will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -25,18 +25,18 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
 #' library(geobr)
 #'
 #' # Read specific municipality at a given year
-#'   mun <- read_municipio(cod_uf=12, year=2017)
+#'   mun <- read_uf(cod_uf=12, year=2017)
 #'
-#'# Read al lstate at a given year
-#'   mun <- read_municipio(cod_mun=12, year=2010)
+#'# Read all states at a given year
+#'   mun <- read_uf(cod_uf="all", year=2010)
 #'
 #'}
 read_uf <- function(year=NULL, cod_uf=NULL){
 
   # Test year input
   if(is.null(year)){
-    year <- str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year, "\n")
+    year <- 2010
+    cat("Using data from year 2010")
     } else {
       # test if year input exists
       if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
@@ -45,13 +45,19 @@ read_uf <- function(year=NULL, cod_uf=NULL){
     }
 
   # Test UF input
-  if(is.null(cod_uf)){ # if NULL, read the entire country
-    cat("Using data from entire country \n")
+    if(is.null(cod_uf)){ stop("Value to argument 'cod_uf' cannot be NULL") }
+    
+  # if "all", read the entire country
+    else if(cod_uf=="all"){
+   
+    cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\UF_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
     return(shape)
-  } else if(is.numeric(cod_uf)==TRUE){
+    }
+  
+    else if(is.numeric(cod_uf)==TRUE){
 
       if( !(cod_uf %in% substr(list.files(paste0(root_dir, "\\UF_", year)), start =  1, stop = 2))){
         stop("Error: Invalid value to argument cod_uf.")
