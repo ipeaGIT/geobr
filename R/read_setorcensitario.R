@@ -52,7 +52,7 @@ read_setorcensitario <- function(CODE = NULL,year = NULL, zone = "urban"){
 
   if(is.null(year)){
     year <- str_extract(list.files(dir.proj), pattern = "[0-9]+") %>% max()
-    cat("Using data from latest year available:", year)
+    cat("Using data from latest year available:", year,"\n")
   } else {
     # test if year input exists
     if(!(year %in% str_extract(list.files(dir.proj), pattern = "[0-9]+"))){
