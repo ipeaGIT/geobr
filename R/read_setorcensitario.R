@@ -1,9 +1,8 @@
-# Funcao de leitura -------------------------------------------------------
-
-#' Title
+#' Download shape files of census sectors of the Brazilian Population Census
 #'
-#' @param CODE
-#' @param year
+#' @param CODE One can either pass the 7-digit code of a Municipality or the 2-digit code of a State.If CODE="all", all census sectors of the country are loaded.
+#' @param year the year of the data download (defaults to 2010)
+#' @param zone "urban" or "rural" for separation in the year 2000
 #'
 #' @return
 #' @export
@@ -27,7 +26,7 @@
 #'
 #'
 #'
-read_setorcensitario <- function(CODE = NULL,year = NULL){
+read_setorcensitario <- function(CODE = NULL,year = NULL, zone = "urban"){
   ## Pacotes
   library(stringr)
   library(sf)
@@ -37,11 +36,19 @@ read_setorcensitario <- function(CODE = NULL,year = NULL){
   # definindo diretorio de download dos arquivos
   dir.proj <- paste0("\\\\storage6\\usuarios\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\setor_censitario")
 
+  if (year==2000 & zone == "urban") {
+    dir.proj <- paste0("\\\\storage6\\usuarios\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\setor_censitario\\Urbano")
+  } else if (year==2000 & zone == "rural") {
+    dir.proj <- paste0("\\\\storage6\\usuarios\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\setor_censitario\\Rural")
+  }
+
+
   library(assertthat)
   # verificando se a pessoa entrou com uma string
-  if( is.string(CODE)) {
+  if( (is.string(CODE) & CODE != "ALL")|is.null(CODE)) {
     stop(paste0("Invalid value to UF or MUN"))
   }
+
 
   if(is.null(year)){
     year <- str_extract(list.files(dir.proj), pattern = "[0-9]+") %>% max()
@@ -53,9 +60,8 @@ read_setorcensitario <- function(CODE = NULL,year = NULL){
     }
   }
 
-  # CODE NULL
-  if( is.null(CODE)) {
-    #ler brasil
+  if(CODE=="all"){
+    cat("Loading data for the whole country \n")
     f <- list.files(paste0(dir.proj,"\\SC_",year),pattern = "^\\d")
     files <- list.files(paste0(dir.proj,"\\SC_",year,"/",f),pattern = ".rds$|.RDS$",full.names = TRUE)
     files <- lapply(X=files, FUN= readRDS)
