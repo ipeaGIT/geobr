@@ -2,17 +2,17 @@
 % Please edit documentation in R/read_uf.R
 \name{read_uf}
 \alias{read_uf}
-\title{Download shape files of state}
+\title{Download shape files of Brazilian states}
 \usage{
 read_uf(year = NULL, cod_uf = NULL)
 }
 \arguments{
 \item{year}{the year of the data download (defaults to 2010)}
 
-\item{cod_uf}{2-digit state code. If not informed, all states will be loaded.}
+\item{cod_uf}{2-digit code of a state. If cod_uf="all", all states will be loaded.}
 }
 \description{
-Download shape files of state
+Download shape files of Brazilian states
 }
 \examples{
 \dontrun{
@@ -20,13 +20,15 @@ Download shape files of state
 library(geobr)
 
 # Read specific municipality at a given year
-  mun <- read_municipio(cod_uf=12, year=2017)
+  mun <- read_uf(cod_uf=12, year=2017)
 
-# Read al lstate at a given year
-  mun <- read_municipio(cod_mun=12, year=2010)
+# Read all states at a given year
+  mun <- read_uf(cod_uf="all", year=2010)
 
 }
 }
 \seealso{
-Other general area functions: \code{\link{read_municipio}}
+Other general area functions: \code{\link{read_mesorregiao}},
+  \code{\link{read_microregiao}},
+  \code{\link{read_municipio}}
 }

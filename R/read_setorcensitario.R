@@ -4,7 +4,6 @@
 #' @param year the year of the data download (defaults to 2010)
 #' @param zone "urban" or "rural" for separation in the year 2000
 #'
-#' @return
 #' @export
 #'
 #' @examples \dontrun{
