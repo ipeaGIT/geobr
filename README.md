@@ -12,13 +12,13 @@
 |Function|Geography|Years available|
 |-----|-----|-----|
 || Brasil | ... |
-|`read_uf`| UFs | ... | 
-|| Macro região | ... | 
-|`read_mesoregiao`| Meso região | ... |  
-|`read_microregiao`| Micro região | ... | 
-|`read_municipio`| Município | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015 |
-|`read_areaponderacao`| Área de ponderação | 2010 | 
-|| Setor Censitário | 2000, 2007, 2010 | 
+|`read_uf`| States | ... | 
+|| Macro region | ... | 
+|`read_mesoregiao`| Meso region | ... |  
+|`read_microregiao`| Micro region | ... | 
+|`read_municipio`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015 |
+|`read_areaponderacao`| Weighting areas | 2010 | 
+|`read_setorcensitario` | Census tract | 2000, 2007, 2010 | 
 
 ## Basic Usage
 ````
