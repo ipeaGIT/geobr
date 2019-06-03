@@ -9,3 +9,4 @@ inst/doc
 *.out
 *.toc
 *.ind
+/R/.Rhistory
