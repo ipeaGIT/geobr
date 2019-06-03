@@ -12,7 +12,7 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 
 #### Função de Leitura para os shapes da microregiao ----
 
-#' Title
+#' Download shape files of micro region.
 #'
 #' @param year the year of the data download (defaults to 2010)
 #' @param cod_micro x-digit code of the micro region. If a two-digit code of a state is passed,
@@ -21,17 +21,17 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#' 
+#'
 #' library(geobr)
 #'
 #' # Read all micro regions of a state at a given year
 #'   micro <- read_microregiao(cod_micro=12, year=2017)
-#' 
+#'
 #'# Read all micro regions at a given year
 #'   micro <- read_microregiao(cod_micro="all", year=2010)
 #' }
-#' 
-#' 
+#'
+#'
 
 read_microregiao <- function(year=NULL, cod_micro=NULL){
 
@@ -48,11 +48,11 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
 
   # Test micro input
     if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
-     
-    
+
+
   # if "all", read the entire country
     else if(cod_micro=="all"){
-    
+
     cat("Loading data for the whole country \n")
     files <- list.files(paste0(root_dir, "\\MI_", year), full.names=T)
     files <- lapply(X=files, FUN= readRDS)
