@@ -33,16 +33,16 @@
 
 ## Comming soon:
 
-|Recorte|Anos|Fonte|Incluido no pacote?| Função de leitura|
-|-----|-----|-----|-----|-----|
-| Regioes Metropolitanas | ... | ... | ... | ... |
-| AMC* de municípios | ... | ... | ... | ... |
-| AMC* de microregiões | ... | ... | ... | ... |
-| AMC* de setores censitários | ... | ... | ... | ... |
-| Área urbanizada | 2005, 2015 | [IBGE](https://www.ibge.gov.br/geociencias-novoportal/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html) | ... | ... |
-| Áreas de risco | 2010 | [IBGE/Cemaden](https://www.ibge.gov.br/geociencias-novoportal/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=downloads) | ... | ... |
-| ... | ... | ... | ... | ... |
-| ... | ... | ... | ... | ... |
+|Geography|Years available|Source|
+|-----|-----|-----|
+| Metropolitan areas | ... | ... |
+| AMC* de municípios | ... | ... | 
+| AMC* de microregiões | ... | ... | 
+| Longitudinal Tract Database* | ... | ... | 
+| Urbanized areas | 2005, 2015 | [IBGE](https://www.ibge.gov.br/geociencias-novoportal/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html) | 
+| Disaster risk areas | 2010 | [IBGE/Cemaden](https://www.ibge.gov.br/geociencias-novoportal/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=downloads) | 
+| ... | ... | ... | 
+| ... | ... | ... | 
 
 '*' AMC - áreas mínimas comparáveis
 
