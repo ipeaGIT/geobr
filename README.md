@@ -49,17 +49,16 @@
 Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 
+## Credits <img align="right" src="figure/ipea_logo.jpg" alt="ipea" width="250">
+
+The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite as:
+
+* Pereira, R.H.M.; Gonçalves, C.N.; Araujo, P.H.F. de; Carvalho, G.D.; Nascimento, I.; Arruda, R.A. de. (2019) **geobr: an R package to easily access shapefiles of the Brazilian Institute of Geography and Statistics**. GitHub repository - https://github.com/ipeaGIT/geobr.
+
+
+
 ### Related projects
 As of today, there are two other packges in R with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf). The **geobr** package has a few advantages when compared to these packages that include, for example:
 - Access to a wider set of shapefiles, including not only country, states and municipalities, but also macro-, me- and micro-regions, sampling areas, census tracts, urbanized areas etc etc
 - Access to shape files with updated geometries across various years
 - Harmonazied attributes and geographic projections across geographies and years
-
-
-
-## Credits <img align="right" src="figure/ipea_logo.jpg" alt="ipea" width="250">
-
-The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. The package will soon be open for other contributions.
-
-
-
