@@ -10,7 +10,7 @@ read_municipio(year = NULL, cod_mun = NULL)
 \item{year}{the year of the data download (defaults to 2010)}
 
 \item{cod_mun}{7-digit code of the municipality. If a the two-digit code of a state is used,
-the function will load all munuciplaities of that state. If not informed, all municipalities will be loaded.}
+the function will load all municipalities of that state. If not informed, all municipalities will be loaded.}
 }
 \description{
 Download shape files of municipalities
@@ -29,5 +29,6 @@ library(geobr)
 }
 }
 \seealso{
-Other general area functions: \code{\link{read_uf}}
+Other general area functions: \code{\link{read_mesorregiao}},
+  \code{\link{read_microregiao}}, \code{\link{read_uf}}
 }

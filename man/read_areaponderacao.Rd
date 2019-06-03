@@ -2,19 +2,23 @@
 % Please edit documentation in R/read_areaponderacao.R
 \name{read_areaponderacao}
 \alias{read_areaponderacao}
-\title{Title}
+\title{Download shape files of weighting areas of the Brazilian Population Census}
 \usage{
 read_areaponderacao(CODE = NULL, year = NULL)
 }
 \arguments{
-\item{year}{}
+\item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}
+
+\item{year}{the year of the data download (defaults to 2010)}
 }
 \description{
-Title
+Download shape files of weighting areas of the Brazilian Population Census
 }
 \examples{
 \dontrun{
-# Exemplos
+
+library(geobr)
+
 dados <- read_areaponderacao(year=2010)
 dados <- read_areaponderacao(3500000,2010)
 dados <- read_areaponderacao(123,2010)
@@ -24,7 +28,7 @@ dados <- read_areaponderacao(35)
 dados <- read_areaponderacao(14,2010)
 dados <- read_areaponderacao()
 
-# mapa
+# map it
 library(mapview)
 mapview(dados)
 }
