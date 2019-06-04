@@ -27,54 +27,62 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
 
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
-  
+
   # check if metadata has already been downloaded
   if (file.exists(tempf)) {
      metadata <- readRDS(tempf)
-    
+
   } else {
   # download it and save to metadata
     download.file(url="http://ipea.gov.br/geobr/metadata/metadata.rds", destfile = tempf, quiet = T)
     metadata <- readRDS(tempf)
   }
-  
-  
+
+
 # Select geo
   temp_meta <- subset(metadata, geo=="municipio")
-  
-  
+
+
 # Verify year input
   if (is.null(year)){ cat("Using data from year 2010")
     temp_meta <- subset(temp_meta, year==2010)
-    
+
   } else if (year %in% temp_meta$year){ temp_meta <- subset(temp_meta, year== year)
-  
+
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                        paste(unique(temp_meta$year),collapse = " ")))
   }
-  
-  
+
+
 # Verify cod_mun input
-  
+
   # Test if cod_mun input is null
     if(is.null(cod_mun)){ stop("Value to argument 'cod_mun' cannot be NULL") }
-    
+
   # if cod_mun=="all", read the entire country
     else if(cod_mun=="all"){ cat("Loading data for the whole country \n")
-      
+
       # list paths of files to download
-      files <- temp_meta$download_path
-      
+      filesD <- temp_meta$download_path
+
 
       # download files
-      
+      lapply(X=filesD, FUN= download.file,
+             destfile = paste0(tempdir(),"/",tail(unlist(strsplit(filesD,"/")),n=1L)),
+             quiet = T)
+
+
+
+
       # read files and pile them up
+      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+      files <- paste0(tempdir(),"/",files)
       files <- lapply(X=files, FUN= readRDS)
       shape <- do.call('rbind', files)
       return(shape)
     }
-  
-    
+
+
    else if(toupper(cod_mun) %in% sg){
       source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/read_tab_sg.R")
       cod_uf <- read_tab(cod_mun)
