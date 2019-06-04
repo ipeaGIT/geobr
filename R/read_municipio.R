@@ -34,7 +34,7 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
 
   } else {
   # download it and save to metadata
-    download.file(url="http://ipea.gov.br/geobr/metadata/metadata.rds", destfile = tempf, quiet = T)
+    download.file(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", destfile = tempf, quiet = T,mode = "wb")
     metadata <- readRDS(tempf)
   }
 
@@ -44,7 +44,7 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
 
 
 # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010")
+  if (is.null(year)){ cat("Using data from year 2010 \n")
     temp_meta <- subset(temp_meta, year==2010)
 
   } else if (year %in% temp_meta$year){ temp_meta <- subset(temp_meta, year== year)
@@ -63,16 +63,13 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
     else if(cod_mun=="all"){ cat("Loading data for the whole country \n")
 
       # list paths of files to download
-      filesD <- temp_meta$download_path
+      filesD <-as.character(temp_meta$download_path)
 
 
       # download files
-      lapply(X=filesD, FUN= download.file,
-             destfile = paste0(tempdir(),"/",tail(unlist(strsplit(filesD,"/")),n=1L)),
-             quiet = T)
-
-
-
+      lapply(X=filesD, function(x) download.file(url = x,
+                                                 destfile = paste0(tempdir(),"/",unlist(lapply(strsplit(x,"/"),tail,n=1L))),
+                                                 quiet = T,mode = "wb"))
 
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
@@ -82,20 +79,23 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
       return(shape)
     }
 
-
-   else if(toupper(cod_mun) %in% sg){
-      source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/read_tab_sg.R")
-      cod_uf <- read_tab(cod_mun)
-      shape <- readRDS(paste0(root_dir, "/MU_", year, "/", substr(x = cod_uf, 1, 2), "MU.rds"))
-      return(shape)
-
-  } else if( !(substr(x = cod_mun, 1, 2) %in% substr(list.files(paste0(root_dir, "/MU_", year)), 1, 2))){
+  else if( !(substr(x = cod_mun, 1, 2) %in% temp_meta$code)){
       stop("Error: Invalid Value to argument cod_mun.")
 
   } else{
-      shape <- readRDS(paste0(root_dir, "/MU_", year, "/", substr(x = cod_mun, 1, 2), "MU.rds"))
+
+    # list paths of files to download
+    filesD <-as.character(subset(temp_meta, code==substr(cod_mun, 1, 2))$download_path)
+
+    # download files
+   download.file(url = filesD,destfile = paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L))),
+                                               quiet = T,mode = "wb")
+
+      shape <- readRDS(paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L))))
+
       if(nchar(cod_mun)==2){
         return(shape)
+
       } else if(cod_mun %in% shape$cod_mun){    # Get Municipio
           x <- cod_mun
           shape %<>% filter(cod_mun==x)
