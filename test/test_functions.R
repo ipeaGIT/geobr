@@ -47,6 +47,55 @@ gc(reset = T)
   
 ###### 3. read_mesorregiao -------------------------
 
-a <- read_mesorregiao(cod_mun=1200179)
-plot(a)
+  ### passed the test
+  
+  system.time( a <- read_mesorregiao(cod_meso=3305, year=2016) )
+  plot(a)
+  
+  system.time( b <- read_mesorregiao(cod_meso=33, year=2001) )
+  plot(b)
+  
+  system.time( c <- read_mesorregiao(cod_meso=11) )
+  plot(c)
 
+
+  
+  
+# NEEDS  correction
+  system.time( d <- read_mesorregiao(cod_meso="all", year=2000) )
+  plot(d)
+  
+
+
+
+
+
+
+
+
+
+###### 4. read_microregiao -------------------------
+gc(reset = T)
+
+
+
+
+### passed the test
+  
+  system.time( a <- read_microregiao(cod_micro=33004, year=2016) )
+  plot(a)
+  
+  system.time( b <- read_microregiao(cod_micro=33, year=2001) )
+  plot(b)
+  
+  system.time( c <- read_microregiao(cod_micro=11) )
+  plot(c)
+  
+  system.time( d <- read_microregiao(cod_micro="all", year=2000) )
+  head(d)
+
+  
+# NEEDS  correction
+  system.time( a <- read_microregiao(cod_micro=33004, year=2016) )
+  plot(a)
+  
