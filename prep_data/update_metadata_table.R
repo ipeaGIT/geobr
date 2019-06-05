@@ -2,8 +2,8 @@
 
 
 # create empty metadata 
-  metadata <- data.frame(matrix(ncol = 4, nrow = 0))
-  colnames(indice) <- c("geo","year","code","code_abrev","download_path")
+  metadata <- data.frame(matrix(ncol = 5, nrow = 0))
+  colnames(metadata) <- c("geo","year","code","download_path","code_abrev")
 
 # list all data files available in the geobr package
   geo=list.files("//storage3/geobr/data")
@@ -14,12 +14,13 @@
     for (b in ano) {
       estado=list.files(paste("//storage3/geobr/data",a,b,sep="/"))
       for (c in estado) {
-        indice[nrow(indice) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))
+        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))
       }
     }
   }
 
 # get code abbreviations
+  library(data.table)
   setDT(metadata)
   metadata[ code== 11, code_abrev :=	"RO" ]
   metadata[ code== 12, code_abrev :=	"AC" ]
@@ -51,5 +52,5 @@
 
   
 # save updated metadata table
-  # writeRDS(metadata,"//storage3/geobr/metadata/metadata.rds")
+  # saveRDS(metadata,"//storage3/geobr/metadata/metadata.rds")
 
