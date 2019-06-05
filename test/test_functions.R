@@ -8,7 +8,8 @@ devtools::load_all("R:/Dropbox/git_projects/geobr")
 devtools::load_all("C:/Users/r1701707/Desktop/geobr")
 
 
-
+# devtools::install_github("ipeaGIT/geobr")
+# library(geobr)
 
 ### 1. read_uf -------------------------
 
