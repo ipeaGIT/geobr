@@ -2,7 +2,7 @@
 
 
 
-
+devtools::load_all("R:/Dropbox/git_projects/geobr")
 
 ### 1. read_uf -------------------------
 
