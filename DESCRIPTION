@@ -1,6 +1,7 @@
 Package: geobr
 Type: Package
 Title: Loads shapefiles of the Brazilian Institute of Geography and Statistics (IBGE)
+Version: 0.01
 Authors@R: c(
             person(given="Rafael H. M.", family="Pereira", email="rafael.pereira@ipea.gov.br", role=c("aut", "cre")),
             person(given="Caio", family="Nogueira Gonçalves", email="caio.goncalves@ipea.gov.br", role=c("aut")),
