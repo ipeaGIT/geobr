@@ -8,7 +8,6 @@ library(readr)
 
 
 
-#### Função de Leitura para os shapes da mesoregiao ----
 
 #' Download shape files of meso region.
 #'
@@ -17,7 +16,6 @@ library(readr)
 #'
 #' @param cod_meso x-digit code of the meso region. If a two-digit code of a state is passed,
 #' the function will load all meso regions of that state. If cod_meso="all", all meso regions of the country are loaded.
-#'
 #' @export
 #' @family general area functions
 #' @examples \dontrun{

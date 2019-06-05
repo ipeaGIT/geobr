@@ -2,9 +2,8 @@
 #'
 #' @param CODE One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography
 #' @param year the year of the data download (defaults to 2010)
-#'
 #' @export
-#' library(geobr)
+#' @family general area functions
 #' @examples \dontrun{
 #'
 #' library(geobr)
