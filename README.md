@@ -1,6 +1,6 @@
 # geobr 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
- ![CRAN Version](https://img.shields.io/badge/CRAN-not%20published-red.svg)
+ ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
 
 
 **geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE). The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
