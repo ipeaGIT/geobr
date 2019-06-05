@@ -8,14 +8,11 @@ library(httr)
 
 
 
-#### Função de Leitura para os shapes da microregiao ----
-
 #' Download shape files of micro region.
 #'
 #' @param year the year of the data download (defaults to 2010)
 #' @param cod_micro x-digit code of the micro region. If a two-digit code of a state is passed,
 #' the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.
-#'
 #' @export
 #' @family general area functions
 #' @examples \dontrun{

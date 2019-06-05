@@ -13,8 +13,10 @@ library(geobr)
 
 ### 1. read_uf -------------------------
 
+install_github "Error: package or namespace load failed"
 
 
+library(geobr)
 
 
 ###### 2. read_municipio -------------------------

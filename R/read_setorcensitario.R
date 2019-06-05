@@ -3,9 +3,8 @@
 #' @param CODE One can either pass the 7-digit code of a Municipality or the 2-digit code of a State.If CODE="all", all census sectors of the country are loaded.
 #' @param year the year of the data download (defaults to 2010)
 #' @param zone "urban" or "rural" for separation in the year 2000
-#'
 #' @export
-#'
+#' @family general area functions
 #' @examples \dontrun{
 #' # Exemplos
 #'dados <- read_setorcensitario(year=2010)
