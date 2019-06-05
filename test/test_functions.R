@@ -2,7 +2,10 @@
 
 
 
+# rafa pc
 devtools::load_all("R:/Dropbox/git_projects/geobr")
+# rafa ipea
+devtools::load_all("C:/Users/r1701707/Desktop/geobr")
 
 ### 1. read_uf -------------------------
 
@@ -25,7 +28,7 @@ gc(reset = T)
   system.time( c <- read_municipio(cod_mun=11) )
   plot(c)
   
-  system.time( d <- read_municipio(cod_mun="all", year=2000) )
+  system.time( d <- read_municipio(cod_mun="all", year=2017 ))
   head(d)
 
 
@@ -91,11 +94,10 @@ gc(reset = T)
   system.time( c <- read_microregiao(cod_micro=11) )
   plot(c)
   
-  system.time( d <- read_microregiao(cod_micro="all", year=2000) )
-  head(d)
-
   
 # NEEDS  correction
-  system.time( a <- read_microregiao(cod_micro=33004, year=2016) )
-  plot(a)
+  system.time( d <- read_microregiao(cod_micro="all", year=2000) )
+  head(d)
+  plot(d)
+  
   
