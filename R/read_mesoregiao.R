@@ -6,8 +6,6 @@ library(magrittr)
 library(readr)
 
 
-# Diretorio raiz
-root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/meso_regiao"
 
 
 #### Função de Leitura para os shapes da mesoregiao ----
@@ -35,42 +33,90 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/meso_regiao"
 #'
 
 read_mesorregiao <- function(year=NULL, cod_meso=NULL){
-
-  # Test year input
-  if(is.null(year)){
-    year <- 2010
-    cat("Using data from year 2010")
+  
+  
+  # Get metadata with data addresses
+  tempf <- file.path(tempdir(), "metadata.rds")
+  
+  # check if metadata has already been downloaded
+  if (file.exists(tempf)) {
+    metadata <- readRDS(tempf)
+    
   } else {
-    # test if year input exists
-    if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
-      stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
-    }
+    # download it and save to metadata
+    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", write_disk(tempf, overwrite = T))
+    metadata <- readRDS(tempf)
   }
-
-  # Test meso input
-    if(is.null(cod_meso)){ stop("Value to argument 'cod_meso' cannot be NULL") }
-
-    # if "all", read the entire country
-    else if(cod_meso=="all"){
-
-    cat("Loading data for the whole country \n")
-    files <- list.files(paste0(root_dir, "\\ME_", year), full.names=T)
+  
+  
+  
+  
+  
+  # Select geo
+  temp_meta <- subset(metadata, geo=="meso_regiao")
+  
+  
+  # Verify year input
+  if (is.null(year)){ cat("Using data from year 2010 \n")
+    temp_meta <- subset(temp_meta, year==2010)
+    
+    #} else if (year %in% temp_meta$year){ temp_meta <- subset(temp_meta, year== year)
+  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
+  
+  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                       paste(unique(temp_meta$year),collapse = " ")))
+  }
+  
+  
+  # Verify cod_meso input
+  
+  # Test if cod_meso input is null
+  if(is.null(cod_meso)){ stop("Value to argument 'cod_meso' cannot be NULL") }
+  
+  # if cod_meso=="all", read the entire country
+  else if(cod_meso=="all"){ cat("Loading data for the whole country \n")
+    
+    # list paths of files to download
+    filesD <- as.character(temp_meta$download_path)
+    
+    
+    # download files
+    lapply(X=filesD, function(x) httr::GET(url=x, 
+                                           write_disk(paste0(tempdir(),"/",unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+    
+    
+    # read files and pile them up
+    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+    files <- paste0(tempdir(),"/",files)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
     return(shape)
   }
-
-  if( !(substr(x = cod_meso, 1, 2) %in% substr(list.files(paste0(root_dir, "\\ME_", year)), start =  1, stop = 2))){
-    stop("Error: Invalid value to argument cod_meso.")
-
+  
+  else if( !(substr(x = cod_meso, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument cod_meso.")
+    
   } else{
-    shape <- readRDS(paste0(root_dir, "\\ME_", year, "\\", substr(x = cod_meso, 1, 2), "ME.rds"))
-    if(cod_meso %in% shape$cod_meso){ #testa se a mesoregiao existe;
-      cod_meso_auxiliar <- cod_meso
-      shape %<>% filter(cod_meso==cod_meso_auxiliar)
+    
+    # list paths of files to download
+    filesD <- as.character(subset(temp_meta, code==substr(cod_meso, 1, 2))$download_path)
+    
+    # download files
+    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+    httr::GET(url=filesD, write_disk(temps, overwrite = T))
+    
+    # read sf
+    shape <- readRDS(temps)
+    
+    if(nchar(cod_meso)==2){
       return(shape)
-
-    } else{stop("Error: Invalid Value to argument cod_meso.")}
+      
+    } else if(cod_meso %in% shape$cod_meso){    # Get meso region
+      x <- cod_meso
+      shape <- subset(shape, cod_meso==x)
+      return(shape)
+    } else{
+      stop("Error: Invalid Value to argument cod_meso.")
+    }
   }
-
 }
