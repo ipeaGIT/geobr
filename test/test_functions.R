@@ -7,6 +7,9 @@ devtools::load_all("R:/Dropbox/git_projects/geobr")
 # rafa ipea
 devtools::load_all("C:/Users/r1701707/Desktop/geobr")
 
+
+
+
 ### 1. read_uf -------------------------
 
 
@@ -30,7 +33,8 @@ gc(reset = T)
   
   system.time( d <- read_municipio(cod_mun="all", year=2017 ))
   head(d)
-
+  plot(d)
+  
 
 ### expected ERROR messages
 
@@ -67,7 +71,7 @@ gc(reset = T)
 # NEEDS  correction
   system.time( d <- read_mesorregiao(cod_meso="all", year=2000) )
   plot(d)
-  
+  head(d)
 
 
 
