@@ -24,11 +24,11 @@
 |-----|-----|-----|
 || Brasil | ... |
 |`read_uf`| States | ... | 
-|| Macro region | ... | 
+|`read_macroregiao`| Macro region | ... | 
 |`read_mesoregiao`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 |  
 |`read_microregiao`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 | 
 |`read_municipio`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017 |
-|`read_areaponderacao`| Weighting areas | 2010 | 
+|`read_areaponderacao`| Census weighting areas | 2010 | 
 |`read_setorcensitario` | Census tract | 2000, 2007, 2010 | 
 
 
