@@ -4,15 +4,7 @@ library(sf)
 library(dplyr)
 library(magrittr)
 library(readr)
-
-
-# Diretorio raiz
-root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
-
-# Leitura das siglas dos estados
-# source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/sg.txt")
-
-#### Função de Leitura para os shapes da UF ----
+library(httr)
 
 #' Download shape files of Brazilian states
 #'
@@ -31,50 +23,88 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/uf"
 #'   mun <- read_uf(cod_uf="all", year=2010)
 #'
 #'}
+
 read_uf <- function(year=NULL, cod_uf=NULL){
 
-  # Test year input
-  if(is.null(year)){
-    year <- 2010
-    cat("Using data from year 2010")
-    } else {
-      # test if year input exists
-      if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
-        stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
-      }
-    }
-
-  # Test UF input
-    if(is.null(cod_uf)){ stop("Value to argument 'cod_uf' cannot be NULL") }
+  # Get metadata with data addresses
+  tempf <- file.path(tempdir(), "metadata.rds")
+  
+  # check if metadata has already been downloaded
+  if (file.exists(tempf)) {
+    metadata <- readRDS(tempf)
     
-  # if "all", read the entire country
-    else if(cod_uf=="all"){
-   
-    cat("Loading data for the whole country \n")
-    files <- list.files(paste0(root_dir, "\\UF_", year), full.names=T)
+  } else {
+    # download it and save to metadata
+    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", write_disk(tempf, overwrite = T))
+    metadata <- readRDS(tempf)
+  }
+  
+  
+  # Select geo
+  temp_meta <- subset(metadata, geo=="uf")
+  
+  
+  # Verify year input
+  if (is.null(year)){ cat("Using data from year 2010 \n")
+    temp_meta <- subset(temp_meta, year==2010)
+    
+    #} else if (year %in% temp_meta$year){ temp_meta <- subset(temp_meta, year== year)
+  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
+  
+  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                       paste(unique(temp_meta$year),collapse = " ")))
+  }
+  
+  
+  # Verify cod_uf input
+  
+  # Test if cod_uf input is null
+  if(is.null(cod_uf)){ stop("Value to argument 'cod_uf' cannot be NULL") }
+  
+  # if cod_uf=="all", read the entire country
+  else if(cod_uf=="all"){ cat("Loading data for the whole country \n")
+    
+    # list paths of files to download
+    filesD <- as.character(temp_meta$download_path)
+    
+    # download files
+    lapply(X=filesD, function(x) httr::GET(url=x, 
+                                           write_disk(paste0(tempdir(),"/",unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+    
+    
+    # read files and pile them up
+    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+    files <- paste0(tempdir(),"/",files)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
     return(shape)
-    }
+  }
   
-    else if(is.numeric(cod_uf)==TRUE){
-
-      if( !(cod_uf %in% substr(list.files(paste0(root_dir, "\\UF_", year)), start =  1, stop = 2))){
-        stop("Error: Invalid value to argument cod_uf.")
-      } else{
-        shape <- readRDS(paste0(root_dir, "/UF_", year, "/", substr(x = cod_uf, 1, 2), "UF.rds"))
-        return(shape)
-      }
-
-  } else if(toupper(cod_uf) %in% sg){
-    source("L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/read_tab_sg.R")
-    cod_uf <- read_tab(cod_uf)
-    shape <- readRDS(paste0(root_dir, "/UF_", year, "/", substr(x = cod_uf, 1, 2), "UF.rds"))
-    return(shape)
-  }  else{
-    stop("Error: Invalid value to argument cod_uf.")
+  else if( !(substr(x = cod_uf, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument cod_uf.")
+    
+  } else{
+    
+    # list paths of files to download
+    filesD <- as.character(subset(temp_meta, code==substr(cod_uf, 1, 2))$download_path)
+    
+    # download files
+    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+    httr::GET(url=filesD, write_disk(temps, overwrite = T))
+    
+    # read sf
+    shape <- readRDS(temps)
+    
+    if(nchar(cod_uf)==2){
+      return(shape)
+      
+    } else if(cod_uf %in% shape$cod_uf){
+      x <- cod_uf
+      shape <- subset(shape, cod_uf==x)
+      return(shape)
+      
+    } else{
+      stop("Error: Invalid Value to argument cod_uf.")
     }
-
+  }
 }
-
-
