@@ -4,10 +4,8 @@ library(sf)
 library(dplyr)
 library(magrittr)
 library(readr)
+library(httr)
 
-
-# Diretorio raiz
-root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 
 
 #### Função de Leitura para os shapes da microregiao ----
@@ -35,42 +33,89 @@ root_dir <- "L:/# DIRUR #/ASMEQ/pacoteR_shapefilesBR/data/micro_regiao"
 
 read_microregiao <- function(year=NULL, cod_micro=NULL){
 
-  # Test year input
-  if(is.null(year)){
-    year <- 2010
-    cat("Using data from year 2010")
+  
+  # Get metadata with data addresses
+  tempf <- file.path(tempdir(), "metadata.rds")
+  
+  # check if metadata has already been downloaded
+  if (file.exists(tempf)) {
+    metadata <- readRDS(tempf)
+    
   } else {
-    # test if year input exists
-    if(!(year %in% str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"))){
-      stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ", paste(str_extract(list.files(root_dir, pattern = ".*\\_"), pattern = "[0-9]+"), collapse = " ")))
-    }
+    # download it and save to metadata
+    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", write_disk(tempf, overwrite = T))
+    metadata <- readRDS(tempf)
   }
-
-  # Test micro input
-    if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
-
-
-  # if "all", read the entire country
-    else if(cod_micro=="all"){
-
-    cat("Loading data for the whole country \n")
-    files <- list.files(paste0(root_dir, "\\MI_", year), full.names=T)
+  
+  
+  
+  
+  
+  # Select geo
+  temp_meta <- subset(metadata, geo=="micro_regiao")
+  
+  
+  # Verify year input
+  if (is.null(year)){ cat("Using data from year 2010 \n")
+    temp_meta <- subset(temp_meta, year==2010)
+    
+    #} else if (year %in% temp_meta$year){ temp_meta <- subset(temp_meta, year== year)
+  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
+  
+  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                       paste(unique(temp_meta$year),collapse = " ")))
+  }
+  
+  
+  # Verify cod_micro input
+  
+  # Test if cod_micro input is null
+  if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
+  
+  # if cod_micro=="all", read the entire country
+  else if(cod_micro=="all"){ cat("Loading data for the whole country \n")
+    
+    # list paths of files to download
+    filesD <- as.character(temp_meta$download_path)
+    
+    
+    # download files
+    lapply(X=filesD, function(x) httr::GET(url=x, 
+                                           write_disk(paste0(tempdir(),"/",unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+    
+    
+    # read files and pile them up
+    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+    files <- paste0(tempdir(),"/",files)
     files <- lapply(X=files, FUN= readRDS)
     shape <- do.call('rbind', files)
     return(shape)
   }
-
-  if( !(substr(x = cod_micro, 1, 2) %in% substr(list.files(paste0(root_dir, "\\MI_", year)), start =  1, stop = 2))){
-    stop("Error: Invalid value to argument cod_micro.")
-
+  
+  else if( !(substr(x = cod_micro, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument cod_micro.")
+    
   } else{
-    shape <- readRDS(paste0(root_dir, "\\MI_", year, "\\", substr(x = cod_micro, 1, 2), "MI.rds"))
-    if(cod_micro %in% shape$cod_micro){ #testa se a microregiao existe;
-      cod_micro_auxiliar <- cod_micro
-      shape %<>% filter(cod_micro==cod_micro_auxiliar)
+    
+    # list paths of files to download
+    filesD <- as.character(subset(temp_meta, code==substr(cod_micro, 1, 2))$download_path)
+    
+    # download files
+    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+    httr::GET(url=filesD, write_disk(temps, overwrite = T))
+    
+    # read sf
+    shape <- readRDS(temps)
+    
+    if(nchar(cod_micro)==2){
       return(shape)
-
-    } else{stop("Error: Invalid Value to argument cod_micro.")}
+      
+    } else if(cod_micro %in% shape$cod_micro){    # Get micro region
+      x <- cod_micro
+      shape <- subset(shape, cod_micro==x)
+      return(shape)
+    } else{
+      stop("Error: Invalid Value to argument cod_micro.")
+    }
   }
-
 }
