@@ -31,6 +31,9 @@ library(geobr)
 
 }
 \seealso{
-Other general area functions: \code{\link{read_microregiao}},
-  \code{\link{read_municipio}}, \code{\link{read_uf}}
+Other general area functions: \code{\link{read_areaponderacao}},
+  \code{\link{read_microregiao}},
+  \code{\link{read_municipio}},
+  \code{\link{read_setorcensitario}}, \code{\link{read_uf}}
 }
+\concept{general area functions}

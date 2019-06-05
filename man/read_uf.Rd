@@ -28,7 +28,10 @@ library(geobr)
 }
 }
 \seealso{
-Other general area functions: \code{\link{read_mesorregiao}},
+Other general area functions: \code{\link{read_areaponderacao}},
+  \code{\link{read_mesorregiao}},
   \code{\link{read_microregiao}},
-  \code{\link{read_municipio}}
+  \code{\link{read_municipio}},
+  \code{\link{read_setorcensitario}}
 }
+\concept{general area functions}
