@@ -20,7 +20,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends: 
-    R (>= 3.6.0)
+    R (>= 3.4.0)
 Suggests:
     ggplot2,
     mapview
