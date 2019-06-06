@@ -1,4 +1,4 @@
-# geobr 
+# geobr <img align="right" src="man/figures/geobr_hex_logo_v0.02.png" alt="logo" width="250">
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
  ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
  [![Github all downloads](https://img.shields.io/github/downloads/ipeaGIT/geobr/total.svg?label=downloads&color=green)](https://GitHub.com/ipeaGIT/geobr/releases/)
