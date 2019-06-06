@@ -2,21 +2,16 @@
 
 
 
-# rafa pc
-devtools::load_all("R:/Dropbox/git_projects/geobr")
-# rafa ipea
-devtools::load_all("C:/Users/r1701707/Desktop/geobr")
 
 
 devtools::install_github("ipeaGIT/geobr")
 library(geobr)
 
+devtools::uninstall(pkg = "geobr")
+
 ### 1. read_uf -------------------------
 
-install_github "Error: package or namespace load failed"
 
-
-library(geobr)
 
 
 ###### 2. read_municipio -------------------------
@@ -107,4 +102,12 @@ gc(reset = T)
   head(d)
   plot(d)
   
+  
+  
+  
+  
+### update package documentation ----------------
+  # library(roxygen2)
+  # setwd("C:/Users/r1701707/Desktop/geobr")
+  # document()
   
