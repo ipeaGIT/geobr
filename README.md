@@ -54,7 +54,7 @@
 * Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 
-## Credits <img align="right" src="figure/ipea_logo.jpg" alt="ipea" width="250">
+## Credits <img align="right" src="man/figures/ipea_logo.jpg" alt="ipea" width="250">
 
 The shape files are created by a team at IBGE. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
