@@ -67,9 +67,11 @@ gc(reset = T)
   
   
 # NEEDS  correction
-  system.time( d <- read_mesorregiao(cod_meso="all", year=2000) )
+  system.time( d <- read_mesorregiao(cod_meso="all", year=2010) )
   plot(d)
   head(d)
+  class(d)
+  
 
 
 
