@@ -1,11 +1,3 @@
-## Pacotes
-library(stringr)
-library(sf)
-library(dplyr)
-library(magrittr)
-library(readr)
-library(httr)
-
 #' Download shape files of Brazilian states
 #'
 #' @param year the year of the data download (defaults to 2010)
@@ -17,10 +9,10 @@ library(httr)
 #' library(geobr)
 #'
 #' # Read specific municipality at a given year
-#'   mun <- read_uf(cod_uf=12, year=2017)
+#'   uf <- read_uf(cod_uf=12, year=2017)
 #'
 #'# Read all states at a given year
-#'   mun <- read_uf(cod_uf="all", year=2010)
+#'   ufs <- read_uf(cod_uf="all", year=2010)
 #'
 #'}
 

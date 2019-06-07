@@ -1,13 +1,3 @@
-## Pacotes
-library(stringr)
-library(sf)
-library(dplyr)
-library(magrittr)
-library(readr)
-library(httr)
-
-
-
 #' Download shape files of micro region.
 #'
 #' @param year the year of the data download (defaults to 2010)
@@ -43,9 +33,6 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
     metadata <- readr::read_rds(tempf)
   }
-  
-  
-  
   
   
   # Select geo
