@@ -62,7 +62,7 @@ read_setorcensitario <- function(CODE = NULL,year = NULL, zone = "urban"){
     cat("Loading data for the whole country \n")
     f <- list.files(paste0(dir.proj,"\\SC_",year),pattern = "^\\d")
     files <- list.files(paste0(dir.proj,"\\SC_",year,"/",f),pattern = ".rds$|.RDS$",full.names = TRUE)
-    files <- lapply(X=files, FUN= readRDS)
+    files <- lapply(X=files, FUN= readr::read_rds)
     files <- lapply(X=files, FUN= as.data.frame)
     shape <- do.call('rbind', files)
     shape <- st_sf(shape)
@@ -77,7 +77,7 @@ read_setorcensitario <- function(CODE = NULL,year = NULL, zone = "urban"){
     if (length(list.files(paste0(dir.proj,"\\SC_",year,"/",CODE)))==0){stop(paste0("UF has no census sectors."))}
 
     files <- list.files(paste0(dir.proj,"\\SC_",year,"/",CODE),pattern = ".rds$|.RDS$",full.names = TRUE)
-    files <- lapply(X=files, FUN= readRDS)
+    files <- lapply(X=files, FUN= readr::read_rds)
     files <- lapply(X=files, FUN= as.data.frame)
     shape <- do.call('rbind', files)
     shape <- st_sf(shape)
@@ -90,9 +90,9 @@ read_setorcensitario <- function(CODE = NULL,year = NULL, zone = "urban"){
       stop(paste0("Invalid value to MUN."))
     }
     if (length(list.files(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".rds",sep="")))==1) {
-      return(readRDS(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".rds",sep="")))
+      return(readr::read_rds(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".rds",sep="")))
       } else {
-    return(readRDS(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".RDS",sep="")))
+    return(readr::read_rds(paste(paste(dir.proj, paste0("SC_",year),substr(CODE,1,2),"municipios\\",sep="\\"),"SC",CODE,".RDS",sep="")))
         }
   }
 

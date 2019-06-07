@@ -36,12 +36,12 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
   
   # check if metadata has already been downloaded
   if (file.exists(tempf)) {
-    metadata <- readRDS(tempf)
+    metadata <- readr::read_rds(tempf)
     
   } else {
     # download it and save to metadata
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", write_disk(tempf, overwrite = T))
-    metadata <- readRDS(tempf)
+    metadata <- readr::read_rds(tempf)
   }
   
   
@@ -84,7 +84,7 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
     # read files and pile them up
     files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
     files <- paste0(tempdir(),"/",files)
-    files <- lapply(X=files, FUN= readRDS)
+    files <- lapply(X=files, FUN= readr::read_rds)
     shape <- do.call('rbind', files)
     return(shape)
   }
@@ -102,7 +102,7 @@ read_microregiao <- function(year=NULL, cod_micro=NULL){
     httr::GET(url=filesD, write_disk(temps, overwrite = T))
     
     # read sf
-    shape <- readRDS(temps)
+    shape <- readr::read_rds(temps)
     
     if(nchar(cod_micro)==2){
       return(shape)

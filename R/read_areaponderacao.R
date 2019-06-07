@@ -56,7 +56,7 @@ read_areaponderacao <- function(CODE = NULL,year = NULL){
     #ler brasil
     f <- list.files(paste(dir.proj,year,sep="/"),pattern = "^\\d")
     files <- list.files(paste(dir.proj,year,f,sep="/"),full.names = T)
-    files <- lapply(X=files, FUN= readRDS)
+    files <- lapply(X=files, FUN= readr::read_rds)
     files <- lapply(X=files, FUN= as.data.frame)
     shape <- do.call('rbind', files)
     shape <- st_sf(shape)
@@ -71,7 +71,7 @@ read_areaponderacao <- function(CODE = NULL,year = NULL){
     if (length(list.files(paste(dir.proj,year,CODE,sep="/")))==0){stop(paste0("UF has no weighting area."))}
 
     files <- list.files(paste(dir.proj,year,CODE,sep="/"),full.names = T)
-    files <- lapply(X=files, FUN= readRDS)
+    files <- lapply(X=files, FUN= readr::read_rds)
     files <- lapply(X=files, FUN= as.data.frame)
     shape <- do.call('rbind', files)
     shape <- st_sf(shape)
@@ -83,7 +83,7 @@ read_areaponderacao <- function(CODE = NULL,year = NULL){
     if( !(CODE %in% substr(list.files(paste(dir.proj, year,substr(CODE,1,2),sep="\\")), start =  1, stop = 7))){
       stop(paste0("Invalid value to MUN."))
     }
-    return(readRDS(paste(paste(dir.proj,year,substr(CODE,1,2),CODE,sep="\\"),"_areaponderacao_",year,".rds",sep="")))
+    return(readr::read_rds(paste(paste(dir.proj,year,substr(CODE,1,2),CODE,sep="\\"),"_areaponderacao_",year,".rds",sep="")))
   }
 
   stop(paste0("Invalid value to CODE."))
