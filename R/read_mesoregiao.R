@@ -1,9 +1,7 @@
 #' Download shape files of meso region.
 #'
-#' @param year the year of the data download (defaults to 2010)
-#' @param cod_meso
-#'
-#' @param cod_meso x-digit code of the meso region. If a two-digit code of a state is passed,
+#' @param year Year of the data (defaults to 2010)
+#' @param cod_meso The 4-digit code of a meso region. If a two-digit code of a state is passed,
 #' the function will load all meso regions of that state. If cod_meso="all", all meso regions of the country are loaded.
 #' @export
 #' @family general area functions

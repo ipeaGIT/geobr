@@ -1,7 +1,7 @@
 #' Download shape files of Brazilian states
 #'
-#' @param year the year of the data download (defaults to 2010)
-#' @param cod_uf 2-digit code of a state. If cod_uf="all", all states will be loaded.
+#' @param year Year of the data (defaults to 2010)
+#' @param cod_uf The two-digit code of a state. If cod_uf="all", all states will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
