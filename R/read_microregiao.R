@@ -1,7 +1,7 @@
 #' Download shape files of micro region.
 #'
-#' @param year the year of the data download (defaults to 2010)
-#' @param cod_micro x-digit code of the micro region. If a two-digit code of a state is passed,
+#' @param year Year of the data (defaults to 2010)
+#' @param cod_micro 5-digit code of a micro region. If the two-digit code of a state is passed,
 #' the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.
 #' @export
 #' @family general area functions

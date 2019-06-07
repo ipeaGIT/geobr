@@ -1,8 +1,8 @@
 #' Download shape files of municipalities
 #'
-#' @param year the year of the data download (defaults to 2010)
-#' @param cod_mun 7-digit code of the municipality. If a the two-digit code of a state is used,
-#' the function will load all municipalities of that state. If not informed, all municipalities will be loaded.
+#' @param year Year of the data (defaults to 2010)
+#' @param cod_mun The 7-digit code of a municipality. If the two-digit code of a state is used,
+#' the function will load all municipalities of that state. If cod_mun="all", all municipalities will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
