@@ -1,14 +1,3 @@
-## Pacotes
-library(stringr)
-library(sf)
-library(dplyr)
-library(magrittr)
-library(readr)
-
-
-
-
-
 #' Download shape files of meso region.
 #'
 #' @param year the year of the data download (defaults to 2010)
@@ -45,9 +34,6 @@ read_mesorregiao <- function(year=NULL, cod_meso=NULL){
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
     metadata <- readr::read_rds(tempf)
   }
-  
-  
-  
   
   
   # Select geo

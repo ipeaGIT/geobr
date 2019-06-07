@@ -1,11 +1,3 @@
-## Pacotes
-library(stringr)
-library(dplyr)
-
-library(sf)
-library(magrittr)
-library(httr)
-
 #' Download shape files of municipalities
 #'
 #' @param year the year of the data download (defaults to 2010)
@@ -40,9 +32,6 @@ read_municipio <- function(year=NULL, cod_mun=NULL){
     metadata <- readr::read_rds(tempf)
   }
 
-  
-
-  
   
 # Select geo
   temp_meta <- subset(metadata, geo=="municipio")
