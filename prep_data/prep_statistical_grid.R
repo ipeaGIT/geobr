@@ -47,5 +47,6 @@ saveRDS(brasil,file = "//Storage6/usuarios/# DIRUR #/ASMEQ/grade_censo2010/dados
 # renaming all data sets 
 
 orig_names <- list.files("//storage3/geobr/data/statistical_grid/2010")
-
-04grid
+for (name in orig_names){
+file.rename(paste0("//storage3/geobr/data/statistical_grid/2010/",name),paste0("//storage3/geobr/data/statistical_grid/2010/",substr(name,9,10),"grid",".rds"))
+}
