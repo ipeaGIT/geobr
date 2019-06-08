@@ -31,12 +31,18 @@ read_statistical_grid <- function(year=NULL, cod_grid=NULL){
   
 # read correspondence table
   
-  # Change this line! to load data from within the package `data` directory
-  setwd("R:/Dropbox/git_projects/geobr")
-  corresptb <- readr::read_rds("./data/correspondence_table_statgrid.rds") 
+  # # Change this line! to load data from within the package `data` directory
+  # setwd("R:/Dropbox/git_projects/geobr")
+  # corresptb <- readr::read_rds("./data/correspondence_table_statgrid.rds") 
+  # 
+  # save(corresptb, file="./data/correspondence_table_statgrid.RData") 
+  # 
+  # load(file="./data/correspondence_table_statgrid.RData")
+  # get reference data
+  data("corresptb", envir=environment())
   
   
-
+  
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
 
