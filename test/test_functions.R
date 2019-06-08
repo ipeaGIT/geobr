@@ -9,6 +9,10 @@ library(geobr)
 
 devtools::uninstall(pkg = "geobr")
 
+utils::remove.packages("geobr")
+
+data("ref", envir=environment())
+
 ### 1. read_uf -------------------------
 
 
