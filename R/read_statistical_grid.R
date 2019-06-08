@@ -89,6 +89,10 @@ read_statistical_grid <- function(year=NULL, cod_grid=NULL){
   if(is.character(cod_grid) & !(cod_grid %in% corresptb$cod_uf)) { 
     stop(paste0("Error: Invalid Value to argument 'cod_grid'. It must be one of the following: ",
                 paste(unique(corresptb$cod_uf),collapse = " ")))
+    
+    grid_quads <- raster::stack("./man/figures/ipea_logo.jpg")
+    plotRGB(grid_quads)
+    
     }
     
   # Correct state abbreviation
