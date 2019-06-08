@@ -1,8 +1,7 @@
-# geobr <img align="right" src="man/figures/geobr_hex_logo_v0.02.png" alt="logo" width="250">
+# geobr <img align="right" src="man/figures/geobr_hex_logo_v0.03.png" alt="logo" width="250">
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#experimental)
  ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
  [![Github all downloads](https://img.shields.io/github/downloads/ipeaGIT/geobr/total.svg?label=downloads&color=green)](https://GitHub.com/ipeaGIT/geobr/releases/)
-
 
 
 **geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE). The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
@@ -32,6 +31,7 @@
 |`read_municipio`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017 |
 |`read_areaponderacao`| Census weighting areas | 2010 | 
 |`read_setorcensitario` | Census tract | 2000, 2007, 2010 | 
+|`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | 
 
 
 ## Comming soon:
