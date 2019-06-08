@@ -10,3 +10,4 @@ inst/doc
 *.toc
 *.ind
 /R/.Rhistory
+/.Rhistory
