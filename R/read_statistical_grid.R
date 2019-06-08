@@ -1,53 +1,42 @@
-#' Download shape files of municipalities
-#'
+#' Download shape files of IBGE's statistical grid (200 x 200 meters)
+#' 
 #' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
-#' @param cod_mun The 7-digit code of a municipality. If the two-digit code of a state is used,
-#' the function will load all municipalities of that state. If cod_mun="all", all municipalities will be loaded.
+#' @param cod_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
+#' the function will load all grid gradrants that intersect with that state. If cod_grid="all", the grid of the whole country will be loaded.
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples /dontrun{
 #'
 #' library(geobr)
 #'
 #' # Read specific municipality at a given year
-#'   mun <- read_municipio(cod_mun=1200179, year=2017)
+#'   grid <- read_statistical_grid(cod_grid = 45, year=2010)
 #'
 #'# Read all municipalities of a state at a given year
-#'   mun <- read_municipio(cod_mun=12, year=2010)
+#'   state_grid <- read_statistical_grid(cod_grid = "RJ")
 #'
 #'}
 
 read_statistical_grid <- function(year=NULL, cod_grid=NULL){
 
-  
 # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010 \n")
-    temp_meta <- subset(temp_meta, year==2010)
+  if (is.null(year)){ cat("Using data from year 2010 /n")
+    # temp_meta <- subset(temp_meta, year==2010)
     
   } else if (year != 2010){ 
-  
+    
     stop(paste0("Error: Invalid Value to argument 'year'. The only year available is 2010."))
   }
   
   
 # read correspondence table
   
-  # Change this line!
+  # Change this line! to load data from within the package `data` directory
+  setwd("R:/Dropbox/git_projects/geobr")
   corresptb <- readr::read_rds("./data/correspondence_table_statgrid.rds") 
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
 
@@ -56,35 +45,35 @@ read_statistical_grid <- function(year=NULL, cod_grid=NULL){
      metadata <- readr::read_rds(tempf)
 
   } else {
+    
   # download it and save to metadata
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
     metadata <- readr::read_rds(tempf)
   }
 
+
   
 # Select geo
-  temp_meta <- subset(metadata, geo=="municipio")
+  temp_meta <- subset(metadata, geo=="statistical_grid")
 
 
 
 
-# Verify cod_mun input
+# Verify cod_grid input
 
-  # Test if cod_mun input is null
-    if(is.null(cod_mun)){ stop("Value to argument 'cod_mun' cannot be NULL") }
+  # Test if cod_grid input is null
+    if(is.null(cod_grid)){ stop("Value to argument 'cod_grid' cannot be NULL") }
 
-  # if cod_mun=="all", read the entire country
-    else if(cod_mun=="all"){ cat("Loading data for the whole country \n")
+  # if cod_grid=="all", read the entire country
+    else if(cod_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
-
 
       # download files
       lapply(X=filesD, function(x) httr::GET(url=x, 
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
-
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
@@ -93,13 +82,45 @@ read_statistical_grid <- function(year=NULL, cod_grid=NULL){
       return(shape)
     }
 
-  else if( !(substr(x = cod_mun, 1, 2) %in% temp_meta$code)){
-      stop("Error: Invalid Value to argument cod_mun.")
+  
+# if cod_grid is a state abbreviation
 
-  } else{
+  # Error if the input does not match any state abbreviation
+  if(is.character(cod_grid) & !(cod_grid %in% corresptb$cod_uf)) { 
+    stop(paste0("Error: Invalid Value to argument 'cod_grid'. It must be one of the following: ",
+                paste(unique(corresptb$cod_uf),collapse = " ")))
+    }
+    
+  # Correct state abbreviation
+    else if(is.character(cod_grid) & cod_grid %in% corresptb$cod_uf) {
+      
+      # find grid quadrants that intersect with the passed state abbreviation
+      corresptb_tmp <- corresptb[corresptb[,2] == cod_grid, ]
+      grid_ids <- substr(corresptb_tmp$cod_grid, 4, 5)
+      
+      # list paths of files to download
+      filesD <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
+      
+      # download files
+      lapply(X=filesD, function(x) httr::GET(url=x, 
+                                             httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+      
+      # read files and pile them up
+      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+      files <- paste0(tempdir(),"/",files)
+      files <- lapply(X=files, FUN= readr::read_rds)
+      shape <- do.call('rbind', files)
+      return(shape)
+      }
 
-    # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(cod_mun, 1, 2))$download_path)
+  
+# if cod_grid is numeric grid quadrant
+    if( !( cod_grid %in% temp_meta$code)){ stop("Error: Invalid Value to argument cod_grid.")
+
+    } else{
+
+    # list paths of file to download
+    filesD <- as.character(subset(temp_meta, code== cod_grid)$download_path)
 
     # download files
     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
@@ -107,16 +128,8 @@ read_statistical_grid <- function(year=NULL, cod_grid=NULL){
     
     # read sf
     shape <- readr::read_rds(temps)
-
-      if(nchar(cod_mun)==2){
-        return(shape)
-
-      } else if(cod_mun %in% shape$cod_mun){    # Get Municipio
-          x <- cod_mun
-          shape <- subset(shape, cod_mun==x)
-          return(shape)
-      } else{
-          stop("Error: Invalid Value to argument cod_mun.")
-      }
+    return(shape)
   }
 }
+
+    

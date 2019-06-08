@@ -106,8 +106,21 @@ gc(reset = T)
   
   
   
+###### 5. read_statistical_grid -------------------------
   
-  
+system.time( g1 <- read_statistical_grid(cod_grid=44) )
+system.time( g1 <- read_statistical_grid(cod_grid=44, year=2010) )
+head(g1)
+st_crs(g1)
+
+
+
+system.time( g1 <- read_statistical_grid(cod_grid="AC") )
+head(g1)
+st_crs(g1)
+plot(g1)
+
+
 ### update package documentation ----------------
   # library(roxygen2)
   # setwd("C:/Users/r1701707/Desktop/geobr")
