@@ -4,14 +4,15 @@
 
 
 
-devtools::install_github("ipeaGIT/geobr")
-library(geobr)
+# devtools::install_github("ipeaGIT/geobr")
+# library(geobr)
+# devtools::uninstall(pkg = "geobr")
+# 
+# utils::remove.packages("geobr")
 
-devtools::uninstall(pkg = "geobr")
+devtools::load_all('R:/Dropbox/git_projects/geobr')
 
-utils::remove.packages("geobr")
 
-data("ref", envir=environment())
 
 ### 1. read_uf -------------------------
 
