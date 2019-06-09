@@ -25,7 +25,7 @@
 #'
 #'
 #'
-read_weighting_area <- function(CODE = NULL,year = NULL){
+read_weighting_area <- function(CODE, year = NULL){
   ## Pacotes
   library(stringr)
   library(sf)

@@ -4,7 +4,7 @@
 \alias{read_census_tract}
 \title{Download shape files of census sectors of the Brazilian Population Census}
 \usage{
-read_census_tract(CODE = NULL, year = NULL, zone = "urban")
+read_census_tract(CODE, year = NULL, zone = "urban")
 }
 \arguments{
 \item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State.If CODE="all", all census sectors of the country are loaded.}

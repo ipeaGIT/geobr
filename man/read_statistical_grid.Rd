@@ -4,13 +4,13 @@
 \alias{read_statistical_grid}
 \title{Download shape files of IBGE's statistical grid (200 x 200 meters)}
 \usage{
-read_statistical_grid(year = NULL, cod_grid = NULL)
+read_statistical_grid(cod_grid, year = NULL)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2010). The only year available thus far is 2010.}
-
 \item{cod_grid}{The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
 the function will load all grid gradrants that intersect with that state. If cod_grid="all", the grid of the whole country will be loaded.}
+
+\item{year}{Year of the data (defaults to 2010). The only year available thus far is 2010.}
 }
 \description{
 Download shape files of IBGE's statistical grid (200 x 200 meters)

@@ -18,7 +18,7 @@
 #'
 #'
 
-read_micro_region <- function(year=NULL, cod_micro=NULL){
+read_micro_region <- function(cod_micro, year=NULL){
 
   
   # Get metadata with data addresses
@@ -56,7 +56,7 @@ read_micro_region <- function(year=NULL, cod_micro=NULL){
   if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
   
   # if cod_micro=="all", read the entire country
-  else if(cod_micro=="all"){ cat("Loading data for the whole country \n")
+  else if(cod_micro=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
     
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)

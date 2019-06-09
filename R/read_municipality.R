@@ -17,7 +17,7 @@
 #'
 #'}
 
-read_municipality <- function(year=NULL, cod_mun=NULL){
+read_municipality <- function(cod_mun, year=NULL){
 
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -54,7 +54,7 @@ read_municipality <- function(year=NULL, cod_mun=NULL){
     if(is.null(cod_mun)){ stop("Value to argument 'cod_mun' cannot be NULL") }
 
   # if cod_mun=="all", read the entire country
-    else if(cod_mun=="all"){ cat("Loading data for the whole country \n")
+    else if(cod_mun=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
