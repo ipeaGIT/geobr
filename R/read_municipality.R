@@ -10,14 +10,14 @@
 #' library(geobr)
 #'
 #' # Read specific municipality at a given year
-#'   mun <- read_municipio(cod_mun=1200179, year=2017)
+#'   mun <- read_municipality(cod_mun=1200179, year=2017)
 #'
 #'# Read all municipalities of a state at a given year
-#'   mun <- read_municipio(cod_mun=12, year=2010)
+#'   mun <- read_municipality(cod_mun=12, year=2010)
 #'
 #'}
 
-read_municipio <- function(year=NULL, cod_mun=NULL){
+read_municipality <- function(year=NULL, cod_mun=NULL){
 
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")

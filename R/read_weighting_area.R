@@ -1,4 +1,4 @@
-#' Download shape files of weighting areas of the Brazilian Population Census
+#' Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census
 #'
 #' @param CODE One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography
 #' @param year the year of the data download (defaults to 2010)
@@ -8,14 +8,14 @@
 #'
 #' library(geobr)
 #'
-#'dados <- read_areaponderacao(year=2010)
-#'dados <- read_areaponderacao(3500000,2010)
-#'dados <- read_areaponderacao(123,2010)
-#'dados <- read_areaponderacao("df",2010)
-#'dados <- read_areaponderacao(1302603,2010)
-#'dados <- read_areaponderacao(35)
-#'dados <- read_areaponderacao(14,2010)
-#'dados <- read_areaponderacao()
+#'dados <- read_weighting_area(year=2010)
+#'dados <- read_weighting_area(3500000,2010)
+#'dados <- read_weighting_area(123,2010)
+#'dados <- read_weighting_area("df",2010)
+#'dados <- read_weighting_area(1302603,2010)
+#'dados <- read_weighting_area(35)
+#'dados <- read_weighting_area(14,2010)
+#'dados <- read_weighting_area()
 #'
 #'# map it
 #'library(mapview)
@@ -25,7 +25,7 @@
 #'
 #'
 #'
-read_areaponderacao <- function(CODE = NULL,year = NULL){
+read_weighting_area <- function(CODE = NULL,year = NULL){
   ## Pacotes
   library(stringr)
   library(sf)

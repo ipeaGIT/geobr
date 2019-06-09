@@ -1,23 +1,26 @@
-#' Download shape files of Brazilian states
+#' Download shape files of micro region.
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param cod_uf The two-digit code of a state. If cod_uf="all", all states will be loaded.
+#' @param cod_micro 5-digit code of a micro region. If the two-digit code of a state is passed,
+#' the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
 #'
 #' library(geobr)
 #'
-#' # Read specific municipality at a given year
-#'   uf <- read_uf(cod_uf=12, year=2017)
+#' # Read all micro regions of a state at a given year
+#'   micro <- read_micro_region(cod_micro=12, year=2017)
 #'
-#'# Read all states at a given year
-#'   ufs <- read_uf(cod_uf="all", year=2010)
+#'# Read all micro regions at a given year
+#'   micro <- read_micro_region(cod_micro="all", year=2010)
+#' }
 #'
-#'}
+#'
 
-read_uf <- function(year=NULL, cod_uf=NULL){
+read_micro_region <- function(year=NULL, cod_micro=NULL){
 
+  
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
   
@@ -33,7 +36,7 @@ read_uf <- function(year=NULL, cod_uf=NULL){
   
   
   # Select geo
-  temp_meta <- subset(metadata, geo=="uf")
+  temp_meta <- subset(metadata, geo=="micro_regiao")
   
   
   # Verify year input
@@ -47,16 +50,17 @@ read_uf <- function(year=NULL, cod_uf=NULL){
   }
   
   
-  # Verify cod_uf input
+  # Verify cod_micro input
   
-  # Test if cod_uf input is null
-  if(is.null(cod_uf)){ stop("Value to argument 'cod_uf' cannot be NULL") }
+  # Test if cod_micro input is null
+  if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
   
-  # if cod_uf=="all", read the entire country
-  else if(cod_uf=="all"){ cat("Loading data for the whole country \n")
+  # if cod_micro=="all", read the entire country
+  else if(cod_micro=="all"){ cat("Loading data for the whole country \n")
     
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
+    
     
     # download files
     lapply(X=filesD, function(x) httr::GET(url=x, 
@@ -71,13 +75,13 @@ read_uf <- function(year=NULL, cod_uf=NULL){
     return(shape)
   }
   
-  else if( !(substr(x = cod_uf, 1, 2) %in% temp_meta$code)){
-    stop("Error: Invalid Value to argument cod_uf.")
+  else if( !(substr(x = cod_micro, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument cod_micro.")
     
   } else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(cod_uf, 1, 2))$download_path)
+    filesD <- as.character(subset(temp_meta, code==substr(cod_micro, 1, 2))$download_path)
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
@@ -86,16 +90,15 @@ read_uf <- function(year=NULL, cod_uf=NULL){
     # read sf
     shape <- readr::read_rds(temps)
     
-    if(nchar(cod_uf)==2){
+    if(nchar(cod_micro)==2){
       return(shape)
       
-    } else if(cod_uf %in% shape$cod_uf){
-      x <- cod_uf
-      shape <- subset(shape, cod_uf==x)
+    } else if(cod_micro %in% shape$cod_micro){    # Get micro region
+      x <- cod_micro
+      shape <- subset(shape, cod_micro==x)
       return(shape)
-      
     } else{
-      stop("Error: Invalid Value to argument cod_uf.")
+      stop("Error: Invalid Value to argument cod_micro.")
     }
   }
 }

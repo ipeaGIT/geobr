@@ -7,14 +7,14 @@
 #' @family general area functions
 #' @examples \dontrun{
 #' # Exemplos
-#'dados <- read_setorcensitario(year=2010)
-# dados <- read_setorcensitario(3500000,2010)
-#'dados <- read_setorcensitario(123,2010)
-#'dados <- read_setorcensitario("df",2010)
-#'dados <- read_setorcensitario(1302603,2010)
-#'dados <- read_setorcensitario(35)
-#'dados <- read_setorcensitario(14,2010)
-#'dados <- read_setorcensitario()
+#'dados <- read_census_tract(year=2010)
+# dados <- read_census_tract(3500000,2010)
+#'dados <- read_census_tract(123,2010)
+#'dados <- read_census_tract("df",2010)
+#'dados <- read_census_tract(1302603,2010)
+#'dados <- read_census_tract(35)
+#'dados <- read_census_tract(14,2010)
+#'dados <- read_census_tract()
 #'
 #'# mapa
 #'library(mapview)
@@ -24,7 +24,7 @@
 #'
 #'
 #'
-read_setorcensitario <- function(CODE = NULL,year = NULL, zone = "urban"){
+read_census_tract <- function(CODE = NULL,year = NULL, zone = "urban"){
   ## Pacotes
   library(stringr)
   library(sf)
