@@ -3,15 +3,21 @@
 
 
 
+### Install development version of geobr
 
 # devtools::install_github("ipeaGIT/geobr")
 # library(geobr)
 # library(sf)
-# devtools::uninstall(pkg = "geobr")
-# utils::remove.packages("geobr")
 
 devtools::load_all('R:/Dropbox/git_projects/geobr')
 devtools::check()
+
+### Uninstall geobr
+
+utils::remove.packages("geobr")
+devtools::uninstall(pkg = "geobr")
+
+
 
 
 ### 0. Data tests  -------------------------
@@ -152,6 +158,7 @@ system.time( g1 <- read_statistical_grid() )
   library("devtools")
 #  setwd("C:/Users/r1701707/Desktop/geobr")
   setwd("R:/Dropbox/git_projects/geobr")
+  
   
   
   document()
