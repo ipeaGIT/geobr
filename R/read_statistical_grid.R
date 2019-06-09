@@ -17,7 +17,7 @@
 #'
 #'}
 
-read_statistical_grid <- function(year=NULL, cod_grid=NULL){
+read_statistical_grid <- function(cod_grid, year=NULL){
 
 # Verify year input
   if (is.null(year)){ cat("Using data from year 2010 /n")

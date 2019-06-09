@@ -4,12 +4,12 @@
 \alias{read_state}
 \title{Download shape files of Brazilian states}
 \usage{
-read_state(year = NULL, cod_uf = NULL)
+read_state(cod_uf, year = NULL)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2010)}
-
 \item{cod_uf}{The two-digit code of a state. If cod_uf="all", all states will be loaded.}
+
+\item{year}{Year of the data (defaults to 2010)}
 }
 \description{
 Download shape files of Brazilian states

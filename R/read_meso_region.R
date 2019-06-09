@@ -17,7 +17,7 @@
 #' }
 #'
 
-read_meso_region <- function(year=NULL, cod_meso=NULL){
+read_meso_region <- function(cod_meso, year=NULL){
   
   
   # Get metadata with data addresses

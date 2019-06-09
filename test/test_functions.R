@@ -6,24 +6,31 @@
 
 # devtools::install_github("ipeaGIT/geobr")
 # library(geobr)
+# library(sf)
 # devtools::uninstall(pkg = "geobr")
-# 
 # utils::remove.packages("geobr")
 
 devtools::load_all('R:/Dropbox/git_projects/geobr')
-
-correspondence_table_stategrid
-
 devtools::check()
+
+
+### 0. Data tests  -------------------------
+
+
+data("correspondence_table_stategrid")
+
+
+
 ### 1. read_state -------------------------
 
 
-#' # Read specific municipality at a given year
-#'   uf <- read_state(cod_uf=12, year=2017)
-#'
-#'# Read all states at a given year
-#'   ufs <- read_state(cod_uf="all", year=2010)
-
+# Read specific municipality at a given year
+  uf <- read_state(cod_uf=12, year=2017)
+  plot(uf)
+  
+# Read all states at a given year
+  ufs <- read_state(cod_uf="all", year=2010)
+  plot(ufs)
 
 
 ###### 2. read_municipality -------------------------
@@ -31,6 +38,8 @@ gc(reset = T)
 
 
 ### passed the test
+
+?read_municipality
 
   system.time( a <- read_municipality(cod_mun=1200179, year=2016) )
   plot(a)

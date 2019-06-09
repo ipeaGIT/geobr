@@ -4,13 +4,13 @@
 \alias{read_meso_region}
 \title{Download shape files of meso region.}
 \usage{
-read_meso_region(year = NULL, cod_meso = NULL)
+read_meso_region(cod_meso, year = NULL)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2010)}
-
 \item{cod_meso}{The 4-digit code of a meso region. If a two-digit code of a state is passed,
 the function will load all meso regions of that state. If cod_meso="all", all meso regions of the country are loaded.}
+
+\item{year}{Year of the data (defaults to 2010)}
 }
 \description{
 Download shape files of meso region.

@@ -16,7 +16,7 @@
 #'
 #'}
 
-read_state <- function(year=NULL, cod_uf=NULL){
+read_state <- function(cod_uf, year=NULL){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")

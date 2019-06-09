@@ -4,13 +4,13 @@
 \alias{read_municipality}
 \title{Download shape files of municipalities}
 \usage{
-read_municipality(year = NULL, cod_mun = NULL)
+read_municipality(cod_mun, year = NULL)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2010)}
-
 \item{cod_mun}{The 7-digit code of a municipality. If the two-digit code of a state is used,
 the function will load all municipalities of that state. If cod_mun="all", all municipalities will be loaded.}
+
+\item{year}{Year of the data (defaults to 2010)}
 }
 \description{
 Download shape files of municipalities

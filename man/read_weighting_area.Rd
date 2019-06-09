@@ -4,7 +4,7 @@
 \alias{read_weighting_area}
 \title{Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census}
 \usage{
-read_weighting_area(CODE = NULL, year = NULL)
+read_weighting_area(CODE, year = NULL)
 }
 \arguments{
 \item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}

@@ -24,7 +24,7 @@
 #'
 #'
 #'
-read_census_tract <- function(CODE = NULL,year = NULL, zone = "urban"){
+read_census_tract <- function(CODE, year = NULL, zone = "urban"){
   ## Pacotes
   library(stringr)
   library(sf)

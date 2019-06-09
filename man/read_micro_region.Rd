@@ -4,13 +4,13 @@
 \alias{read_micro_region}
 \title{Download shape files of micro region.}
 \usage{
-read_micro_region(year = NULL, cod_micro = NULL)
+read_micro_region(cod_micro, year = NULL)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2010)}
-
 \item{cod_micro}{5-digit code of a micro region. If the two-digit code of a state is passed,
 the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.}
+
+\item{year}{Year of the data (defaults to 2010)}
 }
 \description{
 Download shape files of micro region.
