@@ -87,8 +87,10 @@ read_statistical_grid <- function(year=NULL, cod_grid=NULL){
     stop(paste0("Error: Invalid Value to argument 'cod_grid'. It must be one of the following: ",
                 paste(unique(corresptb$cod_uf),collapse = " ")))
     
-    grid_quads <- raster::stack("./man/figures/ipea_logo.jpg")
-    plotRGB(grid_quads)
+    # MAKE this work
+    # >>> https://stackoverflow.com/questions/54993463/include-image-in-r-packages
+    # grid_quads <- raster::stack("./man/figures/ipea_logo.jpg")
+    # plotRGB(grid_quads)
     
     }
     
