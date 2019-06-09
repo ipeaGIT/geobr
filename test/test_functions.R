@@ -12,8 +12,9 @@
 
 devtools::load_all('R:/Dropbox/git_projects/geobr')
 
+correspondence_table_stategrid
 
-
+devtools::check()
 ### 1. read_state -------------------------
 
 
@@ -138,7 +139,10 @@ system.time( g1 <- read_statistical_grid(cod_grid="AC", year=5000) )
 system.time( g1 <- read_statistical_grid() )
 
 ### update package documentation ----------------
-  # library(roxygen2)
-  # setwd("C:/Users/r1701707/Desktop/geobr")
-  # document()
+  library(roxygen2)
+  library("devtools")
+#  setwd("C:/Users/r1701707/Desktop/geobr")
+  setwd("R:/Dropbox/git_projects/geobr")
   
+  
+  document()

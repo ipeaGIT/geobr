@@ -5,7 +5,7 @@
 #' the function will load all grid gradrants that intersect with that state. If cod_grid="all", the grid of the whole country will be loaded.
 #' @export
 #' @family general area functions
-#' @examples /dontrun{
+#' @examples \dontrun{
 #'
 #' library(geobr)
 #'
