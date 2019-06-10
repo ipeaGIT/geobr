@@ -11,3 +11,4 @@ inst/doc
 *.ind
 /R/.Rhistory
 /.Rhistory
+/man/figures/.Rhistory
