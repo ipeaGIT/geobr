@@ -10,12 +10,13 @@
 # library(sf)
 
 devtools::load_all('R:/Dropbox/git_projects/geobr')
-devtools::check()
+devtools::check('R:/Dropbox/git_projects/geobr')
 
 ### Uninstall geobr
 
 utils::remove.packages("geobr")
 devtools::uninstall(pkg = "geobr")
+
 
 
 
