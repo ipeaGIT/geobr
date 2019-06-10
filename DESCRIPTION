@@ -9,7 +9,7 @@ Authors@R: c(
             person(given="Paulo Henrique", family="Fernandes de Araujo", role=c("aut")),
             person(given="Rodrigo", family="Almeida de Arruda", role=c("aut")),
             person(given="Igor", family="Nascimento", role="aut"), 
-            person(family = "Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
+            person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
 Date: 2019-06-09
 URL: https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
