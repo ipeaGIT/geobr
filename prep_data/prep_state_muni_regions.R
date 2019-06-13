@@ -9,6 +9,7 @@ library(parallel)
 library(data.table)
 library(xlsx)
 library(magrittr)
+library(devtools)
 
 
 # to do
@@ -736,12 +737,12 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
   # change col names according to convetions ingeobr package
   table_2010 <- dplyr::select(table_2010
-                              , cod_muni = 'Município'
-                              , name_muni = 'Nome_Município'
-                              , cod_micro = 'Micror.região'
-                              , name_micro = 'Nome_Microrregião'
-                              , cod_meso = 'Mesor.região'
-                              , name_meso = 'Nome_Mesorregião'
+                              , cod_muni = 'Munic?pio'
+                              , name_muni = 'Nome_Munic?pio'
+                              , cod_micro = 'Micror.regi?o'
+                              , name_micro = 'Nome_Microrregi?o'
+                              , cod_meso = 'Mesor.regi?o'
+                              , name_meso = 'Nome_Mesorregi?o'
                               , cod_state = 'UF'
                               , name_state = 'Nome_UF'
                               )
@@ -814,4 +815,9 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
 
 # save .Rdata
-  save(brazil_2010, file = "./data/brazil_2010.Rdata", compress='gzip', compression_level=1)
+  save(brazil_2010, file = "./data/brazil_2010.RData", compress='gzip', compression_level=1)
+
+  # # Save file with usethis::use_data
+  #   assign("brazil_2010", brazil_2010)
+  #   usethis::use_data(brazil_2010, name="brazil_2010", compress='gzip', compression_level=1)
+
