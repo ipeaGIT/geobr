@@ -15,7 +15,7 @@
 #'dados <- read_weighting_area(1302603,2010)
 #'dados <- read_weighting_area(35)
 #'dados <- read_weighting_area(14,2010)
-#'dados <- read_weighting_area()
+#'dados <- read_weighting_area("all")
 #'
 #'# map it
 #'library(mapview)
@@ -25,67 +25,85 @@
 #'
 #'
 #'
-read_weighting_area <- function(CODE, year = NULL){
-  ## Pacotes
-  library(stringr)
-  library(sf)
-  library(dplyr)
-  library(magrittr)
-
-  # definindo diretorio de download dos arquivos
-  dir.proj <- paste0("L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\area_ponderacao")
-
-  library(assertthat)
-  # verificando se a pessoa entrou com uma string
-  if( is.string(CODE)) {
-    stop(paste0("Invalid value to UF or MUN"))
-  }
-
-  if(is.null(year)){
-    year <- 2010
-    cat("Using data from year 2010")
+read_weighting_area <- function(cod_weighting, year = NULL){
+  
+  # Get metadata with data addresses
+  tempf <- file.path(tempdir(), "metadata.rds")
+  
+  # check if metadata has already been downloaded
+  if (file.exists(tempf)) {
+    metadata <- readr::read_rds(tempf)
+    
   } else {
-    # test if year input exists
-    if(!(year %in% str_extract(list.files(dir.proj), pattern = "[0-9]+"))){
-      stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ", paste(str_extract(list.files(dir.proj), pattern = "[0-9]+")) , collapse = " "))
-    }
+    # download it and save to metadata
+    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
+    metadata <- readr::read_rds(tempf)
   }
-
-  # CODE NULL
-  if( is.null(CODE)) {
-    #ler brasil
-    f <- list.files(paste(dir.proj,year,sep="/"),pattern = "^\\d")
-    files <- list.files(paste(dir.proj,year,f,sep="/"),full.names = T)
+  
+  
+  # Select geo
+  temp_meta <- subset(metadata, geo=="area_ponderacao")
+  
+  # Verify year input
+  if (is.null(year)){ cat("Using data from year 2010 \n")
+    temp_meta <- subset(temp_meta, year==2010)
+    
+  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[as.vector(temp_meta[,2] == year), ]
+  
+  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                       paste(unique(temp_meta$year),collapse = " ")))
+  }
+  
+  # Verify cod_weighting input
+  
+  # Test if cod_weighting input is null
+  if(is.null(cod_weighting)){ stop("Value to argument 'cod_weighting' cannot be NULL") }
+  
+  # if cod_weighting=="all", read the entire country
+  else if(cod_weighting=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
+    
+    # list paths of files to download
+    filesD <- as.character(temp_meta$download_path)
+    
+    
+    # download files
+    lapply(X=filesD, function(x) httr::GET(url=x, 
+                                           httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+    
+    
+    # read files and pile them up
+    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+    files <- paste0(tempdir(),"/",files)
     files <- lapply(X=files, FUN= readr::read_rds)
-    files <- lapply(X=files, FUN= as.data.frame)
     shape <- do.call('rbind', files)
-    shape <- st_sf(shape)
     return(shape)
   }
-
-  if(nchar(CODE) == 2) {
-    if(!(CODE %in% as.numeric(list.files(paste(dir.proj,year,sep="/"),pattern = "^\\d"))) ){
-      stop(paste0("Invalid value to UF. Must be one of the following: 11, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 41, 42, 43, 50, 51, 52, 53"))
+  
+  else if( !(substr(x = cod_weighting, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument cod_weighting.")
+    
+  }else{
+    
+    # list paths of files to download
+    filesD <- as.character(subset(temp_meta, code==substr(cod_weighting, 1, 2))$download_path)
+    
+    # download files
+    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+    httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
+    
+    # read sf
+    shape <- readr::read_rds(temps)
+    
+    if(nchar(cod_weighting)==2){
+      return(shape)
+      
+    } else if(cod_weighting %in% shape$cod_mum){    # Get weighting
+      x <- cod_weighting
+      shape <- subset(shape, cod_mum==x)
+      return(shape)
+    } else{
+      stop("Error: Invalid Value to argument cod_weighting.")
     }
-
-    if (length(list.files(paste(dir.proj,year,CODE,sep="/")))==0){stop(paste0("UF has no weighting area."))}
-
-    files <- list.files(paste(dir.proj,year,CODE,sep="/"),full.names = T)
-    files <- lapply(X=files, FUN= readr::read_rds)
-    files <- lapply(X=files, FUN= as.data.frame)
-    shape <- do.call('rbind', files)
-    shape <- st_sf(shape)
-    return(shape)
-
-    }
-
-  if(nchar(CODE) == 7) {
-    if( !(CODE %in% substr(list.files(paste(dir.proj, year,substr(CODE,1,2),sep="\\")), start =  1, stop = 7))){
-      stop(paste0("Invalid value to MUN."))
-    }
-    return(readr::read_rds(paste(paste(dir.proj,year,substr(CODE,1,2),CODE,sep="\\"),"_areaponderacao_",year,".rds",sep="")))
   }
-
-  stop(paste0("Invalid value to CODE."))
 }
 
