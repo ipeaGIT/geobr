@@ -38,9 +38,22 @@ data("correspondence_table_stategrid")
   plot(uf)
   
 # Read all states at a given year
-  ufs <- read_state(cod_uf="all", year=2010)
+  ufs <- read_state(cod_uf="all", year=2018)
   plot(ufs)
 
+  
+  
+  
+# expected errors
+  
+  uf <- read_state(cod_uf=12, year=10000)
+  uf <- read_state(cod_uf=10000, year=2010)
+  uf <- read_state(cod_uf=12, year=2005)
+  
+    
+  
+  
+  
 
 ###### 2. read_municipality -------------------------
 gc(reset = T)
@@ -81,13 +94,17 @@ gc(reset = T)
   
   
 ###### 3. read_meso_region -------------------------
-
+# 2010
+  
+  
   ### passed the test
   
-  system.time( a <- read_meso_region(cod_meso=3305, year=2016) )
+  system.time( a <- read_meso_region(cod_meso=3305, year=2010) )
+  head(a)
   plot(a)
   
-  system.time( b <- read_meso_region(cod_meso=33, year=2001) )
+  system.time( b <- read_meso_region(cod_meso=33, year=2010) )
+  head(b)
   plot(b)
   
   system.time( c <- read_meso_region(cod_meso=11) )
@@ -119,13 +136,16 @@ gc(reset = T)
 
 ### passed the test
   
-  system.time( a <- read_micro_region(cod_micro=33004, year=2016) )
+  system.time( a <- read_micro_region(cod_micro=11, year=2000) )
+  head(a); rm(a)
   plot(a)
   
   system.time( b <- read_micro_region(cod_micro=33, year=2001) )
+  head(b)
   plot(b)
   
   system.time( c <- read_micro_region(cod_micro=11) )
+  head(c)
   plot(c)
   
   
@@ -133,6 +153,13 @@ gc(reset = T)
   system.time( d <- read_micro_region(cod_micro="all", year=2000) )
   head(d)
   plot(d)
+  
+
+  
+  
+  library(sf)
+  library(lwgeom)
+  st_make_valid()
   
   
   
