@@ -3,6 +3,33 @@
 
 
 
+setwd("C:/Users/r1701707/Desktop/geobr")
+system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+system("R CMD Rd2pdf geobr")
+
+# Update documentation
+  devtools::document()
+
+# Install package
+  setwd("..")
+  install("geobr")
+  
+# Check package errors  
+  devtools::check("geobr")
+  
+# Write package manual.pdf
+  system("R CMD Rd2pdf geobr")
+  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+  
+  pack <- "geobr"
+  path <- find.package(pack)
+  system(paste(shQuote(file.path(R.home("bin"), "R")),
+               "CMD", "Rd2pdf", shQuote(path)))
+  
+  
+  install.packages("pdflatex", dependencies = T)  
+  
+  
 ### Install development version of geobr
 
 # devtools::install_github("ipeaGIT/geobr")
@@ -30,6 +57,18 @@ data("correspondence_table_stategrid")
 
 data("brazil_2010")
 
+a <- subset(brazil_2010, cod_state==11)
+head(a)
+plot(a)
+
+b <- a %>%  
+  split(.$name_micro) %>% 
+  lapply(st_union) %>% 
+  do.call(c, .)
+
+b <-  a %>% group_by(cod_micro) %>% summarize()
+head(b)
+plot(b)
 
 ### 1. read_state -------------------------
 
