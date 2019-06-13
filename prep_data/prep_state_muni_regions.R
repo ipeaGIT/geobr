@@ -9,9 +9,12 @@ library(parallel)
 library(data.table)
 
 
+# to do
+#> make sf polygons valid lwgeom::st_make_valid(); st_is_valid()
+
+
 
     
-
 
 
 #### 0. Download original data sets from IBGE ftp -----------------
@@ -624,9 +627,107 @@ shp_to_sf_rds <- function(x){
 
   
   
-###### 8. Correcting number of digits of meso 2010  -------------------------------- 
+###### 8. Correcting number of digits of meso an micro regions in 2010  -------------------------------- 
+# issue #20
+
   
-  # issue #20
+#### 8.1 Meso regions
+ 
+# Dirs 
+  meso_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_cleaned/meso_regiao"
+  sub_dirs <- list.dirs(path =meso_dir, recursive = F) 
+  
+# dirs of 2010 (problematic data) ad 2013 (reference data)
+  sub_dir_2010 <- sub_dirs[sub_dirs %like% 2010]
+  sub_dir_2013 <- sub_dirs[sub_dirs %like% 2013]
+  
+
+# list sf files in each dir
+  sf_files_2010 <- list.files(sub_dir_2010, full.names = T, pattern = ".rds")
+  sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".rds")
+  
+  
+# Create function to correct number of digits of meso regions in 2010
+  
+correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_files_2010[1]
+    
+    # Get UF of the file
+      get_uf <- function(x){substr(x, nchar(x)-7, nchar(x)-6)}
+      uf <- get_uf(a2010_sf_meso_file)
+      
+    # read 2010 file
+      temp2010 <- read_rds(a2010_sf_meso_file)
+      
+    # read 2013 file
+      temp2013 <- sf_files_2013[ get_uf(sf_files_2013) %like% uf]
+      temp2013 <- read_rds(temp2013)
+      
+    # keep only code and name columns
+      table2013 <- temp2013 %>% as.data.frame()
+      table2013 <- dplyr::select(table2013, cod_meso, name_meso)
+      
+    # update cod_meso
+      sf2010 <- left_join(temp2010, table2013, by="name_meso")
+      sf2010 <- dplyr::select(sf2010, cod_meso=cod_meso.y, name_meso, geometry)
+    
+    # Save file
+      write_rds(sf2010, path = a2010_sf_meso_file )
+      }
+
+# Apply function
+  lapply(sf_files_2010, correct_meso_digits)
+
+  
+  
+#### 8.2 Micro regions
+  
+  # Dirs 
+  micro_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_cleaned/micro_regiao"
+  sub_dirs <- list.dirs(path =micro_dir, recursive = F) 
+  
+  # dirs of 2010 (problematic data) ad 2013 (reference data)
+  sub_dir_2010 <- sub_dirs[sub_dirs %like% 2010]
+  sub_dir_2013 <- sub_dirs[sub_dirs %like% 2013]
+  
+  
+  # list sf files in each dir
+  sf_files_2010 <- list.files(sub_dir_2010, full.names = T, pattern = ".rds")
+  sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".rds")
+  
+  
+# Create function to correct number of digits of meso regions in 2010
+    
+  correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[1]
+    
+    # Get UF of the file
+    get_uf <- function(x){substr(x, nchar(x)-7, nchar(x)-6)}
+    uf <- get_uf(a2010_sf_micro_file)
+    
+    # read 2010 file
+    temp2010 <- read_rds(a2010_sf_micro_file)
+    
+    # read 2013 file
+    temp2013 <- sf_files_2013[ get_uf(sf_files_2013) %like% uf]
+    temp2013 <- read_rds(temp2013)
+    
+    # keep only code and name columns
+    table2013 <- temp2013 %>% as.data.frame()
+    table2013 <- dplyr::select(table2013, cod_micro, name_micro)
+    
+    # update cod_micro
+    sf2010 <- left_join(temp2010, table2013, by="name_micro")
+    sf2010 <- dplyr::select(sf2010, cod_micro=cod_micro.y, name_micro, geometry)
+    
+    # Save file
+    write_rds(sf2010, path = a2010_sf_micro_file )
+  }
+  
+  # Apply function
+  lapply(sf_files_2010, correct_micro_digits)
+  
+  
+###### 9. Creating base 2010 file  -------------------------------- 
+  
   
   
   
