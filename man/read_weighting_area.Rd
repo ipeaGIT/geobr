@@ -4,12 +4,12 @@
 \alias{read_weighting_area}
 \title{Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census}
 \usage{
-read_weighting_area(CODE, year = NULL)
+read_weighting_area(cod_weighting, year = NULL)
 }
 \arguments{
-\item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}
-
 \item{year}{the year of the data download (defaults to 2010)}
+
+\item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}
 }
 \description{
 Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census
@@ -26,7 +26,7 @@ dados <- read_weighting_area("df",2010)
 dados <- read_weighting_area(1302603,2010)
 dados <- read_weighting_area(35)
 dados <- read_weighting_area(14,2010)
-dados <- read_weighting_area()
+dados <- read_weighting_area("all")
 
 # map it
 library(mapview)
