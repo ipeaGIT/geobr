@@ -7,6 +7,8 @@ library(dplyr)
 library(readr)
 library(parallel)
 library(data.table)
+library(xlsx)
+library(magrittr)
 
 
 # to do
@@ -727,6 +729,92 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   
   
 ###### 9. Creating base 2010 file  -------------------------------- 
+
+# Read correspondence table from the Census 2019
+  table_2010 <- xlsx::read.xlsx2(file="L:/# DIRUR #/ASMEQ/geobr/data-raw/Divisao_Territorial_do_Brasil/Unidades da Federacao, Mesorregioes, microrregioes e municipios 2010.xls",
+                                 sheetIndex = 1, startRow = 3)
+  
+  # change col names according to convetions ingeobr package  
+  table_2010 <- dplyr::select(table_2010
+                              , cod_muni = 'Município'
+                              , name_muni = 'Nome_Município'
+                              , cod_micro = 'Micror.região'
+                              , name_micro = 'Nome_Microrregião'
+                              , cod_meso = 'Mesor.região'
+                              , name_meso = 'Nome_Mesorregião'
+                              , cod_state = 'UF'
+                              , name_state = 'Nome_UF'
+  )
+  
+  # Add State abbreviations
+  setDT(table_2010)
+  table_2010[ cod_state== 11, abbrev_state :=	"RO" ]
+  table_2010[ cod_state== 12, abbrev_state :=	"AC" ]
+  table_2010[ cod_state== 13, abbrev_state :=	"AM" ]
+  table_2010[ cod_state== 14, abbrev_state :=	"RR" ]
+  table_2010[ cod_state== 15, abbrev_state :=	"PA" ]
+  table_2010[ cod_state== 16, abbrev_state :=	"AP" ]
+  table_2010[ cod_state== 17, abbrev_state :=	"TO" ]
+  table_2010[ cod_state== 21, abbrev_state :=	"MA" ]
+  table_2010[ cod_state== 22, abbrev_state :=	"PI" ]
+  table_2010[ cod_state== 23, abbrev_state :=	"CE" ]
+  table_2010[ cod_state== 24, abbrev_state :=	"RN" ]
+  table_2010[ cod_state== 25, abbrev_state :=	"PB" ]
+  table_2010[ cod_state== 26, abbrev_state :=	"PE" ]
+  table_2010[ cod_state== 27, abbrev_state :=	"AL" ]
+  table_2010[ cod_state== 28, abbrev_state :=	"SE" ]
+  table_2010[ cod_state== 29, abbrev_state :=	"BA" ]
+  table_2010[ cod_state== 31, abbrev_state :=	"MG" ]
+  table_2010[ cod_state== 32, abbrev_state :=	"ES" ]
+  table_2010[ cod_state== 33, abbrev_state :=	"RJ" ]
+  table_2010[ cod_state== 35, abbrev_state :=	"SP" ]
+  table_2010[ cod_state== 41, abbrev_state :=	"PR" ]
+  table_2010[ cod_state== 42, abbrev_state :=	"SC" ]
+  table_2010[ cod_state== 43, abbrev_state :=	"RS" ]
+  table_2010[ cod_state== 50, abbrev_state :=	"MS" ]
+  table_2010[ cod_state== 51, abbrev_state :=	"MT" ]
+  table_2010[ cod_state== 52, abbrev_state :=	"GO" ]
+  table_2010[ cod_state== 53, abbrev_state :=	"DF" ]
+  
+  
+  
+  
+  # Add Region codes and names
+  table_2010$cod_region <- substr(table_2010$cod_state, 1,1)
+  table_2010 <- table_2010 %>% mutate(name_region = ifelse(cod_region==1, 'Norte',
+                                                           ifelse(cod_region==2, 'Nordeste',
+                                                                  ifelse(cod_region==3, 'Sudeste',
+                                                                         ifelse(cod_region==4, 'Sul',
+                                                                                ifelse(cod_region==5, 'Centro Oeste', NA))))))
+  
+  
+  
+  
+### Add geometry
+  
+  # read clean muni data of 2010
+  muni_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_cleaned/municipio"
+  muni_files <- list.files(muni_dir, full.names = T, recursive = T, pattern = ".rds")
+  
+  # All muni 2010 files
+  muni_files_2010 <- muni_files[muni_files %like% 2010]
+  
+  # Read all
+  sf_2010 <- lapply(X=muni_files_2010, FUN= readr::read_rds)
+  sf_2010 <- do.call('rbind', sf_2010)
+  
+  # Add geometry
+  brazil_2010 <- dplyr::left_join(sf_2010, table_2010, by='cod_muni')
+  
+  # fix names
+  brazil_2010$name_muni.x <- NULL
+  brazil_2010 <- dplyr::rename(brazil_2010, name_muni = 'name_muni.y')
+  head(brazil_2010)
+  
+  
+  # save .Rdata
+  save(brazil_2010, file = "./data/brazil_2010.Rdata", compress='gzip', compression_level=1)
+  
   
   
   
