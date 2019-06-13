@@ -183,3 +183,18 @@ saveRDS(d,file = paste(".",i,j,sep = "/"))
 }
 
 
+#juntando as areas de ponderação em uma mesma base, por estado
+
+dir.proj="."
+
+for (CODE in list.files(pattern = "^\\d")) {
+  if (!length(list.files(paste(dir.proj,CODE,sep="/")))==0) {
+files <- list.files(paste(dir.proj,CODE,sep="/"),full.names = T)
+files <- lapply(X=files, FUN= readr::read_rds)
+files <- lapply(X=files, FUN= as.data.frame)
+shape <- do.call('rbind', files)
+shape <- st_sf(shape)
+saveRDS(shape,paste0("./",CODE,"AP.rds"))
+  }
+}
+
