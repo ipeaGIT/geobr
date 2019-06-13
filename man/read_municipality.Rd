@@ -4,11 +4,11 @@
 \alias{read_municipality}
 \title{Download shape files of municipalities}
 \usage{
-read_municipality(cod_mun, year = NULL)
+read_municipality(cod_muni, year = NULL)
 }
 \arguments{
-\item{cod_mun}{The 7-digit code of a municipality. If the two-digit code of a state is used,
-the function will load all municipalities of that state. If cod_mun="all", all municipalities will be loaded.}
+\item{cod_muni}{The 7-digit code of a municipality. If the two-digit code of a state is used,
+the function will load all municipalities of that state. If cod_muni="all", all municipalities will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
@@ -21,10 +21,10 @@ Download shape files of municipalities
 library(geobr)
 
 # Read specific municipality at a given year
-  mun <- read_municipality(cod_mun=1200179, year=2017)
+  mun <- read_municipality(cod_muni=1200179, year=2017)
 
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(cod_mun=12, year=2010)
+  mun <- read_municipality(cod_muni=12, year=2010)
 
 }
 }
