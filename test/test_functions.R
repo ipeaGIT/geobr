@@ -10,6 +10,8 @@
 # library(sf)
 
 devtools::load_all('R:/Dropbox/git_projects/geobr')
+devtools::load_all('C:/Users/r1701707/Desktop/geobr')
+
 devtools::check('R:/Dropbox/git_projects/geobr')
 
 ### Uninstall geobr
@@ -48,16 +50,16 @@ gc(reset = T)
 
 ?read_municipality
 
-  system.time( a <- read_municipality(cod_mun=1200179, year=2016) )
+  system.time( a <- read_municipality(cod_muni=1200179, year=2016) )
   plot(a)
   
-  system.time( b <- read_municipality(cod_mun=33, year=2001) )
+  system.time( b <- read_municipality(cod_muni=33, year=2001) )
   plot(b)
   
-  system.time( c <- read_municipality(cod_mun=11) )
+  system.time( c <- read_municipality(cod_muni=11) )
   plot(c)
   
-  system.time( d <- read_municipality(cod_mun="all", year=2017 ))
+  system.time( d <- read_municipality(cod_muni="all", year=2017 ))
   head(d)
   plot(d)
   
@@ -65,12 +67,12 @@ gc(reset = T)
 ### expected ERROR messages
 
   # invalid year
-  e <- read_municipality(cod_mun=33, year=2012)
+  e <- read_municipality(cod_muni=33, year=2012)
   
-  # invalid cod_mun
-  e <- read_municipality(cod_mun=333, year=2010)
+  # invalid cod_muni
+  e <- read_municipality(cod_muni=333, year=2010)
   
-  # cod_mun cannot be NULL
+  # cod_muni cannot be NULL
   e <- read_municipality( year=2010)
 
 
