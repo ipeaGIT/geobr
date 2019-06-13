@@ -9,12 +9,6 @@ library(parallel)
 library(data.table)
 
 
-# DO NOT run
-## remove all unzipped shape files
-#   # list all unzipped shapes
-#     f <- list.files(path = root_dir, full.names = T, recursive = T, pattern = ".shx|.shp|.prj|.dbf|.cpg")
-#     file.remove(f)
- 
 
     
 
@@ -440,7 +434,7 @@ shp_to_sf_rds <- function(x){
 
   
   
-###### 5. Cleaning MICRO files -------------------------------- 
+###### 6. Cleaning MICRO files -------------------------------- 
   micro_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_original/micro_regiao"
   sub_dirs <- list.dirs(path=micro_dir, recursive = F) 
   
@@ -518,7 +512,7 @@ shp_to_sf_rds <- function(x){
   
   
   
-###### 5. Cleaning MUNI files -------------------------------- 
+###### 7. Cleaning MUNI files -------------------------------- 
   muni_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_original/municipio"
   sub_dirs <- list.dirs(path=muni_dir, recursive = F) 
   
@@ -622,79 +616,20 @@ shp_to_sf_rds <- function(x){
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+# DO NOT run
+## remove all unzipped shape files
+#   # list all unzipped shapes
+#     f <- list.files(path = root_dir, full.names = T, recursive = T, pattern = ".shx|.shp|.prj|.dbf|.cpg")
+#     file.remove(f)
 
   
   
-#shp_file <- "E:/shapes/12MUE250GC_SIR.shp"
-shp_file <- "E:/shapes/ac_municipios2010/12MUE250GC_SIR.shp"
-shp_file <- "E:/shapes/ac_municipios2000/12MU500G.shp"
-
-sf_file <- "E:/shapes/12MU.rds"
-
-
-####### sf
-  sf <- sf::st_read(shp_file, stringsAsFactors=F, options = "ENCODING=UTF8")
-  head(sf)
+###### 8. Correcting number of digits of meso 2010  -------------------------------- 
   
-# FAIL
-  sf$NM_MUNICIP <- as.character(sf$NM_MUNICIP)
-  Encoding(sf$NM_MUNICIP) <- "UTF-8"
-  sf$NM_MUNICIP
+  # issue #20
   
   
   
-> [1] "ACREL\xc2NDIA"        "ASSIS BRASIL"         "BRASIL\xc9IA"         "BUJARI"              
-> [5] "CAPIXABA"             "CRUZEIRO DO SUL"      "EPITACIOL\xc2NDIA"    "FEIJ\xd3"            
-> [9] "JORD\xc3O"            "M\xc2NCIO LIMA"       "MANOEL URBANO"        "MARECHAL THAUMATURGO"
-> [13] "PL\xc1CIDO DE CASTRO" "PORTO WALTER"         "RIO BRANCO"           "RODRIGUES ALVES"     
-> [17] "SANTA ROSA DO PURUS"  "SENADOR GUIOMARD"     "SENA MADUREIRA"       "TARAUAC\xc1"         
-> [21] "XAPURI"               "PORTO ACRE"          
-  
-  sf <- read_rds(sf_file)
-  head(sf)
   
   
-    
-  6666666666666666666 usar isso aqui
-####### SHAPE OK
-shp <- rgdal::readOGR(shp_file, encoding = "UTF-8")
-head(shp@data)
-
-
-shp@data$NM_MUNICIP <- shp@data$NM_MUNICIP %>% as.character() 
-Encoding(shp@data$NM_MUNICIP) <- "UTF-8"
-shp@data$NM_MUNICIP
-  
-
-
-iconv
-
-
-# ### Download rds do pacote
-# table(metadata$geo)
-# f <- subset(metadata, year==2000 & geo=="municipio")[2]
-# f <- f$download_path
-# 
-# temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(f,"/"),tail,n=1L)))
-# httr::GET(url=f, httr::write_disk(temps, overwrite = T))
-# shape <- readr::read_rds(temps)
-# head(shape)
-# 
-# # FAIL
-#   shape$nome_mun <- shape$nome_mun %>% as.character()
-#   Encoding(shape$nome_mun) <- "UTF-8"
-#   shape$nome_mun
-
   
