@@ -11,11 +11,6 @@
 #
 #
 #
-#
-# iconv(data_mun$final_name[1:10],from="UTF-8",to="ASCII//TRANSLIT")
-#
-#
-#
 # ## take out accents
 #
 # data_mun <- data_mun %>%
@@ -25,51 +20,52 @@
 # ## reshape the data. code2010 x year
 #
 # data_mun <- data_mun %>%
-# gather(key = "year", value = "x",-code2010,-final_name)
+# gather(key = "year", value = "muname",-code2010,-final_name)
 #
 #
+# trim_f <- function(x){
+#   return(sub("^\\s+", "", sub("\\s+$", "", x)))
+# }
 #
 # ## gen new variables
 # ## muname will be the variable to make changes
 # ## data remains the original IBGE entry
+# ## problem: typo: double space
+#
 # data_mun <-data_mun %>%
-#   mutate(muname = "")
+#   mutate(data = muname,
+#          data = trim_f(data),
+#          muname = trim_f(muname),
+#          final_name = trim_f(final_name),
+#          muname = gsub("  "," ",muname))
 #
 #
-# ## changes in municipality names:
 #
-# ************
-# *** (2) problem: some variables have a blank at the end
-# // is due to IBGE formating of file
-# ** solution: remove the blank at the end
-# replace data=rtrim(data)
-# replace muname=rtrim(muname)
-# replace final_name=rtrim(final_name)
 #
-# *** problem: typo: double space
-# replace muname = subinstr(muname,"  "," ",.)
-# ************
+# ## (3) problem: some mun exist, but the administration is still in another mun
+# ## denominated "sede em" in the data
+# ## the IBGE apparently does not consider those mun as independent
+# ## treat them as dependent, i.e. part of one cluster !!!
+# ## is very similar to anexado a
 #
-# ************
-# *** (3) problem: some mun exist, but the administration is still in another mun
-# // denominated "sede em" in the data
-# // the IBGE apparently does not consider those mun as independent
-# // treat them as dependent, i.e. part of one cluster !!!
-# // is very similar to anexado a
+# ### related problem:
+# ## "sede em" e desmem. etc. at the same time
+# ## is at least the case for Exu (2605301)
 #
-# *** related problem:
-# // "sede em" e desmem. etc. at the same time
-# // is at least the case for Exu (2605301)
-# replace muname = subinstr(muname,"sede em Granito, desmembrado","anexado e desmembrado",.)
-# replace muname = subinstr(muname,"sede em Pocoes, desmembrado","anexado e desmembrado",.)
-# replace muname = subinstr(muname,"sede em Esplanada, desmembrado","anexado e desmembrado",.)
-# replace muname = subinstr(muname,"sede em Sao Gotardo, desmembrado","anexado e desmembrado",.)
-# replace muname = subinstr(muname,"sede em Santo Andre, desmembrado","anexado e desmembrado",.)
-# replace muname = subinstr(muname,"Couto Magalhaes, sede na vila de Santa Maria do Araguaia","Couto de Magalhaes",.)
-# // the later is dispensable because the mun is the same.
-# // the name is changed in the following period.
+# data_mun <-data_mun %>%
+#   mutate(muname = gsub("sede em Granito, desmembrado","anexado e desmembrado",muname),
+#          muname = gsub("sede em Pocoes, desmembrado","anexado e desmembrado",muname),
+#          muname = gsub("sede em Esplanada, desmembrado","anexado e desmembrado",muname),
+#          muname = gsub("sede em Sao Gotardo, desmembrado","anexado e desmembrado",muname),
+#          muname = gsub("sede em Santo Andre, desmembrado","anexado e desmembrado",muname),
+#          muname = gsub("Couto Magalhaes, sede na vila de Santa Maria do Araguaia","Couto de Magalhaes",muname))
 #
-# ** solution: replace sede em with anexado a
+#
+#
+# ## the later is dispensable because the mun is the same.
+# ## the name is changed in the following period.
+#
+# ## solution: replace sede em with anexado a
 # replace muname = subinstr(muname,"sede em","anexado a", 1)
 #
 # *** problem: some mun were even anex. and desmem. within the same period
