@@ -1,33 +1,8 @@
 #### testing functions of geobr
 
-
-
-
-setwd("C:/Users/r1701707/Desktop/geobr")
-system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
-system("R CMD Rd2pdf geobr")
-
-# Update documentation
-  devtools::document()
-
-# Install package
-  setwd("..")
-  install("geobr")
-  
-# Check package errors  
-  devtools::check("geobr")
-  
-# Write package manual.pdf
-  system("R CMD Rd2pdf geobr")
-  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
-  
-  pack <- "geobr"
-  path <- find.package(pack)
-  system(paste(shQuote(file.path(R.home("bin"), "R")),
-               "CMD", "Rd2pdf", shQuote(path)))
   
   
-  install.packages("pdflatex", dependencies = T)  
+  
   
   
 ### Install development version of geobr
@@ -36,10 +11,12 @@ system("R CMD Rd2pdf geobr")
 # library(geobr)
 # library(sf)
 
+
+# Rafael
 devtools::load_all('R:/Dropbox/git_projects/geobr')
 devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 
-devtools::check('R:/Dropbox/git_projects/geobr')
+
 
 ### Uninstall geobr
 
@@ -56,6 +33,7 @@ devtools::uninstall(pkg = "geobr")
 data("correspondence_table_stategrid")
 
 data("brazil_2010")
+head(brazil_2010)
 
 a <- subset(brazil_2010, cod_state==11)
 head(a)
@@ -76,6 +54,7 @@ plot(b)
 # Read specific municipality at a given year
   uf <- read_state(cod_uf=12, year=2017)
   plot(uf)
+  head(uf)
 
 # Read all states at a given year
   ufs <- read_state(cod_uf="all", year=2018)
@@ -202,14 +181,54 @@ gc(reset = T)
   st_make_valid()
 
 
+  
+###### 5. read_weighting_area -------------------------
+  
+# input state
+system.time( w1 <- read_weighting_area(cod_weighting=53) )
+system.time( w1 <- read_weighting_area(cod_weighting=52) )
 
-###### 5. read_statistical_grid -------------------------
+head(w1)
+plot(w1)
+
+
+system.time( w1 <- read_weighting_area(cod_weighting=33) )
+head(w1)
+plot(w1)
+
+
+mapview::mapview(w1)
+
+# input muni
+system.time( w2 <- read_weighting_area(cod_weighting=5201108, year=2010) )
+head(w2)
+plot(w2)
+
+# input weighting area
+system.time( w3 <- read_weighting_area(cod_weighting=5201108005004, year=2010) )
+head(w3)
+plot(w3)
+
+
+
+# Expected errors
+
+system.time( w2 <- read_weighting_area(cod_weighting=11, year=2000) )
+system.time( w2 <- read_weighting_area(cod_weighting=100000) )
+
+
+
+
+
+
+
+
+###### 6. read_statistical_grid -------------------------
 
 system.time( g1 <- read_statistical_grid(cod_grid=44) )
 system.time( g1 <- read_statistical_grid(cod_grid=44, year=2010) )
 head(g1)
 st_crs(g1)
-
 
 
 system.time( g1 <- read_statistical_grid(cod_grid="AC") )
@@ -223,6 +242,17 @@ system.time( g1 <- read_statistical_grid(cod_grid="xx") )
 system.time( g1 <- read_statistical_grid(cod_grid="AC", year=5000) )
 system.time( g1 <- read_statistical_grid() )
 
+
+
+
+
+
+
+
+
+
+
+
 ### update package documentation ----------------
   library(roxygen2)
   library("devtools")
@@ -231,4 +261,30 @@ system.time( g1 <- read_statistical_grid() )
 
 
 
-  document()
+  
+  setwd("C:/Users/r1701707/Desktop/geobr")
+  
+  # Update documentation
+  devtools::document()
+  
+  # Install package
+  setwd("..")
+  install("geobr")
+  
+  # Check package errors  
+  devtools::check("geobr")
+  
+  # Write package manual.pdf
+  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+  system("R CMD Rd2pdf geobr")
+  
+  
+  pack <- "geobr"
+  path <- find.package(pack)
+  system(paste(shQuote(file.path(R.home("bin"), "R")),
+               "CMD", "Rd2pdf", shQuote(path)))
+  
+  
+  
+  install.packages("pdflatex", dependencies = T)  
+  
