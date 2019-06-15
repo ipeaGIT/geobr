@@ -19,10 +19,10 @@ library(geobr)
   
   
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(cod_mun=12, year=2010)
+  mun <- read_municipality(cod_muni=12, year=2010)
   
 # Read all municipalities in the country at a given year
-  mun <- read_municipality(cod_mun="all", year=2005)
+  mun <- read_municipality(cod_muni="all", year=2005)
 
 ````
 
