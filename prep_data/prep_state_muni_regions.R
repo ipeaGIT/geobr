@@ -813,6 +813,9 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   brazil_2010 <- dplyr::rename(brazil_2010, name_muni = 'name_muni.y')
   head(brazil_2010)
 
+  
+# remove two lagoons
+  brazil_2010 <- subset(brazil_2010, !is.na(cod_state))
 
 # save .Rdata
   save(brazil_2010, file = "./data/brazil_2010.RData", compress='gzip', compression_level=1)
