@@ -1,8 +1,10 @@
 #### testing functions of geobr
 
   
-  
-  
+library(magrittr)
+library(sf)
+library(dplyr)
+
   
   
 ### Install development version of geobr
@@ -29,24 +31,17 @@ devtools::uninstall(pkg = "geobr")
 
 ### 0. Data tests  -------------------------
 
-
 data("correspondence_table_stategrid")
+head(corresptb)
+
 
 data("brazil_2010")
 head(brazil_2010)
 
-a <- subset(brazil_2010, cod_state==11)
-head(a)
-plot(a)
 
-b <- a %>%  
-  split(.$name_micro) %>% 
-  lapply(st_union) %>% 
-  do.call(c, .)
 
-b <-  a %>% group_by(cod_micro) %>% summarize()
-head(b)
-plot(b)
+
+
 
 ### 1. read_state -------------------------
 
@@ -130,9 +125,6 @@ gc(reset = T)
   plot(c)
 
 
-
-
-# NEEDS  correction
   system.time( d <- read_meso_region(cod_meso="all", year=2010) )
   plot(d)
   head(d)
