@@ -1,0 +1,135 @@
+---
+title: "Georeferencing data gain"
+author: "Igor Ferreira do Nascimento"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: bibli.bib
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+
+When you are looking for a new house you investigate the neighborhood environment. It’s happening because the relevant variables associated with the creators of majority people such as safety, infrastructure and pollution rather than being idiosyncratic is at least locally common. Thus, we can considerate that those variables help us to understand the geographic dependency concept.
+
+This situation is an intuitive and practical view of the Waldo Tobler' First Law of Geography "everything is related to everything else, but near things are more related than distant things." @tobler1970computer.
+
+This Vignettes use the geobr package to understand the spatial effect in the Brazilian administrative data analysis. 
+
+
+## Toy model
+
+
+Nesse exemplo piloto vamos analisar o efeito geográfico na modelagem no número de roubos de residências e em veículos na cidade de Columbus,OH, Estados Unidos @spdata.
+
+O modelo utilizado será explicar o número de roubos em função da renda domiciliar e valor das residências com e sem as variáveis de georefenciamento. A figura a seguir apresenta incidência de roubos nas divisões dos bairros da cidade.
+
+
+```{r, fig.show='hold'}
+library(spdep)
+library(spgwr)
+library(RColorBrewer)
+
+columbus <- st_read(system.file("shapes/columbus.shp", package="spData")[1], quiet=TRUE)
+columbus_sp <- as(columbus, "Spatial")
+
+
+spplot(columbus_sp,"CRIME")
+```
+
+
+São ajustados um modelo de regressão via mínimos quadrados ordinários e um outro utilizando o modelo *Geographically Weighted
+Regression* (GWR) @spgwr.
+
+
+O modelo GWR pode ser representado por:
+
+$$y_i = \beta_0(u_i,v_i) + \sum_{j=1}^k \beta_j(u_i,v_i)x_{ij}+\varepsilon_i$$
+sendo $y_i$ a variável dependente, $x_{ij}$ as variáveis independentes, $\beta_j$ os coeficientes de regressão específicos no espaço $(u_i,v_i)$ da unidade $i$ e $\varepsilon_i$ o resíduo do modelo. O processo de estimação dos parâmetros do modelo para a unidade $i$ é impactado por outras unidades e a influência e determinada através da matriz de distância $W$ @li2019spatial. Essa influenciada se reduz a medida em que as unidades se distanciam da unidade $i$.
+
+Essa proximidade na base de dados Columbus pode ser vista por meio da imagem a seguir, indicando as unidades vizinhas.
+
+
+```{r, fig.show='hold'}
+nb <- poly2nb(columbus_sp)
+plot(columbus_sp) 
+plot(nb, coordinates(columbus_sp), col='red', lwd=2, add=TRUE)
+```
+
+
+Apesar de existir situações complexas na conceituação e cálculo da distância, ao invés da medida binária de vizinho ou não, é frequentemente utilizado medidas contínuas de distância @gdr. 
+
+Para esse exemplo utilizaremos a distância gaussiana:
+
+$$W(i,j) = e^{{-(d_{i,j}/h)}^2}$$
+sendo $d_{i,j}$ a distância euclidiana e $h$ um parâmetro que pode ser determinado por validação cruzada. Os modelos de regressão via OLS e utilizando o GWR podem ser ajustados por meio do seguinte código.
+
+
+```{r, fig.show='hold'}
+col.bw <- gwr.sel(CRIME ~ INC + HOVAL, data=columbus_sp)
+                  
+gwr_model <- gwr(CRIME ~ INC + HOVAL , data=columbus_sp,
+                 bandwidth=col.bw, hatmatrix=TRUE)
+
+
+ols_model <- lm(CRIME ~ INC + HOVAL , data=columbus_sp)
+
+columbus_sp$residuals_ols <- ols_model$residuals
+columbus_sp$residuals_gwr <- gwr_model$SDF$pred-columbus_sp$CRIME
+```
+
+
+De maneira análoga à autocorrelação temporal, a autocorrelação espacial mensura a similaridade de unidades baseado em sua posição espacial, podendo ser exógena ou endógena e calcula, majoritariamente, pelo Índice de Moran @gdr.
+
+Apesar de não haver evidências para rejeitar a hipótese de normalidade dos resíduos no modelo OLS (conforme gráficos a seguir), os resíduos analisados espacialmente demonstram evidências de autocorrelação espacial, confirmado pelo Índice de Moran. Esse resultado sugere que as variáveis de posicionamento geográficos possuem "informações" que estão sendo "desperdiçadas" e evidenciadas nos resíduos.
+
+
+
+```{r , fig.show='hold'}
+grps <- 10
+qqnorm(columbus_sp$residuals_ols,col=1,pch = 20)
+qqline(columbus_sp$residuals_ols)
+shapiro.test(columbus_sp$residuals_ols)
+
+
+brks <- quantile(columbus_sp$residuals_ols, 0:(grps-1)/(grps-1), na.rm=TRUE)
+spplot(columbus_sp, 
+       "residuals_ols", 
+       at=brks, 
+       col.regions=rev(brewer.pal(grps, "RdBu")), col="black")
+       
+```
+
+Dessa forma, utilizando o modelo GWR, inserimos as informações espaciais no modelo. Como pode ser visto nos gráficos a seguir, os resíduos do modelo GWR não apresentam mais, estatísticamente, autocorrelação espacial.
+
+
+
+```{r,  fig.show='hold'}
+
+brks <- quantile(columbus_sp$residuals_gwr, 0:(grps-1)/(grps-1), na.rm=TRUE)
+spplot(columbus_sp, "residuals_gwr", 
+       at=brks, 
+       col.regions=rev(brewer.pal(grps, "RdBu")), col="black")
+
+
+qqnorm(columbus_sp$residuals_gwr,col=2,pch = 20)
+qqline(columbus_sp$residuals_gwr)
+shapiro.test(columbus_sp$residuals_gwr)
+
+```
+
+
+
+## References
+
