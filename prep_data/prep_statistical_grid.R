@@ -122,7 +122,7 @@ shp_to_sf_rds <- function(x){
 ###### 4. Prepare table with correspondence between grid ID and code_state -----------------
   
 
-gid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "Acre", "Acre", "Amazonas", 
+grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "Acre", "Acre", "Amazonas", 
                                   "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Amazonas", 
                                   "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Roraima", 
                                   "Roraima", "Roraima", "Roraima", "Roraima", "Roraima", "Amapá", 
@@ -148,7 +148,7 @@ gid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "Ac
                                   "Tocantins", "Tocantins", "Tocantins", "Mato Grosso", "Mato Grosso", 
                                   "Mato Grosso", "Mato Grosso", "Mato Grosso", "Mato Grosso", "Mato Grosso", 
                                   "Mato Grosso", "Mato Grosso", "Mato Grosso", "Rondônia", "Rondônia", 
-                                  "Rondônia", "Rondônia", "Rondônia", "Rondônia"), cod_uf = c("AC", 
+                                  "Rondônia", "Rondônia", "Rondônia", "Rondônia"), code_state = c("AC", 
                                                                                               "AC", "AC", "AC", "AM", "AM", "AM", "AM", "AM", "AM", "AM", "AM", 
                                                                                               "AM", "AM", "AM", "AM", "RR", "RR", "RR", "RR", "RR", "RR", "AP", 
                                                                                               "AP", "AP", "AP", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", 
@@ -181,11 +181,12 @@ gid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "Ac
                                                                                                                                                 "ID_46", "ID_55", "ID_56", "ID_45", "ID_45", "ID_55", "ID_56", 
                                                                                                                                                 "ID_65", "ID_66", "ID_33", "ID_34", "ID_43", "ID_44", "ID_45", 
                                                                                                                                                 "ID_52", "ID_53", "ID_54", "ID_55", "ID_63", "ID_42", "ID_43", 
-                                                                                                                                                "ID_51", "ID_52", "ID_53", "ID_62")), .Names = c("name_uf", "cod_uf", 
+                                                                                                                                                "ID_51", "ID_52", "ID_53", "ID_62")), .Names = c("name_uf", "code_state", 
                                                                                                                                                                                                  "cod_grid"), row.names = c(NA, -139L), class = "data.frame")
   
 # save table
-  save(gid_state_correspondence_table, file = "C:/Users/r1701707/Desktop/geobr/data/gid_state_correspondence_table.RData", compress = T)
+  save(grid_state_correspondence_table, file = "C:/Users/r1701707/Desktop/geobr/data/grid_state_correspondence_table.RData", compress = T)
+  #
   
   
   
