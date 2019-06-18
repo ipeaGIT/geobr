@@ -60,7 +60,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
     if(is.null(code_grid)){ stop("Value to argument 'code_grid' cannot be NULL") }
 
   # if code_grid=="all", read the entire country
-    else if(code_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
+    if(code_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
