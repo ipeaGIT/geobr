@@ -228,6 +228,9 @@ head(g1)
 st_crs(g1)
 plot(g1)
 
+system.time( g3 <- read_statistical_grid(code_grid="all") )
+
+
 # expected errors
 system.time( g1 <- read_statistical_grid(code_grid=1000) )
 system.time( g1 <- read_statistical_grid(code_grid="xx") )
