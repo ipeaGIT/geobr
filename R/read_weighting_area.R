@@ -25,7 +25,7 @@
 #'
 #'
 #'
-read_weighting_area <- function(cod_weighting, year = NULL){
+read_weighting_area <- function(code_weighting, year = NULL){
   
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -54,13 +54,13 @@ read_weighting_area <- function(cod_weighting, year = NULL){
                        paste(unique(temp_meta$year),collapse = " ")))
   }
   
-  # Verify cod_weighting input
+  # Verify code_weighting input
   
-  # Test if cod_weighting input is null
-  if(is.null(cod_weighting)){ stop("Value to argument 'cod_weighting' cannot be NULL") }
+  # Test if code_weighting input is null
+  if(is.null(code_weighting)){ stop("Value to argument 'code_weighting' cannot be NULL") }
   
-  # if cod_weighting=="all", read the entire country
-  else if(cod_weighting=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
+  # if code_weighting=="all", read the entire country
+  else if(code_weighting=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
     
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
@@ -79,13 +79,13 @@ read_weighting_area <- function(cod_weighting, year = NULL){
     return(shape)
   }
   
-  else if( !(substr(x = cod_weighting, 1, 2) %in% temp_meta$code)){
-    stop("Error: Invalid Value to argument cod_weighting.")
+  else if( !(substr(x = code_weighting, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument code_weighting.")
     
   }else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(cod_weighting, 1, 2))$download_path)
+    filesD <- as.character(subset(temp_meta, code==substr(code_weighting, 1, 2))$download_path)
     
     # download files
     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
@@ -94,15 +94,15 @@ read_weighting_area <- function(cod_weighting, year = NULL){
     # read sf
     shape <- readr::read_rds(temps)
     
-    if(nchar(cod_weighting)==2){
+    if(nchar(code_weighting)==2){
       return(shape)
       
-    } else if(cod_weighting %in% shape$cod_mum){    # Get weighting
-      x <- cod_weighting
-      shape <- subset(shape, cod_mum==x)
+    } else if(code_weighting %in% shape$code_mum){    # Get weighting
+      x <- code_weighting
+      shape <- subset(shape, code_mum==x)
       return(shape)
     } else{
-      stop("Error: Invalid Value to argument cod_weighting.")
+      stop("Error: Invalid Value to argument code_weighting.")
     }
   }
 }
