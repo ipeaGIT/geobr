@@ -185,7 +185,7 @@ grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "A
                                                                                                                                                                                                  "code_grid"), row.names = c(NA, -139L), class = "data.frame")
   
 # save table
-  save(grid_state_correspondence_table, file = "C:/Users/r1701707/Desktop/geobr/data/grid_state_correspondence_table.RData", compress = T)
+  save(grid_state_correspondence_table, file = "./grid_state_correspondence_table.RData", compress = T)
   #
   
   
