@@ -30,8 +30,7 @@ read_statistical_grid <- function(cod_grid, year=NULL){
   
   
 # load correspondence table
-  data("correspondence_table_stategrid", envir=environment())
-  
+  data("gid_state_correspondence_table", envir=environment())
   
   
 # Get metadata with data addresses
