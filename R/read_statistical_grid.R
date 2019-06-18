@@ -30,7 +30,7 @@ read_statistical_grid <- function(cod_grid, year=NULL){
   
   
 # load correspondence table
-  data("gid_state_correspondence_table", envir=environment())
+  data("grid_state_correspondence_table", envir=environment())
   
   
 # Get metadata with data addresses
@@ -51,7 +51,6 @@ read_statistical_grid <- function(cod_grid, year=NULL){
   
 # Select geo
   temp_meta <- subset(metadata, geo=="statistical_grid")
-
 
 
 
@@ -82,9 +81,9 @@ read_statistical_grid <- function(cod_grid, year=NULL){
 # if cod_grid is a state abbreviation
 
   # Error if the input does not match any state abbreviation
-  if(is.character(cod_grid) & !(cod_grid %in% corresptb$cod_uf)) { 
+  if(is.character(cod_grid) & !(cod_grid %in% grid_state_correspondence_table$code_state)) { 
     stop(paste0("Error: Invalid Value to argument 'cod_grid'. It must be one of the following: ",
-                paste(unique(corresptb$cod_uf),collapse = " ")))
+                paste(unique(grid_state_correspondence_table$code_state),collapse = " ")))
     
     # MAKE this work
     # >>> https://stackoverflow.com/questions/54993463/include-image-in-r-packages
@@ -94,11 +93,11 @@ read_statistical_grid <- function(cod_grid, year=NULL){
     }
     
   # Correct state abbreviation
-    else if(is.character(cod_grid) & cod_grid %in% corresptb$cod_uf) {
+    else if(is.character(cod_grid) & cod_grid %in% grid_state_correspondence_table$code_state) {
       
       # find grid quadrants that intersect with the passed state abbreviation
-      corresptb_tmp <- corresptb[corresptb[,2] == cod_grid, ]
-      grid_ids <- substr(corresptb_tmp$cod_grid, 4, 5)
+      grid_state_correspondence_table_tmp <- grid_state_correspondence_table[grid_state_correspondence_table[,2] == cod_grid, ]
+      grid_ids <- substr(grid_state_correspondence_table_tmp$cod_grid, 4, 5)
       
       # list paths of files to download
       filesD <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
