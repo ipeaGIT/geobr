@@ -1,8 +1,8 @@
 #' Download shape files of meso region.
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param cod_meso The 4-digit code of a meso region. If a two-digit code of a state is passed,
-#' the function will load all meso regions of that state. If cod_meso="all", all meso regions of the country are loaded.
+#' @param code_meso The 4-digit code of a meso region. If a two-digit code of a state is passed,
+#' the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -10,14 +10,14 @@
 #' library(geobr)
 #'
 #' # Read all meso regions of a state at a given year
-#'   meso <- read_meso_region(cod_meso=12, year=2017)
+#'   meso <- read_meso_region(code_meso=12, year=2017)
 #'
 #'# Read all meso regions of the country at a given year
-#'   meso <- read_meso_region(cod_meso="all", year=2010)
+#'   meso <- read_meso_region(code_meso="all", year=2010)
 #' }
 #'
 
-read_meso_region <- function(cod_meso, year=NULL){
+read_meso_region <- function(code_meso, year=NULL){
   
   
   # Get metadata with data addresses
@@ -49,13 +49,13 @@ read_meso_region <- function(cod_meso, year=NULL){
   }
   
   
-  # Verify cod_meso input
+  # Verify code_meso input
   
-  # Test if cod_meso input is null
-  if(is.null(cod_meso)){ stop("Value to argument 'cod_meso' cannot be NULL") }
+  # Test if code_meso input is null
+  if(is.null(code_meso)){ stop("Value to argument 'code_meso' cannot be NULL") }
   
-  # if cod_meso=="all", read the entire country
-  else if(cod_meso=="all"){ cat("Loading data for the whole country \n")
+  # if code_meso=="all", read the entire country
+  else if(code_meso=="all"){ cat("Loading data for the whole country \n")
     
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
@@ -74,13 +74,13 @@ read_meso_region <- function(cod_meso, year=NULL){
     return(shape)
   }
   
-  else if( !(substr(x = cod_meso, 1, 2) %in% temp_meta$code)){
-    stop("Error: Invalid Value to argument cod_meso.")
+  else if( !(substr(x = code_meso, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument code_meso.")
     
   } else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(cod_meso, 1, 2))$download_path)
+    filesD <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path)
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
@@ -89,15 +89,15 @@ read_meso_region <- function(cod_meso, year=NULL){
     # read sf
     shape <- readr::read_rds(temps)
     
-    if(nchar(cod_meso)==2){
+    if(nchar(code_meso)==2){
       return(shape)
       
-    } else if(cod_meso %in% shape$cod_meso){    # Get meso region
-      x <- cod_meso
-      shape <- subset(shape, cod_meso==x)
+    } else if(code_meso %in% shape$code_meso){    # Get meso region
+      x <- code_meso
+      shape <- subset(shape, code_meso==x)
       return(shape)
     } else{
-      stop("Error: Invalid Value to argument cod_meso.")
+      stop("Error: Invalid Value to argument code_meso.")
     }
   }
 }
