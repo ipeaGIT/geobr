@@ -31,8 +31,8 @@ devtools::uninstall(pkg = "geobr")
 
 ### 0. Data tests  -------------------------
 
-data("correspondence_table_stategrid")
-head(corresptb)
+data("grid_state_correspondence_table")
+head(grid_state_correspondence_table)
 
 
 data("brazil_2010")
@@ -223,7 +223,7 @@ head(g1)
 st_crs(g1)
 
 
-system.time( g1 <- read_statistical_grid(code_grid="AC") )
+system.time( g2 <- read_statistical_grid(code_grid="AC") )
 head(g1)
 st_crs(g1)
 plot(g1)
