@@ -10,11 +10,8 @@ library(data.table)
 library(xlsx)
 library(magrittr)
 library(devtools)
-
-
-# to do
-#> make sf polygons valid lwgeom::st_make_valid(); st_is_valid()
-
+library(lwgeom)
+library(stringi)
 
 
 
@@ -307,34 +304,43 @@ shp_to_sf_rds <- function(x){
       if (year %like% "2000|2001"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_uf = geocodigo, name_uf = nome)
-        temp_sf <- dplyr::select(temp_sf, c('cod_uf', 'name_uf', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
+        temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
       }
 
       if (year %like% "2010"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_uf = cd_geocodu, name_uf = nm_estado)
-        temp_sf <- dplyr::select(temp_sf, c('cod_uf', 'name_uf', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_state = cd_geocodu, name_state = nm_estado)
+        temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
       }
 
       if (year %like% "2013|2014|2015|2016|2017|2018"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_uf = cd_geocuf, name_uf = nm_estado)
-        temp_sf <- dplyr::select(temp_sf, c('cod_uf', 'name_uf', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_state = cd_geocuf, name_state = nm_estado)
+        temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
       }
 
 
       # Use UTF-8 encoding
-        temp_sf$name_uf <- stringi::stri_encode(as.character((temp_sf$name_uf), "UTF-8"))
+        temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
 
       # Capitalize the first letter
-        temp_sf$name_uf <- stringr::str_to_title(temp_sf$name_uf)
+        temp_sf$name_state <- stringr::str_to_title(temp_sf$name_state)
 
       # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
         temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 
+      # Convert columns from factors to characters
+        temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+        
+      # Make an invalid geometry valid # st_is_valid( sf)
+        temp_sf <- lwgeom::st_make_valid(temp_sf)
+        
+        # keep code as.numeric()
+        temp_sf$code_state <- as.numeric(temp_sf$code_state)
+        
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
       write_rds(temp_sf, path = i )
@@ -387,22 +393,22 @@ shp_to_sf_rds <- function(x){
       if (year %like% "2000|2001"){
           # dplyr::rename and subset columns
           names(temp_sf) <- names(temp_sf) %>% tolower()
-          temp_sf <- dplyr::rename(temp_sf, cod_meso = geocodigo, name_meso = nome)
-          temp_sf <- dplyr::select(temp_sf, c('cod_meso', 'name_meso', 'geometry'))
+          temp_sf <- dplyr::rename(temp_sf, code_meso = geocodigo, name_meso = nome)
+          temp_sf <- dplyr::select(temp_sf, c('code_meso', 'name_meso', 'geometry'))
         }
 
        if (year %like% "2010"){
           # dplyr::rename and subset columns
           names(temp_sf) <- names(temp_sf) %>% tolower()
-          temp_sf <- dplyr::rename(temp_sf, cod_meso = cd_geocodu, name_meso = nm_meso)
-          temp_sf <- dplyr::select(temp_sf, c('cod_meso', 'name_meso', 'geometry'))
+          temp_sf <- dplyr::rename(temp_sf, code_meso = cd_geocodu, name_meso = nm_meso)
+          temp_sf <- dplyr::select(temp_sf, c('code_meso', 'name_meso', 'geometry'))
        }
 
         if (year %like% "2013|2014|2015|2016|2017|2018"){
           # dplyr::rename and subset columns
           names(temp_sf) <- names(temp_sf) %>% tolower()
-          temp_sf <- dplyr::rename(temp_sf, cod_meso = cd_geocme, name_meso = nm_meso)
-          temp_sf <- dplyr::select(temp_sf, c('cod_meso', 'name_meso', 'geometry'))
+          temp_sf <- dplyr::rename(temp_sf, code_meso = cd_geocme, name_meso = nm_meso)
+          temp_sf <- dplyr::select(temp_sf, c('code_meso', 'name_meso', 'geometry'))
         }
 
       # Use UTF-8 encoding
@@ -414,6 +420,15 @@ shp_to_sf_rds <- function(x){
       # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
         temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 
+        # Convert columns from factors to characters
+        temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+        
+        # Make an invalid geometry valid # st_is_valid( sf)
+        temp_sf <- lwgeom::st_make_valid(temp_sf)
+        
+        # keep code as.numeric()
+        temp_sf$code_meso <- as.numeric(temp_sf$code_meso)
+        
       # Save cleaned sf in the cleaned directory
         i <- gsub("original", "cleaned", i)
         write_rds(temp_sf, path = i )
@@ -465,24 +480,24 @@ shp_to_sf_rds <- function(x){
       if (year %like% "2000|2001"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_micro = geocodigo, name_micro = nome)
-        temp_sf <- dplyr::select(temp_sf, c('cod_micro', 'name_micro', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_micro = geocodigo, name_micro = nome)
+        temp_sf <- dplyr::select(temp_sf, c('code_micro', 'name_micro', 'geometry'))
       }
 
 
       if (year %like% "2010"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_micro = cd_geocodu, name_micro = nm_micro)
-        temp_sf <- dplyr::select(temp_sf, c('cod_micro', 'name_micro', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_micro = cd_geocodu, name_micro = nm_micro)
+        temp_sf <- dplyr::select(temp_sf, c('code_micro', 'name_micro', 'geometry'))
       }
 
 
       if (year %like% "2013|2014|2015|2016|2017|2018"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_micro = cd_geocmi, name_micro = nm_micro)
-        temp_sf <- dplyr::select(temp_sf, c('cod_micro', 'name_micro', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_micro = cd_geocmi, name_micro = nm_micro)
+        temp_sf <- dplyr::select(temp_sf, c('code_micro', 'name_micro', 'geometry'))
       }
 
     # Use UTF-8 encoding
@@ -494,6 +509,15 @@ shp_to_sf_rds <- function(x){
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
       temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 
+      # Convert columns from factors to characters
+      temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+      
+      # Make an invalid geometry valid # st_is_valid( sf)
+      temp_sf <- lwgeom::st_make_valid(temp_sf)
+      
+      # keep code as.numeric()
+      temp_sf$cod_mico <- as.numeric(temp_sf$code_micro)
+      
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
       write_rds(temp_sf, path = i )
@@ -543,8 +567,8 @@ shp_to_sf_rds <- function(x){
       if (year %like% "2000|2001"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_muni = geocodigo, name_muni = nome )
-        temp_sf <- dplyr::select(temp_sf, c('cod_muni', 'name_muni', 'geometry')) # 'latitudese', 'longitudes' da sede do municipio
+        temp_sf <- dplyr::rename(temp_sf, code_muni = geocodigo, name_muni = nome )
+        temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry')) # 'latitudese', 'longitudes' da sede do municipio
         #names(temp_sf)[3:4] <- c("lat","long")
       }
 
@@ -552,8 +576,8 @@ shp_to_sf_rds <- function(x){
       if (year %like% "2005"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_muni = geocodigo, name_muni = nome )
-        temp_sf <- dplyr::select(temp_sf, c('cod_muni', 'name_muni', 'latitude', 'longitude', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_muni = geocodigo, name_muni = nome )
+        temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'latitude', 'longitude', 'geometry'))
         names(temp_sf)[3:4] <- c("lat","long")
         }
 
@@ -561,22 +585,22 @@ shp_to_sf_rds <- function(x){
       if (year %like% "2007"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_muni = geocodig_m, name_muni = nome_munic )
-        temp_sf <- dplyr::select(temp_sf, c('cod_muni', 'name_muni', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_muni = geocodig_m, name_muni = nome_munic )
+        temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
       }
 
       if (year %like% "2010"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_muni = cd_geocodm, name_muni = nm_municip)
-        temp_sf <- dplyr::select(temp_sf, c('cod_muni', 'name_muni', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_muni = cd_geocodm, name_muni = nm_municip)
+        temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
       }
 
       if (year %like% "2013|2014|2015|2016|2017|2018"){
         # dplyr::rename and subset columns
         names(temp_sf) <- names(temp_sf) %>% tolower()
-        temp_sf <- dplyr::rename(temp_sf, cod_muni = cd_geocmu , name_muni = nm_municip)
-        temp_sf <- dplyr::select(temp_sf, c('cod_muni', 'name_muni', 'geometry'))
+        temp_sf <- dplyr::rename(temp_sf, code_muni = cd_geocmu , name_muni = nm_municip)
+        temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
       }
 
       # Manual test
@@ -596,8 +620,17 @@ shp_to_sf_rds <- function(x){
       temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
 
       # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-      temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+        temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 
+      # Convert columns from factors to characters
+        temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+      
+      # keep code as.numeric()
+        temp_sf$code_muni <- as.numeric(temp_sf$code_muni)
+      
+      # Make an invalid geometry valid # st_is_valid( sf)
+        temp_sf <- lwgeom::st_make_valid(temp_sf)
+      
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
       write_rds(temp_sf, path = i )
@@ -667,11 +700,11 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
     # keep only code and name columns
       table2013 <- temp2013 %>% as.data.frame()
-      table2013 <- dplyr::select(table2013, cod_meso, name_meso)
+      table2013 <- dplyr::select(table2013, code_meso, name_meso)
 
-    # update cod_meso
+    # update code_meso
       sf2010 <- left_join(temp2010, table2013, by="name_meso")
-      sf2010 <- dplyr::select(sf2010, cod_meso=cod_meso.y, name_meso, geometry)
+      sf2010 <- dplyr::select(sf2010, code_meso=code_meso.y, name_meso, geometry)
 
     # Save file
       write_rds(sf2010, path = a2010_sf_meso_file )
@@ -715,11 +748,11 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
     # keep only code and name columns
     table2013 <- temp2013 %>% as.data.frame()
-    table2013 <- dplyr::select(table2013, cod_micro, name_micro)
+    table2013 <- dplyr::select(table2013, code_micro, name_micro)
 
-    # update cod_micro
+    # update code_micro
     sf2010 <- left_join(temp2010, table2013, by="name_micro")
-    sf2010 <- dplyr::select(sf2010, cod_micro=cod_micro.y, name_micro, geometry)
+    sf2010 <- dplyr::select(sf2010, code_micro=code_micro.y, name_micro, geometry)
 
     # Save file
     write_rds(sf2010, path = a2010_sf_micro_file )
@@ -733,65 +766,79 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
 # Read correspondence table from the Census 2019
   table_2010 <- xlsx::read.xlsx2(file="L:/# DIRUR #/ASMEQ/geobr/data-raw/Divisao_Territorial_do_Brasil/Unidades da Federacao, Mesorregioes, microrregioes e municipios 2010.xls",
-                                 sheetIndex = 1, startRow = 3)
+                                 sheetIndex = 1, startRow = 3, stringsAsFactors=F)
 
+  
+# Remove accents from colnames 
+  names(table_2010) <- stringi::stri_trans_general(str = names(table_2010), id = "Latin-ASCII")
+
+  
   # change col names according to convetions ingeobr package
   table_2010 <- dplyr::select(table_2010
-                              , cod_muni = 'Munic?pio'
-                              , name_muni = 'Nome_Munic?pio'
-                              , cod_micro = 'Micror.regi?o'
-                              , name_micro = 'Nome_Microrregi?o'
-                              , cod_meso = 'Mesor.regi?o'
-                              , name_meso = 'Nome_Mesorregi?o'
-                              , cod_state = 'UF'
+                              , code_muni = 'Municipio'
+                              , name_muni = 'Nome_Municipio'
+                              , code_micro = 'Micror.regiao'
+                              , name_micro = 'Nome_Microrregiao'
+                              , code_meso = 'Mesor.regiao'
+                              , name_meso = 'Nome_Mesorregiao'
+                              , code_state = 'UF'
                               , name_state = 'Nome_UF'
                               )
 
 
   # Add State abbreviations
   setDT(table_2010)
-  table_2010[ cod_state== 11, abbrev_state :=	"RO" ]
-  table_2010[ cod_state== 12, abbrev_state :=	"AC" ]
-  table_2010[ cod_state== 13, abbrev_state :=	"AM" ]
-  table_2010[ cod_state== 14, abbrev_state :=	"RR" ]
-  table_2010[ cod_state== 15, abbrev_state :=	"PA" ]
-  table_2010[ cod_state== 16, abbrev_state :=	"AP" ]
-  table_2010[ cod_state== 17, abbrev_state :=	"TO" ]
-  table_2010[ cod_state== 21, abbrev_state :=	"MA" ]
-  table_2010[ cod_state== 22, abbrev_state :=	"PI" ]
-  table_2010[ cod_state== 23, abbrev_state :=	"CE" ]
-  table_2010[ cod_state== 24, abbrev_state :=	"RN" ]
-  table_2010[ cod_state== 25, abbrev_state :=	"PB" ]
-  table_2010[ cod_state== 26, abbrev_state :=	"PE" ]
-  table_2010[ cod_state== 27, abbrev_state :=	"AL" ]
-  table_2010[ cod_state== 28, abbrev_state :=	"SE" ]
-  table_2010[ cod_state== 29, abbrev_state :=	"BA" ]
-  table_2010[ cod_state== 31, abbrev_state :=	"MG" ]
-  table_2010[ cod_state== 32, abbrev_state :=	"ES" ]
-  table_2010[ cod_state== 33, abbrev_state :=	"RJ" ]
-  table_2010[ cod_state== 35, abbrev_state :=	"SP" ]
-  table_2010[ cod_state== 41, abbrev_state :=	"PR" ]
-  table_2010[ cod_state== 42, abbrev_state :=	"SC" ]
-  table_2010[ cod_state== 43, abbrev_state :=	"RS" ]
-  table_2010[ cod_state== 50, abbrev_state :=	"MS" ]
-  table_2010[ cod_state== 51, abbrev_state :=	"MT" ]
-  table_2010[ cod_state== 52, abbrev_state :=	"GO" ]
-  table_2010[ cod_state== 53, abbrev_state :=	"DF" ]
+  table_2010[ code_state== 11, abbrev_state :=	"RO" ]
+  table_2010[ code_state== 12, abbrev_state :=	"AC" ]
+  table_2010[ code_state== 13, abbrev_state :=	"AM" ]
+  table_2010[ code_state== 14, abbrev_state :=	"RR" ]
+  table_2010[ code_state== 15, abbrev_state :=	"PA" ]
+  table_2010[ code_state== 16, abbrev_state :=	"AP" ]
+  table_2010[ code_state== 17, abbrev_state :=	"TO" ]
+  table_2010[ code_state== 21, abbrev_state :=	"MA" ]
+  table_2010[ code_state== 22, abbrev_state :=	"PI" ]
+  table_2010[ code_state== 23, abbrev_state :=	"CE" ]
+  table_2010[ code_state== 24, abbrev_state :=	"RN" ]
+  table_2010[ code_state== 25, abbrev_state :=	"PB" ]
+  table_2010[ code_state== 26, abbrev_state :=	"PE" ]
+  table_2010[ code_state== 27, abbrev_state :=	"AL" ]
+  table_2010[ code_state== 28, abbrev_state :=	"SE" ]
+  table_2010[ code_state== 29, abbrev_state :=	"BA" ]
+  table_2010[ code_state== 31, abbrev_state :=	"MG" ]
+  table_2010[ code_state== 32, abbrev_state :=	"ES" ]
+  table_2010[ code_state== 33, abbrev_state :=	"RJ" ]
+  table_2010[ code_state== 35, abbrev_state :=	"SP" ]
+  table_2010[ code_state== 41, abbrev_state :=	"PR" ]
+  table_2010[ code_state== 42, abbrev_state :=	"SC" ]
+  table_2010[ code_state== 43, abbrev_state :=	"RS" ]
+  table_2010[ code_state== 50, abbrev_state :=	"MS" ]
+  table_2010[ code_state== 51, abbrev_state :=	"MT" ]
+  table_2010[ code_state== 52, abbrev_state :=	"GO" ]
+  table_2010[ code_state== 53, abbrev_state :=	"DF" ]
 
 
 
 
   # Add Region codes and names
-  table_2010$cod_region <- substr(table_2010$cod_state, 1,1)
-  table_2010 <- table_2010 %>% mutate(name_region = ifelse(cod_region==1, 'Norte',
-                                                           ifelse(cod_region==2, 'Nordeste',
-                                                                  ifelse(cod_region==3, 'Sudeste',
-                                                                         ifelse(cod_region==4, 'Sul',
-                                                                                ifelse(cod_region==5, 'Centro Oeste', NA))))))
+  table_2010$code_region <- substr(table_2010$code_state, 1,1)
+  table_2010 <- table_2010 %>% mutate(name_region = ifelse(code_region==1, 'Norte',
+                                                           ifelse(code_region==2, 'Nordeste',
+                                                                  ifelse(code_region==3, 'Sudeste',
+                                                                         ifelse(code_region==4, 'Sul',
+                                                                                ifelse(code_region==5, 'Centro Oeste', NA))))))
 
 
 
+  # Convert code columns to numeric
+    table_2010$code_region <- as.numeric(table_2010$code_region)
+    table_2010$code_state <- as.numeric(table_2010$code_state)
+    table_2010$code_meso <- as.numeric(table_2010$code_meso)
+    table_2010$code_micro <- as.numeric(table_2010$code_micro)
+    table_2010$code_muni <- as.numeric(table_2010$code_muni)
+  
 
+    
+  
 ### Add geometry
 
   # read clean muni data of 2010
@@ -806,7 +853,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   sf_2010 <- do.call('rbind', sf_2010)
 
   # Add geometry
-  brazil_2010 <- dplyr::left_join(sf_2010, table_2010, by='cod_muni')
+  brazil_2010 <- dplyr::left_join(sf_2010, table_2010, by='code_muni')
 
   # fix names
   brazil_2010$name_muni.x <- NULL
@@ -814,13 +861,17 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   head(brazil_2010)
 
   
+  
 # remove two lagoons
-  brazil_2010 <- subset(brazil_2010, !is.na(cod_state))
+  brazil_2010 <- subset(brazil_2010, !is.na(code_state))
 
 # save .Rdata
-  save(brazil_2010, file = "./data/brazil_2010.RData", compress='gzip', compression_level=1)
+  save(brazil_2010, file = "../data/brazil_2010.RData", compress='gzip', compression_level=1)
 
   # # Save file with usethis::use_data
   #   assign("brazil_2010", brazil_2010)
   #   usethis::use_data(brazil_2010, name="brazil_2010", compress='gzip', compression_level=1)
 
+  
+  
+  
