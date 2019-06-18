@@ -1,8 +1,8 @@
 #' Download shape files of micro region.
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param cod_micro 5-digit code of a micro region. If the two-digit code of a state is passed,
-#' the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.
+#' @param code_micro 5-digit code of a micro region. If the two-digit code of a state is passed,
+#' the function will load all micro regions of that state. If code_micro="all", all micro regions of the country are loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -10,15 +10,15 @@
 #' library(geobr)
 #'
 #' # Read all micro regions of a state at a given year
-#'   micro <- read_micro_region(cod_micro=12, year=2017)
+#'   micro <- read_micro_region(code_micro=12, year=2017)
 #'
 #'# Read all micro regions at a given year
-#'   micro <- read_micro_region(cod_micro="all", year=2010)
+#'   micro <- read_micro_region(code_micro="all", year=2010)
 #' }
 #'
 #'
 
-read_micro_region <- function(cod_micro, year=NULL){
+read_micro_region <- function(code_micro, year=NULL){
 
   
   # Get metadata with data addresses
@@ -50,13 +50,13 @@ read_micro_region <- function(cod_micro, year=NULL){
   }
   
   
-  # Verify cod_micro input
+  # Verify code_micro input
   
-  # Test if cod_micro input is null
-  if(is.null(cod_micro)){ stop("Value to argument 'cod_micro' cannot be NULL") }
+  # Test if code_micro input is null
+  if(is.null(code_micro)){ stop("Value to argument 'code_micro' cannot be NULL") }
   
-  # if cod_micro=="all", read the entire country
-  else if(cod_micro=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
+  # if code_micro=="all", read the entire country
+  else if(code_micro=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
     
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
@@ -75,13 +75,13 @@ read_micro_region <- function(cod_micro, year=NULL){
     return(shape)
   }
   
-  else if( !(substr(x = cod_micro, 1, 2) %in% temp_meta$code)){
-    stop("Error: Invalid Value to argument cod_micro.")
+  else if( !(substr(x = code_micro, 1, 2) %in% temp_meta$code)){
+    stop("Error: Invalid Value to argument code_micro.")
     
   } else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(cod_micro, 1, 2))$download_path)
+    filesD <- as.character(subset(temp_meta, code==substr(code_micro, 1, 2))$download_path)
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
@@ -90,15 +90,15 @@ read_micro_region <- function(cod_micro, year=NULL){
     # read sf
     shape <- readr::read_rds(temps)
     
-    if(nchar(cod_micro)==2){
+    if(nchar(code_micro)==2){
       return(shape)
       
-    } else if(cod_micro %in% shape$cod_micro){    # Get micro region
-      x <- cod_micro
-      shape <- subset(shape, cod_micro==x)
+    } else if(code_micro %in% shape$code_micro){    # Get micro region
+      x <- code_micro
+      shape <- subset(shape, code_micro==x)
       return(shape)
     } else{
-      stop("Error: Invalid Value to argument cod_micro.")
+      stop("Error: Invalid Value to argument code_micro.")
     }
   }
 }
