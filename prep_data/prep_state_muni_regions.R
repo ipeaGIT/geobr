@@ -762,6 +762,15 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   lapply(sf_files_2010, correct_micro_digits)
 
 
+  
+  
+  
+  
+  
+  
+  
+  
+
 ###### 9. Creating base 2010 file  --------------------------------
 
 # Read correspondence table from the Census 2019
@@ -868,10 +877,8 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 # save .Rdata
   save(brazil_2010, file = "../data/brazil_2010.RData", compress='gzip', compression_level=1)
 
+  
+
   # # Save file with usethis::use_data
   #   assign("brazil_2010", brazil_2010)
-  #   usethis::use_data(brazil_2010, name="brazil_2010", compress='gzip', compression_level=1)
-
-  
-  
-  
+  #   usethis::use_data(brazil_2010, name="brazil_2010.RData", compress='gzip', compression_level=1)
