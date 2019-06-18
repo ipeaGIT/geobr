@@ -343,7 +343,7 @@ shp_to_sf_rds <- function(x){
         
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i )
+      write_rds(temp_sf, path = i, compress="gz" )
       }
   }
 
@@ -431,7 +431,7 @@ shp_to_sf_rds <- function(x){
         
       # Save cleaned sf in the cleaned directory
         i <- gsub("original", "cleaned", i)
-        write_rds(temp_sf, path = i )
+        write_rds(temp_sf, path = i, compress="gz" )
       }
     }
 
@@ -520,7 +520,7 @@ shp_to_sf_rds <- function(x){
       
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i )
+      write_rds(temp_sf, path = i, compress="gz" )
     }
   }
 
@@ -633,7 +633,7 @@ shp_to_sf_rds <- function(x){
       
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i )
+      write_rds(temp_sf, path = i, compress="gz" )
     }
   }
 
@@ -707,7 +707,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
       sf2010 <- dplyr::select(sf2010, code_meso=code_meso.y, name_meso, geometry)
 
     # Save file
-      write_rds(sf2010, path = a2010_sf_meso_file )
+      write_rds(sf2010, path = a2010_sf_meso_file, compress="gz" )
       }
 
 # Apply function
@@ -755,7 +755,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
     sf2010 <- dplyr::select(sf2010, code_micro=code_micro.y, name_micro, geometry)
 
     # Save file
-    write_rds(sf2010, path = a2010_sf_micro_file )
+    write_rds(sf2010, path = a2010_sf_micro_file, compress="gz" )
   }
 
   # Apply function
