@@ -1,4 +1,4 @@
-#' Download shape files of municipalities
+#' Download sf files of Brazilian municipalities
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_muni The 7-digit code of a municipality. If the two-digit code of a state is used,
@@ -22,23 +22,30 @@ read_municipality2 <- function(code_muni, year=NULL){
   
 # BLOCK 1. Using 2010 data ---------------------------- 
 
+  
+  
   # 1.1 Verify year input
   
-  if ( length(year) == 1 | year==2010 ){
+  if (  year==2010 ){ #is.null(year) |
     cat("Using data from year 2010") 
 
     # load package data
       data("brazil_2010", envir=environment())
       
       
+
+      
     # 1.2 Verify code_muni Input
-  
       
       # Test if code_muni input is null
         if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
   
       # if code_muni=="all", return the entire country
-        if(code_muni=="all"){ return(brazil_2010)}
+        if(code_muni=="all"){
+                              sf <- brazil_2010
+                              print("using local data 1")
+                              return( sf )
+                              }
         
       
       # Check if code_muni matches an existing state
@@ -52,7 +59,9 @@ read_municipality2 <- function(code_muni, year=NULL){
           
           if(nchar(code_muni)==2){
             
-            sf <- subset(brazil_2010, code_state==code_muni)
+            x <- code_muni
+            sf <- subset(brazil_2010, code_state==x)
+            print("using local data 2")
             
             return(sf)
     
@@ -61,12 +70,16 @@ read_municipality2 <- function(code_muni, year=NULL){
           } else if(code_muni %in% brazil_2010$code_muni){    # Get Municipio
             x <- code_muni
             sf <- subset(brazil_2010, code_muni==x)
+            print("using local data 3")
+            
             return(sf)
           } else{
             stop("Error: Invalid Value to argument code_muni.") }
     
         }
       } else{
+        
+        
 # BLOCK 2 other years ---------------------------- 
   
 # Get metadata with data addresses
@@ -82,27 +95,40 @@ read_municipality2 <- function(code_muni, year=NULL){
     metadata <- readr::read_rds(tempf)
   }
 
-  
-# Select geo
+# Select metadata geo
   temp_meta <- subset(metadata, geo=="municipio")
+  
+  # 2.1 Verify year input
+  
+  
+  
+  # Test if code_muni input is null
+  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                                                paste(unique(temp_meta$year),collapse = " ")))
+    }
 
-
-
-
-# Verify code_muni input
+# Select metadata year
+  x <- year
+  temp_meta <- subset(temp_meta, year==x)
+  
+  
+  
+  
+  
+# 2.2 Verify code_muni Input
 
   # Test if code_muni input is null
     if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
 
   # if code_muni=="all", read the entire country
-    else if(code_muni=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
+    if(code_muni=="all"){ cat("Loading data for the whole country. This might take a few minutes. \n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
 
 
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, 
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
 
@@ -110,8 +136,8 @@ read_municipality2 <- function(code_muni, year=NULL){
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
       files <- lapply(X=files, FUN= readr::read_rds)
-      shape <- do.call('rbind', files)
-      return(shape)
+      sf <- do.call('rbind', files)
+      return(sf)
     }
 
   else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code)){
@@ -124,18 +150,18 @@ read_municipality2 <- function(code_muni, year=NULL){
 
     # download files
     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
+    httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
     
     # read sf
-    shape <- readr::read_rds(temps)
+    sf <- readr::read_rds(temps)
 
       if(nchar(code_muni)==2){
-        return(shape)
+        return(sf)
 
-      } else if(code_muni %in% shape$code_muni){    # Get Municipio
+      } else if(code_muni %in% sf$code_muni){    # Get Municipio
           x <- code_muni
-          shape <- subset(shape, code_muni==x)
-          return(shape)
+          sf <- subset(sf, code_muni==x)
+          return(sf)
       } else{
           stop("Error: Invalid Value to argument code_muni.")
       }
