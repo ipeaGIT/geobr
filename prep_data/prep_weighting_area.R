@@ -2,9 +2,73 @@ library(RCurl)
 library(tidyverse)
 library(stringr)
 library(sf)
+library(magrittr)
+library(data.table)
 
-#copiando e colando os arquivos zipados para a pasta de trabalho
-#Fazer manualmente
+
+
+
+
+###### 0. Create folders to save the data -----------------
+
+# Directory to keep raw zipped files
+  dir.create("L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//2010")
+  dir.create("L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//2010//municipios_areas_redefinidas")
+  
+  # # Directory to keep raw sf files
+  # dir.create("L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_original")
+  # dir.create("L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_original//2010")
+  # 
+  # # Directory to keep cleaned sf files
+  # dir.create("L:////# DIRUR #//ASMEQ//geobr//data-raw//grade_estatistica//shapes_in_sf_all_years_cleaned")
+  # dir.create("L:////# DIRUR #//ASMEQ//geobr//data-raw//grade_estatistica//shapes_in_sf_all_years_cleaned//2010")
+  
+  
+  
+  
+
+
+
+
+###### 1. Download 2010 Raw data -----------------
+
+# Root directory
+  root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//2010"
+  setwd(root_dir)
+
+  
+# get files url
+  url = "ftp://geoftp.ibge.gov.br/recortes_para_fins_estatisticos/malha_de_areas_de_ponderacao/censo_demografico_2010/"
+  filenames = getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  filenames <- strsplit(filenames, "\r\n")
+  filenames = unlist(filenames)
+  filenames <- filenames[-28] # remove subdirectory 'municipios_areas_redefinidas'
+
+# Download zipped files
+  for (filename in filenames) {
+    download.file(paste(url, filename, sep = ""), paste(filename))
+  }
+
+###### 1.1 Download municipios_areas_redefinidas
+
+# get files url
+  url = "ftp://geoftp.ibge.gov.br/recortes_para_fins_estatisticos/malha_de_areas_de_ponderacao/censo_demografico_2010/municipios_areas_redefinidas/"
+  filenames = getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  filenames <- strsplit(filenames, "\r\n")
+  filenames = unlist(filenames)
+
+# Download zipped files
+  for (filename in filenames) {
+    download.file( url=paste(url, filename, sep = ""), destfile= paste0("./municipios_areas_redefinidas/",filename))
+  }
+
+
+
+
+
+
+###### 2. Unzip Raw data -----------------
+
 
 #pegando os nomes dos arquivos
 filenames <- list.files(pattern = ".*\\.zip$")
@@ -14,11 +78,18 @@ filenamesred <- list.files(path = "./municipios_areas_redefinidas")
 for (filename in filenames) {
   unzip(filename)
  #excluindo os arquivos .zip
-   file.remove(filename)
 }
+
+
 for (filename in filenamesred) {
   unzip(paste("./municipios_areas_redefinidas",filename,sep="/"),exdir = "./municipios_areas_redefinidas")
 }
+
+
+
+
+###### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
+
 
 #transformando os dados e salvando como rds
 for (filename in list.files(pattern = "^\\d|mun")) {
