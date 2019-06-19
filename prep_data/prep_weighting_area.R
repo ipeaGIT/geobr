@@ -4,6 +4,137 @@ library(stringr)
 library(sf)
 library(magrittr)
 library(data.table)
+library(parallel)
+library(stringi)
+
+
+#### 0. Download original data sets from IBGE ftp -----------------
+
+ftp <- "ftp://geoftp.ibge.gov.br/recortes_para_fins_estatisticos/malha_de_areas_de_ponderacao/"
+
+########  1. Unzip original data sets downloaded from IBGE -----------------
+
+# Root directory
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
+setwd(root_dir)
+
+# List all zip files for all years
+all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
+
+#### 1.1. Municipios sem area redefinidas --------------
+files_1st_batch <- all_zipped_files[!all_zipped_files %like% "municipios_areas_redefinidas"]
+
+# function to Unzip files in their original sub-dir
+unzip_fun <- function(f){
+    unzip(f, exdir = file.path(root_dir, substr(f, 2, 24)))
+}
+
+# create computing clusters
+cl <- parallel::makeCluster(detectCores())
+parallel::clusterExport(cl=cl, varlist= c("files_1st_batch", "root_dir"), envir=environment())
+
+# apply function in parallel
+parallel::parLapply(cl, files_1st_batch, unzip_fun)
+stopCluster(cl)
+
+
+rm(list=setdiff(ls(), c("root_dir","all_zipped_files")))
+gc(reset = T)
+
+#### 1.2. Municipios  area redefinidas --------------
+files_2st_batch <- all_zipped_files[all_zipped_files %like% "municipios_areas_redefinidas"]
+
+# function to Unzip files in their original sub-dir
+unzip_fun <- function(f){
+  
+  unzip(f, exdir = file.path(root_dir, substr(f, 2, 53) ))
+}
+
+# create computing clusters
+cl <- parallel::makeCluster(detectCores())
+parallel::clusterExport(cl=cl, varlist= c("files_2st_batch", "root_dir"), envir=environment())
+
+# apply function in parallel
+parallel::parLapply(cl, files_2st_batch, unzip_fun)
+stopCluster(cl)
+
+
+rm(list=setdiff(ls(), c("root_dir","all_zipped_files")))
+gc(reset = T)
+
+
+#### 2. Create folders to save sf.rds files  -----------------
+
+# create directory to save original shape files in sf format
+dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
+
+# create directory to save cleaned shape files in sf format
+dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
+
+# create a subdirectory area_ponderacao
+dir.create(file.path("shapes_in_sf_all_years_original", "area_ponderacao"), showWarnings = FALSE)
+
+dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao"), showWarnings = FALSE)
+
+# create a subdirectory of year
+dir.create(file.path("shapes_in_sf_all_years_original", "area_ponderacao","2010"), showWarnings = FALSE)
+
+dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao","2010"), showWarnings = FALSE)
+
+# create a subdirectory of municipios_areas_redefinidas
+dir.create(file.path("shapes_in_sf_all_years_original", "area_ponderacao","2010","municipios_areas_redefinidas"), showWarnings = FALSE)
+
+dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao","2010","municipios_areas_redefinidas"), showWarnings = FALSE)
+
+#### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
+
+# Root directory
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
+setwd(root_dir)
+
+# List shapes for all years
+all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp")
+
+
+shp_to_sf_rds <- function(x){
+
+  shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
+  
+  dest_dir <- paste0("./shapes_in_sf_all_years_original/area_ponderacao/", "2010")
+
+  # name of the file that will be saved
+  if( x %like% "municipios_areas_redefinidas"){ file_name <- paste0(toupper(substr(x, 26, 24)), "_AP", ".rds") }
+  if( !x %like% "municipios_areas_redefinidas"){ file_name <- paste0( toupper(substr(x, 26, 27)),"_AP", ".rds") }
+
+ 
+  substr(all_shapes[153], 55 )
+   all_shapes[1]
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
