@@ -4,11 +4,11 @@
 \alias{read_meso_region}
 \title{Download shape files of meso region.}
 \usage{
-read_meso_region(cod_meso, year = NULL)
+read_meso_region(code_meso, year = NULL)
 }
 \arguments{
-\item{cod_meso}{The 4-digit code of a meso region. If a two-digit code of a state is passed,
-the function will load all meso regions of that state. If cod_meso="all", all meso regions of the country are loaded.}
+\item{code_meso}{The 4-digit code of a meso region. If a two-digit code of a state is passed,
+the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
@@ -21,10 +21,10 @@ Download shape files of meso region.
 library(geobr)
 
 # Read all meso regions of a state at a given year
-  meso <- read_meso_region(cod_meso=12, year=2017)
+  meso <- read_meso_region(code_meso=12, year=2017)
 
 # Read all meso regions of the country at a given year
-  meso <- read_meso_region(cod_meso="all", year=2010)
+  meso <- read_meso_region(code_meso="all", year=2010)
 }
 
 }
@@ -37,3 +37,4 @@ Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}
