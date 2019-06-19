@@ -251,13 +251,10 @@ system.time( g1 <- read_statistical_grid() )
 ### update package documentation ----------------
   library(roxygen2)
   library("devtools")
-#  setwd("C:/Users/r1701707/Desktop/geobr")
+
+
   setwd("R:/Dropbox/git_projects/geobr")
-
-
-
-  
-  setwd("C:/Users/r1701707/Desktop/geobr")
+#  setwd("C:/Users/r1701707/Desktop/geobr")
   
   # Update documentation
   devtools::document()

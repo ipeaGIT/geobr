@@ -4,11 +4,11 @@
 \alias{read_micro_region}
 \title{Download shape files of micro region.}
 \usage{
-read_micro_region(cod_micro, year = NULL)
+read_micro_region(code_micro, year = NULL)
 }
 \arguments{
-\item{cod_micro}{5-digit code of a micro region. If the two-digit code of a state is passed,
-the function will load all micro regions of that state. If cod_micro="all", all micro regions of the country are loaded.}
+\item{code_micro}{5-digit code of a micro region. If the two-digit code of a state is passed,
+the function will load all micro regions of that state. If code_micro="all", all micro regions of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
@@ -21,10 +21,10 @@ Download shape files of micro region.
 library(geobr)
 
 # Read all micro regions of a state at a given year
-  micro <- read_micro_region(cod_micro=12, year=2017)
+  micro <- read_micro_region(code_micro=12, year=2017)
 
 # Read all micro regions at a given year
-  micro <- read_micro_region(cod_micro="all", year=2010)
+  micro <- read_micro_region(code_micro="all", year=2010)
 }
 
 
@@ -38,3 +38,4 @@ Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}
