@@ -66,7 +66,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
       filesD <- as.character(temp_meta$download_path)
 
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, 
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
       # read files and pile them up
@@ -103,7 +103,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
       filesD <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
       
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, 
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
       # read files and pile them up
