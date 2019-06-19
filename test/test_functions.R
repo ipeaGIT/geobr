@@ -65,9 +65,11 @@ head(brazil_2010)
   uf <- read_state(code_state=12, year=2005)
 
 
-
-
-
+# ok
+  system.time( a <- read_municipality2(code_muni=1200179, year=2010) )
+# ok
+  system.time( a <- read_municipality2(code_muni="all", year=2010) )
+  
 
 ###### 2. read_municipality -------------------------
 gc(reset = T)
@@ -77,20 +79,35 @@ gc(reset = T)
 
 ?read_municipality
 
-  system.time( a <- read_municipality(code_muni=1200179, year=2016) )
-  plot(a)
 
-  system.time( b <- read_municipality(code_muni=33, year=2001) )
-  plot(b)
 
-  system.time( c <- read_municipality(code_muni=11) )
+  system.time( c <- read_municipality2(code_muni=11) )
+  system.time( c <- read_municipality2(code_muni=1200179) )
+  
   plot(c)
 
-  system.time( d <- read_municipality(code_muni="all", year=2017 ))
+  
+  
+# working fine
+  system.time( a <- read_municipality2(code_muni=1200179, year=2010) )
+  plot(a)
+  
+  system.time( b <- read_municipality2(code_muni=11, year=2010) )
+  head(b)
+  
+  system.time( d <- read_municipality2(code_muni="all", year=2010 ))
   head(d)
-  plot(d)
+  
+  
+  system.time( a <- read_municipality2(code_muni=1200179, year=2016) )
+  head(a)
 
+  system.time( b <- read_municipality2(code_muni=11, year=2000) )
+  head(b)
 
+  system.time( c <- read_municipality2(code_muni="all", year=2013) )
+  head(c)
+  
 ### expected ERROR messages
 
   # invalid year
