@@ -45,3 +45,4 @@ Other general area functions: \code{\link{read_meso_region}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}
