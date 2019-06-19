@@ -67,7 +67,7 @@ read_weighting_area <- function(code_weighting, year = NULL){
     
     
     # download files
-    lapply(X=filesD, function(x) httr::GET(url=x, 
+    lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                            httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
     
     
