@@ -4,11 +4,11 @@
 \alias{read_municipality2}
 \title{Download shape files of municipalities}
 \usage{
-read_municipality2(cod_muni, year = NULL)
+read_municipality2(code_muni, year = NULL)
 }
 \arguments{
-\item{cod_muni}{The 7-digit code of a municipality. If the two-digit code of a state is used,
-the function will load all municipalities of that state. If cod_muni="all", all municipalities will be loaded.}
+\item{code_muni}{The 7-digit code of a municipality. If the two-digit code of a state is used,
+the function will load all municipalities of that state. If code_muni="all", all municipalities will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
@@ -21,10 +21,10 @@ Download shape files of municipalities
 library(geobr)
 
 # Read specific municipality at a given year
-  mun <- read_municipality(cod_muni=1200179, year=2017)
+  mun <- read_municipality(code_muni=1200179, year=2017)
 
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(cod_muni=12, year=2010)
+  mun <- read_municipality(code_muni=12, year=2010)
 
 }
 }
@@ -37,3 +37,4 @@ Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}

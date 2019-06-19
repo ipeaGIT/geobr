@@ -4,10 +4,10 @@
 \alias{read_state}
 \title{Download shape files of Brazilian states}
 \usage{
-read_state(cod_uf, year = NULL)
+read_state(code_uf, year = NULL)
 }
 \arguments{
-\item{cod_uf}{The two-digit code of a state. If cod_uf="all", all states will be loaded.}
+\item{code_uf}{The two-digit code of a state. If code_uf="all", all states will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
@@ -20,10 +20,10 @@ Download shape files of Brazilian states
 library(geobr)
 
 # Read specific municipality at a given year
-  uf <- read_state(cod_uf=12, year=2017)
+  uf <- read_state(code_uf=12, year=2017)
 
 # Read all states at a given year
-  ufs <- read_state(cod_uf="all", year=2010)
+  ufs <- read_state(code_uf="all", year=2010)
 
 }
 }
@@ -36,3 +36,4 @@ Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}

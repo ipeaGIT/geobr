@@ -4,7 +4,7 @@
 \alias{read_weighting_area}
 \title{Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census}
 \usage{
-read_weighting_area(cod_weighting, year = NULL)
+read_weighting_area(code_weighting, year = NULL)
 }
 \arguments{
 \item{year}{the year of the data download (defaults to 2010)}
@@ -46,3 +46,4 @@ Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_state}},
   \code{\link{read_statistical_grid}}
 }
+\concept{general area functions}
