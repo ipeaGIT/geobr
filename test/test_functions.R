@@ -177,17 +177,13 @@ gc(reset = T)
   plot(c)
 
 
-# NEEDS  correction
   system.time( d <- read_micro_region(code_micro="all", year=2000) )
   head(d)
   plot(d)
 
 
 
-
-  library(sf)
-  library(lwgeom)
-  st_make_valid()
+  
 
 
   
@@ -201,10 +197,12 @@ head(w1)
 plot(w1)
 
 
-system.time( w1 <- read_weighting_area(code_weighting=33) )
+
+#### ERROR
+system.time( w1 <- read_weighting_area(code_weighting="all") )
 head(w1)
 plot(w1)
-
+#> Error: arguments have different crs 
 
 mapview::mapview(w1)
 
