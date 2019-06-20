@@ -41,6 +41,7 @@ library(geobr)
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2000 |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | 
 
+obs. Data sets at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 
 ## Comming soon:
 
