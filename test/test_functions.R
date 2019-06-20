@@ -48,7 +48,10 @@ head(brazil_2010)
 
 # Read specific municipality at a given year
   uf <- read_state(code_state=12, year=2017)
-  plot(uf)
+  uf <- read_state(code_state="SP", year=2017)
+  uf <- read_state(code_state="RJ")
+  
+plot(uf)
   head(uf)
 
 # Read all states at a given year
@@ -80,10 +83,12 @@ gc(reset = T)
   system.time( b <- read_municipality(code_muni=11, year=2010) )
   head(b)
   
+  system.time( d <- read_municipality(code_muni="AM", year=2010 ))
   system.time( d <- read_municipality(code_muni="all", year=2010 ))
   head(d)
   
   system.time( c <- read_municipality(code_muni=11) )
+  system.time( c <- read_municipality(code_muni="AC") )
   system.time( c <- read_municipality(code_muni=1200179) )
   
   
@@ -92,7 +97,7 @@ gc(reset = T)
 
   system.time( b <- read_municipality(code_muni=11, year=2000) )
   head(b)
-
+  system.time( c <- read_municipality(code_muni="SC", year=2013) )
   system.time( c <- read_municipality(code_muni="all", year=2013) )
   head(c)
   
@@ -113,6 +118,7 @@ gc(reset = T)
 # 2010
 
 
+  
   ### passed the test
 
   system.time( a <- read_meso_region(code_meso=3305, year=2010) )
@@ -120,6 +126,7 @@ gc(reset = T)
   plot(a)
 
   system.time( b <- read_meso_region(code_meso=33, year=2010) )
+  system.time( b <- read_meso_region(code_meso="SP", year=2010) )
   head(b)
   plot(b)
 
@@ -145,15 +152,20 @@ gc(reset = T)
 gc(reset = T)
 
 
-
+  
 
 ### passed the test
 
+  system.time( b <- read_micro_region(code_micro=11008, year=2018) )
+  head(b)
+  plot(b)
+  
+  
   system.time( a <- read_micro_region(code_micro=11, year=2000) )
   head(a); rm(a)
   plot(a)
 
-  system.time( b <- read_micro_region(code_micro=33, year=2001) )
+  system.time( b <- read_micro_region(code_micro="RJ", year=2001) )
   head(b)
   plot(b)
 
