@@ -44,7 +44,6 @@ read_municipality2 <- function(code_muni, year=NULL){
       # if code_muni=="all", return the entire country
         if(code_muni=="all"){
                               sf <- brazil_2010
-                              print("using local data 1")
                               return( sf )
                               }
         
@@ -62,8 +61,6 @@ read_municipality2 <- function(code_muni, year=NULL){
             
             x <- code_muni
             sf <- subset(brazil_2010, code_state==x)
-            print("using local data 2")
-            
             return(sf)
     
           # if code_muni is a 7-digit code of a muni, return that specific muni
@@ -71,9 +68,8 @@ read_municipality2 <- function(code_muni, year=NULL){
           } else if(code_muni %in% brazil_2010$code_muni){    # Get Municipio
             x <- code_muni
             sf <- subset(brazil_2010, code_muni==x)
-            print("using local data 3")
-            
             return(sf)
+            
           } else{
             stop("Error: Invalid Value to argument code_muni.") }
     
@@ -129,8 +125,11 @@ read_municipality2 <- function(code_muni, year=NULL){
 
 
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
-                                             httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+      counter <- 0
+      lapply(X=filesD, function(X){ counter <<- counter + 1
+                                    print(paste("Downloading ", counter, " of 27 files"))
+                                    httr::GET(url=X, httr::progress(),
+                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(X,"/"),tail,n=1L))), overwrite = T))})
       
 
       # read files and pile them up
