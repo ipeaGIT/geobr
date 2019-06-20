@@ -2,27 +2,32 @@
 % Please edit documentation in R/read_micro_region.R
 \name{read_micro_region}
 \alias{read_micro_region}
-\title{Download shape files of micro region.}
+\title{Download shape files of micro region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
 read_micro_region(code_micro, year = NULL)
 }
 \arguments{
-\item{code_micro}{5-digit code of a micro region. If the two-digit code of a state is passed,
-the function will load all micro regions of that state. If code_micro="all", all micro regions of the country are loaded.}
+\item{code_micro}{5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of
+a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of that state. If code_micro="all", 
+all micro regions of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
 \description{
-Download shape files of micro region.
+Download shape files of micro region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{
 
 library(geobr)
 
-# Read all micro regions of a state at a given year
+# Read an specific micro region a given year
+  micro <- read_micro_region(code_micro=11008, year=2018)
+  
+# Read micro regions of a state at a given year
   micro <- read_micro_region(code_micro=12, year=2017)
-
+  micro <- read_micro_region(code_meso="AM", year=2000)
+  
 # Read all micro regions at a given year
   micro <- read_micro_region(code_micro="all", year=2010)
 }
