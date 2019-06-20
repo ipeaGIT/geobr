@@ -19,10 +19,12 @@ library(geobr)
   
   
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(cod_muni=12, year=2010)
-  
+  mun <- read_municipality(cod_muni=33, year=2010)
+  # alternatively
+  mun <- read_municipality(cod_muni="RJ", year=2010)
+
 # Read all municipalities in the country at a given year
-  mun <- read_municipality(cod_muni="all", year=2005)
+  mun <- read_municipality(cod_muni="all", year=2018)
 
 ````
 
@@ -36,6 +38,7 @@ library(geobr)
 |`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 |  
 |`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 | 
 |`read_municipality`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017 |
+|`read_weighting_area`| Census weighting area (área de ponderação) |  2000 |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | 
 
 
@@ -45,7 +48,6 @@ library(geobr)
 |-----|-----|-----|
 |`read_country`| ... | ... |
 |`read_region`| ... | ... | 
-|`read_weighting_area`| 2010 |  ... |
 |`read_census_tract` | 2000, 2007, 2010 | ...| 
 | Metropolitan areas | ... | ... |
 | Longitudinal Database* of municipalities | ... | ... | 
