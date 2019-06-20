@@ -71,13 +71,15 @@ read_state <- function(code_state, year=NULL){
     return(shape)
   }
   
-  else if( !(substr(x = code_state, 1, 2) %in% temp_meta$code)){
-    stop("Error: Invalid Value to argument code_state.")
+  else if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)
+           ){ stop("Error: Invalid Value to argument code_state.")
     
   } else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path)
+    if (is.numeric(code_state)){ filesD <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
+    if (is.character(code_state)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
+    
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
