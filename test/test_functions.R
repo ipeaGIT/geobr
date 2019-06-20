@@ -65,10 +65,6 @@ head(brazil_2010)
   uf <- read_state(code_state=12, year=2005)
 
 
-# ok
-  system.time( a <- read_municipality2(code_muni=1200179, year=2010) )
-# ok
-  system.time( a <- read_municipality2(code_muni="all", year=2010) )
   
 
 ###### 2. read_municipality -------------------------
@@ -76,17 +72,10 @@ gc(reset = T)
 
 
 ### passed the test
-
-?read_municipality
-
-
-
-  system.time( c <- read_municipality2(code_muni=11) )
-  system.time( c <- read_municipality2(code_muni=1200179) )
+  devtools::load_all('R:/Dropbox/git_projects/geobr')
   
-  plot(c)
-
   
+
   
 # working fine
   system.time( a <- read_municipality2(code_muni=1200179, year=2010) )
@@ -97,6 +86,9 @@ gc(reset = T)
   
   system.time( d <- read_municipality2(code_muni="all", year=2010 ))
   head(d)
+  
+  system.time( c <- read_municipality2(code_muni=11) )
+  system.time( c <- read_municipality2(code_muni=1200179) )
   
   
   system.time( a <- read_municipality2(code_muni=1200179, year=2016) )
@@ -118,9 +110,6 @@ gc(reset = T)
 
   # code_muni cannot be NULL
   e <- read_municipality( year=2010)
-
-
-
 
 
 
