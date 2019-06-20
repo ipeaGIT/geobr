@@ -1,4 +1,4 @@
-#' Download shape files of micro region.
+#' Download shape files of micro region. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_micro 5-digit code of a micro region. If the two-digit code of a state is passed,
