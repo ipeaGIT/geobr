@@ -17,7 +17,7 @@
 #'
 #'}
 
-read_municipality2 <- function(code_muni, year=NULL){
+read_municipality <- function(code_muni, year=NULL){
 
   
 # BLOCK 1. Using 2010 data ---------------------------- 
