@@ -3,8 +3,8 @@
 #' 
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param code_muni The 7-digit code of a municipality. If the two-digit code of a state is passed,
-#' the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
+#' @param code_muni The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
+#'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -15,8 +15,12 @@
 #'   mun <- read_municipality(code_muni=1200179, year=2017)
 #'
 #'# Read all municipalities of a state at a given year
-#'   mun <- read_municipality(code_muni=12, year=2010)
-#'
+#'   mun <- read_municipality(code_muni=33, year=2010)
+#'   mun <- read_municipality(code_muni="RJ", year=2010)
+#'   
+#'# Read all municipalities of the country at a given year
+#'   mun <- read_municipality(code_muni="all", year=2018)
+#'   
 #'}
 
 read_municipality <- function(code_muni, year=NULL){
@@ -51,7 +55,8 @@ read_municipality <- function(code_muni, year=NULL){
         
       
       # Check if code_muni matches an existing state
-        else if( !(substr(x = code_muni, 1, 2) %in% unique(brazil_2010$code_state))){
+        if( !(substr(x = code_muni, 1, 2) %in% unique(brazil_2010$code_state)) & !(substr(x = code_muni, 1, 2) %in% unique(brazil_2010$abbrev_state))){
+                   
           stop("Error: Invalid Value to argument code_muni.")
     
         } else{
@@ -62,7 +67,10 @@ read_municipality <- function(code_muni, year=NULL){
           if(nchar(code_muni)==2){
             
             x <- code_muni
-            sf <- subset(brazil_2010, code_state==x)
+
+            if (is.numeric(x)){ sf <- subset(brazil_2010, code_state==x) }
+            if (is.character(x)){ sf <- subset(brazil_2010, abbrev_state==x) }
+            
             return(sf)
     
           # if code_muni is a 7-digit code of a muni, return that specific muni
@@ -142,14 +150,16 @@ read_municipality <- function(code_muni, year=NULL){
       return(sf)
     }
 
-  else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code)){
+  else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code) & !(substr(x = code_muni, 1, 2) %in% temp_meta$code_abrev)){
+             
       stop("Error: Invalid Value to argument code_muni.")
 
   } else{
 
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path)
-
+    if (is.numeric(code_muni)){ filesD <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
+    if (is.character(code_muni)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_muni, 1, 2))$download_path) }
+    
     # download files
     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
     httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
