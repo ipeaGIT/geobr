@@ -25,8 +25,9 @@ read_municipality2 <- function(code_muni, year=NULL){
   
   
   # 1.1 Verify year input
-  
-  if (  year==2010 ){ #is.null(year) |
+  if (is.null(year)){ year <- 2010}
+    
+  if (  year==2010 ){
     cat("Using data from year 2010") 
 
     # load package data
