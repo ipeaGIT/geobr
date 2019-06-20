@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_statistical_grid.R
 \name{read_statistical_grid}
 \alias{read_statistical_grid}
-\title{Download shape files of IBGE's statistical grid (200 x 200 meters)}
+\title{Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
 read_statistical_grid(code_grid, year = NULL)
 }
@@ -13,7 +13,7 @@ the function will load all grid gradrants that intersect with that state. If cod
 \item{year}{Year of the data (defaults to 2010). The only year available thus far is 2010.}
 }
 \description{
-Download shape files of IBGE's statistical grid (200 x 200 meters)
+Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{
