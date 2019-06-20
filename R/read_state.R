@@ -1,15 +1,18 @@
 #' Download shape files of Brazilian states as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param code_state The two-digit code of a state. If code_state="all", all states will be loaded.
+#' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
 #'
 #' library(geobr)
 #'
-#' # Read specific municipality at a given year
+#' # Read specific state at a given year
 #'   uf <- read_state(code_state=12, year=2017)
+#'   
+#' # Read specific state at a given year
+#'   uf <- read_state(code_state="SC", year=2000)
 #'
 #'# Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
@@ -53,26 +56,26 @@ read_state <- function(code_state, year=NULL){
   if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
   
   # if code_state=="all", read the entire country
-  else if(code_state=="all"){ cat("Loading data for the whole country \n")
-    
-    # list paths of files to download
-    filesD <- as.character(temp_meta$download_path)
-    
-    # download files
-    lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
-                                           httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-    
-    
-    # read files and pile them up
-    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-    files <- paste0(tempdir(),"/",files)
-    files <- lapply(X=files, FUN= readr::read_rds)
-    shape <- do.call('rbind', files)
-    return(shape)
-  }
+    if(code_state=="all"){ cat("Loading data for the whole country \n")
+      
+      # list paths of files to download
+      filesD <- as.character(temp_meta$download_path)
+      
+      # download files
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
+                                             httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+      
+      
+      # read files and pile them up
+      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+      files <- paste0(tempdir(),"/",files)
+      files <- lapply(X=files, FUN= readr::read_rds)
+      shape <- do.call('rbind', files)
+      return(shape)
+    }
   
-  else if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)
-           ){ stop("Error: Invalid Value to argument code_state.")
+  if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
+      stop("Error: Invalid Value to argument code_state.")
     
   } else{
     
