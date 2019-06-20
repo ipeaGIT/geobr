@@ -1,4 +1,4 @@
-#' Download shape files of meso region. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Download shape files of meso region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_meso The 4-digit code of a meso region. If a two-digit code of a state is passed,

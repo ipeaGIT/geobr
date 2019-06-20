@@ -1,4 +1,4 @@
-#' Download shape files of IBGE's statistical grid (200 x 200 meters)
+#' Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #' 
 #' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
 #' @param code_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
