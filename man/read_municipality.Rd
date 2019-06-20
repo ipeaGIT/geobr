@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_municipality.R
 \name{read_municipality}
 \alias{read_municipality}
-\title{Download shape files of municipalities}
+\title{Download sf files of Brazilian municipalities}
 \usage{
 read_municipality(code_muni, year = NULL)
 }
@@ -13,7 +13,7 @@ the function will load all municipalities of that state. If code_muni="all", all
 \item{year}{Year of the data (defaults to 2010)}
 }
 \description{
-Download shape files of municipalities
+Download sf files of Brazilian municipalities
 }
 \examples{
 \dontrun{
@@ -32,7 +32,6 @@ library(geobr)
 Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
-  \code{\link{read_municipality2}},
   \code{\link{read_state}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
