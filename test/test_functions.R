@@ -72,32 +72,28 @@ gc(reset = T)
 
 
 ### passed the test
-  devtools::load_all('R:/Dropbox/git_projects/geobr')
-  
-  
 
-  
 # working fine
-  system.time( a <- read_municipality2(code_muni=1200179, year=2010) )
+  system.time( a <- read_municipality(code_muni=1200179, year=2010) )
   plot(a)
   
-  system.time( b <- read_municipality2(code_muni=11, year=2010) )
+  system.time( b <- read_municipality(code_muni=11, year=2010) )
   head(b)
   
-  system.time( d <- read_municipality2(code_muni="all", year=2010 ))
+  system.time( d <- read_municipality(code_muni="all", year=2010 ))
   head(d)
   
-  system.time( c <- read_municipality2(code_muni=11) )
-  system.time( c <- read_municipality2(code_muni=1200179) )
+  system.time( c <- read_municipality(code_muni=11) )
+  system.time( c <- read_municipality(code_muni=1200179) )
   
   
-  system.time( a <- read_municipality2(code_muni=1200179, year=2016) )
+  system.time( a <- read_municipality(code_muni=1200179, year=2016) )
   head(a)
 
-  system.time( b <- read_municipality2(code_muni=11, year=2000) )
+  system.time( b <- read_municipality(code_muni=11, year=2000) )
   head(b)
 
-  system.time( c <- read_municipality2(code_muni="all", year=2013) )
+  system.time( c <- read_municipality(code_muni="all", year=2013) )
   head(c)
   
 ### expected ERROR messages
@@ -268,7 +264,7 @@ system.time( g1 <- read_statistical_grid() )
   install("geobr")
   
   # Check package errors  
-  devtools::check("geobr")
+  # devtools::check("geobr")
   
   # Write package manual.pdf
   system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
