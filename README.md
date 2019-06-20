@@ -34,10 +34,10 @@ library(geobr)
 
 |Function|Geographies available|Years available|
 |-----|-----|-----|
-|`read_state`| States | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 | 
-|`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 |  
-|`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017 | 
-|`read_municipality`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017 |
+|`read_state`| States | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | 
+|`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  
+|`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | 
+|`read_municipality`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2000 |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | 
 
