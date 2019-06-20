@@ -1,4 +1,4 @@
-#' Download shape files of Brazilian states
+#' Download shape files of Brazilian states. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_state The two-digit code of a state. If code_state="all", all states will be loaded.

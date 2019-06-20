@@ -1,8 +1,10 @@
-#' Download sf files of Brazilian municipalities
+#' Download sf files of Brazilian municipalities. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' 
+#' 
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param code_muni The 7-digit code of a municipality. If the two-digit code of a state is used,
-#' the function will load all municipalities of that state. If code_muni="all", all municipalities will be loaded.
+#' @param code_muni The 7-digit code of a municipality. If the two-digit code of a state is passed,
+#' the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
