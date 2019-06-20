@@ -1,19 +1,24 @@
 #' Download shape files of meso region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param code_meso The 4-digit code of a meso region. If a two-digit code of a state is passed,
-#' the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
+#' @param code_meso The 4-digit code of a meso region. If the two-digit code or a two-letter uppercase abbreviation of
+#'  a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
 #'
 #' library(geobr)
-#'
+#' 
+#' # Read specific meso region at a given year
+#'   meso <- read_meso_region(code_meso=3301, year=2018)
+#'   
 #' # Read all meso regions of a state at a given year
 #'   meso <- read_meso_region(code_meso=12, year=2017)
-#'
-#'# Read all meso regions of the country at a given year
+#'   meso <- read_meso_region(code_meso="AM", year=2000)
+#'   
+#' # Read all meso regions of the country at a given year
 #'   meso <- read_meso_region(code_meso="all", year=2010)
+#'   
 #' }
 #'
 
@@ -55,7 +60,7 @@ read_meso_region <- function(code_meso, year=NULL){
   if(is.null(code_meso)){ stop("Value to argument 'code_meso' cannot be NULL") }
   
   # if code_meso=="all", read the entire country
-  else if(code_meso=="all"){ cat("Loading data for the whole country \n")
+  if(code_meso=="all"){ cat("Loading data for the whole country\n")
     
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
@@ -74,13 +79,16 @@ read_meso_region <- function(code_meso, year=NULL){
     return(shape)
   }
   
-  else if( !(substr(x = code_meso, 1, 2) %in% temp_meta$code)){
+  if( !(substr(x = code_meso, 1, 2) %in% temp_meta$code) & !(substr(x = code_meso, 1, 2) %in% temp_meta$code_abrev)){
     stop("Error: Invalid Value to argument code_meso.")
     
   } else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path)
+    if (is.numeric(code_meso)){ filesD <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path) }
+    if (is.character(code_meso)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_meso, 1, 2))$download_path) }
+    
+    
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
