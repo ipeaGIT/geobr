@@ -2,28 +2,31 @@
 % Please edit documentation in R/read_state.R
 \name{read_state}
 \alias{read_state}
-\title{Download shape files of Brazilian states}
+\title{Download shape files of Brazilian states as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_state(cod_uf, year = NULL)
+read_state(code_state, year = NULL)
 }
 \arguments{
-\item{cod_uf}{The two-digit code of a state. If cod_uf="all", all states will be loaded.}
+\item{code_state}{The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
 \description{
-Download shape files of Brazilian states
+Download shape files of Brazilian states as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{
 
 library(geobr)
 
-# Read specific municipality at a given year
-  uf <- read_state(cod_uf=12, year=2017)
+# Read specific state at a given year
+  uf <- read_state(code_state=12, year=2017)
+  
+# Read specific state at a given year
+  uf <- read_state(code_state="SC", year=2000)
 
 # Read all states at a given year
-  ufs <- read_state(cod_uf="all", year=2010)
+  ufs <- read_state(code_state="all", year=2010)
 
 }
 }
@@ -31,8 +34,8 @@ library(geobr)
 Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
-  \code{\link{read_municipality2}},
   \code{\link{read_municipality}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}
