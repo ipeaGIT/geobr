@@ -15,16 +15,16 @@ library(geobr)
 ## Basic Usage
 ````
 # Read specific municipality at a given year
-  mun <- read_municipality(cod_muni=1200179, year=2017)
+  mun <- read_municipality(code_muni=1200179, year=2017)
   
   
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(cod_muni=33, year=2010)
+  mun <- read_municipality(code_muni=33, year=2010)
   # alternatively
-  mun <- read_municipality(cod_muni="RJ", year=2010)
+  mun <- read_municipality(code_muni="RJ", year=2010)
 
 # Read all municipalities in the country at a given year
-  mun <- read_municipality(cod_muni="all", year=2018)
+  mun <- read_municipality(code_muni="all", year=2018)
 
 ````
 
