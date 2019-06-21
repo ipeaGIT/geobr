@@ -2,18 +2,18 @@
 % Please edit documentation in R/read_municipality.R
 \name{read_municipality}
 \alias{read_municipality}
-\title{Download shape files of municipalities}
+\title{Download shape files of Brazilian municipalities as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_municipality(cod_muni, year = NULL)
+read_municipality(code_muni, year = NULL)
 }
 \arguments{
-\item{cod_muni}{The 7-digit code of a municipality. If the two-digit code of a state is used,
-the function will load all municipalities of that state. If cod_muni="all", all municipalities will be loaded.}
+\item{code_muni}{The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
+a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 }
 \description{
-Download shape files of municipalities
+Download shape files of Brazilian municipalities as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{
@@ -21,19 +21,23 @@ Download shape files of municipalities
 library(geobr)
 
 # Read specific municipality at a given year
-  mun <- read_municipality(cod_muni=1200179, year=2017)
+  mun <- read_municipality(code_muni=1200179, year=2017)
 
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(cod_muni=12, year=2010)
-
+  mun <- read_municipality(code_muni=33, year=2010)
+  mun <- read_municipality(code_muni="RJ", year=2010)
+  
+# Read all municipalities of the country at a given year
+  mun <- read_municipality(code_muni="all", year=2018)
+  
 }
 }
 \seealso{
 Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
-  \code{\link{read_municipality2}},
   \code{\link{read_state}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}
