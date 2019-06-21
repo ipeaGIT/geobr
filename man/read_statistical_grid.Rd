@@ -2,18 +2,18 @@
 % Please edit documentation in R/read_statistical_grid.R
 \name{read_statistical_grid}
 \alias{read_statistical_grid}
-\title{Download shape files of IBGE's statistical grid (200 x 200 meters)}
+\title{Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_statistical_grid(cod_grid, year = NULL)
+read_statistical_grid(code_grid, year = NULL)
 }
 \arguments{
-\item{cod_grid}{The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
-the function will load all grid gradrants that intersect with that state. If cod_grid="all", the grid of the whole country will be loaded.}
+\item{code_grid}{The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
+the function will load all grid gradrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010). The only year available thus far is 2010.}
 }
 \description{
-Download shape files of IBGE's statistical grid (200 x 200 meters)
+Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{
@@ -21,10 +21,10 @@ Download shape files of IBGE's statistical grid (200 x 200 meters)
 library(geobr)
 
 # Read specific municipality at a given year
-  grid <- read_statistical_grid(cod_grid = 45, year=2010)
+  grid <- read_statistical_grid(code_grid = 45, year=2010)
 
 # Read all municipalities of a state at a given year
-  state_grid <- read_statistical_grid(cod_grid = "RJ")
+  state_grid <- read_statistical_grid(code_grid = "RJ")
 
 }
 }
@@ -32,8 +32,8 @@ library(geobr)
 Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
-  \code{\link{read_municipality2}},
   \code{\link{read_municipality}},
   \code{\link{read_state}},
   \code{\link{read_weighting_area}}
 }
+\concept{general area functions}
