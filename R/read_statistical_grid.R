@@ -1,8 +1,8 @@
-#' Download shape files of IBGE's statistical grid (200 x 200 meters)
+#' Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #' 
 #' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
-#' @param cod_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
-#' the function will load all grid gradrants that intersect with that state. If cod_grid="all", the grid of the whole country will be loaded.
+#' @param code_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
+#' the function will load all grid gradrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -10,14 +10,14 @@
 #' library(geobr)
 #'
 #' # Read specific municipality at a given year
-#'   grid <- read_statistical_grid(cod_grid = 45, year=2010)
+#'   grid <- read_statistical_grid(code_grid = 45, year=2010)
 #'
 #'# Read all municipalities of a state at a given year
-#'   state_grid <- read_statistical_grid(cod_grid = "RJ")
+#'   state_grid <- read_statistical_grid(code_grid = "RJ")
 #'
 #'}
 
-read_statistical_grid <- function(cod_grid, year=NULL){
+read_statistical_grid <- function(code_grid, year=NULL){
 
 # Verify year input
   if (is.null(year)){ cat("Using data from year 2010 /n")
@@ -30,8 +30,7 @@ read_statistical_grid <- function(cod_grid, year=NULL){
   
   
 # load correspondence table
-  data("correspondence_table_stategrid", envir=environment())
-  
+  data("grid_state_correspondence_table", envir=environment())
   
   
 # Get metadata with data addresses
@@ -55,20 +54,19 @@ read_statistical_grid <- function(cod_grid, year=NULL){
 
 
 
+# Verify code_grid input
 
-# Verify cod_grid input
+  # Test if code_grid input is null
+    if(is.null(code_grid)){ stop("Value to argument 'code_grid' cannot be NULL") }
 
-  # Test if cod_grid input is null
-    if(is.null(cod_grid)){ stop("Value to argument 'cod_grid' cannot be NULL") }
-
-  # if cod_grid=="all", read the entire country
-    else if(cod_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
+  # if code_grid=="all", read the entire country
+    if(code_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
 
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, 
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
       # read files and pile them up
@@ -80,12 +78,12 @@ read_statistical_grid <- function(cod_grid, year=NULL){
     }
 
   
-# if cod_grid is a state abbreviation
+# if code_grid is a state abbreviation
 
   # Error if the input does not match any state abbreviation
-  if(is.character(cod_grid) & !(cod_grid %in% corresptb$cod_uf)) { 
-    stop(paste0("Error: Invalid Value to argument 'cod_grid'. It must be one of the following: ",
-                paste(unique(corresptb$cod_uf),collapse = " ")))
+  if(is.character(code_grid) & !(code_grid %in% grid_state_correspondence_table$code_state)) { 
+    stop(paste0("Error: Invalid Value to argument 'code_grid'. It must be one of the following: ",
+                paste(unique(grid_state_correspondence_table$code_state),collapse = " ")))
     
     # MAKE this work
     # >>> https://stackoverflow.com/questions/54993463/include-image-in-r-packages
@@ -94,18 +92,18 @@ read_statistical_grid <- function(cod_grid, year=NULL){
     
     }
     
-  # Correct state abbreviation
-    else if(is.character(cod_grid) & cod_grid %in% corresptb$cod_uf) {
+  # Valid state abbreviation
+    else if(is.character(code_grid) & code_grid %in% grid_state_correspondence_table$code_state) {
       
       # find grid quadrants that intersect with the passed state abbreviation
-      corresptb_tmp <- corresptb[corresptb[,2] == cod_grid, ]
-      grid_ids <- substr(corresptb_tmp$cod_grid, 4, 5)
+      grid_state_correspondence_table_tmp <- grid_state_correspondence_table[grid_state_correspondence_table[,2] == code_grid, ]
+      grid_ids <- substr(grid_state_correspondence_table_tmp$code_grid, 4, 5)
       
       # list paths of files to download
       filesD <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
       
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, 
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
       # read files and pile them up
@@ -117,13 +115,13 @@ read_statistical_grid <- function(cod_grid, year=NULL){
       }
 
   
-# if cod_grid is numeric grid quadrant
-    if( !( cod_grid %in% temp_meta$code)){ stop("Error: Invalid Value to argument cod_grid.")
+# if code_grid is numeric grid quadrant
+    if( !( code_grid %in% temp_meta$code)){ stop("Error: Invalid Value to argument code_grid.")
 
     } else{
 
     # list paths of file to download
-    filesD <- as.character(subset(temp_meta, code== cod_grid)$download_path)
+    filesD <- as.character(subset(temp_meta, code== code_grid)$download_path)
 
     # download files
     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
