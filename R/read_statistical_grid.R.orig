@@ -1,4 +1,4 @@
-#' Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Download shape files of IBGE's statistical grid (200 x 200 meters)
 #' 
 #' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
 #' @param code_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
@@ -60,13 +60,13 @@ read_statistical_grid <- function(code_grid, year=NULL){
     if(is.null(code_grid)){ stop("Value to argument 'code_grid' cannot be NULL") }
 
   # if code_grid=="all", read the entire country
-    if(code_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
+    else if(code_grid=="all"){ cat("Loading data for the whole country. This might take a few minutes. /n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
 
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
+      lapply(X=filesD, function(x) httr::GET(url=x, 
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
       # read files and pile them up
@@ -103,7 +103,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
       filesD <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
       
       # download files
-      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
+      lapply(X=filesD, function(x) httr::GET(url=x, 
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
       
       # read files and pile them up
