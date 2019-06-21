@@ -1,22 +1,25 @@
-#' Download shape files of Brazilian states
+#' Download shape files of Brazilian states as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
-#' @param cod_uf The two-digit code of a state. If cod_uf="all", all states will be loaded.
+#' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
 #'
 #' library(geobr)
 #'
-#' # Read specific municipality at a given year
-#'   uf <- read_state(cod_uf=12, year=2017)
+#' # Read specific state at a given year
+#'   uf <- read_state(code_state=12, year=2017)
+#'   
+#' # Read specific state at a given year
+#'   uf <- read_state(code_state="SC", year=2000)
 #'
 #'# Read all states at a given year
-#'   ufs <- read_state(cod_uf="all", year=2010)
+#'   ufs <- read_state(code_state="all", year=2010)
 #'
 #'}
 
-read_state <- function(cod_uf, year=NULL){
+read_state <- function(code_state, year=NULL){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -47,37 +50,39 @@ read_state <- function(cod_uf, year=NULL){
   }
   
   
-  # Verify cod_uf input
+  # Verify code_state input
   
-  # Test if cod_uf input is null
-  if(is.null(cod_uf)){ stop("Value to argument 'cod_uf' cannot be NULL") }
+  # Test if code_state input is null
+  if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
   
-  # if cod_uf=="all", read the entire country
-  else if(cod_uf=="all"){ cat("Loading data for the whole country \n")
-    
-    # list paths of files to download
-    filesD <- as.character(temp_meta$download_path)
-    
-    # download files
-    lapply(X=filesD, function(x) httr::GET(url=x, 
-                                           httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-    
-    
-    # read files and pile them up
-    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-    files <- paste0(tempdir(),"/",files)
-    files <- lapply(X=files, FUN= readr::read_rds)
-    shape <- do.call('rbind', files)
-    return(shape)
-  }
+  # if code_state=="all", read the entire country
+    if(code_state=="all"){ cat("Loading data for the whole country \n")
+      
+      # list paths of files to download
+      filesD <- as.character(temp_meta$download_path)
+      
+      # download files
+      lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
+                                             httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
+      
+      
+      # read files and pile them up
+      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+      files <- paste0(tempdir(),"/",files)
+      files <- lapply(X=files, FUN= readr::read_rds)
+      shape <- do.call('rbind', files)
+      return(shape)
+    }
   
-  else if( !(substr(x = cod_uf, 1, 2) %in% temp_meta$code)){
-    stop("Error: Invalid Value to argument cod_uf.")
+  if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
+      stop("Error: Invalid Value to argument code_state.")
     
   } else{
     
     # list paths of files to download
-    filesD <- as.character(subset(temp_meta, code==substr(cod_uf, 1, 2))$download_path)
+    if (is.numeric(code_state)){ filesD <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
+    if (is.character(code_state)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
+    
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
@@ -86,16 +91,16 @@ read_state <- function(cod_uf, year=NULL){
     # read sf
     shape <- readr::read_rds(temps)
     
-    if(nchar(cod_uf)==2){
+    if(nchar(code_state)==2){
       return(shape)
       
-    } else if(cod_uf %in% shape$cod_uf){
-      x <- cod_uf
-      shape <- subset(shape, cod_uf==x)
+    } else if(code_state %in% shape$code_state){
+      x <- code_state
+      shape <- subset(shape, code_state==x)
       return(shape)
       
     } else{
-      stop("Error: Invalid Value to argument cod_uf.")
+      stop("Error: Invalid Value to argument code_state.")
     }
   }
 }
