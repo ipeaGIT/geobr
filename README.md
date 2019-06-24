@@ -4,7 +4,7 @@
  [![Github all downloads](https://img.shields.io/github/downloads/ipeaGIT/geobr/total.svg?label=downloads&color=green)](https://GitHub.com/ipeaGIT/geobr/releases/)
 
 
-**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official data basis of Brazil. The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
+**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
 
 ## Installation
 ```
@@ -32,28 +32,29 @@ library(geobr)
 ## Available datasets:
 
 
-|Function|Geographies available|Years available|
-|-----|-----|-----|
-|`read_state`| States | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | 
-|`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  
-|`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | 
-|`read_municipality`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |
-|`read_weighting_area`| Census weighting area (área de ponderação) |  2000 |
-|`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | 
+|Function|Geographies available|Years available|Source|
+|-----|-----|-----|-----|
+|`read_state`| States | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
+|`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  IBGE |
+|`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
+|`read_municipality`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |IBGE |
+|`read_weighting_area`| Census weighting area (área de ponderação) |  2000 | IBGE |
+|`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 
 obs. Data sets at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
-
+ 
 ## Comming soon:
 
-|Geography|Years available|Source|
+| Geography | Years available | Source |
 |-----|-----|-----|
-|`read_country`| ... | ... |
-|`read_region`| ... | ... | 
-|`read_census_tract` | 2000, 2007, 2010 | ...| 
-| Metropolitan areas | ... | ... |
-| Longitudinal Database* of municipalities | ... | ... | 
-| Longitudinal Database* of micro regions | ... | ... | 
-| Longitudinal Database* of Census tracts | ... | ... | 
+|`read_country`| ... | IBGE |
+|`read_region`| ... | IBGE | 
+|`read_census_tract` | 2000, 2007, 2010 | IBGE |
+|`read_health_services` | 2015 | CNES, DataSUS | 
+| Metropolitan areas | ... | IBGE and state legislations |
+| Longitudinal Database* of municipalities | ... | IBGE | 
+| Longitudinal Database* of micro regions | ... | IBGE | 
+| Longitudinal Database* of Census tracts | ... | IBGE | 
 | Urbanized areas | 2005, 2015 | [IBGE](https://www.ibge.gov.br/geociencias-novoportal/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html) | 
 | Disaster risk areas | 2010 | [IBGE/Cemaden](https://www.ibge.gov.br/geociencias-novoportal/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=downloads) | 
 | ... | ... | ... | 
