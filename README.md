@@ -60,7 +60,7 @@ obs. Data sets at scale 1:250,000, using Geodetic reference system "SIRGAS2000" 
 | ... | ... | ... | 
 | ... | ... | ... | 
 
-'*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
+'*' Longitudinal Database refers to **C**omparable **M**inimum **A**reas (CMAs)
 
 * [Quadro geográfico de referência para produção, análise e disseminação de estatísticas](https://www.ibge.gov.br/geociencias/organizacao-do-territorio/analises-do-territorio/24233-quadro-geografico-de-referencia-para-producao-analise-e-disseminacao-de-estatisticas.html?=&t=o-que-e)
 * [Regiões Metropolitanas, Aglomerações Urbanas e Regiões Integradas de Desenvolvimento](https://www.ibge.gov.br/geociencias/organizacao-do-territorio/estrutura-territorial/18354-regioes-metropolitanas-aglomeracoes-urbanas-e-regioes-integradas-de-desenvolvimento.html?=&t=acesso-ao-produto)
