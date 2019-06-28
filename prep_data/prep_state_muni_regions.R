@@ -612,12 +612,45 @@ shp_to_sf_rds <- function(x){
       # names(temp_sf) %>% tolower()  %in% "cd_geocmu" %>% sum()
       # names(temp_sf) %>% tolower()  %in% "nm_municip" %>% sum()
 
-
+# add State code and name
+  temp_sf$code_state <- substr(temp_sf$code_muni, 1, 2)
+  temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
+                                  ifelse(code_state== 12, "AC",
+                                  ifelse(code_state== 13, "AM",
+                                  ifelse(code_state== 14, "RR",
+                                  ifelse(code_state== 15, "PA",
+                                  ifelse(code_state== 16, "AP",
+                                  ifelse(code_state== 17, "TO",
+                                  ifelse(code_state== 21, "MA",
+                                  ifelse(code_state== 22, "PI",
+                                  ifelse(code_state== 23, "CE",
+                                  ifelse(code_state== 24, "RN",
+                                  ifelse(code_state== 25, "PB",
+                                  ifelse(code_state== 26, "PE",
+                                  ifelse(code_state== 27, "AL",
+                                  ifelse(code_state== 28, "SE",
+                                  ifelse(code_state== 29, "BA",
+                                  ifelse(code_state== 31, "MG",
+                                  ifelse(code_state== 32, "ES",
+                                  ifelse(code_state== 33, "RJ",
+                                  ifelse(code_state== 35, "SP",
+                                  ifelse(code_state== 41, "PR",
+                                  ifelse(code_state== 42, "SC",
+                                  ifelse(code_state== 43, "RS",
+                                  ifelse(code_state== 50, "MS",
+                                  ifelse(code_state== 51, "MT",
+                                  ifelse(code_state== 52, "GO",
+                                  ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
+  
+  # reorder columns
+  temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
+  
+      
       # Use UTF-8 encoding
-      temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
+        temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
 
       # Capitalize the first letter
-      temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
+        temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
 
       # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
         temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
