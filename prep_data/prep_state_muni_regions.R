@@ -323,6 +323,16 @@ shp_to_sf_rds <- function(x){
       }
 
 
+      # Add Region codes and names
+      temp_sf$code_region <- substr(temp_sf$code_state, 1,1) %>% as.numeric()
+      temp_sf <- temp_sf %>% dplyr::mutate(name_region = ifelse(code_region==1, 'Norte',
+                                                               ifelse(code_region==2, 'Nordeste',
+                                                                      ifelse(code_region==3, 'Sudeste',
+                                                                             ifelse(code_region==4, 'Sul',
+                                                                                    ifelse(code_region==5, 'Centro Oeste', NA))))))
+      # reorder columns
+        temp_sf <- dplyr::select(temp_sf, 'code_state', 'name_state', 'code_region', 'name_region', 'geometry')
+      
       # Use UTF-8 encoding
         temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
 
