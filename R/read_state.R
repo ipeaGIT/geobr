@@ -37,8 +37,7 @@ read_state <- function(code_state, year=NULL){
   
   # Select geo
   temp_meta <- subset(metadata, geo=="uf")
-  
-  
+
   # Verify year input
   if (is.null(year)){ cat("Using data from year 2010 \n")
     temp_meta <- subset(temp_meta, year==2010)
@@ -56,7 +55,7 @@ read_state <- function(code_state, year=NULL){
   if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
   
   # if code_state=="all", read the entire country
-    if(code_state=="all"){ cat("Loading data for the whole country \n")
+    if(code_state=="all"){ cat("Loading data for the whole country\n")
       
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
