@@ -254,8 +254,14 @@ system.time( g1 <- read_statistical_grid() )
 
 
 
+###### 7. read_country -------------------------
 
 
+
+br <- read_country(year=2018)
+plot(br)
+
+br <- read_country(year=1500)
 
 
 
