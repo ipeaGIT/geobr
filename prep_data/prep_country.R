@@ -13,6 +13,7 @@ library(magrittr)
 library(devtools)
 library(lwgeom)
 library(stringi)
+library(httr)
 
 
 library(geobr)
