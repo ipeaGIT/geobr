@@ -34,6 +34,7 @@ library(geobr)
 
 |Function|Geographies available|Years available|Source|
 |-----|-----|-----|-----|
+|`read_country`| Country | 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_state`| States | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  IBGE |
 |`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
@@ -47,7 +48,6 @@ obs. Data sets at scale 1:250,000, using Geodetic reference system "SIRGAS2000" 
 
 | Geography | Years available | Source |
 |-----|-----|-----|
-|`read_country`| ... | IBGE |
 |`read_region`| ... | IBGE | 
 |`read_census_tract` | 2000, 2007, 2010 | IBGE |
 |`read_health_services` | 2015 | CNES, DataSUS | 
