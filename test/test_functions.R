@@ -132,6 +132,7 @@ gc(reset = T)
   plot(b)
 
   system.time( c <- read_meso_region(code_meso=11) )
+  head(c)
   plot(c)
 
 
