@@ -78,12 +78,13 @@ gc(reset = T)
 
 # working fine
   system.time( a <- read_municipality(code_muni=1200179, year=2010) )
+  head(a)
   plot(a)
   
-  system.time( b <- read_municipality(code_muni=11, year=2010) )
+  system.time( b <- read_municipality(code_muni=11, year=2003) )
   head(b)
   
-  system.time( d <- read_municipality(code_muni="AM", year=2010 ))
+  system.time( d <- read_municipality(code_muni="AM", year=2018 ))
   system.time( d <- read_municipality(code_muni="all", year=2010 ))
   head(d)
   
