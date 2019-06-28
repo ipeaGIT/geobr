@@ -29,12 +29,11 @@ read_country <- function(year=NULL){
   
   
   # Select geo
+  temp_ano <- subset(metadata, geo=="country")
   
-  temp_ano <- subset(metadata, geo=="uf")
-
   
   # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010 \n")
+  if (is.null(year)){ cat("Using data from year 2010\n")
     temp_ano <- subset(temp_ano, year==2010)
     
   } else if (year %in% temp_ano$year){ temp_ano <- temp_ano[temp_ano[,2] == year, ]
@@ -46,21 +45,13 @@ read_country <- function(year=NULL){
   
   # list paths of files to download
   filesD <- as.character(temp_ano$download_path)
-    
+  
   # download files
-  lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
-                                         httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-    
-    
-  # read files and pile them up
-  files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-  files <- paste0(tempdir(),"/",files)
-  files <- lapply(X=files, FUN= readr::read_rds)
-  file <- do.call('rbind', files)
-
-  shape <- (file$geometry[1])
-  for (i in 2:27) {
-    shape <- st_union(shape, file$geometry[i])
-  }
-  return(shape)
+  temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+  httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+  
+  # read sf
+  temp_sf <- readr::read_rds(temps)
+  
+  return(temp_sf)
 }
