@@ -50,6 +50,8 @@
   metadata[ code== 52, code_abrev :=	"GO" ]
   metadata[ code== 53, code_abrev :=	"DF" ]
 
+# to avoid conflict whith data.table
+  metadata <- as.data.frame(metadata)
   
 # save updated metadata table
   # saveRDS(metadata,"//storage3/geobr/metadata/metadata.rds")
