@@ -52,6 +52,7 @@
 
 # to avoid conflict with data.table
   metadata <- as.data.frame(metadata)
+  table(metadata$geo)
   
 # save updated metadata table
   # saveRDS(metadata,"//storage3/geobr/metadata/metadata.rds")
