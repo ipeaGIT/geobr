@@ -22,39 +22,41 @@ setwd(root_dir)
 # ftp with original data
   url <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/"
 
-# List Years/folders available
-years = getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-years <- strsplit(years, "\r\n")
-years = unlist(years)
+  # List Years/folders available
+    years = getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    years <- strsplit(years, "\r\n")
+    years = unlist(years)
 
 # create folders to download and store raw data of each year
   dir.create("./historical_state_muni_1872_1991")
 
 # For each year
-for (i in years){
+  for (i in years){ # i <- years[4]
+    
+  # list files
+    subdir <- paste0(url, i,"/")
+    files = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    files <- strsplit(files, "\r\n")
+    files = unlist(files)
+    
   
-  subdir <- paste0(url, i)
-  files = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  files <- strsplit(files, "\r\n")
-  files = unlist(files)
-  
-  filenames = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  
-  filenames = paste(url, strsplit(filenames, "\r*\n")[[1]], sep = "")
-  con = getCurlHandle( ftp.use.epsv = FALSE)
-  
-  contents = sapply(filenames[1:5], function(x) try(getURL(x, curl = con)))
-  names(contents) = filenames[1:length(contents)]
+  # create folder to download and store raw data of each year
+    dir.create(paste0("./historical_state_muni_1872_1991/",i))
   
   
-}
+  # Download zipped files
+    for (filename in files) {
+        download.file(url = paste(subdir, filename, sep = ""), 
+                      destfile = paste0("./historical_state_muni_1872_1991/",i,"/",filename))
+      }
+  }
 
 
-# Download zipped files
-for (filename in filenames) {
-  download.file(paste(url, filename, sep = ""), paste(filename))
-}
-
+  
+  
+rm(list=setdiff(ls(), c("root_dir", "years")))
+gc(reset = T)
+  
 
 
 ########  1. Unzip original data sets downloaded from IBGE -----------------
