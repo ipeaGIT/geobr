@@ -1,6 +1,6 @@
 Type: Package
 Package: geobr
-Title: Loads shapefiles of the Brazilian Institute of Geography and Statistics (IBGE)
+Title: Loads shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil
 Version: 0.02
 Authors@R: c(
             person(given="Rafael H. M.", family="Pereira", email="rafael.pereira@ipea.gov.br", role=c("aut", "cre"), comment = c(ORCID = "0000-0003-2125-7465")),
@@ -10,7 +10,7 @@ Authors@R: c(
             person(given="Rodrigo", family="Almeida de Arruda", role=c("aut")),
             person(given="Igor", family="Nascimento", role="aut"), 
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
-Date: 2019-06-13
+Date: 2019-06-29
 URL: https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
 Description: geobr provides easy access to shapefiles of the Brazilian 
