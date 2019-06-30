@@ -51,10 +51,7 @@ setwd(root_dir)
       }
   }
 
-
-  
-  
-rm(list=setdiff(ls(), c("root_dir", "years")))
+rm(list=setdiff(ls(), c("years")))
 gc(reset = T)
   
 
@@ -62,210 +59,130 @@ gc(reset = T)
 ########  1. Unzip original data sets downloaded from IBGE -----------------
 
 # Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
-setwd(root_dir)
+  root_dir <- "R:/Dropbox/git_projects/geobr/data-raw/historical_state_muni_1872_1991"
+  #root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
+  setwd(root_dir)
 
 # List all zip files for all years
-all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
-
-#### 1.1. Municipios sem area redefinidas --------------
-files_1st_batch <- all_zipped_files[!all_zipped_files %like% "municipios_areas_redefinidas"]
-
-# function to Unzip files in their original sub-dir
-unzip_fun <- function(f){
-    unzip(f, exdir = file.path(root_dir, substr(f, 2, 24)))
-}
-
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-parallel::clusterExport(cl=cl, varlist= c("files_1st_batch", "root_dir"), envir=environment())
-
-# apply function in parallel
-parallel::parLapply(cl, files_1st_batch, unzip_fun)
-stopCluster(cl)
+  all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
 
 
-rm(list=setdiff(ls(), c("root_dir","all_zipped_files")))
-gc(reset = T)
-
-#### 1.2. Municipios  area redefinidas --------------
-files_2st_batch <- all_zipped_files[all_zipped_files %like% "municipios_areas_redefinidas"]
-
-# function to Unzip files in their original sub-dir
-unzip_fun <- function(f){
   
-  unzip(f, exdir = file.path(root_dir, substr(f, 2, 53) ))
+# Select only files with municipalities and states 
+  all_zipped_files <- all_zipped_files[all_zipped_files %like% "limite|malha|litigio"]
+
+
+
+# function to Unzip files in their original sub-dir
+unzip_fun <- function(f){
+    unzip(f, exdir = file.path(root_dir, substr(f, 3, 6)))
 }
+
 
 # create computing clusters
 cl <- parallel::makeCluster(detectCores())
-parallel::clusterExport(cl=cl, varlist= c("files_2st_batch", "root_dir"), envir=environment())
+parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "root_dir"), envir=environment())
 
 # apply function in parallel
-parallel::parLapply(cl, files_2st_batch, unzip_fun)
+parallel::parLapply(cl, all_zipped_files, unzip_fun)
 stopCluster(cl)
 
 
-rm(list=setdiff(ls(), c("root_dir","all_zipped_files")))
+rm(list=setdiff(ls(), c("root_dir")))
 gc(reset = T)
+
+
+
+
+
+
+
 
 
 #### 2. Create folders to save sf.rds files  -----------------
 
-# create directory to save original shape files in sf format
-dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
 
 # create directory to save cleaned shape files in sf format
-dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 
-# create a subdirectory area_ponderacao
-dir.create(file.path("shapes_in_sf_all_years_original", "area_ponderacao"), showWarnings = FALSE)
+# create a subdirectory states and municipalities
+  dir.create(file.path("shapes_in_sf_all_years_cleaned", "uf"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned", "municipio"), showWarnings = FALSE)
 
-dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao"), showWarnings = FALSE)
 
-# create a subdirectory of year
-dir.create(file.path("shapes_in_sf_all_years_original", "area_ponderacao","2010"), showWarnings = FALSE)
 
-dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao","2010"), showWarnings = FALSE)
 
-# create a subdirectory of municipios_areas_redefinidas
-dir.create(file.path("shapes_in_sf_all_years_original", "area_ponderacao","2010","municipios_areas_redefinidas"), showWarnings = FALSE)
+# List years of data available
+  years <- list.dirs(path =".", recursive = F)
+  years <- years[1:11]
+  years <- substr(years, 3, 6)
 
-dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao","2010","municipios_areas_redefinidas"), showWarnings = FALSE)
 
-#### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
-
-# Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
-setwd(root_dir)
-
-# List shapes for all years
-all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
-
-shp_to_sf_rds <- function(x){
-
-  shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-  
-  # name of the file that will be saved
-  if( !x %like% "municipios_areas_redefinidas"){ dest_dir <- "./shapes_in_sf_all_years_original/area_ponderacao/2010"}
-  
-  if( x %like% "municipios_areas_redefinidas"){ dest_dir <- "./shapes_in_sf_all_years_original/area_ponderacao/2010/municipios_areas_redefinidas"}
-   
-  file_name <- paste0(str_replace(unlist(str_split(x,"/"))[4],".shp",""), ".rds")
-   
-  # save in .rds
-  write_rds(shape, path = paste0(dest_dir,"/", file_name), compress="gz" )
-   
-}
-
-# Apply function to save original data sets in rds format
-
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-
-clusterEvalQ(cl, c(library(data.table), library(readr), library(stringr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("all_shapes"), envir=environment())
-
-# apply function in parallel
-parallel::parLapply(cl, all_shapes, shp_to_sf_rds)
-stopCluster(cl)
-
-rm(list= ls())
-gc(reset = T)
-
-###### 4. Cleaning weighting area files --------------------------------
-
-uf_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_original/area_ponderacao"
-sub_dirs <- list.dirs(path =uf_dir, recursive = F)
-
-                            
-  clean_states <- function( e ){ #e <- sub_dirs[1]
-
-  # list all sf files in that year/folder
-  sf_files <- list.files(e, full.names = T,recursive = T)
-  
-  #extraindo base duplicada do estado de sao paulo
-  #sf_files <- sf_files[!sf_files == "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_original/area_ponderacao/2010/35SEE250GC_SIR_area_de_ponderacao.rds"]
-  
-  # for each file
-  for (i in sf_files){ #  i <- sf_files[1]
+# Create function to clean municipalities, additing dipusted lands in case they exist  
+  clean_muni <- function(year){
     
-    # read sf file
-    temp_sf <- read_rds(i)
+   #year <- years[7]
     
+  # create a subdirectory of year
+    dir.create(file.path("./shapes_in_sf_all_years_cleaned", "municipio",year), showWarnings = FALSE)
+    
+  # List of muni shape files of that year
+    all_shps <- list.files(path = paste0("./",year), full.names = T, recursive = T, pattern = ".shp")
+    all_shps <- all_shps[!(all_shps %like% ".xml")] # remove .xml files
+    all_shps <- all_shps[all_shps %like% "malha|lit"]
+    
+  ## Treat Muni file
+  # read shapes
+    muni <- st_read(all_shps[1], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
+    
+  # dplyr::rename and subset columns
+    muni <- dplyr::rename(muni, code_muni = codigo, name_muni = nome )
+    muni <- dplyr::select(muni, c('code_muni', 'name_muni', 'geometry')) # 'latitudese', 'longitudes' da sede do municipio
+  
+  # Use UTF-8 encoding
+    muni$name_muni <- stringi::stri_encode(as.character(muni$name_muni), "UTF-8")
+    
+  # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+    muni <- if( is.na(st_crs(muni)) ){ st_set_crs(muni, 4674) } else { st_transform(muni, 4674) }
+    
+  # Convert columns from factors to characters
+    muni %>% dplyr::mutate_if(is.factor, as.character) -> muni
+    muni$code_muni <- as.numeric(muni$code_muni) # keep code as.numeric()
+    
+  # Make an invalid geometry valid # st_is_valid( sf)
+    muni <- lwgeom::st_make_valid(muni)
+  
+    
+  ## Treat Litigio (disputed territory) file
+    if(length(all_shps) > 1){ 
+      
+      liti <- st_read(all_shps[2], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252") 
+  
       # dplyr::rename and subset columns
-      names(temp_sf) <- names(temp_sf) %>% tolower()
-      colnames(temp_sf)[colnames(temp_sf) %in% c("cd_aponde","area_pond")] <- "cod_weighting_area"
-      temp_sf <- dplyr::select(temp_sf, c('cod_weighting_area', 'geometry'))
-      temp_sf <- dplyr::mutate(temp_sf, cod_muni = str_sub(cod_weighting_area,1,7)) 
-      temp_sf <- dplyr::mutate(temp_sf, cod_state = str_sub(cod_weighting_area,1,2))
+      liti <- dplyr::rename(liti, code_muni = Id, name_muni = nome )
+      liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudese', 'longitudes' da sede do municipio
+      
+      # Use UTF-8 encoding
+      liti$name_muni <- stringi::stri_encode(as.character(liti$name_muni), "UTF-8")
       
       # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-      temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+      liti <- if( is.na(st_crs(liti)) ){ st_set_crs(liti, 4674) } else { st_transform(liti, 4674) }
       
       # Convert columns from factors to characters
-      temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+      liti %>% dplyr::mutate_if(is.factor, as.character) -> liti
+      liti$code_muni <- as.numeric(liti$code_muni) # keep code as.numeric()
       
       # Make an invalid geometry valid # st_is_valid( sf)
-      temp_sf <- lwgeom::st_make_valid(temp_sf)
+      liti <- lwgeom::st_make_valid(liti)
       
-      # keep code as.numeric()
-      temp_sf$cod_weighting_area <- as.numeric(temp_sf$cod_weighting_area)
-      temp_sf$cod_muni <- as.numeric(temp_sf$cod_muni)
-      temp_sf$cod_state <- as.numeric(temp_sf$cod_state)
-      
-      # Save cleaned sf in the cleaned directory
-      i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i, compress="gz" )
-      
-      }
-}
+      muni <- do.call('rbind', list(muni, liti))
+    }
+    
+    # Save cleaned sf in the cleaned directory
+    destdir <- file.path("./shapes_in_sf_all_years_cleaned", "municipio",year)
+    readr::write_rds(muni, path = paste0(destdir,"/municipios_", year, ".rds"), compress="gz" )
+    
+  }
 
 
-  # Apply function to save original data sets in rds format
-  
-  # create computing clusters
-  cl <- parallel::makeCluster(detectCores())
-  
-  clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
-  parallel::clusterExport(cl=cl, varlist= c("sub_dirs"), envir=environment())
-  
-  # apply function in parallel
-  parallel::parLapply(cl, sub_dirs, clean_states)
-  stopCluster(cl)
-  
-  rm(list= ls())
-  gc(reset = T)
-
- 
-  
-  #####FAZER #####
-  # verificar os dados de pelotas que est? corrompido
-  #juntar as bases por estado
-  
-  # 2- verificar dados de pelotas corrompido
-  # 3- inserir op??o de areas redefinidas, merge das bases
-  # 5- verificar quantidade de linhas de sao paulo
-  
-   
- ########### #pelotas corrompido ##########
-  shape <- st_read("L:/# DIRUR #/ASMEQ/geobr/data-raw/malha_de_areas_de_ponderacao/censo_demografico_2010/municipios_areas_redefinidas/Pelotas_area de ponderacao.shp", quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-  
-  
-  
-
-#
-# 
-# dir.proj="."
-# 
-# for (CODE in list.files(pattern = "^\\d")) {
-#   if (!length(list.files(paste(dir.proj,CODE,sep="/")))==0) {
-# files <- list.files(paste(dir.proj,CODE,sep="/"),full.names = T)
-# files <- lapply(X=files, FUN= readr::read_rds)
-# files <- lapply(X=files, FUN= as.data.frame)
-# shape <- do.call('rbind', files)
-# shape <- st_sf(shape)
-# saveRDS(shape,paste0("./",CODE,"AP.rds"))
-#   }
-# }
 
