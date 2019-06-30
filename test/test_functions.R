@@ -1,12 +1,12 @@
 #### testing functions of geobr
 
-  
+
 library(magrittr)
 library(sf)
 library(dplyr)
 
-  
-  
+
+
 ### Install development version of geobr
 
 # devtools::install_github("ipeaGIT/geobr")
@@ -47,28 +47,53 @@ head(brazil_2010)
 
 
 # Read specific municipality at a given year
-  uf <- read_state(code_state=12, year=2017)
-  uf <- read_state(code_state="SP", year=2017)
-  uf <- read_state(code_state="RJ")
-  
+uf <- read_state(code_state=12, year=2017)
+uf <- read_state(code_state="SP", year=2017)
+uf <- read_state(code_state="RJ")
+
 plot(uf)
-  head(uf)
+head(uf)
 
 # Read all states at a given year
-  ufs <- read_state(code_state="all", year=2018)
-  plot(ufs)
+ufs <- read_state(code_state="all", year=2018)
+plot(ufs)
 
+ufs <- select(ufs, 'code_region', 'geometry')
+ufs$s <- 1
+
+ufs <- lwgeom::st_make_valid(ufs)
+ufs <- ufs %>% st_buffer(0)
+plot(ufs)
+
+system.time(sumar <- ufs %>% group_by(code_region) %>% summarise()) # 21sec
+head(sumar)
+plot(sumar)
+
+
+system.time( union <- ufs %>% group_by(code_region) %>% st_union() ) # 37 sec
+
+head(union)
+plot(union)
+
+
+object.size(sumar) -
+  object.size(union) # union ganha
+
+
+
+a <- read_country(year=2010)
+plot(a)
 
 
 
 # expected errors
 
-  uf <- read_state(code_state=12, year=10000)
-  uf <- read_state(code_state=10000, year=2010)
-  uf <- read_state(code_state=12, year=2005)
+uf <- read_state(code_state=12, year=10000)
+uf <- read_state(code_state=10000, year=2010)
+uf <- read_state(code_state=12, year=2005)
 
 
-  
+
 
 ###### 2. read_municipality -------------------------
 gc(reset = T)
@@ -77,41 +102,41 @@ gc(reset = T)
 ### passed the test
 
 # working fine
-  system.time( a <- read_municipality(code_muni=1200179, year=2010) )
-  head(a)
-  plot(a)
-  
-  system.time( b <- read_municipality(code_muni=11, year=2003) )
-  head(b)
-  
-  system.time( d <- read_municipality(code_muni="AM", year=2018 ))
-  system.time( d <- read_municipality(code_muni="all", year=2010 ))
-  head(d)
-  
-  system.time( c <- read_municipality(code_muni=11) )
-  system.time( c <- read_municipality(code_muni="AC") )
-  system.time( c <- read_municipality(code_muni=1200179) )
-  
-  
-  system.time( a <- read_municipality(code_muni=1200179, year=2016) )
-  head(a)
+system.time( a <- read_municipality(code_muni=1200179, year=2010) )
+head(a)
+plot(a)
 
-  system.time( b <- read_municipality(code_muni=11, year=2000) )
-  head(b)
-  system.time( c <- read_municipality(code_muni="SC", year=2013) )
-  system.time( c <- read_municipality(code_muni="all", year=2013) )
-  head(c)
-  
+system.time( b <- read_municipality(code_muni=11, year=2003) )
+head(b)
+
+system.time( d <- read_municipality(code_muni="AM", year=2018 ))
+system.time( d <- read_municipality(code_muni="all", year=2010 ))
+head(d)
+
+system.time( c <- read_municipality(code_muni=11) )
+system.time( c <- read_municipality(code_muni="AC") )
+system.time( c <- read_municipality(code_muni=1200179) )
+
+
+system.time( a <- read_municipality(code_muni=1200179, year=2016) )
+head(a)
+
+system.time( b <- read_municipality(code_muni=11, year=2000) )
+head(b)
+system.time( c <- read_municipality(code_muni="SC", year=2013) )
+system.time( c <- read_municipality(code_muni="all", year=2013) )
+head(c)
+
 ### expected ERROR messages
 
-  # invalid year
-  e <- read_municipality(code_muni=33, year=2012)
+# invalid year
+e <- read_municipality(code_muni=33, year=2012)
 
-  # invalid code_muni
-  e <- read_municipality(code_muni=333, year=2010)
+# invalid code_muni
+e <- read_municipality(code_muni=333, year=2010)
 
-  # code_muni cannot be NULL
-  e <- read_municipality( year=2010)
+# code_muni cannot be NULL
+e <- read_municipality( year=2010)
 
 
 
@@ -119,27 +144,27 @@ gc(reset = T)
 # 2010
 
 
-  
-  ### passed the test
 
-  system.time( a <- read_meso_region(code_meso=3305, year=2010) )
-  head(a)
-  plot(a)
+### passed the test
 
-  system.time( b <- read_meso_region(code_meso=33, year=2010) )
-  system.time( b <- read_meso_region(code_meso="SP", year=2010) )
-  head(b)
-  plot(b)
+system.time( a <- read_meso_region(code_meso=3305, year=2010) )
+head(a)
+plot(a)
 
-  system.time( c <- read_meso_region(code_meso=11) )
-  head(c)
-  plot(c)
+system.time( b <- read_meso_region(code_meso=33, year=2010) )
+system.time( b <- read_meso_region(code_meso="SP", year=2010) )
+head(b)
+plot(b)
+
+system.time( c <- read_meso_region(code_meso=11) )
+head(c)
+plot(c)
 
 
-  system.time( d <- read_meso_region(code_meso="all", year=2010) )
-  plot(d)
-  head(d)
-  class(d)
+system.time( d <- read_meso_region(code_meso="all", year=2010) )
+plot(d)
+head(d)
+class(d)
 
 
 
@@ -154,40 +179,40 @@ gc(reset = T)
 gc(reset = T)
 
 
-  
+
 
 ### passed the test
 
-  system.time( b <- read_micro_region(code_micro=11008, year=2018) )
-  head(b)
-  plot(b)
-  
-  
-  system.time( a <- read_micro_region(code_micro=11, year=2000) )
-  head(a); rm(a)
-  plot(a)
-
-  system.time( b <- read_micro_region(code_micro="RJ", year=2001) )
-  head(b)
-  plot(b)
-
-  system.time( c <- read_micro_region(code_micro=11) )
-  head(c)
-  plot(c)
+system.time( b <- read_micro_region(code_micro=11008, year=2018) )
+head(b)
+plot(b)
 
 
-  system.time( d <- read_micro_region(code_micro="all", year=2000) )
-  head(d)
-  plot(d)
+system.time( a <- read_micro_region(code_micro=11, year=2000) )
+head(a); rm(a)
+plot(a)
+
+system.time( b <- read_micro_region(code_micro="RJ", year=2001) )
+head(b)
+plot(b)
+
+system.time( c <- read_micro_region(code_micro=11) )
+head(c)
+plot(c)
+
+
+system.time( d <- read_micro_region(code_micro="all", year=2000) )
+head(d)
+plot(d)
 
 
 
-  
 
 
-  
+
+
 ###### 5. read_weighting_area -------------------------
-  
+
 # input state
 system.time( w1 <- read_weighting_area(code_weighting=53) )
 system.time( w1 <- read_weighting_area(code_weighting=52) )
@@ -269,34 +294,34 @@ br <- read_country(year=1500)
 
 
 ### update package documentation ----------------
-  library(roxygen2)
-  library("devtools")
+library(roxygen2)
+library("devtools")
 
 
-  setwd("R:/Dropbox/git_projects/geobr")
+setwd("R:/Dropbox/git_projects/geobr")
 #  setwd("C:/Users/r1701707/Desktop/geobr")
-  
-  # Update documentation
-  devtools::document()
-  
-  # Install package
-  setwd("..")
-  install("geobr")
-  
-  # Check package errors  
-  # devtools::check("geobr")
-  
-  # Write package manual.pdf
-  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
-  system("R CMD Rd2pdf geobr")
-  
-  
-  pack <- "geobr"
-  path <- find.package(pack)
-  system(paste(shQuote(file.path(R.home("bin"), "R")),
-               "CMD", "Rd2pdf", shQuote(path)))
-  
-  
-  
-  install.packages("pdflatex", dependencies = T)  
-  
+
+# Update documentation
+devtools::document()
+
+# Install package
+setwd("..")
+install("geobr")
+
+# Check package errors  
+# devtools::check("geobr")
+
+# Write package manual.pdf
+system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+system("R CMD Rd2pdf geobr")
+
+
+pack <- "geobr"
+path <- find.package(pack)
+system(paste(shQuote(file.path(R.home("bin"), "R")),
+             "CMD", "Rd2pdf", shQuote(path)))
+
+
+
+install.packages("pdflatex", dependencies = T)  
+
