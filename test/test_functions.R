@@ -290,15 +290,18 @@ br <- read_country(year=2018)
 plot(br)
 
 br <- read_country(year=1500)
+br <- read_country(year=2010)
 
 
 
+###### 8. read_region -------------------------
+
+reg <- read_region(year=2018)
+plot(reg)
 
 
 
-
-
-###### 8. Health facilities -------------------------
+###### 9. Health facilities -------------------------
 
 devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 
