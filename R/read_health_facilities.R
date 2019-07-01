@@ -43,15 +43,10 @@ read_health_facilities <- function(code, year=NULL){
   
 
 # Verify year input
-  if (is.null(year)){ cat("Using data from year 2015\n")
-    temp_meta <- subset(temp_meta, year==2015)
-    
-  } 
+  if (is.null(year)){ cat("Using data from year 2015\n") } else {
   
-  if (year != 2015){ stop(paste0("Error: Invalid Value to argument 'year'. The only year available is 2015"))
-                                 }
-                                 
-                                 
+  if (is.null(year) | year != 2015){ stop(paste0("Error: Invalid Value to argument 'year'. The only year available is 2015"))}}
+
                                  
                                  
   # Get metadata with data addresses
@@ -69,26 +64,18 @@ read_health_facilities <- function(code, year=NULL){
   
   
   # Select geo
-  temp_meta <- subset(metadata, geo=="health_services")
+  temp_meta <- subset(metadata, geo=="health_facilities")
   
   
-                                 
-  
-  
-  
-
-      
-    # list paths of files to download
+  # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
     
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
-    
-    # filesD <- "R:/Dropbox/git_projects/geobr/data-raw/health_services/shapes_in_sf_all_years_cleaned/2015/cnes_sf_2015.rds"
-    # temp_sf <- read_rds(filesD)
-    
-    # read sf
+    httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+  
+      
+  # read sf
     temp_sf <- readr::read_rds(temps)
     
     
@@ -113,7 +100,7 @@ read_health_facilities <- function(code, year=NULL){
 
     
   # If user passed seven-digit numeric code of a municipality
-    if(nchar(code)==2 & is.numeric(code)){
+    if(nchar(code)==7 & is.numeric(code)){
                                             x <- code
                                             temp_sf <- subset(temp_sf, code_muni==x)
                                             return(temp_sf)
