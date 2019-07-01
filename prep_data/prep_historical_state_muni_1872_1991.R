@@ -11,7 +11,7 @@ library(lwgeom)
 
 
 # Root directory
-root_dir <- "R:/Dropbox/git_projects/geobr/data-raw"
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
 
 
@@ -59,8 +59,7 @@ gc(reset = T)
 ########  1. Unzip original data sets downloaded from IBGE -----------------
 
 # Root directory
-  root_dir <- "R:/Dropbox/git_projects/geobr/data-raw/historical_state_muni_1872_1991"
-  #root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
+  root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw/historical_state_muni_1872_1991"
   setwd(root_dir)
 
 # List all zip files for all years
@@ -80,12 +79,12 @@ unzip_fun <- function(f){
 
 
 # create computing clusters
-cl <- parallel::makeCluster(detectCores())
-parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "root_dir"), envir=environment())
+  cl <- parallel::makeCluster(detectCores())
+  parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "root_dir"), envir=environment())
 
 # apply function in parallel
-parallel::parLapply(cl, all_zipped_files, unzip_fun)
-stopCluster(cl)
+  parallel::parLapply(cl, all_zipped_files, unzip_fun)
+  stopCluster(cl)
 
 
 rm(list=setdiff(ls(), c("root_dir")))
@@ -182,7 +181,7 @@ gc(reset = T)
       # dplyr::rename and subset columns
       names(liti) <- names(liti) %>% tolower()
       
-      liti <- dplyr::rename(liti, code_muni = Id, name_muni = nome )
+      liti <- dplyr::rename(liti, code_muni = id, name_muni = nome )
       liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudese', 'longitudes' da sede do municipio
       
       # Use UTF-8 encoding
@@ -198,12 +197,12 @@ gc(reset = T)
       # Make an invalid geometry valid # st_is_valid( sf)
       liti <- lwgeom::st_make_valid(liti)
       
-      muni <- do.call('rbind', list(temp_sf, liti))
+      temp_sf <- do.call('rbind', list(temp_sf, liti))
     }
     
     # Save cleaned sf in the cleaned directory
     destdir <- file.path("./shapes_in_sf_all_years_cleaned", "municipio",year)
-    readr::write_rds(muni, path = paste0(destdir,"/municipios_", year, ".rds"), compress="gz" )
+    readr::write_rds(temp_sf, path = paste0(destdir,"/municipios_", year, ".rds"), compress="gz" )
   }
 
 # Apply function to save original data sets in rds format
@@ -261,14 +260,9 @@ clean_state <- function(year){
     # dplyr::rename and subset columns
     names(temp_sf) <- names(temp_sf) %>% tolower()
     
-  if (year %like% "1991"){ next
-              } else {
-        
-        # other years
                 temp_sf <- dplyr::rename(temp_sf, name_state = nome )
                 temp_sf <- dplyr::select(temp_sf, c('name_state', 'geometry'))
-              }
-      
+
       
   # Use UTF-8 encoding
     temp_sf$name_state <- stringi::stri_encode(as.character(temp_sf$name_state), "UTF-8")
@@ -339,8 +333,8 @@ clean_state <- function(year){
   # DO NOT run
   ## remove all unzipped shape files
   #   # list all unzipped shapes
-  #     root_dir <- "R:/Dropbox/git_projects/geobr/data-raw"
-  #     f <- list.files(path = root_dir, full.names = T, recursive = T, pattern = ".shx|.shp|.prj|.dbf|.cpg|.sbx|.sbn|.xml")
-  #     file.remove(f)
+      # root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw/historical_state_muni_1872_1991"
+      # f <- list.files(path = root_dir, full.names = T, recursive = T, pattern = ".shx|.shp|.prj|.dbf|.cpg|.sbx|.sbn|.xml")
+      # file.remove(f)
   
 
