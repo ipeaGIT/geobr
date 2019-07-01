@@ -121,6 +121,25 @@ read_municipality <- function(code_muni, year=NULL){
   
   
   
+# BLOCK 2.1 From 1872 to 1991  ---------------------------- 
+  
+  if( x < 1992){
+    
+    # list paths of files to download
+    filesD <- as.character(temp_meta$download_path)
+    
+    # download files
+    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+    httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+    
+    # read sf
+    temp_sf <- readr::read_rds(temps)
+    
+    return(temp_sf)
+    } else {
+  
+  
+# BLOCK 2.2 From 2000 onwards  ---------------------------- 
   
 # 2.2 Verify code_muni Input
 
@@ -178,4 +197,4 @@ read_municipality <- function(code_muni, year=NULL){
           stop("Error: Invalid Value to argument code_muni.")
       }
   }
-}}
+}}}
