@@ -53,6 +53,7 @@
 # to avoid conflict with data.table
   metadata <- as.data.frame(metadata)
   table(metadata$geo)
+  table(metadata$year)
   
 # save updated metadata table
   # readr::write_rds(metadata,"//storage3/geobr/metadata/metadata.rds", compress = "gz")
