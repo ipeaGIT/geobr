@@ -294,6 +294,37 @@ br <- read_country(year=1500)
 
 
 
+
+
+
+
+###### 8. Health facilities -------------------------
+
+devtools::load_all('C:/Users/r1701707/Desktop/geobr')
+
+
+h <- read_health_facilities(code=11)
+plot(h)
+head(h)
+
+h <- read_health_facilities(code="all")
+plot(h)
+head(h)
+
+
+h <- read_health_facilities(code="AM")
+
+
+
+
+
+
+
+
+
+
+
+
 ### update package documentation ----------------
 library(roxygen2)
 library("devtools")
