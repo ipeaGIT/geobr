@@ -33,6 +33,4 @@ read_region <- function(year=NULL){
   return(temp_sf)
 }
 
-a <- read_region(year=2010)
-plot(a)
 
