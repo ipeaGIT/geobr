@@ -22,7 +22,7 @@ library(geobr)
 
 
 # Root directory
-root_dir <- "R:/Dropbox/git_projects/geobr/data-raw/health_services"
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
 
 
@@ -30,7 +30,7 @@ setwd(root_dir)
 ###### 0. Create folders to save the data -----------------
 
 # Directory to keep raw zipped files
-  dir.create("./health_services")
+  dir.create("./health_facilities")
 
 
 #### 0. Download original data sets from IBGE ftp -----------------
@@ -52,48 +52,20 @@ setwd(root_dir)
 
 
 # Create dir to save data of that specific year
-  dir.create(paste0("./",most_freq_year))
+  dir.create(paste0("./health_facilities/",most_freq_year))
   
   
 # Save original raw data
-  fwrite(cnes, file = paste0("./",most_freq_year,"/cnes_rawdata_",most_freq_year,".csv"))
+  fwrite(cnes, file = paste0("./health_facilities/",most_freq_year,"/cnes_rawdata_",most_freq_year,".csv"))
 
 
-          # 
-          # # url of data source
-          #   shp_url = "http://i3geo.saude.gov.br/i3geo/ogc.php?service=WFS&version=1.0.0&request=GetFeature&typeName=cnes&outputFormat=SHAPE-ZIP"
-          # 
-          #   download.file(shp_url, destfile = )
-          # 
-          # # Download file
-          # 
-          #   rm(list=setdiff(ls(), c("root_dir")))
-          #   gc(reset = T)  
-          # 
-          #   
-  
-  
-          # ########  1. Unzip original data sets -----------------
-          #   
-          # # List all zip files
-          #   zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
-          #   
-          #   
-          # # Unzip Manually
-          #   unzip(zipfile = zipped_files) #> ERROR?
-          #   
-          #   
-          # rm(list=setdiff(ls(), c("root_dir")))
-          # gc(reset = T)
-
-
-  rm(list=setdiff(ls(), c("root_dir")))
+rm(list=setdiff(ls(), c("root_dir")))
 
 
 #### 2. Create folders to save sf.rds files  -----------------
 
 # create directory to save cleaned shape files in sf format
-  dir.create("./shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
+  dir.create("./health_facilities/shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
 
 
 
@@ -103,7 +75,7 @@ setwd(root_dir)
 #### 3. Save cleaned data sets in compact .rds format-----------------
 
 # list all csv files
-  all_csv <- list.files(full.names = T, recursive = T, pattern = ".csv")
+  all_csv <- list.files(path="./health_facilities", full.names = T, recursive = T, pattern = ".csv")
   
 # read data
   cnes <- fread(all_csv)
@@ -162,7 +134,7 @@ setwd(root_dir)
   
 
 # Create dir to save data of that specific year
-  dir.create(paste0("./shapes_in_sf_all_years_cleaned/",most_freq_year))
+  dir.create(paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year))
   
 
     
@@ -190,7 +162,7 @@ setwd(root_dir)
   
   
 # Save raw file in sf format
-  write_rds(cnes_sf, paste0("./shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".rds"), compress = "gz")
+  write_rds(cnes_sf, paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".rds"), compress = "gz")
 
   
   
