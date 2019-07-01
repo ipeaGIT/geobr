@@ -1,7 +1,8 @@
-#' Download geolocated data of health services as sf objects.
+#' Download geolocated data of health facilities as an sf object.
 #' 
 #' Data comes from the National Registry of Healthcare facilities (Cadastro Nacional de Estabelecimentos de Saúde - CNES),
-#' originally collected by the Brazilian Ministry of Health. These data uses Geodetic reference 
+#' originally collected by the Brazilian Ministry of Health. The date of the last data update is 
+#' registered in the database in the columns ‘date_update’ and ‘year_update’. These data uses Geodetic reference 
 #' system "SIRGAS2000" and CRS(4674). The coordinates of each facility was obtained by CNES 
 #' and validated by means of space operations. These operations verify if the point is in the 
 #' municipality, considering a radius of 5,000 meters. When the coordinate is not correct, 
@@ -9,11 +10,9 @@
 #' like Google Maps . Finally, if the coordinates have been correctly obtained in this process,
 #' the coordinates of the municipal head office are used. The final source used is registered 
 #' in the database in a specific column ‘data_source’. Periodically the coordinates are revised 
-#' with the objective of improving the quality of the data. The date of the last data update is 
-#' registers in the database in the columns ‘date_update’ and ‘year_update’. More information 
+#' with the objective of improving the quality of the data. More information 
 #' available at http://dados.gov.br/dataset/cnes 
 #' 
-#' @param year Year of the data (defaults to 2015)
 #' @param code The 7-digit code of a municipality. If the two-digit code or a two-letter 
 #' abbreviation of a state is passed, (e.g. 33 or "RJ") the function will load all healthcare
 #' facilities of that state. If code="all", all facilities of the country are loaded.
@@ -22,33 +21,25 @@
 #'
 #' library(geobr)
 #' 
-#' # Read specific meso region at a given year
-#'   meso <- read_meso_region(code_meso=3301, year=2018)
+#' # Read the health facilities of state 11
+#'   h <- read_health_facilities(code=11)
 #'   
-#' # Read all meso regions of a state at a given year
-#'   meso <- read_meso_region(code_meso=12, year=2017)
-#'   meso <- read_meso_region(code_meso="AM", year=2000)
+#' # Read the health facilities of state "AM"
+#'   h <- read_health_facilities(code="AM")
 #'   
-#' # Read all meso regions of the country at a given year
-#'   meso <- read_meso_region(code_meso="all", year=2010)
+#' # Read all health facilities of the country
+#'   h <- read_health_facilities(code="all")
 #'   
 #' }
 #'
 
-read_health_facilities <- function(code, year=NULL){
+read_health_facilities <- function(code){
 
   
 # Test if code input is null
   if(is.null(code)){ stop("Value to argument 'code' cannot be NULL") }
   
 
-# Verify year input
-  if (is.null(year)){ cat("Using data from year 2015\n") } else {
-  
-  if (is.null(year) | year != 2015){ stop(paste0("Error: Invalid Value to argument 'year'. The only year available is 2015"))}}
-
-                                 
-                                 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
   
