@@ -35,7 +35,7 @@
 #' }
 #'
 
-read_health_services <- function(code, year=NULL){
+read_health_facilities <- function(code, year=NULL){
 
   
 # Test if code input is null
