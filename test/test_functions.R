@@ -58,6 +58,14 @@ plot(uf)
 ufs <- read_state(code_state="all", year=2018)
 plot(ufs)
 
+ufs <- read_state(code_state="all", year=1940)
+ufs <- read_state( year=1872)
+ufs <- read_state( year=1500)
+
+plot(ufs)
+
+
+
 ufs <- select(ufs, 'code_region', 'geometry')
 ufs$s <- 1
 
@@ -109,6 +117,11 @@ plot(a)
 system.time( b <- read_municipality(code_muni=11, year=2003) )
 head(b)
 
+system.time( b <- read_municipality(code_muni=11, year=1940) )
+system.time( b <- read_municipality(code_muni=11, year=1872) )
+plot(b)
+head(b)
+
 system.time( d <- read_municipality(code_muni="AM", year=2018 ))
 system.time( d <- read_municipality(code_muni="all", year=2010 ))
 head(d)
@@ -138,6 +151,7 @@ e <- read_municipality(code_muni=333, year=2010)
 # code_muni cannot be NULL
 e <- read_municipality( year=2010)
 
+system.time( b <- read_municipality(code_muni=11, year=1500) )
 
 
 ###### 3. read_meso_region -------------------------
