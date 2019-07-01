@@ -38,10 +38,10 @@ library(geobr)
 |-----|-----|-----|-----|
 |`read_country`| Country | 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_region`| Region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
-|`read_state`| States | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
+|`read_state`| States | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  IBGE |
 |`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
-|`read_municipality`| Municipality | 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |IBGE |
+|`read_municipality`| Municipality | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |IBGE |
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2000 | IBGE |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 |`read_health_services` | Health facilities | 2015 | CNES, DataSUS | 
