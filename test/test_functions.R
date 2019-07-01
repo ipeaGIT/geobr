@@ -357,6 +357,7 @@ devtools::document()
 setwd("..")
 install("geobr")
 
+
 # Check package errors  
 # devtools::check("geobr")
 
@@ -365,37 +366,37 @@ system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
 system("R CMD Rd2pdf geobr")
 
 
-pack <- "geobr"
-path <- find.package(pack)
-system(paste(shQuote(file.path(R.home("bin"), "R")),
-             "CMD", "Rd2pdf", shQuote(path)))
-
-
-
-install.packages("pdflatex", dependencies = T)  
-
-  
-  # Update documentation
-  devtools::document()
-  
-  # Install package
-  setwd("..")
-  install("geobr")
-  
-  # Check package errors  
-  # devtools::check("geobr")
-  
-  # Write package manual.pdf
-  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
-  system("R CMD Rd2pdf geobr")
-  
-  
-  pack <- "geobr"
-  path <- find.package(pack)
-  system(paste(shQuote(file.path(R.home("bin"), "R")),
-               "CMD", "Rd2pdf", shQuote(path)))
-  
-  
-  
-  install.packages("pdflatex", dependencies = T)  
-  
+# pack <- "geobr"
+# path <- find.package(pack)
+# system(paste(shQuote(file.path(R.home("bin"), "R")),
+#              "CMD", "Rd2pdf", shQuote(path)))
+# 
+# 
+# 
+# install.packages("pdflatex", dependencies = T)  
+# 
+#   
+#   # Update documentation
+#   devtools::document()
+#   
+#   # Install package
+#   setwd("..")
+#   install("geobr")
+#   
+#   # Check package errors  
+#   # devtools::check("geobr")
+#   
+#   # Write package manual.pdf
+#   system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+#   system("R CMD Rd2pdf geobr")
+#   
+#   
+#   pack <- "geobr"
+#   path <- find.package(pack)
+#   system(paste(shQuote(file.path(R.home("bin"), "R")),
+#                "CMD", "Rd2pdf", shQuote(path)))
+#   
+#   
+#   
+#   install.packages("pdflatex", dependencies = T)  
+#   
