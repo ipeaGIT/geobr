@@ -47,12 +47,12 @@ head(brazil_2010)
 
 
 # Read specific municipality at a given year
-uf <- read_state(code_state=12, year=2017)
-uf <- read_state(code_state="SP", year=2017)
-uf <- read_state(code_state="RJ")
-
+  uf <- read_state(code_state=12, year=2017)
+  uf <- read_state(code_state="SP", year=2017)
+  uf <- read_state(code_state="RJ")
+  
 plot(uf)
-head(uf)
+  head(uf)
 
 # Read all states at a given year
 ufs <- read_state(code_state="all", year=2018)
@@ -216,6 +216,7 @@ plot(d)
 # input state
 system.time( w1 <- read_weighting_area(code_weighting=53) )
 system.time( w1 <- read_weighting_area(code_weighting=52) )
+system.time( w1 <- read_weighting_area(code_weighting=33) )
 
 head(w1)
 plot(w1)
@@ -325,3 +326,28 @@ system(paste(shQuote(file.path(R.home("bin"), "R")),
 
 install.packages("pdflatex", dependencies = T)  
 
+  
+  # Update documentation
+  devtools::document()
+  
+  # Install package
+  setwd("..")
+  install("geobr")
+  
+  # Check package errors  
+  # devtools::check("geobr")
+  
+  # Write package manual.pdf
+  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+  system("R CMD Rd2pdf geobr")
+  
+  
+  pack <- "geobr"
+  path <- find.package(pack)
+  system(paste(shQuote(file.path(R.home("bin"), "R")),
+               "CMD", "Rd2pdf", shQuote(path)))
+  
+  
+  
+  install.packages("pdflatex", dependencies = T)  
+  
