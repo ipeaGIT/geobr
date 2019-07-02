@@ -1,4 +1,4 @@
-# geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="200"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="200">
+# geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
 ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
 
