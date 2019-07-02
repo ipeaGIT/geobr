@@ -1,9 +1,6 @@
 # geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="200"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="200">
 
-![GitHub release](https://img.shields.io/github/release/ipeaGIT/geobr.svg?color=green&label=Release) ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
-
-
-![Github all downloads](https://img.shields.io/github/downloads/ipeaGIT/geobr/total.svg?label=Downloads&color=green)
+![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
 
 
 
