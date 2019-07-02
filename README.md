@@ -4,7 +4,8 @@
 
 
 
-**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
+**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide range of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
+
 
 ## Installation
 ```
@@ -76,8 +77,8 @@ The shape files are created by IBGE. The **geobr** package is developed by a tea
 
 
 
-### Related projects
-As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf). The **geobr** package has a few advantages when compared to these packages, including for example:
-- Access to a wider set of shapefiles, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
+### Advantages of **geobr** and related projects
+As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://cran.r-project.org/web/packages/brazilmaps/brazilmaps.pdf). The **geobr** package follows an intuitive syntax and it has a few advantages when compared to other packages, including for example:
+- Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shape files with updated geometries for various years
-- Harmonazied attributes and geographic projections across geographies and years
+- Harmonized attributes and geographic projections across geographies and years
