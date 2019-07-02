@@ -1,9 +1,7 @@
 # geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="200"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="200">
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#experimental)
- ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
- [![Github all downloads](https://img.shields.io/github/downloads/ipeaGIT/geobr/total.svg?label=downloads&color=green)](https://GitHub.com/ipeaGIT/geobr/releases/) 
- [![GitHub Release](https://github-basic-badges.herokuapp.com/release/ipeaGIT/geobr.svg)]()
- [![GitHub Release](https://github-basic-badges.herokuapp.com/downloads/ipeaGIT/geobr/total.svg)]()
+
+![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg) ![GitHub release](https://img.shields.io/github/release/ipeaGIT/geobr.svg?color=green&label=Release) ![CRAN Version](http://www.r-pkg.org/badges/version/geobr) ![Github all downloads](https://img.shields.io/github/downloads/ipeaGIT/geobr/total.svg?label=Downloads&color=green)
+
 
 
 **geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide set of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
