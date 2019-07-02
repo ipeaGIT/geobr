@@ -526,7 +526,7 @@ shp_to_sf_rds <- function(x){
       temp_sf <- lwgeom::st_make_valid(temp_sf)
       
       # keep code as.numeric()
-      temp_sf$cod_mico <- as.numeric(temp_sf$code_micro)
+      temp_sf$code_micro <- as.numeric(temp_sf$code_micro)
       
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
