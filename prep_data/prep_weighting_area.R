@@ -44,6 +44,9 @@ gc(reset = T)
 #### 1.2. Municipios  area redefinidas --------------
 files_2st_batch <- all_zipped_files[all_zipped_files %like% "municipios_areas_redefinidas"]
 
+## excluindo as areas redefinidas de Pelotas e de Ponta Grossa, dados corrompidos
+files_2st_batch <- files_2st_batch[!files_2st_batch %like% "Pelotas|Ponta_Grossa"]
+
 # function to Unzip files in their original sub-dir
 unzip_fun <- function(f){
   
@@ -92,6 +95,11 @@ dir.create(file.path("shapes_in_sf_all_years_cleaned", "area_ponderacao","2010",
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao"
 setwd(root_dir)
 
+# renomeando Boa Vista, nÃ£o tem .shp
+file.rename("L:/# DIRUR #/ASMEQ/geobr/data-raw/malha_de_areas_de_ponderacao/censo_demografico_2010/14_RR_Roraima/Boa_Vista_area de ponderacao",
+            "L:/# DIRUR #/ASMEQ/geobr/data-raw/malha_de_areas_de_ponderacao/censo_demografico_2010/14_RR_Roraima/Boa_Vista_area de ponderacao.shp")
+
+
 # List shapes for all years
 all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
 
@@ -135,10 +143,12 @@ sub_dirs <- list.dirs(path =uf_dir, recursive = F)
   clean_states <- function( e ){ #e <- sub_dirs[1]
 
   # list all sf files in that year/folder
+  #############################################trocar
   sf_files <- list.files(e, full.names = T,recursive = T)
+  #sf_files <- list.files(e, full.names = T,recursive = T)[!list.files(e, full.names = T,recursive = T) %in% str_subset(list.files(e, full.names = T,recursive = T), "municipios")]
   
   #extraindo base duplicada do estado de sao paulo
-  #sf_files <- sf_files[!sf_files == "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_original/area_ponderacao/2010/35SEE250GC_SIR_area_de_ponderacao.rds"]
+  sf_files <- sf_files[!sf_files == "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_original/area_ponderacao/2010/35SEE250GC_SIR_area_de_ponderacao.rds"]
   
   # for each file
   for (i in sf_files){ #  i <- sf_files[1]
@@ -168,8 +178,14 @@ sub_dirs <- list.dirs(path =uf_dir, recursive = F)
       temp_sf$cod_state <- as.numeric(temp_sf$cod_state)
       
       # Save cleaned sf in the cleaned directory
-      i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i, compress="gz" )
+      #i <- gsub("original", "cleaned", i)
+      # name of the file that will be saved
+      if( !i %like% "municipios_areas_redefinidas"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_cleaned//area_ponderacao//2010//"}
+      
+      if( i %like% "municipios_areas_redefinidas"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_cleaned//area_ponderacao//2010//municipios_areas_redefinidas//"}
+      
+      
+      write_rds(temp_sf, path = paste0(dest_dir,as.character(temp_sf$cod_muni[1]),".rds"), compress="gz" )
       
       }
 }
@@ -190,35 +206,38 @@ sub_dirs <- list.dirs(path =uf_dir, recursive = F)
   rm(list= ls())
   gc(reset = T)
 
- 
+  ## inserindo as areas redefinidas
+  dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_cleaned/area_ponderacao/2010"
+  dir.files <- list.files(dir,pattern = ".rds$")
   
-  #####FAZER #####
-  # verificar os dados de pelotas que está corrompido
-  #juntar as bases por estado
+  dir.redefinidas <-"L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_cleaned/area_ponderacao/2010/municipios_areas_redefinidas"
+  dir.redefinidas.files <- list.files(dir.redefinidas,pattern = ".rds$")
   
-  # 2- verificar dados de pelotas corrompido
-  # 3- inserir opção de areas redefinidas, merge das bases
-  # 5- verificar quantidade de linhas de sao paulo
+  for (file in dir.files) { #file=dir.files[11]
+    if (file %in% dir.redefinidas.files) {
+      file.remove(paste0(dir,"//",file))
+      file.copy(from=paste0(dir.redefinidas,"//",file),to=paste0(dir,"//",file))
+      file.remove(paste0(dir.redefinidas,"//",file))
+      }
+  }
   
-   
- ########### #pelotas corrompido ##########
-  shape <- st_read("L:/# DIRUR #/ASMEQ/geobr/data-raw/malha_de_areas_de_ponderacao/censo_demografico_2010/municipios_areas_redefinidas/Pelotas_area de ponderacao.shp", quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-  
-  
-  
+  #removendo pasta municipio area redefinida
+   unlink("L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_cleaned//area_ponderacao//2010//municipios_areas_redefinidas",recursive = TRUE)
 
-#
-# 
-# dir.proj="."
-# 
-# for (CODE in list.files(pattern = "^\\d")) {
-#   if (!length(list.files(paste(dir.proj,CODE,sep="/")))==0) {
-# files <- list.files(paste(dir.proj,CODE,sep="/"),full.names = T)
-# files <- lapply(X=files, FUN= readr::read_rds)
-# files <- lapply(X=files, FUN= as.data.frame)
-# shape <- do.call('rbind', files)
-# shape <- st_sf(shape)
-# saveRDS(shape,paste0("./",CODE,"AP.rds"))
-#   }
-# }
+  
+#juntando as bases por estado
+dir.proj="L:////# DIRUR #//ASMEQ//geobr//data-raw//malha_de_areas_de_ponderacao//shapes_in_sf_all_years_cleaned/area_ponderacao/2010/"
+setwd(dir.proj)
+lista <- unique(substr(list.files(dir.proj),1,2))
+
+for (CODE in lista) {#CODE <- lista[1]
+  
+    files <- list.files(full.names = T,pattern = paste0("^",CODE))
+    files <- lapply(X=files, FUN= readr::read_rds)
+    files <- lapply(X=files, FUN= as.data.frame)
+    shape <- do.call('rbind', files)
+    shape <- st_sf(shape)
+    saveRDS(shape,paste0("./",CODE,"AP.rds"))
+  }
+
 
