@@ -25,7 +25,7 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting, year = NULL){
+read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=1400100
   
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -97,9 +97,9 @@ read_weighting_area <- function(code_weighting, year = NULL){
     if(nchar(code_weighting)==2){
       return(shape)
       
-    } else if(code_weighting %in% shape$code_mum){    # Get weighting
+    } else if(code_weighting %in% shape$cod_muni){    # Get weighting
       x <- code_weighting
-      shape <- subset(shape, code_mum==x)
+      shape <- subset(shape, cod_muni==x)
       return(shape)
     } else{
       stop("Error: Invalid Value to argument code_weighting.")
