@@ -1,7 +1,6 @@
 #### testing functions of geobr
 
-
-library(magrittr)
+#library(magrittr)
 library(sf)
 library(dplyr)
 
@@ -10,6 +9,7 @@ library(dplyr)
 ### Install development version of geobr
 
 # devtools::install_github("ipeaGIT/geobr")
+# devtools::install_github("ipeaGIT/geobr@v0.02")
 # library(geobr)
 # library(sf)
 
@@ -124,6 +124,10 @@ head(b)
 
 system.time( d <- read_municipality(code_muni="AM", year=2018 ))
 system.time( d <- read_municipality(code_muni="all", year=2010 ))
+
+system.time( d <- read_municipality(code_muni="all", year=1991 ))
+system.time( d <- read_municipality(code_muni="all" ))
+
 head(d)
 
 system.time( c <- read_municipality(code_muni=11) )
