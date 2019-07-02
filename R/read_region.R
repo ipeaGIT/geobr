@@ -20,10 +20,11 @@ read_region <- function(year=NULL){
   
   # merge by Region
   temp_sf <- dplyr::select(temp_sf, 'code_region', 'geometry')
-  temp_sf <- temp_sf %>% group_by(code_region) %>% summarize()
+  temp_sf <- dplyr::summarize( group_by(temp_sf, code_region))
+
   
   # add region names
-  temp_sf <- temp_sf %>% dplyr::mutate(name_region = ifelse(code_region==1, 'Norte',
+  temp_sf <- dplyr::mutate(temp_sf, name_region = ifelse(code_region==1, 'Norte',
                                                             ifelse(code_region==2, 'Nordeste',
                                                                    ifelse(code_region==3, 'Sudeste',
                                                                           ifelse(code_region==4, 'Sul',
