@@ -21,7 +21,7 @@ library(geobr)
 
 # Read specific state at a given year
   uf <- read_state(code_state=12, year=2017)
-  
+
 # Read specific state at a given year
   uf <- read_state(code_state="SC", year=2000)
 
