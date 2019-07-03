@@ -22,14 +22,14 @@ library(geobr)
 
 # Read specific meso region at a given year
   meso <- read_meso_region(code_meso=3301, year=2018)
-  
+
 # Read all meso regions of a state at a given year
   meso <- read_meso_region(code_meso=12, year=2017)
   meso <- read_meso_region(code_meso="AM", year=2000)
-  
+
 # Read all meso regions of the country at a given year
   meso <- read_meso_region(code_meso="all", year=2010)
-  
+
 }
 
 }

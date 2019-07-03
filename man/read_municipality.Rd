@@ -26,10 +26,10 @@ library(geobr)
 # Read all municipalities of a state at a given year
   mun <- read_municipality(code_muni=33, year=2010)
   mun <- read_municipality(code_muni="RJ", year=2010)
-  
+
 # Read all municipalities of the country at a given year
   mun <- read_municipality(code_muni="all", year=2018)
-  
+
 }
 }
 \seealso{
