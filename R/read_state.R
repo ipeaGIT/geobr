@@ -14,7 +14,7 @@
 #' # Read specific state at a given year
 #'   uf <- read_state(code_state="SC", year=2000)
 #'
-#'# Read all states at a given year
+#' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
 #'
 #'}
