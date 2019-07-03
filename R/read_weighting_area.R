@@ -1,4 +1,4 @@
-#' Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census
+#' Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census. Only 2010 data is currently available.
 #'
 #' @param CODE One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography
 #' @param year the year of the data download (defaults to 2010)
@@ -8,18 +8,21 @@
 #'
 #' library(geobr)
 #'
-#'dados <- read_weighting_area(year=2010)
-#'dados <- read_weighting_area(3500000,2010)
-#'dados <- read_weighting_area(123,2010)
-#'dados <- read_weighting_area("df",2010)
-#'dados <- read_weighting_area(1302603,2010)
-#'dados <- read_weighting_area(35)
-#'dados <- read_weighting_area(14,2010)
-#'dados <- read_weighting_area("all")
+#' # Read specific weighting area at a given year
+#'   w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 #'
-#'# map it
-#'library(mapview)
-#'mapview(dados)
+#'# Read all weighting areas of a state at a given year
+#'   w <- read_weighting_area(code_weighting=53, year=2010); # or
+#'   w <- read_weighting_area(code_weighting="DF"", year=2010)
+#'   plot(w)
+#'
+#'#'# Read all weighting areas of a municipality at a given year
+#'   w <- read_weighting_area(code_weighting=5201108, year=2010)
+#'   plot(w)
+#'
+#'# Read all municipalities of the country at a given year
+#'   w <- read_weighting_area(code_muni="all", year=2010)
+#'
 #' }
 #'
 #'
@@ -95,13 +98,22 @@ read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=14
     # read sf
       shape <- readr::read_rds(temps)
 
+    # return whole state
     if(nchar(code_weighting)==2){
       return(shape)
 
-    } else if(code_weighting %in% shape$cod_muni){    # Get weighting
+    # return municipality
+
+    } else if(code_weighting %in% shape$code_muni){    # Get weighting area
       x <- code_weighting
-      shape <- subset(shape, cod_muni==x)
+      shape <- subset(shape, code_muni==x)
       return(shape)
+
+    } else if(code_weighting %in% shape$code_weighting_area){    # Get weighting area
+      x <- code_weighting
+      shape <- subset(shape, code_weighting_area==x)
+      return(shape)
+
     } else{
       stop("Error: Invalid Value to argument code_weighting.")
     }
