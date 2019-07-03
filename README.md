@@ -1,6 +1,7 @@
 # geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
 ![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
+![GitHub release](https://img.shields.io/github/release/ipeaGIT/geobr.svg)
 
 
 
@@ -41,7 +42,7 @@ library(geobr)
 |`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  IBGE |
 |`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_municipality`| Municipality | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |IBGE |
-|`read_weighting_area`| Census weighting area (área de ponderação) |  2000 | IBGE |
+|`read_weighting_area`| Census weighting area (área de ponderação) |  2010 | IBGE |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
 
