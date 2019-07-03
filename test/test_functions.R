@@ -238,6 +238,8 @@ devtools::load_all('C:/Users/r1701707/Desktop/geobr')
   system.time( w1 <- read_weighting_area(code_weighting="DF") )
   plot(w)
 
+
+
 # input whole country
   w <- read_weighting_area(code_weighting="all")
   head(w)
@@ -376,28 +378,4 @@ system("R CMD Rd2pdf geobr")
 #
 # install.packages("pdflatex", dependencies = T)
 #
-#
-#   # Update documentation
-#   devtools::document()
-#
-#   # Install package
-#   setwd("..")
-#   install("geobr")
-#
-#   # Check package errors
-#   # devtools::check("geobr")
-#
-#   # Write package manual.pdf
-#   system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
-#   system("R CMD Rd2pdf geobr")
-#
-#
-#   pack <- "geobr"
-#   path <- find.package(pack)
-#   system(paste(shQuote(file.path(R.home("bin"), "R")),
-#                "CMD", "Rd2pdf", shQuote(path)))
-#
-#
-#
-#   install.packages("pdflatex", dependencies = T)
 #
