@@ -50,7 +50,7 @@ head(brazil_2010)
   uf <- read_state(code_state=12, year=2017)
   uf <- read_state(code_state="SP", year=2017)
   uf <- read_state(code_state="RJ")
-  
+
 plot(uf)
   head(uf)
 
@@ -231,28 +231,25 @@ plot(d)
 
 ###### 5. read_weighting_area -------------------------
 
+devtools::load_all('C:/Users/r1701707/Desktop/geobr')
+
 # input state
-system.time( w1 <- read_weighting_area(code_weighting=53) )
-system.time( w1 <- read_weighting_area(code_weighting=52) )
-system.time( w1 <- read_weighting_area(code_weighting=33) )
+  system.time( w1 <- read_weighting_area(code_weighting=53) )
+  system.time( w1 <- read_weighting_area(code_weighting="DF") )
+  plot(w)
 
-head(w1)
-plot(w1)
+# input whole country
+  w <- read_weighting_area(code_weighting="all")
+  head(w)
+  plot(w)
 
 
 
-#### ERROR
-system.time( w1 <- read_weighting_area(code_weighting="all") )
-head(w1)
-plot(w1)
-#> Error: arguments have different crs 
-
-mapview::mapview(w1)
 
 # input muni
-system.time( w2 <- read_weighting_area(code_weighting=5201108, year=2010) )
-head(w2)
-plot(w2)
+  system.time( w2 <- read_weighting_area(code_weighting=5201108, year=2010) )
+  head(w2)
+  plot(w2)
 
 # input weighting area
 system.time( w3 <- read_weighting_area(code_weighting=5201108005004, year=2010) )
@@ -362,7 +359,7 @@ setwd("..")
 install("geobr")
 
 
-# Check package errors  
+# Check package errors
 # devtools::check("geobr")
 
 # Write package manual.pdf
@@ -374,33 +371,33 @@ system("R CMD Rd2pdf geobr")
 # path <- find.package(pack)
 # system(paste(shQuote(file.path(R.home("bin"), "R")),
 #              "CMD", "Rd2pdf", shQuote(path)))
-# 
-# 
-# 
-# install.packages("pdflatex", dependencies = T)  
-# 
-#   
+#
+#
+#
+# install.packages("pdflatex", dependencies = T)
+#
+#
 #   # Update documentation
 #   devtools::document()
-#   
+#
 #   # Install package
 #   setwd("..")
 #   install("geobr")
-#   
-#   # Check package errors  
+#
+#   # Check package errors
 #   # devtools::check("geobr")
-#   
+#
 #   # Write package manual.pdf
 #   system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
 #   system("R CMD Rd2pdf geobr")
-#   
-#   
+#
+#
 #   pack <- "geobr"
 #   path <- find.package(pack)
 #   system(paste(shQuote(file.path(R.home("bin"), "R")),
 #                "CMD", "Rd2pdf", shQuote(path)))
-#   
-#   
-#   
-#   install.packages("pdflatex", dependencies = T)  
-#   
+#
+#
+#
+#   install.packages("pdflatex", dependencies = T)
+#
