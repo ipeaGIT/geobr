@@ -29,25 +29,28 @@ This Vignettes use the geobr package to understand the spatial effect in the Bra
 
 
 
-## Relação entre taxa de fecundidade e tempo de estudo da população
+## Fertility and years of schooling
 
 
-Nesse exemplo piloto vamos analisar o efeito benéfico da inserção das informações geográficas na modelagem do tempo de estudos em dados municipais do estado de Rondônia (RO) no Brasil disponíveis no [http://atlasbrasil.org.br/2013/pt/download/](Atlas de Desenvolvimento Humano ADH).
+There are many studies that associate the years of schooling and fertility. The work of @osili2008does analyse the educational policies in girls and young women and its impact in fertility and GDP.
 
-O modelo será utilizado para explicar o tempo de estudo em função da taxa de fecundidade total nos municípios quando as variáveis de georefenciamento são incorporadas ao modelo. A figura a seguir apresenta o tempo de estudos e a taxa de fecundidade total.
+In our example we analyse the impact on estimates coefficients and model specification in reason add geographical variables in regression model associating eductation level and fertility rate on cities of Rondônia state in Brazil using the package @geobr. The cities data are avaliable in [http://atlasbrasil.org.br/2013/pt/download/](Atlas de Desenvolvimento Humano - ADH).
+
+The model will be used to explain the years of schooling as a function of the fertility rate in the municipalities when the georefining variables are incorporated into the model. The following figure shows the years of schooling and the fertility rate.
 
 
 ```{r,  message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
+# devtools::install_github("ipeaGIT/geobr")
+library(geobr)
+
 library(spdep)
 library(spgwr)
 library(RColorBrewer)
-library(geobr)
 library(readxl)
 library(dplyr)
 library(ggplot2)
 
-
-adh <- read_excel("atlas2013_dadosbrutos_pt.xlsx",sheet = "MUN 91-00-10")
+adh <- read_excel("C:\\Users\\Igor\\Documents\\geo_add\\atlas2013_dadosbrutos_pt.xlsx",sheet = "MUN 91-00-10")
 
 adh <- adh %>%
   dplyr::select(ANO,UF,Codmun7,
@@ -57,7 +60,7 @@ adh <- adh %>%
 adh_2010 <- adh %>%
   filter(ANO==2010)
 
-shape <- read_municipality(cod_muni = "all", year = 2010)
+shape <- read_municipality(code_muni = "all", year = 2010)
 
 shape_11 <- shape %>%
   filter(substr(code_muni,1,2)=="11") %>%
@@ -78,17 +81,11 @@ ggplot(shape_11) +
 
 ```
 
-A figura a seguir apresenta o tempo de estudos e a taxa de fecundidade total.
+
+The following figure shows the years of schooling and the fertility rate.
 
 
 ```{r,  message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
-library(spdep)
-library(spgwr)
-library(RColorBrewer)
-library(geobr)
-library(readxl)
-library(dplyr)
-library(ggplot2)
 
 
 adh <- read_excel("C:\\Users\\Igor\\Documents\\geo_add\\atlas2013_dadosbrutos_pt.xlsx",
@@ -102,10 +99,9 @@ adh <- adh %>%
 adh_2010 <- adh %>%
   filter(ANO==2010)
 
-shape <- read_municipality(cod_muni = "all", year = 2010)
+shape <- read_municipality(code_muni = 13, year = 2010)
 
 shape_11 <- shape %>%
-  filter(substr(code_muni,1,2)=="11") %>%
   left_join(adh_2010,by = c("code_muni"="Codmun7"))
 
 
@@ -116,40 +112,41 @@ brks <- seq(from = range(shape_11$E_ANOSESTUDO)[1],
 ggplot(shape_11) +
   geom_sf(aes(fill=E_ANOSESTUDO)) +
   scale_fill_gradient(high = "red",
-                      low= "grey90", name="Tempo de estudo",
+                      low= "grey90", name="Years of schooling",
                        labels = round(brks,2),
                        breaks = brks) +
-  labs(title = "Tempo de estudo em Rondônia-Brasil (2010)")
+  labs(title = "Education in Rondônia-Brazil (2010)")
 
 ```
 
 
 
+A regression model is fitted using ordinary least squares and one using the Geographically Weighted Regression  model (GWR) @spgwr
 
-São ajustados um modelo de regressão via mínimos quadrados ordinários e um outro utilizando o modelo *Geographically Weighted
-Regression* (GWR) @spgwr.
-
-
-O modelo GWR pode ser representado por:
+The GWR model can be represented by @li2019spatial:
 
 $$y_i = \beta_0(u_i,v_i) + \sum_{j=1}^k \beta_j(u_i,v_i)x_{ij}+\varepsilon_i$$
-sendo $y_i$ a variável dependente, $x_{ij}$ as variáveis independentes, $\beta_j$ os coeficientes de regressão específicos no espaço $(u_i,v_i)$ da unidade $i$ e $\varepsilon_i$ o resíduo do modelo. O processo de estimação dos parâmetros do modelo para a unidade $i$ é impactado por outras unidades e a influência e determinada através da matriz de distância $W$ @li2019spatial. Essa influenciada se reduz a medida em que as unidades se distanciam da unidade $i$.
 
-Apesar de existir situações complexas na conceituação e cálculo da distância, ao invés da medida binária de vizinho ou não, é frequentemente utilizado medidas contínuas de distância @gdr. 
+where $y_i$ is the dependent variable, $x_ {ij}$ the independent variables, $ \ beta_j $ the regression coefficients in the space $(u_i, v_i)$ of the unit $ i $ and $ \varepsilon_i$ the model's residual. The  model parameters estimating  for unit $ i $ is impacted by other units and the  dependece is determined by distance matrix $W$ @li2019spatial. This influence decreases as units move away from unit $ i $.
 
-Para esse exemplo utilizaremos a distância gaussiana:
+Although there are complex situations and approach in the distance calculation, the mostly  distance matrix are continuous measures instead of the binary measure of neighborhood @gdr.
+
+For this example we will use the Gaussian distance:
 
 $$W(i,j) = e^{{-(d_{i,j}/h)}^2}$$
-sendo $d_{i,j}$ a distância euclidiana e $h$ um parâmetro que pode ser determinado por validação cruzada. Os modelos de regressão via OLS e utilizando o GWR podem ser ajustados por meio do seguinte código.
+where $d_{i,j}$ is the Euclidean distance and $h$ is the bandwidth parameter that can be determined by cross validation. Regression models via OLS and GWR can be fitted by following code.
 
 
 ```{r ,message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
-col.bw <- gwr.sel(E_ANOSESTUDO ~ FECTOT, data=as(shape_11, "Spatial"))
+bandwidth <- gwr.sel(E_ANOSESTUDO ~ FECTOT, data=as(shape_11, "Spatial"))
 
-gwr_model <- gwr(E_ANOSESTUDO ~ FECTOT, data=as(shape_11, "Spatial"),
-                 bandwidth=col.bw, hatmatrix=TRUE)
+gwr_model <- gwr(E_ANOSESTUDO ~ FECTOT, 
+                 data=as(shape_11, "Spatial"),
+                 bandwidth=bandwidth, 
+                 hatmatrix=TRUE)
 
-ols_model <- lm(E_ANOSESTUDO ~ FECTOT, data=shape_11)
+ols_model <- lm(E_ANOSESTUDO ~ FECTOT, 
+                data=shape_11)
 
 shape_11$residuals_ols <- ols_model$residuals
 shape_11$residuals_gwr <- gwr_model$SDF$pred-shape_11$E_ANOSESTUDO
@@ -157,48 +154,50 @@ shape_11$residuals_gwr <- gwr_model$SDF$pred-shape_11$E_ANOSESTUDO
 model_gwr_data <- gwr_model$SDF@data
 model_gwr_data$code_muni <- shape_11$code_muni
 
-model_gwr_data <- model_gwr_data %>% dplyr::select(code_muni,X.Intercept.,FECTOT)
+model_gwr_data <- model_gwr_data %>% 
+  dplyr::select(code_muni,X.Intercept.,FECTOT)
 names(model_gwr_data) <- c("code_muni","Intercept","Slope")
 shape_11 <- shape_11 %>%
   left_join(model_gwr_data,by = "code_muni")
 
-
 quantile(shape_11$Slope)
-brks <- seq(-2.5,0,by=.5)
+bks <- seq(-2.5,0,by=.5)
 
 ggplot(shape_11) +
   geom_sf(aes(fill=Slope)) +
   scale_fill_gradient(high = "grey90",
                       low= "red", name="Slope",
-                       labels = round(brks,2),
-                       breaks = brks) +
+                       labels = round(bks,2),
+                       breaks = bks) +
   labs(title = "Slope coefficient")
 ```
 
+
+The slope coefficient show the negative relationship between years of schooling and fertility agreeing to work of @osili2008does.
 
 
 ```{r ,message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
 quantile(shape_11$Intercept)
-brks <- seq(10,15,by=1)
+bks <- seq(10,15,by=1)
 
 ggplot(shape_11) +
   geom_sf(aes(fill=Intercept)) +
   scale_fill_gradient(high = "red",
                       low= "grey90", name="Intercept",
-                       labels = round(brks,2),
-                       breaks = brks) +
+                       labels = round(bks,2),
+                       breaks = bks) +
   labs(title = "Intercept coefficient")
 
 ```
 
-De maneira análoga à autocorrelação temporal, a autocorrelação espacial mensura a similaridade de unidades baseado em sua posição espacial, podendo ser exógena ou endógena e calcula, majoritariamente, pelo Índice de Moran @gdr.
+Similar to temporal autocorrelation, spatial autocorrelation measures the similarity of units based on their spatial position, which may be exogenous or endogenous, and is mostly calculated by the Moran Index @gdr.
 
-Com base no gráfico de qqplot e na estatística de Shapiro-Wilk há evidências
-para rejeitar a hipótese de normalidade dos resíduos no modelo OLS. Além disso,
-os resíduos analisados apresentam evidências de autocorrelação espacial,
-confirmado pelo Índice de Moran. Dessa forma, os resíduos sugerem que o modelo não está
-especificado corretamente e que pode haver "informação disperdiçada" ao ignorar as variáveis de posicionamento geográfico.
+Based on the qqplot graph and the Shapiro-Wilk statistic there is evidence
+to reject the hypothesis of residual normality in the OLS model. Besides that,
+the residues analyzed present evidence of spatial autocorrelation,
+confirmed by the Moran Index. Thus, the residuals suggests that the model is not
+correctly specified and that there could be "neglected information" due ignored geographic positioning variables.
 
 
 
@@ -208,15 +207,16 @@ lw <- nb2listw(nb)
 
 
 quantile(shape_11$residuals_ols)
-brks <- seq(from = -1.5,
+bks <- seq(from = -1.5,
             to = 1.5,
             length.out =5)
 
 ggplot(shape_11) +
   geom_sf(aes(fill=residuals_ols)) +
-  scale_fill_gradient2(high = "blue", low= "lightcoral", mid = "grey90", name="Residuals",
-                      labels = round(brks,2),
-                      breaks = brks) +
+  scale_fill_gradient2(high = "blue", low= "lightcoral",
+                       mid = "grey90", name="Residuals",
+                      labels = round(bks,2),
+                      breaks = bks) +
   labs(title = "Residuals distribuition") +
   labs(title = "OLS residuals")
 
@@ -228,28 +228,30 @@ moran.mc(shape_11$residuals_ols,
 
 ```{r ,message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
-qqnorm(shape_11$residuals_ols,col=2,pch = 20,main = "OLS residuals QQ-Plot")
+qqnorm(shape_11$residuals_ols,col=2,pch = 20,
+       main = "OLS residuals QQ-Plot")
 qqline(shape_11$residuals_ols)
 shapiro.test(shape_11$residuals_ols)
 
 ```
 
-Por outro lado, quando utilizamos o modelo GWR estamos inserimos as informações espaciais no processo de estimação dos parâmetros do modelo. Como pode ser visto nos gráficos a seguir, não há evidências estatísticas de autocorrelação espacial nos resíduos do modelo GWR. Além disso, não há evidências de violação do pressuposto de normalidade dos resíduos.
-
+whereas that when we use the GWR model the spatial information are inserted in the parameters estimation of model. As show on graphs following , there is no statistical evidence of spatial autocorrelation in the GWR model residuals. In addition, there is no evidence of violation of the normality assumption.
 
 
 ```{r,message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
 quantile(shape_11$residuals_gwr)
-brks <- seq(from = -1,
+brk <- seq(from = -1,
             to = 1,
             length.out =5)
 
 
 ggplot(shape_11) +
   geom_sf(aes(fill=residuals_gwr)) +
-  scale_fill_gradient2(high = "blue", mid= "grey90",low = "lightcoral", name="Residuals",
-                       labels = round(brks,2),
+  scale_fill_gradient2(high = "blue", mid= "grey90",
+                       low = "lightcoral", 
+                       name="Residuals",
+                       labels = round(brk,2),
                        breaks = brks) +
   labs(title = "GWR residuals")
 
@@ -261,7 +263,8 @@ moran.mc(shape_11$residuals_gwr,
 
 ```{r ,message=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
-qqnorm(shape_11$residuals_gwr,col=2,pch = 20,main = "GWR residuals QQ-Plot")
+qqnorm(shape_11$residuals_gwr,col=2,pch = 20,
+       main = "GWR residuals QQ-Plot")
 qqline(shape_11$residuals_gwr)
 shapiro.test(shape_11$residuals_gwr)
 
