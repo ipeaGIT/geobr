@@ -207,7 +207,12 @@ plot(b)
 
 
 system.time( a <- read_micro_region(code_micro=11, year=2000) )
-head(a); rm(a)
+system.time( a <- read_micro_region(code_micro=11, year=2010) )
+system.time( a <- read_micro_region(code_micro=11, year=2013) )
+
+system.time( a <- read_micro_region(code_micro=11, year=2018) )
+
+head(a)
 plot(a)
 
 system.time( b <- read_micro_region(code_micro="RJ", year=2001) )
