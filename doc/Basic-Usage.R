@@ -5,8 +5,11 @@ knitr::opts_chunk$set(
 )
 
 ## ------------------------------------------------------------------------
-devtools::install_github("ipeaGIT/geobr")
-  library(geobr)
+library(devtools)
+library(digest)
+
+# devtools::install_github("ipeaGIT/geobr")
+library(geobr)
 
 ## ----message=FALSE,warning=FALSE,results='hide'--------------------------
 
@@ -18,6 +21,7 @@ library(grid)
 library(beepr)
 library(dplyr)
 library(readxl)
+library(rio)
 
 
 
@@ -79,7 +83,9 @@ ggplot() + geom_sf(data=state_amazonas_micro,
 
 ## ---- fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE----
 
-adh <- read_excel("C:\\Users\\Igor\\Documents\\geo_add\\atlas2013_dadosbrutos_pt.xlsx",sheet = "MUN 91-00-10")
+adh <- rio::import("http://atlasbrasil.org.br/2013/data/rawData/atlas2013_dadosbrutos_pt.xlsx",
+                   which = "MUN 91-00-10")
+
 
 adh <- adh %>%
   dplyr::select(ANO,UF,Codmun7,
@@ -101,7 +107,7 @@ ggplot() + geom_sf(data=state_amazonas_muni,
                    color="#FEBF57", size=.15, show.legend = FALSE) + 
     theme_minimal() +
     no_axis +
-    labs(subtitle="Municipality in Amazonas states (code 13)", size=8) + 
+    labs(subtitle="Municipalities HDI in Amazonas states (code 13)", size=8) + 
     geom_sf_text(data=state_amazonas_muni, aes(label = paste0(IDHM)), 
                  colour = "white",size = 2.6)
 
@@ -112,7 +118,7 @@ ggplot() + geom_sf(data=state_amazonas_muni,
                    color="#FEBF57", size=.15) + 
     theme_minimal() +
     no_axis +
-    labs(subtitle="Municipality in Amazonas states (code 13)", size=8) + 
+    labs(subtitle="Municipalities HDI Amazonas states (code 13)", size=8) + 
     geom_sf_text(data=state_amazonas_muni, aes(label = paste0(round(IDHM,2))), 
                  colour = "black",size = 2.6) +
   scale_fill_gradient2( low = "red", mid = "white",
