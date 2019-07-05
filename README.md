@@ -57,6 +57,7 @@ obs. Geodetic reference system "SIRGAS2000", CRS(4674). Most data setsare availa
 | Longitudinal Database* of Census tracts | ... | IBGE | 
 | Urbanized areas | 2005, 2015 | [IBGE](https://www.ibge.gov.br/geociencias-novoportal/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html) | 
 | Disaster risk areas | 2010 | [IBGE/Cemaden](https://www.ibge.gov.br/geociencias-novoportal/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=downloads) | 
+| Schools | 2019 | School Census (Inep) | 
 | ... | ... | ... | 
 | ... | ... | ... | 
 
