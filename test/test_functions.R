@@ -351,6 +351,8 @@ h <- read_health_facilities(code="AM")
 
 
 ### update package documentation ----------------
+rm(list = ls())
+
 library(roxygen2)
 library("devtools")
 
@@ -372,6 +374,10 @@ install("geobr")
 # Write package manual.pdf
 system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
 system("R CMD Rd2pdf geobr")
+
+# build binary
+  devtools::build(pkg = "geobr", binary = T)
+
 
 
 # pack <- "geobr"
