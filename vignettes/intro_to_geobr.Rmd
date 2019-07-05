@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **geobr** package provides quick and easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The syntax of all **geobr** functions operate a simple logic that allows users to easily download a wide variety of official spatial data sets with updated geometries, harmonized attributes and geographic projections across geographies and years. This vignette presents is a quick intro to **geobr**.
+The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The syntax of all **geobr** functions operate a simple logic that allows users to easily download a wide variety of official spatial data sets with updated geometries, harmonized attributes and geographic projections across geographies and years. This vignette presents is a quick intro to **geobr**.
 
 
 ## Installation
