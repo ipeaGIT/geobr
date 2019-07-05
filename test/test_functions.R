@@ -3,7 +3,7 @@
 #library(magrittr)
 library(sf)
 library(dplyr)
-
+library(data.table)
 
 
 ### Install development version of geobr
@@ -53,12 +53,12 @@ plot(uf)
   head(uf)
 
 # Read all states at a given year
-ufs <- read_state(code_state="all", year=2018)
-plot(ufs)
+uf <- read_state(code_state="all", year=2018)
+plot(uf)
 
-ufs <- read_state(code_state="all", year=1940)
-ufs <- read_state( year=1872)
-ufs <- read_state( year=1500)
+uf <- read_state(code_state="all", year=1940)
+uf <- read_state( year=1872)
+uf <- read_state( year=1500)
 
 plot(ufs)
 
@@ -85,10 +85,54 @@ plot(union)
 object.size(sumar) -
   object.size(union) # union ganha
 
+df <- as.data.frame(ufs)
+
+dt <- setDT(df)[, .(name_region= name_region[1L],
+                     geo= sf::st_union(geometry)), by=code_region]
+head(dt)
 
 
-a <- read_country(year=2010)
-plot(a)
+setDT(ufs)[, list(geom = st_union(geometry)), by = "code_region"]
+
+
+library(mapview)
+library(sf)
+library(data.table)
+brew = st_join(breweries, franconia["district"])
+dt = data.table(brew)
+union = dt[, list(geom = st_union(geometry)), by = "district"]
+mapview(st_as_sf(union))
+
+
+library(sf)
+# data
+ demo(nc, ask = FALSE, echo = FALSE)
+
+# create new id columns
+  nc$newid <- substr(nc$CNTY_ID, 1, 2)
+
+
+# st_union
+  dt <- data.table(nc)
+  union = setDT(dt)[, list(geom = st_union(geom)), by = "newid"]
+  mapview(st_as_sf(union))
+
+
+  shape$newid <- sample(1:4, size = nrow(shape), replace = T)
+  dt <- data.table(shape)
+  union = setDT(dt)[, list(geometry = st_union(geometry)), by = "newid"]
+  mapview(st_as_sf(union))
+
+  readr::write_rds(shape, path = "shape.rds", compress = 'gz')
+  shape <- readr::read_rds(path = "shape.rds")
+
+  ufdt <- data.table(uf)
+  union = setDT(ufdt)[, list(geom = st_union(geometry)), by = "code_region"]
+  mapview(st_as_sf(union))
+
+
+
+
 
 
 
