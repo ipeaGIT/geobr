@@ -141,7 +141,7 @@ gc(reset = T)
   parallel::parLapply(cl, files_3rd_batch, unzip_fun)
   stopCluster(cl)
 
-  rm(list= ls())
+  # rm(list= ls())
   gc(reset = T)
 
 
@@ -197,7 +197,7 @@ gc(reset = T)
     }
   }
 
-  rm(list= ls())
+  # rm(list= ls())
   gc(reset = T)
 
 
@@ -270,7 +270,7 @@ shp_to_sf_rds <- function(x){
   parallel::parLapply(cl, all_shapes, shp_to_sf_rds)
   stopCluster(cl)
 
-  rm(list= ls())
+  # rm(list= ls())
   gc(reset = T)
 
 
@@ -322,6 +322,34 @@ shp_to_sf_rds <- function(x){
         temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
       }
 
+      # add State abbreviation
+      temp_sf <- temp_sf %>% mutate(abbrev_state =  ifelse(code_state== 11, "RO",
+                                                    ifelse(code_state== 12, "AC",
+                                                    ifelse(code_state== 13, "AM",
+                                                    ifelse(code_state== 14, "RR",
+                                                    ifelse(code_state== 15, "PA",
+                                                    ifelse(code_state== 16, "AP",
+                                                    ifelse(code_state== 17, "TO",
+                                                    ifelse(code_state== 21, "MA",
+                                                    ifelse(code_state== 22, "PI",
+                                                    ifelse(code_state== 23, "CE",
+                                                    ifelse(code_state== 24, "RN",
+                                                    ifelse(code_state== 25, "PB",
+                                                    ifelse(code_state== 26, "PE",
+                                                    ifelse(code_state== 27, "AL",
+                                                    ifelse(code_state== 28, "SE",
+                                                    ifelse(code_state== 29, "BA",
+                                                    ifelse(code_state== 31, "MG",
+                                                    ifelse(code_state== 32, "ES",
+                                                    ifelse(code_state== 33, "RJ",
+                                                    ifelse(code_state== 35, "SP",
+                                                    ifelse(code_state== 41, "PR",
+                                                    ifelse(code_state== 42, "SC",
+                                                    ifelse(code_state== 43, "RS",
+                                                    ifelse(code_state== 50, "MS",
+                                                    ifelse(code_state== 51, "MT",
+                                                    ifelse(code_state== 52, "GO",
+                                                    ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
 
       # Add Region codes and names
       temp_sf$code_region <- substr(temp_sf$code_state, 1,1) %>% as.numeric()
@@ -331,7 +359,7 @@ shp_to_sf_rds <- function(x){
                                                                              ifelse(code_region==4, 'Sul',
                                                                                     ifelse(code_region==5, 'Centro Oeste', NA))))))
       # reorder columns
-        temp_sf <- dplyr::select(temp_sf, 'code_state', 'name_state', 'code_region', 'name_region', 'geometry')
+        temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')
 
       # Use UTF-8 encoding
         temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
@@ -371,7 +399,7 @@ shp_to_sf_rds <- function(x){
     parallel::parLapply(cl, sub_dirs, clean_states)
     stopCluster(cl)
 
-    rm(list= ls())
+    # rm(list= ls())
     gc(reset = T)
 
 
@@ -459,7 +487,7 @@ shp_to_sf_rds <- function(x){
   parallel::parLapply(cl, sub_dirs, clean_meso)
   stopCluster(cl)
 
-  rm(list= ls())
+  # rm(list= ls())
   gc(reset = T)
 
 
@@ -547,7 +575,7 @@ shp_to_sf_rds <- function(x){
   parallel::parLapply(cl, sub_dirs, clean_micro)
   stopCluster(cl)
 
-  rm(list= ls())
+  # rm(list= ls())
   gc(reset = T)
 
 
@@ -693,7 +721,7 @@ shp_to_sf_rds <- function(x){
   parallel::parLapply(cl, sub_dirs, clean_muni)
   stopCluster(cl)
 
-  rm(list= ls())
+  # rm(list= ls())
   gc(reset = T)
 
 
