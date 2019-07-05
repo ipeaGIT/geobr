@@ -104,7 +104,7 @@ Once you've downloaded the data, it is really simple to plot mas using ggplot2`.
 # Plot all Brazilian states
   ggplot() + 
     geom_sf(data=state, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) + 
-    geom_sf_text(data=state, aes(label = code_state), colour = "white") +
+    geom_sf_text(data=state, aes(label = abbrev_state), colour = "white") +
     labs(subtitle="States", size=8) + 
     theme_minimal() +
     no_axis
