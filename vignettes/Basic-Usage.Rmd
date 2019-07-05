@@ -14,15 +14,28 @@ knitr::opts_chunk$set(
 )
 ```
 
+The **geobr** package provides quick and easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The syntax of all **geobr** functions operate a simple logic that allows users to easily download a wide variety of official spatial data sets with updated geometries, harmonazied attributes and geographic projections across geographies and years. This vignette presents is a quick intro to **geobr**.
+
+
+## Installation
+
+The package will soon be available on CRAN. In the meantime, you can install it using the `devtools` package.
+
 ```{r }
 library(devtools)
 library(digest)
 
 # devtools::install_github("ipeaGIT/geobr")
 library(geobr)
+
 ```
 
-The geobr packages downloads the Brazilians shapefiles using simple codes and specific parameters that restricts the desired area. This supports the maps analysis.   
+
+
+
+
+
+
 
 
 ## Download shape file
@@ -47,8 +60,8 @@ library(rio)
 
 
 # download data
-y <- 2010
-state <- read_state(code_state="all", year=y)
+
+state <- read_state(code_state="all", year= 2010)
 
 ```
 
@@ -88,7 +101,7 @@ Filtering the Amazonas state (code 13) we have many mesoregion. The codebelow sh
 
 ```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
 # Meso region download
-state_amazonas_meso <- read_meso_region( code_meso = 13, year=y)
+state_amazonas_meso <- read_meso_region( code_meso = 13, year= 2010)
   
 # Meso region plot
 ggplot() + geom_sf(data=state_amazonas_meso, 
@@ -108,7 +121,7 @@ Filtering the Amazonas state (code 13) we have many microregion. The code below 
 
 ```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
 # micro region download
-state_amazonas_micro <- read_micro_region( code_micro = 13, year=y)
+state_amazonas_micro <- read_micro_region( code_micro = 13, year= 2010)
   
 # micro region plot
 ggplot() + geom_sf(data=state_amazonas_micro, 
@@ -144,7 +157,7 @@ adh <- adh %>%
          RAZDEP,IDHM)
 
 # municipality download
-state_amazonas_muni <- read_municipality( code_muni= 13, year=y)
+state_amazonas_muni <- read_municipality( code_muni= 13, year= 2010)
 
 
 state_amazonas_muni <- state_amazonas_muni %>%
