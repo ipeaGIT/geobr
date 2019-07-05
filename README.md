@@ -4,7 +4,6 @@
 ![GitHub release](https://img.shields.io/github/release/ipeaGIT/geobr.svg)
 
 
-
 **geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide range of geographic datasets as *simple features*, availabe at various geographic scales and for various years (see detailed list below):
 
 
