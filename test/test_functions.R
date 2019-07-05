@@ -41,8 +41,6 @@ head(brazil_2010)
 
 
 
-
-
 ### 1. read_state -------------------------
 
 
@@ -129,6 +127,52 @@ system.time( d <- read_municipality(code_muni="all", year=1991 ))
 system.time( d <- read_municipality(code_muni="all" ))
 
 head(d)
+
+setDT(d)
+d[, code_state := as.numeric(substr(code_muni, 1, 2))]
+d[, code_region := as.numeric(substr(code_muni, 1, 1))]
+d[, name_region := ifelse(code_region==1, 'Norte',
+                   ifelse(code_region==2, 'Nordeste',
+                   ifelse(code_region==3, 'Sudeste',
+                   ifelse(code_region==4, 'Sul',
+                   ifelse(code_region==5, 'Centro Oeste', NA)))))]
+
+
+d[, abbrev_state := ifelse(code_state== 11, "RO",
+                    ifelse(code_state== 12, "AC",
+                    ifelse(code_state== 13, "AM",
+                    ifelse(code_state== 14, "RR",
+                    ifelse(code_state== 15, "PA",
+                    ifelse(code_state== 16, "AP",
+                    ifelse(code_state== 17, "TO",
+                    ifelse(code_state== 21, "MA",
+                    ifelse(code_state== 22, "PI",
+                    ifelse(code_state== 23, "CE",
+                    ifelse(code_state== 24, "RN",
+                    ifelse(code_state== 25, "PB",
+                    ifelse(code_state== 26, "PE",
+                    ifelse(code_state== 27, "AL",
+                    ifelse(code_state== 28, "SE",
+                    ifelse(code_state== 29, "BA",
+                    ifelse(code_state== 31, "MG",
+                    ifelse(code_state== 32, "ES",
+                    ifelse(code_state== 33, "RJ",
+                    ifelse(code_state== 35, "SP",
+                    ifelse(code_state== 41, "PR",
+                    ifelse(code_state== 42, "SC",
+                    ifelse(code_state== 43, "RS",
+                    ifelse(code_state== 50, "MS",
+                    ifelse(code_state== 51, "MT",
+                    ifelse(code_state== 52, "GO",
+                    ifelse(code_state== 53, "DF",NA)))))))))))))))))))))))))))]
+
+setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_region', 'name_region', 'geometry'))
+
+
+d2 <- st_cast(st_as_sf(d))
+head(d2)
+
+
 
 system.time( c <- read_municipality(code_muni=11) )
 system.time( c <- read_municipality(code_muni="AC") )
