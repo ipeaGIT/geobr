@@ -332,7 +332,7 @@ shp_to_sf_rds <- function(x){
                                                                                     ifelse(code_region==5, 'Centro Oeste', NA))))))
       # reorder columns
         temp_sf <- dplyr::select(temp_sf, 'code_state', 'name_state', 'code_region', 'name_region', 'geometry')
-      
+
       # Use UTF-8 encoding
         temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
 
@@ -344,13 +344,13 @@ shp_to_sf_rds <- function(x){
 
       # Convert columns from factors to characters
         temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-        
+
       # Make an invalid geometry valid # st_is_valid( sf)
         temp_sf <- lwgeom::st_make_valid(temp_sf)
-        
+
         # keep code as.numeric()
         temp_sf$code_state <- as.numeric(temp_sf$code_state)
-        
+
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
       write_rds(temp_sf, path = i, compress="gz" )
@@ -432,13 +432,13 @@ shp_to_sf_rds <- function(x){
 
         # Convert columns from factors to characters
         temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-        
+
         # Make an invalid geometry valid # st_is_valid( sf)
         temp_sf <- lwgeom::st_make_valid(temp_sf)
-        
+
         # keep code as.numeric()
         temp_sf$code_meso <- as.numeric(temp_sf$code_meso)
-        
+
       # Save cleaned sf in the cleaned directory
         i <- gsub("original", "cleaned", i)
         write_rds(temp_sf, path = i, compress="gz" )
@@ -521,13 +521,13 @@ shp_to_sf_rds <- function(x){
 
       # Convert columns from factors to characters
       temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-      
+
       # Make an invalid geometry valid # st_is_valid( sf)
       temp_sf <- lwgeom::st_make_valid(temp_sf)
-      
+
       # keep code as.numeric()
       temp_sf$code_micro <- as.numeric(temp_sf$code_micro)
-      
+
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
       write_rds(temp_sf, path = i, compress="gz" )
@@ -651,11 +651,11 @@ shp_to_sf_rds <- function(x){
                                   ifelse(code_state== 51, "MT",
                                   ifelse(code_state== 52, "GO",
                                   ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
-  
+
   # reorder columns
   temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
-  
-      
+
+
       # Use UTF-8 encoding
         temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
 
@@ -667,13 +667,13 @@ shp_to_sf_rds <- function(x){
 
       # Convert columns from factors to characters
         temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-      
+
       # keep code as.numeric()
         temp_sf$code_muni <- as.numeric(temp_sf$code_muni)
-      
+
       # Make an invalid geometry valid # st_is_valid( sf)
         temp_sf <- lwgeom::st_make_valid(temp_sf)
-      
+
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
       write_rds(temp_sf, path = i, compress="gz" )
@@ -728,6 +728,7 @@ shp_to_sf_rds <- function(x){
 
 # Create function to correct number of digits of meso regions in 2010
 
+# use data of 2013 to add code and name of meso regions in the 2010 data
 correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_files_2010[1]
 
     # Get UF of the file
@@ -759,8 +760,9 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
 
 #### 8.2 Micro regions
+# use data of 2013 to add code and name of micro regions in the 2010 data
 
-  # Dirs
+# Dirs
   micro_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_cleaned/micro_regiao"
   sub_dirs <- list.dirs(path =micro_dir, recursive = F)
 
@@ -774,7 +776,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".rds")
 
 
-# Create function to correct number of digits of meso regions in 2010
+# Create function to correct number of digits of meso regions in 2010, based on 2013 data
 
   correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[1]
 
@@ -805,14 +807,14 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   lapply(sf_files_2010, correct_micro_digits)
 
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
 
 ###### 9. Creating base 2010 file  --------------------------------
 
@@ -820,11 +822,11 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   table_2010 <- xlsx::read.xlsx2(file="L:/# DIRUR #/ASMEQ/geobr/data-raw/Divisao_Territorial_do_Brasil/Unidades da Federacao, Mesorregioes, microrregioes e municipios 2010.xls",
                                  sheetIndex = 1, startRow = 3, stringsAsFactors=F)
 
-  
-# Remove accents from colnames 
+
+# Remove accents from colnames
   names(table_2010) <- stringi::stri_trans_general(str = names(table_2010), id = "Latin-ASCII")
 
-  
+
   # change col names according to convetions ingeobr package
   table_2010 <- dplyr::select(table_2010
                               , code_muni = 'Municipio'
@@ -887,10 +889,10 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
     table_2010$code_meso <- as.numeric(table_2010$code_meso)
     table_2010$code_micro <- as.numeric(table_2010$code_micro)
     table_2010$code_muni <- as.numeric(table_2010$code_muni)
-  
 
-    
-  
+
+
+
 ### Add geometry
 
   # read clean muni data of 2010
@@ -912,15 +914,15 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   brazil_2010 <- dplyr::rename(brazil_2010, name_muni = 'name_muni.y')
   head(brazil_2010)
 
-  
-  
+
+
 # remove two lagoons
   brazil_2010 <- subset(brazil_2010, !is.na(code_state))
 
 # save .Rdata
   save(brazil_2010, file = "../data/brazil_2010.RData", compress='gzip', compression_level=1)
 
-  
+
 
   # # Save file with usethis::use_data
   #   assign("brazil_2010", brazil_2010)
