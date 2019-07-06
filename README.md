@@ -10,6 +10,7 @@
 
 ## Installation
 ```R
+# Soon available on CRAN
 devtools::install_github("ipeaGIT/geobr")
 library(geobr)
 ```
@@ -18,8 +19,7 @@ library(geobr)
 ```R
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni=1200179, year=2017)
-  
-  
+
 # Read all municipalities of a state at a given year
 mun <- read_municipality(code_muni=33, year=2010)
 # alternatively
