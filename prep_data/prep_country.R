@@ -1,15 +1,14 @@
-require(geobr)
-require(dplyr)
-require(readr)
-require(sp)
-require(sf)
+library(geobr)
+
+library(dplyr)
+library(readr)
+library(sp)
+library(sf)
 library(rgdal)
 library(rgeos)
 library(maptools)
-
-library(geobr)
-
-
+library(devtools)
+library(parallel)
 
 #### Using data already in the geobr package -----------------
 
@@ -44,7 +43,7 @@ years <- stringi::stri_sub(dirs,-4,-1)
 get_country <- function(y){
 
   # a) reads all states sf files and pile them up
-    # y <- 2000
+    # y <- 2010
     temp_sf <- read_state(year=y, code_state = "all")
 
 
@@ -53,50 +52,17 @@ get_country <- function(y){
     temp_sf <- temp_sf %>% st_buffer(0)
 
     # convert to sp
-      temp_sp <- temp_sf %>% as("Spatial")
-      temp_sp <- as_Spatial(temp_sf)
-
-
-      any(is.na(st_dimension(temp_sf)))
-
-a <-       na.omit(temp_sf)
-a <- lwgeom::st_make_valid(a) %>% st_cast("MULTIPOLYGON")
-
-
-
-temp_sp <- as_Spatial(a)
-
+      temp_sp <- sf::as_Spatial(temp_sf)
       temp_sp <- rgeos::gBuffer(temp_sp, byid=TRUE, width=0)
 
+
   # c) dissolve borders to create country file
-    result <- unionSpatialPolygons(temp_sp, rep(TRUE, nrow(temp_sp@data))) # dissolve
+    result <- maptools::unionSpatialPolygons(temp_sp, rep(TRUE, nrow(temp_sp@data))) # dissolve
+
 
   # d) get rid of holes
     outerRings = Filter(function(f){f@ringDir==1},result@polygons[[1]]@Polygons)
     outerBounds = SpatialPolygons(list(Polygons(outerRings,ID=1)))
-
-
-
-
-
-
-
-
-  temp_sf <- as(temp_sf, "Spatial")
-
-  types <- vapply(sf::st_geometry(temp_sf), function(x) {
-    class(x)[2]
-  }, "")
-
-
-  lines <- temp_sf[ grepl("*LINE", types), ]
-  polys <- temp_sf[ grepl("*POLYGON", types), ]
-  GEOMETRYCOLLECTION <- temp_sf[ grepl("*GEOMETRYCOLLECTION", types), ]
-
-  spLines <- as(lines, "Spatial")
-  spPolys <- as(polys, "Spatial")
-  spPolys <- as(GEOMETRYCOLLECTION, "Spatial")
-
 
 
   # d) create a subdirectory of that year in the country directory
@@ -111,12 +77,13 @@ temp_sp <- as_Spatial(a)
 
 
 
+
 # Apply function to save original data sets in rds format
 
 # create computing clusters
   cl <- parallel::makeCluster(detectCores())
 
-  clusterEvalQ(cl, c(library(geobr), library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
+  clusterEvalQ(cl, c(library(geobr), library(maptools), library(dplyr), library(readr), library(rgeos), library(sf)))
   parallel::clusterExport(cl=cl, varlist= c("years","read_state"), envir=environment())
 
 # apply function in parallel
