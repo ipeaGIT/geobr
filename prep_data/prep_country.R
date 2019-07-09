@@ -1,20 +1,11 @@
-
-library(RCurl)
-#library(tidyverse)
-library(stringr)
-library(sf)
-library(janitor)
-library(dplyr)
-library(readr)
-library(parallel)
-library(data.table)
-library(xlsx)
-library(magrittr)
-library(devtools)
-library(lwgeom)
-library(stringi)
-library(httr)
-
+require(geobr)
+require(dplyr)
+require(readr)
+require(sp)
+require(sf)
+library(rgdal)
+library(rgeos)
+library(maptools)
 
 library(geobr)
 
@@ -28,7 +19,7 @@ setwd(root_dir)
 
 
 # create directory to save cleaned shape files in sf format
-dir.create(file.path("./shapes_in_sf_all_years_cleaned/country"), showWarnings = T)
+# dir.create(file.path("./shapes_in_sf_all_years_cleaned/country"), showWarnings = T)
 
 
 # List years for which we have data
@@ -51,28 +42,71 @@ years <- stringi::stri_sub(dirs,-4,-1)
 
 
 get_country <- function(y){
-  
+
   # a) reads all states sf files and pile them up
-  temp_sf <- read_state(year=y, code_state = "all")
-  
-  
-  # b) make sure the have valid geometries
-  temp_sf <- lwgeom::st_make_valid(temp_sf)
-  temp_sf <- temp_sf %>% st_buffer(0)
-  
+    # y <- 2000
+    temp_sf <- read_state(year=y, code_state = "all")
+
+
+  # b) make sure we have valid geometries
+    temp_sf <- lwgeom::st_make_valid(temp_sf)
+    temp_sf <- temp_sf %>% st_buffer(0)
+
+    # convert to sp
+      temp_sp <- temp_sf %>% as("Spatial")
+      temp_sp <- as_Spatial(temp_sf)
+
+
+      any(is.na(st_dimension(temp_sf)))
+
+a <-       na.omit(temp_sf)
+a <- lwgeom::st_make_valid(a) %>% st_cast("MULTIPOLYGON")
+
+
+
+temp_sp <- as_Spatial(a)
+
+      temp_sp <- rgeos::gBuffer(temp_sp, byid=TRUE, width=0)
+
   # c) dissolve borders to create country file
-  temp_sf <- st_union(temp_sf)
-  
-  
+    result <- unionSpatialPolygons(temp_sp, rep(TRUE, nrow(temp_sp@data))) # dissolve
+
+  # d) get rid of holes
+    outerRings = Filter(function(f){f@ringDir==1},result@polygons[[1]]@Polygons)
+    outerBounds = SpatialPolygons(list(Polygons(outerRings,ID=1)))
+
+
+
+
+
+
+
+
+  temp_sf <- as(temp_sf, "Spatial")
+
+  types <- vapply(sf::st_geometry(temp_sf), function(x) {
+    class(x)[2]
+  }, "")
+
+
+  lines <- temp_sf[ grepl("*LINE", types), ]
+  polys <- temp_sf[ grepl("*POLYGON", types), ]
+  GEOMETRYCOLLECTION <- temp_sf[ grepl("*GEOMETRYCOLLECTION", types), ]
+
+  spLines <- as(lines, "Spatial")
+  spPolys <- as(polys, "Spatial")
+  spPolys <- as(GEOMETRYCOLLECTION, "Spatial")
+
+
+
   # d) create a subdirectory of that year in the country directory
   dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/country/",y)
   dir.create(dest_dir, showWarnings = FALSE)
-  
-  # e) save as an sf file
-  write_rds(temp_sf, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
-  
-}
 
+  # e) save as an sf file
+  readr::write_rds(outerBounds, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
+
+}
 
 
 
