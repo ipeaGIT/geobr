@@ -1,7 +1,7 @@
 library(sf)
 library(readr)
 library(geobr)
-library(feather)
+library(feather) 
 
  
 a <- geobr::read_country(year=2018)
