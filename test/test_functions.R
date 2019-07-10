@@ -167,6 +167,7 @@ head(b)
 system.time( d <- read_municipality(code_muni="AM", year=2018 ))
 system.time( d <- read_municipality(code_muni="all", year=2010 ))
 
+system.time( d <- read_municipality(code_muni="all", year=1960 ))
 system.time( d <- read_municipality(code_muni="all", year=1991 ))
 system.time( d <- read_municipality(code_muni="all" ))
 
@@ -453,7 +454,7 @@ devtools::document()
 
 # Install package
 setwd("..")
-install("geobr")
+devtools::install("geobr")
 
 
 # Check package errors
