@@ -70,6 +70,7 @@ get_country <- function(y){
   dir.create(dest_dir, showWarnings = FALSE)
 
   # e) save as an sf file
+  outerBounds <- st_as_sf(outerBounds)
   readr::write_rds(outerBounds, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
 
 }
