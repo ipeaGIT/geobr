@@ -40,6 +40,7 @@ read_state <- function(code_state, year=NULL){
 
   # Verify year input
   if (is.null(year)){ cat("Using data from year 2010\n")
+    year <- 2010
     temp_meta <- subset(temp_meta, year==2010)
 
   } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
