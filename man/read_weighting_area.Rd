@@ -2,35 +2,38 @@
 % Please edit documentation in R/read_weighting_area.R
 \name{read_weighting_area}
 \alias{read_weighting_area}
-\title{Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census}
+\title{Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.}
 \usage{
 read_weighting_area(code_weighting, year = NULL)
 }
 \arguments{
-\item{year}{the year of the data download (defaults to 2010)}
+\item{code_weighting}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}
 
-\item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}
+\item{year}{the year of the data download (defaults to 2010)}
 }
 \description{
-Download shape files of Census Weighting Areas (área de ponderação) of the Brazilian Population Census
+Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.
 }
 \examples{
 \dontrun{
 
 library(geobr)
 
-dados <- read_weighting_area(year=2010)
-dados <- read_weighting_area(3500000,2010)
-dados <- read_weighting_area(123,2010)
-dados <- read_weighting_area("df",2010)
-dados <- read_weighting_area(1302603,2010)
-dados <- read_weighting_area(35)
-dados <- read_weighting_area(14,2010)
-dados <- read_weighting_area("all")
+# Read specific weighting area at a given year
+  w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 
-# map it
-library(mapview)
-mapview(dados)
+# Read all weighting areas of a state at a given year
+  w <- read_weighting_area(code_weighting=53, year=2010); # or
+  w <- read_weighting_area(code_weighting="DF", year=2010)
+  plot(w)
+
+# Read all weighting areas of a municipality at a given year
+  w <- read_weighting_area(code_weighting=5201108, year=2010)
+  plot(w)
+
+# Read all weighting areas of the country at a given year
+  w <- read_weighting_area(code_muni="all", year=2010)
+
 }
 
 
@@ -39,10 +42,11 @@ mapview(dados)
 }
 \seealso{
 Other general area functions: \code{\link{read_census_tract}},
+  \code{\link{read_country}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
   \code{\link{read_municipality}},
-  \code{\link{read_state}},
+  \code{\link{read_region}}, \code{\link{read_state}},
   \code{\link{read_statistical_grid}}
 }
 \concept{general area functions}
