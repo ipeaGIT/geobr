@@ -37,10 +37,11 @@ mapview(dados)
 
 }
 \seealso{
-Other general area functions: \code{\link{read_meso_region}},
+Other general area functions: \code{\link{read_country}},
+  \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
   \code{\link{read_municipality}},
-  \code{\link{read_state}},
+  \code{\link{read_region}}, \code{\link{read_state}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
