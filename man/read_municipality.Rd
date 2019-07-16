@@ -26,17 +26,18 @@ library(geobr)
 # Read all municipalities of a state at a given year
   mun <- read_municipality(code_muni=33, year=2010)
   mun <- read_municipality(code_muni="RJ", year=2010)
-  
+
 # Read all municipalities of the country at a given year
   mun <- read_municipality(code_muni="all", year=2018)
-  
+
 }
 }
 \seealso{
 Other general area functions: \code{\link{read_census_tract}},
+  \code{\link{read_country}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
-  \code{\link{read_state}},
+  \code{\link{read_region}}, \code{\link{read_state}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }
