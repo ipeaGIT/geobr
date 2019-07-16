@@ -21,7 +21,7 @@ library(geobr)
 
 # Read specific state at a given year
   uf <- read_state(code_state=12, year=2017)
-  
+
 # Read specific state at a given year
   uf <- read_state(code_state="SC", year=2000)
 
@@ -32,9 +32,11 @@ library(geobr)
 }
 \seealso{
 Other general area functions: \code{\link{read_census_tract}},
+  \code{\link{read_country}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
   \code{\link{read_municipality}},
+  \code{\link{read_region}},
   \code{\link{read_statistical_grid}},
   \code{\link{read_weighting_area}}
 }

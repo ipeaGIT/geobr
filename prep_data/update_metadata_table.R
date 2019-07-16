@@ -76,7 +76,11 @@
   metadata[ grepl("52", code), code_abrev :=	"GO" ]
   metadata[ grepl("53", code), code_abrev :=	"DF" ]
 
+# to avoid conflict with data.table
+  metadata <- as.data.frame(metadata)
+  table(metadata$geo)
+  table(metadata$year)
   
 # save updated metadata table
-  # saveRDS(metadata,"//storage3/geobr/metadata/metadata.rds")
+  # readr::write_rds(metadata,"//storage3/geobr/metadata/metadata.rds", compress = "gz")
 

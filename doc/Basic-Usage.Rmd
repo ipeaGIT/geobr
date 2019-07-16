@@ -1,0 +1,184 @@
+---
+title: "Basic usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic-Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r }
+library(devtools)
+library(digest)
+
+# devtools::install_github("ipeaGIT/geobr")
+library(geobr)
+```
+
+The geobr packages downloads the Brazilians shapefiles using simple codes and specific parameters that restricts the desired area. This supports the maps analysis.   
+
+
+## Download shape file
+
+
+The Brazil is organized into state, mesoregion, microregion and municipalities. The code below download each territoriality. 
+
+
+```{r message=FALSE,warning=FALSE,results='hide'}
+
+library(ggplot2)
+library(sf)
+library(cowplot)
+library(sysfonts)
+library(grid)
+library(beepr)
+library(dplyr)
+library(readxl)
+library(rio)
+
+
+
+
+# download data
+y <- 2010
+state <- read_state(code_state="all", year=y)
+
+```
+
+
+
+## Plot shape file
+
+
+The codes of territoriality in Brazil is managed by IBGE (Instituto Brasileiro de Geografia e Estatística in portuguese) and can be found [here](https://concla.ibge.gov.br/classificacoes/por-tema/codigo-de-areas/codigo-de-areas).
+
+
+
+```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+
+# No plot axis
+  no_axis <- theme(axis.title=element_blank(),
+                   axis.text=element_blank(),
+                   axis.ticks=element_blank())
+
+
+
+
+ggplot() + geom_sf(data=state, 
+                   fill="#2D3E50",
+                   color="#FEBF57", size=.15, show.legend = FALSE) + 
+    theme_minimal() +
+    no_axis +
+    labs(subtitle="States", size=8) + 
+    geom_sf_text(data=state, aes(label = code_state), 
+                 colour = "white")
+  
+```
+
+
+Filtering the Amazonas state (code 13) we have many mesoregion. The codebelow show this meseregions.
+
+
+```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+# Meso region download
+state_amazonas_meso <- read_meso_region( code_meso = 13, year=y)
+  
+# Meso region plot
+ggplot() + geom_sf(data=state_amazonas_meso, 
+                   fill="#2D3E50",
+                   color="#FEBF57", size=.15, show.legend = FALSE) + 
+    theme_minimal() +
+    no_axis +
+    labs(subtitle="Meso regions in Amazonas states (code 13)", size=8) + 
+    geom_sf_text(data=state_amazonas_meso, aes(label = paste0(name_meso,"\n Code=",code_meso)), 
+                 colour = "white",size = 2.6)
+  
+```
+
+
+Filtering the Amazonas state (code 13) we have many microregion. The code below show this microregion.
+
+
+```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+# micro region download
+state_amazonas_micro <- read_micro_region( code_micro = 13, year=y)
+  
+# micro region plot
+ggplot() + geom_sf(data=state_amazonas_micro, 
+                   fill="#2D3E50",
+                   color="#FEBF57", size=.15, show.legend = FALSE) + 
+    theme_minimal() +
+    no_axis +
+    labs(subtitle="Micro regions in Amazonas states (code 13)", size=8) + 
+    geom_sf_text(data=state_amazonas_micro, aes(label = paste0(name_micro ,"\n Code=",code_micro)), 
+                 colour = "white",size = 2.8)
+  
+```
+
+
+## Merge external data
+
+The shape file could be merged to external data using the key variable that depends of territoriality. In this case we merge the shape data with Human Development Index (HDI)
+ on municipality level of Amazonas state in Brazil. The cities data are avaliable in [http://atlasbrasil.org.br/2013/pt/download/](Atlas de Desenvolvimento Humano - ADH).
+
+
+As an example we filter the base of IDHM of the municipalities of Amazonas in the year 2010 and we use the variable "Codmun7" to connect with the variable y in shape dataset. By doing this we join the databases.
+
+
+```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+
+adh <- rio::import("http://atlasbrasil.org.br/2013/data/rawData/atlas2013_dadosbrutos_pt.xlsx",
+                   which = "MUN 91-00-10")
+
+
+adh <- adh %>%
+  dplyr::select(ANO,UF,Codmun7,
+         E_ANOSESTUDO,FECTOT,
+         RAZDEP,IDHM)
+
+# municipality download
+state_amazonas_muni <- read_municipality( code_muni= 13, year=y)
+
+
+state_amazonas_muni <- state_amazonas_muni %>%
+  left_join(adh %>%
+              filter(ANO == y) %>%
+              select(Codmun7,IDHM), by = c("code_muni" = "Codmun7"))
+
+# municipality plot
+ggplot() + geom_sf(data=state_amazonas_muni, 
+                   fill="#2D3E50",
+                   color="#FEBF57", size=.15, show.legend = FALSE) + 
+    theme_minimal() +
+    no_axis +
+    labs(subtitle="Municipalities HDI in Amazonas states (code 13)", size=8) + 
+    geom_sf_text(data=state_amazonas_muni, aes(label = paste0(IDHM)), 
+                 colour = "white",size = 2.6)
+
+
+# municipality plot
+ggplot() + geom_sf(data=state_amazonas_muni,
+                   aes(fill=IDHM),
+                   color="#FEBF57", size=.15) + 
+    theme_minimal() +
+    no_axis +
+    labs(subtitle="Municipalities HDI Amazonas states (code 13)", size=8) + 
+    geom_sf_text(data=state_amazonas_muni, aes(label = paste0(round(IDHM,2))), 
+                 colour = "black",size = 2.6) +
+  scale_fill_gradient2( low = "red", mid = "white",
+  high = "blue", 
+  midpoint = mean(state_amazonas_muni$IDHM), ## mean is the midpoint
+  space = "Lab",
+  na.value = "grey50", 
+  guide = "colourbar", 
+  aesthetics = "fill")
+
+
+```
