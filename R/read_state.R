@@ -10,11 +10,11 @@
 #'
 #' # Read specific state at a given year
 #'   uf <- read_state(code_state=12, year=2017)
-#'   
+#'
 #' # Read specific state at a given year
 #'   uf <- read_state(code_state="SC", year=2000)
 #'
-#'# Read all states at a given year
+#' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
 #'
 #'}
@@ -23,49 +23,72 @@ read_state <- function(code_state, year=NULL){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
-  
+
   # check if metadata has already been downloaded
   if (file.exists(tempf)) {
     metadata <- readr::read_rds(tempf)
-    
+
   } else {
     # download it and save to metadata
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
     metadata <- readr::read_rds(tempf)
   }
-  
-  
+
+
   # Select geo
   temp_meta <- subset(metadata, geo=="uf")
-  
-  
+
   # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010 \n")
+  if (is.null(year)){ cat("Using data from year 2010\n")
+    year <- 2010
     temp_meta <- subset(temp_meta, year==2010)
-    
+
   } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
-  
+
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                        paste(unique(temp_meta$year),collapse = " ")))
   }
-  
-  
+
+
+
+
+# BLOCK 2.1 From 1872 to 1991  ----------------------------
+  x <- year
+
+if( x < 1992){
+
+  # list paths of files to download
+  filesD <- as.character(temp_meta$download_path)
+
+  # download files
+  temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+  httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+
+  # read sf
+  temp_sf <- readr::read_rds(temps)
+
+  return(temp_sf)
+} else {
+
+
+# BLOCK 2.2 From 2000 onwards  ----------------------------
+
   # Verify code_state input
-  
+
   # Test if code_state input is null
   if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
-  
+
   # if code_state=="all", read the entire country
-    if(code_state=="all"){ cat("Loading data for the whole country \n")
-      
+    if(code_state=="all"){ cat("Loading data for the whole country\n")
+
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
-      
+
       # download files
       lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-      
-      
+
+
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
@@ -73,34 +96,34 @@ read_state <- function(code_state, year=NULL){
       shape <- do.call('rbind', files)
       return(shape)
     }
-  
+
   if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
       stop("Error: Invalid Value to argument code_state.")
-    
+
   } else{
-    
+
     # list paths of files to download
     if (is.numeric(code_state)){ filesD <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
     if (is.character(code_state)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
-    
-    
+
+
     # download files
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
     httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
-    
+
     # read sf
     shape <- readr::read_rds(temps)
-    
+
     if(nchar(code_state)==2){
       return(shape)
-      
+
     } else if(code_state %in% shape$code_state){
       x <- code_state
       shape <- subset(shape, code_state==x)
       return(shape)
-      
+
     } else{
       stop("Error: Invalid Value to argument code_state.")
     }
   }
-}
+}}
