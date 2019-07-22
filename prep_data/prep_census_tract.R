@@ -32,7 +32,7 @@ filenames <- strsplit(filenames, "\r\n")
 filenames = unlist(filenames)
 filenames <- filenames[!grepl('leia_me', filenames)]
 
-filesurl<-paste(ftp, filenames[1],"/", sep = "")
+filesurl<-paste(ftp, filenames[9],"/", sep = "")
 filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 filesurl<-strsplit(filesurl, "\r\n")
 filesurl<-unlist(filesurl)
@@ -134,7 +134,7 @@ for (filename in filenames) {
 
 dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/",filename)
 
-all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_setores_censitarios.zip"))
+all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_setores_censitarios.zip|go_setores _censitarios.zip"))
 #
 # for (files in filesurl) {
 #   if(grepl("_setores_censitarios.zip",files)){
@@ -412,14 +412,14 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     if ((year %like% "2000") & (i %like% "Rural")){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- temp_sf %>% mutate(code_state=substr(geocodigo,1,2))
+      temp_sf <- temp_sf %>% mutate(code_state=substr(geocodigo,1,2),municipality_code=substr(geocodigo,1,7))
       # temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
       # temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
     }
     if ((year %like% "2000") & (i %like% "Urbano")){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- temp_sf %>% mutate(code_state=substr(id_,1,2))
+      temp_sf <- temp_sf %>% mutate(code_state=substr(id_,1,2),municipality_code=substr(id_,1,7))
       sf::st_crs(temp_sf) <- paste(sf::st_crs(temp_sf)[["proj4string"]], "+south")
       # temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
       # temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
