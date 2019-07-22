@@ -1,14 +1,14 @@
 # update metadata.rds
 
 
-# create empty metadata 
+# create empty metadata
   metadata <- data.frame(matrix(ncol = 5, nrow = 0))
   colnames(metadata) <- c("geo","year","code","download_path","code_abrev")
 
 # list all data files available in the geobr package
   geo=list.files("//storage3/geobr/data")
-  # geo<-"setor_censitario"
-# populate the metadata table
+
+  # populate the metadata table
   for (a in geo) {
     ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
     ano=ano[!grepl("Urbano|Rural", ano)]
@@ -27,11 +27,15 @@
     for (b in ano) {
       estado=list.files(paste("//storage3/geobr/data",a,"Urbano",b,sep="/"))
       for (c in estado) {
+        if (grepl('^-?[0-9.]+$',substr(estado[1], 1, 7))) {
+          metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(c, 1, 7)),paste("http://www.ipea.gov.br/geobr/data",a,"Urbano",b,c,sep="/"))
+        }else{
         metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(c, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,"Urbano",b,c,sep="/"))
+        }
       }
     }
   }
-  
+
   for (a in geo) {
     ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
     ano=ano[grepl("Rural", ano)]
@@ -43,8 +47,8 @@
       }
     }
   }
-  
-  
+
+
 # get code abbreviations
   library(data.table)
   setDT(metadata)
@@ -80,7 +84,7 @@
   metadata <- as.data.frame(metadata)
   table(metadata$geo)
   table(metadata$year)
-  
+
 # save updated metadata table
   # readr::write_rds(metadata,"//storage3/geobr/metadata/metadata.rds", compress = "gz")
 
