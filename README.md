@@ -47,7 +47,7 @@ mun <- read_municipality(code_muni="all", year=2018)
 
 obs. Geodetic reference system "SIRGAS2000", CRS(4674). Most data setsare available at scale 1:250,000 (see documentation for details).
  
-## Comming soon:
+## Coming soon:
 
 | Geography | Years available | Source |
 |-----|-----|-----|
