@@ -19,11 +19,14 @@ library(stringi)
 
 #### 0. Download original data sets from IBGE ftp -----------------
 
-ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/setores_censitarios_shp/"
+# setores 2010
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/setores_censitarios_shp/"
 
-ftp2 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_rural/projecao_geografica/censo_2000/e500_arcview_shp/uf/"
+# setores 2000 rural
+  ftp2 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_rural/projecao_geografica/censo_2000/e500_arcview_shp/uf/"
 
-ftp3 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_urbano/"
+# setores 2000 urbano
+  ftp3 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_urbano/"
 
 
 ### setor censitario censo 2010
@@ -309,11 +312,11 @@ setwd(root_dir)
 
 # List shapes for all years
 all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp|.SHP")
-x<-all_shapes[1]
-head(all_shapes)
+ead(all_shapes)
 
 shp_to_sf_rds <- function(x){
 
+  # x <- all_shapes[1]
 
   # get corresponding year of the file
   year <- unlist(stringr::str_split(x,"/"))
@@ -389,12 +392,13 @@ setwd(SC_dir)
 all_shapes <- list.files(full.names = T, recursive = T, pattern = "[^0-9]")
 
 sub_dirs <- list.dirs(path =SC_dir, recursive = T)
-sub_dirs <-grep(pattern = "2000|2010|2007",sub_dirs,value = T)
+sub_dirs <- grep(pattern = "2000|2010|2007",sub_dirs,value = T)
 
 # e<-sub_dirs[1]
 # i<-sf_files[1]
+
 # create a function that will clean the sf files according to particularities of the data in each year
-clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
+clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
 
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
@@ -403,54 +407,90 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
   # list all sf files in that year/folder
   sf_files <- list.files(e, full.names = T)
 
-  # for each file
-  for (i in sf_files){ #  i <- sf_files[2]
+  # for each file, rename and subset columns
+  for (i in sf_files){
 
     # read sf file
     temp_sf <- read_rds(i)
 
+  # rural tracts of year 2000
     if ((year %like% "2000") & (i %like% "Rural")){
-      # dplyr::rename and subset columns
+
+      # i <- sf_files[sf_files %like% "2000" & sf_files %like% "Rural"]
+      # i <- i[2]
+      # temp_sf <- read_rds(i)
+
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- temp_sf %>% mutate(code_state=substr(geocodigo,1,2),municipality_code=substr(geocodigo,1,7))
-      # temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
-      # temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
+      temp_sf <- temp_sf %>% mutate(code_state=substr(geocodigo,1,2),code_muni=substr(geocodigo,1,7))
+      temp_sf <- dplyr::rename(temp_sf, code_tract = geocodigo, zone = situacao)
+      temp_sf <- dplyr::select(temp_sf, c('code_tract', 'zone', 'code_muni', 'code_state', 'geometry'))
     }
+
+
+  # Urban tracts of year 2000
     if ((year %like% "2000") & (i %like% "Urbano")){
-      # dplyr::rename and subset columns
-      names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- temp_sf %>% mutate(code_state=substr(id_,1,2),municipality_code=substr(id_,1,7))
+
+      # i <- sf_files[sf_files %like% "2000" & sf_files %like% "Urbano"]
+      # i <- i[2]
+      # temp_sf <- read_rds(i)
+
+        names(temp_sf) <- names(temp_sf) %>% tolower()
+        temp_sf <- temp_sf %>% mutate(code_state=substr(id_,1,2),code_muni=substr(id_,1,7))
+        temp_sf <- dplyr::rename(temp_sf, code_tract = id_)
+        temp_sf <- dplyr::select(temp_sf, c('code_tract', 'code_muni', 'code_state', 'geometry'))
+
       sf::st_crs(temp_sf) <- paste(sf::st_crs(temp_sf)[["proj4string"]], "+south")
       # temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
       # temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
     }
 
+
+  # Tracts of year 2010
     if (year %like% "2010"){
-      # dplyr::rename and subset columns
+
+      # i <- sf_files[sf_files %like% "2010"]
+      # i <- i[2]
+      # temp_sf <- read_rds(i)
+
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- temp_sf %>% mutate(code_state=substr(cd_geocodm,1,2))
-      temp_sf <- dplyr::rename(temp_sf, municipality_code = cd_geocodm, municipality_name = nm_municip,neighborhood_name=nm_bairro,
-                               neighborhood_code=cd_geocodb,subdistrict_code=cd_geocods,subdistrict_name=nm_subdist,
-                               district_code=cd_geocodd,district_name=nm_distrit,micro_name=nm_micro,meso_name=nm_meso)
-      # Use UTF-8 encoding
+      temp_sf <- dplyr::rename(temp_sf,
+                               code_tract = cd_geocodi,
+                               zone = tipo,
+                               code_muni = cd_geocodm,
+                               name_muni = nm_municip,
+                               name_neighborhood=nm_bairro,
+                               code_neighborhood=cd_geocodb,
+                               code_subdistrict=cd_geocods,
+                               name_subdistrict=nm_subdist,
+                               code_district=cd_geocodd,
+                               name_district=nm_distrit)
 
-      cols.names <- grep("_name",names(temp_sf),value = T)
+      temp_sf <- dplyr::select(temp_sf,
+                               'code_tract',
+                               'zone',
+                               'code_muni',
+                               'name_muni',
+                               'name_neighborhood',
+                               'code_neighborhood',
+                               'code_subdistrict',
+                               'name_subdistrict',
+                               'code_district',
+                               'name_district',
+                               'geometry')
 
-      temp_sf$neighborhood_name <- stringi::stri_encode(as.character((temp_sf$neighborhood_name), "UTF-8"))
-      temp_sf$subdistrict_name <- stringi::stri_encode(as.character((temp_sf$subdistrict_name), "UTF-8"))
-      temp_sf$district_name <- stringi::stri_encode(as.character((temp_sf$district_name), "UTF-8"))
-      temp_sf$municipality_name <- stringi::stri_encode(as.character((temp_sf$municipality_name), "UTF-8"))
-      temp_sf$micro_name <- stringi::stri_encode(as.character((temp_sf$micro_name), "UTF-8"))
-      temp_sf$meso_name <- stringi::stri_encode(as.character((temp_sf$meso_name), "UTF-8"))
+      # Adjust string columns
+        cols.names <- grep("name",names(temp_sf),value = T)
 
-      # Capitalize the first letter
-      temp_sf$subdistrict_name <- stringr::str_to_title(temp_sf$subdistrict_name)
-      temp_sf$district_name <- stringr::str_to_title(temp_sf$district_name)
-      temp_sf$municipality_name <- stringr::str_to_title(temp_sf$municipality_name)
-      temp_sf$subdistrict_name <- stringr::str_to_title(temp_sf$subdistrict_name)
-      temp_sf$micro_name <- stringr::str_to_title(temp_sf$micro_name)
-      temp_sf$meso_name <- stringr::str_to_title(temp_sf$meso_name)
-      # temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
+        for (col in cols.names){
+
+        # Use UTF-8 encoding
+          temp_sf[[col]] <- stringi::stri_encode(as.character((temp_sf[[col]]), "UTF-8"))
+
+        # Capitalize the first letter
+          temp_sf[[col]] <- stringr::str_to_title(temp_sf[[col]])
+
+        }
     }
 
     # if (year %like% "2013|2014|2015|2016|2017|2018"){
@@ -468,20 +508,21 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     # temp_sf$neighborhood_name <- stringi::stri_encode(as.character((temp_sf$neighborhood_name), "UTF-8"))
     # temp_sf$subdistrict_name <- stringi::stri_encode(as.character((temp_sf$subdistrict_name), "UTF-8"))
     # temp_sf$district_name <- stringi::stri_encode(as.character((temp_sf$district_name), "UTF-8"))
-    # temp_sf$municipality_name <- stringi::stri_encode(as.character((temp_sf$municipality_name), "UTF-8"))
+    # temp_sf$name_muni <- stringi::stri_encode(as.character((temp_sf$name_muni), "UTF-8"))
     # temp_sf$micro_name <- stringi::stri_encode(as.character((temp_sf$micro_name), "UTF-8"))
     # temp_sf$meso_name <- stringi::stri_encode(as.character((temp_sf$meso_name), "UTF-8"))
     #
     # # Capitalize the first letter
     # temp_sf$subdistrict_name <- stringr::str_to_title(temp_sf$subdistrict_name)
     # temp_sf$district_name <- stringr::str_to_title(temp_sf$district_name)
-    # temp_sf$municipality_name <- stringr::str_to_title(temp_sf$municipality_name)
+    # temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
     # temp_sf$subdistrict_name <- stringr::str_to_title(temp_sf$subdistrict_name)
     # temp_sf$micro_name <- stringr::str_to_title(temp_sf$micro_name)
     # temp_sf$meso_name <- stringr::str_to_title(temp_sf$meso_name)
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-    temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+      temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+      # mapview::mapview(temp_sf)
 
     # Convert columns from factors to characters
     temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
