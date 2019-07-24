@@ -48,7 +48,7 @@ for (filename in filenames) {
   filesurl<-strsplit(filesurl, "\r\n")
   filesurl<-unlist(filesurl)
 
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/",filename)
+  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2010/",filename)
   dir.create(dir.fonte,recursive = T)
 
   for (files in filesurl) {
@@ -70,7 +70,7 @@ for (filename in filenames) {
   filesurl<-strsplit(filesurl, "\r\n")
   filesurl<-unlist(filesurl)
 
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/",filename)
+  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/",filename)
   dir.create(dir.fonte,recursive = T)
 
   for (files in filesurl) {
@@ -86,7 +86,7 @@ filenames = unlist(filenames)
 filenames <- filenames[!grepl('leia_me', filenames)]
 
 
-dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/Urbano/")
+dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/")
 filespasta<-list.files(dir.fonte)
 filespasta<-unlist(filespasta)
 difflies<-setdiff(filenames,filespasta)
@@ -99,7 +99,7 @@ for (filename in difflies) {
   filesurl<-strsplit(filesurl, "\r\n")
   filesurl<-unlist(filesurl)
 
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/Urbano/",filename)
+  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/",filename)
   dir.create(dir.fonte,recursive = T)
 
 
@@ -115,103 +115,91 @@ for (filename in difflies) {
   }
 }
 
+
+
 ########  1. Unzip original data sets downloaded from IBGE -----------------
 
 # Root directory
 root_dir <- "//Storage6/usuarios/# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios"
 setwd(root_dir)
 
-all_zipped_files<-list()
 
-filenames = getURL(ftp, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filenames <- strsplit(filenames, "\r\n")
-filenames = unlist(filenames)
-filenames <- filenames[!grepl('leia_me', filenames)]
+# list all zipped files
+  all_zipped_files <- list.files(pattern = ".zip", recursive = T, full.names = T)
+  all_zipped_files <- all_zipped_files[all_zipped_files %like% "_censitarios"]
 
-for (filename in filenames) {
+  teste_zip<-unlist(all_zipped_files)
 
-  filesurl<-paste(ftp, filename,"/", sep = "")
-  filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filesurl<-strsplit(filesurl, "\r\n")
-  filesurl<-unlist(filesurl)
-
-dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/",filename)
-
-all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_setores_censitarios.zip|go_setores _censitarios.zip"))
+# all_zipped_files <- list()
 #
-# for (files in filesurl) {
-#   if(grepl("_setores_censitarios.zip",files)){
-#     # unzip(paste(dir.fonte,"/",files,sep = ""),exdir = "//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/unzip")
-#   }
-# }
-}
-
-
-### setor censitario rural censo 2000
-filenames = getURL(ftp2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filenames <- strsplit(filenames, "\r\n")
-filenames = unlist(filenames)
-filenames <- filenames[!grepl('leia_me', filenames)]
-
-
-for (filename in filenames) {
-
-  filesurl<-paste(ftp2, filename,"/", sep = "")
-  filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filesurl<-strsplit(filesurl, "\r\n")
-  filesurl<-unlist(filesurl)
-
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/Rural/",filename)
-
-  all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_setores_censitarios.zip"))
-  #
-  # for (files in filesurl) {
-  #   if(grepl("_setores_censitarios.zip",files)){
-  #     # unzip(paste(dir.fonte,"/",files,sep = ""),exdir = "//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/unzip")
-  #   }
-  # }
-}
-
-
-
-filenames = getURL(ftp3, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filenames <- strsplit(filenames, "\r\n")
-filenames = unlist(filenames)
-filenames <- filenames[!grepl('leia_me', filenames)]
-
-filename <-filenames[1]
-
-for (filename in filenames) {
-
-  filesurl<-paste(ftp3, filename,"/", sep = "")
-  filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filesurl<-strsplit(filesurl, "\r\n")
-  filesurl<-unlist(filesurl)
-
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/Urbano/",filename)
-
-  all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = ".zip"))
-  #
-  # for (files in filesurl) {
-  #   if(grepl("_setores_censitarios.zip",files)){
-  #     # unzip(paste(dir.fonte,"/",files,sep = ""),exdir = "//Storage6/usuarios/# DIRUR #/ASMEQ/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/unzip")
-  #   }
-  # }
-}
-
+# # setor censitario rural censo 2010
+#   filenames = getURL(ftp, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#   filenames <- strsplit(filenames, "\r\n")
+#   filenames = unlist(filenames)
+#   filenames <- filenames[!grepl('leia_me', filenames)]
 #
-# c<-0
-# for (testes in all_zipped_files) {
-#   if (grepl("Rural|Urbano",testes)) {
-#     c<-c+1
+#   for (filename in filenames) { # filename <- filenames[2]
+#
+#     filesurl<-paste(ftp, filename,"/", sep = "")
+#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#     filesurl<-strsplit(filesurl, "\r\n")
+#     filesurl<-unlist(filesurl)
+#
+#   # incluir Goias
+#   all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_censitarios.zip"))
 #   }
-# }
+#
+#
+# # setor censitario rural censo 2000 rural
+#   filenames = getURL(ftp2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#   filenames <- strsplit(filenames, "\r\n")
+#   filenames = unlist(filenames)
+#   filenames <- filenames[!grepl('leia_me', filenames)]
+#
+#
+#   for (filename in filenames) {
+#
+#     filesurl<-paste(ftp2, filename,"/", sep = "")
+#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#     filesurl<-strsplit(filesurl, "\r\n")
+#     filesurl<-unlist(filesurl)
+#
+#     dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Rural/",filename)
+#
+#     all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_setores_censitarios.zip"))
+#   }
+#
+#
+# # setor censitario rural censo 2000 urbano
+#   filenames = getURL(ftp3, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#   filenames <- strsplit(filenames, "\r\n")
+#   filenames = unlist(filenames)
+#   filenames <- filenames[!grepl('leia_me', filenames)]
+#
+#   filename <-filenames[1]
+#
+#   for (filename in filenames) {
+#
+#     filesurl<-paste(ftp3, filename,"/", sep = "")
+#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#     filesurl<-strsplit(filesurl, "\r\n")
+#     filesurl<-unlist(filesurl)
+#
+#     dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/",filename)
+#
+#     all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = ".zip"))
+#   }
 
-teste_zip<-unlist(all_zipped_files)
+
+
+
 
 # function to Unzip files in their original sub-dir
 unzip_fun <- function(f){
-# f <- teste_zip[100]
+# f <- teste_zip[73]
+# f <- teste_zip[80]
+# f <- teste_zip[46]
+
   if (grepl("Rural|Urbano",f)) {
     zip_path <- unlist(stringr::str_split(f,"/"))
     zip_path <- tail(zip_path , n=4)
@@ -223,9 +211,40 @@ unzip_fun <- function(f){
     zip_path <- head(zip_path , n=2)
     zip_path <-paste(zip_path ,collapse  = "/")
   }
-  dir.create(file.path(root_dir,zip_path), showWarnings = FALSE)
-  unzip(f, exdir = file.path(root_dir,zip_path))
-  }
+
+  # unzip
+    dir.create(file.path(root_dir,zip_path), showWarnings = FALSE)
+    unzip(f, exdir = file.path(root_dir,zip_path))
+
+### EXCEPTIONS
+  # correction in file names of Sao Paulo 2010
+    if(f %like% "./censo_2010/sp/sp_setores_censitarios.zip"){
+
+      # list shape files
+      files <- list.files(file.path(root_dir,zip_path), full.names = T)
+      files <- files[files %like% "_SIR"]
+      files_new <- gsub("33SEE250GC_SIR",'35SEE250GC_SIR',files)
+
+      # rename files
+      file.rename(files,files_new)
+    }
+
+    # correction of file names of Municipio 3300704_2000 (year 2000 urbano)
+    if(f %like% "./censo_2000/Urbano/rj/rj_setores_censitarios.zip"){
+
+      # list shape files
+      files <- list.files(file.path(root_dir,zip_path), full.names = T)
+      files <- files[files %like% "3300704_2000"]
+      files_new <- gsub("3300704_2000",'3300704',files)
+
+      # rename files
+      file.rename(files,files_new)
+    }
+
+
+
+
+}
 
 # create computing clusters
 cl <- parallel::makeCluster(detectCores())
@@ -259,42 +278,23 @@ years <-  unlist(years)
 years <-gsub("[^0-9]",NA,years)
 years <-years[!is.na(years)]
 
-# create directory to save original shape files in sf format
-dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
+# create directory to save original and clean shape files in sf format
+  dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 
-# create directory to save cleaned shape files in sf format
-dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 
-# create a subdirectory of states, municipalities, micro and meso regions
-dir.create(file.path("shapes_in_sf_all_years_original", "Rural"), showWarnings = FALSE)
-dir.create(file.path("shapes_in_sf_all_years_original", "Urbano"), showWarnings = FALSE)
+# year 2000
+  dir.create(file.path("shapes_in_sf_all_years_original", "2000"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_original/2000", "Rural"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_original/2000", "Urbano"), showWarnings = FALSE)
 
-dir.create(file.path("shapes_in_sf_all_years_cleaned", "Rural"), showWarnings = FALSE)
-dir.create(file.path("shapes_in_sf_all_years_cleaned", "Urbano"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned", "2000"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned/2000", "Rural"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned/2000", "Urbano"), showWarnings = FALSE)
 
-# create a subdirectory of years
-sub_dirs <- list.dirs(path ="./shapes_in_sf_all_years_original", recursive = F)
+  # year 2010
+  dir.create(file.path("shapes_in_sf_all_years_original", "2010"), showWarnings = FALSE)
 
-for (i in sub_dirs){
-  for (y in years){
-    if (y==2010) {dir.create(file.path("./shapes_in_sf_all_years_original", y), showWarnings = FALSE)
-    } else {
-      dir.create(file.path(i, y), showWarnings = FALSE)
-    }
-  }
-}
-
-sub_dirs <- list.dirs(path ="./shapes_in_sf_all_years_cleaned", recursive = F)
-
-for (i in sub_dirs){
-  for (y in years){
-    if (y==2010) {dir.create(file.path("./shapes_in_sf_all_years_cleaned", y), showWarnings = FALSE)
-    } else {
-    dir.create(file.path(i, y), showWarnings = FALSE)
-      }
-
-  }
-}
 
 rm(list= ls())
 gc(reset = T)
@@ -312,7 +312,7 @@ setwd(root_dir)
 
 # List shapes for all years
 all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp|.SHP")
-ead(all_shapes)
+head(all_shapes)
 
 shp_to_sf_rds <- function(x){
 
@@ -345,16 +345,16 @@ shp_to_sf_rds <- function(x){
 
 
   # get destination subdirectory based on abbreviation of the geography
-  last15 <- function(x){substr(x, nchar(x)-30, nchar(x))}   # function to get the last 4 digits of a string
+  last30 <- function(x){substr(x, nchar(x)-30, nchar(x))}   # function to get the last 4 digits of a string
 
-  if ( last15(x) %like% "Urbano"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/Urbano/", year)  }
-  else if ( last15(x) %like% "Rural"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/Rural/", year) }
-  else {dest_dir <- paste0("./shapes_in_sf_all_years_original/", year)    }
+  if ( last30(x) %like% "Urbano"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",year,"/Urbano")
+  } else if ( last30(x) %like% "Rural"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",year, "/Rural")
+  } else {dest_dir <- paste0("./shapes_in_sf_all_years_original/", year)    }
 
   # name of the file that will be saved
-  if( year %like% "2000" & last15(x) %like% "Urbano"){ file_name <- paste0(toupper(
+  if( year %like% "2000" & last30(x) %like% "Urbano"){ file_name <- paste0(toupper(
     substr(tail(unlist(stringr::str_split(x,"/")),n=1), 0, (nchar(tail(unlist(stringr::str_split(x,"/")),n=1))-4) )), ".rds") }
-  if( year %like% "2000" & last15(x) %like% "Rural"){ file_name <- paste0(toupper(
+  if( year %like% "2000" & last30(x) %like% "Rural"){ file_name <- paste0(toupper(
     substr(tail(unlist(stringr::str_split(x,"/")),n=1),0,2)), ".rds") }
   if( year %like% "2010"){ file_name <- paste0( toupper(
     substr(tail(unlist(stringr::str_split(x,"/")),n=1),0,2)), ".rds") }
@@ -443,9 +443,19 @@ clean_tracts <- function( sf_file ){
         temp_sf <- dplyr::rename(temp_sf, code_tract = id_)
         temp_sf <- dplyr::select(temp_sf, c('code_tract', 'code_muni', 'code_state', 'geometry'))
 
+    # fix projection
       sf::st_crs(temp_sf) <- paste(sf::st_crs(temp_sf)[["proj4string"]], "+south")
-      # temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
-      # temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
+
+    # define urban/rural classification
+        # 1 – Área urbanizada de vila ou cidade: Setor urbano situado em áreas legalmente definidas como urbanas, caracterizadas por construções, arruamentos e intensa ocupação humana; áreas afetadas por transformações decorrentes do desenvolvimento urbano e aquelas reservadas à expansão urbana;
+        # 2 – Área não urbanizada de vila ou cidade: Setor urbano situado em áreas localizadas dentro do perímetro urbano de cidades e vilas reservadas à expansão urbana ou em processo de urbanização; áreas legalmente definidas como urbanas, mas caracterizadas por ocupação predominantemente de caráter rural;
+        # 3 – Área urbanizada isolada: Setor urbano situado em áreas definidas por lei municipal e separadas da sede municipal ou distrital por área rural ou por um outro limite legal;
+        # 4 – Rural - extensão urbana: Setor rural situado em assentamentos situados em área externa ao perímetro urbano legal, mas desenvolvidos a partir de uma cidade ou vila, ou por elas englobados em sua extensão;
+        # 5 – Rural – povoado: Setor rural situado em aglomerado rural isolado sem caráter privado ou empresarial, ou seja, não vinculado a um único proprietário do solo (empresa agrícola, indústria, usina, etc.), cujos moradores exercem atividades econômicas no próprio aglomerado ou fora dele. Caracteriza-se pela existência de um número mínimo de serviços ou equipamentos para atendimento aos moradores do próprio aglomerado ou de áreas rurais próximas;
+        # 6 – Rural – núcleo: Setor rural situado em aglomerado rural isolado, vinculado a um único proprietário do solo (empresa agrícola, indústria, usina, etc.), privado ou empresarial, dispondo ou não dos serviços ou equipamentos definidores dos povoados;
+        # 7 – Rural - outros aglomerados: Setor rural situado em outros tipos de aglomerados rurais, que não dispõem, no todo ou em parte, dos serviços ou equipamentos definidores dos povoados, e que não estão vinculados a um único proprietário (empresa agrícola, indústria, usina, etc.);
+        # 8 – Rural – exclusive os aglomerados rurais: Setor rural situado em área externa ao perímetro urbano, exclusive as áreas de aglomerado rural.
+
     }
 
 
@@ -500,26 +510,6 @@ clean_tracts <- function( sf_file ){
 
       }
 
-
-    # # Use UTF-8 encoding
-    #
-    # cols.names <- grep("_name",names(temp_sf),value = T)
-    #
-    # temp_sf$neighborhood_name <- stringi::stri_encode(as.character((temp_sf$neighborhood_name), "UTF-8"))
-    # temp_sf$subdistrict_name <- stringi::stri_encode(as.character((temp_sf$subdistrict_name), "UTF-8"))
-    # temp_sf$district_name <- stringi::stri_encode(as.character((temp_sf$district_name), "UTF-8"))
-    # temp_sf$name_muni <- stringi::stri_encode(as.character((temp_sf$name_muni), "UTF-8"))
-    # temp_sf$micro_name <- stringi::stri_encode(as.character((temp_sf$micro_name), "UTF-8"))
-    # temp_sf$meso_name <- stringi::stri_encode(as.character((temp_sf$meso_name), "UTF-8"))
-    #
-    # # Capitalize the first letter
-    # temp_sf$subdistrict_name <- stringr::str_to_title(temp_sf$subdistrict_name)
-    # temp_sf$district_name <- stringr::str_to_title(temp_sf$district_name)
-    # temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
-    # temp_sf$subdistrict_name <- stringr::str_to_title(temp_sf$subdistrict_name)
-    # temp_sf$micro_name <- stringr::str_to_title(temp_sf$micro_name)
-    # temp_sf$meso_name <- stringr::str_to_title(temp_sf$meso_name)
-
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
       temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
       # mapview::mapview(temp_sf)
@@ -537,9 +527,9 @@ clean_tracts <- function( sf_file ){
 
 
   # Determine directory to save cleaned sf
-      if( sf_file %like% "2010"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//" }
-      if( sf_file %like% "Urbano/2000"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//Urbano//2000//" }
-      if( sf_file %like% "Rural/2000"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//Rural//2000//" }
+      if( sf_file %like% "/2010/"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//" }
+      if( sf_file %like% "2000/Urbano"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//" }
+      if( sf_file %like% "2000/Rural"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//Rural//" }
 
   # name of the file that will be saved (the whole string between './' and '.rds')
     file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
