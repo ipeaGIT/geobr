@@ -365,8 +365,55 @@ system.time( w2 <- read_weighting_area(code_weighting=100000) )
 
 
 
+###### 6. read_census_tract -------------------------
+2007??????????????????
 
-###### 6. read_statistical_grid -------------------------
+  projecao levemente errada. Ver exemplo do muni - 1100049
+
+
+devtools::load_all('C:/Users/r1701707/Desktop/geobr')
+
+
+# input state
+system.time( w1 <- read_census_tract(code_tract=53) )
+system.time( w1 <- read_census_tract(code_tract="DF") )
+system.time( w1 <- read_census_tract(code_tract="DF", zone='rural') )
+system.time( w1 <- read_census_tract(code_tract="DF", zone='rural', year=2000) )
+
+plot(w1)
+rm(w1)
+
+
+# input whole country
+w <- read_census_tract(code_tract="all")
+head(w)
+plot(w)
+
+
+
+
+# input muni
+system.time( w2 <- read_weighting_area(code_weighting=5201108, year=2010) )
+head(w2)
+plot(w2)
+
+# input weighting area
+system.time( w3 <- read_weighting_area(code_weighting=5201108005004, year=2010) )
+head(w3)
+plot(w3)
+
+
+
+# Expected errors
+
+system.time( w2 <- read_weighting_area(code_weighting=11, year=2000) )
+system.time( w2 <- read_weighting_area(code_weighting=100000) )
+
+
+
+
+
+###### 7. read_statistical_grid -------------------------
 
 system.time( g1 <- read_statistical_grid(code_grid=44) )
 system.time( g1 <- read_statistical_grid(code_grid=44, year=2010) )
@@ -393,7 +440,7 @@ system.time( g1 <- read_statistical_grid() )
 
 
 
-###### 7. read_country -------------------------
+###### 8. read_country -------------------------
 
 
 
@@ -405,14 +452,14 @@ br <- read_country(year=2010)
 
 
 
-###### 8. read_region -------------------------
+###### 9. read_region -------------------------
 
 reg <- read_region(year=2018)
 plot(reg)
 
 
 
-###### 9. Health facilities -------------------------
+###### 10. Health facilities -------------------------
 
 devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 
