@@ -396,6 +396,7 @@ setwd(SC_dir)
 
 
 
+
 # create a function that will clean the sf files according to particularities of the data in each year
 clean_tracts <- function( sf_file ){
 
