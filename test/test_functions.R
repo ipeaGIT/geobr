@@ -366,7 +366,10 @@ system.time( w2 <- read_weighting_area(code_weighting=100000) )
 
 
 ###### 6. read_census_tract -------------------------
-# 2007??????????????????
+# mover dados zipados e shapes para 'geobr//data-raw//setores_censitarios'
+# Erro Rio e SP
+# Mudar estrutura de base 2000/urbano e 2000/rural
+# incluir ano 2007
 # projecao levemente errada. Ver exemplo do muni - 1100049
 
 
@@ -376,20 +379,25 @@ devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 # input state
 system.time( rj <- read_census_tract(code_tract=33) )
 system.time( sp <- read_census_tract(code_tract=35) )
-plot(rj["tipo"])
-plot(sp["tipo"])
+plot(rj["zone"])
+plot(sp["zone"])
 
 
-system.time( c <- read_census_tract(code_tract="DF") )
+system.time( rj <- read_census_tract(code_tract=33, year=2000) )
+system.time( sp <- read_census_tract(code_tract=35, year=2000) )
+
+
+system.time( c <- read_census_tract(code_tract="GO") )
 system.time( c <- read_census_tract(code_tract="DF", zone='rural') )
 system.time( c <- read_census_tract(code_tract="DF", zone='urban') )
 
-system.time( c <- read_census_tract(code_tract="DF", zone='rural', year=2000) )
-system.time( c <- read_census_tract(code_tract="DF", zone='urban', year=2000) )
+system.time( c1 <- read_census_tract(code_tract="DF", zone='rural', year=2000) )
+system.time( c2 <- read_census_tract(code_tract="DF", zone='urban', year=2000) )
+plot(c1["code_muni"])
+plot(c2["code_muni"])
 
-head(c)
 
-rm(w1)
+
 
 
 # input whole country
