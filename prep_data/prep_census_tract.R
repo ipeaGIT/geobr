@@ -529,7 +529,7 @@ clean_tracts <- function( sf_file ){
   # Determine directory to save cleaned sf
       if( sf_file %like% "/2010/"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//" }
       if( sf_file %like% "2000/Urbano"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//" }
-      if( sf_file %like% "2000/Rural"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//Rural//" }
+      if( sf_file %like% "2000/Rural"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Rural//" }
 
   # name of the file that will be saved (the whole string between './' and '.rds')
     file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
@@ -556,4 +556,22 @@ stopCluster(cl)
 rm(list= ls())
 gc(reset = T)
 
-# this
+
+############juntando as bases por estado --------------
+
+dir.proj="L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//"
+setwd(dir.proj)
+lista <- unique(substr(list.files(dir.proj),1,2))
+
+for (CODE in lista) {# CODE <- 33
+
+  files <- list.files(full.names = T,pattern = paste0("^",CODE))
+  files <- lapply(X=files, FUN= readr::read_rds)
+  files <- lapply(X=files, FUN= as.data.frame)
+  shape <- do.call('rbind', files)
+  shape <- st_sf(shape)
+  readr::write_rds(shape,paste0("./",CODE,"sc.rds"), compress="gz")
+}
+
+
+a <- read_municipality(code_muni = "11")
