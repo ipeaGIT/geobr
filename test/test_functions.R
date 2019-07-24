@@ -366,21 +366,29 @@ system.time( w2 <- read_weighting_area(code_weighting=100000) )
 
 
 ###### 6. read_census_tract -------------------------
-2007??????????????????
-
-  projecao levemente errada. Ver exemplo do muni - 1100049
+# 2007??????????????????
+# projecao levemente errada. Ver exemplo do muni - 1100049
 
 
 devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 
 
 # input state
-system.time( w1 <- read_census_tract(code_tract=53) )
-system.time( w1 <- read_census_tract(code_tract="DF") )
-system.time( w1 <- read_census_tract(code_tract="DF", zone='rural') )
-system.time( w1 <- read_census_tract(code_tract="DF", zone='rural', year=2000) )
+system.time( rj <- read_census_tract(code_tract=33) )
+system.time( sp <- read_census_tract(code_tract=35) )
+plot(rj["tipo"])
+plot(sp["tipo"])
 
-plot(w1)
+
+system.time( c <- read_census_tract(code_tract="DF") )
+system.time( c <- read_census_tract(code_tract="DF", zone='rural') )
+system.time( c <- read_census_tract(code_tract="DF", zone='urban') )
+
+system.time( c <- read_census_tract(code_tract="DF", zone='rural', year=2000) )
+system.time( c <- read_census_tract(code_tract="DF", zone='urban', year=2000) )
+
+head(c)
+
 rm(w1)
 
 
