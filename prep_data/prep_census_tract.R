@@ -387,38 +387,41 @@ gc(reset = T)
 
 
 ###### 4. Cleaning files --------------------------------
+
 SC_dir <- "//Storage6/usuarios/# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_original/"
 setwd(SC_dir)
-all_shapes <- list.files(full.names = T, recursive = T, pattern = "[^0-9]")
 
-sub_dirs <- list.dirs(path =SC_dir, recursive = T)
-sub_dirs <- grep(pattern = "2000|2010|2007",sub_dirs,value = T)
+# list all .rds files
+  all_shapes <- list.files(full.names = T, recursive = T, pattern = ".rds")
 
-# e<-sub_dirs[1]
-# i<-sf_files[1]
+
 
 # create a function that will clean the sf files according to particularities of the data in each year
-clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
+clean_tracts <- function( sf_file ){
 
-  # get year of the folder
-  last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
-  year <- last4(e)
+  # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Urbano"]
+  # sf_file <- all_shapes[all_shapes %like% "2010"]
 
-  # list all sf files in that year/folder
-  sf_files <- list.files(e, full.names = T)
+  # sf_file <- sf_file[2]
 
-  # for each file, rename and subset columns
-  for (i in sf_files){
+  # read sf file
+    temp_sf <- read_rds(sf_file)
 
-    # read sf file
-    temp_sf <- read_rds(i)
+
+  # get year of the file
+    # last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
+    # year <- last4(e)
+    if( sf_file %like% "/2000/" ){ year <- 2000}
+    if( sf_file %like% "/2007/" ){ year <- 2007}
+    if( sf_file %like% "/2010/" ){ year <- 2010}
+
 
   # rural tracts of year 2000
-    if ((year %like% "2000") & (i %like% "Rural")){
+    if ((year %like% "2000") & (sf_file %like% "Rural")){
 
-      # i <- sf_files[sf_files %like% "2000" & sf_files %like% "Rural"]
-      # i <- i[2]
-      # temp_sf <- read_rds(i)
+      # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Rural"]
+      # sf_file <- sf_file[2]
+      # temp_sf <- read_rds(sf_file)
 
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- temp_sf %>% mutate(code_state=substr(geocodigo,1,2),code_muni=substr(geocodigo,1,7))
@@ -428,11 +431,11 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
 
 
   # Urban tracts of year 2000
-    if ((year %like% "2000") & (i %like% "Urbano")){
+    if ((year %like% "2000") & (sf_file %like% "Urbano")){
 
-      # i <- sf_files[sf_files %like% "2000" & sf_files %like% "Urbano"]
-      # i <- i[2]
-      # temp_sf <- read_rds(i)
+      # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Urbano"]
+      # sf_file <- sf_file[2]
+      # temp_sf <- read_rds(sf_file)
 
         names(temp_sf) <- names(temp_sf) %>% tolower()
         temp_sf <- temp_sf %>% mutate(code_state=substr(id_,1,2),code_muni=substr(id_,1,7))
@@ -448,10 +451,11 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
   # Tracts of year 2010
     if (year %like% "2010"){
 
-      # i <- sf_files[sf_files %like% "2010"]
-      # i <- i[2]
-      # temp_sf <- read_rds(i)
+      # sf_file <- all_shapes[all_shapes %like% "2010"]
+      # sf_file <- sf_file[2]
+      # temp_sf <- read_rds(sf_file)
 
+      # rename columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- temp_sf %>% mutate(code_state=substr(cd_geocodm,1,2))
       temp_sf <- dplyr::rename(temp_sf,
@@ -465,7 +469,7 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
                                name_subdistrict=nm_subdist,
                                code_district=cd_geocodd,
                                name_district=nm_distrit)
-
+      # filter columns
       temp_sf <- dplyr::select(temp_sf,
                                'code_tract',
                                'zone',
@@ -477,28 +481,23 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
                                'name_subdistrict',
                                'code_district',
                                'name_district',
+                               'code_state',
                                'geometry')
+            }
 
-      # Adjust string columns
-        cols.names <- grep("name",names(temp_sf),value = T)
 
-        for (col in cols.names){
+    # Adjust string columns
+      cols.names <- grep("name",names(temp_sf),value = T)
+
+      for (col in cols.names){
 
         # Use UTF-8 encoding
-          temp_sf[[col]] <- stringi::stri_encode(as.character((temp_sf[[col]]), "UTF-8"))
+        temp_sf[[col]] <- stringi::stri_encode(as.character((temp_sf[[col]]), "UTF-8"))
 
         # Capitalize the first letter
-          temp_sf[[col]] <- stringr::str_to_title(temp_sf[[col]])
+        temp_sf[[col]] <- stringr::str_to_title(temp_sf[[col]])
 
-        }
-    }
-
-    # if (year %like% "2013|2014|2015|2016|2017|2018"){
-    #   # dplyr::rename and subset columns
-    #   names(temp_sf) <- names(temp_sf) %>% tolower()
-    #   temp_sf <- dplyr::rename(temp_sf, code_state = cd_geocuf, name_state = nm_estado)
-    #   temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
-    # }
+      }
 
 
     # # Use UTF-8 encoding
@@ -525,24 +524,33 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2010]
       # mapview::mapview(temp_sf)
 
     # Convert columns from factors to characters
-    temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+      temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 
     # Make an invalid geometry valid # st_is_valid( sf)
-    temp_sf <- lwgeom::st_make_valid(temp_sf)
+      temp_sf <- lwgeom::st_make_valid(temp_sf)
 
     # keep code as.numeric()
-    cols.names <- grep("_code",names(temp_sf),value = T)
+      #temp_sf %>% dplyr::mutate_at(vars(matches("code_")), funs(as.numeric))
+      temp_sf$code_state <- as.numeric(temp_sf$code_state)
+      temp_sf$code_muni <- as.numeric(temp_sf$code_muni)
 
-    # temp_sf$code_state <- as.numeric(temp_sf$code_state)
-    temp_sf %>% dplyr::mutate_at(vars(matches("_code")), funs(as.numeric))
 
-    # Save cleaned sf in the cleaned directory
-    i <- gsub("original", "cleaned", i)
-    write_rds(temp_sf, path = i, compress="gz" )
-  }
+  # Determine directory to save cleaned sf
+      if( sf_file %like% "2010"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//" }
+      if( sf_file %like% "Urbano/2000"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//Urbano//2000//" }
+      if( sf_file %like% "Rural/2000"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//Rural//2000//" }
+
+  # name of the file that will be saved (the whole string between './' and '.rds')
+    file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
+
+  # Save cleaned sf in the cleaned directory
+    write_rds(temp_sf, path = paste0(dest_dir, file_name,".rds"), compress="gz" )
+
 }
 
-lapply(sub_dirs, clean_states)
+
+
+lapply(sub_dirs, clean_tracts)
 
 # Apply function to save original data sets in rds format
 
@@ -553,7 +561,7 @@ clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(
 parallel::clusterExport(cl=cl, varlist= c("sub_dirs"), envir=environment())
 
 # apply function in parallel
-parallel::parLapply(cl, sub_dirs, clean_states)
+parallel::parLapply(cl, sub_dirs, clean_tracts)
 stopCluster(cl)
 
 rm(list= ls())
