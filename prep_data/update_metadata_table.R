@@ -1,24 +1,33 @@
 # update metadata.rds
 
 
+######### Etapa 1 - bases padrao ( geo/ano/arquivo) ----------------------
+
+
+
 # create empty metadata
-  metadata <- data.frame(matrix(ncol = 5, nrow = 0))
-  colnames(metadata) <- c("geo","year","code","download_path","code_abrev")
+  metadata1 <- data.frame(matrix(ncol = 5, nrow = 0))
+  colnames(metadata1) <- c("geo","year","code","download_path","code_abrev")
 
 # list all data files available in the geobr package
   geo=list.files("//storage3/geobr/data")
 
   # populate the metadata table
-  for (a in geo) {
+  for (a in geo) {    # a="setor_censitario"
     ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
-    ano=ano[!grepl("Urbano|Rural", ano)]
-    for (b in ano) {
+    for (b in ano) { # b=2000
       estado=list.files(paste("//storage3/geobr/data",a,b,sep="/"))
-      for (c in estado) {
-        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))
+      for (c in estado) { c="Urbano"
+        metadata1[nrow(metadata1) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))
       }
     }
   }
+
+
+
+
+#########  Etapa 2 - bases padrao ( geo/ano/zona/arquivo) ----------------------
+
 
   for (a in geo) {
     ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
