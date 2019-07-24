@@ -551,18 +551,16 @@ clean_tracts <- function( sf_file ){
 
 
 
-lapply(sub_dirs, clean_tracts)
-
 # Apply function to save original data sets in rds format
 
 # create computing clusters
 cl <- parallel::makeCluster(detectCores())
 
 clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("sub_dirs"), envir=environment())
+parallel::clusterExport(cl=cl, varlist= c("all_shapes"), envir=environment())
 
 # apply function in parallel
-parallel::parLapply(cl, sub_dirs, clean_tracts)
+parallel::parLapply(cl, all_shapes, clean_tracts)
 stopCluster(cl)
 
 rm(list= ls())
