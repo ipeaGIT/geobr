@@ -2,23 +2,28 @@
 #'
 #' @param code_tract One can either pass the 7-digit code of a Municipality or the 2-digit code of a State.If code_tract="all", all census sectors of the country are loaded.
 #' @param year the year of the data download (defaults to 2010)
-#' @param zone "urban" or "rural" for separation in the year 2000
+#' @param zone "urban" or "rural" for separation in the year 2000 (defaults to "urban")
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#' # Exemplos
-#'dados <- read_census_tract(year=2010)
-# dados <- read_census_tract(3500000,2010)
-#'dados <- read_census_tract(123,2010)
-#'dados <- read_census_tract("df",2010)
-#'dados <- read_census_tract(1302603,2010)
-#'dados <- read_census_tract(35)
-#'dados <- read_census_tract(14,2010)
-#'dados <- read_census_tract()
 #'
-#'# mapa
-#'library(mapview)
-#'mapview(dados)
+#' library(geobr)
+#'
+#' # Read rural census sector for years before 2007
+#'   w <- read_census_tract(code_tract=5201108, year=2000,zone="rural")
+#'
+#' # Read all census sectors of a state at a given year
+#'   w <- read_census_tract(code_tract=53, year=2010); # or
+#'   w <- read_census_tract(code_tract="DF", year=2010)
+#'   plot(w)
+#'
+#' # Read all census sectors of a municipality at a given year
+#'   w <- read_census_tract(code_tract=5201108, year=2010)
+#'   plot(w)
+#'
+#' # Read all weighting areas of the country at a given year
+#'   w <- read_census_tract(code_tract="all", year=2010)
+#'
 #' }
 #'
 #'
