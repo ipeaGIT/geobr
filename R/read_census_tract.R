@@ -50,9 +50,11 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
 
   } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
 
-  if (year<=2007 & zone == "urban") {temp_meta <- temp_meta[temp_meta[,3] %like% "U", ]}
+  if (year<=2007 & zone == "urban") {cat("Using data of Urban census tracts\n")
+                                      temp_meta <- temp_meta[temp_meta[,3] %like% "U", ]}
 
-  if (year<=2007 & zone == "rural") {temp_meta <- temp_meta[temp_meta[,3] %like% "R", ]}
+  if (year<=2007 & zone == "rural") {cat("Using data of Rural census tracts\n")
+                                          temp_meta <- temp_meta[temp_meta[,3] %like% "R", ]}
 
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                        paste(unique(temp_meta$year),collapse = " ")))
