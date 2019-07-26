@@ -379,13 +379,13 @@ devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 
 # input state
 system.time( rj <- read_census_tract(code_tract=33) )
-system.time( sp <- read_census_tract(code_tract=35) )
+system.time( am <- read_census_tract(code_tract="AM") )
 plot(rj["zone"])
-plot(sp["zone"])
+plot(am["zone"])
 
 
 system.time( rj <- read_census_tract(code_tract=33, year=2000) )
-system.time( sp <- read_census_tract(code_tract=35, year=2000) )
+system.time( ac <- read_census_tract(code_tract="AC", year=2000) )
 
 
 system.time( c <- read_census_tract(code_tract="GO") )
@@ -397,16 +397,18 @@ system.time( c2 <- read_census_tract(code_tract="DF", zone='urban', year=2000) )
 plot(c1["code_muni"])
 plot(c2["code_muni"])
 
+# input whole muni
 
-
+system.time( c2 <- read_census_tract(code_tract=5201108, zone='urban', year=2000) )
+system.time( c2 <- read_census_tract(code_tract=5201108, zone='rural', year=2000) )
+system.time( c2 <- read_census_tract(code_tract=5201108,  year=2010) )
+plot(c2)
 
 
 # input whole country
 w <- read_census_tract(code_tract="all")
 head(w)
-plot(w)
-
-
+plot(w["aaa"])
 
 
 # input muni
