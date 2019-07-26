@@ -373,7 +373,7 @@ shp_to_sf_rds <- function(x){
       # Convert columns from factors to characters
         temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 
-      # Make an invalid geometry valid # st_is_valid( sf)
+      # Make any invalid geometry valid # st_is_valid( sf)
         temp_sf <- lwgeom::st_make_valid(temp_sf)
 
         # keep code as.numeric()
