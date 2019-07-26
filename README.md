@@ -45,7 +45,7 @@ mun <- read_municipality(code_muni="all", year=2018)
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
 
-obs. Geodetic reference system "SIRGAS2000", CRS(4674). Most data setsare available at scale 1:250,000 (see documentation for details).
+obs. Geodetic reference system "SIRGAS2000", CRS(4674). Most data sets are available at scale 1:250,000 (see documentation for details).
  
 ## Coming soon:
 
