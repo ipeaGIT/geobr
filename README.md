@@ -35,7 +35,7 @@ mun <- read_municipality(code_muni="all", year=2018)
 
 |Function|Geographies available|Years available|Source|
 |-----|-----|-----|-----|
-|`read_country`| Country | 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
+|`read_country`| Country | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_region`| Region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_state`| States | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
 |`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |  IBGE |
@@ -52,6 +52,7 @@ obs. Geodetic reference system "SIRGAS2000", CRS(4674). Most data setsare availa
 | Geography | Years available | Source |
 |-----|-----|-----|
 |`read_census_tract` | 2000, 2007, 2010 | IBGE |
+|`read_indigenous_land` | 201907 | FUNAI |
 | Metropolitan areas | ... | IBGE and state legislations |
 | Longitudinal Database* of municipalities | ... | IBGE | 
 | Longitudinal Database* of micro regions | ... | IBGE | 
