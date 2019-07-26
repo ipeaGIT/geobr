@@ -1,28 +1,30 @@
-#' Download shape files of census sectors of the Brazilian Population Census
+#' Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
 #'
-#' @param code_tract One can either pass the 7-digit code of a Municipality or the 2-digit code of a State.If code_tract="all", all census sectors of the country are loaded.
-#' @param year the year of the data download (defaults to 2010)
-#' @param zone "urban" or "rural" for separation in the year 2000 (defaults to "urban")
+#' @param code_tract The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
+#'  a state is passed, (e.g. 33 or "RJ") the function will load all census tracts of that state. If code_tract="all",
+#'  all census tracts of the country are loaded.
+#' @param year Year of the data (defaults to 2010)
+#' @param zone "urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
 #'
 #' library(geobr)
 #'
-#' # Read rural census sector for years before 2007
-#'   w <- read_census_tract(code_tract=5201108, year=2000,zone="rural")
+#' # Read rural census tracts for years before 2007
+#'   c <- read_census_tract(code_tract=5201108, year=2000,zone="rural")
 #'
-#' # Read all census sectors of a state at a given year
-#'   w <- read_census_tract(code_tract=53, year=2010); # or
-#'   w <- read_census_tract(code_tract="DF", year=2010)
-#'   plot(w)
+#' # Read all census tracts of a state at a given year
+#'   c <- read_census_tract(code_tract=53, year=2010); # or
+#'   c <- read_census_tract(code_tract="DF", year=2010)
+#'   plot(c)
 #'
-#' # Read all census sectors of a municipality at a given year
-#'   w <- read_census_tract(code_tract=5201108, year=2010)
-#'   plot(w)
+#' # Read all census tracts of a municipality at a given year
+#'   c <- read_census_tract(code_tract=5201108, year=2010)
+#'   plot(c)
 #'
-#' # Read all weighting areas of the country at a given year
-#'   w <- read_census_tract(code_tract="all", year=2010)
+#' # Read all census tracts of the country at a given year
+#'   c <- read_census_tract(code_tract="all", year=2010)
 #'
 #' }
 #'
