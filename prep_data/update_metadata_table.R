@@ -13,12 +13,23 @@
   geo=list.files("//storage1/geobr/data")
 
   # populate the metadata table
-  for (a in geo) {    # a="indiginous_land"
+  for (a in geo) {    # a="setor_censitario"
     ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
-    for (b in ano) { # b=201907
+    for (b in ano) { # b=2000
       estado=list.files(paste("//storage1/geobr/data",a,b,sep="/"))
       for (c in estado) { #c="Urbano"
-        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))
+        if (c=="Urbano"|c=="Rural"){
+          estado2=list.files(paste("//storage1/geobr/data",a,b,c,sep="/"))
+          for (d in estado2) { #d=estado2[1]
+            if (c=="Urbano") {
+              metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,b,c,d,sep="/"))
+            }
+            if (c=="Rural") {
+              metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,b,c,d,sep="/"))
+            }
+          }
+        } else {
+        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))}
       }
     }
   }
@@ -28,36 +39,6 @@
   # temp_ano <- subset(metadata, geo=="setor_censitario")
   # temp_ano <- subset(metadata, geo=="country")
 
-#########  Etapa 2 - bases padrao ( geo/ano/zona/arquivo) ----------------------
-
-
-  for (a in geo) {
-    ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
-    ano=ano[grepl("Urbano", ano)]
-    ano=list.files(paste("//storage1/geobr/data",a,ano,sep="/"))
-    for (b in ano) {
-      estado=list.files(paste("//storage1/geobr/data",a,"Urbano",b,sep="/"))
-      for (c in estado) {
-        if (grepl('^-?[0-9.]+$',substr(estado[1], 1, 7))) {
-          metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(c, 1, 7)),paste("http://www.ipea.gov.br/geobr/data",a,"Urbano",b,c,sep="/"))
-        }else{
-        metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(c, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,"Urbano",b,c,sep="/"))
-        }
-      }
-    }
-  }
-
-  for (a in geo) {
-    ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
-    ano=ano[grepl("Rural", ano)]
-    ano=list.files(paste("//storage1/geobr/data",a,ano,sep="/"))
-    for (b in ano) {
-      estado=list.files(paste("//storage1/geobr/data",a,"Rural",b,sep="/"))
-      for (c in estado) {
-        metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(c, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,"Rural",b,c,sep="/"))
-      }
-    }
-  }
 
 
 # get code abbreviations
