@@ -1,7 +1,9 @@
 #' Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.
 #'
-#' @param code_weighting One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography
-#' @param year the year of the data download (defaults to 2010)
+#' @param code_weighting The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
+#'  a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
+#'  all weighting areas of the country are loaded.
+#' @param year Year of the data (defaults to 2010)
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
