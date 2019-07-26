@@ -4,6 +4,7 @@
 library(sf)
 library(dplyr)
 library(data.table)
+library(geobr)
 
 
 ### Install development version of geobr
@@ -461,10 +462,20 @@ system.time( g1 <- read_statistical_grid() )
 
 
 br <- read_country(year=2018)
-plot(br)
+plot(br); rm(br)
+
+br <- read_country(year=2010)
+plot(br); rm(br)
+
+
+br <- read_country(year=2000)
+plot(br); rm(br)
+
+br <- read_country(year=1920)
+plot(br); rm(br)
+
 
 br <- read_country(year=1500)
-br <- read_country(year=2010)
 
 
 
