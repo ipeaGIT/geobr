@@ -25,9 +25,16 @@ setwd(root_dir)
 dirs <- list.dirs("./shapes_in_sf_all_years_cleaned/uf")[-1]
 years <- stringi::stri_sub(dirs,-4,-1)
 
+hist_dirs <- list.dirs("../historical_state_muni_1872_1991/shapes_in_sf_all_years_cleaned/uf")[-1]
+hist_years <- stringi::stri_sub(hist_dirs,-4,-1)
+
+# all years
+years <- c(years, hist_years) %>% sort()
+
+
 
 # remove problematic years
-  years <- years[!(years %in% c(2000, 2001, 2005, 2007))]
+  years <- years[!(years %in% c(2005, 2007))]
 
 
 #### Function to create country sf file
@@ -43,36 +50,53 @@ years <- stringi::stri_sub(dirs,-4,-1)
 get_country <- function(y){
 
   # a) reads all states sf files and pile them up
-    # y <- 2010
-    temp_sf <- read_state(year=y, code_state = "all")
+    # y <- 2018
+    sf_states <- read_state(year= y , code_state = "all")
 
+  # store original crs
+    original_crs <- st_crs(sf_states)
 
   # b) make sure we have valid geometries
-    temp_sf <- lwgeom::st_make_valid(temp_sf)
+    temp_sf <- lwgeom::st_make_valid(sf_states)
     temp_sf <- temp_sf %>% st_buffer(0)
 
-    # convert to sp
-      temp_sp <- sf::as_Spatial(temp_sf)
-      temp_sp <- rgeos::gBuffer(temp_sp, byid=TRUE, width=0)
+    sf_states1 <- temp_sf %>% st_cast("MULTIPOLYGON")
+
+  # c) create attribute with the number of points each polygon has
+    points_in_each_polygon = sapply(1:dim(sf_states1)[1], function(i)
+      length(st_coordinates(sf_states1$geometry[i])))
+
+    sf_states1$points_in_each_polygon <- points_in_each_polygon
+    mypols <- sf_states1 %>% filter(points_in_each_polygon > 0)
+
+  # d) convert to sp
+      sf_statesa <- mypols %>% as("Spatial")
+      sf_statesa <- rgeos::gBuffer(sf_statesa, byid=TRUE, width=0) # correct eventual topology issues
+
+      # temp_sp <- sf::as_Spatial(temp_sf)
+      # temp_sp <- rgeos::gBuffer(temp_sp, byid=TRUE, width=0)
+      # plot(sf_statesa)
 
 
   # c) dissolve borders to create country file
-    result <- maptools::unionSpatialPolygons(temp_sp, rep(TRUE, nrow(temp_sp@data))) # dissolve
+    result <- maptools::unionSpatialPolygons(sf_statesa, rep(TRUE, nrow(sf_statesa@data))) # dissolve
 
 
   # d) get rid of holes
     outerRings = Filter(function(f){f@ringDir==1},result@polygons[[1]]@Polygons)
     outerBounds = SpatialPolygons(list(Polygons(outerRings,ID=1)))
+    plot(outerBounds)
 
+  # e) convert back to sf data
+    outerBounds <- st_as_sf(outerBounds)
+    outerBounds <- st_set_crs(outerBounds, original_crs)
 
-  # d) create a subdirectory of that year in the country directory
-  dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/country/",y)
-  dir.create(dest_dir, showWarnings = FALSE)
+  # f) create a subdirectory of that year in the country directory
+    dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/country/",y)
+    dir.create(dest_dir, showWarnings = FALSE)
 
-  # e) save as an sf file
-  outerBounds <- st_as_sf(outerBounds)
-  readr::write_rds(outerBounds, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
-
+  # g) save as an sf file
+    readr::write_rds(outerBounds, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
 }
 
 
