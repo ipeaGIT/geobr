@@ -10,13 +10,13 @@
   colnames(metadata1) <- c("geo","year","code","download_path","code_abrev")
 
 # list all data files available in the geobr package
-  geo=list.files("//storage3/geobr/data")
+  geo=list.files("//storage1/geobr/data")
 
   # populate the metadata table
   for (a in geo) {    # a="setor_censitario"
-    ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
+    ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
     for (b in ano) { # b=2000
-      estado=list.files(paste("//storage3/geobr/data",a,b,sep="/"))
+      estado=list.files(paste("//storage1/geobr/data",a,b,sep="/"))
       for (c in estado) { c="Urbano"
         metadata1[nrow(metadata1) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))
       }
@@ -30,11 +30,11 @@
 
 
   for (a in geo) {
-    ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
+    ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
     ano=ano[grepl("Urbano", ano)]
-    ano=list.files(paste("//storage3/geobr/data",a,ano,sep="/"))
+    ano=list.files(paste("//storage1/geobr/data",a,ano,sep="/"))
     for (b in ano) {
-      estado=list.files(paste("//storage3/geobr/data",a,"Urbano",b,sep="/"))
+      estado=list.files(paste("//storage1/geobr/data",a,"Urbano",b,sep="/"))
       for (c in estado) {
         if (grepl('^-?[0-9.]+$',substr(estado[1], 1, 7))) {
           metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(c, 1, 7)),paste("http://www.ipea.gov.br/geobr/data",a,"Urbano",b,c,sep="/"))
@@ -46,11 +46,11 @@
   }
 
   for (a in geo) {
-    ano=list.files(paste("//storage3/geobr/data",a,sep="/"))
+    ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
     ano=ano[grepl("Rural", ano)]
-    ano=list.files(paste("//storage3/geobr/data",a,ano,sep="/"))
+    ano=list.files(paste("//storage1/geobr/data",a,ano,sep="/"))
     for (b in ano) {
-      estado=list.files(paste("//storage3/geobr/data",a,"Rural",b,sep="/"))
+      estado=list.files(paste("//storage1/geobr/data",a,"Rural",b,sep="/"))
       for (c in estado) {
         metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(c, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,"Rural",b,c,sep="/"))
       }
@@ -95,5 +95,5 @@
   table(metadata$year)
 
 # save updated metadata table
-  # readr::write_rds(metadata,"//storage3/geobr/metadata/metadata.rds", compress = "gz")
+  # readr::write_rds(metadata,"//storage1/geobr/metadata/metadata.rds", compress = "gz")
 
