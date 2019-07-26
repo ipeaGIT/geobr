@@ -406,7 +406,7 @@ clean_tracts <- function( sf_file ){
   # sf_file <- sf_file[2]
 
   # read sf file
-    temp_sf <- read_rds(sf_file)
+    temp_sf <- read_rds(sf_file, quiet = T)
 
 
   # get year of the file
@@ -566,7 +566,7 @@ lista <- unique(substr(list.files(dir.proj),1,2))
 for (CODE in lista) {# CODE <- 33
 
   files <- list.files(full.names = T,pattern = paste0("^",CODE))
-  files <- lapply(X=files, FUN= readr::read_rds)
+  files <- lapply(X=files, FUN= readr::read_rds, quiet = T)
   files <- lapply(X=files, FUN= as.data.frame)
   shape <- do.call('rbind', files)
   shape <- st_sf(shape)
