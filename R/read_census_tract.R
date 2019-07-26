@@ -65,9 +65,6 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
   if(is.null(code_tract)){ stop("Value to argument 'code_tract' cannot be NULL") }
 
 
-  # if(as.numeric(year)>=2010){
-
-
     # if code_tract=="all", read the entire country
     if(code_tract=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
 
@@ -91,9 +88,9 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
       return(sf)
     }
 
-    else if( (!(substr(x = code_tract, 1, 2) %in% temp_meta$code) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev))
-            |(!(paste0("U",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev))
-            |(!(paste0("R",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev))
+    else if( (!(substr(x = code_tract, 1, 2) %in% temp_meta$code) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev)
+              )&(!(paste0("U",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev)
+                 )&(!(paste0("R",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev))
             ){
 
       stop("Error: Invalid Value to argument code_tract.")
@@ -135,127 +132,4 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
         stop("Error: Invalid Value to argument code_tract.")
       }
     }
-
-
-  # } else if (year==2000 & zone == "urban") {
-  #
-  #   temp_meta <- temp_meta[temp_meta[,3] %like% "U", ]
-  #
-  #   # if code_tract=="all", read the entire country
-  #   if(code_tract=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
-  #
-  #     # list paths of files to download
-  #     filesD <- as.character(temp_meta$download_path)
-  #
-  #
-  #     # download files
-  #     counter <- 0
-  #     lapply(X=filesD, function(X){ counter <<- counter + 1
-  #     print(paste("Downloading ", counter, " of ",length(filesD)," files"))
-  #     httr::GET(url=X, httr::progress(),
-  #               httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(X,"/"),tail,n=1L))), overwrite = T))})
-  #
-  #
-  #     # read files and pile them up
-  #     files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-  #     files <- paste0(tempdir(),"/",files)
-  #     files <- lapply(X=files, FUN= readr::read_rds)
-  #     sf <- do.call('rbind', files)
-  #     return(sf)
-  #   }
-  #   else if( !(paste0("U",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev)){
-  #
-  #     stop("Error: Invalid Value to argument code_tract.")
-  #
-  #   } else if( (is.numeric(code_tract) & nchar(code_tract)==2)|(is.character(code_tract) & nchar(code_tract)==2) ){
-  #
-  #     if (is.numeric(code_tract)) {temp_meta <- temp_meta[temp_meta[,3] %like% paste0("U",code_tract), ] }
-  #
-  #     if (is.character(code_tract)) {temp_meta <- temp_meta[temp_meta[,5] %like% code_tract, ] }
-  #
-  #     # list paths of files to download
-  #     filesD <- as.character(temp_meta$download_path)
-  #
-  #
-  #     # download files
-  #     counter <- 0
-  #     lapply(X=filesD, function(X){ counter <<- counter + 1
-  #     print(paste("Downloading ", counter, " of ",length(filesD)," files"))
-  #     httr::GET(url=X, httr::progress(),
-  #               httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(X,"/"),tail,n=1L))), overwrite = T))})
-  #
-  #
-  #     # read files and pile them up
-  #     files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-  #     files <- paste0(tempdir(),"/",files)
-  #     files <- lapply(X=files, FUN= readr::read_rds)
-  #     sf <- do.call('rbind', files)
-  #     return(sf)
-  #
-  #   }else if(paste0("U",code_tract) %in% temp_meta$code){    # Get Municipio
-  #
-  #     filesD <- as.character(subset(temp_meta, code==paste0("U",code_tract))$download_path)
-  #
-  #     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-  #
-  #     httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
-  #
-  #     # read sf
-  #     sf <- readr::read_rds(temps)
-  #     return(sf)
-  #   } else{
-  #     stop("Error: Invalid Value to argument code_tract.")
-  #   }
-  # } else if (year==2000 & zone == "rural") {
-  #   temp_meta <- temp_meta[temp_meta[,3] %like% "R", ]
-  #
-  #   # if code_tract=="all", read the entire country
-  #   if(code_tract=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
-  #
-  #     # list paths of files to download
-  #     filesD <- as.character(temp_meta$download_path)
-  #
-  #
-  #     # download files
-  #     counter <- 0
-  #     lapply(X=filesD, function(X){ counter <<- counter + 1
-  #     print(paste("Downloading ", counter, " of ",length(filesD)," files"))
-  #     httr::GET(url=X, httr::progress(),
-  #               httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(X,"/"),tail,n=1L))), overwrite = T))})
-  #
-  #
-  #     # read files and pile them up
-  #     files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-  #     files <- paste0(tempdir(),"/",files)
-  #     files <- lapply(X=files, FUN= readr::read_rds)
-  #     sf <- do.call('rbind', files)
-  #     return(sf)
-  #   }else{
-  #
-  #     # list paths of files to download
-  #     if (is.numeric(code_tract)){ filesD <- as.character(subset(temp_meta, code==paste0("R",substr(code_tract, 1, 2)))$download_path) }
-  #     if (is.character(code_tract)){ filesD <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
-  #
-  #     # download files
-  #     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-  #     httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
-  #
-  #     # read sf
-  #     sf <- readr::read_rds(temps)
-  #
-  #     if(nchar(code_tract)==2){
-  #       return(sf)
-  #
-  #     } else if(code_tract %in% sf$municipality_code){    # Get Municipio
-  #       x <- code_tract
-  #       sf <- subset(sf, municipality_code==x)
-  #       return(sf)
-  #     } else{
-  #       stop("Error: Invalid Value to argument code_tract.")
-  #     }
-  #   }
-  #
-  # }
-
-
-}
+  }
