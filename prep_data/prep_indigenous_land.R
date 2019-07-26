@@ -15,7 +15,7 @@ library(stringi)
 
 
 
-#> DATASET: Indiginous Lands
+#> DATASET: indigenous Lands
 #> Source: FUNAI - http://www.funai.gov.br/index.php/shape
 #> Metadata:
   # Titulo: Terras Indígenas  / Terras Indígenas em Estudos
@@ -47,14 +47,14 @@ root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
 
 # Directory to keep raw zipped files
-  dir.create("./indiginous_land")
-  destdir_raw <- paste0("./indiginous_land/",update)
+  dir.create("./indigenous_land")
+  destdir_raw <- paste0("./indigenous_land/",update)
   dir.create(destdir_raw)
 
 
 # Create folders to save clean sf.rds files  -----------------
-  dir.create("./indiginous_land/shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
-  destdir_clean <- paste0("./indiginous_land/shapes_in_sf_all_years_cleaned/",update)
+  dir.create("./indigenous_land/shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
+  destdir_clean <- paste0("./indigenous_land/shapes_in_sf_all_years_cleaned/",update)
   dir.create(destdir_clean)
 
 
@@ -67,7 +67,7 @@ setwd(root_dir)
   ftp <- "http://mapas2.funai.gov.br/portal_mapas/shapes/ti_sirgas.zip"
 
   download.file(url = ftp,
-                destfile = paste0(destdir_raw,"/","indiginous_land.zip"))
+                destfile = paste0(destdir_raw,"/","indigenous_land.zip"))
 
 
 
@@ -90,7 +90,7 @@ setwd(root_dir)
 #### 3. Clean data set and save it in compact .rds format-----------------
 
 # Root directory
-  root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//indiginous_land"
+  root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//indigenous_land"
   setwd(root_dir)
 
 
@@ -162,7 +162,8 @@ setwd(root_dir)
   write_rds(temp_sf, path = i, compress="gz" )
 
 # Save raw file in sf format
-  write_rds(temp_sf, paste0(destdir_clean,"/indiginous_land_", update,".rds"), compress = "gz")
+  write_rds(temp_sf, paste0(destdir_clean,"/indigenous_land_", update,".rds"), compress = "gz")
 
 
 
+  indigenous
