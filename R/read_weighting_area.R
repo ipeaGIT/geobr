@@ -21,7 +21,7 @@
 #'   plot(w)
 #'
 #' # Read all weighting areas of the country at a given year
-#'   w <- read_weighting_area(code_muni="all", year=2010)
+#'   w <- read_weighting_area(code_weighting="all", year=2010)
 #'
 #' }
 #'
