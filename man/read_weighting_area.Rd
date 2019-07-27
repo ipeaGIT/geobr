@@ -7,9 +7,11 @@
 read_weighting_area(code_weighting, year = NULL)
 }
 \arguments{
-\item{code_weighting}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State. The function will load the shape files of all weighting areas in the specified geography}
+\item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
+a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
+all weighting areas of the country are loaded.}
 
-\item{year}{the year of the data download (defaults to 2010)}
+\item{year}{Year of the data (defaults to 2010)}
 }
 \description{
 Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.
@@ -32,7 +34,7 @@ library(geobr)
   plot(w)
 
 # Read all weighting areas of the country at a given year
-  w <- read_weighting_area(code_muni="all", year=2010)
+  w <- read_weighting_area(code_weighting="all", year=2010)
 
 }
 
