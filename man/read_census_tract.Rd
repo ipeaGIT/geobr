@@ -2,34 +2,42 @@
 % Please edit documentation in R/read_census_tract.R
 \name{read_census_tract}
 \alias{read_census_tract}
-\title{Download shape files of census sectors of the Brazilian Population Census}
+\title{Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).}
 \usage{
-read_census_tract(CODE, year = NULL, zone = "urban")
+read_census_tract(code_tract, year = NULL, zone = "urban")
 }
 \arguments{
-\item{CODE}{One can either pass the 7-digit code of a Municipality or the 2-digit code of a State.If CODE="all", all census sectors of the country are loaded.}
+\item{code_tract}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
+a state is passed, (e.g. 33 or "RJ") the function will load all census tracts of that state. If code_tract="all",
+all census tracts of the country are loaded.}
 
-\item{year}{the year of the data download (defaults to 2010)}
+\item{year}{Year of the data (defaults to 2010)}
 
-\item{zone}{"urban" or "rural" for separation in the year 2000}
+\item{zone}{"urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")}
 }
 \description{
-Download shape files of census sectors of the Brazilian Population Census
+Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
 }
 \examples{
 \dontrun{
-# Exemplos
-dados <- read_census_tract(year=2010)
-dados <- read_census_tract(123,2010)
-dados <- read_census_tract("df",2010)
-dados <- read_census_tract(1302603,2010)
-dados <- read_census_tract(35)
-dados <- read_census_tract(14,2010)
-dados <- read_census_tract()
 
-# mapa
-library(mapview)
-mapview(dados)
+library(geobr)
+
+# Read rural census tracts for years before 2007
+  c <- read_census_tract(code_tract=5201108, year=2000,zone="rural")
+
+# Read all census tracts of a state at a given year
+  c <- read_census_tract(code_tract=53, year=2010); # or
+  c <- read_census_tract(code_tract="DF", year=2010)
+  plot(c)
+
+# Read all census tracts of a municipality at a given year
+  c <- read_census_tract(code_tract=5201108, year=2010)
+  plot(c)
+
+# Read all census tracts of the country at a given year
+  c <- read_census_tract(code_tract="all", year=2010)
+
 }
 
 
