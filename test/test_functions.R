@@ -379,7 +379,7 @@ devtools::load_all('C:/Users/r1701707/Desktop/geobr')
 
 # input state
 system.time( rj <- read_census_tract(code_tract=33) )
-system.time( am <- read_census_tract(code_tract="AM") )
+system.time( am <- read_census_tract(code_tract=c("AM","AC")) )
 plot(rj["zone"])
 plot(am["zone"])
 
@@ -388,7 +388,7 @@ system.time( rj <- read_census_tract(code_tract=33, year=2000) )
 system.time( ac <- read_census_tract(code_tract="AC", year=2000) )
 
 
-system.time( c <- read_census_tract(code_tract="GO") )
+system.time( c <- read_census_tract(code_tract="AM") )
 system.time( c <- read_census_tract(code_tract="DF", zone='rural') )
 system.time( c <- read_census_tract(code_tract="DF", zone='urban') )
 
@@ -553,5 +553,16 @@ system("R CMD Rd2pdf geobr")
 #
 #
 # install.packages("pdflatex", dependencies = T)
-#
-#
+
+
+
+# PLOT
+    system.time( am <- read_census_tract(code_tract="am") )
+  system.time( ac <- read_census_tract(code_tract="ac") )
+  system.time( rr <- read_census_tract(code_tract="rr") )
+
+  s <- rbind(rr, am, ac)
+
+  plot(s["name_district"], border = 'grey') # , col = sf.colors(12, categorical = TRUE)
+
+
