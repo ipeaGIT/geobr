@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_weighting_area.R
 \name{read_weighting_area}
 \alias{read_weighting_area}
-\title{Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.}
+\title{Download shape files of Census Weighting Areas (area de ponderação) of the Brazilian Population Census. Only 2010 data is currently available.}
 \usage{
 read_weighting_area(code_weighting, year = NULL)
 }
@@ -14,7 +14,7 @@ all weighting areas of the country are loaded.}
 \item{year}{Year of the data (defaults to 2010)}
 }
 \description{
-Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.
+Download shape files of Census Weighting Areas (area de ponderação) of the Brazilian Population Census. Only 2010 data is currently available.
 }
 \examples{
 \dontrun{
