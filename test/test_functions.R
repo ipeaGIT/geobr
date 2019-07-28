@@ -552,7 +552,7 @@ devtools::document()
 
 
 # Check package errors
-# devtools::check("geobr")
+ devtools::check("geobr")
 
 
 # build binary
