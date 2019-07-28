@@ -12,7 +12,7 @@
 #' library(geobr)
 #'
 #' # Read rural census tracts for years before 2007
-#'   c <- read_census_tract(code_tract=5201108, year=2000,zone="rural")
+#'   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 #'
 #' # Read all census tracts of a state at a given year
 #'   c <- read_census_tract(code_tract=53, year=2010); # or
@@ -61,7 +61,7 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
                                       temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "U", ]}
 
   if (year<=2007 & zone == "rural") {cat("Using data of Rural census tracts\n")
-                                          temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "R", ], ]}
+                                          temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "R", ]}
 
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                        paste(unique(temp_meta$year),collapse = " ")))
