@@ -519,29 +519,54 @@ h <- read_health_facilities(code="AM")
 rm(list = ls())
 
 library(roxygen2)
-library("devtools")
+library(devtools)
+library(usethis)
 
 
 setwd("R:/Dropbox/git_projects/geobr")
 #  setwd("C:/Users/r1701707/Desktop/geobr")
 
+# update `NEWS.md` file
+# update `DESCRIPTION` file
+# update ``cran-comments.md` file
+
+
+# checks spelling
+library(spelling)
+devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
+
 # Update documentation
 devtools::document()
 
+
+# Write package manual.pdf
+  setwd("..")
+  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+  # system("R CMD Rd2pdf geobr")
+
+
 # Install package
-setwd("..")
-devtools::install("geobr")
+  devtools::install("geobr")
+
+
 
 
 # Check package errors
 # devtools::check("geobr")
 
-# Write package manual.pdf
-system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
-system("R CMD Rd2pdf geobr")
 
 # build binary
-  devtools::build(pkg = "geobr", binary = T)
+  devtools::build(pkg = ".", binary = T)
+
+# check
+  # system("R CMD check R:/Dropbox/git_projects/geobr")
+  devtools::check_win_devel()
+
+
+# Submit to CRAN
+  devtools::check_rhub()
+
+  devtools::release()
 
 
 
