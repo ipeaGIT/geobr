@@ -1,8 +1,8 @@
 #' Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
-#' 
+#'
 #' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
 #' @param code_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
-#' the function will load all grid gradrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.
+#' the function will load all grid quadrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
@@ -22,17 +22,17 @@ read_statistical_grid <- function(code_grid, year=NULL){
 # Verify year input
   if (is.null(year)){ cat("Using data from year 2010 /n")
     # temp_meta <- subset(temp_meta, year==2010)
-    
-  } else if (year != 2010){ 
-    
+
+  } else if (year != 2010){
+
     stop(paste0("Error: Invalid Value to argument 'year'. The only year available is 2010."))
   }
-  
-  
+
+
 # load correspondence table
   data("grid_state_correspondence_table", envir=environment())
-  
-  
+
+
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
 
@@ -41,14 +41,14 @@ read_statistical_grid <- function(code_grid, year=NULL){
      metadata <- readr::read_rds(tempf)
 
   } else {
-    
+
   # download it and save to metadata
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
     metadata <- readr::read_rds(tempf)
   }
 
 
-  
+
 # Select geo
   temp_meta <- subset(metadata, geo=="statistical_grid")
 
@@ -68,7 +68,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
       # download files
       lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-      
+
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
@@ -77,35 +77,35 @@ read_statistical_grid <- function(code_grid, year=NULL){
       return(shape)
     }
 
-  
+
 # if code_grid is a state abbreviation
 
   # Error if the input does not match any state abbreviation
-  if(is.character(code_grid) & !(code_grid %in% grid_state_correspondence_table$code_state)) { 
+  if(is.character(code_grid) & !(code_grid %in% grid_state_correspondence_table$code_state)) {
     stop(paste0("Error: Invalid Value to argument 'code_grid'. It must be one of the following: ",
                 paste(unique(grid_state_correspondence_table$code_state),collapse = " ")))
-    
+
     # MAKE this work
     # >>> https://stackoverflow.com/questions/54993463/include-image-in-r-packages
     # grid_quads <- raster::stack("./man/figures/ipea_logo.jpg")
     # plotRGB(grid_quads)
-    
+
     }
-    
+
   # Valid state abbreviation
     else if(is.character(code_grid) & code_grid %in% grid_state_correspondence_table$code_state) {
-      
+
       # find grid quadrants that intersect with the passed state abbreviation
       grid_state_correspondence_table_tmp <- grid_state_correspondence_table[grid_state_correspondence_table[,2] == code_grid, ]
       grid_ids <- substr(grid_state_correspondence_table_tmp$code_grid, 4, 5)
-      
+
       # list paths of files to download
       filesD <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
-      
+
       # download files
       lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-      
+
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
@@ -114,7 +114,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
       return(shape)
       }
 
-  
+
 # if code_grid is numeric grid quadrant
     if( !( code_grid %in% temp_meta$code)){ stop("Error: Invalid Value to argument code_grid.")
 
@@ -126,11 +126,11 @@ read_statistical_grid <- function(code_grid, year=NULL){
     # download files
     temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
     httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
-    
+
     # read sf
     shape <- readr::read_rds(temps)
     return(shape)
   }
 }
 
-    
+
