@@ -1,4 +1,4 @@
-#' Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census. Only 2010 data is currently available.
+#' Download shape files of Census Weighting Areas (area de ponderação) of the Brazilian Population Census. Only 2010 data is currently available.
 #'
 #' @param code_weighting The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
