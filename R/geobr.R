@@ -23,4 +23,5 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
                                                         'code_abrev',
                                                         'abbrev_state',
                                                         'code_region',
+                                                        'name_region',
                                                         'group_by'))
