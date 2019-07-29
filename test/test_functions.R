@@ -556,15 +556,15 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
 # build binary
-  devtools::build(pkg = "geobr", binary = T)
+#  devtools::build(pkg = "geobr", binary = T)
 
-# check
-  # system("R CMD check R:/Dropbox/git_projects/geobr")
-  devtools::check_win_devel()
+  # check
+    # system("R CMD check R:/Dropbox/git_projects/geobr")
+    devtools::check_win_devel("geobr", binary = T)
 
 
 # Submit to CRAN
-  devtools::check_rhub()
+  devtools::check_rhub(pkg="geobr", email = "rafael.pereira@ipea.gov.br")
 
   devtools::release()
 
