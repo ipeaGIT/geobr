@@ -121,21 +121,17 @@ One can also download the meso regions of a particular state, such as the Amazon
     no_axis
   
 ```
-Similarly, one can easily download all municipalities of particular regions:
+Similarly, one can easily download all municipalities of particular states:
 
 
 ```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
-# Download all municipalities
-  all_muni <- read_municipality( code_muni = "all", year= 2010)
-  
-# Keep municipalities in the North and Central-West regions
-  myregion <- subset(all_muni, name_region == "Norte")
-    
+# Download all municipalities of Sao Paulo
+  all_muni <- read_municipality( code_muni = "SP", year= 2018)
 
-# micro region plot
+# plot
   ggplot() + 
-    geom_sf(data=myregion, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) +
-    labs(subtitle="Municipalities of the North region", size=8) + 
+    geom_sf(data=all_muni, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) +
+    labs(subtitle="Municipalities of Sao Paulo", size=8) + 
     theme_minimal() +
     no_axis
     
