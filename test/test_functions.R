@@ -528,6 +528,7 @@ library(usethis)
 
 setwd("R:/Dropbox/git_projects/geobr")
 #  setwd("C:/Users/r1701707/Desktop/geobr")
+setwd("..")
 
 # update `NEWS.md` file
 # update `DESCRIPTION` file
@@ -536,21 +537,20 @@ setwd("R:/Dropbox/git_projects/geobr")
 
 # checks spelling
 library(spelling)
-devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
+devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 
 # Update documentation
-  devtools::document()
+  devtools::document(pkg = "geobr")
 
 
 # Write package manual.pdf
-  setwd("..")
   system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
   # system("R CMD Rd2pdf geobr")
 
 
 # Install package
-#  devtools::install("geobr")
-
+  devtools::install("geobr", build_vignettes = T)
+  # system("R CMD INSTALL --build geobr")
 
 # build binary
 # Check package errors
@@ -558,20 +558,30 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
   devtools::build(pkg = "geobr", binary = T)
   devtools::check("geobr")
 
-  system("R CMD build geobr")
+66666666666666666666666  system("R CMD build geobr --resave-data") # build tar.gz
+
+
   system("R CMD check geobr")
 
 
   # check
     # system("R CMD check R:/Dropbox/git_projects/geobr")
     devtools::check_win_devel("geobr", binary = T)
+    devtools::check_win("geobr", binary = T)
+
+    rhub::list_validated_emails()
+    rhub::validate_email()
+    rhub::validate_email(email = "rafa.pereira.br@gmail.com", token = 'xxx')
+
     devtools::check_rhub(pkg="geobr", email = "rafa.pereira.br@gmail.com", interactive = TRUE)
 
     devtools::build_win("geobr")
 
 # Submit to CRAN
-  devtools::release(pkg="geobr")
+    # setwd("R:/Dropbox/git_projects/geobr")
+    devtools::release(pkg=".")
 
+  system("R CMD check --as-cran geobr")
 
 
 # pack <- "geobr"
