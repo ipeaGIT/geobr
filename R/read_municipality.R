@@ -23,10 +23,7 @@
 #'
 #'}
 
-
-a <- read_municipality2(code_muni="AC", year=2018)
-
-read_municipality2 <- function(code_muni, year=NULL){
+read_municipality <- function(code_muni, year=NULL){
 
 # 1.1 Verify year input
   if (is.null(year)){ year <- 2010}
