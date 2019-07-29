@@ -1,6 +1,6 @@
-#' correspondance table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state
+#' correspondence table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state
 #'
-#' @title A correspondance table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state
+#' @title A correspondence table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state
 #' @description Built-in dataset
 #'
 #'

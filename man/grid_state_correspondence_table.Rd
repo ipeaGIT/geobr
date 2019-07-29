@@ -3,7 +3,7 @@
 \docType{data}
 \name{grid_state_correspondence_table}
 \alias{grid_state_correspondence_table}
-\title{A correspondance table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state}
+\title{A correspondence table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state}
 \format{A data frame sf with 139 rows and 3 columns}
 \usage{
 data(grid_state_correspondence_table)
@@ -19,7 +19,7 @@ Built-in dataset
 }
 }
 \details{
-correspondance table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state
+correspondence table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state
 }
 \note{
 Last updated 2019-06-17
