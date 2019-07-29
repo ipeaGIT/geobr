@@ -2,11 +2,7 @@ Type: Package
 Package: geobr
 Title: Loads Shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and Other Official Spatial Data Sets of Brazil
 Version: 1.0
-Authors@R: c(
-            person(given="Rafael H M",
-                   family="Pereira",
-                   email="rafa.pereira.br@gmail.com",
-                   role=c("aut", "cre")),
+Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.br@gmail.com", role=c("aut", "cre"), comment = c(ORCID = "0000-0003-2125-7465")),
             person(given="Caio", family="Nogueira Goncalves", role=c("aut")),
             person(given="Guilherme", family="Duarte Carvalho", role=c("aut")),
             person(given="Paulo Henrique", family="Fernandes de Araujo", role=c("aut")),
@@ -25,12 +21,12 @@ LazyData: TRUE
 Depends:
     R (>= 3.4.0)
 Suggests:
-    dplyr,
     ggplot2,
     mapview,
     knitr,
     rmarkdown
 Imports:
+      dplyr,
       httr,
       readr,
       sf,
