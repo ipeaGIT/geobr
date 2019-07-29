@@ -558,16 +558,14 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
   devtools::build(pkg = "geobr", binary = T)
   devtools::check("geobr")
 
-66666666666666666666666  system("R CMD build geobr --resave-data") # build tar.gz
-
-
-  system("R CMD check geobr")
+system("R CMD build geobr --resave-data") # build tar.gz
+system("R CMD check geobr_1.0.tar.gz")
 
 
   # check
     # system("R CMD check R:/Dropbox/git_projects/geobr")
     devtools::check_win_devel("geobr", binary = T)
-    devtools::check_win("geobr", binary = T)
+    devtools::check_win(pkg = "geobr")
 
     rhub::list_validated_emails()
     rhub::validate_email()
