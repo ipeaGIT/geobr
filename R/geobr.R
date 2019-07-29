@@ -8,9 +8,19 @@
 #'
 #' @docType package
 #' @name geobr
-#' @importFrom dplyr %>%
-#' @importFrom("utils", "data", "tail")
+#' @importFrom utils "tail"
 NULL
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
+                                                        'grid_state_correspondence_table',
+                                                        'data',
+                                                        "geo",
+                                                        'code',
+                                                        'code_weighting_area',
+                                                        'code_muni',
+                                                        'code_state',
+                                                        'code_abrev',
+                                                        'abbrev_state',
+                                                        'code_region',
+                                                        'group_by'))

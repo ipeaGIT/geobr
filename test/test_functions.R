@@ -549,23 +549,22 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 
 
 # Install package
-  devtools::install("geobr", build_vignettes = T)
+  # devtools::install("geobr", build_vignettes = T)
   # system("R CMD INSTALL --build geobr")
 
 # build binary
+  #devtools::build(pkg = "geobr", binary = T)
+  system("R CMD build geobr --resave-data") # build tar.gz
+
 # Check package errors
+  # devtools::check("geobr")
+  system("R CMD check geobr_1.0.tar.gz")
 
-  devtools::build(pkg = "geobr", binary = T)
-  devtools::check("geobr")
-
-system("R CMD build geobr --resave-data") # build tar.gz
-system("R CMD check geobr_1.0.tar.gz")
 
 
   # check
     # system("R CMD check R:/Dropbox/git_projects/geobr")
     devtools::check_win_devel("geobr", binary = T)
-    devtools::check_win(pkg = "geobr")
 
     rhub::list_validated_emails()
     rhub::validate_email()
