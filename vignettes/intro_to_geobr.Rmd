@@ -22,13 +22,8 @@ The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and eas
 The package will soon be available on CRAN. In the meantime, you can install it using the `devtools` package.
 
 ```{r }
-library(devtools)
-library(digest)
-
-# devtools::install_github("ipeaGIT/geobr")
+# Load geobr and other libraries we'll use
   library(geobr)
-
-# Other libraries we'll use
   library(ggplot2)
   library(sf)
   library(dplyr)
