@@ -24,7 +24,7 @@ Download shape files of census tracts of the Brazilian Population Census (Only y
 library(geobr)
 
 # Read rural census tracts for years before 2007
-  c <- read_census_tract(code_tract=5201108, year=2000,zone="rural")
+  c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 
 # Read all census tracts of a state at a given year
   c <- read_census_tract(code_tract=53, year=2010); # or
