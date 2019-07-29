@@ -536,7 +536,7 @@ library(spelling)
 devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 # Update documentation
-devtools::document()
+  devtools::document()
 
 
 # Write package manual.pdf
@@ -556,7 +556,7 @@ devtools::document()
 
 
 # build binary
-  devtools::build(pkg = ".", binary = T)
+  devtools::build(pkg = "geobr", binary = T)
 
 # check
   # system("R CMD check R:/Dropbox/git_projects/geobr")
