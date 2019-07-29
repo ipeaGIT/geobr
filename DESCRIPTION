@@ -24,6 +24,7 @@ Suggests:
     ggplot2,
     mapview,
     knitr,
+    rio,
     rmarkdown
 Imports:
       dplyr,
