@@ -516,6 +516,9 @@ h <- read_health_facilities(code="AM")
 
 
 ### update package documentation ----------------
+# http://r-pkgs.had.co.nz/release.html#release-check
+
+
 rm(list = ls())
 
 library(roxygen2)
@@ -546,27 +549,28 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
 # Install package
-  devtools::install("geobr")
-
-
-
-
-# Check package errors
- devtools::check("geobr")
+#  devtools::install("geobr")
 
 
 # build binary
-#  devtools::build(pkg = "geobr", binary = T)
+# Check package errors
+
+  devtools::build(pkg = "geobr", binary = T)
+  devtools::check("geobr")
+
+  system("R CMD build geobr")
+  system("R CMD check geobr")
+
 
   # check
     # system("R CMD check R:/Dropbox/git_projects/geobr")
     devtools::check_win_devel("geobr", binary = T)
+    devtools::check_rhub(pkg="geobr", email = "rafa.pereira.br@gmail.com", interactive = TRUE)
 
+    devtools::build_win("geobr")
 
 # Submit to CRAN
-  devtools::check_rhub(pkg="geobr", email = "rafael.pereira@ipea.gov.br")
-
-  devtools::release()
+  devtools::release(pkg="geobr")
 
 
 
