@@ -23,71 +23,16 @@
 #'
 #'}
 
-read_municipality <- function(code_muni, year=NULL){
 
+a <- read_municipality2(code_muni="AC", year=2018)
 
-# BLOCK 1. Using 2010 data ----------------------------
+read_municipality2 <- function(code_muni, year=NULL){
 
-
-
-  # 1.1 Verify year input
+# 1.1 Verify year input
   if (is.null(year)){ year <- 2010}
 
-  if (  year==2010 ){
-    cat("Using data from year 2010")
-
-    # load package data
-      data("brazil_2010", envir=environment())
 
 
-
-
-    # 1.2 Verify code_muni Input
-
-      # Test if code_muni input is null
-        if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
-
-      # if code_muni=="all", return the entire country
-        if(code_muni=="all"){
-                              sf <- brazil_2010
-                              return( sf )
-                              }
-
-
-      # Check if code_muni matches an existing state
-        if( !(substr(x = code_muni, 1, 2) %in% unique(brazil_2010$code_state)) & !(substr(x = code_muni, 1, 2) %in% unique(brazil_2010$abbrev_state))){
-
-          stop("Error: Invalid Value to argument code_muni.")
-
-        } else{
-
-
-          # if code_muni is a two-digit code of a state, return the whole state
-
-          if(nchar(code_muni)==2){
-
-            x <- code_muni
-
-            if (is.numeric(x)){ sf <- subset(brazil_2010, code_state==x) }
-            if (is.character(x)){ sf <- subset(brazil_2010, abbrev_state==x) }
-
-            return(sf)
-
-          # if code_muni is a 7-digit code of a muni, return that specific muni
-
-          } else if(code_muni %in% brazil_2010$code_muni){    # Get Municipio
-            x <- code_muni
-            sf <- subset(brazil_2010, code_muni==x)
-            return(sf)
-
-          } else{
-            stop("Error: Invalid Value to argument code_muni.") }
-
-        }
-      } else{
-
-
-# BLOCK 2 other years ----------------------------
 
 # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -117,8 +62,7 @@ read_municipality <- function(code_muni, year=NULL){
 # Select metadata year
   x <- year
   temp_meta <- subset(temp_meta, year==x)
-
-
+  cat(paste0("Using data from year ", x))
 
 
 # BLOCK 2.1 From 1872 to 1991  ----------------------------
@@ -197,4 +141,4 @@ read_municipality <- function(code_muni, year=NULL){
           stop("Error: Invalid Value to argument code_muni.")
       }
   }
-}}}
+}}
