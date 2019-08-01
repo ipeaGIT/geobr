@@ -527,7 +527,6 @@ library(usethis)
 
 
 setwd("R:/Dropbox/git_projects/geobr")
-#  setwd("C:/Users/r1701707/Desktop/geobr")
 setwd("..")
 
 # update `NEWS.md` file
@@ -559,7 +558,7 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 # Check package errors
   # devtools::check("geobr")
   system("R CMD check geobr_1.0.tar.gz")
-
+  system("R CMD check --as-cran geobr_1.0.tar.gz")
 
 
   # check
@@ -569,16 +568,14 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
     rhub::list_validated_emails()
     rhub::validate_email()
     rhub::validate_email(email = "rafa.pereira.br@gmail.com", token = 'xxx')
-
+    
     devtools::check_rhub(pkg="geobr", email = "rafa.pereira.br@gmail.com", interactive = TRUE)
 
-    devtools::build_win("geobr")
 
 # Submit to CRAN
     # setwd("R:/Dropbox/git_projects/geobr")
     devtools::release(pkg=".")
 
-  system("R CMD check --as-cran geobr")
 
 
 # pack <- "geobr"
