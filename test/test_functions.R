@@ -547,6 +547,24 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
   # system("R CMD Rd2pdf geobr")
 
 
+
+
+# Ignore these files/folders when building the package (but keep them on github)
+  setwd("R:/Dropbox/git_projects/geobr")
+
+
+  usethis::use_build_ignore("test")
+  usethis::use_build_ignore("prep_data")
+  usethis::use_build_ignore("manual.pdf")
+
+  # script da base de dados e a propria base armazenada localmente, mas que eh muito grande para o CRAN
+    usethis::use_build_ignore("brazil_2010.R")
+    usethis::use_build_ignore("brazil_2010.RData")
+
+  # Vignette que ainda nao esta pronta
+    usethis::use_build_ignore("  Georeferencing-gain")
+
+
 # Install package
   # devtools::install("geobr", build_vignettes = T)
   # system("R CMD INSTALL --build geobr")
@@ -568,7 +586,7 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
     rhub::list_validated_emails()
     rhub::validate_email()
     rhub::validate_email(email = "rafa.pereira.br@gmail.com", token = 'xxx')
-    
+
     devtools::check_rhub(pkg="geobr", email = "rafa.pereira.br@gmail.com", interactive = TRUE)
 
 
