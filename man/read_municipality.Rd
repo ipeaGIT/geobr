@@ -16,7 +16,7 @@ a state is passed, (e.g. 33 or "RJ") the function will load all municipalities o
 Download shape files of Brazilian municipalities as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\donttest{
 
 library(geobr)
 

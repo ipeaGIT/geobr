@@ -6,3 +6,7 @@
 ^brazil_2010\.R$
 ^brazil_2010\.RData$
 ^  Georeferencing-gain$
+^crosswalk_pre\.R$
+^brazil_2010\.Rd$
+^  Georeferencing-gain\.R$
+^  Georeferencing-gain\.Rmd$
