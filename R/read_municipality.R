@@ -7,7 +7,7 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' library(geobr)
 #'
@@ -59,7 +59,7 @@ read_municipality <- function(code_muni, year=NULL){
 # Select metadata year
   x <- year
   temp_meta <- subset(temp_meta, year==x)
-  cat(paste0("Using data from year ", x))
+  message(paste0("Using data from year ", x))
 
 
 # BLOCK 2.1 From 1872 to 1991  ----------------------------
@@ -88,7 +88,7 @@ read_municipality <- function(code_muni, year=NULL){
     if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
 
   # if code_muni=="all", read the entire country
-    if(code_muni=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
+    if(code_muni=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
