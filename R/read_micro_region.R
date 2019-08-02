@@ -6,7 +6,7 @@
 #'  all micro regions of the country are loaded.
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' library(geobr)
 #'
@@ -45,7 +45,7 @@ read_micro_region <- function(code_micro, year=NULL){
 
 
   # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010\n")
+  if (is.null(year)){ message("Using data from year 2010\n")
     temp_meta <- subset(temp_meta, year==2010)
 
   } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
@@ -61,7 +61,7 @@ read_micro_region <- function(code_micro, year=NULL){
   if(is.null(code_micro)){ stop("Value to argument 'code_micro' cannot be NULL") }
 
   # if code_micro=="all", read the entire country
-  if(code_micro=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
+  if(code_micro=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)

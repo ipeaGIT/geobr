@@ -4,7 +4,7 @@
 #' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' library(geobr)
 #'
@@ -39,7 +39,7 @@ read_state <- function(code_state, year=NULL){
   temp_meta <- subset(metadata, geo=="uf")
 
   # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010\n")
+  if (is.null(year)){ message("Using data from year 2010\n")
     year <- 2010
     temp_meta <- subset(temp_meta, year==2010)
 
@@ -79,7 +79,7 @@ if( x < 1992){
   if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
 
   # if code_state=="all", read the entire country
-    if(code_state=="all"){ cat("Loading data for the whole country\n")
+    if(code_state=="all"){ message("Loading data for the whole country\n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)

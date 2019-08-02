@@ -7,7 +7,7 @@
 #' @param zone "urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' library(geobr)
 #'
@@ -51,16 +51,16 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
 
 
   # Verify year input
-  if (is.null(year)){ cat("Using data from year 2010\n")
+  if (is.null(year)){ message("Using data from year 2010\n")
     temp_meta <- subset(temp_meta, year==2010)
     year<-2010
 
   } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
 
-  if (year<=2007 & zone == "urban") {cat("Using data of Urban census tracts\n")
+  if (year<=2007 & zone == "urban") {message("Using data of Urban census tracts\n")
                                       temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "U", ]}
 
-  if (year<=2007 & zone == "rural") {cat("Using data of Rural census tracts\n")
+  if (year<=2007 & zone == "rural") {message("Using data of Rural census tracts\n")
                                           temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "R", ]}
 
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
@@ -75,7 +75,7 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
 
 
     # if code_tract=="all", read the entire country
-    if(code_tract=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
+    if(code_tract=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
