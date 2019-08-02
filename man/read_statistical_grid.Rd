@@ -16,7 +16,7 @@ the function will load all grid quadrants that intersect with that state. If cod
 Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\donttest{
 
 library(geobr)
 

@@ -17,7 +17,7 @@ all weighting areas of the country are loaded.}
 Download shape files of Census Weighting Areas (area de ponderação) of the Brazilian Population Census. Only 2010 data is currently available.
 }
 \examples{
-\dontrun{
+\donttest{
 
 library(geobr)
 

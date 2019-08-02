@@ -17,7 +17,7 @@ all micro regions of the country are loaded.}
 Download shape files of micro region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\donttest{
 
 library(geobr)
 
