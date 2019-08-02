@@ -3,7 +3,7 @@
 #' @param year Year of the data (defaults to 2010)
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' library(geobr)
 #'

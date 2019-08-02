@@ -6,7 +6,7 @@
 #' @param year Year of the data (defaults to 2010)
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' library(geobr)
 #'
@@ -50,7 +50,7 @@ read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=14
     temp_meta <- subset(metadata, geo=="area_ponderacao")
 
     # Verify year input
-    if (is.null(year)){ cat("Using data from year 2010\n")
+    if (is.null(year)){ message("Using data from year 2010\n")
       temp_meta <- subset(temp_meta, year==2010)
 
     } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[as.vector(temp_meta[,2] == year), ]
@@ -65,7 +65,7 @@ read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=14
   if(is.null(code_weighting)){ stop("Value to argument 'code_weighting' cannot be NULL") }
 
   # if code_weighting=="all", read the entire country
-    if(code_weighting=="all"){ cat("Loading data for the whole country. This might take a few minutes.\n")
+    if(code_weighting=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
         # list paths of files to download
         filesD <- as.character(temp_meta$download_path)
