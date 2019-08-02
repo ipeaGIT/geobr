@@ -543,7 +543,7 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 
 
 # Write package manual.pdf
-  system("R CMD Rd2pdf --title=Package geobr --output=./manual.pdf")
+  system("R CMD Rd2pdf --title=Package geobr --output=./geobr/manual.pdf")
   # system("R CMD Rd2pdf geobr")
 
 
@@ -560,9 +560,20 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
   # script da base de dados e a propria base armazenada localmente, mas que eh muito grande para o CRAN
     usethis::use_build_ignore("brazil_2010.R")
     usethis::use_build_ignore("brazil_2010.RData")
+    usethis::use_build_ignore("brazil_2010.Rd")
 
   # Vignette que ainda nao esta pronta
-    usethis::use_build_ignore("  Georeferencing-gain")
+    usethis::use_build_ignore("  Georeferencing-gain.R")
+    usethis::use_build_ignore("  Georeferencing-gain.Rmd")
+
+  # temp files
+    usethis::use_build_ignore("crosswalk_pre.R")
+
+
+
+
+setwd("R:/Dropbox/git_projects/geobr")
+setwd("..")
 
 
 # Install package

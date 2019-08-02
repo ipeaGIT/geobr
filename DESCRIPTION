@@ -16,10 +16,6 @@ Description: Easy access to shapefiles of the Brazilian Institute of Geography a
 	     <https://www.ibge.gov.br/> and other official spatial data sets of Brazil as 'sf' objects
              in R. The package includes a wide range of geographic datasets available at various 
              geographic scales and for various years.
-
-
-
-
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
