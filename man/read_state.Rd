@@ -15,7 +15,7 @@ read_state(code_state, year = NULL)
 Download shape files of Brazilian states as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\donttest{
 
 library(geobr)
 
