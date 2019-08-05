@@ -2,6 +2,7 @@ library(sf)
 library(readr)
 library(geobr)
 library(R.utils)
+library(microbenchmark)
 
 
 ####### Generate inputs ---------------------
@@ -66,7 +67,7 @@ plot(br)
 
 ####### BENCHMARK Download and Reading files ---------------------
 
-mbm <- microbenchmark::microbenchmark(times = 20,
+mbm <- microbenchmark::microbenchmark(times = 30,
 
               ### RDS  -------------------------------------
               'rds' = { # files
@@ -166,7 +167,7 @@ ggplot2::autoplot(mbm)
 
 ####### BENCHMARK Reading files only ---------------------
 
-mbmr <- microbenchmark::microbenchmark(times =20,
+mbmr <- microbenchmark::microbenchmark(times =30,
                 ### RDS  -------------------------------------
                 'rds' = {
                           # files
