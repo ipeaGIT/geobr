@@ -224,5 +224,5 @@ mbmr <- microbenchmark::microbenchmark(times =20,
 )
 
 # plot result
-ggplot2::autoplot(mbmr)
+  ggplot2::autoplot(mbmr)
 
