@@ -3,7 +3,7 @@
 ![CRAN/METACRAN Version](https://img.shields.io/cran/v/geobr?color=brightgreen)
 <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=brightgreen">
 
-**geobr** is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide range of geographic datasets as *simple features*, available at various geographic scales and for various years (see detailed list below):
+[**geobr**](https://cran.r-project.org/web/packages/geobr/index.html) is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide range of geographic datasets as *simple features*, available at various geographic scales and for various years (see detailed list below):
 
 
 ## Installation
