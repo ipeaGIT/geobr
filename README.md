@@ -1,7 +1,7 @@
 # geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
-![CRAN/METACRAN Version](https://img.shields.io/cran/v/geobr?color=brightgreen)
-<img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=brightgreen">
+![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)
+<img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=blue">
 
 [**geobr**](https://cran.r-project.org/web/packages/geobr/index.html) is an R package that allows users to easily access shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The package includes a wide range of geographic datasets as *simple features*, available at various geographic scales and for various years (see detailed list below):
 
@@ -87,4 +87,6 @@ As of today, there are two other R packges with similar functionalities. These a
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
+
+![CRAN/METACRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr)
 
