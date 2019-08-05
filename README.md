@@ -1,7 +1,6 @@
 # geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
-![CRAN Version](http://www.r-pkg.org/badges/version/geobr)
-![GitHub release](https://img.shields.io/github/release/ipeaGIT/geobr.svg)
+![CRAN/METACRAN Version](https://img.shields.io/cran/v/geobr?color=brightgreen)
 <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=brightgreen">
 
 
@@ -89,3 +88,7 @@ As of today, there are two other R packges with similar functionalities. These a
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
+
+
+![CRAN/METACRAN Version](http://cranlogs.r-pkg.org/badges/grand-total/geobr)
+
