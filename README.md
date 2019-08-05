@@ -10,9 +10,13 @@
 
 ## Installation
 ```R
-# Soon available on CRAN
-devtools::install_github("ipeaGIT/geobr")
-library(geobr)
+# From CRAN
+  install.packages("geobr")
+  library(geobr)
+
+# or use the development version with latest features
+  devtools::install_github("ipeaGIT/geobr")
+  library(geobr)
 ```
 
 ## Basic Usage
