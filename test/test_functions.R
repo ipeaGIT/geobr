@@ -7,12 +7,12 @@ library(data.table)
 library(geobr)
 
 
-### Install development version of geobr
+### Install package
+install.packages("geobr")
+library(geobr)
 
-# devtools::install_github("ipeaGIT/geobr")
-# devtools::install_github("ipeaGIT/geobr@v0.02")
-# library(geobr)
-# library(sf)
+  # or use development version of geobr
+    #devtools::install_github("ipeaGIT/geobr")
 
 
 # Rafael
@@ -581,8 +581,8 @@ setwd("..")
   # system("R CMD INSTALL --build geobr")
 
 # build binary
-  #devtools::build(pkg = "geobr", binary = T)
   system("R CMD build geobr --resave-data") # build tar.gz
+  # devtools::build(pkg = "geobr", path=".", binary = T, manual=T)
 
 # Check package errors
   # devtools::check("geobr")

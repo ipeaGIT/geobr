@@ -10,6 +10,5 @@ Easy access to shapefiles of the Brazilian Institute of Geography and Statistics
 }
 \details{
 See the README on
-\href{https://cran.r-project.org/package=geobr/README.html}{CRAN}
-or \href{https://github.com/ipeaGIT/geobr#readme}{GitHub}
+\href{https://github.com/ipeaGIT/geobr#readme}{GitHub}
 }
