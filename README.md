@@ -30,6 +30,7 @@ mun <- read_municipality(code_muni="RJ", year=2010)
 # Read all municipalities in the country at a given year
 mun <- read_municipality(code_muni="all", year=2018)
 ```
+More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c459965c75b155) and in the [intro Vignette](https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html)
 
 
 ## Available datasets:
