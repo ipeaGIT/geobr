@@ -22,7 +22,7 @@
 #' }
 #'
 
-read_meso_region <- function(code_meso, year=NULL){
+read_meso_region2 <- function(code_meso, year=NULL){
 
 
   # Get metadata with data addresses
@@ -65,11 +65,20 @@ read_meso_region <- function(code_meso, year=NULL){
     # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
 
+    # input for progress bar
+      total <- length(filesD)
+      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
 
     # download files
-    lapply(X=filesD, function(x) httr::GET(url=x, httr::progress(),
-                                           httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-
+      lapply(X=filesD, function(x){
+                                    i <- match(c(x),filesD);
+                                    httr::GET(url=x, #httr::progress(),
+                                            httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T));
+                                    utils::setTxtProgressBar(pb, i)
+                                  }
+             )
+    # closing progress bar
+      close(pb)
 
     # read files and pile them up
     files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))

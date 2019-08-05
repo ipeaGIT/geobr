@@ -93,14 +93,20 @@ read_municipality <- function(code_muni, year=NULL){
       # list paths of files to download
       filesD <- as.character(temp_meta$download_path)
 
+      # input for progress bar
+      total <- length(filesD)
+      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
 
       # download files
-      counter <- 0
-      lapply(X=filesD, function(X){ counter <<- counter + 1
-                                    print(paste("Downloading ", counter, " of 27 files"))
-                                    httr::GET(url=X, httr::progress(),
-                                              httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(X,"/"),tail,n=1L))), overwrite = T))})
-
+      lapply(X=filesD, function(x){
+        i <- match(c(x),filesD);
+        httr::GET(url=x, #httr::progress(),
+                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T));
+        utils::setTxtProgressBar(pb, i)
+      }
+      )
+      # closing progress bar
+      close(pb)
 
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
