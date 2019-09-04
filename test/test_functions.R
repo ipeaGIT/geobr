@@ -526,6 +526,9 @@ library(devtools)
 library(usethis)
 
 
+
+
+setwd("C:/Users/r1701707/Desktop/git/geobr")
 setwd("R:/Dropbox/git_projects/geobr")
 setwd("..")
 
