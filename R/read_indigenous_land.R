@@ -44,15 +44,15 @@ read_indigenous_land <- function(date){
   if(is.null(date)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
                                  paste(unique(temp_meta$year),collapse = " ")))
 
-  } else if (date %in% temp_ano$year){ temp_ano <- temp_ano[temp_ano[,2] == year, ]
+  } else if (date %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == date, ]
 
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_ano$year),collapse = " ")))
+                       paste(unique(temp_meta$year),collapse = " ")))
   }
 
 
 # list paths of files to download
-  filesD <- as.character(temp_ano$download_path)
+  filesD <- as.character(temp_meta$download_path)
 
 # download files
   temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
