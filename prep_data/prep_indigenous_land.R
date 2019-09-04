@@ -1,6 +1,6 @@
 # To Update the data, input the date YYYYMM and run the code
 
-update <- 201907
+update <- 201909
 
 library(RCurl)
 library(stringr)
@@ -158,11 +158,7 @@ setwd(root_dir)
 
 
 # Save cleaned sf in the cleaned directory
-  i <- gsub("original", "cleaned", i)
-  write_rds(temp_sf, path = i, compress="gz" )
-
-# Save raw file in sf format
-  write_rds(temp_sf, paste0(destdir_clean,"/indigenous_land_", update,".rds"), compress = "gz")
+  readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
 
 
 
