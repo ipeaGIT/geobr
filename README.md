@@ -49,13 +49,10 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_census_tract`| Census tract (setor censitário) |  2000, 2010 | IBGE |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
-|`read_indigenous_land` | Indigenous lands | 201907 | FUNAI | 
+|`read_indigenous_land` (dev.) | Indigenous lands | 201907 | FUNAI | 
 
-
-
-
-
-obs. Geodetic reference system "SIRGAS2000", CRS(4674). Most data sets are available at scale 1:250,000 (see documentation for details).
+Note 1. Functions marked with "dev." are only available in the development version of `geobr`
+Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most data sets are available at scale 1:250,000 (see documentation for details).
  
 ## Coming soon:
 
