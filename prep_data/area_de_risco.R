@@ -1,4 +1,20 @@
-require(sf)
+library(RCurl)
+#library(tidyverse)
+library(stringr)
+library(sf)
+library(janitor)
+library(dplyr)
+library(readr)
+library(parallel)
+library(data.table)
+library(xlsx)
+library(magrittr)
+library(devtools)
+library(lwgeom)
+library(stringi)
+library(geobr)
+
+
 
 # endereço do servidor onde o shape será salvo
 dir.proj <- "L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\area_de_risco\\2010"
@@ -6,13 +22,13 @@ dir.proj <- "L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\area_de_risco\\
 # definindo diretório de download dos arquivos para a pasta "Shapes"
 dir.download <- paste0("L:\\\\# DIRUR #\\ASMEQ\\pacoteR_shapefilesBR\\data\\area_de_risco\\Shapes")
 
-# se a pasta Shapes não existir ela será criada 
+# se a pasta Shapes não existir ela será criada
 dir.create(dir.download)
 setwd(dir.download)
 # getwd()
 
 # baixando o shape no formato .zip e dando-lhe o nome de "PARBR2018_BATER.zip"
-download.file("ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/populacao_em_areas_de_risco_no_brasil/SHPs/PARBR2018_BATER.zip" , 
+download.file("ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/populacao_em_areas_de_risco_no_brasil/SHPs/PARBR2018_BATER.zip" ,
               destfile="PARBR2018_BATER.zip")
 
 # descompactando o arquivo
@@ -27,7 +43,7 @@ setwd(dir.proj)
 # salvando no formato rds
 saveRDS(shp_risco, "shp_risco.rds")
 
-# lendo o arquivo 
+# lendo o arquivo
 # area_de_risco_2010 <- readRDS("area_de_risco_2010.rds")
 
 # st_write(shp_risco, "shp_risco.shp")
