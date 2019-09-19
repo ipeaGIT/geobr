@@ -12,7 +12,7 @@ install.packages("geobr")
 library(geobr)
 
   # or use development version of geobr
-    #devtools::install_github("ipeaGIT/geobr")
+    # devtools::install_github("ipeaGIT/geobr")
 
 
 # Rafael
@@ -630,4 +630,5 @@ setwd("..")
 
   plot(s["name_district"], border = 'grey') # , col = sf.colors(12, categorical = TRUE)
 
+2+2
 
