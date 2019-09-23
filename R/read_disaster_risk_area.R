@@ -1,27 +1,26 @@
 #' Download official data of disaster risk areas as an sf object.
 #'
-#' This function read the database calculated by IBGE and CEMADEN for all Brazil and return the code of the state,
+#' This function reads the database calculated by IBGE and CEMADEN for all Brazil and return the code of the state,
 #' code and name of county, polygon geocode of statistical territorial base of risk area (BATER), origin of the
 #' census sector, accuracy (coincidence of the risk area in relation to the census area), observations considered
 #' relevant in relation to delimitation of areas, number of risk areas included in the BATER polygon,states
 #' abbreviation and the geometry. It specifically focuses on hydrometeorological disasters capable of triggering floods,
-#' runoffs, and mass movements. For more information, visit:
-#'#'https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=acesso-ao-produto
+#' runoffs, and mass movements. For more information, visit: https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html
 #'
-#' @param year A date numer in YYYY format.
+#' @param year A year number in YYYY format.
 #' @export
 #' @examples \donttest{
 #'
 #' library(geobr)
 #'
-#' # Read all disaster risk area in an specific date
-#'   i <- read_disaster_risk_area(2018)
+#' # Read all disaster risk areas in an specific year
+#'   i <- read_disaster_risk_area(year=2018)
 #'
 #' }
 #'
 #'
 
-read_disaster_risk_area <- function(date){
+read_disaster_risk_area <- function(year){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -41,11 +40,11 @@ read_disaster_risk_area <- function(date){
   # Select geo
   temp_meta <- subset(metadata, geo=="disaster_risk_area")
 
-  # Verify date input
-  if(is.null(date)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
+  # Verify year input
+  if(is.null(year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                                  paste(unique(temp_meta$year),collapse = " ")))
 
-  } else if (date %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == date, ]
+  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
 
   } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                        paste(unique(temp_meta$year),collapse = " ")))
@@ -63,6 +62,3 @@ read_disaster_risk_area <- function(date){
   temp_sf <- readr::read_rds(temps)
   return(temp_sf)
 }
-
-read_disaster_risk_area(2018)
-
