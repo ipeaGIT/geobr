@@ -22,5 +22,8 @@
   * This fixes the output of vignette
 
 * New data sets/functions
-  * New Function `read_indigenous_land` to read official data of indigenous lands of all ethnicities according to stage of demarcation (2019-09-04)
-  
+  * New Function `read_indigenous_land` to read official data of indigenous lands of all ethnicities according to stage of demarcation (2019-09-04).
+  * New Function `read_disaster_risk_area` to read official data of areas exposed to risks of geodynamic and hydro-meteorological disasters capable of triggering landslides and floods (added in 2019-09-24).
+  * New Function `read_biomes` to read official data of polygons of all of all biomes present in Brazilian territory(added in 2019-09-24).
+
+
