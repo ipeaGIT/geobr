@@ -109,3 +109,4 @@ area_de_risco <- lwgeom::st_make_valid(area_de_risco)
 # Save cleaned sf in the cleaned directory
 readr::write_rds(area_de_risco, path="disaster_risk_area.rds", compress = "gz")
 
+
