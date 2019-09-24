@@ -1,7 +1,10 @@
-#' Download shape files of the Brazilian biomes (Only year 2006 is currently available).
+#' Download official data of Brazilian biomes as an sf object.
 #'
-
-#' @param year Year of the data
+#' This data set covers the whole of Brazil and it includes the polygons of all of all biomes present in Brazilian
+#' territory. The last update of the data was 2004 (only year for which the data is currently available). The original
+#' data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/ .
+#'
+#' @param year A date number in YYYY format.
 #' @export
 #' @family general area functions
 #' @examples \donttest{
