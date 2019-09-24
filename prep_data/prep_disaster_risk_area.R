@@ -27,11 +27,11 @@ unzip(paste0(zipfile=dir.download,"/PARBR2018_BATER.zip"), exdir = dir.download)
 
 
 # lendo o shapefile
-<<<<<<< HEAD
+
 shp_risco <- st_read("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.shp", options = "ENCODING=UTF-8")
-=======
+
 shp_risco <- st_read("./Shapes/PARBR2018_BATER.shp")
->>>>>>> 3ffd93107a5456fe3334f08c794676283e71533e
+
 
 # Definindo o destino dos arquivos
 setwd(dir.disaster)
@@ -111,12 +111,11 @@ area_de_risco <- lwgeom::st_make_valid(area_de_risco)
 
 
 
-<<<<<<< HEAD
 #salvar o arquivo sf limpo
 saveRDS(area_de_risco_sf,"L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\risk_2018.rds")
 #area_de_risco_sf <- st_transform(area_de_risco_sf,crs = 4674)
-=======
+
 # Save cleaned sf in the cleaned directory
 readr::write_rds(area_de_risco, path="disaster_risk_area.rds", compress = "gz")
->>>>>>> 3ffd93107a5456fe3334f08c794676283e71533e
+
 
