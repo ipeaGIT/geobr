@@ -1,3 +1,6 @@
+update <- 2010
+
+
 library(sf)
 library(dplyr)
 library(tidyverse)
@@ -5,108 +8,146 @@ library(data.table)
 library(mapview)
 
 
-#endereco onde o shape sera salvo
-dir.disaster <- "L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area"
+#> DATASET: disaster_risk_areas 2010
+#> Source: IBGE - ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/populacao_em_areas_de_risco_no_brasil
+#> Metadata:
+# Titulo: disaster_risk_areas
+# Titulo alternativo: Areas de risco de desastres naturais 2010
+# Frequencia de atualizacao: ?
+#
+# Forma de apresentação: Shape
+# Linguagem: Pt-BR
+# Character set: Utf-8
+#
+# Resumo: Poligonos de areas de risco de desastres de natura hidro-climatologicas
+# Informações adicionais: Dados produzidos conjuntamente por IBGE e CEMADEM
+#
+# Estado: Em desenvolvimento
+# Palavras chaves descritivas:****
+# Informacao do Sistema de Referencia: SIRGAS 2000
 
-dir.download <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes")
 
-# criando o diretorio de download dos arquivos para a pasta "Shapes"
-dir.create(dir.disaster)
-dir.create(dir.download)
+
+
+
+###### 0. Create Root folder to save the data -----------------
+# Root directory
+root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
+setwd(root_dir)
+
+
+
+# Directory to keep raw zipped files
+dir.create("./disaster_risk_area")
+destdir_raw <- paste0("./disaster_risk_area/",update)
+dir.create(destdir_raw)
+
+
+# Create folders to save clean sf.rds files  -----------------
+dir.create("./disaster_risk_area/shapes_in_sf_cleaned", showWarnings = FALSE)
+destdir_clean <- paste0("./disaster_risk_area/shapes_in_sf_cleaned/",update)
+dir.create(destdir_clean)
+
+
+
+#### 0. Download original data sets from source website -----------------
+
 
 # baixando o shape no formato .zip e dando-lhe o nome de "PARBR2018_BATER.zip"
 download.file("ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/populacao_em_areas_de_risco_no_brasil/base_de_dados/PARBR2018_BATER.zip" ,
-              destfile= paste0(dir.download,"/PARBR2018_BATER.zip"))
-
-# descompactando o arquivo
-setwd("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes")
+              destfile= paste0(destdir_raw,"/PARBR2018_BATER.zip"))
 
 
-unzip(paste0(zipfile=dir.download,"/PARBR2018_BATER.zip"), exdir = dir.download)
+
+#### 2. Unzipe shape files -----------------
+setwd(destdir_raw)
+
+# list and unzip zipped files
+zipfiles <- list.files(pattern = ".zip")
+unzip(zipfiles)
+
+
+
+
+#### 3. Clean data set and save it in compact .rds format-----------------
 
 
 # lendo o shapefile
-shp_risco <- st_read("./Shapes/PARBR2018_BATER.shp")
-
-# Definindo o destino dos arquivos
-setwd(dir.disaster)
-
-# salvando no formato rds
-readr::write_rds(shp_risco, "shp_risco.rds", compress = "gz")
-
-# lendo o arquivo
-area_de_risco <- readr::read_rds("shp_risco.rds")
-
-# Deletando a pasta de download
-unlink("Shapes", recursive = TRUE)
+temp_sf <- st_read("PARBR2018_BATER.shp")
 
 
 # renomeando as vari?veis e excluindo algumas
 
-names(area_de_risco)
-area_de_risco$ID <- NULL
-area_de_risco$AREA_GEO <- NULL
-area_de_risco <- rename(area_de_risco, code_state = GEO_UF)
-area_de_risco <- rename(area_de_risco, code_muni = GEO_MUN)
-area_de_risco <- rename(area_de_risco, nome_muni = MUNICIPIO)
-area_de_risco <- rename(area_de_risco, geo_bater = GEO_BATER)
-area_de_risco <- rename(area_de_risco, origem = ORIGEM)
-area_de_risco <- rename(area_de_risco, acuracia = ACURACIA)
-area_de_risco <- rename(area_de_risco, obs = OBS)
-area_de_risco <- rename(area_de_risco, num = NUM)
+names(temp_sf)
+temp_sf$ID <- NULL
+temp_sf$AREA_GEO <- NULL
+temp_sf <- rename(temp_sf, code_state = GEO_UF)
+temp_sf <- rename(temp_sf, code_muni = GEO_MUN)
+temp_sf <- rename(temp_sf, name_muni = MUNICIPIO)
+temp_sf <- rename(temp_sf, geo_bater = GEO_BATER)
+temp_sf <- rename(temp_sf, origem = ORIGEM)
+temp_sf <- rename(temp_sf, acuracia = ACURACIA)
+temp_sf <- rename(temp_sf, obs = OBS)
+temp_sf <- rename(temp_sf, num = NUM)
+
+
+# Use UTF-8 encoding
+temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
+
 
 # store original CRS
-original_crs <- st_crs(area_de_risco)
-
+original_crs <- sf::st_crs(temp_sf)
 
 # # criando a coluna das UFs
-#alterando area_de_risco para poder criar abbrev_state
-area_de_risco <- as.data.table(area_de_risco)
+#alterando temp_sf para poder criar abbrev_state
+temp_sf <- as.data.table(temp_sf)
 
 # Criando a coluna das UFs
-area_de_risco[ code_state== 11, abbrev_state :=	"RO" ]
-area_de_risco[ code_state== 12, abbrev_state :=	"AC" ]
-area_de_risco[ code_state== 13, abbrev_state :=	"AM" ]
-area_de_risco[ code_state== 14, abbrev_state :=	"RR" ]
-area_de_risco[ code_state== 15, abbrev_state :=	"PA" ]
-area_de_risco[ code_state== 16, abbrev_state :=	"AP" ]
-area_de_risco[ code_state== 17, abbrev_state :=	"TO" ]
-area_de_risco[ code_state== 21, abbrev_state :=	"MA" ]
-area_de_risco[ code_state== 22, abbrev_state :=	"PI" ]
-area_de_risco[ code_state== 23, abbrev_state :=	"CE" ]
-area_de_risco[ code_state== 24, abbrev_state :=	"RN" ]
-area_de_risco[ code_state== 25, abbrev_state :=	"PB" ]
-area_de_risco[ code_state== 26, abbrev_state :=	"PE" ]
-area_de_risco[ code_state== 27, abbrev_state :=	"AL" ]
-area_de_risco[ code_state== 28, abbrev_state :=	"SE" ]
-area_de_risco[ code_state== 29, abbrev_state :=	"BA" ]
-area_de_risco[ code_state== 31, abbrev_state :=	"MG" ]
-area_de_risco[ code_state== 32, abbrev_state :=	"ES" ]
-area_de_risco[ code_state== 33, abbrev_state :=	"RJ" ]
-area_de_risco[ code_state== 35, abbrev_state :=	"SP" ]
-area_de_risco[ code_state== 41, abbrev_state :=	"PR" ]
-area_de_risco[ code_state== 42, abbrev_state :=	"SC" ]
-area_de_risco[ code_state== 43, abbrev_state :=	"RS" ]
-area_de_risco[ code_state== 50, abbrev_state :=	"MS" ]
-area_de_risco[ code_state== 51, abbrev_state :=	"MT" ]
-area_de_risco[ code_state== 52, abbrev_state :=	"GO" ]
-area_de_risco[ code_state== 53, abbrev_state :=	"DF" ]
-head(area_de_risco)
+temp_sf[ code_state== 11, abbrev_state :=	"RO" ]
+temp_sf[ code_state== 12, abbrev_state :=	"AC" ]
+temp_sf[ code_state== 13, abbrev_state :=	"AM" ]
+temp_sf[ code_state== 14, abbrev_state :=	"RR" ]
+temp_sf[ code_state== 15, abbrev_state :=	"PA" ]
+temp_sf[ code_state== 16, abbrev_state :=	"AP" ]
+temp_sf[ code_state== 17, abbrev_state :=	"TO" ]
+temp_sf[ code_state== 21, abbrev_state :=	"MA" ]
+temp_sf[ code_state== 22, abbrev_state :=	"PI" ]
+temp_sf[ code_state== 23, abbrev_state :=	"CE" ]
+temp_sf[ code_state== 24, abbrev_state :=	"RN" ]
+temp_sf[ code_state== 25, abbrev_state :=	"PB" ]
+temp_sf[ code_state== 26, abbrev_state :=	"PE" ]
+temp_sf[ code_state== 27, abbrev_state :=	"AL" ]
+temp_sf[ code_state== 28, abbrev_state :=	"SE" ]
+temp_sf[ code_state== 29, abbrev_state :=	"BA" ]
+temp_sf[ code_state== 31, abbrev_state :=	"MG" ]
+temp_sf[ code_state== 32, abbrev_state :=	"ES" ]
+temp_sf[ code_state== 33, abbrev_state :=	"RJ" ]
+temp_sf[ code_state== 35, abbrev_state :=	"SP" ]
+temp_sf[ code_state== 41, abbrev_state :=	"PR" ]
+temp_sf[ code_state== 42, abbrev_state :=	"SC" ]
+temp_sf[ code_state== 43, abbrev_state :=	"RS" ]
+temp_sf[ code_state== 50, abbrev_state :=	"MS" ]
+temp_sf[ code_state== 51, abbrev_state :=	"MT" ]
+temp_sf[ code_state== 52, abbrev_state :=	"GO" ]
+temp_sf[ code_state== 53, abbrev_state :=	"DF" ]
+head(temp_sf)
 
 
 
 # Convert data.table back into sf
-area_de_risco <- st_as_sf(area_de_risco, crs=original_crs)
+temp_sf <- st_as_sf(temp_sf, crs=original_crs)
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-area_de_risco <- if( is.na(st_crs(area_de_risco)) ){ st_set_crs(area_de_risco, 4674) } else { st_transform(area_de_risco, 4674) }
+temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 
 # Make any invalid geometry valid # st_is_valid( sf)
-area_de_risco <- lwgeom::st_make_valid(area_de_risco)
+temp_sf <- lwgeom::st_make_valid(temp_sf)
 
-
+# reorder column names
+setcolorder(temp_sf, c('geo_bater', 'origem', 'acuracia', 'obs', 'num', 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry'))
 
 # Save cleaned sf in the cleaned directory
-readr::write_rds(area_de_risco, path="disaster_risk_area.rds", compress = "gz")
+setwd(root_dir)
+readr::write_rds(temp_sf, path= paste0(destdir_clean,"/disaster_risk_area2010.rds"), compress = "gz")
 
 
