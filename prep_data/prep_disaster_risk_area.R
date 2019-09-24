@@ -20,7 +20,7 @@ library(mapview)
 # Character set: Utf-8
 #
 # Resumo: Poligonos de areas de risco de desastres de natura hidro-climatologicas
-# Informações adicionais: Dados produzidos conjuntamente por IBGE e CEMADEM
+# Informações adicionais: Dados produzidos conjuntamente por IBGE e CEMADEN
 #
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****

@@ -51,6 +51,8 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
 |`read_indigenous_land` (dev.) | Indigenous lands | 201907 | FUNAI | 
+|`read_biomes` (dev.) | Biomes | 2004 | IBGE | 
+|`read_disaster_risk_area` (dev.) | Disaster risk areas | 2010 | CEMADEN and IBGE | 
 
 Note 1. Functions marked with "dev." are only available in the development version of `geobr`.
 
@@ -61,13 +63,11 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Geography | Years available | Source |
 |-----|-----|-----|
 |`read_census_tract` | 2007 | IBGE |
-|`read_indigenous_territory` | 201907 | FUNAI |
 | Metropolitan areas | ... | IBGE and state legislations |
 | Longitudinal Database* of municipalities | ... | IBGE | 
 | Longitudinal Database* of micro regions | ... | IBGE | 
 | Longitudinal Database* of Census tracts | ... | IBGE | 
 | Urbanized areas | 2005, 2015 | [IBGE](https://www.ibge.gov.br/geociencias-novoportal/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html) | 
-| Disaster risk areas | 2010 | [IBGE/Cemaden](https://www.ibge.gov.br/geociencias-novoportal/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html?=&t=downloads) | 
 | Schools | 2019 | School Census (Inep) | 
 | ... | ... | ... | 
 | ... | ... | ... | 
