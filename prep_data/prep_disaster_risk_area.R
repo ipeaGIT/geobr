@@ -107,5 +107,5 @@ area_de_risco <- lwgeom::st_make_valid(area_de_risco)
 
 
 # Save cleaned sf in the cleaned directory
-readr::write_rds(area_de_risco, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
+readr::write_rds(area_de_risco, path="disaster_risk_area.rds", compress = "gz")
 
