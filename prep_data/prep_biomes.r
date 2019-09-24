@@ -18,19 +18,19 @@ library(stringi)
 #> Metadata:
 # Titulo: Biomas
 # Titulo alternativo: Biomas 2004
-# Data: Atualiza??o Mensal
+# Frequencia de atualizacao: ?
 #
 # Forma de apresentação: Shape
 # Linguagem: Pt-BR
 # Character set: Utf-8
 #
-# Resumo: Pol?gonos e Pontos do biomas brasileiros.
-# Informações adicionais: Dados produzidos pelo IBGE, e utilizados na elabora??o do shape de biomas com a melhor base oficial dispon?vel.
-# Prop?sito: Identifica??o dos biomas brasileiros.
+# Resumo: Poligonos e Pontos do biomas brasileiros.
+# Informações adicionais: Dados produzidos pelo IBGE, e utilizados na elaboracao do shape de biomas com a melhor base oficial disponivel.
+# Proposito: Identificao dos biomas brasileiros.
 #
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
-# Informa??o do Sistema de Refer?ncia: SIRGAS 2000
+# Informacao do Sistema de Referencia: SIRGAS 2000
 
 
 
@@ -59,7 +59,7 @@ dir.create(destdir_clean)
 
 
 
-#### 0. Download original data sets from FUNAI website -----------------
+#### 0. Download original data sets from source website -----------------
 
 # Download and read into CSV at the same time
 ftp <- 'https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/vetores/Biomas_5000mil.zip'
