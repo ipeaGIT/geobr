@@ -16,26 +16,26 @@ dir.create(dir.download)
 
 # baixando o shape no formato .zip e dando-lhe o nome de "PARBR2018_BATER.zip"
 download.file("ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/populacao_em_areas_de_risco_no_brasil/base_de_dados/PARBR2018_BATER.zip" ,
-              destfile="PARBR2018_BATER.zip")
+              destfile= paste0(dir.download,"/PARBR2018_BATER.zip"))
 
 # descompactando o arquivo
 setwd("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes")
-#uzp <- "L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\PARBR2018_BATER.zip"
-#unzip(uzp, exdir="L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes")
-unzip("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.zip")
+
+
+unzip(paste0(zipfile=dir.download,"/PARBR2018_BATER.zip"), exdir = dir.download)
 
 
 # lendo o shapefile
-shp_risco <- st_read("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.shp")
+shp_risco <- st_read("./Shapes/PARBR2018_BATER.shp")
 
 # Definindo o destino dos arquivos
 setwd(dir.disaster)
 
 # salvando no formato rds
-saveRDS(shp_risco, "shp_risco.rds")
+readr::write_rds(shp_risco, "shp_risco.rds", compress = "gz")
 
 # lendo o arquivo
-area_de_risco <- readRDS("shp_risco.rds")
+area_de_risco <- readr::read_rds("shp_risco.rds")
 
 # Deletando a pasta de download
 unlink("Shapes", recursive = TRUE)
@@ -54,7 +54,10 @@ area_de_risco <- rename(area_de_risco, origem = ORIGEM)
 area_de_risco <- rename(area_de_risco, acuracia = ACURACIA)
 area_de_risco <- rename(area_de_risco, obs = OBS)
 area_de_risco <- rename(area_de_risco, num = NUM)
-#area_de_risco <- rename(area_de_risco, area_geo = AREA_GEO)
+
+# store original CRS
+original_crs <- st_crs(area_de_risco)
+
 
 # # criando a coluna das UFs
 #alterando area_de_risco para poder criar abbrev_state
@@ -92,10 +95,17 @@ head(area_de_risco)
 
 
 
-# convertendo geometry em um objeto sf
-area_de_risco_sf <- st_as_sf(x = area_de_risco,
-                    crs = "+proj=longlat +ellps=GRS80 +no_defs")
+# Convert data.table back into sf
+area_de_risco <- st_as_sf(area_de_risco, crs=original_crs)
+
+# Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+area_de_risco <- if( is.na(st_crs(area_de_risco)) ){ st_set_crs(area_de_risco, 4674) } else { st_transform(area_de_risco, 4674) }
+
+# Make any invalid geometry valid # st_is_valid( sf)
+area_de_risco <- lwgeom::st_make_valid(area_de_risco)
 
 
-#area_de_risco_sf <- st_transform(area_de_risco_sf,crs = 4674)
+
+# Save cleaned sf in the cleaned directory
+readr::write_rds(area_de_risco, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
 
