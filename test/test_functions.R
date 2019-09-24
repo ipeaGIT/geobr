@@ -5,6 +5,7 @@ library(sf)
 library(dplyr)
 library(data.table)
 library(geobr)
+library(ggplot2)
 
 
 ### Install package
@@ -508,8 +509,16 @@ h <- read_health_facilities(code="AM")
 
 
 
+###### 11. Biomes -------------------------
 
+b <- read_biomes(year=2000)
+b <- read_biomes(year=2004)
+table(b$name_biome)
 
+subset(b, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
+  ggplot() +
+  geom_sf(aes(fill=name_biome)) +
+  theme_minimal()
 
 
 
