@@ -12,7 +12,7 @@
 #' library(geobr)
 #'
 #' # Read biomes
-#'   c <- read_biomes(year=2006)
+#'   b <- read_biomes(year=2004)
 #'
 #'
 #'
