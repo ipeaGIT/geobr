@@ -26,7 +26,7 @@ unzip("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARB
 
 
 # lendo o shapefile
-shp_risco <- st_read("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.shp")
+shp_risco <- st_read("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.shp", )
 
 # Definindo o destino dos arquivos
 setwd(dir.disaster)
@@ -97,5 +97,7 @@ area_de_risco_sf <- st_as_sf(x = area_de_risco,
                     crs = "+proj=longlat +ellps=GRS80 +no_defs")
 
 
+#salvar o arquivo sf limpo
+saveRDS(area_de_risco_sf,"L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\risk_2018.rds")
 #area_de_risco_sf <- st_transform(area_de_risco_sf,crs = 4674)
 
