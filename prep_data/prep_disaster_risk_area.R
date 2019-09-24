@@ -25,8 +25,9 @@ setwd("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes")
 unzip("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.zip")
 
 
+
 # lendo o shapefile
-shp_risco <- st_read("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.shp", )
+shp_risco <- st_read("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\disaster_risk_area\\Shapes\\PARBR2018_BATER.shp", options = "ENCODING=UTF-8")
 
 # Definindo o destino dos arquivos
 setwd(dir.disaster)
