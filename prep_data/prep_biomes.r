@@ -1,4 +1,4 @@
-update <- 2006
+update <- 2004
 
 library(RCurl)
 library(stringr)
@@ -16,21 +16,21 @@ library(stringi)
 #> DATASET: biomes 2004
 #> Source: IBGE - https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/
 #> Metadata:
-# Titulo: Biomas 
+# Titulo: Biomas
 # Titulo alternativo: Biomas 2004
-# Data: Atualização Mensal
+# Data: Atualiza??o Mensal
 #
 # Forma de apresentaÃ§Ã£o: Shape
 # Linguagem: Pt-BR
 # Character set: Utf-8
 #
-# Resumo: Polígonos e Pontos do biomas brasileiros.
-# InformaÃ§Ãµes adicionais: Dados produzidos pelo IBGE, e utilizados na elaboração do shape de biomas com a melhor base oficial disponível.
-# Propósito: Identificação dos biomas brasileiros.
+# Resumo: Pol?gonos e Pontos do biomas brasileiros.
+# InformaÃ§Ãµes adicionais: Dados produzidos pelo IBGE, e utilizados na elabora??o do shape de biomas com a melhor base oficial dispon?vel.
+# Prop?sito: Identifica??o dos biomas brasileiros.
 #
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
-# Informação do Sistema de Referência: SIRGAS 2000
+# Informa??o do Sistema de Refer?ncia: SIRGAS 2000
 
 
 
@@ -41,7 +41,7 @@ getwd()
 
 ###### 0. Create Root folder to save the data -----------------
 # Root directory
-root_dir <- "L:/# IPEADATA_LAB #/projetos/ASMEQ"
+root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
 setwd(root_dir)
 
 # Directory to keep raw zipped files
@@ -51,8 +51,8 @@ dir.create(destdir_raw)
 
 
 # Create folders to save clean sf.rds files  -----------------
-dir.create("./biomes/shapes_in_sf_2004_cleaned", showWarnings = FALSE)
-destdir_clean <- paste0("./biomes/shapes_in_sf_2004_cleaned/",update)
+dir.create("./biomes/shapes_in_sf_cleaned", showWarnings = FALSE)
+destdir_clean <- paste0("./biomes/shapes_in_sf_cleaned/",update)
 dir.create(destdir_clean)
 
 
@@ -88,7 +88,7 @@ unzip(zipfiles)
 #### 3. Clean data set and save it in compact .rds format-----------------
 
 # Root directory
-root_dir <- "L:/# IPEADATA_LAB #/projetos/ASMEQ/biomes"
+root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\biomes"
 setwd(root_dir)
 
 
@@ -109,7 +109,7 @@ head(temp_sf)
 original_crs <- st_crs(temp_sf)
 
 # Create columns with date and with state codes
-setDT(temp_sf)[, date := update]
+setDT(temp_sf)[, year := update]
 
 
 # Convert data.table back into sf
@@ -124,9 +124,13 @@ temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_t
 temp_sf <- lwgeom::st_make_valid(temp_sf)
 
 
+# Use UTF-8 encoding
+temp_sf$code_biome <- stringi::stri_encode(as.character(temp_sf$code_biome), "UTF-8")
+temp_sf$name_biome <- stringi::stri_encode(as.character(temp_sf$name_biome), "UTF-8")
+
 
 # Save cleaned sf in the cleaned directory
-readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_2004_cleaned/",update,"/biomes_", update,".rds"), compress = "gz")
+readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update,".rds"), compress = "gz")
 
 
 
