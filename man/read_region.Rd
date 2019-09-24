@@ -23,7 +23,8 @@ library(geobr)
 }
 }
 \seealso{
-Other general area functions: \code{\link{read_census_tract}},
+Other general area functions: \code{\link{read_biomes}},
+  \code{\link{read_census_tract}},
   \code{\link{read_country}},
   \code{\link{read_meso_region2}},
   \code{\link{read_micro_region}},
