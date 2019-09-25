@@ -530,7 +530,6 @@ subset(b, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
   geom_sf(aes(fill=name_biome)) +
   theme_minimal()
 
-###### 13. Distar risk areas -------------------------
 
 ###### 13. Distar risk areas -------------------------
 d <- read_disaster_risk_area(year=2010)
@@ -539,16 +538,20 @@ head(d)
 d <- read_disaster_risk_area(year=2010000)
 d <- read_disaster_risk_area(year=2010)
 head(d)
-  theme_minimal()
 
-subset(d, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
-  d %>% ggplot() +
-  geom_sf(aes(fill=code_muni)) +
-  theme_minimal()
 
-plot( d['abbrev_state'] )
+b <- read_country(year=2018)
+d <- read_disaster_risk_area(year=2010)
 
-mapview(br, alpha = 0.3)
+mapview(b, alpha.regions=0.1) +
+
+
+
+mapview(b, alpha.regions=0.02, map.types = c("Esri.WorldShadedRelief", "OpenStreetMap.DE"), color = "grey40") +
+  mapview(i, col.regions='#FEB845', alpha.regions=0.5)
+
+
+
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
