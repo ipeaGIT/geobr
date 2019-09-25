@@ -539,7 +539,7 @@ subset(d, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
 
 plot( d['abbrev_state'] )
 
-
+mapview(br, alpha = 0.3)
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
