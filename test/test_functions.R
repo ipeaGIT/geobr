@@ -6,6 +6,7 @@ library(dplyr)
 library(data.table)
 library(geobr)
 library(ggplot2)
+library(mapview)
 
 
 ### Install package
@@ -507,9 +508,13 @@ h <- read_health_facilities(code="AM")
 
 
 
+###### 11. Indigenous -------------------------
+
+i <- read_indigenous_land(date=2000000)
+i <- read_indigenous_land(date=201909)
 
 
-###### 11. Biomes -------------------------
+###### 12. Biomes -------------------------
 
 b <- read_biomes(year=2000)
 b <- read_biomes(year=2004)
@@ -521,6 +526,18 @@ subset(b, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
   theme_minimal()
 
 
+###### 13. Distar risk areas -------------------------
+
+d <- read_disaster_risk_area(year=2010000)
+d <- read_disaster_risk_area(year=2010)
+head(d)
+
+subset(d, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
+  d %>% ggplot() +
+  geom_sf(aes(fill=code_muni)) +
+  theme_minimal()
+
+plot( d['abbrev_state'] )
 
 
 
