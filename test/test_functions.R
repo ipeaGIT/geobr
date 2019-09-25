@@ -520,17 +520,26 @@ b <- read_biomes(year=2000)
 b <- read_biomes(year=2004)
 table(b$name_biome)
 
+b <- read_biomes(year=2000)
+b <- read_biomes(year=2004)
+table(b$name_biome)
+  theme_minimal()
+
 subset(b, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
   ggplot() +
   geom_sf(aes(fill=name_biome)) +
   theme_minimal()
 
+###### 13. Distar risk areas -------------------------
 
 ###### 13. Distar risk areas -------------------------
+d <- read_disaster_risk_area(year=2010)
+head(d)
 
 d <- read_disaster_risk_area(year=2010000)
 d <- read_disaster_risk_area(year=2010)
 head(d)
+  theme_minimal()
 
 subset(d, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
   d %>% ggplot() +
