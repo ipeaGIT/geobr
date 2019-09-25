@@ -539,18 +539,26 @@ d <- read_disaster_risk_area(year=2010000)
 d <- read_disaster_risk_area(year=2010)
 head(d)
 
+# interactive map
+  library(grobr)
+  library(leafgl)
+  library(leaflet)
+  library(sf)
+  library(colourvalues)
 
-b <- read_country(year=2018)
-d <- read_disaster_risk_area(year=2010)
+  # get data
+  d <- read_disaster_risk_area(year=2010)
 
-mapview(b, alpha.regions=0.1) +
+  # format conversion to work in leafgl
+  d2 <-   sf::st_cast(d, 'POLYGON')
 
+  # colo
+  cols = colour_values_rgb(d$code_state, palette = "inferno", include_alpha = FALSE) / 255
 
-
-mapview(b, alpha.regions=0.02, map.types = c("Esri.WorldShadedRelief", "OpenStreetMap.DE"), color = "grey40") +
-  mapview(i, col.regions='#FEB845', alpha.regions=0.5)
-
-
+  # map
+  leaflet() %>%
+    addProviderTiles(provider = providers$CartoDB.DarkMatterNoLabels) %>%
+    addGlPolygons(data = d2, group = "pols", color= cols)
 
 
 ### update package documentation ----------------
