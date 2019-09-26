@@ -4,7 +4,7 @@
 #' territory. The last update of the data was 2004 (only year for which the data is currently available). The original
 #' data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/ .
 #'
-#' @param year A date number in YYYY format.
+#' @param year A date number in YYYY format (defaults to 2004)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -18,8 +18,7 @@
 #'
 #'
 
-read_biomes <- function(year){
-
+read_biomes <- function(year=NULL){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -39,14 +38,20 @@ read_biomes <- function(year){
   temp_meta <- subset(metadata, geo=="biomes")
 
 
+  # 1.1 Verify year input
+  if (is.null(year)){ year <- 2004}
 
-  # Verify date input
-   if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
+  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                                               paste(unique(temp_meta$year),collapse = " ")))
   }
 
+  message(paste0("Using data from year ", year))
+
+
+
+  # # Select metadata year
+  # x <- year
+  # temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
   filesD <- as.character(temp_meta$download_path)
