@@ -531,7 +531,7 @@ subset(b, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
   theme_minimal()
 
 
-###### 13. Distar risk areas -------------------------
+###### 13. Disaster risk areas -------------------------
 d <- read_disaster_risk_area(year=2010)
 head(d)
 
