@@ -22,7 +22,7 @@
 #' }
 #'
 
-read_meso_region2 <- function(code_meso, year=NULL){
+read_meso_region <- function(code_meso, year=NULL){
 
 
   # Get metadata with data addresses
