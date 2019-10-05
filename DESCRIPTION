@@ -29,7 +29,8 @@ Suggests:
     mapview,
     knitr,
     rio,
-    rmarkdown
+    rmarkdown,
+    testthat
 Imports:
       dplyr,
       httr,
