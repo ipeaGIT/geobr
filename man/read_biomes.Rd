@@ -4,10 +4,10 @@
 \alias{read_biomes}
 \title{Download official data of Brazilian biomes as an sf object.}
 \usage{
-read_biomes(year)
+read_biomes(year = NULL)
 }
 \arguments{
-\item{year}{A date number in YYYY format.}
+\item{year}{A date number in YYYY format (defaults to 2004)}
 }
 \description{
 This data set covers the whole of Brazil and it includes the polygons of all of all biomes present in Brazilian
@@ -17,7 +17,7 @@ data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_
 \seealso{
 Other general area functions: \code{\link{read_census_tract}},
   \code{\link{read_country}},
-  \code{\link{read_meso_region2}},
+  \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
   \code{\link{read_municipality}},
   \code{\link{read_region}}, \code{\link{read_state}},
