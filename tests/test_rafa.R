@@ -44,27 +44,7 @@ head(brazil_2010)
 
 
 
-### 1. read_state -------------------------
-
-
-# Read specific municipality at a given year
-  uf <- read_state(code_state=12, year=2017)
-  uf <- read_state(code_state="SP", year=2017)
-  uf <- read_state(code_state="RJ")
-
-plot(uf)
-  head(uf)
-
-# Read all states at a given year
-uf <- read_state(code_state="all", year=2018)
-plot(uf)
-
-uf <- read_state(code_state="all", year=1940)
-uf <- read_state( year=1872)
-uf <- read_state( year=1500)
-
-plot(ufs)
-
+### 1. read_region -------------------------
 
 
 ufs <- select(ufs, 'code_region', 'geometry')
@@ -137,13 +117,6 @@ library(sf)
 
 
 
-
-
-# expected errors
-
-uf <- read_state(code_state=12, year=10000)
-uf <- read_state(code_state=10000, year=2010)
-uf <- read_state(code_state=12, year=2005)
 
 
 
