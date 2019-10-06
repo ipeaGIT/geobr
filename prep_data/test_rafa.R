@@ -380,22 +380,6 @@ i <- read_indigenous_land(date=2000000)
 i <- read_indigenous_land(date=201909)
 
 
-###### 12. Biomes -------------------------
-
-b <- read_biomes(year=2000)
-b <- read_biomes(year=2004)
-table(b$name_biome)
-
-b <- read_biomes(year=2000)
-b <- read_biomes(year=2004)
-table(b$name_biome)
-  theme_minimal()
-
-subset(b, !(name_biome %like% 'Zona|Massa'), color='gray90') %>%
-  ggplot() +
-  geom_sf(aes(fill=name_biome)) +
-  theme_minimal()
-
 
 ###### 13. Disaster risk areas -------------------------
 d <- read_disaster_risk_area(year=2010)
@@ -436,9 +420,16 @@ head(d)
   library(covr)
   library(geobr)
 
-  a <- package_coverage()
+  d <- package_coverage()
 
 x <- as.data.frame(h)
+
+
+function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
+x <- function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
+
+
+
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check

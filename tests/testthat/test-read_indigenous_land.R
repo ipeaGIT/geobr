@@ -1,0 +1,33 @@
+context("Read")
+
+
+# Reading the data -----------------------
+
+test_that("read_indigenous_land", {
+
+  # read data
+  test_sf <- geobr::read_indigenous_land(date=201907)
+
+
+  # check sf object
+  expect_true(is(test_sf, "sf"))
+
+  # check number of micro
+  expect_equal(test_sf$code_terrai %>% length(), 615)
+
+  # check projection
+#  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
+
+})
+
+
+
+# ERRORS and messagens  -----------------------
+test_that("read_indigenous_land", {
+
+  # Wrong date
+  expect_error(geobr::read_indigenous_land(date=9999999))
+  expect_error(geobr::read_indigenous_land(date="xxx"))
+  expect_error(geobr::read_indigenous_land(date=NULL))
+
+})
