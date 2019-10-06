@@ -396,15 +396,11 @@ d <- read_disaster_risk_area(year=2010)
   library(geobr)
 
   e <- package_coverage(clean=T, function_exclusions="read_statistical_grid")
+  x <- as.data.frame(h)
 
 
 
-
-x <- as.data.frame(h)
-
-
-
-geobr::download_fun(1)
+geobr::download_fun(0)
 function_coverage(fun='download_fun', test_file("tests/testthat/test-download_fun.R"))
 
 grid_state_correspondence_table
@@ -454,7 +450,7 @@ library(spelling)
 devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 
 # Update documentation
-  devtools::document(pkg = ".")
+  devtools::document(pkg = "geobr")
 
 
 # Write package manual.pdf
