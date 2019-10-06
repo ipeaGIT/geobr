@@ -8,7 +8,9 @@ cache: packages
 
 r_packages:
  - devtools
- - covr
+
+r_github_packages:
+  - r-lib/covr
 
 #r_binary_packages:
 # - libgit2
