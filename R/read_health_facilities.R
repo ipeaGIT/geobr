@@ -13,32 +13,18 @@
 #' with the objective of improving the quality of the data. More information
 #' available at http://dados.gov.br/dataset/cnes
 #'
-#' @param code The 7-digit code of a municipality. If the two-digit code or a two-letter
-#' abbreviation of a state is passed, (e.g. 33 or "RJ") the function will load all healthcare
-#' facilities of that state. If code="all", all facilities of the country are loaded.
 #' @export
 #' @examples \donttest{
 #'
 #' library(geobr)
 #'
-#' # Read the health facilities of state 11
-#'   h <- read_health_facilities(code=11)
-#'
-#' # Read the health facilities of state "AM"
-#'   h <- read_health_facilities(code="AM")
-#'
-#' # Read all health facilities of the country
-#'   h <- read_health_facilities(code="all")
+#' # Read all health facilities of the whole country
+#'   h <- read_health_facilities()
 #'
 #' }
 #'
 
-read_health_facilities <- function(code){
-
-
-# Test if code input is null
-  if(is.null(code)){ stop("Value to argument 'code' cannot be NULL") }
-
+read_health_facilities <- function(){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -68,34 +54,6 @@ read_health_facilities <- function(code){
 
   # read sf
     temp_sf <- readr::read_rds(temps)
+    return(temp_sf)
 
-
-  # Return the whole dataset if code==all
-    if(code=="all"){ return(temp_sf) }
-
-
-  # If user passed two-digit numeric code of a state
-    if(nchar(code)==2 & is.numeric(code)){
-                                            x <- code
-                                            temp_sf <- subset(temp_sf, code_state==x)
-                                            return(temp_sf)
-                                          }
-
-
-  # If user passed two-letter abbreviation of a state
-    if(nchar(code)==2 & is.character(code)){
-                                              x <- code
-                                              temp_sf <- subset(temp_sf, abbrev_state== toupper(code))
-                                              return(temp_sf)
-                                            }
-
-
-  # If user passed seven-digit numeric code of a municipality
-    if(nchar(code)==7 & is.numeric(code)){
-                                            x <- code
-                                            temp_sf <- subset(temp_sf, code_muni==x)
-                                            return(temp_sf)
-                                          }
-
-else{ stop("Error: Invalid Value to argument code_meso.") }
-}
+    }

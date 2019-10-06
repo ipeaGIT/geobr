@@ -374,20 +374,12 @@ h <- read_health_facilities(code="AM")
 
 
 
-###### 11. Indigenous -------------------------
-
-i <- read_indigenous_land(date=2000000)
-i <- read_indigenous_land(date=201909)
 
 
 
 ###### 13. Disaster risk areas -------------------------
 d <- read_disaster_risk_area(year=2010)
-head(d)
 
-d <- read_disaster_risk_area(year=2010000)
-d <- read_disaster_risk_area(year=2010)
-head(d)
 
 # interactive map
   library(grobr)
@@ -420,14 +412,16 @@ head(d)
   library(covr)
   library(geobr)
 
-  d <- package_coverage()
+  e <- package_coverage()
 
 x <- as.data.frame(h)
 
 
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
-x <- function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
+function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 
+
+function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 
 
 
