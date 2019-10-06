@@ -69,6 +69,8 @@ test_that("read_meso_region", {
   # Wrong year  expect_error(geobr::read_meso_region(code_meso="xxx", year=NULL))
     expect_error(geobr::read_micro_region(code_micro=11, year=9999999))
     expect_error(geobr::read_micro_region(code_micro=11, year= "xx"))
+    expect_error(geobr::read_micro_region(code_micro=1401, year=9999999))
+    expect_error(geobr::read_micro_region(code_micro=1401, year= "xx"))
 
     expect_error(geobr::read_meso_region(code_meso="SC", year=9999999))
     expect_error(geobr::read_meso_region(code_meso="SC", year="xx"))
@@ -77,11 +79,8 @@ test_that("read_meso_region", {
     expect_error(geobr::read_micro_region(code_micro="all", year="xx"))
 
   # Wrong code
-   expect_error(geobr::read_meso_region(code_meso=9999999, year=2000))
-   expect_error(geobr::read_meso_region(code_meso="XXX", year=2000))
-   expect_error(geobr::read_meso_region(code_meso="XXX", year=NULL))
-   expect_error(geobr::read_meso_region(code_meso=NULL, year=2000))
-
+     expect_error(geobr::read_meso_region(code_meso=9999999, year=2000))
+     expect_error(geobr::read_meso_region(code_meso="XXX", year=2000))
+     expect_error(geobr::read_meso_region(code_meso="XXX", year=NULL))
+     expect_error(geobr::read_meso_region(code_meso=NULL, year=2000))
 })
-
-

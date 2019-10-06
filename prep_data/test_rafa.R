@@ -432,9 +432,9 @@ head(d)
 
 ### Test coverage  ----------------
   library(covr)
-  g <- package_coverage()
+  i <- package_coverage()
 
-x <- as.data.frame(d)
+x <- as.data.frame(h)
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
