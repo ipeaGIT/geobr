@@ -229,43 +229,6 @@ plot(d)
 
 
 
-###### 5. read_weighting_area -------------------------
-
-devtools::load_all('C:/Users/r1701707/Desktop/geobr')
-
-# input state
-  system.time( w1 <- read_weighting_area(code_weighting=53) )
-  system.time( w1 <- read_weighting_area(code_weighting="DF") )
-  plot(w)
-
-
-
-# input whole country
-  w <- read_weighting_area(code_weighting="all")
-  head(w)
-  plot(w)
-
-
-
-
-# input muni
-  system.time( w2 <- read_weighting_area(code_weighting=5201108, year=2010) )
-  head(w2)
-  plot(w2)
-
-# input weighting area
-system.time( w3 <- read_weighting_area(code_weighting=5201108005004, year=2010) )
-head(w3)
-plot(w3)
-
-
-
-# Expected errors
-
-system.time( w2 <- read_weighting_area(code_weighting=11, year=2000) )
-system.time( w2 <- read_weighting_area(code_weighting=100000) )
-
-
 
 
 
