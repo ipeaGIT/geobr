@@ -12,7 +12,7 @@ test_that("read_municipality", {
   munis2d <- geobr::read_municipality(code_muni=12, year=2018)
 
   # check number of states
-  expect_equal(munis2d$code_muni %>% unique() %>% length(), 22)
+  expect_equal(munis2d$code_muni %>% length(), 22)
 
   # check projection
   expect_equal(sf::st_crs(munis2d)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
