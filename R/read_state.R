@@ -57,6 +57,9 @@ read_state <- function(code_state, year=NULL){
 
 if( x < 1992){
 
+  if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
+    stop("Error: Invalid Value to argument code_state.")}
+
   # list paths of files to download
   filesD <- as.character(temp_meta$download_path)
 
