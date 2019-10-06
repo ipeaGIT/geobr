@@ -391,26 +391,41 @@ d <- read_disaster_risk_area(year=2010)
   https://travis-ci.org/ipeaGIT/geobr
 
 ### Test coverage  ----------------
+
   library(covr)
   library(geobr)
 
-  e <- package_coverage()
+  e <- package_coverage(clean=T, function_exclusions="read_statistical_grid")
 
-  usethis::use_coverage( type = c("codecov"))
 
 
 
 x <- as.data.frame(h)
 
 
+
+geobr::download_fun(1)
+function_coverage(fun='download_fun', test_file("tests/testthat/test-download_fun.R"))
+
+grid_state_correspondence_table
+
+function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
+
+
+function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
+
+
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
-
-
+function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
-
 function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
-52.08%
+
+
+# create githubl shield with code coverage
+usethis::use_coverage( type = c("codecov"))
+
+
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
@@ -439,7 +454,7 @@ library(spelling)
 devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 
 # Update documentation
-  devtools::document(pkg = "geobr")
+  devtools::document(pkg = ".")
 
 
 # Write package manual.pdf

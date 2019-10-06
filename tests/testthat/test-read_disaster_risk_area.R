@@ -1,6 +1,37 @@
 context("Read")
 
 
+
+
+# Downloading the data -----------------------
+
+test_that("read_disaster_risk_area", {
+
+  # Get metadata with data addresses
+  tempf <- file.path(tempdir(), "metadata.rds")
+
+  # check if metadata has already been downloaded
+  if (file.exists(tempf)) {
+    metadata <- readr::read_rds(tempf)
+
+  } else {
+
+    # download it and save to metadata
+    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
+    metadata <- readr::read_rds(tempf)
+
+    # test
+    expect_equal(tempf %>% length(), 1)
+    expect_equal(ncol(metadata), 5)
+    }
+
+}
+)
+
+
+
+
+
 # Reading the data -----------------------
 
 test_that("read_disaster_risk_area", {

@@ -1,7 +1,7 @@
 context("Read")
 
 
-# test_that("read_meso_region", {
+# test_that("downloading meta data", {
 #
 #   # test metada
 #   tempf <- file.path(tempdir(), "metadata.rds")

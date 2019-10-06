@@ -4,12 +4,7 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities as an sf object.}
 \usage{
-read_health_facilities(code)
-}
-\arguments{
-\item{code}{The 7-digit code of a municipality. If the two-digit code or a two-letter
-abbreviation of a state is passed, (e.g. 33 or "RJ") the function will load all healthcare
-facilities of that state. If code="all", all facilities of the country are loaded.}
+read_health_facilities()
 }
 \description{
 Data comes from the National Registry of Healthcare facilities (Cadastro Nacional de Estabelecimentos de Saúde - CNES),
@@ -30,14 +25,8 @@ available at http://dados.gov.br/dataset/cnes
 
 library(geobr)
 
-# Read the health facilities of state 11
-  h <- read_health_facilities(code=11)
-
-# Read the health facilities of state "AM"
-  h <- read_health_facilities(code="AM")
-
-# Read all health facilities of the country
-  h <- read_health_facilities(code="all")
+# Read all health facilities of the whole country
+  h <- read_health_facilities()
 
 }
 
