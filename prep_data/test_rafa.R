@@ -125,28 +125,8 @@ library(sf)
 gc(reset = T)
 
 
-### passed the test
 
-# working fine
-system.time( a <- read_municipality(code_muni=1200179, year=2010) )
-head(a)
-plot(a)
-
-system.time( b <- read_municipality(code_muni=11, year=2003) )
-head(b)
-
-system.time( b <- read_municipality(code_muni=11, year=1940) )
-system.time( b <- read_municipality(code_muni=11, year=1872) )
-plot(b)
-head(b)
-
-system.time( d <- read_municipality(code_muni="AM", year=2018 ))
-system.time( d <- read_municipality(code_muni="all", year=2010 ))
-
-system.time( d <- read_municipality(code_muni="all", year=1960 ))
-system.time( d <- read_municipality(code_muni="all", year=1991 ))
 system.time( d <- read_municipality(code_muni="all" ))
-
 head(d)
 
 setDT(d)
@@ -190,64 +170,14 @@ d[, abbrev_state := ifelse(code_state== 11, "RO",
 setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_region', 'name_region', 'geometry'))
 
 
-d2 <- st_cast(st_as_sf(d))
-head(d2)
 
 
 
-system.time( c <- read_municipality(code_muni=11) )
-system.time( c <- read_municipality(code_muni="AC") )
-system.time( c <- read_municipality(code_muni=1200179) )
-
-
-system.time( a <- read_municipality(code_muni=1200179, year=2016) )
-head(a)
-
-system.time( b <- read_municipality(code_muni=11, year=2000) )
-head(b)
-system.time( c <- read_municipality(code_muni="SC", year=2013) )
-system.time( c <- read_municipality(code_muni="all", year=2013) )
-head(c)
-
-### expected ERROR messages
-
-# invalid year
-e <- read_municipality(code_muni=33, year=2012)
-
-# invalid code_muni
-e <- read_municipality(code_muni=333, year=2010)
-
-# code_muni cannot be NULL
-e <- read_municipality( year=2010)
-
-system.time( b <- read_municipality(code_muni=11, year=1500) )
-
-
-###### 3. read_meso_region -------------------------
-# 2010
 
 
 
-### passed the test
-
-system.time( a <- read_meso_region(code_meso=3305, year=2010) )
-head(a)
-plot(a)
-
-system.time( b <- read_meso_region(code_meso=33, year=2010) )
-system.time( b <- read_meso_region(code_meso="SP", year=2010) )
-head(b)
-plot(b)
-
-system.time( c <- read_meso_region(code_meso=11) )
-head(c)
-plot(c)
 
 
-system.time( d <- read_meso_region(code_meso="all", year=2010) )
-plot(d)
-head(d)
-class(d)
 
 
 

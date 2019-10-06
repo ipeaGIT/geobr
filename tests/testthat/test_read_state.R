@@ -9,7 +9,7 @@ test_that("read_state", {
   expect_true(is(states, "sf"))
 
   # check number of states
-  expect_equal(states$code_state %>% unique() %>% length(), 27)
+  expect_equal(states$code_state %>% length(), 27)
 
   # check projection
   expect_equal(sf::st_crs(states)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
