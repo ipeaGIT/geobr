@@ -356,24 +356,6 @@ plot(reg)
 
 
 
-###### 10. Health facilities -------------------------
-
-devtools::load_all('C:/Users/r1701707/Desktop/geobr')
-
-
-h <- read_health_facilities(code=11)
-plot(h)
-head(h)
-
-h <- read_health_facilities(code="all")
-plot(h)
-head(h)
-
-
-h <- read_health_facilities(code="AM")
-
-
-
 
 
 
@@ -427,7 +409,8 @@ function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.
 
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 
-
+function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
+52.08%
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check

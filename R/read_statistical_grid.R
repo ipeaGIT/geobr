@@ -54,7 +54,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
 
 
 
-# Verify code_grid input
+# Verify code_grid input ----------------------------------
 
   # Test if code_grid input is null
     if(is.null(code_grid)){ stop("Value to argument 'code_grid' cannot be NULL") }
@@ -89,7 +89,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
     }
 
 
-# if code_grid is a state abbreviation
+# if code_grid is a state abbreviation  ----------------------------------
 
   # Error if the input does not match any state abbreviation
   if(is.character(code_grid) & !(code_grid %in% grid_state_correspondence_table$code_state)) {
@@ -126,7 +126,7 @@ read_statistical_grid <- function(code_grid, year=NULL){
       }
 
 
-# if code_grid is numeric grid quadrant
+# if code_grid is numeric grid quadrant  ----------------------------------
     if( !( code_grid %in% temp_meta$code)){ stop("Error: Invalid Value to argument code_grid.")
 
     } else{
