@@ -1,0 +1,33 @@
+context("Read")
+
+
+# Reading the data -----------------------
+
+test_that("read_biomes", {
+
+  # read data
+  expect_message(geobr::read_biomes(year=NULL))
+  test_sf <- geobr::read_biomes(year=2004)
+
+  # check sf object
+  expect_true(is(test_sf, "sf"))
+
+  # check number of micro
+  expect_equal(test_sf$code_biome %>% length(), 10)
+
+  # check projection
+#  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
+
+})
+
+
+
+
+# ERRORS and messagens  -----------------------
+test_that("read_biomes", {
+
+  # Wrong year
+  expect_error(geobr::read_biomes(year=9999999))
+  expect_error(geobr::read_biomes(year="xxx"))
+
+})
