@@ -427,6 +427,15 @@ head(d)
     addGlPolygons(data = d2, group = "pols", color= cols)
 
 
+
+
+
+### Test coverage  ----------------
+  library(covr)
+  b <- package_coverage()
+
+
+
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
 
