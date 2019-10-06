@@ -9,6 +9,9 @@ cache: packages
 r_packages:
  - devtools
 
+r_binary_packages:
+ - libgit2
+
 before_install:
  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
  - sudo apt-get --yes --force-yes update -qq
