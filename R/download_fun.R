@@ -35,7 +35,7 @@ download_fun <- function(x) {
     temp_sf <- readr::read_rds(tempf)
   }
 
-  t <- temp_sf$code_meso[1] + x
+  t <- min(temp_sf$code_meso) + x
   return(t)
 
 }
