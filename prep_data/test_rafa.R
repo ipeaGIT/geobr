@@ -432,7 +432,7 @@ head(d)
 
 ### Test coverage  ----------------
   library(covr)
-  i <- package_coverage()
+  m <- package_coverage()
 
 x <- as.data.frame(h)
 

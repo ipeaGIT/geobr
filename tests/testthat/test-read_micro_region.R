@@ -69,6 +69,38 @@ test_that("read_micro_region", {
 
 # ERRORS
 # ERRORS
+# test_that("read_micro_region", {
+#
+#   # Wrong year and code
+#   expect_error(geobr::read_micro_region(code_micro=9999999, year=9999999))
+#   expect_error(geobr::read_micro_region(code_micro=9999999, year="xxx"))
+#   expect_error(geobr::read_micro_region(code_micro="xxx", year=9999999))
+#   expect_error(geobr::read_micro_region(code_micro="xxx", year="xxx"))
+#   expect_error(geobr::read_micro_region(code_micro=9999999, year=NULL))
+#
+#   # Wrong year  expect_error(geobr::read_micro_region(code_micro="xxx", year=NULL))
+#   expect_error(geobr::read_micro_region(code_micro=11, year=9999999))
+#   expect_error(geobr::read_micro_region(code_micro=11, year= "xx"))
+#   expect_error(geobr::read_micro_region(code_micro=11008, year=9999999))
+#   expect_error(geobr::read_micro_region(code_micro=11008, year= "xx"))
+#
+#
+#
+#   expect_error(geobr::read_micro_region(code_micro="SC", year=9999999))
+#   expect_error(geobr::read_micro_region(code_micro="SC", year="xx"))
+#
+#   expect_error(geobr::read_micro_region(code_micro="all", year=9999999))
+#   expect_error(geobr::read_micro_region(code_micro="all", year="xx"))
+#
+#   # Wrong code
+#   expect_error(geobr::read_micro_region(code_micro=9999999, year=2000))
+#   expect_error(geobr::read_micro_region(code_micro="XXX", year=2000))
+#   expect_error(geobr::read_micro_region(code_micro="XXX", year=NULL))
+#   expect_error(geobr::read_micro_region(code_micro=NULL, year=2000))
+# })
+
+
+# ERRORS
 test_that("read_micro_region", {
 
   # Wrong year and code
@@ -76,25 +108,28 @@ test_that("read_micro_region", {
   expect_error(geobr::read_micro_region(code_micro=9999999, year="xxx"))
   expect_error(geobr::read_micro_region(code_micro="xxx", year=9999999))
   expect_error(geobr::read_micro_region(code_micro="xxx", year="xxx"))
-  expect_error(geobr::read_micro_region(code_micro=9999999, year=NULL))
+  expect_error(geobr::read_micro_region(code_micro=NULL, year=9999999))
+  expect_error(geobr::read_micro_region(code_micro=NULL, year="xxx"))
 
-  # Wrong year  expect_error(geobr::read_micro_region(code_micro="xxx", year=NULL))
+  # Wrong year
   expect_error(geobr::read_micro_region(code_micro=11, year=9999999))
-  expect_error(geobr::read_micro_region(code_micro=11, year= "xx"))
+  expect_error(geobr::read_micro_region(code_micro=1401, year=9999999))
   expect_error(geobr::read_micro_region(code_micro=11008, year=9999999))
+  expect_error(geobr::read_micro_region(code_micro=11, year= "xx"))
+  expect_error(geobr::read_micro_region(code_micro=1401, year= "xx"))
   expect_error(geobr::read_micro_region(code_micro=11008, year= "xx"))
 
-
-
+  expect_error(geobr::read_micro_region(code_micro="all", year=9999999))
   expect_error(geobr::read_micro_region(code_micro="SC", year=9999999))
   expect_error(geobr::read_micro_region(code_micro="SC", year="xx"))
-
-  expect_error(geobr::read_micro_region(code_micro="all", year=9999999))
   expect_error(geobr::read_micro_region(code_micro="all", year="xx"))
 
   # Wrong code
   expect_error(geobr::read_micro_region(code_micro=9999999, year=2000))
+  expect_error(geobr::read_micro_region(code_micro=9999999, year=NULL))
   expect_error(geobr::read_micro_region(code_micro="XXX", year=2000))
   expect_error(geobr::read_micro_region(code_micro="XXX", year=NULL))
   expect_error(geobr::read_micro_region(code_micro=NULL, year=2000))
+  expect_error(geobr::read_micro_region(code_micro=NULL, year=NULL))
+
 })
