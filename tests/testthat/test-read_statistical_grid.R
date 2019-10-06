@@ -17,16 +17,18 @@ test_that("read_statistical_grid", {
   expect_true(is(test_state_abrev, "sf"))
   expect_true(is(test_state_abrev2, "sf"))
 
+  # check number of micro
+  expect_equal(test_state_abrev2$ID_UNICO %>% length(), 778694)
+  # clean memory
   rm(test_quad_code, test_quad_code2, test_state_abrev, test_state_abrev2)
   gc(reset = T)
 
-   test_all <- geobr::read_statistical_grid(code_grid="all", year=2010)
-  # test_all2 <- geobr::read_statistical_grid(code_grid="all", year=NULL)
-   expect_true(is(test_all, "sf"))
-  # expect_true(is(test_all2, "sf"))
+   # test_all <- geobr::read_statistical_grid(code_grid="all", year=2010)
+   # expect_true(is(test_all, "sf"))
 
-  # check number of micro
-  expect_equal(test_state_abrev2$ID_UNICO %>% length(), 778694)
+   # test_all2 <- geobr::read_statistical_grid(code_grid="all", year=NULL)
+   # expect_true(is(test_all2, "sf"))
+
 
   # check projection
   #expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
