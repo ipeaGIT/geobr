@@ -27,11 +27,11 @@ test_that("read_state", {
   # read data
   test_state_abrev <- geobr::read_state(code_state="AC", year=2010)
   test_state_abrev2 <- geobr::read_state(code_state="AP", year=NULL)
-  test_state_abrev3 <- geobr::read_state(code_state="AP", year=1872)
+#  test_state_abrev3 <- geobr::read_state(name_state="Pernambuco", year=1872)
 
   test_state_code <- geobr::read_state(code_state=11, year=2010)
   test_state_code2 <- geobr::read_state(code_state=11, year=NULL)
-  test_state_code3 <- geobr::read_state(code_state=11, year=1872)
+#  test_state_code3 <- geobr::read_state(code_state=11, year=1872)
 
   test_all <- geobr::read_state(code_state="all", year=2010)
   test_all2 <- geobr::read_state(code_state="all", year=NULL)
@@ -40,10 +40,10 @@ test_that("read_state", {
   # check sf object
   expect_true(is(test_state_abrev, "sf"))
   expect_true(is(test_state_abrev2, "sf"))
-  expect_true(is(test_state_abrev3, "sf"))
+  # expect_true(is(test_state_abrev3, "sf"))
   expect_true(is(test_state_code, "sf"))
   expect_true(is(test_state_code2, "sf"))
-  expect_true(is(test_state_code3, "sf"))
+  # expect_true(is(test_state_code3, "sf"))
   expect_true(is(test_all, "sf"))
   expect_true(is(test_all2, "sf"))
   expect_true(is(test_all3, "sf"))
@@ -86,13 +86,13 @@ test_that("read_state", {
   expect_error(geobr::read_state(code_state="all", year="xx"))
 
   # Wrong code
-  expect_error(geobr::read_state(code_state=9999999, year=1991))
+  expect_message(geobr::read_state(code_state=9999999, year=1991))
   expect_error(geobr::read_state(code_state=9999999, year=2000))
   expect_error(geobr::read_state(code_state=9999999, year=NULL))
-  expect_error(geobr::read_state(code_state="XXX", year=1991))
+  expect_message(geobr::read_state(code_state="XXX", year=1991))
   expect_error(geobr::read_state(code_state="XXX", year=2000))
   expect_error(geobr::read_state(code_state="XXX", year=NULL))
-  expect_error(geobr::read_state(code_state=NULL, year=1991))
+  expect_message(geobr::read_state(code_state=NULL, year=1991))
   expect_error(geobr::read_state(code_state=NULL, year=2000))
   expect_error(geobr::read_state(code_state=NULL, year=NULL))
 

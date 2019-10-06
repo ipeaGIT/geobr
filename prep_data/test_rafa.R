@@ -429,9 +429,13 @@ head(d)
 
 
 
+# TRAVS
+  https://travis-ci.org/ipeaGIT/geobr
 
 ### Test coverage  ----------------
   library(covr)
+  library(geobr)
+
   a <- package_coverage()
 
 x <- as.data.frame(h)
