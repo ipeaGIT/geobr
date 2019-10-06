@@ -1,5 +1,27 @@
 context("Read")
 
+
+test_that("read_micro_region", {
+
+  # test metada
+  tempf <- file.path(tempdir(), "metadata.rds")
+
+  # check if metadata has already been downloaded
+  if (file.exists(tempf)) {
+    metadata <- readr::read_rds(tempf)
+
+  } else {
+    # download it and save to metadata
+    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
+    metadata <- readr::read_rds(tempf)
+  }
+
+  expect_true(class(metadata)=='data.frame')
+  expect_true(file.exists(tempf))
+
+})
+
+
 test_that("read_meso_region", {
 
   # read data
