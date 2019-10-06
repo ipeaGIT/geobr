@@ -393,6 +393,7 @@ d <- read_disaster_risk_area(year=2010)
 ### Test coverage  ----------------
 
   library(covr)
+  library(testthat)
   library(geobr)
 
   e <- package_coverage(clean=T, function_exclusions="read_statistical_grid")
@@ -402,8 +403,6 @@ d <- read_disaster_risk_area(year=2010)
 
 geobr::download_fun(0)
 function_coverage(fun='download_fun', test_file("tests/testthat/test-download_fun.R"))
-
-grid_state_correspondence_table
 
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
