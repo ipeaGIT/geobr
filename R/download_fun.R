@@ -20,7 +20,6 @@
 #'
 #'
 download_fun <- function(x) {
-
   # Get data
   tempf <- file.path(tempdir(), "41ME.rds")
 
