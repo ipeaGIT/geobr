@@ -1,6 +1,6 @@
 context("Read")
 
-# R/read_meso_region.R: 65.12%
+# R/read_micro_region.R: 65.12%
 # R/read_micro_region.R: 93.02%
 
 # test_that("read_micro_region", {
@@ -60,14 +60,20 @@ test_that("read_micro_region", {
 # ERRORS
 test_that("read_micro_region", {
 
+  # Wrong year and code
+  expect_error(geobr::read_micro_region(code_meso="xxx", year=9999999))
+  expect_error(geobr::read_micro_region(code_meso="xxx", year=NULL))
+
   # Wrong year
   expect_error(geobr::read_micro_region(code_micro="SC", year=2000000))
   expect_error(geobr::read_micro_region(code_micro=11, year=2000000))
   expect_error(geobr::read_micro_region(code_micro=11, year= "xx"))
 
   # Wrong code
-  expect_error(geobr::read_micro_region(code_micro="xx", year=2000))
-  expect_error(geobr::read_micro_region( code_micro=NULL, year=2000))
+  expect_error(geobr::read_micro_region(code_meso="XXX", year=2000))
+  expect_error(geobr::read_micro_region(code_meso="XXX", year=NULL))
+  expect_error(geobr::read_micro_region(code_meso=NULL, year=2000))
+
 
 })
 
