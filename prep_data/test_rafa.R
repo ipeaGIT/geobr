@@ -404,12 +404,22 @@ d <- read_disaster_risk_area(year=2010)
 geobr::download_fun(0)
 function_coverage(fun='download_fun', test_file("tests/testthat/test-download_fun.R"))
 
+# get results with unit tests
+c2 <- function_coverage(fun = download_fun, code = geobr::download_fun(0)== 4101)
+
+
+
+function_coverage(fun='download_fun', test_file("tests/testthat/test-download_fun.R"))
+
+file_coverage(source_files="R/download_fun.R",
+              test_files="tests/testthat/test-download_fun.R")
+
+
+
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
 
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
-
-
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
