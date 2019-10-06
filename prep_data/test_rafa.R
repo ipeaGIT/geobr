@@ -414,6 +414,10 @@ d <- read_disaster_risk_area(year=2010)
 
   e <- package_coverage()
 
+  usethis::use_coverage( type = c("codecov"))
+
+
+
 x <- as.data.frame(h)
 
 
