@@ -15,7 +15,7 @@
   * Statistical Grid 
 
 -------------------------------------------------------
-# geobr dev1.0.1 
+# geobr dev1.1
 
 * closes issue #42 (2019-08-05)
   * Shows a single download progress bar when `*_code="all"`. 
@@ -25,5 +25,6 @@
   * New Function `read_indigenous_land` to read official data of indigenous lands of all ethnicities according to stage of demarcation - closes issue #47 (2019-09-04).
   * New Function `read_disaster_risk_area` to read official data of areas exposed to risks of geodynamic and hydro-meteorological disasters capable of triggering landslides and floods - closes issue #14 (added in 2019-09-24).
   * New Function `read_biomes` to read official data of polygons of all of all biomes present in Brazilian territory - closes issue #45 (added in 2019-09-24).
+  * New Function `read_amazon` to read official data of Brazil's Legal Amazon - closes issue #38 (added in 2019-10-07).
 
 
