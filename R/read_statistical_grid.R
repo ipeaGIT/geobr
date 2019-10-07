@@ -33,19 +33,8 @@ read_statistical_grid <- function(code_grid, year=NULL){
   data("grid_state_correspondence_table", envir=environment())
 
 
-# Get metadata with data addresses
-  tempf <- file.path(tempdir(), "metadata.rds")
-
-  # check if metadata has already been downloaded
-  if (file.exists(tempf)) {
-     metadata <- readr::read_rds(tempf)
-
-  } else {
-
-  # download it and save to metadata
-    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
-    metadata <- readr::read_rds(tempf)
-  }
+  # Get metadata with data addresses
+  metadata <- geobr::download_metadata()
 
 
 

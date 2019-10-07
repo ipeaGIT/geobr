@@ -34,19 +34,11 @@
 read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
 
   # Get metadata with data addresses
-  tempf <- file.path(tempdir(), "metadata.rds")
-  # check if metadata has already been downloaded
-  if (file.exists(tempf)) {
-    metadata <- readr::read_rds(tempf)
+  metadata <- geobr::download_metadata()
 
-  } else { # download it and save to metadata
-    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
-    metadata <- readr::read_rds(tempf)
-  }
 
   # Select geo
   temp_meta <- subset(metadata, geo=="setor_censitario")
-
 
 
 
