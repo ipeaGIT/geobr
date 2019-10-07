@@ -14,8 +14,20 @@ This data set covers the whole of Brazil and it includes the polygons of all of 
 territory. The last update of the data was 2004 (only year for which the data is currently available). The original
 data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/ .
 }
+\examples{
+\donttest{
+
+library(geobr)
+
+# Read biomes
+  b <- read_biomes(year=2004)
+
+}
+
+}
 \seealso{
-Other general area functions: \code{\link{read_census_tract}},
+Other general area functions: \code{\link{read_amazon}},
+  \code{\link{read_census_tract}},
   \code{\link{read_country}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},

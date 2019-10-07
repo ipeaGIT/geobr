@@ -14,8 +14,7 @@
 #' # Read biomes
 #'   b <- read_biomes(year=2004)
 #'
-#'
-#'
+#'}
 #'
 
 read_biomes <- function(year=NULL){

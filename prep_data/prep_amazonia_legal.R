@@ -14,7 +14,7 @@ library(stringi)
 
 
 #> DATASET: legal amazon
-#> Source: IBGE - http://mapas.mma.gov.br/i3geo/datadownload.htm
+#> Source: MMA - http://mapas.mma.gov.br/i3geo/datadownload.htm
 #> Metadata:
 # Titulo: Amzonia legal
 # Titulo alternativo: Amazonia legal
