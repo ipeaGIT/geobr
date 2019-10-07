@@ -2,6 +2,7 @@
 
 export(download_fun)
 export(download_metadata)
+export(read_amazon)
 export(read_biomes)
 export(read_census_tract)
 export(read_country)
