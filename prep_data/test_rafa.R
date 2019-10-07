@@ -397,7 +397,7 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
   setwd("R:/Dropbox/git_projects/geobr")
 
 
-  usethis::use_build_ignore("test")
+  usethis::use_build_ignore("travis.yml")
   usethis::use_build_ignore("prep_data")
   usethis::use_build_ignore("manual.pdf")
 
@@ -409,6 +409,9 @@ devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
   # Vignette que ainda nao esta pronta
     usethis::use_build_ignore("  Georeferencing-gain.R")
     usethis::use_build_ignore("  Georeferencing-gain.Rmd")
+
+
+
 
   # temp files
     usethis::use_build_ignore("crosswalk_pre.R")
