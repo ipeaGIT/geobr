@@ -121,7 +121,7 @@ library(sf)
 
 
 
-###### 2. read_municipality -------------------------
+###### recode column codes -------------------------
 gc(reset = T)
 
 
@@ -187,41 +187,6 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
-
-###### 4. read_micro_region -------------------------
-gc(reset = T)
-
-
-
-
-### passed the test
-
-system.time( b <- read_micro_region(code_micro=11008, year=2018) )
-head(b)
-plot(b)
-
-
-system.time( a <- read_micro_region(code_micro=11, year=2000) )
-system.time( a <- read_micro_region(code_micro=11, year=2010) )
-system.time( a <- read_micro_region(code_micro=11, year=2013) )
-
-system.time( a <- read_micro_region(code_micro=11, year=2018) )
-
-head(a)
-plot(a)
-
-system.time( b <- read_micro_region(code_micro="RJ", year=2001) )
-head(b)
-plot(b)
-
-system.time( c <- read_micro_region(code_micro=11) )
-head(c)
-plot(c)
-
-
-system.time( d <- read_micro_region(code_micro="all", year=2000) )
-head(d)
-plot(d)
 
 
 
@@ -300,31 +265,6 @@ system.time( w2 <- read_weighting_area(code_weighting=100000) )
 
 
 
-###### 7. read_statistical_grid -------------------------
-
-system.time( g1 <- read_statistical_grid(code_grid=44) )
-system.time( g1 <- read_statistical_grid(code_grid=44, year=2010) )
-head(g1)
-st_crs(g1)
-
-
-system.time( g2 <- read_statistical_grid(code_grid="AC") )
-head(g1)
-st_crs(g1)
-plot(g1)
-
-system.time( g3 <- read_statistical_grid(code_grid="all") )
-
-
-# expected errors
-system.time( g1 <- read_statistical_grid(code_grid=1000) )
-system.time( g1 <- read_statistical_grid(code_grid="xx") )
-system.time( g1 <- read_statistical_grid(code_grid="AC", year=5000) )
-system.time( g1 <- read_statistical_grid() )
-
-
-
-
 
 
 ###### 8. read_country -------------------------
@@ -359,32 +299,6 @@ plot(reg)
 
 
 
-###### 13. Disaster risk areas -------------------------
-d <- read_disaster_risk_area(year=2010)
-
-
-# interactive map
-  library(grobr)
-  library(leafgl)
-  library(leaflet)
-  library(sf)
-  library(colourvalues)
-
-  # get data
-  d <- read_disaster_risk_area(year=2010)
-
-  # format conversion to work in leafgl
-  d2 <-   sf::st_cast(d, 'POLYGON')
-
-  # colo
-  cols = colour_values_rgb(d$code_state, palette = "inferno", include_alpha = FALSE) / 255
-
-  # map
-  leaflet() %>%
-    addProviderTiles(provider = providers$CartoDB.DarkMatterNoLabels) %>%
-    addGlPolygons(data = d2, group = "pols", color= cols)
-
-
 
 
 # TRAVS
@@ -396,7 +310,7 @@ d <- read_disaster_risk_area(year=2010)
   library(testthat)
   library(geobr)
 
-  e <- package_coverage(clean=T, function_exclusions="read_statistical_grid")
+  e <- package_coverage()#clean=T, function_exclusions="read_statistical_grid")
   x <- as.data.frame(h)
 
 
@@ -425,6 +339,10 @@ file_coverage(source_files="R/download_fun.R",
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
 
+function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
+
+
+function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
@@ -541,7 +459,6 @@ setwd("..")
 #
 #
 # install.packages("pdflatex", dependencies = T)
-
 
 
 # PLOT
