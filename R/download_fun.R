@@ -1,7 +1,7 @@
 #' test function
 #'
 #' Testintg function
-#'
+#' @param x number test
 #' @export
 #'
 download_fun <- function(x) {

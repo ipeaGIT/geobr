@@ -6,6 +6,9 @@
 \usage{
 download_fun(x)
 }
+\arguments{
+\item{x}{number test}
+}
 \description{
 Testintg function
 }
