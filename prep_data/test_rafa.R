@@ -465,7 +465,7 @@ library(spelling)
 devtools::spell_check(pkg = "geobr", vignettes = TRUE, use_wordlist = TRUE)
 
 # Update documentation
-  devtools::document(pkg = "geobr")
+  devtools::document(pkg = ".")
 
 
 # Write package manual.pdf
