@@ -409,6 +409,9 @@ c2 <- function_coverage(fun = download_fun, code = geobr::download_fun(0)== 4101
 
 
 
+function_coverage(fun=geobr::download_metadata, test_file("tests/testthat/test-download_metadata.R"))
+
+
 function_coverage(fun=geobr::download_fun, test_file("tests/testthat/test-download_fun.R"))
 
 function_coverage(fun = geobr::download_fun, code = {geobr::download_fun(x=0)== 4101} )
