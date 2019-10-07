@@ -11,3 +11,4 @@
 ^  Georeferencing-gain\.R$
 ^  Georeferencing-gain\.Rmd$
 ^codecov\.yml$
+^travis\.yml$
