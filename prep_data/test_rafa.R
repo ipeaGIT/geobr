@@ -310,7 +310,7 @@ plot(reg)
   library(testthat)
   library(geobr)
 
-  geobr_cov2 <- package_coverage()#clean=T, function_exclusions="read_statistical_grid")
+  geobr_cov <- package_coverage()#clean=T, function_exclusions="read_statistical_grid")
   x <- as.data.frame(h)
 
 
