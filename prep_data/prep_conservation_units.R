@@ -95,17 +95,20 @@ head(temp_sf)
 
 
 # Rename columns
-temp_sf <- dplyr::rename(temp_sf, 
-                         code_conservation_unit = ID_UC0, 
-                         name_conservation_unit = NOME_UC1, 
-                         id_wcm = ID_WCMC2, 
+temp_sf <- dplyr::rename(temp_sf,
+                         code_conservation_unit = ID_UC0,
+                         name_conservation_unit = NOME_UC1,
+                         id_wcm = ID_WCMC2,
                          category = CATEGORI3,
-                         group = GRUPO4, 
-                         government_level = ESFERA5, 
-                         creation_year = ANO_CRIA6, 
-                         gid7 = GID7, 
-                         quality = QUALIDAD8, 
-                         code_u111 = CODIGO_U11)
+                         group = GRUPO4,
+                         government_level = ESFERA5,
+                         creation_year = ANO_CRIA6,
+                         gid7 = GID7,
+                         quality = QUALIDAD8,
+                         code_u111 = CODIGO_U11,
+                         legislation = ATO_LEGA9,
+                         name_organization = NOME_ORG12,
+                         dt_ultim10 = DT_ULTIM10)
 head(temp_sf)
 
 
