@@ -32,7 +32,7 @@ read_municipality <- function(code_muni, year=NULL){
 
 
 # Get metadata with data addresses
-  metadata <- geobr::download_metadata()
+  metadata <- download_metadata()
 
 
 # Select metadata geo

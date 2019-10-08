@@ -25,17 +25,17 @@ context("Read")
 test_that("read_state", {
 
   # read data
-  test_state_abrev <- geobr::read_state(code_state="AC", year=2010)
-  test_state_abrev2 <- geobr::read_state(code_state="AP", year=NULL)
-#  test_state_abrev3 <- geobr::read_state(name_state="Pernambuco", year=1872)
+  test_state_abrev <- read_state(code_state="AC", year=2010)
+  test_state_abrev2 <- read_state(code_state="AP", year=NULL)
+#  test_state_abrev3 <- read_state(name_state="Pernambuco", year=1872)
 
-  test_state_code <- geobr::read_state(code_state=11, year=2010)
-  test_state_code2 <- geobr::read_state(code_state=11, year=NULL)
-#  test_state_code3 <- geobr::read_state(code_state=11, year=1872)
+  test_state_code <- read_state(code_state=11, year=2010)
+  test_state_code2 <- read_state(code_state=11, year=NULL)
+#  test_state_code3 <- read_state(code_state=11, year=1872)
 
-  test_all <- geobr::read_state(code_state="all", year=2010)
-  test_all2 <- geobr::read_state(code_state="all", year=NULL)
-  test_all3 <- geobr::read_state(code_state="all", year=1872)
+  test_all <- read_state(code_state="all", year=2010)
+  test_all2 <- read_state(code_state="all", year=NULL)
+  test_all3 <- read_state(code_state="all", year=1872)
 
   # check sf object
   expect_true(is(test_state_abrev, "sf"))
@@ -65,35 +65,35 @@ test_that("read_state", {
 test_that("read_state", {
 
   # Wrong year and code
-  expect_error(geobr::read_state(code_state=9999999, year=9999999))
-  expect_error(geobr::read_state(code_state=9999999, year="xxx"))
-  expect_error(geobr::read_state(code_state="xxx", year=9999999))
-  expect_error(geobr::read_state(code_state="xxx", year="xxx"))
-  expect_error(geobr::read_state(code_state=NULL, year=9999999))
-  expect_error(geobr::read_state(code_state=NULL, year="xxx"))
+  expect_error(read_state(code_state=9999999, year=9999999))
+  expect_error(read_state(code_state=9999999, year="xxx"))
+  expect_error(read_state(code_state="xxx", year=9999999))
+  expect_error(read_state(code_state="xxx", year="xxx"))
+  expect_error(read_state(code_state=NULL, year=9999999))
+  expect_error(read_state(code_state=NULL, year="xxx"))
 
   # Wrong year
-  expect_error(geobr::read_state(code_state=11, year=9999999))
-  expect_error(geobr::read_state(code_state=1401, year=9999999))
-  expect_error(geobr::read_state(code_state=11008, year=9999999))
-  expect_error(geobr::read_state(code_state=11, year= "xx"))
-  expect_error(geobr::read_state(code_state=1401, year= "xx"))
-  expect_error(geobr::read_state(code_state=11008, year= "xx"))
+  expect_error(read_state(code_state=11, year=9999999))
+  expect_error(read_state(code_state=1401, year=9999999))
+  expect_error(read_state(code_state=11008, year=9999999))
+  expect_error(read_state(code_state=11, year= "xx"))
+  expect_error(read_state(code_state=1401, year= "xx"))
+  expect_error(read_state(code_state=11008, year= "xx"))
 
-  expect_error(geobr::read_state(code_state="all", year=9999999))
-  expect_error(geobr::read_state(code_state="SC", year=9999999))
-  expect_error(geobr::read_state(code_state="SC", year="xx"))
-  expect_error(geobr::read_state(code_state="all", year="xx"))
+  expect_error(read_state(code_state="all", year=9999999))
+  expect_error(read_state(code_state="SC", year=9999999))
+  expect_error(read_state(code_state="SC", year="xx"))
+  expect_error(read_state(code_state="all", year="xx"))
 
   # Wrong code
-  expect_message(geobr::read_state(code_state=9999999, year=1991))
-  expect_error(geobr::read_state(code_state=9999999, year=2000))
-  expect_error(geobr::read_state(code_state=9999999, year=NULL))
-  expect_message(geobr::read_state(code_state="XXX", year=1991))
-  expect_error(geobr::read_state(code_state="XXX", year=2000))
-  expect_error(geobr::read_state(code_state="XXX", year=NULL))
-  expect_message(geobr::read_state(code_state=NULL, year=1991))
-  expect_error(geobr::read_state(code_state=NULL, year=2000))
-  expect_error(geobr::read_state(code_state=NULL, year=NULL))
+  expect_message(read_state(code_state=9999999, year=1991))
+  expect_error(read_state(code_state=9999999, year=2000))
+  expect_error(read_state(code_state=9999999, year=NULL))
+  expect_message(read_state(code_state="XXX", year=1991))
+  expect_error(read_state(code_state="XXX", year=2000))
+  expect_error(read_state(code_state="XXX", year=NULL))
+  expect_message(read_state(code_state=NULL, year=1991))
+  expect_error(read_state(code_state=NULL, year=2000))
+  expect_error(read_state(code_state=NULL, year=NULL))
 
 })

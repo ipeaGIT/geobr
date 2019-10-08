@@ -22,7 +22,7 @@ read_indigenous_land <- function(date){
 
 
 # Get metadata with data addresses
-  metadata <- geobr::download_metadata()
+  metadata <- download_metadata()
 
 
 # Select geo

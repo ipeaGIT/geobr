@@ -37,7 +37,7 @@ test_that("read_health_facilities", {
 test_that("read_health_facilities", {
 
   # read data
-  test_sf <- geobr::read_health_facilities()
+  test_sf <- read_health_facilities()
 
   # check sf object
   expect_true(is(test_sf, "sf"))

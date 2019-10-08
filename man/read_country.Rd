@@ -26,6 +26,7 @@ library(geobr)
 Other general area functions: \code{\link{read_amazon}},
   \code{\link{read_biomes}},
   \code{\link{read_census_tract}},
+  \code{\link{read_conservation_units}},
   \code{\link{read_meso_region}},
   \code{\link{read_micro_region}},
   \code{\link{read_municipality}},

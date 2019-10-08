@@ -33,7 +33,7 @@
 read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=1400100
 
   # Get metadata with data addresses
-  metadata <- geobr::download_metadata()
+  metadata <- download_metadata()
 
 
   # Select geo
