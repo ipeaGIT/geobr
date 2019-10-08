@@ -59,6 +59,8 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_biomes` (dev.) | Biomes | 2004 | IBGE | 
 |`read_disaster_risk_area` (dev.) | Disaster risk areas | 2010 | CEMADEN and IBGE | 
 |`read_amazon` (dev.) | Brazil's Legal Amazon | 2012 | MMA | 
+|`read_conservation_units` (dev.) | Environmental Conservation Units | 201909 | MMA | 
+
 
 Note 1. Functions marked with "dev." are only available in the development version of `geobr`.
 
