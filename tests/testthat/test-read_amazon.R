@@ -6,8 +6,8 @@ context("Read")
 test_that("read_amazon", {
 
   # read data
-  expect_message(geobr::read_amazon(year=NULL))
-  test_sf <- geobr::read_amazon(year=2012)
+  expect_message(read_amazon(year=NULL))
+  test_sf <- read_amazon(year=2012)
 
   # check sf object
   expect_true(is(test_sf, "sf"))
@@ -27,7 +27,7 @@ test_that("read_amazon", {
 test_that("read_amazon", {
 
   # Wrong year
-  expect_error(geobr::read_amazon(year=9999999))
-  expect_error(geobr::read_amazon(year="xxx"))
+  expect_error(read_amazon(year=9999999))
+  expect_error(read_amazon(year="xxx"))
 
 })

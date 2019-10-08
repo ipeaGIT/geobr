@@ -34,7 +34,7 @@
 read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
 
   # Get metadata with data addresses
-  metadata <- geobr::download_metadata()
+  metadata <- download_metadata()
 
 
   # Select geo

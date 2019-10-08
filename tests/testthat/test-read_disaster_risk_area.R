@@ -37,7 +37,7 @@ test_that("read_disaster_risk_area", {
 test_that("read_disaster_risk_area", {
 
   # read data
-  test_sf <- geobr::read_disaster_risk_area(year=2010)
+  test_sf <- read_disaster_risk_area(year=2010)
 
   # check sf object
   expect_true(is(test_sf, "sf"))
@@ -57,8 +57,8 @@ test_that("read_disaster_risk_area", {
 test_that("read_disaster_risk_area", {
 
   # Wrong year
-  expect_error(geobr::read_disaster_risk_area(year=9999999))
-  expect_error(geobr::read_disaster_risk_area(year="xxx"))
-  expect_error(geobr::read_disaster_risk_area(year=NULL))
+  expect_error(read_disaster_risk_area(year=9999999))
+  expect_error(read_disaster_risk_area(year="xxx"))
+  expect_error(read_disaster_risk_area(year=NULL))
 
 })

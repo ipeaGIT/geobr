@@ -6,7 +6,7 @@ context("Read")
 test_that("read_indigenous_land", {
 
   # read data
-  test_sf <- geobr::read_indigenous_land(date=201907)
+  test_sf <- read_indigenous_land(date=201907)
 
 
   # check sf object
@@ -26,8 +26,8 @@ test_that("read_indigenous_land", {
 test_that("read_indigenous_land", {
 
   # Wrong date
-  expect_error(geobr::read_indigenous_land(date=9999999))
-  expect_error(geobr::read_indigenous_land(date="xxx"))
-  expect_error(geobr::read_indigenous_land(date=NULL))
+  expect_error(read_indigenous_land(date=9999999))
+  expect_error(read_indigenous_land(date="xxx"))
+  expect_error(read_indigenous_land(date=NULL))
 
 })

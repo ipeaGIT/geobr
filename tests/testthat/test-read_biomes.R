@@ -6,8 +6,8 @@ context("Read")
 test_that("read_biomes", {
 
   # read data
-  expect_message(geobr::read_biomes(year=NULL))
-  test_sf <- geobr::read_biomes(year=2004)
+  expect_message(read_biomes(year=NULL))
+  test_sf <- read_biomes(year=2004)
 
   # check sf object
   expect_true(is(test_sf, "sf"))
@@ -27,7 +27,7 @@ test_that("read_biomes", {
 test_that("read_biomes", {
 
   # Wrong year
-  expect_error(geobr::read_biomes(year=9999999))
-  expect_error(geobr::read_biomes(year="xxx"))
+  expect_error(read_biomes(year=9999999))
+  expect_error(read_biomes(year="xxx"))
 
 })

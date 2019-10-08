@@ -24,7 +24,7 @@
 read_disaster_risk_area <- function(year){
 
   # Get metadata with data addresses
-  metadata <- geobr::download_metadata()
+  metadata <- download_metadata()
 
 
   # Select geo

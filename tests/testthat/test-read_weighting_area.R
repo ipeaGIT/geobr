@@ -5,22 +5,22 @@ test_that("read_weighting_area", {
   # read data
 
     # input weighting area
-    test_code <- geobr::read_weighting_area(code_weighting=5201108005004, year=2010)
-    test_code2 <- geobr::read_weighting_area(code_weighting=5201108005004, year=NULL)
+    test_code <- read_weighting_area(code_weighting=5201108005004, year=2010)
+    test_code2 <- read_weighting_area(code_weighting=5201108005004, year=NULL)
 
     # input muni
-    test_muni <- geobr::read_weighting_area(code_weighting=5201108, year=2010)
-    test_muni2 <- geobr::read_weighting_area(code_weighting=5201108, year=NULL)
+    test_muni <- read_weighting_area(code_weighting=5201108, year=2010)
+    test_muni2 <- read_weighting_area(code_weighting=5201108, year=NULL)
 
 
-    test_abrev <- geobr::read_weighting_area(code_weighting="AC", year=2010)
-    test_abrev2 <- geobr::read_weighting_area(code_weighting="AP", year=NULL)
+    test_abrev <- read_weighting_area(code_weighting="AC", year=2010)
+    test_abrev2 <- read_weighting_area(code_weighting="AP", year=NULL)
 
-    test_state <- geobr::read_weighting_area(code_weighting=11, year=2010)
-    test_state2 <- geobr::read_weighting_area(code_weighting=11, year=NULL)
+    test_state <- read_weighting_area(code_weighting=11, year=2010)
+    test_state2 <- read_weighting_area(code_weighting=11, year=NULL)
 
-    test_all <- geobr::read_weighting_area(code_weighting="all", year=2010)
-    test_all2 <- geobr::read_weighting_area(code_weighting="all", year=NULL)
+    test_all <- read_weighting_area(code_weighting="all", year=2010)
+    test_all2 <- read_weighting_area(code_weighting="all", year=NULL)
 
 
   # check sf object
@@ -49,28 +49,28 @@ test_that("read_weighting_area", {
 test_that("read_weighting_area", {
 
   # Wrong year and code
-  expect_error(geobr::read_weighting_area(code_weighting=9999999, year=9999999))
-  expect_error(geobr::read_weighting_area(code_weighting=9999999, year="xxx"))
-  expect_error(geobr::read_weighting_area(code_weighting="xxx", year=9999999))
-  expect_error(geobr::read_weighting_area(code_weighting="xxx", year="xxx"))
-  expect_error(geobr::read_weighting_area(code_weighting=9999999, year=NULL))
+  expect_error(read_weighting_area(code_weighting=9999999, year=9999999))
+  expect_error(read_weighting_area(code_weighting=9999999, year="xxx"))
+  expect_error(read_weighting_area(code_weighting="xxx", year=9999999))
+  expect_error(read_weighting_area(code_weighting="xxx", year="xxx"))
+  expect_error(read_weighting_area(code_weighting=9999999, year=NULL))
 
-  # Wrong year  expect_error(geobr::read_weighting_area(code_weighting="xxx", year=NULL))
-  expect_error(geobr::read_weighting_area(code_weighting=11, year=9999999))
-  expect_error(geobr::read_weighting_area(code_weighting=11, year= "xx"))
-  expect_error(geobr::read_weighting_area(code_weighting=1401, year=9999999))
-  expect_error(geobr::read_weighting_area(code_weighting=1401, year= "xx"))
+  # Wrong year  expect_error(read_weighting_area(code_weighting="xxx", year=NULL))
+  expect_error(read_weighting_area(code_weighting=11, year=9999999))
+  expect_error(read_weighting_area(code_weighting=11, year= "xx"))
+  expect_error(read_weighting_area(code_weighting=1401, year=9999999))
+  expect_error(read_weighting_area(code_weighting=1401, year= "xx"))
 
-  expect_error(geobr::read_weighting_area(code_weighting="SC", year=9999999))
-  expect_error(geobr::read_weighting_area(code_weighting="SC", year="xx"))
+  expect_error(read_weighting_area(code_weighting="SC", year=9999999))
+  expect_error(read_weighting_area(code_weighting="SC", year="xx"))
 
-  expect_error(geobr::read_weighting_area(code_weighting="all", year=9999999))
-  expect_error(geobr::read_weighting_area(code_weighting="all", year="xx"))
+  expect_error(read_weighting_area(code_weighting="all", year=9999999))
+  expect_error(read_weighting_area(code_weighting="all", year="xx"))
 
   # Wrong code
-  expect_error(geobr::read_weighting_area(code_weighting=9999999, year=2000))
-  expect_error(geobr::read_weighting_area(code_weighting="XXX", year=2000))
-  expect_error(geobr::read_weighting_area(code_weighting="XXX", year=NULL))
-  expect_error(geobr::read_weighting_area(code_weighting=NULL, year=2000))
+  expect_error(read_weighting_area(code_weighting=9999999, year=2000))
+  expect_error(read_weighting_area(code_weighting="XXX", year=2000))
+  expect_error(read_weighting_area(code_weighting="XXX", year=NULL))
+  expect_error(read_weighting_area(code_weighting=NULL, year=2000))
 
 })
