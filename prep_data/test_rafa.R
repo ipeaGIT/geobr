@@ -310,7 +310,7 @@ plot(reg)
   library(testthat)
   library(geobr)
 
-  e <- package_coverage()#clean=T, function_exclusions="read_statistical_grid")
+  geobr_cov <- package_coverage()#clean=T, function_exclusions="read_statistical_grid")
   x <- as.data.frame(h)
 
 
@@ -354,7 +354,8 @@ function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-re
 # create githubl shield with code coverage
 usethis::use_coverage( type = c("codecov"))
 
-
+# update Package coverage
+  covr::codecov( coverage =geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
