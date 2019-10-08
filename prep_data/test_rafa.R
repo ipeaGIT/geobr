@@ -323,12 +323,10 @@ c2 <- function_coverage(fun = download_fun, code = geobr::download_fun(0)== 4101
 
 
 
-function_coverage(fun=geobr::download_metadata, test_file("tests/testthat/test-download_metadata.R"))
 
 
-function_coverage(fun=geobr::download_fun, test_file("tests/testthat/test-download_fun.R"))
-
-function_coverage(fun = geobr::download_fun, code = {geobr::download_fun(x=0)== 4101} )
+# function_coverage(fun=geobr::download_fun, test_file("tests/testthat/test-download_fun.R"))
+# function_coverage(fun = geobr::download_fun, code = {geobr::download_fun(x=0)== 4101} )
 
 
 file_coverage(source_files="R/download_fun.R",
@@ -339,9 +337,9 @@ file_coverage(source_files="R/download_fun.R",
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
 
+function_coverage(fun=geobr::download_metadata, test_file("tests/testthat/test-download_metadata.R"))
+function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
 function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
-
-
 function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
