@@ -353,7 +353,7 @@ function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-re
   # usethis::use_coverage( type = c("codecov"))
 
 # update Package coverage
-  covr::codecov( coverage =geobr_cov2, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
+  covr::codecov( coverage =geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
