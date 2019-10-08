@@ -93,6 +93,9 @@ shape <- list.files(path=paste0("./",update), full.names = T, pattern = ".shp$")
 temp_sf <- st_read(shape, quiet = F, stringsAsFactors=F, options = "ENCODING=latin1") #Encoding usado pelo IBGE (ISO-8859-1) usa-se latin1 para ler acentos
 head(temp_sf)
 
+# add download date column
+
+temp_sf$date <- update
 
 # Rename columns
 temp_sf <- dplyr::rename(temp_sf,
