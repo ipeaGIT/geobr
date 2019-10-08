@@ -19,6 +19,7 @@
   library(geobr)
 
 # or use the development version with latest features
+  utils::remove.packages('geobr')
   devtools::install_github("ipeaGIT/geobr")
   library(geobr)
 ```
