@@ -1,45 +1,31 @@
+#> DATASET: urbanized areas
+#> Source: 2005 - ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/areas_urbanizadas_do_brasil/2005/areas_urbanizadas_do_Brasil_2005_shapes.zip
+#>         2015 - ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/areas_urbanizadas_do_brasil/2015/Shape/AreasUrbanizadasDoBrasil_2015.zip
+#> Metadata:
+# Title: urbanized areas
+# Alternate title: ***
+# Date: Update 2015
+#
+# Presentation form: Shape
+# Language: Pt-BR
+# Character set: 2005 - WINDOWS-1252
+#                2015 - UTF-8
+#
+# Abstract: Polygons of the brazilian urbanized areas.
+# Purpose:: Identify the brazilian urbanized areas.
+#
+# Status: in development
+# keywords:****
+# Reference System Information: SIRGAS 2000
+
+
+
 library(sf)
 library(dplyr)
 library(tidyverse)
 library(tidyr)
 library(data.table)
 library(mapview)
-
-
-
-#> DATASET: urban area
-#> Source: 2005 - ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/areas_urbanizadas_do_brasil/2005/areas_urbanizadas_do_Brasil_2005_shapes.zip
-#>         2015 - ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/areas_urbanizadas_do_brasil/2015/Shape/AreasUrbanizadasDoBrasil_2015.zip
-#> Metadata:
-# Titulo: Áreas Urbanizadas
-# Titulo alternativo:
-# Data: Atualização ***
-#
-# Forma de apresentação: Shape
-# Linguagem: Pt-BR
-# Character set: 2005 - WINDOWS-1252
-#                2015 - UTF-8
-#
-# Resumo: Polígonos e Pontos das unidades de conservação brasileiras.
-# Informações adicionais: Dados produzidos pelo MMA, e utilizados na elaboração do shape de biomas com a melhor base oficial disponível.
-# Propósito: Identificação das unidades de conservação brasileiras.
-#
-# Estado: Em desenvolvimento
-# Palavras chaves descritivas:****
-# Informação do Sistema de Referência: SIRGAS 2000
-
-
-
-
-
-
-
-view(ACP_urb_05)
-
-
-
-
-
 
 
 
@@ -88,22 +74,23 @@ shp_ate_urban_mun_2015 <- st_read("./AreasUrbanizadasDoBrasil_2015_Concentracoes
 # directory 2005
 setwd(dir.2005)
 
-# save rds
-saveRDS(shp_ACP_urban_mun_2005, "shp_ACP_urban_mun_2005.rds")
-saveRDS(shp_cemk_urban_mun_2005, "shp_cemk_urban_mun_2005.rds")
-saveRDS(shp_cost_urban_mun_2005, "shp_cost_urban_mun_2005.rds")
+# save files rds
+readr::write_rds(shp_ACP_urban_mun_2005,"shp_ACP_urban_mun_2005.rds", compress = "gz")
+readr::write_rds(shp_cemk_urban_mun_2005,"shp_cemk_urban_mun_2005.rds", compress = "gz")
+readr::write_rds(shp_cost_urban_mun_2005,"shp_cost_urban_mun_2005.rds", compress = "gz")
+
+
 
 # read files of 2005
 ACP_urban_05 <- readRDS("shp_ACP_urban_mun_2005.rds")
 cemk_urban_05 <- readRDS("shp_cemk_urban_mun_2005.rds")
 cost_urban_05 <- readRDS("shp_cost_urban_mun_2005.rds")
 
-
 # directory 2015
 setwd(dir.2015)
 
-saveRDS(shp_mais_urban_mun_2015, "shp_mais_urban_mun_2015.rds")
-saveRDS(shp_ate_urban_mun_2015, "shp_ate_urban_mun_2015.rds")
+readr::write_rds(shp_mais_urban_mun_2015,"shp_mais_urban_mun_2015.rds", compress = "gz")
+readr::write_rds(shp_ate_urban_mun_2015,"shp_ate_urban_mun_2015.rds", compress = "gz")
 
 
 # read shape files
@@ -130,9 +117,8 @@ ibge_05 <- dplyr::rename(ibge_05, name_muni = municipality_name, code_muni = mun
 ibge_05$code_muni <- as.factor(ibge_05$code_muni)
 head(ibge_05)
 
-#############
-#### Clean data set
-#########2005#####
+#### Clean data set ------------------------------------------------
+#########2005##### -------------------------------------------------
 setwd(dir.2005)
 
 ##### ACP #####
@@ -156,11 +142,17 @@ original_crs <- sf::st_crs(ACP_urb_05)
 # Convert data.table back into sf
 ACP_urb_05_sf <- st_as_sf(ACP_urb_05, crs=original_crs)
 
+# Use UTF-8 encoding
+str(ACP_urb_05_sf)
+
+ACP_urb_05_sf$name_muni <- stringi::stri_encode(as.character(ACP_urb_05_sf$name_muni), "UTF-8")
+ACP_urb_05_sf$abbrev_state <- stringi::stri_encode(as.character(ACP_urb_05_sf$abbrev_state), "UTF-8")
+
 # test the shape
 mapview(ACP_urb_05_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(ACP_urb_05_sf,"./ACP_urb_05.rds")
+readr::write_rds(ACP_urb_05_sf,"./ACP_urb_05.rds", compress = "gz")
 
 ##### cemk #####
 
@@ -184,11 +176,17 @@ original_crs <- sf::st_crs(cemk_urb_05)
 # Convert data.table back into sf
 cemk_urb_05_sf <- st_as_sf(cemk_urb_05, crs=original_crs)
 
+# Use UTF-8 encoding
+str(cemk_urb_05_sf)
+
+cemk_urb_05_sf$name_muni <- stringi::stri_encode(as.character(cemk_urb_05_sf$name_muni), "UTF-8")
+cemk_urb_05_sf$abbrev_state <- stringi::stri_encode(as.character(cemk_urb_05_sf$abbrev_state), "UTF-8")
+
 # test the shape
 mapview(cemk_urb_05_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(cemk_urb_05_sf,"./cemk_urb_05.rds")
+readr::write_rds(cemk_urb_05_sf,"./cemk_urb_05.rds", compress = "gz")
 
 
 ##### cost #####
@@ -207,19 +205,26 @@ cost_urb_05 <- cost_urban_05_new[,c("densidade","code_muni","code_state","name_m
 names(cost_urb_05)
 
 # store original CRS
-original_crs <- sf::st_crs(cemk_urb_05)
+original_crs <- sf::st_crs(cost_urb_05)
 
 # Convert data.table back into sf
-cemk_urb_05_sf <- st_as_sf(cemk_urb_05, crs=original_crs)
+cost_urb_05_sf <- st_as_sf(cost_urb_05, crs=original_crs)
 
-#test the shape
-mapview(cemk_urb_05_sf)
+# Use UTF-8 encoding
+str(cost_urb_05_sf)
+
+cost_urb_05_sf$name_muni <- stringi::stri_encode(as.character(cost_urb_05_sf$name_muni), "UTF-8")
+cost_urb_05_sf$abbrev_state <- stringi::stri_encode(as.character(cost_urb_05_sf$abbrev_state), "UTF-8")
+
+# test the shape
+mapview(cost_urb_05_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(cemk_urb_05_sf,"./cemk_urb_05.rds")
+readr::write_rds(cost_urb_05_sf,"./cost_urb_05.rds", compress = "gz")
 
 
-#########2015#####
+
+#########2015##### --------------------------------------
 
 # activate directory 2015
 setwd(dir.2015)
@@ -241,9 +246,7 @@ ibge_15$code_muni <- as.factor(ibge_15$code_muni)
 head(ibge_15)
 
 
-###############
-########  mais
-###############
+########  mais ---------------------
 
 # rename and create columns
 mais_urban_15 <- dplyr::rename(mais_urban_15, fid_1 = FID_1, densidade = Densidade, tipo = Tipo, code_muni = CodConcUrb)
@@ -261,15 +264,21 @@ original_crs <- sf::st_crs(mais_urb_15)
 # Convert data.table back into sf
 mais_urb_15_sf <- st_as_sf(mais_urb_15, crs=original_crs)
 
-#test the shape
+# Use UTF-8 encoding
+str(mais_urb_15_sf)
+
+mais_urb_15_sf$name_muni <- stringi::stri_encode(as.character(mais_urb_15_sf$name_muni), "UTF-8")
+mais_urb_15_sf$abbrev_state <- stringi::stri_encode(as.character(mais_urb_15_sf$abbrev_state), "UTF-8")
+
+# test the shape
 mapview(mais_urb_15_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(mais_urb_15_sf,"./mais_urb_15.rds")
+readr::write_rds(mais_urb_15_sf,"./mais_urb_15.rds", compress = "gz")
+
 
 #############
-##### até
-###############
+##### até ---------------
 
 # rename and create columns
 ate_urban_15 <- dplyr::rename(ate_urban_15, densidade = Densidade, tipo = Tipo, code_muni = CodConcUrb)
@@ -287,16 +296,23 @@ original_crs <- sf::st_crs(ate_urb_15)
 # Convert data.table back into sf
 ate_urb_15_sf <- st_as_sf(ate_urb_15, crs=original_crs)
 
-#test the shape
+
+# Use UTF-8 encoding
+str(ate_urb_15_sf)
+
+ate_urb_15_sf$name_muni <- stringi::stri_encode(as.character(ate_urb_15_sf$name_muni), "UTF-8")
+ate_urb_15_sf$abbrev_state <- stringi::stri_encode(as.character(ate_urb_15_sf$abbrev_state), "UTF-8")
+
+# test the shape
 mapview(ate_urb_15_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(ate_urb_15_sf,"./ate_urb_15.rds")
+readr::write_rds(ate_urb_15_sf,"./ate_urb_15.rds", compress = "gz")
 
 
 
-##### join datasets
-###############
+##### join datasets --------------------
+
 # creat pop_2005 in ACP_urb_05 and cost_urb_05
 # creat dataset column
 
@@ -326,7 +342,7 @@ urb_2005_sf <- st_as_sf(urb_2005, crs=original_crs)
 mapview(urb_2005_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(urb_2005_sf,"./urb_2005.rds")
+readr::write_rds(urb_2005_sf,"./urb_2005.rds", compress = "gz")
 
 # creat dataset column
 setwd(dir.2015)
@@ -350,4 +366,5 @@ urb_2015_sf <- st_as_sf(urb_2015, crs=original_crs)
 mapview(urb_2015_sf)
 
 # Save cleaned sf in the cleaned directory
-saveRDS(urb_2015_sf,"./urb_2015.rds")
+readr::write_rds(urb_2015_sf,"./urb_2015.rds", compress = "gz")
+
