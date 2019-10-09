@@ -118,14 +118,17 @@ head(temp_sf)
 # store original CRS
 original_crs <- st_crs(temp_sf)
 
+# # Use UTF-8 encoding
+# temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
+
+
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
 temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 st_crs(temp_sf)
 
+
 # Make any invalid geometry valid # st_is_valid( sf)
 temp_sf <- lwgeom::st_make_valid(temp_sf)
-
-
 
 # Save cleaned sf in the cleaned directory
 setwd(root_dir)

@@ -148,6 +148,10 @@ setwd(root_dir)
   temp_sf <- st_as_sf(temp_sf, crs=original_crs)
 
 
+  # # Use UTF-8 encoding
+  # temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
+
+
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
   temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 
