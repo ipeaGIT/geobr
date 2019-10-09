@@ -1,7 +1,6 @@
 # geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
 [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr)
- [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr)
   [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) 
   [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr)
   <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange">
@@ -94,7 +93,7 @@ The shapefiles are created by IBGE. The **geobr** package is developed by a team
 * Pereira, R.H.M.; Gonçalves, C.N.; Araujo, P.H.F. de; Carvalho, G.D.; Nascimento, I.; Arruda, R.A. de. (2019) **geobr: an R package to easily access shapefiles of the Brazilian Institute of Geography and Statistics**. GitHub repository - https://github.com/ipeaGIT/geobr.
 
 
-
+[![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr)
 
 ### Advantages of **geobr** and related projects
 As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package follows an intuitive syntax and it has a few advantages when compared to other packages, including for example:
