@@ -104,6 +104,9 @@ temp_sf <- st_read(shape, quiet = F, stringsAsFactors=F, options = "ENCODING=lat
 temp_sf <- dplyr::rename(temp_sf, code_biome = COD_BIOMA, name_biome = NOM_BIOMA)
 head(temp_sf)
 
+# # Use UTF-8 encoding
+# temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
+
 
 # store original CRS
 original_crs <- st_crs(temp_sf)
