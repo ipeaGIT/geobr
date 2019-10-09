@@ -30,76 +30,134 @@ library(mapview)
 
 
 
-##### dowload, read e saverds ####
+###### 0. Create Root folder to save the data -----------------
+# Root directory
+root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
+setwd(root_dir)
 
-#endereco onde os shapes serão salvos
-dir.shapes <- "L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\urban_area"
 
-dir.download <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\urban_area\\Shapes")
+# Directory to keep raw zipped files
+  dir.create("./urban_area2")
+  dir_2005 <- paste0("./urban_area2/2005")
+  dir_2015 <- paste0("./urban_area2/2015")
+  dir.create(dir_2005)
+  dir.create(dir_2015)
 
-dir.2005 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\urban_area\\2005")
 
-dir.2015 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\urban_area\\2015")
+# Directory to save clean sf.rds files
+dir.create("./urban_area2/shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
+destdir_clean_2005 <- paste0("./urban_area2/shapes_in_sf_all_years_cleaned/",2005)
+destdir_clean_2015 <- paste0("./urban_area2/shapes_in_sf_all_years_cleaned/",2015)
+dir.create(destdir_clean_2005)
+dir.create(destdir_clean_2015)
 
-# create folder to save the data
-dir.create(dir.shapes)
-dir.create(dir.download)
-dir.create(dir.2005)
-dir.create(dir.2015)
 
-setwd(dir.download)
+
+
+#### 0. Download original data sets  -----------------
+
+setwd('./urban_area2')
+
+
 # download shape files
 download.file("ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/areas_urbanizadas_do_brasil/2005/areas_urbanizadas_do_Brasil_2005_shapes.zip" ,
-              destfile="areas_urbanizadas_do_Brasil_2005_shapes.zip")
+              destfile= paste0(dir_2005,"/areas_urbanizadas_do_Brasil_2005_shapes.zip") )
+
 download.file("ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/areas_urbanizadas_do_brasil/2015/Shape/AreasUrbanizadasDoBrasil_2015.zip" ,
-              destfile="AreasUrbanizadasDoBrasil_2015.zip")
+              destfile= paste0(dir_2015,"/areas_urbanizadas_do_Brasil_2015_shapes.zip"))
 
 
-# unzip shape files
-unzip("./areas_urbanizadas_do_Brasil_2005_shapes.zip")
-unzip("./AreasUrbanizadasDoBrasil_2015.zip")
 
-# read shape files
-shp_ACP_urban_mun_2005 <- st_read("./AreasUrbanizadas_MunicipiosACP_porMunicipio.shp",
-                                  options = "ENCODING=WINDOWS-1252")
-shp_cemk_urban_mun_2005 <- st_read("./AreasUrbanizadas_MunicipiosAcima100k_porMunicipio.shp",
-                                   options = "ENCODING=WINDOWS-1252")
-shp_cost_urban_mun_2005 <- st_read("./AreasUrbanizadas_MunicipiosCosteiros_porMunicipio.shp",
-                                   options = "ENCODING=WINDOWS-1252")
-shp_mais_urban_mun_2015 <- st_read("./AreasUrbanizadasDoBrasil_2015_Concentracoes_Urbanas_com_mais_de_300000_habitantes.shp",
+
+#### 2. Unzipe shape files -----------------
+
+# 2005
+unzip( paste0(dir_2005,"/areas_urbanizadas_do_Brasil_2005_shapes.zip"), exdir = dir_2005)
+
+# 2015
+unzip( paste0(dir_2015,"/areas_urbanizadas_do_Brasil_2015_shapes.zip"), exdir = dir_2015)
+
+
+
+
+
+
+#### 3. Clean data set and save it in compact .rds format-----------------
+
+
+##### 3.1 read shape files -------------------
+setwd(root_dir)
+
+# 2005
+  ACP_urban_05 <- st_read( paste0(dir_2005,"/AreasUrbanizadas_MunicipiosACP_porMunicipio.shp"),
+                                    options = "ENCODING=WINDOWS-1252")
+  cemk_urban_05 <- st_read( paste0(dir_2005,"/AreasUrbanizadas_MunicipiosAcima100k_porMunicipio.shp"),
+                                     options = "ENCODING=WINDOWS-1252")
+  cost_urban_05 <- st_read( paste0(dir_2005,"/AreasUrbanizadas_MunicipiosCosteiros_porMunicipio.shp"),
+                                     options = "ENCODING=WINDOWS-1252")
+
+
+  # 2015
+  mais_urban_15 <- st_read( paste0(dir_2015,"/AreasUrbanizadasDoBrasil_2015_Concentracoes_Urbanas_com_mais_de_300000_habitantes.shp"),
                                    options = "ENCODING=UTF-8")
-shp_ate_urban_mun_2015 <- st_read("./AreasUrbanizadasDoBrasil_2015_Concentracoes_Urbanas_de_100000_a_300000_habitantes.shp",
-                                  options = "ENCODING=UTF-8")
-
-# directory 2005
-setwd(dir.2005)
-
-# save files rds
-readr::write_rds(shp_ACP_urban_mun_2005,"shp_ACP_urban_mun_2005.rds", compress = "gz")
-readr::write_rds(shp_cemk_urban_mun_2005,"shp_cemk_urban_mun_2005.rds", compress = "gz")
-readr::write_rds(shp_cost_urban_mun_2005,"shp_cost_urban_mun_2005.rds", compress = "gz")
+  ate_urban_15 <- st_read( paste0(dir_2015,"/AreasUrbanizadasDoBrasil_2015_Concentracoes_Urbanas_de_100000_a_300000_habitantes.shp"),
+                                    options = "ENCODING=UTF-8")
 
 
 
-# read files of 2005
-ACP_urban_05 <- readRDS("shp_ACP_urban_mun_2005.rds")
-cemk_urban_05 <- readRDS("shp_cemk_urban_mun_2005.rds")
-cost_urban_05 <- readRDS("shp_cost_urban_mun_2005.rds")
 
-# directory 2015
-setwd(dir.2015)
-
-readr::write_rds(shp_mais_urban_mun_2015,"shp_mais_urban_mun_2015.rds", compress = "gz")
-readr::write_rds(shp_ate_urban_mun_2015,"shp_ate_urban_mun_2015.rds", compress = "gz")
+##### 3.2 Pile them up by year -------------------
 
 
-# read shape files
-mais_urban_15 <- readRDS("shp_mais_urban_mun_2015.rds")
-ate_urban_15 <- readRDS("shp_ate_urban_mun_2015.rds")
 
-setwd(dir.shapes)
-# Delete download folder
-unlink("Shapes", recursive = TRUE)
+
+
+# Make all data sets have the same columns
+  ACP_urban_05$POP_2005 <- NA
+  ACP_urban_05$dataset <- "population concentration area"
+
+  cost_urban_05$POP_2005 <- NA
+  cost_urban_05$ACP <- NA
+  cost_urban_05$COD_ACP <- NA
+  cost_urban_05$dataset <- "coastal area"
+
+  cemk_urban_05$ACP <- NA
+  cemk_urban_05$COD_ACP <- NA
+  cemk_urban_05$dataset <- "population above 100k"
+
+  # columns in the same order
+  setDT(ACP_urban_05)
+  setDT(cost_urban_05)
+  setDT(cemk_urban_05)
+
+  setcolorder(cost_urban_05, neworder= c(names(ACP_urban_05)) )
+  setcolorder(cemk_urban_05, neworder=  c(names(ACP_urban_05)) )
+
+
+ # pile them up
+  urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
+
+6666666666666666666666666666666666666666666666666666
+  # store original CRS
+  original_crs <- sf::st_crs(urb_2005)
+
+  # Convert data.table back into sf
+  urb_2005_sf <- st_as_sf(urb_2005, crs=original_crs)
+
+  #test the shape
+  mapview(urb_2005_sf)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # read the IBGE files for 2005 and 2015
@@ -117,9 +175,12 @@ ibge_05 <- dplyr::rename(ibge_05, name_muni = municipality_name, code_muni = mun
 ibge_05$code_muni <- as.factor(ibge_05$code_muni)
 head(ibge_05)
 
+
+
+
 #### Clean data set ------------------------------------------------
 #########2005##### -------------------------------------------------
-setwd(dir.2005)
+setwd(dir_2005)
 
 ##### ACP #####
 
@@ -227,7 +288,7 @@ readr::write_rds(cost_urb_05_sf,"./cost_urb_05.rds", compress = "gz")
 #########2015##### --------------------------------------
 
 # activate directory 2015
-setwd(dir.2015)
+setwd(dir_2015)
 
 # read the IBGE files for 2005 and 2015
 # Note: Although the files are com.rds, they are in another format to read this file, use load
@@ -313,39 +374,13 @@ readr::write_rds(ate_urb_15_sf,"./ate_urb_15.rds", compress = "gz")
 
 ##### join datasets --------------------
 
-# creat pop_2005 in ACP_urb_05 and cost_urb_05
-# creat dataset column
 
-setwd(dir.2005)
-
-ACP_urb_05$pop_2005 <- NA
-ACP_urb_05$dataset <- "population concentration area"
-cost_urb_05$pop_2005 <- NA
-cost_urb_05$dataset <- "coastal area"
-cemk_urb_05$dataset <- "population about 100k"
-
-
-urb_2005 <- rbind(ACP_urb_05,cemk_urb_05,cost_urb_05)
-dim(urb_2005)
-head(urb_2005)
-dim(ACP_urb_05)
-dim(cemk_urb_05)
-dim(cost_urb_05)
-
-# store original CRS
-original_crs <- sf::st_crs(urb_2005)
-
-# Convert data.table back into sf
-urb_2005_sf <- st_as_sf(urb_2005, crs=original_crs)
-
-#test the shape
-mapview(urb_2005_sf)
 
 # Save cleaned sf in the cleaned directory
 readr::write_rds(urb_2005_sf,"./urb_2005.rds", compress = "gz")
 
 # creat dataset column
-setwd(dir.2015)
+setwd(dir_2015)
 
 mais_urb_15$dataset <- "population greater than 300k"
 ate_urb_15$dataset <- "population less than 300k"
