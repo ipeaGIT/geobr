@@ -82,7 +82,7 @@ unzip( paste0(dir_2015,"/areas_urbanizadas_do_Brasil_2015_shapes.zip"), exdir = 
 
 
 
-#### 3. Clean data set and save it in compact .rds format-----------------
+#### 3. 2005 Clean data set and save it in compact .rds format-----------------
 
 
 ##### 3.1 read shape files -------------------
@@ -104,15 +104,17 @@ setwd(root_dir)
                                     options = "ENCODING=UTF-8")
 
 
+# do they come with the same projection? Yes
+  st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
+  st_crs(ACP_urban_05) == st_crs(cost_urban_05)
+  st_crs(mais_urban_15) == st_crs(ate_urban_15)
+
+  original_crs <- st_crs(mais_urban_15)
 
 
 ##### 3.2 Pile them up by year -------------------
 
-
-
-
-
-# Make all data sets have the same columns
+# Make sure all data sets have the same columns (in the same order)
   ACP_urban_05$POP_2005 <- NA
   ACP_urban_05$dataset <- "population concentration area"
 
@@ -137,152 +139,92 @@ setwd(root_dir)
  # pile them up
   urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
 
-6666666666666666666666666666666666666666666666666666
-  # store original CRS
-  original_crs <- sf::st_crs(urb_2005)
-
-  # Convert data.table back into sf
-  urb_2005_sf <- st_as_sf(urb_2005, crs=original_crs)
-
-  #test the shape
-  mapview(urb_2005_sf)
 
 
 
+##### 3.3 Data cleaning -------------------
+
+  # Rename and reoder columns
+  urb_2005 <- dplyr::select(urb_2005,
+                            code_urb = GEOC_URB,
+                            pop_2005 = POP_2005,
+                            area_km2 = Area_Km2,
+                            density = Tipo,
+                            code_muni = GEOCODIGO,
+                            name_muni = NOME_MUNIC,
+                            code_acp = COD_ACP,
+                            name_acp = ACP,
+                            abbrev_state = UF,
+                            dataset = dataset,
+                            geometry = geometry
+                            )
+
+
+# convert codes to numeric
+  urb_2005$code_urb <- urb_2005$code_urb %>% as.character() %>% as.numeric()
+  urb_2005$code_muni <- urb_2005$code_muni %>% as.character() %>% as.numeric()
+  urb_2005$code_acp <- urb_2005$code_acp %>% as.character() %>% as.numeric()
+
+  # convert codes to character
+  urb_2005$density <- urb_2005$density %>% as.character()
+  urb_2005$name_muni <- urb_2005$name_muni %>% as.character()
+  urb_2005$name_acp <- urb_2005$name_acp %>% as.character()
+  urb_2005$abbrev_state <- urb_2005$abbrev_state %>% as.character()
+  urb_2005$dataset <- urb_2005$dataset %>% as.character()
+
+
+# Recupera info de code_state e name_state
+  estados <- geobr::read_state(code_state = 'all', year=2010)
+  estados$geometry <- NULL
+  estados <- select(estados, 'code_state', 'abbrev_state', 'name_state')
+  urb_2005 <- left_join(urb_2005, estados)
 
 
 
+# Use UTF-8 encoding in all character columns
+  urb_2005 <- urb_2005 %>%
+                      mutate_if(is.factor, function(x){ x %>% as.character() %>%
+                                                      stringi::stri_encode("UTF-8") } )
 
 
+# reoder columns
+  setDT(urb_2005)
+  setcolorder(urb_2005, c("code_urb", "pop_2005", "area_km2", "density", "code_muni", "name_muni", "code_acp", "name_acp", "code_state", "abbrev_state", "name_state", "dataset", "geometry"))
 
-
-
-
-
-
-# read the IBGE files for 2005 and 2015
-# Note: Although the files are com.rds, they are in another format to read this file, use load
-cod_ibge_05 <- "\\\\storage1\\territorial_desenv\\Bases ASMEQ\\Bases consolidadas\\codigo_ibge\\rds\\2005.rds"
-load(cod_ibge_05)
-
-names(mun)
-ibge_05 <- subset (mun, select = c(municipality_name, municipality_code, state_code, state_initials))
-
-# Rename columns
-ibge_05 <- dplyr::rename(ibge_05, name_muni = municipality_name, code_muni = municipality_code,
-                         code_state = state_code, abbrev_state = state_initials)
-
-ibge_05$code_muni <- as.factor(ibge_05$code_muni)
-head(ibge_05)
-
-
-
-
-#### Clean data set ------------------------------------------------
-#########2005##### -------------------------------------------------
-setwd(dir_2005)
-
-##### ACP #####
-
-# rename and create columns
-names(ACP_urban_05)
-ACP_urban_05 <- dplyr::rename(ACP_urban_05, densidade = Tipo, code_muni = GEOCODIGO,
-                              geoc_urb = GEOC_URB, acp = ACP, code_acp = COD_ACP)
-
-ACP_urb_05_new<-merge(ACP_urban_05,ibge_05,by="code_muni")
-head(ACP_urban_05)
-
-
-# order and and delete columns
-ACP_urb_05 <- ACP_urb_05_new[,c("densidade","code_muni","code_state","name_muni",
-                                "abbrev_state","geometry","geoc_urb")]
-
-# store original CRS
-original_crs <- sf::st_crs(ACP_urb_05)
 
 # Convert data.table back into sf
-ACP_urb_05_sf <- st_as_sf(ACP_urb_05, crs=original_crs)
-
-# Use UTF-8 encoding
-str(ACP_urb_05_sf)
-
-ACP_urb_05_sf$name_muni <- stringi::stri_encode(as.character(ACP_urb_05_sf$name_muni), "UTF-8")
-ACP_urb_05_sf$abbrev_state <- stringi::stri_encode(as.character(ACP_urb_05_sf$abbrev_state), "UTF-8")
-
-# test the shape
-mapview(ACP_urb_05_sf)
-
-# Save cleaned sf in the cleaned directory
-readr::write_rds(ACP_urb_05_sf,"./ACP_urb_05.rds", compress = "gz")
-
-##### cemk #####
-
-# rename and create columns
-names(cemk_urban_05)
-cemk_urban_05 <- dplyr::rename(cemk_urban_05, densidade = Tipo, code_muni = GEOCODIGO,
-                              geoc_urb = GEOC_URB, pop_2005 = POP_2005)
-
-cemk_urban_05_new<-merge(cemk_urban_05,ibge_05,by="code_muni")
-
-head(cemk_urban_05)
-
-# order and and delete columns
-cemk_urb_05 <- cemk_urban_05_new[,c("densidade","code_muni","code_state",
-                                    "name_muni","abbrev_state","geometry","pop_2005","geoc_urb")]
-names(cemk_urb_05)
-
-# store original CRS
-original_crs <- sf::st_crs(cemk_urb_05)
-
-# Convert data.table back into sf
-cemk_urb_05_sf <- st_as_sf(cemk_urb_05, crs=original_crs)
-
-# Use UTF-8 encoding
-str(cemk_urb_05_sf)
-
-cemk_urb_05_sf$name_muni <- stringi::stri_encode(as.character(cemk_urb_05_sf$name_muni), "UTF-8")
-cemk_urb_05_sf$abbrev_state <- stringi::stri_encode(as.character(cemk_urb_05_sf$abbrev_state), "UTF-8")
-
-# test the shape
-mapview(cemk_urb_05_sf)
-
-# Save cleaned sf in the cleaned directory
-readr::write_rds(cemk_urb_05_sf,"./cemk_urb_05.rds", compress = "gz")
+  temp_sf <- st_as_sf(urb_2005, crs=original_crs)
 
 
-##### cost #####
+# Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+  temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+  st_crs(temp_sf) <- 4674
 
-# rename and create columns
-names(cost_urban_05)
 
-cost_urban_05 <- dplyr::rename(cost_urban_05, densidade = Tipo, code_muni = GEOCODIGO,geoc_urb = GEOC_URB)
+# Make any invalid geometry valid # st_is_valid( sf)
+  temp_sf <- lwgeom::st_make_valid(temp_sf)
 
-cost_urban_05_new<-merge(cost_urban_05,ibge_05,by="code_muni")
-head(cost_urban_05)
 
-# order and and delete columns
-cost_urb_05 <- cost_urban_05_new[,c("densidade","code_muni","code_state","name_muni",
-                                    "abbrev_state","geometry","geoc_urb")]
-names(cost_urb_05)
 
-# store original CRS
-original_crs <- sf::st_crs(cost_urb_05)
 
-# Convert data.table back into sf
-cost_urb_05_sf <- st_as_sf(cost_urb_05, crs=original_crs)
+##### 3.4 Save  -------------------
 
-# Use UTF-8 encoding
-str(cost_urb_05_sf)
+  # Save cleaned sf in the cleaned directory
+  readr::write_rds(temp_sf, path=paste0(destdir_clean_2005,"/urban_area_2005.rds"), compress = "gz")
 
-cost_urb_05_sf$name_muni <- stringi::stri_encode(as.character(cost_urb_05_sf$name_muni), "UTF-8")
-cost_urb_05_sf$abbrev_state <- stringi::stri_encode(as.character(cost_urb_05_sf$abbrev_state), "UTF-8")
 
-# test the shape
-mapview(cost_urb_05_sf)
 
-# Save cleaned sf in the cleaned directory
-readr::write_rds(cost_urb_05_sf,"./cost_urb_05.rds", compress = "gz")
 
+
+
+
+
+
+
+
+
+
+#### 4. 2015 Clean data set and save it in compact .rds format-----------------
 
 
 #########2015##### --------------------------------------
