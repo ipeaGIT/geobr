@@ -56,12 +56,12 @@ ftp <- 'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial
 
 
 download.file(url = ftp,
-              destfile = paste0(destdir_raw,"/","lista_municipios_semiarido.xls") )
+              destfile = paste0(destdir_raw,"/","lista_municipios_semiarido.xlsx") )
 
 
 
 # read IBGE data frame
-semi_arid_munis <- readxl::read_xlsx(path = paste0(destdir_raw,"/","lista_municipios_semiarido.xls"),
+semi_arid_munis <- readxl::read_xlsx(path = paste0(destdir_raw,"/","lista_municipios_semiarido.xlsx"),
                                      skip = 1)
 na.exclude(semi_arid_munis)
 colnames(semi_arid_munis) <- c("code_state","name_state","code_muni","name_muni","year_muni")
