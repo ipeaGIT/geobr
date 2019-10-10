@@ -167,6 +167,8 @@ d[, abbrev_state := ifelse(code_state== 11, "RO",
                     ifelse(code_state== 52, "GO",
                     ifelse(code_state== 53, "DF",NA)))))))))))))))))))))))))))]
 
+
+
 setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_region', 'name_region', 'geometry'))
 
 
