@@ -4,6 +4,7 @@ test_that("read_micro_region", {
 
   # skip tests because they take too much time
   skip_on_cran()
+  skip_on_travis()
 
   # read data
   test_micro_code <- read_micro_region(code_micro=11008, year=2010)
@@ -37,52 +38,13 @@ test_that("read_micro_region", {
 })
 
 
-# test_all <- read_micro_region(code_micro="all", year=2010)
-# a <- subset(test_all, is.na(code_micro))
-#
-# ggplot()+
-#   geom_sf(data=test_all, fill="gray50") +
-#   geom_sf(data=a, fill="red")
-
-
-# ERRORS
-# ERRORS
-# test_that("read_micro_region", {
-#
-#   # Wrong year and code
-#   expect_error(read_micro_region(code_micro=9999999, year=9999999))
-#   expect_error(read_micro_region(code_micro=9999999, year="xxx"))
-#   expect_error(read_micro_region(code_micro="xxx", year=9999999))
-#   expect_error(read_micro_region(code_micro="xxx", year="xxx"))
-#   expect_error(read_micro_region(code_micro=9999999, year=NULL))
-#
-#   # Wrong year  expect_error(read_micro_region(code_micro="xxx", year=NULL))
-#   expect_error(read_micro_region(code_micro=11, year=9999999))
-#   expect_error(read_micro_region(code_micro=11, year= "xx"))
-#   expect_error(read_micro_region(code_micro=11008, year=9999999))
-#   expect_error(read_micro_region(code_micro=11008, year= "xx"))
-#
-#
-#
-#   expect_error(read_micro_region(code_micro="SC", year=9999999))
-#   expect_error(read_micro_region(code_micro="SC", year="xx"))
-#
-#   expect_error(read_micro_region(code_micro="all", year=9999999))
-#   expect_error(read_micro_region(code_micro="all", year="xx"))
-#
-#   # Wrong code
-#   expect_error(read_micro_region(code_micro=9999999, year=2000))
-#   expect_error(read_micro_region(code_micro="XXX", year=2000))
-#   expect_error(read_micro_region(code_micro="XXX", year=NULL))
-#   expect_error(read_micro_region(code_micro=NULL, year=2000))
-# })
-
 
 # ERRORS
 test_that("read_micro_region", {
 
   # skip tests because they take too much time
   skip_on_cran()
+  skip_on_travis()
 
   # Wrong year and code
   expect_error(read_micro_region(code_micro=9999999, year=9999999))
