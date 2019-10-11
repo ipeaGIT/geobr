@@ -27,7 +27,7 @@ test_that("read_state", {
   # read data
   test_state_abrev <- read_state(code_state="AC", year=2010)
   test_state_abrev2 <- read_state(code_state="AP", year=NULL)
-#  test_state_abrev3 <- read_state(name_state="Pernambuco", year=1872)
+  test_state_abrev3 <- read_state(code_state='all', year=1872)
 
   test_state_code <- read_state(code_state=11, year=2010)
   test_state_code2 <- read_state(code_state=11, year=NULL)
@@ -40,7 +40,7 @@ test_that("read_state", {
   # check sf object
   expect_true(is(test_state_abrev, "sf"))
   expect_true(is(test_state_abrev2, "sf"))
-  # expect_true(is(test_state_abrev3, "sf"))
+  expect_true(is(test_state_abrev3, "sf"))
   expect_true(is(test_state_code, "sf"))
   expect_true(is(test_state_code2, "sf"))
   # expect_true(is(test_state_code3, "sf"))
