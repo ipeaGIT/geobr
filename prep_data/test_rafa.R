@@ -302,6 +302,8 @@ function_coverage(fun='grid_state_correspondence_table', test_file("tests/testth
 
 
 function_coverage(fun=geobr::download_metadata, test_file("tests/testthat/test-download_metadata.R"))
+
+function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
 function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
 function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
