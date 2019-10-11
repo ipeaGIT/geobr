@@ -37,17 +37,17 @@ setwd(root_dir)
 
 
 # Directory to keep raw zipped files
-  dir.create("./urban_area2")
-  dir_2005 <- paste0("./urban_area2/2005")
-  dir_2015 <- paste0("./urban_area2/2015")
+  dir.create("./urban_area")
+  dir_2005 <- paste0("./urban_area/2005")
+  dir_2015 <- paste0("./urban_area/2015")
   dir.create(dir_2005)
   dir.create(dir_2015)
 
 
 # Directory to save clean sf.rds files
-dir.create("./urban_area2/shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
-destdir_clean_2005 <- paste0("./urban_area2/shapes_in_sf_all_years_cleaned/",2005)
-destdir_clean_2015 <- paste0("./urban_area2/shapes_in_sf_all_years_cleaned/",2015)
+dir.create("./urban_area/shapes_in_sf_all_years_cleaned", showWarnings = FALSE)
+destdir_clean_2005 <- paste0("./urban_area/shapes_in_sf_all_years_cleaned/",2005)
+destdir_clean_2015 <- paste0("./urban_area/shapes_in_sf_all_years_cleaned/",2015)
 dir.create(destdir_clean_2005)
 dir.create(destdir_clean_2015)
 
@@ -56,7 +56,6 @@ dir.create(destdir_clean_2015)
 
 #### 0. Download original data sets  -----------------
 
-setwd('./urban_area2')
 
 
 # download shape files
@@ -107,7 +106,7 @@ setwd(root_dir)
 # do they come with the same projection? Yes
   st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
   st_crs(ACP_urban_05) == st_crs(cost_urban_05)
-  st_crs(mais_urban_15) == st_crs(ate_urban_15)
+
 
   original_crs <- st_crs(mais_urban_15)
 
@@ -115,31 +114,48 @@ setwd(root_dir)
 ##### 3.2 Pile them up by year -------------------
 
 # Make sure all data sets have the same columns (in the same order)
-  ACP_urban_05$POP_2005 <- NA
-  ACP_urban_05$dataset <- "population concentration area"
+  #2005
+   ACP_urban_05$POP_2005 <- NA
+   ACP_urban_05$dataset <- "population concentration area"
 
-  cost_urban_05$POP_2005 <- NA
-  cost_urban_05$ACP <- NA
-  cost_urban_05$COD_ACP <- NA
-  cost_urban_05$dataset <- "coastal area"
+   cost_urban_05$POP_2005 <- NA
+   cost_urban_05$ACP <- NA
+   cost_urban_05$COD_ACP <- NA
+   cost_urban_05$dataset <- "coastal area"
 
-  cemk_urban_05$ACP <- NA
-  cemk_urban_05$COD_ACP <- NA
-  cemk_urban_05$dataset <- "population above 100k"
+   cemk_urban_05$ACP <- NA
+   cemk_urban_05$COD_ACP <- NA
+   cemk_urban_05$dataset <- "population above 100k"
 
-  # columns in the same order
-  setDT(ACP_urban_05)
-  setDT(cost_urban_05)
-  setDT(cemk_urban_05)
+   # columns in the same order
+    setDT(ACP_urban_05)
+    setDT(cost_urban_05)
+    setDT(cemk_urban_05)
 
-  setcolorder(cost_urban_05, neworder= c(names(ACP_urban_05)) )
-  setcolorder(cemk_urban_05, neworder=  c(names(ACP_urban_05)) )
-
-
- # pile them up
-  urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
+    setcolorder(cost_urban_05, neworder= c(names(ACP_urban_05)) )
+    setcolorder(cemk_urban_05, neworder=  c(names(ACP_urban_05)) )
 
 
+   # pile them up
+    urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
+
+ #2015
+   ate_urban_15$FID_1 <-  NA
+   ate_urban_15$UF <-  NULL
+   ate_urban_15 <- dplyr::rename(ate_urban_15, NomeConcUr = NomConcUrb)
+   mais_urban_15$OBJECTID <- NULL
+
+   # do they come with the same projection? Yes
+    st_crs(mais_urban_15) == st_crs(ate_urban_15)
+
+   # columns in the same order
+    setDT(mais_urban_15)
+    setDT(ate_urban_15)
+
+    setcolorder(ate_urban_15, neworder= c(names(mais_urban_15)) )
+
+   # pile them up
+    urb_2015 <- rbind(ate_urban_15,mais_urban_15)
 
 
 ##### 3.3 Data cleaning -------------------
@@ -159,11 +175,27 @@ setwd(root_dir)
                             geometry = geometry
                             )
 
+   urb_2015 <- dplyr::select(urb_2015,
+                             fid_1 = FID_1,
+                             density = Densidade,
+                             code_muni = CodConcUrb,
+                             type = Tipo,
+                             name_muni = NomeConcUr,
+                             area_geo = AREA_GEO,
+                             shape_leng = Shape_Leng,
+                             shape_area = Shape_Area,
+                             geometry = geometry
+                             )
+
 
 # convert codes to numeric
   urb_2005$code_urb <- urb_2005$code_urb %>% as.character() %>% as.numeric()
   urb_2005$code_muni <- urb_2005$code_muni %>% as.character() %>% as.numeric()
   urb_2005$code_acp <- urb_2005$code_acp %>% as.character() %>% as.numeric()
+
+  urb_2015$fid_1 <- urb_2015$fid_1 %>% as.character() %>% as.numeric()
+  urb_2015$code_muni <- urb_2015$code_muni %>% as.character() %>% as.numeric()
+  #urb_2015$code_acp <- urb_2015$code_acp %>% as.character() %>% as.numeric()
 
   # convert codes to character
   urb_2005$density <- urb_2005$density %>% as.character()
@@ -172,6 +204,11 @@ setwd(root_dir)
   urb_2005$abbrev_state <- urb_2005$abbrev_state %>% as.character()
   urb_2005$dataset <- urb_2005$dataset %>% as.character()
 
+  urb_2015$density <- urb_2015$density %>% as.character()
+  urb_2015$name_muni <- urb_2015$name_muni %>% as.character()
+  urb_2015$tipo <- urb_2015$tipo %>% as.character()
+  #urb_2015$code_muni <- urb_2015$abbrev_state %>% as.character()
+  #urb_2015$dataset <- urb_2015$dataset %>% as.character()
 
 # Recupera info de code_state e name_state
   estados <- geobr::read_state(code_state = 'all', year=2010)
@@ -180,17 +217,32 @@ setwd(root_dir)
   urb_2005 <- left_join(urb_2005, estados)
 
 
+  municipios <- geobr::read_municipality(code_muni  = 'all', year=2010)
+
+  municipios <-
+
+  municipios$geometry <- NULL
+  municipios <- select(municipios, 'code_muni','name_muni','code_state','abbrev_state')
+  urb_2015 <- dplyr::left_join(urb_2015,municipios)
+
 
 # Use UTF-8 encoding in all character columns
   urb_2005 <- urb_2005 %>%
+                      mutate_if(is.factor, function(x){ x %>% as.character() %>%
+                                                      stringi::stri_encode("UTF-8") } )
+  urb_2015 <- urb_2015 %>%
                       mutate_if(is.factor, function(x){ x %>% as.character() %>%
                                                       stringi::stri_encode("UTF-8") } )
 
 
 # reoder columns
   setDT(urb_2005)
-  setcolorder(urb_2005, c("code_urb", "pop_2005", "area_km2", "density", "code_muni", "name_muni", "code_acp", "name_acp", "code_state", "abbrev_state", "name_state", "dataset", "geometry"))
+  setcolorder(urb_2005, c("code_urb", "pop_2005", "area_km2", "density", "code_muni", "name_muni", "code_acp", "name_acp",
+                          "code_state", "abbrev_state", "name_state", "dataset", "geometry"))
 
+  setDT(urb_2015)
+  setcolorder(urb_2015, c("fid_1", "densidade", "code_muni", "tipo",  "name_muni", "area_geo", "shape_leng", "shape_area",
+                          "code_state", "abbrev_state", "name_state", "geometry"))
 
 # Convert data.table back into sf
   temp_sf <- st_as_sf(urb_2005, crs=original_crs)
@@ -227,26 +279,30 @@ setwd(root_dir)
 #### 4. 2015 Clean data set and save it in compact .rds format-----------------
 
 
-#########2015##### --------------------------------------
 
-# activate directory 2015
-setwd(dir_2015)
 
-# read the IBGE files for 2005 and 2015
-# Note: Although the files are com.rds, they are in another format to read this file, use load
-cod_ibge_15 <- "\\\\storage1\\territorial_desenv\\Bases ASMEQ\\Bases consolidadas\\codigo_ibge\\rds\\2015.rds"
-load(cod_ibge_15)
 
-names(mun)
-ibge_15 <- subset (mun, select = c(municipality_name, municipality_code, state_code, state_initials))
 
-# Rename columns
-ibge_15 <- dplyr::rename(ibge_15, name_muni = municipality_name, code_muni = municipality_code,
-                         code_state = state_code, abbrev_state = state_initials)
-head(ibge_15)
+#### 5. 2015 Clean data set and save it in compact .rds format-----------------
 
-ibge_15$code_muni <- as.factor(ibge_15$code_muni)
-head(ibge_15)
+
+##### 5.1 read shape files -------------------
+  setwd(root_dir)
+ # activate directory 2015
+  setwd(dir_2015)
+
+ # do they come with the same projection? Yes
+  st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
+  st_crs(ACP_urban_05) == st_crs(cost_urban_05)
+  st_crs(mais_urban_15) == st_crs(ate_urban_15)
+
+  original_crs <- st_crs(mais_urban_15)
+
+
+
+
+
+
 
 
 ########  mais ---------------------
