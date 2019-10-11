@@ -1,16 +1,3 @@
-update <- 2017
-
-library(RCurl)
-library(stringr)
-library(sf)
-library(dplyr)
-library(readr)
-library(data.table)
-library(magrittr)
-library(lwgeom)
-library(stringi)
-
-
 #> DATASET: Brazilian semi-arid
 #> Source: IBGE - https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads
 #> Metadata:
@@ -23,41 +10,69 @@ library(stringi)
 # Character set: Utf-8
 #
 # Resumo: Poligonos e Pontos do semiarido brasileiro.
-# Informacoees adicionais: Dados produzidos pelo IBGE com base na legal que consta na resolucao do ministerio da integracao nacional, de 23 de novembro de 2017
+# Informacoes adicionais: Dados produzidos pelo IBGE com base em decretos administrativos do Ministério da Integração Nacional.
+# -"Resolução Nº 115, de 23 de novembro de 2017, do Ministério da Integração Nacional"
+# -"Portaria N°89 de 16 de março de 2005, do Ministério da Integração Nacional"
 # Proposito: Identificao do semiarido brasileiro.
-#
+
 # Estado: Em desenvolvimento
-# Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
 
-getwd()
+
+
+
+library(RCurl)
+library(stringr)
+library(sf)
+library(dplyr)
+library(readr)
+library(data.table)
+library(magrittr)
+library(lwgeom)
+library(stringi)
 
 
 ###### 0. Create Root folder to save the data -----------------
+
 # Root directory
 root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
 setwd(root_dir)
 
+for (in in c(2015, 2017)){
 # Directory to keep raw zipped files
 dir.create("./semiarid")
 destdir_raw <- paste0("./semiarid/",update)
 dir.create(destdir_raw)
 
 
-# Create folders to save clean sf.rds files  -----------------
+# Create folders to save clean sf.rds files
+
 dir.create("./semiarid/shapes_in_sf_cleaned", showWarnings = FALSE)
 destdir_clean <- paste0("./semiarid/shapes_in_sf_cleaned/",update)
 dir.create(destdir_clean)
 
-#### 0. Download original data sets from source website -----------------
+}
+
+
+
+
+#### 2. Download original data sets from source website -----------------
 
 # Download and read into CSV at the same time
-ftp <- 'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/semiarido_brasileiro/Situacao_23nov2017/lista_municipios_Semiarido_2017_11_23.xlsx'
+ftp_2017 <- 'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/semiarido_brasileiro/Situacao_23nov2017/lista_municipios_Semiarido_2017_11_23.xlsx'
+
+ftp_2015 <- 'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/semiarido_brasileiro/Situacao_2005a2017/lista_municipios_semiarido.xls'
 
 
-download.file(url = ftp,
+download.file(url = ftp_2017,
               destfile = paste0(destdir_raw,"/","lista_municipios_semiarido.xlsx") )
 
+download.file(url = ftp_2017,
+              destfile = paste0(destdir_raw,"/","lista_municipios_semiarido.xlsx") )
+
+
+
+#### 3. Clean data set and save it in compact .rds format-----------------
 
 
 # read IBGE data frame
