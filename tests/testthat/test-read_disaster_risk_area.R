@@ -8,7 +8,7 @@ context("Read")
 test_that("read_disaster_risk_area", {
 
   # skip tests because they take too much time
-  skip_on_cran()
+  #skip_on_cran()
   skip_on_travis()
 
   # Get metadata with data addresses
@@ -64,6 +64,10 @@ test_that("read_disaster_risk_area", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_disaster_risk_area", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
 
   # Wrong year
   expect_error(read_disaster_risk_area(year=9999999))
