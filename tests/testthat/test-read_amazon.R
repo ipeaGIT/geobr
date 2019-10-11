@@ -5,6 +5,10 @@ context("Read")
 
 test_that("read_amazon", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+
+
   # read data
   expect_message(read_amazon(year=NULL))
   test_sf <- read_amazon(year=2012)
@@ -25,6 +29,10 @@ test_that("read_amazon", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_amazon", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
+
 
   # Wrong year
   expect_error(read_amazon(year=9999999))

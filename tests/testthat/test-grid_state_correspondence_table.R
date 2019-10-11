@@ -3,6 +3,10 @@ context("Data")
 
 test_that("grid_state_correspondence_table", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+
+
   # load data
 #  load( system.file("data/grid_state_correspondence_table.RData", package="geobr") )
 

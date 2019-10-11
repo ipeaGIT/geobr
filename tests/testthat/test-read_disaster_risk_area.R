@@ -7,6 +7,9 @@ context("Read")
 
 test_that("read_disaster_risk_area", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
 
@@ -35,6 +38,10 @@ test_that("read_disaster_risk_area", {
 # Reading the data -----------------------
 
 test_that("read_disaster_risk_area", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
+
 
   # read data
   test_sf <- read_disaster_risk_area(year=2010)
