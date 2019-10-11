@@ -1,31 +1,9 @@
 context("Read")
 
-# R/read_micro_region.R: 65.12%
-# R/read_micro_region.R: 93.02%
-
-# test_that("read_micro_region", {
-#
-#   # test metada
-#   tempf <- file.path(tempdir(), "metadata.rds")
-#
-#   # check if metadata has already been downloaded
-#   if (file.exists(tempf)) {
-#     metadata <- readr::read_rds(tempf)
-#
-#   } else {
-#     # download it and save to metadata
-#     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
-#     metadata <- readr::read_rds(tempf)
-#   }
-#
-#   expect_true(class(metadata)=='data.frame')
-#   expect_true(file.exists(tempf))
-#
-# })
-
-
-
 test_that("read_micro_region", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
 
   # read data
   test_micro_code <- read_micro_region(code_micro=11008, year=2010)
@@ -102,6 +80,9 @@ test_that("read_micro_region", {
 
 # ERRORS
 test_that("read_micro_region", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
 
   # Wrong year and code
   expect_error(read_micro_region(code_micro=9999999, year=9999999))

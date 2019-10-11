@@ -5,6 +5,9 @@ context("Read")
 
 test_that("read_conservation_units", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+
   # read data
   test_sf <- read_conservation_units(date=201909)
 
@@ -22,6 +25,10 @@ test_that("read_conservation_units", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_conservation_units", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
+
 
   # Wrong date
   expect_error(read_conservation_units(date=9999999))

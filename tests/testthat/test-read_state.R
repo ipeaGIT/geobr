@@ -1,28 +1,10 @@
 context("Read")
 
-# test_that("read_state", {
-#
-#   # test metada
-#   tempf <- file.path(tempdir(), "metadata.rds")
-#
-#   # check if metadata has already been downloaded
-#   if (file.exists(tempf)) {
-#     metadata <- readr::read_rds(tempf)
-#
-#   } else {
-#     # download it and save to metadata
-#     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
-#     metadata <- readr::read_rds(tempf)
-#   }
-#
-#   expect_true(class(metadata)=='data.frame')
-#   expect_true(file.exists(tempf))
-#
-# })
-
-
 
 test_that("read_state", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
 
   # read data
   test_state_abrev <- read_state(code_state="AC", year=2010)
@@ -66,7 +48,6 @@ test_that("read_state", {
 
   # skip tests because they take too much time
   skip_on_cran()
-  skip_on_travis()
 
   # Wrong year and code
   expect_error(read_state(code_state=9999999, year=9999999))

@@ -5,6 +5,9 @@ context("Read")
 
 test_that("read_biomes", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+
   # read data
   expect_message(read_biomes(year=NULL))
   test_sf <- read_biomes(year=2004)
@@ -25,6 +28,10 @@ test_that("read_biomes", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_biomes", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
+
 
   # Wrong year
   expect_error(read_biomes(year=9999999))

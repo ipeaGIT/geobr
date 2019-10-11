@@ -5,6 +5,10 @@ context("Read")
 
 test_that("read_country", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+
+
   # read data
   test_sf <- read_country(year=1991)
 
@@ -23,7 +27,10 @@ test_that("read_country", {
 
 
 # ERRORS and messagens  -----------------------
-test_that("read_indigenous_land", {
+test_that("read_country", {
+
+  # skip tests because they take too much time
+  skip_on_cran()
 
   # Wrong date
   expect_error(read_country(year=9999999))
