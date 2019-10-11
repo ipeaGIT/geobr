@@ -3,6 +3,10 @@ context("Read")
 
 test_that("read_statistical_grid", {
 
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
   # read data
   test_quad_code <- read_statistical_grid(code_grid=44, year=2010)
   test_quad_code2 <- read_statistical_grid(code_grid=44, year=NULL)
@@ -39,6 +43,10 @@ test_that("read_statistical_grid", {
 
 # ERRORS
 test_that("read_statistical_grid", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
 
   # Wrong year and code
   expect_error(read_statistical_grid(code_grid=9999999, year=9999999))

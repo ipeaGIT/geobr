@@ -7,6 +7,10 @@ context("Read")
 
 test_that("read_disaster_risk_area", {
 
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
 
@@ -36,6 +40,11 @@ test_that("read_disaster_risk_area", {
 
 test_that("read_disaster_risk_area", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+  skip_on_travis()
+
+
   # read data
   test_sf <- read_disaster_risk_area(year=2010)
 
@@ -55,6 +64,10 @@ test_that("read_disaster_risk_area", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_disaster_risk_area", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
 
   # Wrong year
   expect_error(read_disaster_risk_area(year=9999999))

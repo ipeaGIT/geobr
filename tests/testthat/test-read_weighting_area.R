@@ -2,6 +2,10 @@ context("Read")
 
 test_that("read_weighting_area", {
 
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
   # read data
 
     # input weighting area
@@ -47,6 +51,10 @@ test_that("read_weighting_area", {
 
 # ERRORS
 test_that("read_weighting_area", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
 
   # Wrong year and code
   expect_error(read_weighting_area(code_weighting=9999999, year=9999999))

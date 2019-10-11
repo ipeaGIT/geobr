@@ -1,33 +1,16 @@
 context("Read")
 
-# test_that("read_state", {
-#
-#   # test metada
-#   tempf <- file.path(tempdir(), "metadata.rds")
-#
-#   # check if metadata has already been downloaded
-#   if (file.exists(tempf)) {
-#     metadata <- readr::read_rds(tempf)
-#
-#   } else {
-#     # download it and save to metadata
-#     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
-#     metadata <- readr::read_rds(tempf)
-#   }
-#
-#   expect_true(class(metadata)=='data.frame')
-#   expect_true(file.exists(tempf))
-#
-# })
-
-
 
 test_that("read_state", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
 
   # read data
   test_state_abrev <- read_state(code_state="AC", year=2010)
   test_state_abrev2 <- read_state(code_state="AP", year=NULL)
-#  test_state_abrev3 <- read_state(name_state="Pernambuco", year=1872)
+  test_state_abrev3 <- read_state(code_state='all', year=1872)
 
   test_state_code <- read_state(code_state=11, year=2010)
   test_state_code2 <- read_state(code_state=11, year=NULL)
@@ -40,7 +23,7 @@ test_that("read_state", {
   # check sf object
   expect_true(is(test_state_abrev, "sf"))
   expect_true(is(test_state_abrev2, "sf"))
-  # expect_true(is(test_state_abrev3, "sf"))
+  expect_true(is(test_state_abrev3, "sf"))
   expect_true(is(test_state_code, "sf"))
   expect_true(is(test_state_code2, "sf"))
   # expect_true(is(test_state_code3, "sf"))
@@ -64,6 +47,10 @@ test_that("read_state", {
 # ERRORS
 test_that("read_state", {
 
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
   # Wrong year and code
   expect_error(read_state(code_state=9999999, year=9999999))
   expect_error(read_state(code_state=9999999, year="xxx"))
@@ -86,13 +73,13 @@ test_that("read_state", {
   expect_error(read_state(code_state="all", year="xx"))
 
   # Wrong code
-  expect_message(read_state(code_state=9999999, year=1991))
+#  expect_message(read_state(code_state=9999999, year=1991))
   expect_error(read_state(code_state=9999999, year=2000))
   expect_error(read_state(code_state=9999999, year=NULL))
-  expect_message(read_state(code_state="XXX", year=1991))
+#  expect_message(read_state(code_state="XXX", year=1991))
   expect_error(read_state(code_state="XXX", year=2000))
   expect_error(read_state(code_state="XXX", year=NULL))
-  expect_message(read_state(code_state=NULL, year=1991))
+#  expect_message(read_state(code_state=NULL, year=1991))
   expect_error(read_state(code_state=NULL, year=2000))
   expect_error(read_state(code_state=NULL, year=NULL))
 

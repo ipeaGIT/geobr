@@ -17,7 +17,7 @@
 #'
 #'}
 
-read_statistical_grid <- function(code_grid, year=NULL){
+read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
 
 # Verify year input
   if (is.null(year)){ message("Using data from year 2010 /n")
@@ -131,6 +131,6 @@ read_statistical_grid <- function(code_grid, year=NULL){
     shape <- readr::read_rds(temps)
     return(shape)
   }
-}
+} # nocov end
 
 
