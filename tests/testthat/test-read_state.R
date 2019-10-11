@@ -64,6 +64,10 @@ test_that("read_state", {
 # ERRORS
 test_that("read_state", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+  skip_on_travis()
+
   # Wrong year and code
   expect_error(read_state(code_state=9999999, year=9999999))
   expect_error(read_state(code_state=9999999, year="xxx"))
@@ -86,13 +90,13 @@ test_that("read_state", {
   expect_error(read_state(code_state="all", year="xx"))
 
   # Wrong code
-  expect_message(read_state(code_state=9999999, year=1991))
+#  expect_message(read_state(code_state=9999999, year=1991))
   expect_error(read_state(code_state=9999999, year=2000))
   expect_error(read_state(code_state=9999999, year=NULL))
-  expect_message(read_state(code_state="XXX", year=1991))
+#  expect_message(read_state(code_state="XXX", year=1991))
   expect_error(read_state(code_state="XXX", year=2000))
   expect_error(read_state(code_state="XXX", year=NULL))
-  expect_message(read_state(code_state=NULL, year=1991))
+#  expect_message(read_state(code_state=NULL, year=1991))
   expect_error(read_state(code_state=NULL, year=2000))
   expect_error(read_state(code_state=NULL, year=NULL))
 

@@ -44,6 +44,10 @@ test_that("read_statistical_grid", {
 # ERRORS
 test_that("read_statistical_grid", {
 
+  # skip tests because they take too much time
+  skip_on_cran()
+  skip_on_travis()
+
   # Wrong year and code
   expect_error(read_statistical_grid(code_grid=9999999, year=9999999))
   expect_error(read_statistical_grid(code_grid=9999999, year="xxx"))
