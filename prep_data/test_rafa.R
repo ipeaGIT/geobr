@@ -269,27 +269,6 @@ system.time( w2 <- read_weighting_area(code_weighting=100000) )
 
 
 
-###### 8. read_country -------------------------
-
-
-
-br <- read_country(year=2018)
-plot(br); rm(br)
-
-br <- read_country(year=2010)
-plot(br); rm(br)
-
-
-br <- read_country(year=2000)
-plot(br); rm(br)
-
-br <- read_country(year=1920)
-plot(br); rm(br)
-
-
-br <- read_country(year=1500)
-
-
 
 ###### 9. read_region -------------------------
 
