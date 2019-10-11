@@ -53,6 +53,8 @@ if( x < 1992){
 #       stop("Error: Invalid Value to argument code_state.")
 #       }
 
+  if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
+
   message("Loading data for the whole country\n")
 
   # list paths of files to download

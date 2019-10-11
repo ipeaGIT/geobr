@@ -2,7 +2,11 @@ context("Read")
 
 test_that("read_municipality", {
 
-    # read data
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
+  # read data
   test_code_1991 <- read_municipality(code_muni=1200179, year=1991)
   test_code_2010 <- read_municipality(code_muni=1200179, year=2010)
   test_code2_2010 <- read_municipality(code_muni=1200179, year=NULL)
@@ -42,6 +46,10 @@ test_that("read_municipality", {
 
 # ERRORS
 test_that("read_municipality", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
 
   # Wrong year and code
   expect_error(read_municipality(code_muni=9999999, year=9999999))

@@ -269,27 +269,6 @@ system.time( w2 <- read_weighting_area(code_weighting=100000) )
 
 
 
-###### 8. read_country -------------------------
-
-
-
-br <- read_country(year=2018)
-plot(br); rm(br)
-
-br <- read_country(year=2010)
-plot(br); rm(br)
-
-
-br <- read_country(year=2000)
-plot(br); rm(br)
-
-br <- read_country(year=1920)
-plot(br); rm(br)
-
-
-br <- read_country(year=1500)
-
-
 
 ###### 9. read_region -------------------------
 
@@ -316,30 +295,15 @@ plot(reg)
   x <- as.data.frame(h)
 
 
-
-geobr::download_fun(0)
-function_coverage(fun='download_fun', test_file("tests/testthat/test-download_fun.R"))
-
-# get results with unit tests
-c2 <- function_coverage(fun = download_fun, code = geobr::download_fun(0)== 4101)
-
-
-
-
-
-# function_coverage(fun=geobr::download_fun, test_file("tests/testthat/test-download_fun.R"))
-# function_coverage(fun = geobr::download_fun, code = {geobr::download_fun(x=0)== 4101} )
-
-
-file_coverage(source_files="R/download_fun.R",
-              test_files="tests/testthat/test-download_fun.R")
-
+  read_meso_region
 
 
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
 
 function_coverage(fun=geobr::download_metadata, test_file("tests/testthat/test-download_metadata.R"))
+
+function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
 function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
 function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))

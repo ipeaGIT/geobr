@@ -2,6 +2,11 @@ context("Read")
 
 test_that("read_meso_region", {
 
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
+
   # read data
   test_code <- read_meso_region(code_meso=1401, year=2010)
   test_code2 <- read_meso_region(code_meso=1401, year=NULL)
@@ -36,6 +41,11 @@ test_that("read_meso_region", {
 
 # ERRORS
 test_that("read_meso_region", {
+
+  # skip tests because they take too much time
+  #skip_on_cran()
+  skip_on_travis()
+
 
   # Wrong year and code
     expect_error(read_meso_region(code_meso=9999999, year=9999999))
