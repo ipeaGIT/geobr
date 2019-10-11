@@ -7,6 +7,7 @@ test_that("read_indigenous_land", {
 
   # skip tests because they take too much time
   skip_on_cran()
+  skip_on_travis()
 
   # read data
   test_sf <- read_indigenous_land(date=201907)
@@ -29,6 +30,7 @@ test_that("read_indigenous_land", {
 
   # skip tests because they take too much time
   skip_on_cran()
+  skip_on_travis()
 
   # Wrong date
   expect_error(read_indigenous_land(date=9999999))
