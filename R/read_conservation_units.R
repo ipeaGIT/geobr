@@ -13,10 +13,8 @@
 #'
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
+#'}
 #'
-#'
-#'
-
 read_conservation_units <- function(date=NULL){
 
   # Get metadata with data addresses
@@ -55,6 +53,3 @@ read_conservation_units <- function(date=NULL){
   temp_sf <- readr::read_rds(temps)
   return(temp_sf)
 }
-
-
-b <- read_conservation_units(date=201909)
