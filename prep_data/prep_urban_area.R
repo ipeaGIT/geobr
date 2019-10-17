@@ -217,13 +217,13 @@ setwd(root_dir)
   urb_2005 <- left_join(urb_2005, estados)
 
 
-  municipios <- geobr::read_municipality(code_muni  = 'all', year=2010)
+  municipios <- geobr::read_municipality(code_muni  = 'all', year=2015)
 
-  municipios <-
+# ????  municipios <- st_zm(municipios, drop = T, what = "ZM")
 
   municipios$geometry <- NULL
   municipios <- select(municipios, 'code_muni','name_muni','code_state','abbrev_state')
-  urb_2015 <- dplyr::left_join(urb_2015,municipios)
+  urb_2015 <- dplyr::left_join(urb_2015, municipios)
 
 
 # Use UTF-8 encoding in all character columns
