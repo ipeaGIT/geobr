@@ -11,8 +11,9 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
             person(given="Barbara", family="Santiago Pedreira da Costa", role="ctb"), 
             person(given="Welligtton", family="Silva Cavedo", role="ctb"),
             person(given="Pedro", family="R. Andrate", role="ctb"),
+            person(given="Alan", family="da Silva", role="ctb"),
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
-Date: 2019-10-08
+Date: 2019-10-17
 URL: https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
 Description: Easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE)
