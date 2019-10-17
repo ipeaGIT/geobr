@@ -279,8 +279,8 @@ setwd(root_dir)
 ##### 4.4 Save  -------------------
 
   # Save cleaned sf in the cleaned directory
-  readr::write_rds(temp_sf, path=paste0(destdir_clean_2005,"/urban_area_2005.rds"), compress = "gz")
-  readr::write_rds(temp_sf, path=paste0(destdir_clean_2015,"/urban_area_2015.rds"), compress = "gz")
+  readr::write_rds(urb_2005, path=paste0(destdir_clean_2005,"/urban_area_2005.rds"), compress = "gz")
+  readr::write_rds(urb_2015, path=paste0(destdir_clean_2015,"/urban_area_2015.rds"), compress = "gz")
 
 
 
