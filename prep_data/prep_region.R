@@ -1,15 +1,23 @@
 library(sp)
 library(sf)
+library(geobr)
+library(dplyr)
+library(mapview)
 
 
-
+#### This function loads Brazilian stantes for an specified year {geobr::read_states} and
+#### and generates the sf boundaries of region
 prep_region <- function(year){
 
   # a) reads all states sf files and pile them up
   y <- year
-  sf_states <- geobr::read_state(code_state = "all", year = 2000)
+  sf_states <- geobr::read_state(code_state = "all", year = y)
 
-  # store original crs
+# remove wrong-coded regions
+  sf_states <- subset(sf_states, code_region %in% c(1:5))
+
+
+# store original crs
   original_crs <- st_crs(sf_states)
 
   # b) make sure we have valid geometries
@@ -20,7 +28,7 @@ prep_region <- function(year){
 
 ## Func to clean and dissolve each region
 
-each_region <- function(region_code){
+dissolve_each_region <- function(region_code){
 
 # subset region
 tem_region <- subset(sf_states1, code_region == region_code )
@@ -50,27 +58,41 @@ outerBounds <- st_as_sf(outerBounds)
 outerBounds <- st_set_crs(outerBounds, original_crs)
 st_crs(outerBounds) <- 4674
 
+# retrieve code_region info
+outerBounds$code_region <- region_code
+
 return(outerBounds)
 }
 
-a <- lapply(unique(sf_states1$code_region), each_region)
-
-a <- lapply(c(1, 2), each_region)
-
-shape <- do.call('rbind', files)
+# aplicar para todas regioes e empilha resultados
+all_regions <- lapply(unique(sf_states1$code_region), dissolve_each_region)
+all_regions <- do.call('rbind', all_regions)
 
 
-a <- each_region(1)
 
-  # Dissolve borders within continents with ms_dissolve()
-  temp_ucs2 <- rmapshaper::ms_dissolve(temp_ucs)
+### add region names
+all_regions$name_region <- ifelse(all_regions$code_region==1, 'Norte',
+                                ifelse(all_regions$code_region==2, 'Nordeste',
+                                       ifelse(all_regions$code_region==3, 'Sudeste',
+                                              ifelse(all_regions$code_region==4, 'Sul',
+                                                     ifelse(all_regions$code_region==5, 'Centro Oeste', NA)))))
 
 
-  #clean columns and add region names
-  temp_sf$Group.1 <- NULL
-  temp_sf$name_region <- ifelse(temp_sf$code_region==1, 'Norte',
-                                ifelse(temp_sf$code_region==2, 'Nordeste',
-                                       ifelse(temp_sf$code_region==3, 'Sudeste',
-                                              ifelse(temp_sf$code_region==4, 'Sul',
-                                                     ifelse(temp_sf$code_region==5, 'Centro Oeste', NA)))))
+# redorder columns
+all_regions <- select(all_regions, c('code_region', 'name_region', 'geometry'))
 
+return(all_regions)
+}
+
+
+
+
+a2018 <- prep_region(2018)
+a2000 <- prep_region(2000)
+plot(a2018)
+plot(a2000)
+
+a <- read_state(code_state = "all", year=2010)
+head(a)
+
+1991 # code state e code region missing
