@@ -15,7 +15,6 @@ dir.create("./regions")
 
 #### This function loads Brazilian stantes for an specified year {geobr::read_states} and
 #### and generates the sf boundaries of region
-
 prep_region <- function(year){
 
   y <- year
@@ -31,7 +30,7 @@ prep_region <- function(year){
   sf_states <- subset(sf_states, code_region %in% c(1:5))
 
 
-  # store original crs
+# store original crs
   original_crs <- st_crs(sf_states)
 
   # b) make sure we have valid geometries
@@ -77,6 +76,18 @@ dissolve_each_region <- function(region_code){
     return(outerBounds)
     }
 
+all_regions <- lapply(unique(sf_states1$code_region), dissolve_each_region)
+all_regions <- do.call('rbind', all_regions)
+### add region names
+all_regions$name_region <- ifelse(all_regions$code_region==1, 'Norte',
+                                ifelse(all_regions$code_region==2, 'Nordeste',
+                                       ifelse(all_regions$code_region==3, 'Sudeste',
+                                              ifelse(all_regions$code_region==4, 'Sul',
+                                                     ifelse(all_regions$code_region==5, 'Centro Oeste', NA)))))
+all_regions <- select(all_regions, c('code_region', 'name_region', 'geometry'))
+
+return(all_regions)
+}
 
 # aplicar para todas regioes e empilha resultados
 temp_sf <- lapply(unique(sf_states1$code_region), dissolve_each_region)
