@@ -11,7 +11,7 @@ read_biomes(year = NULL)
 }
 \description{
 This data set covers the whole of Brazil and it includes the polygons of all of all biomes present in Brazilian
-territory. The last update of the data was 2004 (only year for which the data is currently available). The original
+territory at scale 1:5.000.000. The last update of the data was 2004 (only year for which the data is currently available). The original
 data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/ .
 }
 \examples{
