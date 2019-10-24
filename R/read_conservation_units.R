@@ -28,14 +28,16 @@ read_conservation_units <- function(date=NULL){
 
 
   # 1.1 Verify year input
-  if(is.null(date)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
-                                 paste(unique(temp_meta$year),collapse = " ")))
+  if (is.null(date)){ date <- 201909
+                      message(paste0("Using data from year ", date))
+                      }
 
-  } else if (date %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == date, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
+  if(!(date %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
+                                               paste(unique(temp_meta$year),collapse = " ")))
   }
+
+
+
 
 
   # # Select metadata year

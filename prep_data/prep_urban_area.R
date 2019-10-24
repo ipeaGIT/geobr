@@ -104,8 +104,10 @@ ate_urban_15 <- st_read( paste0(dir_2015,"/AreasUrbanizadasDoBrasil_2015_Concent
 
 
 # do they come with the same projection? Yes
+
 st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
 st_crs(ACP_urban_05) == st_crs(cost_urban_05)
+
 
 
 original_crs <- st_crs(mais_urban_15)

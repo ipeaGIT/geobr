@@ -64,12 +64,12 @@ ftp_2017 <- 'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territ
 
 
 # 2005
-download.file(url = ftp_2005, destfile = paste0(dir_raw_2005,"/","lista_municipios_semiarido.xlsx"), mode = 'wb')
+download.file(url = ftp_2005, destfile = paste0(dir_raw_2005,"/","lista_municipios_semiarido.xls"), mode = 'wb')
 
 # httr::GET(url=ftp_2005, httr::progress(),
 #           httr::write_disk(paste0(dir_raw_2005,"/","lista_municipios_semiarido.xlsx")))
 
-# 20007
+# 2017
 download.file(url = ftp_2017,
               destfile = paste0(dir_raw_2017,"/","lista_municipios_semiarido.xlsx") , mode = 'wb')
 
@@ -78,14 +78,14 @@ download.file(url = ftp_2017,
 #### 3. 2005 Clean data set and save it in compact .rds format-----------------
 
 # read IBGE data frame
-semi_arid_munis <- readxl::read_xlsx(path = paste0(dir_raw_2005,"/","lista_municipios_semiarido.xlsx"),
-                                     skip = 1)
-
+semi_arid_munis <- readxl::read_xls(path = paste0(dir_raw_2005,"/","lista_municipios_semiarido.xls"),
+                                     skip = 1, n_max = 1133)
+semi_arid_munis <- as.data.frame(semi_arid_munis)
 
 
 # Remove linha con info da fonte de dados
-  # semi_arid_munis[1263,1]
-  # semi_arid_munis <- na.exclude(semi_arid_munis)
+# semi_arid_munis[1263,1]
+# semi_arid_munis <- na.exclude(semi_arid_munis)
 
 
 # Rename columns
@@ -122,11 +122,13 @@ readr::write_rds(semi_arid_sf, path= paste0(dir_clean_2005,"/semiarid_2005",".rd
 
 # read IBGE data frame
 semi_arid_munis <- readxl::read_xlsx(path = paste0(dir_raw_2017,"/","lista_municipios_semiarido.xlsx"),
-                                     skip = 1)
+                                     skip = 1, n_max = 1262)
+semi_arid_munis <- as.data.frame(semi_arid_munis)
 
 # Remove linha con info da fonte de dados
-semi_arid_munis[1263,1]
-semi_arid_munis <- na.exclude(semi_arid_munis)
+#semi_arid_munis[1263,1]
+#semi_arid_munis <- na.exclude(semi_arid_munis)
+
 
 
 # Rename columns
