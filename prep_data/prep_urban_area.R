@@ -29,7 +29,6 @@ library(mapview)
 library(geobr)
 
 
-
 ###### 1. Create Root folder to save the data -----------------
 # Root directory
 root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
@@ -105,18 +104,19 @@ ate_urban_15 <- st_read( paste0(dir_2015,"/AreasUrbanizadasDoBrasil_2015_Concent
 
 # do they come with the same projection? Yes
 
-st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
-st_crs(ACP_urban_05) == st_crs(cost_urban_05)
+  st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
+  st_crs(ACP_urban_05) == st_crs(cost_urban_05)
 
 
+  original_crs <- st_crs(mais_urban_15)
 
-original_crs <- st_crs(mais_urban_15)
 
 
 
 ##### 4.2 Pile them up by year -------------------
 
 # Make sure all data sets have the same columns (in the same order)
+
 #2005
 ACP_urban_05$POP_2005 <- NA
 ACP_urban_05$dataset <- "population concentration area"
@@ -130,6 +130,8 @@ cemk_urban_05$ACP <- NA
 cemk_urban_05$COD_ACP <- NA
 cemk_urban_05$dataset <- "population above 100k"
 
+
+
 # columns in the same order
 setDT(ACP_urban_05)
 setDT(cost_urban_05)
@@ -138,9 +140,13 @@ setDT(cemk_urban_05)
 setcolorder(cost_urban_05, neworder= c(names(ACP_urban_05)) )
 setcolorder(cemk_urban_05, neworder=  c(names(ACP_urban_05)) )
 
+# Make any invalid geometry valid # st_is_valid( sf)
+  urb_2005 <- lwgeom::st_make_valid(urb_2005)
+  urb_2015 <- lwgeom::st_make_valid(urb_2015)
 
 # pile them up
 urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
+
 
 #2015
 ate_urban_15$FID_1 <-  NA
@@ -273,3 +279,128 @@ urb_2015 <- lwgeom::st_make_valid(urb_2015)
 readr::write_rds(urb_2005, path=paste0(destdir_clean_2005,"/urban_area_2005.rds"), compress = "gz")
 readr::write_rds(urb_2015, path=paste0(destdir_clean_2015,"/urban_area_2015.rds"), compress = "gz")
 
+# #### 4. 2015 Clean data set and save it in compact .rds format-----------------
+#
+#
+#
+#
+#
+#
+# #### 5. 2015 Clean data set and save it in compact .rds format-----------------
+#
+#
+# ##### 5.1 read shape files -------------------
+#   setwd(root_dir)
+#  # activate directory 2015
+#   setwd(dir_2015)
+#
+#  # do they come with the same projection? Yes
+#   st_crs(ACP_urban_05) == st_crs(cemk_urban_05)
+#   st_crs(ACP_urban_05) == st_crs(cost_urban_05)
+#   st_crs(mais_urban_15) == st_crs(ate_urban_15)
+#
+#   original_crs <- st_crs(mais_urban_15)
+#
+#
+#
+#
+#
+#
+#
+#
+# ########  mais ---------------------
+#
+# # rename and create columns
+# mais_urban_15 <- dplyr::rename(mais_urban_15, fid_1 = FID_1, densidade = Densidade, tipo = Tipo, code_muni = CodConcUrb)
+#
+# mais_urban_15_new<-merge(mais_urban_15,ibge_15,by="code_muni")
+# head(mais_urban_15)
+#
+# # order and and delete columns
+# mais_urb_15 <- mais_urban_15_new[,c("densidade","code_muni","code_state","name_muni",
+#                                     "abbrev_state","geometry","tipo")]
+#
+# # store original CRS
+# original_crs <- sf::st_crs(mais_urb_15)
+#
+# # Convert data.table back into sf
+# mais_urb_15_sf <- st_as_sf(mais_urb_15, crs=original_crs)
+#
+# # Use UTF-8 encoding
+# str(mais_urb_15_sf)
+#
+# mais_urb_15_sf$name_muni <- stringi::stri_encode(as.character(mais_urb_15_sf$name_muni), "UTF-8")
+# mais_urb_15_sf$abbrev_state <- stringi::stri_encode(as.character(mais_urb_15_sf$abbrev_state), "UTF-8")
+#
+# # test the shape
+# mapview(mais_urb_15_sf)
+#
+# # Save cleaned sf in the cleaned directory
+# readr::write_rds(mais_urb_15_sf,"./mais_urb_15.rds", compress = "gz")
+#
+#
+# #############
+# ##### até ---------------
+#
+# # rename and create columns
+# ate_urban_15 <- dplyr::rename(ate_urban_15, densidade = Densidade, tipo = Tipo, code_muni = CodConcUrb)
+#
+# ate_urban_15_new<-merge(ate_urban_15,ibge_15,by="code_muni")
+# head(ate_urban_15)
+#
+# # order and and delete columns
+# ate_urb_15 <- ate_urban_15_new[,c("densidade","code_muni","code_state","name_muni",
+#                                     "abbrev_state","geometry","tipo")]
+#
+# # store original CRS
+# original_crs <- sf::st_crs(ate_urb_15)
+#
+# # Convert data.table back into sf
+# ate_urb_15_sf <- st_as_sf(ate_urb_15, crs=original_crs)
+#
+#
+# # Use UTF-8 encoding
+# str(ate_urb_15_sf)
+#
+# ate_urb_15_sf$name_muni <- stringi::stri_encode(as.character(ate_urb_15_sf$name_muni), "UTF-8")
+# ate_urb_15_sf$abbrev_state <- stringi::stri_encode(as.character(ate_urb_15_sf$abbrev_state), "UTF-8")
+#
+# # test the shape
+# mapview(ate_urb_15_sf)
+#
+# # Save cleaned sf in the cleaned directory
+# readr::write_rds(ate_urb_15_sf,"./ate_urb_15.rds", compress = "gz")
+#
+#
+#
+# ##### join datasets --------------------
+#
+#
+#
+# # Save cleaned sf in the cleaned directory
+# readr::write_rds(urb_2005_sf,"./urb_2005.rds", compress = "gz")
+#
+# # creat dataset column
+# setwd(dir_2015)
+#
+# mais_urb_15$dataset <- "population greater than 300k"
+# ate_urb_15$dataset <- "population less than 300k"
+#
+# dim(mais_urb_15)
+# dim(ate_urb_15)
+#
+# urb_2015 <- rbind(ate_urb_15,mais_urb_15)
+# dim(urb_2015)
+#
+# # store original CRS
+# original_crs <- sf::st_crs(urb_2015)
+#
+# # Convert data.table back into sf
+# urb_2015_sf <- st_as_sf(urb_2015, crs=original_crs)
+#
+# #test the shape
+# mapview(urb_2015_sf)
+#
+# # Save cleaned sf in the cleaned directory
+# readr::write_rds(urb_2015_sf,"./urb_2015.rds", compress = "gz")
+#

@@ -28,3 +28,6 @@
   * New function `download_metadata` simply the download of df with data set addresses.
   * New data set `read_amazon` to read official data of Brazil's Legal Amazon - closes issue #38 (added in 2019-10-07).
   * New data set `read_conservation_units` to read official data of Environmental Conservation Units - closes issue #59 (added in 2019-10-08).
+  * New data set `read_urban_area` to read official data of urban footprint of Brazilian cities - closes issue #52 (added in 2019-10-17).
+  * Changes to `read_region` function to improve speed and remove `dplyr`dependency (added in 2019-10-22).
+

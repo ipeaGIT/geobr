@@ -23,6 +23,9 @@
   devtools::install_github("ipeaGIT/geobr")
   library(geobr)
 ```
+obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).
+
+
 
 ## Basic Usage
 ```R
@@ -60,6 +63,7 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_disaster_risk_area` (dev.) | Disaster risk areas | 2010 | CEMADEN and IBGE | 
 |`read_amazon` (dev.) | Brazil's Legal Amazon | 2012 | MMA | 
 |`read_conservation_units` (dev.) | Environmental Conservation Units | 201909 | MMA | 
+|`read_urban_area` (dev.) | Urban footprints | 2005, 2015 | IBGE | 
 
 
 Note 1. Functions marked with "dev." are only available in the development version of `geobr`.
@@ -75,7 +79,6 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Longitudinal Database* of municipalities | ... | IBGE | 
 | Longitudinal Database* of micro regions | ... | IBGE | 
 | Longitudinal Database* of Census tracts | ... | IBGE | 
-| Urbanized areas | 2005, 2015 | [IBGE](https://www.ibge.gov.br/geociencias-novoportal/cartas-e-mapas/redes-geograficas/15789-areas-urbanizadas.html) | 
 | Schools | 2019 | School Census (Inep) | 
 | ... | ... | ... | 
 | ... | ... | ... | 

@@ -14,24 +14,35 @@
 
 read_region <- function(year=NULL){
 
-  # read all states
-  y <- year
-  temp_sf <- read_state(code_state = "all", year = y)
-
-  # merge by Region
-  temp_sf <- dplyr::select(temp_sf, 'code_region', 'geometry')
-  temp_sf <- dplyr::summarize( group_by(temp_sf, code_region))
+  # Get metadata with data addresses
+  metadata <- download_metadata()
 
 
-  # add region names
-  temp_sf <- dplyr::mutate(temp_sf, name_region = ifelse(code_region==1, 'Norte',
-                                                            ifelse(code_region==2, 'Nordeste',
-                                                                   ifelse(code_region==3, 'Sudeste',
-                                                                          ifelse(code_region==4, 'Sul',
-                                                                                 ifelse(code_region==5, 'Centro Oeste', NA))))))
-  # reorder columns and return sf
-  temp_sf <- dplyr::select(temp_sf, 'code_region', 'name_region', 'geometry')
-  sf::st_crs(temp_sf)
+  # Select geo
+  temp_ano <- subset(metadata, geo=="regions")
+
+
+  # Verify year input
+  if (is.null(year)){ message("Using data from year 2010\n")
+    temp_ano <- subset(temp_ano, year==2010)
+
+  } else if (year %in% temp_ano$year){ temp_ano <- temp_ano[temp_ano[,2] == year, ]
+
+  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                       paste(unique(temp_ano$year),collapse = " ")))
+  }
+
+
+  # list paths of files to download
+  filesD <- as.character(temp_ano$download_path)
+
+  # download files
+  temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
+  httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+
+  # read sf
+  temp_sf <- readr::read_rds(temps)
+
   return(temp_sf)
 }
 
