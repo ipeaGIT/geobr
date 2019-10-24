@@ -111,6 +111,7 @@ setwd(root_dir)
   original_crs <- st_crs(mais_urban_15)
 
 
+
 ##### 3.2 Pile them up by year -------------------
 
 # Make sure all data sets have the same columns (in the same order)
