@@ -33,14 +33,16 @@ read_semiarid <- function(year=NULL){
 
   message(paste0("Using data from year ", year))
 
+  x<-year
 
+  filesD <- as.character(subset(temp_meta, year==x)$download_path)
 
   # # Select metadata year
   # x <- year
   # temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  # filesD <- as.character(temp_meta$download_path)
 
   # download files
   temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))

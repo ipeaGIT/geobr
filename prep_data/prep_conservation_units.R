@@ -76,8 +76,14 @@ download.file(url = ftp,
               destfile = paste0(destdir_raw,"/","ucstodas.dbf"),mode = "wb")
 
 
+
+
+
+
 #### 2. Unzipe shape files -----------------
-setwd(destdir_raw)
+# unecessary
+
+
 
 
 #### 3. Clean data set and save it in compact .rds format-----------------
@@ -94,7 +100,6 @@ temp_sf <- st_read(shape, quiet = F, stringsAsFactors=F, options = "ENCODING=lat
 head(temp_sf)
 
 # add download date column
-
 temp_sf$date <- update
 
 # Rename columns
@@ -129,6 +134,12 @@ st_crs(temp_sf)
 
 # Make any invalid geometry valid # st_is_valid( sf)
 temp_sf <- lwgeom::st_make_valid(temp_sf)
+
+
+# Make sure all geometry types are MULTIPOLYGON (fix isse #66)
+temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+unique(sf::st_geometry_type(temp_sf)) # [1] MULTIPOLYGON       GEOMETRYCOLLECTION
+
 
 # Save cleaned sf in the cleaned directory
 setwd(root_dir)
