@@ -330,6 +330,7 @@ rm(list = ls())
 library(roxygen2)
 library(devtools)
 library(usethis)
+  library(testthat)
 
 
 
@@ -397,9 +398,9 @@ setwd("..")
   # devtools::build(pkg = "geobr", path=".", binary = T, manual=T)
 
 # Check package errors
-  # devtools::check(".")
+   devtools::check(".",  cran = TRUE)
   system("R CMD check geobr_1.0.tar.gz")
-  system("R CMD check --as-cran geobr_1.0.tar.gz")
+  system("R CMD check --as-cran geobr")
 
 
   # check
