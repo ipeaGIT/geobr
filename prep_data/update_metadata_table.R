@@ -36,7 +36,7 @@
 
 
   # table(metadata$geo)
-  # temp_ano <- subset(metadata, geo=="disaster_risk_area")
+  # temp_ano <- subset(metadata, geo=="biomes")
   # temp_ano <- subset(metadata, geo=="country")
 
 
