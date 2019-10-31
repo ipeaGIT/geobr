@@ -1,10 +1,10 @@
 #' Download official data of Brazilian biomes as an sf object.
 #'
-#' This data set covers the whole of Brazil and it includes the polygons of all of all biomes present in Brazilian
-#' territory at scale 1:5.000.000. The last update of the data was 2004 (only year for which the data is currently available). The original
-#' data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/ .
+#' This data set includes  polygons of all  biomes present in Brazilian territory and coastal area.
+#' The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
+#' the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 #'
-#' @param year A date number in YYYY format (defaults to 2004)
+#' @param year A date number in YYYY format (defaults to 2019)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -12,7 +12,7 @@
 #' library(geobr)
 #'
 #' # Read biomes
-#'   b <- read_biomes(year=2004)
+#'   b <- read_biomes(year=2019)
 #'
 #'}
 #'
@@ -28,19 +28,19 @@ read_biomes <- function(year=NULL){
 
 
   # 1.1 Verify year input
-  if (is.null(year)){ year <- 2004}
+  if (is.null(year)){ year <- 2019}
 
   if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
+                                               paste( unique(temp_meta$year) ,collapse = " ") ))
   }
 
   message(paste0("Using data from year ", year))
 
 
 
-  # # Select metadata year
-  # x <- year
-  # temp_meta <- subset(temp_meta, year==x)
+  # Select metadata year
+  x <- year
+  temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
   filesD <- as.character(temp_meta$download_path)

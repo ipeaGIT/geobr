@@ -7,12 +7,12 @@
 read_biomes(year = NULL)
 }
 \arguments{
-\item{year}{A date number in YYYY format (defaults to 2004)}
+\item{year}{A date number in YYYY format (defaults to 2019)}
 }
 \description{
-This data set covers the whole of Brazil and it includes the polygons of all of all biomes present in Brazilian
-territory at scale 1:5.000.000. The last update of the data was 2004 (only year for which the data is currently available). The original
-data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/ .
+This data set includes  polygons of all  biomes present in Brazilian territory and coastal area.
+The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
+the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 }
 \examples{
 \donttest{
@@ -20,7 +20,7 @@ data comes from IBGE and can be found at https://geoftp.ibge.gov.br/informacoes_
 library(geobr)
 
 # Read biomes
-  b <- read_biomes(year=2004)
+  b <- read_biomes(year=2019)
 
 }
 
