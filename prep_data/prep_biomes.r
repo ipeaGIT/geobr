@@ -15,7 +15,8 @@ library(stringi)
 
 #> DATASET: biomes 2004, 2019
 #> Source: IBGE - https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/
-#> Metadata:
+#: scale 1:5.000.000
+#> Metadata: 
 # Titulo: Biomas
 # Titulo alternativo: Biomas 2004
 # Frequencia de atualizacao: ?
