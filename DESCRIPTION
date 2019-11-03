@@ -26,14 +26,14 @@ LazyData: TRUE
 Depends:
     R (>= 3.4.0)
 Suggests:
+    covr,
     dplyr,
     ggplot2,
-    mapview,
     knitr,
+    mapview,
     rio,
     rmarkdown,
-    testthat,
-    covr
+    testthat
 Imports:
       httr,
       readr,
