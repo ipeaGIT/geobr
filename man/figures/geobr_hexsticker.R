@@ -15,14 +15,13 @@ loadfonts(device = "win")
 # add special text font
   library(sysfonts)
   font_add_google(name = "Roboto", family = "Roboto")
-  font_add_google(name = "HelveticaR", family = "Linotype")
-
+  # font_add_google(name = "HelveticaR", family = "Linotype")
 
 
 
 ### Yellow and blue logo ---------------
 
-plot <-
+plot_y <-
   ggplot() +
   geom_sf(data = meso, fill=NA, size=.15, color="#272D67") +
   geom_sf(data = uf, fill=NA, size=.4, color="#2E3946") +
@@ -33,10 +32,10 @@ plot <-
            size = 25, family = "Roboto", fontface="bold", angle = 0) #
 
 
-sticker(plot, package="",
+sticker(plot_y, package="",
         s_x=1.12, s_y=.9, s_width=1.8, s_height=1.8, # ggplot image size and position
         h_fill="#FEB845", h_color="#FE9F45", h_size=1.5, # hexagon
-        filename="./man/figures/geobr_logo_y2.png", dpi=400)  # output name and resolution
+        filename="./man/figures/geobr_logo_y.png", dpi=400)  # output name and resolution
 
 beepr::beep()
 
@@ -45,10 +44,7 @@ beepr::beep()
 
 ### Blue and Yellowd logo ---------------
 
-
-# plot horizontal
-
-plot <-
+plot_b <-
   ggplot() +
   geom_sf(data = meso, fill=NA, size=.15, color="#FEB845") +
   geom_sf(data = uf, fill=NA, size=.4, color="#FEBF57") +
@@ -59,7 +55,7 @@ plot <-
            size = 25, family = "Roboto", fontface="bold", angle = 0) #
 
 
-sticker(plot, package="",
+sticker(plot_b, package="",
         s_x=1.12, s_y=.9, s_width=1.8, s_height=1.8, # ggplot image size and position
         h_fill="#2D3E50", h_color="#1f2b38", h_size=1.5, # hexagon
         filename="./man/figures/geobr_logo_b.png", dpi=400)  # output name and resolution
