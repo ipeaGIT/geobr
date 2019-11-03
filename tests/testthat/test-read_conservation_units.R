@@ -6,11 +6,12 @@ context("Read")
 test_that("read_conservation_units", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # read data
   test_sf <- read_conservation_units(date=201909)
+  expect_output(read_conservation_units(date=NULL))
 
 
   # check sf object
@@ -28,12 +29,11 @@ test_that("read_conservation_units", {
 test_that("read_conservation_units", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # Wrong date
   expect_error(read_conservation_units(date=9999999))
   expect_error(read_conservation_units(date="xxx"))
-  expect_error(read_conservation_units(date=NULL))
 
 })
