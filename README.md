@@ -27,13 +27,15 @@ obs. If you use **Linux**, you need to install a couple dependencies before inst
 
 
 ## Basic Usage
+
+The syntax of all `geobr` functions operate one the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
+
 ```R
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni=1200179, year=2017)
 
-# Read all municipalities of a state at a given year
-mun <- read_municipality(code_muni=33, year=2010)
-# alternatively
+# Read all municipalities of given state at a given year
+mun <- read_municipality(code_muni=33, year=2010) # or
 mun <- read_municipality(code_muni="RJ", year=2010)
 
 # Read all municipalities in the country at a given year
