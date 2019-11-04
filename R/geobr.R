@@ -27,5 +27,5 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
                                                         'group_by'))
 
 .onLoad <- function(lib, pkg) {
-  require(sf)
+  requireNamespace("sf")
 }
