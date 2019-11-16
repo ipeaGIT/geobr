@@ -65,7 +65,10 @@ sticker(plot_b, package="",
 sticker(plot_b, package="",
         s_x=1.12, s_y=.9, s_width=1.8, s_height=1.8, # ggplot image size and position
         h_fill="#2D3E50", h_color="#1f2b38", h_size=1.5, # hexagon
-        filename="./man/figures/geobr_logo_b599.svg", dpi=400)  # output name and resolution
+        filename="./man/figures/geobr_logo_b3.svg")  # output name and resolution
+
 
 beepr::beep()
+
+
 
