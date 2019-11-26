@@ -1,4 +1,4 @@
-read_rgi <- function(year = NULL){
+read_rgi <- function(code_rgi, year = NULL){
   
   # Get metadata with data addresses
   metadata <- geobr::download_metadata()
@@ -11,17 +11,16 @@ read_rgi <- function(year = NULL){
   temp_meta <- subset(metadata, geo=="immediate_regions")
   
   # 1.1 Verify year input
-  if (is.null(year)){ year <- 2017}
+  if (is.null(year)){ year <- 2017
+  message(paste0("Using data from year", year))}
   
   if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                                                paste(unique(temp_meta$year),collapse = " ")))
-  }
-  
-  message(paste0("Using data from year", year))
+  } else {
   
   # # Select metadata year
-  # x <- year
-  # temp_meta <- subset(temp_meta, year==x)
+   x <- year
+   temp_meta <- subset(temp_meta, year==x)
   
   # list paths of files to download
   filesD <- as.character(temp_meta$download_path)
@@ -32,5 +31,20 @@ read_rgi <- function(year = NULL){
   
   # read sf
   temp_sf <- readr::read_rds(temps)
-  return(temp_sf)
+  
+  }
+  
+  if(code_rgint=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+    temp_sf <- temp_sf 
+  } else if(code_rgi %in% temp_sf$abbrev_state){
+    y <- code_rgi
+    temp_sf <- subset(temp_sf, abbrev_state == y)
+  } else if(code_rgi %in% temp_sf$code_state){
+    y <- code_rgi
+    temp_sf <- subset(temp_sf, code_state == y)
+  } else {stop(paste0("Error: Invalid Value to argument 'code_rgint'. UF must be valid",collapse = " "))}
+  
+  return(temp_sf) 
 }
+
+z <- read_rgi(code_rgi = 25,year=2017)
