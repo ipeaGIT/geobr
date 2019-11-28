@@ -1,5 +1,6 @@
-#' Download shape files of Brazilian municipalities as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Download shape files of Brazilian municipalities as sf objects.
 #'
+#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #'
 #' @param year Year of the data (defaults to 2010)
