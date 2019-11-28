@@ -16,7 +16,7 @@ library(stringi)
 #> Source: IBGE - https://www.ibge.gov.br/geociencias/organizacao-do-territorio/divisao-regional/15778-divisoes-regionais-do-brasil.html?=&t=o-que-e
 #> scale 1:5.000.000 ?????????????
 #> Metadata:
-# Titulo: Regioes Geograficas Imediatas e Intermedi?rias
+# Titulo: Regioes Geograficas Imediatas
 # Titulo alternativo:
 # Frequencia de atualizacao: decenal
 #
@@ -24,11 +24,7 @@ library(stringi)
 # Linguagem: Pt-BR
 # Character set: Utf-8
 #
-# Resumo: A Divisao Regional do Brasil consiste no agrupamento de Estados e Municipios em regioes com a finalidade
-#         de atualizar o conhecimento regional do Pais e viabilizar a definicao de uma base territorial para fins
-#         de levantamento e divulgacao de dados estatisticos. Ademais, visa contribuir com uma perspectiva para a
-#         compreens?o da organiza??o do territ?rio nacional e assistir o governo federal, bem como Estados e Munic?pios,
-#         na implantacao e gestao de politicas publicas e investimentos.
+# Resumo: Regioes Geograficas Imediadas foram criadas pelo IBGE em 2017 para substituir a micro-regioes
 #
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
@@ -111,11 +107,11 @@ temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rg
                               ifelse(code_state== 13, "Amazônia",
                               ifelse(code_state== 14, "Roraima",
                               ifelse(code_state== 15, "Pará",
-                              ifelse(code_state== 16, "Amap?",
+                              ifelse(code_state== 16, "Amapá",
                               ifelse(code_state== 17, "Tocantins",
                               ifelse(code_state== 21, "Maranhão",
-                              ifelse(code_state== 22, "Piau?",
-                              ifelse(code_state== 23, "Cear?",
+                              ifelse(code_state== 22, "Piauí",
+                              ifelse(code_state== 23, "Ceará",
                               ifelse(code_state== 24, "Rio Grande do Norte",
                               ifelse(code_state== 25, "Paraíba",
                               ifelse(code_state== 26, "Pernambuco",
@@ -126,7 +122,7 @@ temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rg
                               ifelse(code_state== 32, "Espírito Santo",
                               ifelse(code_state== 33, "Rio de Janeiro",
                               ifelse(code_state== 35, "São Paulo",
-                              ifelse(code_state== 41, "Paran?",
+                              ifelse(code_state== 41, "Paraná",
                               ifelse(code_state== 42, "Santa Catarina",
                               ifelse(code_state== 43, "Rio Grande do Sul",
                               ifelse(code_state== 50, "Mato Grosso do Sul",
