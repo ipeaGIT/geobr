@@ -30,6 +30,6 @@
   * New data set `read_conservation_units` to read official data of Environmental Conservation Units - closes issue #59 (added in 2019-10-08).
   * New data set `read_urban_area` to read official data of urban footprint of Brazilian cities - closes issue #52 (added in 2019-10-17).
   * Changes to `read_region` function to improve speed and remove `dplyr`dependency (added in 2019-10-22).
-  * New data set of biomes (
-  to 2019 and it is (2019) available at scale 1:250.000. (added in 2019-10-31) - closes issue #72
-  
+  * New data set of biomes (2019) available at scale 1:250.000. (added in 2019-10-31) - closes issue #72
+  * New data set of Intermediate Regions (2017) (added in 2019-11-28)
+  * New data set of Immediate Regions (2017) (added in 2019-11-28)
