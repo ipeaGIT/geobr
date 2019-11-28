@@ -10,7 +10,7 @@ read_biomes(year = NULL)
 \item{year}{A date number in YYYY format (defaults to 2019)}
 }
 \description{
-This data set includes  polygons of all  biomes present in Brazilian territory and coastal area.
+This data set includes  polygons of all biomes present in Brazilian territory and coastal area.
 The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
 the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 }
@@ -26,16 +26,20 @@ library(geobr)
 
 }
 \seealso{
-Other general area functions: \code{\link{read_amazon}},
-  \code{\link{read_census_tract}},
-  \code{\link{read_conservation_units}},
-  \code{\link{read_country}},
-  \code{\link{read_meso_region}},
-  \code{\link{read_micro_region}},
-  \code{\link{read_municipality}},
-  \code{\link{read_region}}, \code{\link{read_semiarid}},
-  \code{\link{read_state}},
-  \code{\link{read_statistical_grid}},
-  \code{\link{read_weighting_area}}
+Other general area functions: 
+\code{\link{read_amazon}()},
+\code{\link{read_census_tract}()},
+\code{\link{read_conservation_units}()},
+\code{\link{read_country}()},
+\code{\link{read_immediate_region}()},
+\code{\link{read_meso_region}()},
+\code{\link{read_micro_region}()},
+\code{\link{read_municipality}()},
+\code{\link{read_region}()},
+\code{\link{read_rgint}()},
+\code{\link{read_semiarid}()},
+\code{\link{read_state}()},
+\code{\link{read_statistical_grid}()},
+\code{\link{read_weighting_area}()}
 }
 \concept{general area functions}
