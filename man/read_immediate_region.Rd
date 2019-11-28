@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_immediate_region.R
 \name{read_immediate_region}
 \alias{read_immediate_region}
-\title{Download shape files of Brazil's Immediate Geographic Areas as sf objects.}
+\title{Download shape files of Brazil's Immediate Geographic Areas as sf objects}
 \usage{
 read_immediate_region(code_immediate = NULL, year = NULL)
 }
