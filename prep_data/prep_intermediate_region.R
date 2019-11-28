@@ -1,5 +1,4 @@
 library(RCurl)
-#library(tidyverse)
 library(stringr)
 library(sf)
 library(janitor)
@@ -13,119 +12,126 @@ library(devtools)
 library(lwgeom)
 library(stringi)
 
-#> DATASET: Intermediate and Immediate Geographic Regions - 2017
+#> DATASET: Intermediate Geographic Regions - 2017
 #> Source: IBGE - https://www.ibge.gov.br/geociencias/organizacao-do-territorio/divisao-regional/15778-divisoes-regionais-do-brasil.html?=&t=o-que-e
-#: scale 1:5.000.000
-#> Metadata: 
-# Titulo: Regiões Geográficas Imediatas e Intermediárias
-# Titulo alternativo: 
-# Frequencia de atualizacao: ?
+#> scale 1:5.000.000 ?????????????
+#> Metadata:
+# Titulo: Regioes Geograficas Intermediarias
+# Titulo alternativo:
+# Frequencia de atualizacao: decenal
 #
-# Forma de apresentação: Shape
+# Forma de apresentacao: Shape
 # Linguagem: Pt-BR
 # Character set: Utf-8
 #
-# Resumo: A Divisão Regional do Brasil consiste no agrupamento de Estados e Municípios em regiões com a finalidade 
-#         de atualizar o conhecimento regional do País e viabilizar a definição de uma base territorial para fins 
-#         de levantamento e divulgação de dados estatísticos. Ademais, visa contribuir com uma perspectiva para a 
-#         compreensão da organização do território nacional e assistir o governo federal, bem como Estados e Municípios,
-#         na implantação e gestão de políticas públicas e investimentos.
-# Informações adicionais: Dados produzidos pelo IBGE, e utilizados na elaboracao do shape de biomas com a melhor base oficial disponivel.
-# Proposito: Identificao dos biomas brasileiros.
+# Resumo: Regioes Geograficas Intermediarias foram criadas pelo IBGE em 2017 para substituir a meso-regioes
 #
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
 
 # Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//geographic_regions"
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
+
+# Directory to keep raw zipped files
+dir.create("./intermediate_regions")
+setwd("./intermediate_regions")
+
+# Create folders to save clean sf.rds files
+dir.create("./shapes_in_sf_cleaned", showWarnings = FALSE)
+
+
 
 #### 0. Download original Intermediate Regions data sets from IBGE ftp -----------------
 
 ftp <- 'ftp://geoftp.ibge.gov.br/organizacao_do_territorio/divisao_regional/divisao_regional_do_brasil/divisao_regional_do_brasil_em_regioes_geograficas_2017/shp/RG2017_rgint_20180911.zip'
+download.file(url = ftp, destfile = "RG2017_rgint_20180911.zip")
+
 
 ########  1. Unzip original data sets downloaded from IBGE -----------------
 
-# Directory to keep raw zipped files
-dir.create("./Intermediate Regions")
-setwd("./Intermediate Regions")
-
-download.file(url = ftp, destfile = "RG2017_rgint_20180911.zip")
-
 unzip("RG2017_rgint_20180911.zip")
 
-# read data
-
-temp_sf <- st_read("RG2017_rgint.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
 
 ##### Rename columns -------------------------
 
-temp_sf <- dplyr::rename(temp_sf, code_rgint = rgint, name_rgint = nome_rgint) %>% 
+# read data
+temp_sf <- st_read("RG2017_rgint.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
+
+
+temp_sf <- dplyr::rename(temp_sf, code_intermediate = rgint, name_intermediate = nome_rgint) %>%
   dplyr::mutate(year = 2017,
-                code_state = substr(code_rgint,1,2),
+                # code_state
+                code_state = substr(code_immediate,1,2),
+
+                # abbrev_state
                 abbrev_state =  ifelse(code_state== 11, "RO",
-                                              ifelse(code_state== 12, "AC",
-                                              ifelse(code_state== 13, "AM",
-                                              ifelse(code_state== 14, "RR",
-                                              ifelse(code_state== 15, "PA",
-                                              ifelse(code_state== 16, "AP",
-                                              ifelse(code_state== 17, "TO",
-                                              ifelse(code_state== 21, "MA",
-                                              ifelse(code_state== 22, "PI",
-                                              ifelse(code_state== 23, "CE",
-                                              ifelse(code_state== 24, "RN",
-                                              ifelse(code_state== 25, "PB",
-                                              ifelse(code_state== 26, "PE",
-                                              ifelse(code_state== 27, "AL",
-                                              ifelse(code_state== 28, "SE",
-                                              ifelse(code_state== 29, "BA",
-                                              ifelse(code_state== 31, "MG",
-                                              ifelse(code_state== 32, "ES",
-                                              ifelse(code_state== 33, "RJ",
-                                              ifelse(code_state== 35, "SP",
-                                              ifelse(code_state== 41, "PR",
-                                              ifelse(code_state== 42, "SC",
-                                              ifelse(code_state== 43, "RS",
-                                              ifelse(code_state== 50, "MS",
-                                              ifelse(code_state== 51, "MT",
-                                              ifelse(code_state== 52, "GO",
-                                              ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))),
-                name_state =  ifelse(code_state== 11, "Rondônia",
-                              ifelse(code_state== 12, "Acre",
-                              ifelse(code_state== 13, "Amazônia",
-                              ifelse(code_state== 14, "Roraima",
-                              ifelse(code_state== 15, "Pará",
-                              ifelse(code_state== 16, "Amapá",
-                              ifelse(code_state== 17, "Tocantins",
-                              ifelse(code_state== 21, "Maranhão",
-                              ifelse(code_state== 22, "Piauí",
-                              ifelse(code_state== 23, "Ceará",
-                              ifelse(code_state== 24, "Rio Grande do Norte",
-                              ifelse(code_state== 25, "Paraíba",
-                              ifelse(code_state== 26, "Pernambuco",
-                              ifelse(code_state== 27, "Alagoas",
-                              ifelse(code_state== 28, "Sergipe",
-                              ifelse(code_state== 29, "Bahia",
-                              ifelse(code_state== 31, "Minas Gerais",
-                              ifelse(code_state== 32, "Espírito Santo",
-                              ifelse(code_state== 33, "Rio de Janeiro",
-                              ifelse(code_state== 35, "São Paulo",
-                              ifelse(code_state== 41, "Paraná",
-                              ifelse(code_state== 42, "Santa Catarina",
-                              ifelse(code_state== 43, "Rio Grande do Sul",
-                              ifelse(code_state== 50, "Mato Grosso do Sul",
-                              ifelse(code_state== 51, "Mato Grosso",
-                              ifelse(code_state== 52, "Goiás",
-                              ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))),
-                code_region = substr(code_rgint,1,1),
+                                       ifelse(code_state== 12, "AC",
+                                       ifelse(code_state== 13, "AM",
+                                       ifelse(code_state== 14, "RR",
+                                       ifelse(code_state== 15, "PA",
+                                       ifelse(code_state== 16, "AP",
+                                       ifelse(code_state== 17, "TO",
+                                       ifelse(code_state== 21, "MA",
+                                       ifelse(code_state== 22, "PI",
+                                       ifelse(code_state== 23, "CE",
+                                       ifelse(code_state== 24, "RN",
+                                       ifelse(code_state== 25, "PB",
+                                       ifelse(code_state== 26, "PE",
+                                       ifelse(code_state== 27, "AL",
+                                       ifelse(code_state== 28, "SE",
+                                       ifelse(code_state== 29, "BA",
+                                       ifelse(code_state== 31, "MG",
+                                       ifelse(code_state== 32, "ES",
+                                       ifelse(code_state== 33, "RJ",
+                                       ifelse(code_state== 35, "SP",
+                                       ifelse(code_state== 41, "PR",
+                                       ifelse(code_state== 42, "SC",
+                                       ifelse(code_state== 43, "RS",
+                                       ifelse(code_state== 50, "MS",
+                                       ifelse(code_state== 51, "MT",
+                                       ifelse(code_state== 52, "GO",
+                                       ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))),
+                # name_state
+                name_state =  ifelse(code_state== 11, "RondÃ´nia",
+                                     ifelse(code_state== 12, "Acre",
+                                     ifelse(code_state== 13, "AmazÃ´nia",
+                                     ifelse(code_state== 14, "Roraima",
+                                     ifelse(code_state== 15, "ParÃ¡",
+                                     ifelse(code_state== 16, "AmapÃ¡",
+                                     ifelse(code_state== 17, "Tocantins",
+                                     ifelse(code_state== 21, "MaranhÃ£o",
+                                     ifelse(code_state== 22, "PiauÃ­",
+                                     ifelse(code_state== 23, "CearÃ¡",
+                                     ifelse(code_state== 24, "Rio Grande do Norte",
+                                     ifelse(code_state== 25, "ParaÃ­ba",
+                                     ifelse(code_state== 26, "Pernambuco",
+                                     ifelse(code_state== 27, "Alagoas",
+                                     ifelse(code_state== 28, "Sergipe",
+                                     ifelse(code_state== 29, "Bahia",
+                                     ifelse(code_state== 31, "Minas Gerais",
+                                     ifelse(code_state== 32, "EspÃ­rito Santo",
+                                     ifelse(code_state== 33, "Rio de Janeiro",
+                                     ifelse(code_state== 35, "SÃ£o Paulo",
+                                     ifelse(code_state== 41, "ParanÃ¡",
+                                     ifelse(code_state== 42, "Santa Catarina",
+                                     ifelse(code_state== 43, "Rio Grande do Sul",
+                                     ifelse(code_state== 50, "Mato Grosso do Sul",
+                                     ifelse(code_state== 51, "Mato Grosso",
+                                     ifelse(code_state== 52, "GoiÃ¡s",
+                                     ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))),
+                # code_region
+                code_region = substr(code_immediate,1,1),
+
+                # name_region
                 name_region = ifelse(code_region==1, 'Norte',
-                              ifelse(code_region==2, 'Nordeste',
-                              ifelse(code_region==3, 'Sudeste',
-                              ifelse(code_region==4, 'Sul',
-                              ifelse(code_region==5, 'Centro Oeste', NA))))))
+                                     ifelse(code_region==2, 'Nordeste',
+                                     ifelse(code_region==3, 'Sudeste',
+                                     ifelse(code_region==4, 'Sul',
+                                     ifelse(code_region==5, 'Centro Oeste', NA))))))
 # reorder columns
-temp_sf <- dplyr::select(temp_sf, 'code_rgint', 'name_rgint','code_state', 'abbrev_state',
+temp_sf <- dplyr::select(temp_sf, 'code_intermediate', 'name_intermediate','code_state', 'abbrev_state',
                                    'name_state', 'code_region', 'name_region', 'geometry')
 
 # Convert columns from factors to characters
@@ -133,6 +139,7 @@ temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
 temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+st_crs(temp_sf) <- 4674
 
 # Make any invalid geometry valid # st_is_valid( sf)
 temp_sf <- lwgeom::st_make_valid(temp_sf)
@@ -140,4 +147,7 @@ temp_sf <- lwgeom::st_make_valid(temp_sf)
 # keep code as.numeric()
 temp_sf$code_state <- as.numeric(temp_sf$code_state)
 
-write_rds(temp_sf, path = "2017_rgint.rds", compress="gz" )
+
+##### Save data -------------------------
+readr::write_rds(temp_sf, path = "./shapes_in_sf_cleaned/intermediate_regions_2017.rds", compress="gz" )
+
