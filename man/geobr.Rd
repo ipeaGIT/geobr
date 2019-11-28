@@ -3,7 +3,6 @@
 \docType{package}
 \name{geobr}
 \alias{geobr}
-\alias{geobr-package}
 \title{\code{geobr} package}
 \description{
 Easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil

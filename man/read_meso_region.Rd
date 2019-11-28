@@ -13,7 +13,7 @@ a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of 
 \item{year}{Year of the data (defaults to 2010)}
 }
 \description{
-Download shape files of meso region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \donttest{
@@ -34,16 +34,20 @@ library(geobr)
 
 }
 \seealso{
-Other general area functions: \code{\link{read_amazon}},
-  \code{\link{read_biomes}},
-  \code{\link{read_census_tract}},
-  \code{\link{read_conservation_units}},
-  \code{\link{read_country}},
-  \code{\link{read_micro_region}},
-  \code{\link{read_municipality}},
-  \code{\link{read_region}}, \code{\link{read_semiarid}},
-  \code{\link{read_state}},
-  \code{\link{read_statistical_grid}},
-  \code{\link{read_weighting_area}}
+Other general area functions: 
+\code{\link{read_amazon}()},
+\code{\link{read_biomes}()},
+\code{\link{read_census_tract}()},
+\code{\link{read_conservation_units}()},
+\code{\link{read_country}()},
+\code{\link{read_immediate_region}()},
+\code{\link{read_micro_region}()},
+\code{\link{read_municipality}()},
+\code{\link{read_region}()},
+\code{\link{read_rgint}()},
+\code{\link{read_semiarid}()},
+\code{\link{read_state}()},
+\code{\link{read_statistical_grid}()},
+\code{\link{read_weighting_area}()}
 }
 \concept{general area functions}

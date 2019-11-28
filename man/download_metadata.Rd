@@ -2,12 +2,12 @@
 % Please edit documentation in R/download_metadata.R
 \name{download_metadata}
 \alias{download_metadata}
-\title{Download data.framte with a summary of the data sets included in grobr}
+\title{Download data.frame with a summary of the data sets included in grobr}
 \usage{
 download_metadata()
 }
 \description{
-Download data.framte with a summary of the data sets included in grobr
+Download data.frame with a summary of the data sets included in grobr
 }
 \examples{
 \donttest{
