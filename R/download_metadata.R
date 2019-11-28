@@ -1,6 +1,6 @@
-#' Download data.framte with a summary of the data sets included in grobr
+#' Download data.frame with a summary of the data sets included in grobr
 #'
-#' Download data.framte with a summary of the data sets included in grobr
+#' Download data.frame with a summary of the data sets included in grobr
 #'
 #' @export
 #' @family general support functions

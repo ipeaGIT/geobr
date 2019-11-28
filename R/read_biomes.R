@@ -1,6 +1,6 @@
 #' Download official data of Brazilian biomes as an sf object.
 #'
-#' This data set includes  polygons of all  biomes present in Brazilian territory and coastal area.
+#' This data set includes  polygons of all biomes present in Brazilian territory and coastal area.
 #' The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
 #' the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 #'
