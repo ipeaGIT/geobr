@@ -8,8 +8,8 @@ read_immediate_region(code_immediate = NULL, year = NULL)
 }
 \arguments{
 \item{code_immediate}{6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of
-a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_micro="all",
-all micro regions of the country are loaded (defaults to "all").}
+a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_immediate="all",
+all immediate regions of the country are loaded (defaults to "all").}
 
 \item{year}{A date number in YYYY format (defaults to 2017)}
 }
@@ -43,11 +43,11 @@ Other general area functions:
 \code{\link{read_census_tract}()},
 \code{\link{read_conservation_units}()},
 \code{\link{read_country}()},
+\code{\link{read_intermediate_region}()},
 \code{\link{read_meso_region}()},
 \code{\link{read_micro_region}()},
 \code{\link{read_municipality}()},
 \code{\link{read_region}()},
-\code{\link{read_rgint}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
 \code{\link{read_statistical_grid}()},

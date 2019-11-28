@@ -5,8 +5,8 @@
 #'
 #' @param year A date number in YYYY format (defaults to 2017)
 #' @param code_immediate 6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_micro="all",
-#'  all micro regions of the country are loaded (defaults to "all").
+#'  a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_immediate="all",
+#'  all immediate regions of the country are loaded (defaults to "all").
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -36,7 +36,7 @@ read_immediate_region <- function(code_immediate= NULL, year = NULL){
 
   # 1.1 Verify year input
   if (is.null(year)){ year <- 2017
-  message(paste0("Using data from year", year))}
+  message(paste0("Using data from year ", year))}
 
   if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                                                paste(unique(temp_meta$year),collapse = " ")))
