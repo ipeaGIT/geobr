@@ -71,11 +71,11 @@ unzip("RG2017_rgi_20180911.zip")
 # read data
 temp_sf <- st_read("RG2017_rgi.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
 
-temp_sf <- dplyr::rename(temp_sf, code_rgi = rgi, name_rgi = nome_rgi) %>%
+temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rgi) %>%
   dplyr::mutate(year = 2017,
 
                 # code_state
-                code_state = substr(code_rgi,1,2),
+                code_state = substr(code_immediate,1,2),
 
                 # abbrev_state
                 abbrev_state =  ifelse(code_state== 11, "RO",
@@ -134,7 +134,7 @@ temp_sf <- dplyr::rename(temp_sf, code_rgi = rgi, name_rgi = nome_rgi) %>%
                               ifelse(code_state== 52, "Goiás",
                               ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))),
                 # code_region
-                code_region = substr(code_rgi,1,1),
+                code_region = substr(code_immediate,1,1),
 
                 # name_region
                 name_region = ifelse(code_region==1, 'Norte',
@@ -143,7 +143,7 @@ temp_sf <- dplyr::rename(temp_sf, code_rgi = rgi, name_rgi = nome_rgi) %>%
                               ifelse(code_region==4, 'Sul',
                               ifelse(code_region==5, 'Centro Oeste', NA))))))
 # reorder columns
-temp_sf <- dplyr::select(temp_sf, 'code_rgi', 'name_rgi','code_state', 'abbrev_state',
+temp_sf <- dplyr::select(temp_sf, 'code_immediate', 'name_immediate','code_state', 'abbrev_state',
                          'name_state', 'code_region', 'name_region', 'geometry')
 
 # Convert columns from factors to characters
