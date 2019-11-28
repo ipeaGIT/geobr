@@ -4,9 +4,9 @@
 #' replace the "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year A date number in YYYY format (defaults to 2017)
-#' @param code_intermediate 6-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_micro="all",
-#'  all micro regions of the country are loaded (defaults to "all").
+#' @param code_intermediate 4-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
+#'  a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_intermediate="all",
+#'  all intermediate regions of the country are loaded (defaults to "all").
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -14,7 +14,7 @@
 #' library(geobr)
 #'
 #' # Read an specific intermediate region
-#'   im <- read_intermediate_region(code_intermediate=110006)
+#'   im <- read_intermediate_region(code_intermediate=1202)
 #'
 #' # Read intermediate regions of a state
 #'   im <- read_intermediate_region(code_intermediate=12)
@@ -26,15 +26,10 @@
 #' }
 #'
 #'
-read_rgint <- function(code_rgint, year = NULL){
-
+read_intermediate_region <- function(code_immediate= NULL, year = NULL){
 
   # Get metadata with data addresses
   metadata <- geobr::download_metadata()
-
-  # verify input type
-  #if(is.null(type)){type <- "reg_mun"}
-  #if(all(type != c("rgint","rgi","reg_mun"))) stop("type must be 'rgint' or 'rgi' or 'reg_mun'")
 
   # Select geo
   temp_meta <- subset(metadata, geo=="intermediate_regions")
@@ -46,6 +41,7 @@ read_rgint <- function(code_rgint, year = NULL){
   if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                                                paste(unique(temp_meta$year),collapse = " ")))
   } else {
+
     # # Select metadata year
     x <- year
     temp_meta <- subset(temp_meta, year==x)
@@ -62,15 +58,26 @@ read_rgint <- function(code_rgint, year = NULL){
 
   }
 
-    if(code_rgint=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
-     temp_sf <- temp_sf
-    } else if(code_rgint %in% temp_sf$abbrev_state){
-      y <- code_rgint
-      temp_sf <- subset(temp_sf, abbrev_state == y)
-    } else if(code_rgint %in% temp_sf$code_state){
-      y <- code_rgint
-      temp_sf <- subset(temp_sf, code_state == y)
-    } else {stop(paste0("Error: Invalid Value to argument 'code_rgint'. UF must be valid",collapse = " "))}
+  if(is.null(code_immediate)){ message("Loading data for the whole country. This might take a few minutes.\n")
+
+  } else if(code_immediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+
+    # abbrev_state
+  } else if(code_immediate %in% temp_sf$abbrev_state){
+    y <- code_immediate
+    temp_sf <- subset(temp_sf, abbrev_state == y)
+
+    # code_state
+  } else if(code_immediate %in% temp_sf$code_state){
+    y <- code_immediate
+    temp_sf <- subset(temp_sf, code_state == y)
+
+    # code_immediate
+  } else if(code_immediate %in% temp_sf$code_immediate){
+    y <- code_immediate
+    temp_sf <- subset(temp_sf, code_immediate == y)
+
+  } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))}
 
   return(temp_sf)
 }
