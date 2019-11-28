@@ -26,7 +26,7 @@
 #' }
 #'
 #'
-read_intermediate_region <- function(code_immediate= NULL, year = NULL){
+read_intermediate_region <- function(code_intermediate= NULL, year = NULL){
 
   # Get metadata with data addresses
   metadata <- geobr::download_metadata()
@@ -58,26 +58,26 @@ read_intermediate_region <- function(code_immediate= NULL, year = NULL){
 
   }
 
-  if(is.null(code_immediate)){ message("Loading data for the whole country. This might take a few minutes.\n")
+  if(is.null(code_intermediate)){ message("Loading data for the whole country. This might take a few minutes.\n")
 
-  } else if(code_immediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  } else if(code_intermediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
     # abbrev_state
-  } else if(code_immediate %in% temp_sf$abbrev_state){
-    y <- code_immediate
+  } else if(code_intermediate %in% temp_sf$abbrev_state){
+    y <- code_intermediate
     temp_sf <- subset(temp_sf, abbrev_state == y)
 
     # code_state
-  } else if(code_immediate %in% temp_sf$code_state){
-    y <- code_immediate
+  } else if(code_intermediate %in% temp_sf$code_state){
+    y <- code_intermediate
     temp_sf <- subset(temp_sf, code_state == y)
 
-    # code_immediate
-  } else if(code_immediate %in% temp_sf$code_immediate){
-    y <- code_immediate
-    temp_sf <- subset(temp_sf, code_immediate == y)
+    # code_intermediate
+  } else if(code_intermediate %in% temp_sf$code_intermediate){
+    y <- code_intermediate
+    temp_sf <- subset(temp_sf, code_intermediate == y)
 
-  } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))}
+  } else {stop(paste0("Error: Invalid Value to argument 'code_intermediate'",collapse = " "))}
 
   return(temp_sf)
 }
