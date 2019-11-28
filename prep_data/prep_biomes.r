@@ -16,7 +16,7 @@ library(stringi)
 #> DATASET: biomes 2004, 2019
 #> Source: IBGE - https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/
 #: scale 1:5.000.000
-#> Metadata: 
+#> Metadata:
 # Titulo: Biomas
 # Titulo alternativo: Biomas 2004
 # Frequencia de atualizacao: ?
@@ -88,7 +88,7 @@ download.file(url = ftp_costeiro, destfile = paste0(destdir_raw,"/","Biomas_250m
 
 
 
-#### 2. Unzipe shape files -----------------
+#### 2. Unzip shape files -----------------
 setwd(destdir_raw)
 
 # list and unzip zipped files
