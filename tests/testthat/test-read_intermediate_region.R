@@ -13,8 +13,8 @@ test_that("read_intermediate_region", {
   expect_message(read_intermediate_region(year=NULL))
   test_sf <- read_intermediate_region(year=2017)
 
-  test_code_state <- read_intermediate_region(code_immediate = 11)
-  test_code_state2 <- read_intermediate_region(code_immediate = "AC")
+  test_code_state <- read_intermediate_region(code_intermediate = 11)
+  test_code_state2 <- read_intermediate_region(code_intermediate = "AC")
 
 
   # check sf object
@@ -44,16 +44,13 @@ test_that("read_intermediate_region", {
 
 
   # Wrong year
-  expect_error(read_immediate_region(year = 9999999))
-  expect_error(read_immediate_region(year = "xxx"))
+  expect_error(read_intermediate_region(year = 9999999))
+  expect_error(read_intermediate_region(year = "xxx"))
 
 
-  # wrong code_intermediate
-  expect_error(read_intermediate_region(code_immediate = 99999999,year = NULL))
-  expect_error(read_intermediate_region(code_immediate = "xxx" ,year = NULL))
 
   # wrong year and code_immediate
-  expect_error(read_intermediate_region(code_immediate = "xxxx", year=9999999))
-  expect_error(read_intermediate_region(code_immediate = 9999999, year="xxx"))
+  expect_error(read_intermediate_region(code_intermediate = "xxxx", year=9999999))
+  expect_error(read_intermediate_region(code_intermediate = 9999999, year="xxx"))
 
 })
