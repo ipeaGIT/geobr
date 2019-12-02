@@ -12,3 +12,4 @@
 ^  Georeferencing-gain\.Rmd$
 ^codecov\.yml$
 ^travis\.yml$
+^NEWS\.md$
