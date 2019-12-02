@@ -58,6 +58,3 @@ test_that("read_health_facilities", {
 #  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
 
 })
-
-
-

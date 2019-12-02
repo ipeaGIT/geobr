@@ -385,7 +385,7 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
 
-setwd("R:/Dropbox/git_projects/geobr")
+setwd("R:/Dropbox/git/geobr")
 setwd("..")
 
 
@@ -398,7 +398,7 @@ setwd("..")
   # devtools::build(pkg = "geobr", path=".", binary = T, manual=T)
 
 # Check package errors
-   devtools::check(".",  cran = TRUE)
+   devtools::check(pkg = "geobr",  cran = TRUE)
   system("R CMD check geobr_1.1.tar.gz")
   system("R CMD check --as-cran geobr")
 

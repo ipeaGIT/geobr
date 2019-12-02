@@ -1,4 +1,4 @@
-#' Download shape files of Census Weighting Areas (area de ponderação) of the Brazilian Population Census.
+#' Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.
 #'
 #' Only 2010 data is currently available.
 #'
@@ -123,4 +123,3 @@ read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=14
     }
   }
 }
-

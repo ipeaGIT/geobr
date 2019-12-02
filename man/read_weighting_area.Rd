@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_weighting_area.R
 \name{read_weighting_area}
 \alias{read_weighting_area}
-\title{Download shape files of Census Weighting Areas (area de ponderação) of the Brazilian Population Census.}
+\title{Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.}
 \usage{
 read_weighting_area(code_weighting, year = NULL)
 }
