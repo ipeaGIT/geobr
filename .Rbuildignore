@@ -13,3 +13,4 @@
 ^codecov\.yml$
 ^travis\.yml$
 ^NEWS\.md$
+^\.travis\.yml$
