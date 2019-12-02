@@ -373,8 +373,8 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
     usethis::use_build_ignore("brazil_2010.Rd")
 
   # Vignette que ainda nao esta pronta
-    usethis::use_build_ignore("  Georeferencing-gain.R")
-    usethis::use_build_ignore("  Georeferencing-gain.Rmd")
+    usethis::use_build_ignore("Georeferencing-gain.R")
+    usethis::use_build_ignore("Georeferencing-gain.Rmd")
 
 
 
