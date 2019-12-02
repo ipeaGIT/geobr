@@ -363,8 +363,8 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
   setwd("R:/Dropbox/git_projects/geobr")
 
 
-  usethis::use_build_ignore("travis.yml")
-  usethis::use_build_ignore("prep_data")
+  usethis::use_build_ignore(".travis.yml")
+  sethis::use_build_ignore("prep_data")
   usethis::use_build_ignore("manual.pdf")
 
   # script da base de dados e a propria base armazenada localmente, mas que eh muito grande para o CRAN
