@@ -399,7 +399,7 @@ setwd("..")
 
 # Check package errors
    devtools::check(".",  cran = TRUE)
-  system("R CMD check geobr_1.0.tar.gz")
+  system("R CMD check geobr_1.1.tar.gz")
   system("R CMD check --as-cran geobr")
 
 

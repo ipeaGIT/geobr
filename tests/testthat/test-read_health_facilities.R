@@ -6,7 +6,7 @@ context("Read")
 test_that("read_health_facilities", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # Get metadata with data addresses
@@ -41,7 +41,7 @@ test_that("read_health_facilities", {
 test_that("read_health_facilities", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
 
