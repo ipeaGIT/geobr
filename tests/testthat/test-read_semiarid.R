@@ -6,7 +6,7 @@ context("Read")
 test_that("read_semiarid", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # read data
@@ -31,7 +31,7 @@ test_that("read_semiarid", {
 test_that("read_semiarid", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
 
