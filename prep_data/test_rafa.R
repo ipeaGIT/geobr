@@ -364,8 +364,9 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
   usethis::use_build_ignore(".travis.yml")
-  sethis::use_build_ignore("prep_data")
+  usethis::use_build_ignore("prep_data")
   usethis::use_build_ignore("manual.pdf")
+  usethis::use_build_ignore("README.md")
 
   # script da base de dados e a propria base armazenada localmente, mas que eh muito grande para o CRAN
     usethis::use_build_ignore("brazil_2010.R")
