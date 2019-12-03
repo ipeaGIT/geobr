@@ -20,8 +20,8 @@ test_that("read_amazon", {
   # check sf object
   expect_true(is(test_sf, "sf"))
 
-  # check number of micro
-  expect_equal(test_sf %>% length(), 2)
+  # check number of columns
+  expect_equal(ncol(test_sf), 2)
 
   # check projection
   expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
