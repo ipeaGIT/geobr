@@ -12,3 +12,7 @@
 ^  Georeferencing-gain\.Rmd$
 ^codecov\.yml$
 ^travis\.yml$
+^NEWS\.md$
+^\.travis\.yml$
+^README\.md$
+^geobr_logo_b\.svg$

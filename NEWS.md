@@ -1,7 +1,7 @@
 # log history of geobr package development
 
 -------------------------------------------------------
-# geobr v1.0 (2019-30-07)
+# geobr v1.0 (2019-07-30)
 
 * Launch of **geobr** v1.0 on [CRAN](https://cran.r-project.org/web/packages/geobr/index.html) with the following data sets:
   * Country
@@ -15,7 +15,7 @@
   * Statistical Grid 
 
 -------------------------------------------------------
-# geobr dev1.1
+# geobr v1.1 (2019-12-03)
 
 * closes issue #42 (2019-08-05)
   * Shows a single download progress bar when `*_code="all"`. 
@@ -31,5 +31,9 @@
   * New data set `read_urban_area` to read official data of urban footprint of Brazilian cities - closes issue #52 (added in 2019-10-17).
   * Changes to `read_region` function to improve speed and remove `dplyr`dependency (added in 2019-10-22).
   * New data set of biomes (2019) available at scale 1:250.000. (added in 2019-10-31) - closes issue #72
-  * New data set of Intermediate Regions (2017) (added in 2019-11-28)
-  * New data set of Immediate Regions (2017) (added in 2019-11-28)
+  * New data set of `read_intermediate_region` (2017) (added in 2019-11-28)
+  * New data set of `read_immediate_region` (2017) (added in 2019-11-28)
+
+
+-------------------------------------------------------
+# geobr dev v1.2

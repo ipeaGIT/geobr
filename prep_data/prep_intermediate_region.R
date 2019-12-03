@@ -63,7 +63,7 @@ temp_sf <- st_read("RG2017_rgint.shp", quiet = F, stringsAsFactors=F, options = 
 temp_sf <- dplyr::rename(temp_sf, code_intermediate = rgint, name_intermediate = nome_rgint) %>%
   dplyr::mutate(year = 2017,
                 # code_state
-                code_state = substr(code_immediate,1,2),
+                code_state = substr(code_intermediate,1,2),
 
                 # abbrev_state
                 abbrev_state =  ifelse(code_state== 11, "RO",
@@ -122,7 +122,7 @@ temp_sf <- dplyr::rename(temp_sf, code_intermediate = rgint, name_intermediate =
                                      ifelse(code_state== 52, "Goiás",
                                      ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))),
                 # code_region
-                code_region = substr(code_immediate,1,1),
+                code_region = substr(code_intermediate,1,1),
 
                 # name_region
                 name_region = ifelse(code_region==1, 'Norte',

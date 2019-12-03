@@ -3,7 +3,7 @@ context("Read")
 test_that("read_micro_region", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # read data
@@ -43,7 +43,7 @@ test_that("read_micro_region", {
 test_that("read_micro_region", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # Wrong year and code
