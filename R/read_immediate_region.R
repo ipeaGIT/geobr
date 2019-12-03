@@ -1,4 +1,4 @@
-#' Download shape files of Brazil's Immediate Geographic Areas as sf objects.
+#' Download shape files of Brazil's Immediate Geographic Areas as sf objects
 #'
 #' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE to
 #' replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

@@ -8,26 +8,14 @@ context("Read")
 test_that("read_disaster_risk_area", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
-  # Get metadata with data addresses
-  tempf <- file.path(tempdir(), "metadata.rds")
-
-  # check if metadata has already been downloaded
-  if (file.exists(tempf)) {
-    metadata <- readr::read_rds(tempf)
-
-  } else {
-
-    # download it and save to metadata
-    httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata.rds", httr::write_disk(tempf, overwrite = T))
-    metadata <- readr::read_rds(tempf)
-
+  # read data
+  test_sf <- read_disaster_risk_area(year=2010)
     # test
-    expect_equal(tempf %>% length(), 1)
-    expect_equal(ncol(metadata), 5)
-    }
+    expect_equal(test_sf %>% length(), 10)
+
 
 }
 )
@@ -43,7 +31,6 @@ test_that("read_disaster_risk_area", {
   # skip tests because they take too much time
   skip_on_cran()
   skip_on_travis()
-
 
   # read data
   test_sf <- read_disaster_risk_area(year=2010)
@@ -66,7 +53,7 @@ test_that("read_disaster_risk_area", {
 test_that("read_disaster_risk_area", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # Wrong year

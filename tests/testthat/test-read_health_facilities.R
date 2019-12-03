@@ -6,7 +6,7 @@ context("Read")
 test_that("read_health_facilities", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # Get metadata with data addresses
@@ -41,7 +41,7 @@ test_that("read_health_facilities", {
 test_that("read_health_facilities", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
 
@@ -58,6 +58,3 @@ test_that("read_health_facilities", {
 #  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
 
 })
-
-
-

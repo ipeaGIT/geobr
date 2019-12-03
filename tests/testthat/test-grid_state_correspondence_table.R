@@ -4,7 +4,7 @@ context("Data")
 test_that("grid_state_correspondence_table", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
 
