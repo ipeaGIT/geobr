@@ -67,6 +67,7 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_amazon` | Brazil's Legal Amazon | 2012 | MMA | 
 |`read_conservation_units` | Environmental Conservation Units | 201909 | MMA | 
 |`read_urban_area` | Urban footprints | 2005, 2015 | IBGE | 
+|`read_semiarid` | Semi Arid region | 2005, 2017 | IBGE | 
 
 
 Note 1. Functions marked with "dev." are only available in the development version of `geobr`.
