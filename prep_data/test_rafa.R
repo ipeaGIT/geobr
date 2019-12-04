@@ -291,8 +291,6 @@ plot(reg)
   library(testthat)
   library(geobr)
 
-  geobr_cov <- package_coverage()#clean=T, function_exclusions="read_statistical_grid")
-  x <- as.data.frame(h)
 
 
   read_meso_region
@@ -324,7 +322,10 @@ function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-re
   # usethis::use_coverage( type = c("codecov"))
 
 # update Package coverage
-  covr::codecov( coverage =geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
+  Sys.setenv(NOT_CRAN = "true")
+  geobr_cov <- covr::package_coverage()
+  x <- as.data.frame(geobr_cov)
+  covr::codecov( coverage = geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
