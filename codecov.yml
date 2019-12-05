@@ -1,5 +1,8 @@
 comment: false
 
+ignore:
+  - "prep_data/*"
+
 coverage:
   status:
     project:
