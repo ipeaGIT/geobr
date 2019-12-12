@@ -14,16 +14,13 @@
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
 #'}
-#'
 read_conservation_units <- function(date=NULL){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
 
-
   # Select geo
   temp_meta <- subset(metadata, geo=="conservation_units")
-
 
   # 1.1 Verify year input
   if (is.null(date)){ date <- 201909
@@ -33,10 +30,6 @@ read_conservation_units <- function(date=NULL){
   if(!(date %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
                                                paste(unique(temp_meta$year),collapse = " ")))
   }
-
-
-
-
 
   # # Select metadata year
   # x <- year
