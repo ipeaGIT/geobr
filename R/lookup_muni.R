@@ -17,6 +17,12 @@
 #' # Or you can get a lookup table for the same municipality searching for its code
 #' mun <- lookup_muni(code_muni = 3304557)
 #'
+#' # Get lookup table for all municipalities
+#' mun_all <- lookup_muni(name_muni == "all")
+#'
+#' # Or:
+#' mun_all <- lookup_muni(code_muni == "all")
+#'
 #'}
 
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
@@ -107,25 +113,36 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   # code_muni has priority over other arguments
   if (is.numeric(code_muni) | is.character(code_muni)) {
 
-    # 1. Search input in the lookup table -----------------
+    if (code_muni == "all") {
 
-    x <- code_muni
+      # Delete formatted column
+      lookup_table_2010$name_muni_format <- NULL
 
-    # Filter muni name
-    lookup_filter <- subset(lookup_table_2010, code_muni == x)
-
-    if (nrow(lookup_filter) == 0) {
-
-      stop("Please insert a valid municipality code", call. = FALSE)
+      return(lookup_table_2010)
 
     } else {
 
-      message(sprintf("Returning results for municipality %s", lookup_filter$name_muni))
+      # 1. Search input in the lookup table -----------------
 
-      # Delete formatted column
-      lookup_filter$name_muni_format <- NULL
+      x <- code_muni
 
-      return(lookup_filter)
+      # Filter muni name
+      lookup_filter <- subset(lookup_table_2010, code_muni == x)
+
+      if (nrow(lookup_filter) == 0) {
+
+        stop("Please insert a valid municipality code", call. = FALSE)
+
+      } else {
+
+        message(sprintf("Returning results for municipality %s", lookup_filter$name_muni))
+
+        # Delete formatted column
+        lookup_filter$name_muni_format <- NULL
+
+        return(lookup_filter)
+
+      }
 
     }
 
