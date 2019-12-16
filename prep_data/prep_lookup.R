@@ -62,6 +62,14 @@ if ( update == 2010){
   # Open lookup table with munis
   lookup_munis <- fread("lookup_muni/tabela_muni_codigos_2010.csv")
 
+  # convert encoding
+  lookup_munis <- lookup_munis %>%
+    mutate_at(vars(matches("nome")), stringi::stri_encode, to = "UTF8")
+
+  # save and open again to make sure it's ok
+  write_csv(lookup_munis, "lookup_muni/lookup_munis_utf8.csv")
+  lookup_munis <- fread("lookup_muni/lookup_munis_utf8.csv", encoding = "UTF-8")
+
   # Download munis
   munis <- geobr::read_municipality(code_muni = "all", year = 2010) %>%
     # select necessary columns
@@ -77,7 +85,7 @@ if ( update == 2010){
   # micro_regions <- geobr::read_micro_region(code_micro = "all", year = 2010)
 
   # Download intermediate information
-  intermediates <- geobr::read_intermediate_region(code_immediate = "all") %>% # ta errado isso!
+  intermediates <- geobr::read_intermediate_region(code_intermediate = "all") %>%
     # # delete geometry
     # st_set_geometry(NULL) %>%
     # select necessary columns
@@ -111,18 +119,27 @@ if ( update == 2010){
            code_immediate, name_immediate,
            code_intermediate, name_intermediate)
 
+  # Save unformatted
+  write_rds(lookup_end, "lookup_muni/lookup_muni_2010_unformatted.rds")
+
 
 }
 
 
+
+
 #### 2. Format muni name -----------------
+
+# Open unformatted lookup muni
+lookup_end <- read_rds("lookup_muni/lookup_muni_2010_unformatted.rds")
 
 lookup_end_format <- lookup_end %>%
 
   # to lower
   mutate(name_muni_format = tolower(name_muni)) %>%
   # delete accents
-  mutate(name_muni_format = iconv(name_muni_format, to="ASCII//TRANSLIT")) %>%
+  mutate(name_muni_format = stringi::stri_trans_general(name_muni_format, id = "Latin-ASCII")) %>%
+  mutate(name_muni_format = iconv(name_muni_format, to="UTF-8")) %>%
   # trim white spaces
   mutate(name_muni_format = trimws(name_muni_format, "both"))
 
