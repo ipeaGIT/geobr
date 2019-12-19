@@ -12,6 +12,7 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
             person(given="Welligtton", family="Silva Cavedo", role="ctb"),
             person(given="Pedro", family="R. Andrate", role="ctb"),
             person(given="Alan", family="da Silva", role="ctb"),
+	    person(given="Carlos", family="Kauê Vieira Braga", role="ctb"),   
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
 Date: 2019-12-01
 URL: https://github.com/ipeaGIT/geobr
