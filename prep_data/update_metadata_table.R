@@ -77,6 +77,8 @@
   table(metadata$geo)
   table(metadata$year)
 
+  subset(metadata, geo == 'metropolitan_area')
+
 # save updated metadata table
   # readr::write_rds(metadata,"//storage1/geobr/metadata/metadata.rds", compress = "gz")
 

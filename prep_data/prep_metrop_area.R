@@ -45,13 +45,17 @@ root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//metropolitan_area"
 dir.create(root_dir)
 setwd(root_dir)
 
-# 2001_2005
-dir_2001_2005 <- "./2001_2005/"
-dir.create(paste(dir_2001_2005,"",sep = ""))
 
-# 2010_2018
-dir_2010_2018 <- "./2010_2018/"
-dir.create(paste(dir_2010_2018,"/",sep = ""))
+dest_dir <- './shapes_in_sf_all_years_cleaned/'
+dir.create( paste(dest_dir,"",sep = "") )
+
+# # 2001_2005
+# dir_2001_2005 <- "./2001_2005/"
+# dir.create(paste(dir_2001_2005,"",sep = ""))
+#
+# # 2010_2018
+# dir_2010_2018 <- "./2010_2018/"
+# dir.create(paste(dir_2010_2018,"/",sep = ""))
 
 
 
@@ -86,7 +90,7 @@ filenames_10_18 <- filenames[grepl("_06_|_07_", filenames)]
 # 2001:2005
 for (files in filenames_01_05) {
   download.file( url = paste(ftp_01_05, files, sep = ""),
-                 destfile = paste(dir_2001_2005, files, sep = ""),
+                 destfile = paste('.', files, sep = ""),
                  mode = "wb")
   }
 
@@ -94,7 +98,7 @@ for (files in filenames_01_05) {
 # 2010:2018
 for (files_ in filenames_10_18) {
   download.file( url = paste(ftp_10_18,files_, sep = ""),
-                 destfile = paste(dir_2010_2018, files_, sep = ""),
+                 destfile = paste('.', files_, sep = ""),
                  mode = "wb")
 }
 
@@ -111,11 +115,10 @@ for (files_ in filenames_10_18) {
 
 #### 2.1 Cleaning date 2001-2005 -----------------
 
-setwd(dir_2001_2005)
+# listar arquivos baixados
+dados_01_05 <- list.files(pattern = "*.xls", all.files = T)
+dados_01_05 <- dados_01_05[ dados_01_05  %like% '.RM ']
 
-
-#listar arquivos baixados
-dados_01_05 <- list.files(pattern = "*.xls", full.names = T)
 
 
 for (i in 1:4){
@@ -126,7 +129,7 @@ for (i in 1:4){
   dado1 <- readxl::read_excel(path = dados_01_05[i])
 
   # identifica ano de referencia do arquibo
-  year_RM <- paste0(20,substr(dados_01_05[i],12,13))
+  year_RM <- paste0(20,substr(dados_01_05[i],11,12))
 
  # Corrige encoding dos dados
   if (year_RM %like% "2001|2005"){
@@ -216,8 +219,11 @@ for (i in 1:4){
 # set back to spatial sf
   temp_sf <- st_as_sf(dado3, crs=4674)
 
+# create dir to save data
+  dir.create(paste(dest_dir,year_RM,"/",sep = ""))
+
 ### Save data
-  readr::write_rds(temp_sf, path=paste0('metro_',year_RM,".rds"), compress = "gz")
+  readr::write_rds(temp_sf, path=paste0(dest_dir,year_RM,"/",'metro_',year_RM,".rds"), compress = "gz")
 
 # delete original file
   unlink(dados_01_05[i])
@@ -230,10 +236,10 @@ for (i in 1:4){
 
 
 #### 2.2 Cleaning date 2010-2018 -----------------
-setwd(paste0(".", dir_2010_2018))
 
-# list all files
-dados_10_18 <- list.files(pattern = "*.xls", full.names = T)
+# listar arquivos baixados
+dados_10_18 <- list.files(pattern = "*.xls", all.files = T)
+dados_10_18 <- dados_10_18[ dados_10_18  %like% 'RMs']
 
 
 # create cleanning function
@@ -248,7 +254,7 @@ fun_clean_2010_2018 <- function(i){
         stringi::stri_encode("WINDOWS-1252") } )
 
   # identifica ano de referencia
-  year_RM2 <- substr( i, 37,40)
+  year_RM2 <- substr( i, 36, 39)
 
   # Progress message
   message(paste('working on', year_RM2))
@@ -334,8 +340,12 @@ fun_clean_2010_2018 <- function(i){
   # set back to spatial sf
   temp_sf <- st_as_sf(dados6, crs=4674)
 
-  ### save data
-  readr::write_rds(temp_sf, path=paste0('metro_',year_RM2,".rds"), compress = "gz")
+  # create dir to save data
+  dir.create(paste(dest_dir,year_RM2,"/",sep = ""))
+
+  ### Save data
+  readr::write_rds(temp_sf, path=paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".rds"), compress = "gz")
+
   # delete original file
  unlink(i)
 }
