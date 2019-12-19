@@ -21,7 +21,7 @@ The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and eas
 
 The package will soon be available on CRAN. In the meantime, you can install it using the `devtools` package.
 
-```{r }
+```{r message=FALSE, warning=FALSE}
 # Load geobr and other libraries we'll use
   library(geobr)
   library(ggplot2)
@@ -50,7 +50,7 @@ The syntax of all *geobr* functions operate one the same logic, so the code to d
 
 
 Read an specific geographic area at a given year
-```{r message=FALSE,warning=FALSE,results='hide'}
+```{r message=FALSE, warning=FALSE, results='hide'}
 # download data
   state <- read_state(code_state="SE", year=2018)          # State
   micro <- read_micro_region(code_micro=160101, year=2000) # Micro region
@@ -59,7 +59,7 @@ Read an specific geographic area at a given year
 
 
 Read all geographic areas within a state at a given year
-```{r message=FALSE,warning=FALSE,results='hide'}
+```{r message=FALSE, warning=FALSE, results='hide'}
 # download data
   meso <- read_meso_region(code_meso="PA", year=2018)      # Meso region
   muni <- read_municipality(code_muni= "AL", year=2007)    # Municipality
@@ -68,7 +68,7 @@ Read all geographic areas within a state at a given year
 
 
 The user can also read all geographic areas in the country in a single line of code.
-```{r message=FALSE,warning=FALSE,results='hide'}
+```{r message=FALSE, warning=FALSE, results='hide'}
 # download data
   state <- read_state(code_state="all", year=1991)         # State
   meso <- read_meso_region(code_meso="all", year=2001)     # Meso region
@@ -82,7 +82,7 @@ The user can also read all geographic areas in the country in a single line of c
 Once you've downloaded the data, it is really simple to plot maps using `ggplot2`.
 
 
-```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
 # No plot axis
   no_axis <- theme(axis.title=element_blank(),
@@ -102,9 +102,12 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 
 All the municipalities of a particular state, such as Rio de Janeiro:
 
-```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
 # Download all municipalities of Rio
   all_muni <- read_municipality( code_muni = "RJ", year= 2000)
+```
+
+```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
 # plot
   ggplot() + 
@@ -112,7 +115,6 @@ All the municipalities of a particular state, such as Rio de Janeiro:
     labs(subtitle="Municipalities of Rio de Janeiro, 2000", size=8) + 
     theme_minimal() +
     no_axis
-    
 ```
 
 
@@ -124,19 +126,16 @@ The next step is to combine  data from ***geobr*** package with other data sets 
 
 First, we need to download the Life Expectancy data set and merge it to our spatial database. The two-digit abbreviation of state names is our key to join these two databases.
 
-```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
+```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
 
 # download Life Expectancy data
   adh <- rio::import("http://atlasbrasil.org.br/2013/data/rawData/Indicadores%20Atlas%20-%20RADAR%20IDHM.xlsx", which = "Dados")
-
-
 
 # keep only information for the year 2010 and the columns we want
   adh <- subset(adh, ANO == 2014)
   
 # Download the sf of all Brazilian states
   all_states <- read_state(code_state= "all", year= 2014)
-
   
 # joind the databases
   all_states <-left_join(all_states, adh, by = c("abbrev_state" = "NOME_AGREGA"))
@@ -144,8 +143,7 @@ First, we need to download the Life Expectancy data set and merge it to our spat
 
 #### Plot thematic map
 
-```{r , fig.height = 8, fig.width = 8, fig.align = "center",message=FALSE,warning=FALSE}
-
+```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
   ggplot() + 
     geom_sf(data=all_states, aes(fill=ESPVIDA), color= NA, size=.15) + 
       labs(subtitle="Life Expectancy at birth, Brazilian States, 2014", size=8) + 
