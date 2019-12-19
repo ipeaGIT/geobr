@@ -11,12 +11,8 @@ library(lwgeom)
 library(magrittr)
 library(zoo)
 library(future)
-
-
 library(gdata)
-library(baytrends) # ???????
 library(stringr)
-library(janitor)
 library(devtools)
 
 
@@ -222,12 +218,12 @@ for (i in 1:4){
 
 ### Save data
   readr::write_rds(temp_sf, path=paste0('metro_',year_RM,".rds"), compress = "gz")
+
+# delete original file
   unlink(dados_01_05[i])
 }
 
 # encoding 2002 e 2003: WINDOWS-1252
-# dado1 <- readxl::read_excel(path = dados_01_05[4])
-# colnames(dado1)
 #
 
 
@@ -257,7 +253,7 @@ fun_clean_2010_2018 <- function(i){
   # Progress message
   message(paste('working on', year_RM2))
 
-  # O que esse trecho faz ????????????????????????????????????????
+  #apagar as 4 últimas linhas do arquivo
   if  (year_RM2 %like% "2015"){
     L <- nrow(dados2)
     a <- (L-3):L
@@ -340,7 +336,8 @@ fun_clean_2010_2018 <- function(i){
 
   ### save data
   readr::write_rds(temp_sf, path=paste0('metro_',year_RM2,".rds"), compress = "gz")
-  # unlink(dados_10_18[i])
+  # delete original file
+ unlink(i)
 }
 
 
@@ -349,6 +346,7 @@ lapply(X=dados_10_18, FUN=fun_clean_2010_2018)
 
 
 # Parallel processing using future.apply
+### ---------------- essa parte tá pedindo os arquivos que foram apagados. Precisa mesmo deles ou é algo que pode ser atualizado??????
 future::plan(future::multiprocess)
 future.apply::future_lapply(X = dados_10_18, FUN=fun_clean_2010_2018, future.packages=c('sf', 'dplyr', 'data.table'))
 
