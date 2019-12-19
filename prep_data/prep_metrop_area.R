@@ -10,6 +10,8 @@ library(sf)
 library(lwgeom)
 library(magrittr)
 library(zoo)
+library(future)
+
 
 library(gdata)
 library(baytrends) # ???????
@@ -18,7 +20,6 @@ library(janitor)
 library(devtools)
 
 
-library(RCurl)
 
 #> DATASET: metropolitan areas 2000 - 2018
 #> Source: IBGE - "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/"
@@ -219,7 +220,6 @@ for (i in 1:4){
 # set back to spatial sf
   temp_sf <- st_as_sf(dado3, crs=4674)
 
-
 ### Save data
   readr::write_rds(temp_sf, path=paste0('metro_',year_RM,".rds"), compress = "gz")
   unlink(dados_01_05[i])
@@ -236,60 +236,77 @@ for (i in 1:4){
 #### 2.2 Cleaning date 2010-2018 -----------------
 setwd(paste0(".", dir_2010_2018))
 
+# list all files
 dados_10_18 <- list.files(pattern = "*.xls", full.names = T)
 
-setwd(dir_10_18)
 
+# create cleanning function
+fun_clean_2010_2018 <- function(i){
 
+  # Read data
+  dados1 <- readxl::read_excel(path = i)
 
-
-for (i in 1:7){
-  dados1 <- readxl::read_excel(path = dados_10_18[i])
+  # Fix Encoding
   dados2 <- dados1 %>%
     mutate_if(is.factor, function(x){ x %>% as.character() %>%
         stringi::stri_encode("WINDOWS-1252") } )
 
-  year_RM2 <- substr(dados_10_18[i],37,40)
+  # identifica ano de referencia
+  year_RM2 <- substr( i, 37,40)
 
+  # Progress message
+  message(paste('working on', year_RM2))
+
+  # O que esse trecho faz ????????????????????????????????????????
   if  (year_RM2 %like% "2015"){
     L <- nrow(dados2)
     a <- (L-3):L
     b <- dados2[-a,]
   }
 
+  # Rename code_muni
   if (year_RM2 %like% "2010|2013|2014|2015"){
     dados2 <- dplyr::rename(dados1, code_muni = `Código Município`)
   } else {
     dados2 <- dplyr::rename(dados1, code_muni = `COD_MUN`)
   }
 
+  # Converte Code muni para numerico
+  dados2$code_muni <- as.numeric(as.character(dados2$code_muni))
+
+  # Todos colnames para minusculo
   dados3 <- dados2 %>% setnames(colnames(dados2),tolower(colnames(dados2)))
-  dados3$code_muni <- as.numeric(as.character(dados3$code_muni))
+
+  # leitura dos dados espaciais
   municipios <- geobr::read_municipality(code_muni  = 'all', year=year_RM2)
-  dados4 <- dplyr::left_join(dados3,municipios)
+
+  # merge de dados para adicionar coluna espacial 'geometry'
+  dados4 <- dplyr::left_join(dados3, municipios)
+
+  # Renomeia colunas (padrao varia em cada ano)
   if(year_RM2 %like% "2010|2013|2014"){
     dados5 <- dplyr::rename(dados4,
-                            mr = `região metropolitana, ride ou aglomeração urbana`,
+                            name_metro = `região metropolitana, ride ou aglomeração urbana`,
                             subdivision = `subdivisões`,
                             legislation = `legislação`,
-                            date_of_law = `data lei`,
+                            legislation_date = `data lei`,
                             type = tipo
     )
   } else if (year_RM2 %like% "2015") {
     dados5 <- dplyr::rename(dados4,
-                            mr = `região metropolitana, ride ou aglomeração urbana`,
+                            name_metro = `região metropolitana, ride ou aglomeração urbana`,
                             subdivision = `subdivisões`,
                             legislation = `legislação`,
-                            publication_date = `data de publicação da lei`,
+                            legislation_date = `data de publicação da lei`,
                             signature_date = `data de assinatura da lei`,
                             type = tipo
     )
   } else {
     dados5 <- dplyr::rename(dados4,
-                            mr = `nome_rm`,
+                            name_metro = `nome_rm`,
                             subdivision = `subdivisao`,
                             legislation = `leg`,
-                            date_of_law = `data`,
+                            legislation_date = `data`,
                             type = tipo)
   }
 
@@ -299,9 +316,9 @@ for (i in 1:7){
                             'name_muni',
                             'code_state',
                             'abbrev_state',
-                            'mr',
+                            'name_metro',
                             'type',
-                            'date_of_law',
+                            'legislation_date',
                             'geometry'
     )
   } else {
@@ -310,7 +327,7 @@ for (i in 1:7){
                             'name_muni',
                             'code_state',
                             'abbrev_state',
-                            'mr',
+                            'name_metro',
                             'type',
                             'subdivision',
                             'legislation',
@@ -318,10 +335,20 @@ for (i in 1:7){
     )
   }
 
+  # set back to spatial sf
   temp_sf <- st_as_sf(dados6, crs=4674)
-  readr::write_rds(temp_sf, path=paste0(year_RM2,".rds"), compress = "gz")
-  unlink(dados_10_18[i])
+
+  ### save data
+  readr::write_rds(temp_sf, path=paste0('metro_',year_RM2,".rds"), compress = "gz")
+  # unlink(dados_10_18[i])
 }
 
 
+# Apply function and create data
+lapply(X=dados_10_18, FUN=fun_clean_2010_2018)
+
+
+# Parallel processing using future.apply
+future::plan(future::multiprocess)
+future.apply::future_lapply(X = dados_10_18, FUN=fun_clean_2010_2018, future.packages=c('sf', 'dplyr', 'data.table'))
 
