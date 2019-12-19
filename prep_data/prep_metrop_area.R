@@ -1,40 +1,71 @@
-library(gdata)
-library(readxl)
 library(data.table)
+library(readxl)
 library(xlsx)
 library(stringi)
-library(dplyr)
-library(baytrends)
-library(zoo)
 library(geobr)
 library(RCurl)
-library(stringr)
-library(sf)
-library(janitor)
 library(dplyr)
 library(readr)
-#library(parallel)
-library(xlsx)
-library(magrittr)
-library(devtools)
+library(sf)
 library(lwgeom)
+library(magrittr)
+library(zoo)
 
-# #### 0. Download original data sets from IBGE ftp -----------------
+library(gdata)
+library(baytrends) # ???????
+library(stringr)
+library(janitor)
+library(devtools)
+
+
+library(RCurl)
+
+#> DATASET: metropolitan areas 2000 - 2018
+#> Source: IBGE - "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/"
+#: scale ________
+#> Metadata:
+# Titulo: Regioes Metropolitanas
+# Frequencia de atualizacao: Anual
 #
-ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/"
+# Forma de apresentação: Shape
+# Linguagem: Pt-BR
+# Character set: Utf-8
 #
+# Resumo: Poligonos de municipios de regioes metropolitanas do Brasil
+# Informações adicionais: Regioes metropolitanas definidas por legislacao estadual
 #
-# ########  1. Unzip original data sets downloaded from IBGE -----------------
-#
-# # Root directory
+# Informacao do Sistema de Referencia: SIRGAS 2000
+
+
+
+
+
+###### 0. Create Root folder to save the data -----------------
+
+
+# Root directory
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//metropolitan_area"
 dir.create(root_dir)
 setwd(root_dir)
-#
-#
-#construir a lista de caminhos
+
+# 2001_2005
+dir_2001_2005 <- "./2001_2005/"
+dir.create(paste(dir_2001_2005,"",sep = ""))
+
+# 2010_2018
+dir_2010_2018 <- "./2010_2018/"
+dir.create(paste(dir_2010_2018,"/",sep = ""))
+
+
+
+
+
+
+##### 1. Download original data sets from IBGE ftp -----------------
+
+### construir a lista de caminhos para arquivos no ftp do IBGE
 ftp_01_05 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/Situacao_2000a2009/2001a2005/"
-filenames = getURL(ftp_01_05, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+filenames = RCurl::getURL(ftp_01_05, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 filenames <- strsplit(filenames, "\r\n")
 filenames = unlist(filenames)
 filenames <- filenames[!grepl('LEIA_ME', filenames)]
@@ -43,9 +74,8 @@ filenames3 <- filenames[grepl("RM 18.11.02.xls", filenames)]
 filenames_01_05 <- c(filenames2,filenames3)
 
 
-
 ftp_10_18 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/Situacao_2010a2019/"
-filenames <- getURL(ftp_10_18, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+filenames <- RCurl::getURL(ftp_10_18, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 filenames <- strsplit(filenames, "\r\n")
 filenames <- unlist(filenames)
 filenames <- filenames[!grepl('.xlsx', filenames)]
@@ -53,99 +83,145 @@ filenames <- filenames[grepl(".xls", filenames)]
 filenames_10_18 <- filenames[grepl("_06_|_07_", filenames)]
 ## não tem dados para 2011 e 2012
 
-##------------------
 
-# fazer o download dos arquivos
+### fazer o download dos arquivos
 
-
-####---------- 2001:2005
-#
-dir_01_05 <- "L://# DIRUR #//ASMEQ/geobr/data-raw/metropolitan_area/2001_2005/"
-dir.create(paste(dir_01_05,"",sep = ""))
-#
-#
-#
-# baixar arquivos no diretório
+# 2001:2005
 for (files in filenames_01_05) {
-  download.file(paste(ftp_01_05,files, sep = ""),paste(dir_01_05,files,sep = ""), mode = "wb")
-}
-#
-# ####  2010:2018
-#
-dir_10_18 <- "L://# DIRUR #//ASMEQ/geobr/data-raw/metropolitan_area/2010_2018/"
-dir.create(paste(dir_10_18,"/",sep = ""))
-#
-#
-# baixar arquivos no diretório
+  download.file( url = paste(ftp_01_05, files, sep = ""),
+                 destfile = paste(dir_2001_2005, files, sep = ""),
+                 mode = "wb")
+  }
+
+
+# 2010:2018
 for (files_ in filenames_10_18) {
-  download.file(paste(ftp_10_18,files_, sep = ""),paste(dir_10_18,files_,sep = ""), mode = "wb")
+  download.file( url = paste(ftp_10_18,files_, sep = ""),
+                 destfile = paste(dir_2010_2018, files_, sep = ""),
+                 mode = "wb")
 }
 
---------------------
 
 
-  setwd(dir_01_05)
-#
-#
-#
+
+
+
+
+
+
+#### 2. Clean data set and save it in compact .rds format-----------------
+
+
+#### 2.1 Cleaning date 2001-2005 -----------------
+
+setwd(dir_2001_2005)
+
+
 #listar arquivos baixados
 dados_01_05 <- list.files(pattern = "*.xls", full.names = T)
-#
-setwd(dir_10_18)
-#
-dados_10_18 <- list.files(pattern = "*.xls", full.names = T)
-setwd(dir_01_05)
 
-####--------------- for para tratar dados de 2001 até 2005
-#
+
 for (i in 1:4){
+
+  message(paste('working on', dados_01_05[i]))
+
+  # Leitura do arquivo em excel
   dado1 <- readxl::read_excel(path = dados_01_05[i])
+
+  # identifica ano de referencia do arquibo
   year_RM <- paste0(20,substr(dados_01_05[i],12,13))
+
+ # Corrige encoding dos dados
   if (year_RM %like% "2001|2005"){
     names1 <- stri_encode(names(dado1),"utf-8")
     setnames(dado1,names(dado1),names1)
     dado2 <- lapply(dado1, stri_encode, from = "utf-8") %>% as.data.frame()
   } else {
-    names1 <- stri_encode(names(dado1),"WINDOWS-1252")
-    setnames(dado1,names(dado1),names1)
-    dado2 <- lapply(dado1, stri_encode, from = "WINDOWS-1252") %>% as.data.frame()
+    names1 <- stringi::stri_encode(names(dado1),"WINDOWS-1252")
+    setnames(dado1, names(dado1), names1)
+    dado2 <- lapply(dado1, stringi::stri_encode, from = "WINDOWS-1252") %>% as.data.frame()
   }
 
-  #preenchendo o campos em branco com a primeira informação acima
 
+## Coluna name_metro
+
+  # identifica coluna com nome da Regiao Metropolitana
   colname_nome <- grep("R",colnames(dado2), value= T)
-  #names(dado2)[names(dado2) == filename_test] <- "NOME_DA_RM"
-  setnames(dado2,colname_nome,"NOME_DA_RM")
-  dado2$NOME_DA_RM <- na.locf(dado2$NOME_DA_RM)
 
-  #dado2$DATA_DA_LEI <- gsub(" ","",dado2$DATA_DA_LEI)
-  #usar a função de cima (NOME_DA_RM) para resolver
+  # atualiza nome da coluna e preenche valores NA
+  setnames(dado2, colname_nome, "name_metro")
+
+  # preenchendo o campos em branco com a primeira informação acima
+  dado2$name_metro <- zoo::na.locf(dado2$name_metro)
+
+## Coluna legislation e legislation_date
+  setnames(dado2, "LEGISLAÇÃO", "legislation")
+
+  # identifica coluna problema com data de criacao da lei de Regiao Metropolitana, e renomeia coluna
   colname_data <- grep("DATA",colnames(dado2), value= T)
-  #names(dado2)[names(dado2) == filename_test] <- "NOME_DA_RM"
-  setnames(dado2,colname_data,"DATA_DA_LEI")
-  dado2$DATA_DA_LEI <- gsub(" ","",dado2$DATA_DA_LEI)
+  setnames(dado2, colname_data, "legislation_date")
+  dado2$legislation_date <- gsub(" ","",dado2$legislation_date)
 
-  #esse grep, na base de 2002 vai ter 2 colunas com "código", arrumar esse bug
-  colname_codigo_ <- grep("CÓDIGO",colnames(dado2),value = T)
+  # preenchendo o campos em branco com a primeira informação acima
+  dado2$legislation_date <- zoo::na.locf(dado2$legislation_date)
+  dado2$legislation <- zoo::na.locf(dado2$legislation)
+
+
+## Nome de outras colunas
 
   if (year_RM %like% "2001|2002|2003"){
-    colname_codigo <- grep("DO",colname_codigo_,value = T)
-    setnames(dado2,colname_codigo,"code_muni")
+
+    # Coluna code_metro
+    setnames(dado2, "CÓDIGO", "code_metro")
+
+    # Coluna code_muni
+    colname_codigo <- grep("CÓDIGO_DO_MUN", names(dado2), value = T)
+    setnames(dado2, colname_codigo, "code_muni")
+
+    # Coluna name_muni
+    colname_nome <- grep("NOME", names(dado2), value = T)
+    setnames(dado2, colname_nome, "name_muni")
+    dado2$name_muni = NULL
+
   } else {
-    setnames(dado2,colname_codigo_,"code_muni")
+
+    # Identifica nome da coluna
+    colname_codigo_ <- grep("CÓDIGO",colnames(dado2),value = T)[1]
+    # rename col
+    setnames(dado2, colname_codigo_,"code_muni")
+
+    # Coluna name_muni
+    setnames(dado2, "MUNICÍPIO", "name_muni")
+    dado2$name_muni = NULL
+
   }
-  #transformando code_muni em ema variável numérica
+
+
+  # transformando code_muni em variável numérica
   dado2$code_muni <- as.numeric(as.character(dado2$code_muni))
 
 
+
+# read muni shapes
   if(year_RM %like% "2001|2002|2003"){
     municipios <- geobr::read_municipality(code_muni  = 'all', year=2001)
   } else if (year_RM %like% "2005") {
     municipios <- geobr::read_municipality(code_muni  = 'all', year=year_RM)
   }
-  dado3 <- dplyr::left_join(dado2,municipios)
+
+
+# Adiciona dado espacial (coluna geometry)
+  dado3 <- dplyr::left_join(dado2, municipios, by = "code_muni") %>% setDT()
+
+# reordena colunas
+  setcolorder(dado3, c('name_metro', 'code_muni', 'name_muni', 'legislation', 'legislation_date', 'code_state', 'abbrev_state', 'geometry'))
+
+# set back to spatial sf
   temp_sf <- st_as_sf(dado3, crs=4674)
-  readr::write_rds(temp_sf, path=paste0(year_RM,".rds"), compress = "gz")  #testar pra ver se funciona
+
+
+### Save data
+  readr::write_rds(temp_sf, path=paste0('metro_',year_RM,".rds"), compress = "gz")
   unlink(dados_01_05[i])
 }
 
@@ -153,11 +229,20 @@ for (i in 1:4){
 # dado1 <- readxl::read_excel(path = dados_01_05[4])
 # colnames(dado1)
 #
+
+
+
+
+#### 2.2 Cleaning date 2010-2018 -----------------
+setwd(paste0(".", dir_2010_2018))
+
+dados_10_18 <- list.files(pattern = "*.xls", full.names = T)
+
 setwd(dir_10_18)
-#
-#
-# dados_10_18 <- list.files(pattern = "*.xls", full.names = T)
-#
+
+
+
+
 for (i in 1:7){
   dados1 <- readxl::read_excel(path = dados_10_18[i])
   dados2 <- dados1 %>%
