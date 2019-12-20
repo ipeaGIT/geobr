@@ -39,5 +39,5 @@ Imports:
       readr,
       sf,
       utils
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
