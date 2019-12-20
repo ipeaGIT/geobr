@@ -2,7 +2,7 @@
 % Please edit documentation in R/lookup_muni.R
 \name{lookup_muni}
 \alias{lookup_muni}
-\title{Lookup geographies information from a given municipality}
+\title{Lookup municipality codes and names}
 \usage{
 lookup_muni(name_muni = NULL, code_muni = NULL)
 }
@@ -15,7 +15,8 @@ lookup_muni(name_muni = NULL, code_muni = NULL)
 A data.frame with 13 columns identifying the geographies information of that municipality
 }
 \description{
-Input a municipality \strong{name} \emph{or} \strong{code} and get municipality information from referent state, meso, micro, intermediate, and immediate regions
+Input a municipality \strong{name} \emph{or} \strong{code} and get the names and codes of the
+municipality's corresponding state, meso, micro, intermediate, and immediate regions
 }
 \details{
 Only available from 2010 Census data so far
