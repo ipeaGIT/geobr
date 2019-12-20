@@ -1,6 +1,7 @@
-#' Lookup geographies information from a given municipality
+#' Lookup municipality codes and names
 #'
-#' Input a municipality \strong{name} \emph{or} \strong{code} and get municipality information from referent state, meso, micro, intermediate, and immediate regions
+#' Input a municipality \strong{name} \emph{or} \strong{code} and get the names and codes of the
+#' municipality's corresponding state, meso, micro, intermediate, and immediate regions
 #'
 #'
 #' @param name_muni The municipality name to be looked up
