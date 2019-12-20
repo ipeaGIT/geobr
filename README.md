@@ -71,10 +71,10 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_metro_areas` | Metropolitan areas | 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018,  | IBGE | 
 
 
-## Other functions:
+### Other functions:
 
 
-|Function| Purpouse|
+| Function | Action|
 |-----|-----|
 |`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
 |`lookup_muni` (dev)| Look up municipality codes by their name, or the other way around |
@@ -82,7 +82,7 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 
 
 
-Note 1. Functions marked with "dev" are only available in the development version of `geobr`.
+Note 1. Data sets and Functions marked with "dev" are only available in the development version of `geobr`.
 
 Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most data sets are available at scale 1:250,000 (see documentation for details).
  
