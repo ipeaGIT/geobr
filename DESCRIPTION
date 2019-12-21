@@ -4,9 +4,9 @@ Title: Loads Shapefiles of Official Spatial Data Sets of Brazil
 Version: 1.1
 Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.br@gmail.com", role=c("aut", "cre"), comment = c(ORCID = "0000-0003-2125-7465")),
             person(given="Caio", family="Nogueira Goncalves", role=c("aut")),
-            person(given="Guilherme", family="Duarte Carvalho", role=c("aut")),
             person(given="Paulo Henrique", family="Fernandes de Araujo", role=c("aut")),
-            person(given="Rodrigo", family="Almeida de Arruda", role=c("aut")),
+            person(given="Guilherme", family="Duarte Carvalho", role=c("ctb")),
+            person(given="Rodrigo", family="Almeida de Arruda", role=c("ctb")),
             person(given="Igor", family="Nascimento", role="ctb"), 
             person(given="Barbara", family="Santiago Pedreira da Costa", role="ctb"), 
             person(given="Welligtton", family="Silva Cavedo", role="ctb"),
