@@ -360,3 +360,178 @@ lapply(X=dados_10_18, FUN=fun_clean_2010_2018)
 future::plan(future::multiprocess)
 future.apply::future_lapply(X = dados_10_18, FUN=fun_clean_2010_2018, future.packages=c('sf', 'dplyr', 'data.table'))
 
+
+
+
+
+
+###### Data from metro areas in 1970 ----------------------------------------
+
+dest_dir <- './shapes_in_sf_all_years_cleaned/'
+dir.create( paste0(dest_dir, 1970,"/") )
+
+
+# read.excel <- function(header=TRUE,...) { read.table("clipboard",sep="\t",header=header,...) }
+# df=read.excel()
+#
+# head(df)
+# df$Subdivisões <- NULL
+# df$Nome.Município  <- NULL
+#
+# names(df) <- c('name_metro', 'code_muni', "legislation", "legislation_date")
+#
+# # add geometry
+# sf70 <- read_municipality(code_muni = 'all', year=1970)
+#
+# rio <- subset(sf70, name_muni=='Guanabara')
+# rio$code_muni <- 3304557
+# rio$name_muni <- "Rio de Janeiro"
+# sf70 <- rbind(sf70, rio)
+#
+# aaaa <- left_join(df,  sf70, by="code_muni")
+#
+#
+# aaaa$code_state <- substring(aaaa$code_muni, 1,2)
+#
+# aaaa <- aaaa %>% mutate(abbrev_state =  ifelse(code_state== 11, "RO",
+#                                                      ifelse(code_state== 12, "AC",
+#                                                             ifelse(code_state== 13, "AM",
+#                                                                    ifelse(code_state== 14, "RR",
+#                                                                           ifelse(code_state== 15, "PA",
+#                                                                                  ifelse(code_state== 16, "AP",
+#                                                                                         ifelse(code_state== 17, "TO",
+#                                                                                                ifelse(code_state== 21, "MA",
+#                                                                                                       ifelse(code_state== 22, "PI",
+#                                                                                                              ifelse(code_state== 23, "CE",
+#                                                                                                                     ifelse(code_state== 24, "RN",
+#                                                                                                                            ifelse(code_state== 25, "PB",
+#                                                                                                                                   ifelse(code_state== 26, "PE",
+#                                                                                                                                          ifelse(code_state== 27, "AL",
+#                                                                                                                                                 ifelse(code_state== 28, "SE",
+#                                                                                                                                                        ifelse(code_state== 29, "BA",
+#                                                                                                                                                               ifelse(code_state== 31, "MG",
+#                                                                                                                                                                      ifelse(code_state== 32, "ES",
+#                                                                                                                                                                             ifelse(code_state== 33, "RJ",
+#                                                                                                                                                                                    ifelse(code_state== 35, "SP",
+#                                                                                                                                                                                           ifelse(code_state== 41, "PR",
+#                                                                                                                                                                                                  ifelse(code_state== 42, "SC",
+#                                                                                                                                                                                                         ifelse(code_state== 43, "RS",
+#                                                                                                                                                                                                                ifelse(code_state== 50, "MS",
+#                                                                                                                                                                                                                       ifelse(code_state== 51, "MT",
+#                                                                                                                                                                                                                              ifelse(code_state== 52, "GO",
+#                                                                                                                                                                                                                                     ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
+#
+# aaaa <- select(aaaa, name_metro, code_muni, name_muni, legislation, legislation_date, code_state, abbrev_state)
+#
+#
+# dput(aaaa)
+
+data1970 <- structure(list(name_metro = structure(c(1L, 1L, 4L, 4L, 4L, 4L,
+              4L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 8L, 8L, 8L, 8L, 8L, 8L,
+              8L, 8L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 9L, 9L, 9L, 9L, 9L, 9L,
+              9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L,
+              9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 3L,
+              3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 5L, 5L, 5L,
+              5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L), .Label = c("RM Belém",
+              "RM Belo Horizonte", "RM Curitiba", "RM Fortaleza", "RM Porto Alegre",
+              "RM Recife", "RM Rio de Janeiro", "RM Salvador", "RM São Paulo"
+              ), class = "factor"), code_muni = c(1500800, 1501402, 2301000,
+              2303709, 2304400, 2307700, 2309706, 2602902, 2606804, 2607604,
+              2607901, 2609402, 2609600, 2610707, 2611606, 2613701, 2905701,
+              2906501, 2916104, 2919207, 2927408, 2929206, 2930709, 2933208,
+              3106200, 3106705, 3110004, 3118601, 3129806, 3137601, 3144805,
+              3149309, 3153905, 3154606, 3154804, 3156700, 3157807, 3171204,
+              3301702, 3301900, 3302502, 3303203, 3303302, 3303500, 3303609,
+              3304557, 3304904, 3305109, 3503901, 3505708, 3506607, 3509007,
+              3509205, 3510609, 3513009, 3513801, 3515004, 3515103, 3515707,
+              3516309, 3516408, 3518305, 3518800, 3522208, 3522505, 3523107,
+              3525003, 3526209, 3528502, 3529401, 3530607, 3534401, 3539103,
+              3539806, 3543303, 3544103, 3545001, 3546801, 3547304, 3547809,
+              3548708, 3548807, 3550308, 3552502, 3552809, 4100400, 4101804,
+              4102307, 4103107, 4104006, 4104204, 4105805, 4106209, 4106902,
+              4114302, 4119509, 4120804, 4122206, 4125506, 4300604, 4303103,
+              4303905, 4304606, 4307609, 4307708, 4309209, 4309308, 4313409,
+              4314902, 4318705, 4319901, 4320008, 4323002), name_muni = c("Ananindeua",
+              "Belém", "Aquiraz", "Caucaia", "Fortaleza", "Maranguape", "Pacatuba",
+              "Cabo de Santo Agostinho", "Igarassu", "Ilha de Itamaracá", "Jaboatão dos Guararapes",
+              "Moreno", "Olinda", "Paulista", "Recife", "São Lourenço da Mata",
+              "Camaçari", "Candeias", "Itaparica", "Lauro de Freitas", "Salvador",
+              "São Francisco do Conde", "Simões Filho", "Vera Cruz", "Belo Horizonte",
+              "Betim", "Caeté", "Contagem", "Ibirité", "Lagoa Santa", "Nova Lima",
+              "Pedro Leopoldo", "Raposos", "Ribeirão das Neves", "Rio Acima",
+              "Sabará", "Santa Luzia", "Vespasiano", "Duque de Caxias", "Itaboraí",
+              "Magé", "Nilópolis", "Niterói", "Nova Iguaçu", "Paracambi", "Rio de Janeiro",
+              "São Gonçalo", "São João de Meriti", "Arujá", "Barueri", "Biritiba-Mirim",
+              "Caieiras", "Cajamar", "Carapicuíba", "Cotia", "Diadema", "Embu",
+              "EmbuGuaçu", "Ferraz de Vasconcelos", "Francisco Morato", "Franco da Rocha",
+              "Guararema", "Guarulhos", "Itapecerica da Serra", "Itapevi",
+              "Itaquaquecetuba", "Jandira", "Juquitiba", "Mairiporã", "Mauá",
+              "Mogi das Cruzes", "Osasco", "Pirapora do Bom Jesus", "Poá",
+              "Ribeirão Pires", "Rio Grande da Serra", "Salesópolis", "Santa Isabel",
+              "Santana de Parnaíba", "Santo André", "São Bernardo do Campo",
+              "São Caetano do Sul", "São Paulo", "Suzano", "Taboão da Serra",
+              "Almirante Tamandaré", "Araucária", "Balsa Nova", "Bocaiúva do Sul",
+              "Campina Grande do Sul", "Campo Largo", "Colombo", "Contenda",
+              "Curitiba", "Mandirituba", "Piraquara", "Quatro Barras", "Rio Branco do Sul",
+              "São José dos Pinhais", "Alvorada", "Cachoeirinha", "Campo Bom",
+              "Canoas", "Estância Velha", "Esteio", "Gravataí", "Guaíba", "Novo Hamburgo",
+              "Porto Alegre", "São Leopoldo", "Sapiranga", "Sapucaia do Sul",
+              "Viamão"), legislation = structure(c(2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), .Label = c("Lei Complementar 014",
+              "Lei Complementar 014 (Federal)", "Lei Complementar 020 (Federal)"
+              ), class = "factor"), legislation_date = structure(c(2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+              2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), .Label = c("01.07.1974",
+              "08.06.1973"), class = "factor"), code_state = c("15", "15",
+              "23", "23", "23", "23", "23", "26", "26", "26", "26", "26", "26",
+              "26", "26", "26", "29", "29", "29", "29", "29", "29", "29", "29",
+              "31", "31", "31", "31", "31", "31", "31", "31", "31", "31", "31",
+              "31", "31", "31", "33", "33", "33", "33", "33", "33", "33", "33",
+              "33", "33", "35", "35", "35", "35", "35", "35", "35", "35", "35",
+              "35", "35", "35", "35", "35", "35", "35", "35", "35", "35", "35",
+              "35", "35", "35", "35", "35", "35", "35", "35", "35", "35", "35",
+              "35", "35", "35", "35", "35", "35", "41", "41", "41", "41", "41",
+              "41", "41", "41", "41", "41", "41", "41", "41", "41", "43", "43",
+              "43", "43", "43", "43", "43", "43", "43", "43", "43", "43", "43",
+              "43"), abbrev_state = c("PA", "PA", "CE", "CE", "CE", "CE", "CE",
+              "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "BA", "BA",
+              "BA", "BA", "BA", "BA", "BA", "BA", "MG", "MG", "MG", "MG", "MG",
+              "MG", "MG", "MG", "MG", "MG", "MG", "MG", "MG", "MG", "RJ", "RJ",
+              "RJ", "RJ", "RJ", "RJ", "RJ", "RJ", "RJ", "RJ", "SP", "SP", "SP",
+              "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP",
+              "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP",
+              "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP", "SP",
+              "SP", "PR", "PR", "PR", "PR", "PR", "PR", "PR", "PR", "PR", "PR",
+              "PR", "PR", "PR", "PR", "RS", "RS", "RS", "RS", "RS", "RS", "RS",
+              "RS", "RS", "RS", "RS", "RS", "RS", "RS")), class = "data.frame", row.names = c(NA,
+              -113L))
+
+# add geometry
+sf70 <- read_municipality(code_muni = 'all', year=1970)
+
+# correct Guanabara = Rio de Janeiro
+rio <- subset(sf70, name_muni=='Guanabara')
+rio$code_muni <- 3304557
+rio$name_muni <- "Rio de Janeiro"
+sf70 <- rbind(sf70, rio)
+
+# add geometry
+data1970_sf <- left_join(data1970,  sf70, by=c("code_muni","name_muni")) %>% st_sf()
+
+mapview::mapview(data1970_sf)
+
+
+### save data
+readr::write_rds(data1970_sf, path=paste0(dest_dir, 1970, "/", 'metro_', 1970,".rds"), compress = "gz")
