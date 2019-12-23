@@ -41,7 +41,7 @@ loadfonts(device = "win")
 ### .png
 plot_y <-
   ggplot() +
-    geom_sf(data = meso_s, fill=NA, size=.17, color="#272D67") +
+    geom_sf(data = meso_s, fill=NA, size=.16, color="#272D67") +
   geom_sf(data = uf_s, fill=NA, size=.4, color="#2E3946") +
   theme_void() +
   theme(panel.grid.major=element_line(colour="transparent")) +
@@ -88,7 +88,7 @@ sticker(plot_y_svg, package="",
 ### .png
 plot_b <-
   ggplot() +
-  geom_sf(data = meso_s, fill=NA, size=.17, color="#FEB845") +
+  geom_sf(data = meso_s, fill=NA, size=.16, color="#FEB845") +
   geom_sf(data = uf_s, fill=NA, size=.4, color="#FEBF57") +
   theme_void() +
   theme(panel.grid.major=element_line(colour="transparent")) +
