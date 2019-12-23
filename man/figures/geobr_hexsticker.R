@@ -12,6 +12,20 @@ loadfonts(device = "win")
   system.time( meso <- read_meso_region(code_meso="all", year=2010) )
   system.time( uf <- read_state(code_state="all", year=2010) )
 
+  # Simplify geometry
+  meso_s <- st_simplify(meso, preserveTopology = TRUE, dTolerance = .1)
+  uf_s <- st_simplify(uf, preserveTopology = TRUE, dTolerance = .1)
+
+  plot(meso_s['code_meso'])
+  plot(meso['code_meso'])
+
+  plot(uf_s['code_state'])
+  plot(uf['code_state'])
+
+  as.numeric(object.size(meso_s))/  as.numeric(  object.size(meso))
+  as.numeric(object.size(uf_s))/  as.numeric(  object.size(uf))
+
+
 # add special text font
   library(sysfonts)
   font_add_google(name = "Roboto", family = "Roboto")
