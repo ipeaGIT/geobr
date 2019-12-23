@@ -38,10 +38,10 @@ loadfonts(device = "win")
 
 ### Yellow and blue logo ---------------
 
-# .png
+### .png
 plot_y <-
   ggplot() +
-  geom_sf(data = meso_s, fill=NA, size=.15, color="#272D67") +
+  geom_sf(data = meso_s, fill=NA, size=.2, color="#272D67") +
   geom_sf(data = uf_s, fill=NA, size=.4, color="#2E3946") +
   theme_void() +
   theme(panel.grid.major=element_line(colour="transparent")) +
@@ -61,7 +61,7 @@ beepr::beep()
 
 
 
-# .svg
+### .svg
 plot_y_svg <-
   ggplot() +
   geom_sf(data = meso_s, fill=NA, size=.08, color="#272D67") +
@@ -85,10 +85,10 @@ sticker(plot_y_svg, package="",
 
 ### Blue and Yellowd logo ---------------
 
-# .png
+### .png
 plot_b <-
   ggplot() +
-  geom_sf(data = meso_s, fill=NA, size=.15, color="#FEB845") +
+  geom_sf(data = meso_s, fill=NA, size=.2, color="#FEB845") +
   geom_sf(data = uf_s, fill=NA, size=.4, color="#FEBF57") +
   theme_void() +
   theme(panel.grid.major=element_line(colour="transparent")) +
@@ -104,7 +104,7 @@ sticker(plot_b, package="",
 
 
 
-# .svg
+### .svg
 
 plot_b_svg <-
   ggplot() +
