@@ -367,6 +367,9 @@ future.apply::future_lapply(X = dados_10_18, FUN=fun_clean_2010_2018, future.pac
 
 ###### Data from metro areas in 1970 ----------------------------------------
 
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//metropolitan_area"
+setwd(root_dir)
+
 dest_dir <- './shapes_in_sf_all_years_cleaned/'
 dir.create( paste0(dest_dir, 1970,"/") )
 
@@ -529,8 +532,9 @@ sf70 <- rbind(sf70, rio)
 
 # add geometry
 data1970_sf <- left_join(data1970,  sf70, by=c("code_muni","name_muni")) %>% st_sf()
+head(data1970_sf)
 
-mapview::mapview(data1970_sf)
+# mapview::mapview(data1970_sf)
 
 
 ### save data
