@@ -39,4 +39,4 @@
 # geobr dev v1.2
 
   * New function `lookup_muni` to look up municipality codes by their name, or the other way around (added in 2019-12)  - closes issue #58.
-
+  * New data set `read_metro_area` to read official metropolitan areas - closes issue #2 (added in 2019-12).
