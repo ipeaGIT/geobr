@@ -305,7 +305,7 @@ function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_am
 
 function_coverage(fun=geobr::read_indigenous_land, test_file("tests/testthat/test-read_indigenous_land.R"))
 
-function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
+function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-read_metro_area.R"))
 
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
 function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
