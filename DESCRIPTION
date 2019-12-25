@@ -3,16 +3,16 @@ Package: geobr
 Title: Loads Shapefiles of Official Spatial Data Sets of Brazil
 Version: 1.1
 Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.br@gmail.com", role=c("aut", "cre"), comment = c(ORCID = "0000-0003-2125-7465")),
-            person(given="Caio", family="Nogueira Goncalves", role=c("aut")),
-            person(given="Paulo Henrique", family="Fernandes de Araujo", role=c("aut")),
-            person(given="Guilherme", family="Duarte Carvalho", role=c("ctb")),
-            person(given="Rodrigo", family="Almeida de Arruda", role=c("ctb")),
+            person(given="Caio Nogueira", family="Goncalves", role=c("aut")),
+            person(given="Paulo Henrique Fernandes de", family="Araujo", role=c("aut")),
+            person(given="Guilherme Duarte", family="Carvalho", role=c("ctb")),
+            person(given="Rodrigo Almeida de", family="Arruda", role=c("ctb")),
             person(given="Igor", family="Nascimento", role="ctb"), 
-            person(given="Barbara", family="Santiago Pedreira da Costa", role="ctb"), 
-            person(given="Welligtton", family="Silva Cavedo", role="ctb"),
-            person(given="Pedro", family="R. Andrate", role="ctb"),
-            person(given="Alan", family="da Silva", role="ctb"),
-	    person(given="Carlos", family="Kauê Vieira Braga", role="ctb"),   
+            person(given="Barbara Santiago Pedreira da ", family="Costa", role="ctb"), 
+            person(given="Welligtton Silva ", family="Cavedo", role="ctb"),
+            person(given="Pedro R.", family="Andrade", role="ctb"),
+            person(given="Alan da", family="Silva", role="ctb"),
+	    person(given="Carlos Kauê Vieira", family="Braga", role="ctb"),   
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
 Date: 2019-12-01
 URL: https://github.com/ipeaGIT/geobr
