@@ -91,7 +91,6 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Geography | Years available | Source |
 |-----|-----|-----|
 |`read_census_tract` | 2007 | IBGE |
-| Metropolitan areas | ... | IBGE and state legislations |
 | Longitudinal Database* of municipalities | ... | IBGE | 
 | Longitudinal Database* of micro regions | ... | IBGE | 
 | Longitudinal Database* of Census tracts | ... | IBGE | 
