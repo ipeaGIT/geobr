@@ -9,7 +9,7 @@
    [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) 
 
 
-[**geobr**](https://CRAN.R-project.org/package=geobr) is an R package that allows users to easily access official spatial data sets of Brazil. The package includes a wide range of geospatial data as *simple features*, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list below).
+[**geobr**](https://CRAN.R-project.org/package=geobr) is an R package that allows users to easily access official spatial data sets of Brazil. The package includes a wide range of geospatial data as *simple features*, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below).
 
 ## Installation
 ```R
