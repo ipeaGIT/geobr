@@ -177,103 +177,74 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
+##### metro areas  ---------------------
+3346 7390
+
+library(geobr)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(magrittr)
+library(ggthemes)
+
+
+# read metro areas sf
+yrs <- c(1970, 2001, 2010, 2018)
+
+download_metro <- function(y){
+  tmp <- read_metro_area(year = y) %>% select(name_metro, abbrev_state, geometry)
+  tmp$year <- y
+  return(tmp)
+}
+
+metros_Sf <- lapply(X=yrs, FUN=download_metro)
+metros_Sf <- do.call('rbind', metros_Sf)
+
+
+# simplify geometry
+metros <- sf::st_simplify(metros_Sf, preserveTopology=T, dTolerance=.1)
+
+# dissolve municipalities' borders
+metros_dissolve <- metros %>% group_by(name_metro, year) %>% summarize()
+metros_dissolve <- na.omit(metros_dissolve)
+
+# read sf of Brazil ans states
+br <- read_country()
+uf <- read_state(code_state = 'all')
+
+
+library(data.table)
+setDT(metros_dissolve)[year==2001, name_metro := paste0('RM ', name_metro)]
+metros_dissolve <- st_sf(metros_dissolve)
+# plot
+temp_lot <- ggplot() +
+              geom_sf(data=br, color="gray80", fill="gray80") +
+              geom_sf(data=uf, color="gray90", fill=NA, size=.5) +
+              geom_sf(data=metros_dissolve, aes(color=as.factor(name_metro), fill=as.factor(name_metro)), show.legend = FALSE) +
+            #  geom_sf(data=metros_dissolve, color="gray50", fill="gray50") +
+              facet_wrap(~year, nrow = 2) +
+              theme_map() +
+              theme( strip.background = element_rect(colour = "white", fill = "white"),
+                     strip.text.x = element_text(size = 11, face ="bold"))
+
+
+ggsave(temp_lot, file= "geobr_metros_1970-2018.png", dpi = 300, width = 15, height = 15, units = "cm")
+
+
+Euro
+43
+
+libras
+13
+
+dollar
+209
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###### 6. read_census_tract -------------------------
-# mover dados zipados e shapes para 'geobr//data-raw//setores_censitarios'
-# Erro Rio e SP
-# Mudar estrutura de base 2000/urbano e 2000/rural
-# incluir ano 2007
-# projecao levemente errada. Ver exemplo do muni - 1100049
-
-
-devtools::load_all('C:/Users/r1701707/Desktop/geobr')
-
-
-# input state
-system.time( rj <- read_census_tract(code_tract=33) )
-system.time( am <- read_census_tract(code_tract=c("AM","AC")) )
-plot(rj["zone"])
-plot(am["zone"])
-
-
-system.time( rj <- read_census_tract(code_tract=33, year=2000) )
-system.time( ac <- read_census_tract(code_tract="AC", year=2000) )
-
-
-system.time( c <- read_census_tract(code_tract="AM") )
-system.time( c <- read_census_tract(code_tract="DF", zone='rural') )
-system.time( c <- read_census_tract(code_tract="DF", zone='urban') )
-
-system.time( c1 <- read_census_tract(code_tract="DF", zone='rural', year=2000) )
-system.time( c2 <- read_census_tract(code_tract="DF", zone='urban', year=2000) )
-plot(c1["code_muni"])
-plot(c2["code_muni"])
-
-# input whole muni
-
-system.time( c2 <- read_census_tract(code_tract=5201108, zone='urban', year=2000) )
-system.time( c2 <- read_census_tract(code_tract=5201108, zone='rural', year=2000) )
-system.time( c2 <- read_census_tract(code_tract=5201108,  year=2010) )
-plot(c2)
-
-
-# input whole country
-w <- read_census_tract(code_tract="all")
-head(w)
-plot(w["aaa"])
-
-
-# input muni
-system.time( w2 <- read_weighting_area(code_weighting=5201108, year=2010) )
-head(w2)
-plot(w2)
-
-# input weighting area
-system.time( w3 <- read_weighting_area(code_weighting=5201108005004, year=2010) )
-head(w3)
-plot(w3)
-
-
-
-# Expected errors
-
-system.time( w2 <- read_weighting_area(code_weighting=11, year=2000) )
-system.time( w2 <- read_weighting_area(code_weighting=100000) )
-
-
-
-
-
-
-
-
-###### 9. read_region -------------------------
-
-reg <- read_region(year=2018)
-plot(reg)
 
 
 
@@ -283,7 +254,7 @@ plot(reg)
 
 
 # TRAVS
-  https://travis-ci.org/ipeaGIT/geobr
+#  https://travis-ci.org/ipeaGIT/geobr
 
 ### Test coverage  ----------------
 
