@@ -2,12 +2,12 @@
 % Please edit documentation in R/download_metadata.R
 \name{download_metadata}
 \alias{download_metadata}
-\title{Download data.frame with a summary of the data sets included in grobr}
+\title{Support function to download metadata internally used in geobr}
 \usage{
 download_metadata()
 }
 \description{
-Download data.frame with a summary of the data sets included in grobr
+Support function to download metadata internally used in geobr
 }
 \examples{
 \donttest{
@@ -18,5 +18,9 @@ df <- download_metadata()
 
 }
 
+}
+\seealso{
+Other general support functions: 
+\code{\link{list_geobr}()}
 }
 \concept{general support functions}
