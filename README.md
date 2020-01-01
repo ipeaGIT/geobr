@@ -9,7 +9,7 @@
    [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) 
 
 
-[**geobr**](https://CRAN.R-project.org/package=geobr) is an R package that allows users to easily access official spatial data sets of Brazil. The package includes a wide range of geospatial data as *simple features*, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list below).
+[**geobr**](https://CRAN.R-project.org/package=geobr) is an R package that allows users to easily access official spatial data sets of Brazil. The package includes a wide range of geospatial data as *simple features*, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below).
 
 ## Installation
 ```R
@@ -91,7 +91,6 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Geography | Years available | Source |
 |-----|-----|-----|
 |`read_census_tract` | 2007 | IBGE |
-| Metropolitan areas | ... | IBGE and state legislations |
 | Longitudinal Database* of municipalities | ... | IBGE | 
 | Longitudinal Database* of micro regions | ... | IBGE | 
 | Longitudinal Database* of Census tracts | ... | IBGE | 
@@ -108,14 +107,15 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 
 ## Credits <img align="right" src="man/figures/ipea_logo.jpg" alt="ipea" width="250">
 
-The shapefiles are created by IBGE. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
+Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
-* Pereira, R.H.M.; Gonçalves, C.N.; Araujo, P.H.F. de; Carvalho, G.D.; Nascimento, I.; Arruda, R.A. de. (2019) **geobr: an R package to easily access shapefiles of the Brazilian Institute of Geography and Statistics**. GitHub repository - https://github.com/ipeaGIT/geobr.
+* Pereira, R.H.M.; Gonçalves, C.N.; et. all (2019) **geobr: Loads Shapefiles of Official Spatial Data Sets of Brazil**. GitHub repository - https://github.com/ipeaGIT/geobr.
 
 
 
-### Advantages of **geobr** and related projects
-As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package follows an intuitive syntax and it has a few advantages when compared to other packages, including for example:
+### Related projects
+As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package has a few advantages when compared to these  other packages, including for example:
+- A same syntax structure across all functions, making the package very easy and intuitive to use
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
