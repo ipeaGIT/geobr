@@ -19,3 +19,8 @@ df <- list_geobr()
 }
 
 }
+\seealso{
+Other general support functions: 
+\code{\link{download_metadata}()}
+}
+\concept{general support functions}
