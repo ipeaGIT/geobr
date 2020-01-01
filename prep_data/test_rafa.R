@@ -379,7 +379,7 @@ setwd("..")
   # devtools::build(pkg = "geobr", path=".", binary = T, manual=T)
 
 # Check package errors
-   devtools::check(pkg = "geobr",  cran = TRUE)
+   devtools::check(pkg = ".",  cran = TRUE)
 
 
   # check
