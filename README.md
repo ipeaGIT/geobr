@@ -76,9 +76,10 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 
 | Function | Action|
 |-----|-----|
-|`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
+| `list_geobr` (dev) | List all datasets available in the geobr package |
 |`lookup_muni` (dev)| Look up municipality codes by their name, or the other way around |
-| ... | ... | ... | 
+|`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
+| ... | ... |
 
 
 
@@ -91,11 +92,11 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Geography | Years available | Source |
 |-----|-----|-----|
 |`read_census_tract` | 2007 | IBGE |
-| Longitudinal Database* of municipalities | ... | IBGE | 
-| Longitudinal Database* of micro regions | ... | IBGE | 
-| Longitudinal Database* of Census tracts | ... | IBGE | 
+| Longitudinal Database* of municipalities | various years | IBGE | 
+| Longitudinal Database* of micro regions | various years | IBGE | 
+| Longitudinal Database* of Census tracts | various years | IBGE | 
 | Schools | 2019 | School Census (Inep) | 
-| ... | ... | ... | 
+| Municipality seats (sedes municipais) | various years | IBGE | 
 | ... | ... | ... | 
 
 '*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
