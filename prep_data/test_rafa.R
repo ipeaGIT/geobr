@@ -270,9 +270,9 @@ dollar
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
 
-function_coverage(fun=geobr::download_metadata, test_file("tests/testthat/test-download_metadata.R"))
 
 function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
+function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_semiarid.R"))
 
 function_coverage(fun=geobr::read_indigenous_land, test_file("tests/testthat/test-read_indigenous_land.R"))
 
