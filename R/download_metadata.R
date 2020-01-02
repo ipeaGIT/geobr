@@ -1,8 +1,6 @@
-#' Download data.frame with a summary of the data sets included in grobr
+#' Support function to download metadata internally used in geobr
 #'
-#' Download data.frame with a summary of the data sets included in grobr
 #'
-#' @export
 #' @family general support functions
 #' @examples \donttest{
 #'
