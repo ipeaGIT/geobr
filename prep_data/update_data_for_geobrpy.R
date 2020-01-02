@@ -41,11 +41,15 @@ temp_rds <- readr::read_rds( paste0('\\\\storage1\\geobr\\data\\', f, '.rds') )
 # # change file extension
 # dest_file <- gsub(".rds", ".gpkg", f)
 
-# # create dest folder
-#
-# dir.create( paste0('//storage1/geobr/data_python/', f) )
-#
-# sub('/.*$','', f)
+# create dest folder
+dest_dir <- sub("^(.*)[/].*", "\\1", f)
+
+
+
+dir.create( paste0('//storage1/geobr/data_python/', f), recursive = T )
+
+
+
 
 
 # save file in geopackage format
