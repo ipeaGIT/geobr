@@ -29,7 +29,7 @@
 read_intermediate_region <- function(code_intermediate= NULL, year = NULL){
 
   # Get metadata with data addresses
-  metadata <- geobr::download_metadata()
+  metadata <- download_metadata()
 
   # Select geo
   temp_meta <- subset(metadata, geo=="intermediate_regions")
