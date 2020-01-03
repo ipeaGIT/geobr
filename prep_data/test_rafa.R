@@ -177,82 +177,9 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
-##### metro areas  ---------------------
 
 
-library(geobr)
-library(dplyr)
-library(ggplot2)
-library(sf)
-library(magrittr)
-library(ggthemes)
-library(data.table)
-
-
-# download sf of Brazil and states
-  br <- read_country()
-  uf <- read_state(code_state = 'all')
-
-
-# download metro areas sf
-  download_metro <- function(y){
-    tmp <- read_metro_area(year = y) %>% select(name_metro, abbrev_state, geometry)
-    tmp$year <- y
-    return(tmp)
-  }
-
-  yrs <- c(1970, 2001, 2010, 2018)
-  metros_Sf <- lapply(X=yrs, FUN=download_metro) %>% do.call('rbind', .)
-  metros_Sf <- do.call('rbind', metros_Sf)
-
-sapply(metros_Sf[[1]], class)
-
-# simplify geometry for the sake of plot speed
-  metros <- sf::st_simplify(metros_Sf, preserveTopology=T, dTolerance=.01)
-  as.numeric(object.size(metros)) / as.numeric(object.size(metros_Sf))
-
-
-# dissolve municipalities' borders in each metro
-  metros_dissolved <- na.omit(metros_dissolved)
-  metros_dissolved <- metros %>% group_by(name_metro, year) %>% summarize()
-
-
-  # Harmoznize metro names
-    setDT(metros_dissolved)[year==2001 & !(name_metro %like% 'Distrito Federal'), name_metro := paste0('RM ', name_metro)]
-    metros_dissolved <- st_sf(metros_dissolved)
-
-
-
-# plot
-temp_lot <- ggplot() +
-              geom_sf(data=br, color="gray80", fill="gray80") +
-              geom_sf(data=uf, color="gray90", fill=NA, size=.5) +
-              geom_sf(data=metros_dissolved, aes(color=as.factor(name_metro), fill=as.factor(name_metro)), show.legend = FALSE) +
-            #  geom_sf(data=metros_dissolved, color="gray50", fill="gray50") +
-              facet_wrap(~year, nrow = 2) +
-              theme_map() +
-              theme( strip.background = element_rect(colour = "white", fill = "white"),
-                     strip.text.x = element_text(size = 11, face ="bold"))
-
-
-ggsave(temp_lot, file= "geobr_metros_1970-20182.png", dpi = 300, width = 15, height = 15, units = "cm")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# TRAVS
+# TRAVIS
 #  https://travis-ci.org/ipeaGIT/geobr
 
 ### Test coverage  ----------------
