@@ -222,13 +222,15 @@ for (i in 1:4){
 # set back to spatial sf
   temp_sf <- st_as_sf(dado3, crs=4674)
 
+# remove missing values
+  temp_sf <- subset(temp_sf, !is.na(name_metro))
+  temp_sf <- subset(temp_sf, !is.na(abbrev_state))
+
+
+
 # Conver factor columns to character AND Use UTF-8 encoding in all character
   temp_sf <- temp_sf %>%
-    mutate_if(is.factor, function(x){ x %>% as.character() %>%
-        stringi::stri_encode("UTF-8") } )
-
-  temp_sf <- temp_sf %>%
-    mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+    mutate_if(is.factor, function(x){ x %>% as.character()  } )
 
 
 # create dir to save data
@@ -349,6 +351,10 @@ fun_clean_2010_2018 <- function(i){
 
   # set back to spatial sf
   temp_sf <- st_as_sf(dados6, crs=4674)
+
+  # remove missing values
+  temp_sf <- subset(temp_sf, !is.na(name_metro))
+  temp_sf <- subset(temp_sf, !is.na(abbrev_state))
 
   # Conver factor columns to character AND Use UTF-8 encoding in all character
   temp_sf <- temp_sf %>%
@@ -549,6 +555,15 @@ sf70 <- rbind(sf70, rio)
 # add geometry
 data1970_sf <- left_join(data1970,  sf70, by=c("code_muni","name_muni")) %>% st_sf()
 head(data1970_sf)
+
+
+data1970_sf$name_metro %>%  as.character() %>% unique()
+
+
+# Conver factor columns to character AND Use UTF-8 encoding in all character
+data1970_sf <- data1970_sf %>%
+  mutate_if(is.factor, function(x){ x %>% as.character()  } )
+
 
 # mapview::mapview(data1970_sf)
 
