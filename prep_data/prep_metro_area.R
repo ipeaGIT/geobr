@@ -200,6 +200,9 @@ for (i in 1:4){
   # transformando code_muni em variável numérica
   dado2$code_muni <- as.numeric(as.character(dado2$code_muni))
 
+# if 2001, add "RM" to 'name_metro' to harmonize column with other years
+  if(year_RM==2001){ setDT(dado2)[ !(name_metro %like% 'Distrito Federal|Aglomeração Urbana|RIDE|Colar Metropolitano|Área de Expansã|Núcleo Metropolitano'), name_metro := paste0('RM ', name_metro)] }
+
 
 
 # read muni shapes
@@ -219,14 +222,21 @@ for (i in 1:4){
 # set back to spatial sf
   temp_sf <- st_as_sf(dado3, crs=4674)
 
+# Conver factor columns to character AND Use UTF-8 encoding in all character
+  temp_sf <- temp_sf %>%
+    mutate_if(is.factor, function(x){ x %>% as.character() %>%
+        stringi::stri_encode("UTF-8") } )
+
+  temp_sf <- temp_sf %>%
+    mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+
+
 # create dir to save data
   dir.create(paste(dest_dir,year_RM,"/",sep = ""))
 
 ### Save data
   readr::write_rds(temp_sf, path=paste0(dest_dir,year_RM,"/",'metro_',year_RM,".rds"), compress = "gz")
 
-# delete original file
-  unlink(dados_01_05[i])
 }
 
 # encoding 2002 e 2003: WINDOWS-1252
@@ -340,14 +350,20 @@ fun_clean_2010_2018 <- function(i){
   # set back to spatial sf
   temp_sf <- st_as_sf(dados6, crs=4674)
 
+  # Conver factor columns to character AND Use UTF-8 encoding in all character
+  temp_sf <- temp_sf %>%
+    mutate_if(is.factor, function(x){ x %>% as.character() %>%
+        stringi::stri_encode("UTF-8") } )
+
+  temp_sf <- temp_sf %>%
+    mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+
   # create dir to save data
   dir.create(paste(dest_dir,year_RM2,"/",sep = ""))
 
   ### Save data
   readr::write_rds(temp_sf, path=paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".rds"), compress = "gz")
 
-  # delete original file
- unlink(i)
 }
 
 
