@@ -74,8 +74,14 @@ plot(br)
 
 ####### BENCHMARK Download and Reading files ---------------------
 
+  library(sf)
+  library(readr)
+  library(geobr)
+  library(R.utils)
+  library(microbenchmark)
+  library(beepr)
 
-mbm <- microbenchmark::microbenchmark(times = 10,
+mbm <- microbenchmark::microbenchmark(times = 30,
 
               ### RDS  -------------------------------------
               'rds' = { # files
