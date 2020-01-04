@@ -1,6 +1,6 @@
 # Become a contributor to **geobr** <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
-If you would like to contribute to **geobr**, please open a [Github issue](https://github.com/ipeaGIT/geobr/issues) with your suggestion of ***function*** or ***dataset*** you would like to see in the package. Keep in mind that, as a rule, the package only includes geospatial data sets with national spatial coverage that are created/managed by govermental institutions and which are publicly available. 
+If you would like to contribute to **geobr**, the first thing to do is to open a [Github issue](https://github.com/ipeaGIT/geobr/issues) with your suggestion of ***function*** or ***dataset*** you would like to see in the package. Keep in mind that, as a rule, the package only includes geospatial data sets with national spatial coverage that are created/managed by govermental institutions and which are publicly available. 
 
 The inclusion of every dataset in geobr follows a three-step process, as follows:
 
@@ -20,12 +20,12 @@ Once the prep_ script is ready, the geobr team will test the script and validate
 
 The 3rd step is perhaps the simplest one. In this step the contributor should write the package function that will be used to download the data. Most dowload functions have relatively simple structure and documentation. Please, have a look at some of the [other geobr functions](https://github.com/ipeaGIT/geobr/tree/master/R) for a reference. Function names should also follow our simple spelling convention*.
 
-Once the download script is ready, the geobr team will write a script to test the function ((examples here)[https://github.com/ipeaGIT/geobr/tree/master/tests/testthat]). If everything works fine, the contributor can open a pull request and start the celebration. We will update our documentation to add your name to our contributors team.
+Once the download script is ready, the geobr team will write a script to test the function ((examples here)[https://github.com/ipeaGIT/geobr/tree/master/tests/testthat]). If everything works fine, the contributor can open a [pull request](http://r-pkgs.had.co.nz/git.html#pr-make) and start the celebration. We will update our documentation to add your name to our contributors team.
+
 
 **Spelling conventions**: Names should be lower case, short, use underscore when necessary, use English American spelling. Please have a look at the columns names and functions used in in geobr, and don't hesitate to contact if you have any question.
 
 
-
 -----
 
-Please note that the ‘geobr’ project is released with a (Contributor Code of Conduct)[https://github.com/ipeaGIT/geobr/blob/master/README.md]. By contributing to this project, you agree to abide by its terms.
+Please note that the ‘geobr’ project is released with a [Contributor Code of Conduct](https://github.com/ipeaGIT/geobr/blob/master/CONDUCT.md). By contributing to this project, you agree to abide by its terms.
