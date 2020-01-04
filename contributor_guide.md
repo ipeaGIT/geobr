@@ -25,3 +25,8 @@ The 3rd step is perhaps the simplest one. In this step the contributor should wr
 Once the download script is ready, the geobr team will write a script to test the function ((examples here)[https://github.com/ipeaGIT/geobr/tree/master/tests/testthat]). If everything works fine, the contributor can open a pull request and start the celebration. We will update our documentation to add your name to our contributors team.
 
 * Spelling conventions: Names should be lower case, short, use underscore when necessary, use English American spelling. Please have a look at the columns names and functions used in in geobr, and don't hesitate to contact if you have any question.
+
+
+
+-----
+Please note that the ‘geobr’ project is released with a (Contributor Code of Conduct)[https://github.com/ipeaGIT/geobr/blob/master/CONDUCT.md]. By contributing to this project, you agree to abide by its terms.
