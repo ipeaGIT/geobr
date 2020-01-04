@@ -17,7 +17,7 @@ This script can use any `R` package, but it needs to be 100% reproducible. There
 Once the prep_ script is ready, the geobr team will test the script and validate the data output. If everything works fine, the geobr team will upload the data to our servers so it will become available for download.
 
 
-### Step 3. Download an test functions
+### Step 3. Download and test functions
 
 The 3rd step is perhaps the simplest one. In this step the contributor should write the package function that will be used to download the data. Most dowload functions have relatively simple structure and documentation. Please, have a look at some of the [other geobr functions](https://github.com/ipeaGIT/geobr/tree/master/R) for a reference. Function names should also follow our simple spelling convention*.
 
