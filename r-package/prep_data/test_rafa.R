@@ -233,7 +233,8 @@ rm(list = ls())
 library(roxygen2)
 library(devtools)
 library(usethis)
-  library(testthat)
+library(testthat)
+library(usethis)
 
 
 
