@@ -11,7 +11,7 @@
 
 [**geobr**](https://CRAN.R-project.org/package=geobr) is an R package that allows users to easily access official spatial data sets of Brazil. The package includes a wide range of geospatial data as *simple features*, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below).
 
-## Installation
+# Installation
 ```R
 # From CRAN
   install.packages("geobr")
@@ -26,7 +26,7 @@ obs. If you use **Linux**, you need to install a couple dependencies before inst
 
 
 
-## Basic Usage
+# Basic Usage
 
 The syntax of all `geobr` functions operate one the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
@@ -44,7 +44,7 @@ mun <- read_municipality(code_muni="all", year=2018)
 More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c459965c75b155) and in the [intro Vignette](https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html)
 
 
-## Available datasets:
+# Available datasets:
 
 
 |Function|Geographies available|Years available|Source|
@@ -71,7 +71,7 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_metro_area` (dev) | Metropolitan areas | 1970, 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE | 
 
 
-### Other functions:
+## Other functions:
 
 
 | Function | Action|
@@ -106,11 +106,11 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 * Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 
-## Contributing to geobr
+# Contributing to geobr
 If you would like to contribute to geobr and add new functions or data sets, please check this [guide](https://github.com/ipeaGIT/geobr/blob/master/CONTRIBUTING.md) to propose your contribution.
 
 
-## Credits <img align="right" src="man/figures/ipea_logo.jpg" alt="ipea" width="250">
+# Credits <img align="right" src="man/figures/ipea_logo.jpg" alt="ipea" width="250">
 
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
@@ -118,7 +118,7 @@ Original shapefiles are created by official government institutions. The **geobr
 
 
 
-### Related projects
+**Related projects**
 As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package has a few advantages when compared to these  other packages, including for example:
 - A same syntax structure across all functions, making the package very easy and intuitive to use
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
