@@ -16,7 +16,7 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 
 # or use the development version with latest features
   utils::remove.packages('geobr')
-  devtools::install_github("ipeaGIT/geobr",  ref ="python_dev",  subdir = "r-package")
+  devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
   library(geobr)
 ```
 
@@ -105,7 +105,6 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 '*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
 
 * [Quadro geográfico de referência para produção, análise e disseminação de estatísticas](https://www.ibge.gov.br/geociencias/organizacao-do-territorio/analises-do-territorio/24233-quadro-geografico-de-referencia-para-producao-analise-e-disseminacao-de-estatisticas.html?=&t=o-que-e)
-* [Regiões Metropolitanas, Aglomerações Urbanas e Regiões Integradas de Desenvolvimento](https://www.ibge.gov.br/geociencias/organizacao-do-territorio/estrutura-territorial/18354-regioes-metropolitanas-aglomeracoes-urbanas-e-regioes-integradas-de-desenvolvimento.html?=&t=acesso-ao-produto)
 * Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 

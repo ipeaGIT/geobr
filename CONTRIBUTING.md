@@ -1,6 +1,6 @@
 
 
-# Become a contributor to **geobr** <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
+# Become a contributor to **geobr** <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="170"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="170">
 
 If you would like to contribute to **geobr**, the first thing to do is to open a [Github issue](https://github.com/ipeaGIT/geobr/issues) with your suggestion of ***function*** or ***dataset*** you would like to see in the package. Keep in mind that, as a rule, the package only includes geospatial data sets with national spatial coverage that are created/managed by govermental institutions and which are publicly available. 
 
