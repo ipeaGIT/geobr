@@ -1,14 +1,17 @@
-# geobr <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="180"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="180">
+# geobr <img align="right" src="man/figures/geobr_logo_b.png" alt="logo" width="160"> <img align="right" src="man/figures/geobr_logo_y.png" alt="logo" width="160">
 
-<p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data as simple features or geopackages, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
+[![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr)
+  [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) 
+  [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr)
+  <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange">
 
-The package is currently available in [**R**](https://CRAN.R-project.org/package=geobr). The Python version is under development.
+[![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr)
+   [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) 
 
-| ***R*** | ***Python*** | 
-|-----|-----|
-| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> | (under development) |
- 
-## Installation R
+
+[**geobr**](https://CRAN.R-project.org/package=geobr) is an R package that allows users to easily access official spatial data sets of Brazil. The package includes a wide range of geospatial data as *simple features*, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below).
+
+# Installation
 ```R
 # From CRAN
   install.packages("geobr")
@@ -16,15 +19,9 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 
 # or use the development version with latest features
   utils::remove.packages('geobr')
-  devtools::install_github("ipeaGIT/geobr",  ref ="python_dev",  subdir = "r-package")
+  devtools::install_github("ipeaGIT/geobr")
   library(geobr)
 ```
-
-## Installation Python
-```R
-under development
-```
-
 obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).
 
 
@@ -113,8 +110,7 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 If you would like to contribute to geobr and add new functions or data sets, please check this [guide](https://github.com/ipeaGIT/geobr/blob/master/CONTRIBUTING.md) to propose your contribution.
 
 
-
-# Credits <img align="right" src="r-package/man/figures/ipea_logo.jpg" alt="ipea" width="250">
+# Credits <img align="right" src="man/figures/ipea_logo.jpg" alt="ipea" width="250">
 
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
@@ -128,3 +124,5 @@ As of today, there are two other R packges with similar functionalities. These a
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
+
+
