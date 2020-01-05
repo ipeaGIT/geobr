@@ -106,6 +106,10 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 * Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 
+## Contributing to geobr
+If you would like to contribute to geobr and add new functions or data sets, please check this [guide](https://github.com/ipeaGIT/geobr/blob/master/CONTRIBUTING.md) to propose your contribution.
+
+
 ## Credits <img align="right" src="man/figures/ipea_logo.jpg" alt="ipea" width="250">
 
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
