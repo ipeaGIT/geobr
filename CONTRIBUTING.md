@@ -19,9 +19,9 @@ Once the prep_ script is ready, the geobr team will test the script and validate
 
 ### Step 3. Download and test functions
 
-The 3rd step is perhaps the simplest one. In this step the contributor should write the package function that will be used to download the data. Most dowload functions have relatively simple structure and documentation. Please, have a look at some of the [other geobr functions](https://github.com/ipeaGIT/geobr/tree/master/R) for a reference. Function names should also follow our simple spelling convention*.
+The 3rd step is perhaps the simplest one. In this step the contributor should write the package function that will be used to download the data. Most dowload functions have relatively simple structure and documentation. Please, have a look at some of the [other geobr functions](https://github.com/ipeaGIT/geobr/tree/master/r-package/R) for a reference. Function names should also follow our simple spelling convention*.
 
-Once the download script is ready, the geobr team will write a script to test the function ((examples here)[https://github.com/ipeaGIT/geobr/tree/master/tests/testthat]). If everything works fine, the contributor can open a [pull request](http://r-pkgs.had.co.nz/git.html#pr-make) and start the celebration. We will update our documentation to add your name to our contributors team.
+Once the download script is ready, the geobr team will write a script to test the function ([examples here](https://github.com/ipeaGIT/geobr/tree/master/r-package/tests/testthat)). If everything works fine, the contributor can open a [pull request](http://r-pkgs.had.co.nz/git.html#pr-make) and start the celebration. We will update our documentation to add your name to our contributors team.
 
 
 **Spelling conventions**: Names should be lower case, short, use underscore when necessary, use English American spelling. Please have a look at the columns names and functions used in in geobr, and don't hesitate to contact if you have any question.
