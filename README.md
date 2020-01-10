@@ -1,4 +1,4 @@
-# geobr <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="180"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="180">
+# geobr <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="170"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="170">
 
 <p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data as simple features or geopackages, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
 
@@ -112,6 +112,19 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 If you would like to contribute to geobr and add new functions or data sets, please check this [guide](https://github.com/ipeaGIT/geobr/blob/master/CONTRIBUTING.md) to propose your contribution.
 
 
+-----
+
+#### **Related projects**
+
+As of today, there are two other R packages with similar functionalities: [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package has a few advantages when compared to these  other packages, including for example:
+- A same syntax structure across all functions, making the package very easy and intuitive to use
+- Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
+- Access to shapefiles with updated geometries for various years
+- Harmonized attributes and geographic projections across geographies and years
+
+
+
+-----
 
 # Credits <img align="right" src="r-package/man/figures/ipea_logo.png" alt="ipea" width="250">
 
@@ -119,11 +132,3 @@ Original shapefiles are created by official government institutions. The **geobr
 
 * Pereira, R.H.M.; Gonçalves, C.N.; et. all (2019) **geobr: Loads Shapefiles of Official Spatial Data Sets of Brazil**. GitHub repository - https://github.com/ipeaGIT/geobr.
 
-
-
-**Related projects**
-As of today, there are two other R packges with similar functionalities. These are the packages [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package has a few advantages when compared to these  other packages, including for example:
-- A same syntax structure across all functions, making the package very easy and intuitive to use
-- Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
-- Access to shapefiles with updated geometries for various years
-- Harmonized attributes and geographic projections across geographies and years
