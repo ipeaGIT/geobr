@@ -113,7 +113,7 @@ If you would like to contribute to geobr and add new functions or data sets, ple
 
 
 
-# Credits <img align="right" src="r-package/man/figures/ipea_logo.jpg" alt="ipea" width="250">
+# Credits <img align="right" src="r-package/man/figures/ipea_logo.png" alt="ipea" width="250">
 
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
