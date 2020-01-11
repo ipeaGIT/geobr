@@ -126,7 +126,7 @@ As of today, there are two other R packages with similar functionalities: [simpl
 
 -----
 
-# Credits <img align="right" src="r-package/man/figures/ipea_logo.png" alt="ipea" width="250">
+# Credits <img align="right" src="r-package/man/figures/ipea_logo.png" alt="ipea" width="300">
 
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
