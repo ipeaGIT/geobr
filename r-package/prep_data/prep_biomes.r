@@ -178,7 +178,9 @@ temp_sf <- lwgeom::st_make_valid(temp_sf)
 temp_sf <- temp_sf %>%
   mutate_if(is.factor, function(x){ x %>% as.character() %>%
       stringi::stri_encode("UTF-8") } )
-
+temp_sf <- temp_sf %>%
+  mutate_if(is.factor, function(x){ x %>% as.character() %>%
+      stringi::stri_encode("UTF-8") } )
 
 
 

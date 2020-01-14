@@ -141,6 +141,14 @@ temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
 unique(sf::st_geometry_type(temp_sf)) # [1] MULTIPOLYGON       GEOMETRYCOLLECTION
 
 
+# Use UTF-8 encoding in all character columns
+temp_sf <- temp_sf %>%
+  mutate_if(is.factor, function(x){ x %>% as.character() %>%
+      stringi::stri_encode("UTF-8") } )
+temp_sf <- temp_sf %>%
+  mutate_if(is.factor, function(x){ x %>% as.character() %>%
+      stringi::stri_encode("UTF-8") } )
+
 # Save cleaned sf in the cleaned directory
 setwd(root_dir)
 readr::write_rds(temp_sf, path= paste0(destdir_clean,'/conservation_units_', update,'.rds'), compress = "gz")

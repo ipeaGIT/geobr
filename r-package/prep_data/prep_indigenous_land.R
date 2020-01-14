@@ -159,7 +159,13 @@ setwd(root_dir)
 # Make any invalid geometry valid # st_is_valid( sf)
   temp_sf <- lwgeom::st_make_valid(temp_sf)
 
-
+  # Use UTF-8 encoding in all character columns
+  temp_sf <- temp_sf %>%
+    mutate_if(is.factor, function(x){ x %>% as.character() %>%
+        stringi::stri_encode("UTF-8") } )
+  temp_sf <- temp_sf %>%
+    mutate_if(is.factor, function(x){ x %>% as.character() %>%
+        stringi::stri_encode("UTF-8") } )
 
 # Save cleaned sf in the cleaned directory
   readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
