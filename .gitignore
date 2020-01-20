@@ -81,3 +81,12 @@
 inst/doc
 Meta
 /man/figures/Thumbs.db
+
+# Python Ignores
+python-package/.env/
+python-package/notebooks/
+
+*.pyc
+
+# VSCODE
+*.vscode
