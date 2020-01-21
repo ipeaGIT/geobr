@@ -3,19 +3,10 @@ library(readr)
 library(geobr)
 library(R.utils)
 library(microbenchmark)
-library(beepr)
-
-
-#######  create folders for the test  ---------------------
-  setwd('C:/Users/r1701707/Desktop/a')
-  setwd('C:/Users/rafa/Desktop/a')
-
-dir.create("./rds")
-dir.create("./geojson")
-dir.create("./gpkg")
 
 
 ####### Generate inputs ---------------------
+  setwd('C:/Users/r1701707/Desktop/a')
 
 #  download original geobr data
   am <- geobr::read_state(year=2018, code_state='AM')
@@ -28,8 +19,6 @@ dir.create("./gpkg")
 
 br <- rbind(am, pa, ac, rr, ap)
 plot(br)
-
-####### Save inputs ---------------------
 
 # save as RDS
   readr::write_rds(am, "./rds/am.rds", compress="gz")
@@ -50,7 +39,7 @@ plot(br)
   # zip files
   files_geojson <- list.files(path = '.', pattern = ".geojson", recursive = T, full.names = T)
   for (i in seq_along(files_geojson)){
-    R.utils::gzip(files_geojson[i] ,destname= paste0(files_geojson[i],'.gz'), remove=F )
+    R.utils::gzip(files_geojson[i] ,destname= paste0(files_geojson[i],'.gz'))
   }
 
 
@@ -65,21 +54,18 @@ plot(br)
 # zip files
   files_gpkg <- list.files(path = '.', pattern = ".gpkg", recursive = T, full.names = T)
   for (i in seq_along(files_gpkg)){
-    R.utils::gzip(files_gpkg[i] ,destname= paste0(files_gpkg[i],'.gz'), remove=F )
+    R.utils::gzip(files_gpkg[i] ,destname= paste0(files_gpkg[i],'.gz'))
     }
 
 
 
 
 
-####### BENCHMARK Download and Reading files ---------------------
 
-  library(sf)
-  library(readr)
-  library(geobr)
-  library(R.utils)
-  library(microbenchmark)
-  library(beepr)
+
+
+
+####### BENCHMARK Download and Reading files ---------------------
 
 mbm <- microbenchmark::microbenchmark(times = 30,
 
@@ -104,34 +90,16 @@ mbm <- microbenchmark::microbenchmark(times = 30,
 
               ### GPKG  -------------------------------------
               'gpkg' = { # files
-                files_gpkg <- c('http://www.ipea.gov.br/geobr/tests/gpkg/ac.gpkg',
-                                'http://www.ipea.gov.br/geobr/tests/gpkg/am.gpkg',
-                                'http://www.ipea.gov.br/geobr/tests/gpkg/ap.gpkg')
-
-
-                # download files
-                lapply(X=files_gpkg, function(x) httr::GET(url=x, httr::progress(),
-                                                          httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-
-                # read files and pile them up
-                files <- unlist(lapply(strsplit(files_gpkg,"/"), tail, n = 1L))
-                files <- paste0(tempdir(),"/",files)
-                files <- lapply(X=files, FUN= sf::st_read)
-                shape <- do.call('rbind', files)
-              },
-
-              ### GPKG_zip  -------------------------------------
-              'gpkg_zip' = { # files
-                        files_gpkg_zip <- c('http://www.ipea.gov.br/geobr/tests/gpkg/ac.gpkg.gz',
-                                            'http://www.ipea.gov.br/geobr/tests/gpkg/am.gpkg.gz',
-                                            'http://www.ipea.gov.br/geobr/tests/gpkg/ap.gpkg.gz')
+                        files_gpkg <- c('http://www.ipea.gov.br/geobr/tests/gpkg/ac.gpkg.gz',
+                                        'http://www.ipea.gov.br/geobr/tests/gpkg/am.gpkg.gz',
+                                        'http://www.ipea.gov.br/geobr/tests/gpkg/ap.gpkg.gz')
 
                         # download files
-                        lapply(X=files_gpkg_zip, function(x) httr::GET(url=x, httr::progress(),
+                        lapply(X=files_gpkg, function(x) httr::GET(url=x, httr::progress(),
                                                                    httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
 
                         # read files and pile them up
-                        files <- unlist(lapply(strsplit(files_gpkg_zip,"/"), tail, n = 1L))
+                        files <- unlist(lapply(strsplit(files_gpkg,"/"), tail, n = 1L))
                         files <- paste0(tempdir(),"/",files)
 
                         gpkg_fun <- function( zipf){
@@ -156,18 +124,18 @@ mbm <- microbenchmark::microbenchmark(times = 30,
                       },
 
 
-              ### geojson_zip -------------------------------------
-              'geojson_zip' = { # files
-                        files_geojson_zip <- c('http://www.ipea.gov.br/geobr/tests/geojson/ac.geojson.gz',
-                                               'http://www.ipea.gov.br/geobr/tests/geojson/am.geojson.gz',
-                                               'http://www.ipea.gov.br/geobr/tests/geojson/ap.geojson.gz')
+              ### geojson  -------------------------------------
+              'geojson' = { # files
+                        files_geojson <- c('http://www.ipea.gov.br/geobr/tests/geojson/ac.geojson.gz',
+                                           'http://www.ipea.gov.br/geobr/tests/geojson/am.geojson.gz',
+                                           'http://www.ipea.gov.br/geobr/tests/geojson/ap.geojson.gz')
 
                         # download files
-                        lapply(X=files_geojson_zip, function(x) httr::GET(url=x, httr::progress(),
+                        lapply(X=files_geojson, function(x) httr::GET(url=x, httr::progress(),
                                                                       httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
 
                         # read files and pile them up
-                        files <- unlist(lapply(strsplit(files_geojson_zip,"/"), tail, n = 1L))
+                        files <- unlist(lapply(strsplit(files_geojson,"/"), tail, n = 1L))
                         files <- paste0(tempdir(),"/",files)
 
                         geojson_fun <- function( zipf){
@@ -188,42 +156,18 @@ mbm <- microbenchmark::microbenchmark(times = 30,
                           file.remove(files)
                         }
                         files <- lapply(X=files, FUN= geojson_fun)
-                        shape <- do.call('rbind', files)
-                        },
-
-
-              ### geojson  -------------------------------------
-              'geojson' = { # files
-                files_geojson <- c('http://www.ipea.gov.br/geobr/tests/geojson/ac.geojson',
-                                   'http://www.ipea.gov.br/geobr/tests/geojson/am.geojson',
-                                   'http://www.ipea.gov.br/geobr/tests/geojson/ap.geojson')
-
-
-                # download files
-                lapply(X=files_geojson, function(x) httr::GET(url=x, httr::progress(),
-                                                          httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T)) )
-
-                # read files and pile them up
-                files <- unlist(lapply(strsplit(files_geojson,"/"), tail, n = 1L))
-                files <- paste0(tempdir(),"/",files)
-                files <- lapply(X=files, FUN= sf::st_read)
-                shape <- do.call('rbind', files)
-              }
-
+                        shape <- do.call('rbind', files)}
 )
-
-beepr::beep()
 
 # plot result
 ggplot2::autoplot(mbm)
-ggplot2::autoplot( subset(mbm, expr != 'rds') )
 
 
 
 
 ####### BENCHMARK Reading files only ---------------------
 
-mbmr_read <- microbenchmark::microbenchmark(times = 10,
+mbmr <- microbenchmark::microbenchmark(times =30,
                 ### RDS  -------------------------------------
                 'rds' = {
                           # files
@@ -237,20 +181,8 @@ mbmr_read <- microbenchmark::microbenchmark(times = 10,
 
                 ### GPKG  -------------------------------------
                 'gpkg' = {
-                  # files
-                  files_gpkg <- list.files(path = '.', pattern = ".gpkg", recursive = T, full.names = T)
-                  files_gpkg <- files_gpkg[endsWith(files_gpkg, '.gpkg')]
-
-
-                  # read files and pile them up
-                  files <- lapply(X=files_gpkg, FUN= sf::st_read)
-                  shape <- do.call('rbind', files)
-                },
-
-                ### GPKG_zip  -------------------------------------
-                'gpkg_zip' = {
                           # files
-                          files_gpkg_zip <- list.files(path = '.', pattern = ".gpkg.gz", recursive = T, full.names = T)
+                          files_gpkg <- list.files(path = '.', pattern = ".gpkg", recursive = T, full.names = T)
 
                           gpkg_fun <- function( zipf){
 
@@ -265,31 +197,15 @@ mbmr_read <- microbenchmark::microbenchmark(times = 10,
                             files <- list.files(tempdir(), full.names = T, pattern = "^file")
                             file.remove(files)
                           }
-                          files <- lapply(X=files_gpkg_zip, FUN= gpkg_fun)
+                          files <- lapply(X=files_gpkg, FUN= gpkg_fun)
                           shape <- do.call('rbind', files)
                         },
 
 
-
-
                 ### geojson  -------------------------------------
                 'geojson' = {
-                  # files
-                  files_geojson <- list.files(path = '.', pattern = ".geojson", recursive = T, full.names = T)
-                  files_geojson <- files_geojson[endsWith(files_geojson, '.geojson')]
-
-
-                  # read files and pile them up
-                  files <- lapply(X=files_geojson, FUN= sf::st_read)
-                  shape <- do.call('rbind', files)
-                },
-
-
-
-                ### geojson_zip  -------------------------------------
-                'geojson_zip' = {
                           # files
-                          files_geojson_zip <- list.files(path = '.', pattern = ".geojson.gz", recursive = T, full.names = T)
+                          files_geojson <- list.files(path = '.', pattern = ".geojson", recursive = T, full.names = T)
 
                           geojson_fun <- function( zipf){
 
@@ -304,16 +220,10 @@ mbmr_read <- microbenchmark::microbenchmark(times = 10,
                             files <- list.files(tempdir(), full.names = T, pattern = "^file")
                             file.remove(files)
                           }
-                          files <- lapply(X=files_geojson_zip, FUN= geojson_fun)
+                          files <- lapply(X=files_geojson, FUN= geojson_fun)
                           shape <- do.call('rbind', files)}
 )
 
-beepr::beep()
-
 # plot result
-  ggplot2::autoplot(mbmr_read)
-  ggplot2::autoplot( subset(mbmr_read, expr != 'rds') )
+  ggplot2::autoplot(mbmr)
 
-
-
-  Hi @JoaoCarabetta . Sorry for the long wait. I'm gradually starting to work again on the python version of `geobr`. Last time we discussed this, we
