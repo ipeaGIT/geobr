@@ -15,7 +15,7 @@
 #'   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 #'
 #' # Read all census tracts of a state at a given year
-#'   c <- read_census_tract(code_tract=53, year=2010); # or
+#'   c <- read_census_tract(code_tract=53, year=2010) # or
 #'   c <- read_census_tract(code_tract="DF", year=2010)
 #'   plot(c)
 #'
@@ -78,9 +78,9 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
 
       # download files
       lapply(X=filesD, function(x){
-        i <- match(c(x),filesD);
+        i <- match(c(x),filesD)
         httr::GET(url=x, #httr::progress(),
-                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T));
+                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
         utils::setTxtProgressBar(pb, i)
       }
       )

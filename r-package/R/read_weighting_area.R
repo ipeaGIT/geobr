@@ -16,7 +16,7 @@
 #'   w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 #'
 #' # Read all weighting areas of a state at a given year
-#'   w <- read_weighting_area(code_weighting=53, year=2010); # or
+#'   w <- read_weighting_area(code_weighting=53, year=2010) # or
 #'   w <- read_weighting_area(code_weighting="DF", year=2010)
 #'   plot(w)
 #'
@@ -68,9 +68,9 @@ read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=14
 
         # download files
         lapply(X=filesD, function(x){
-          i <- match(c(x),filesD);
+          i <- match(c(x),filesD)
           httr::GET(url=x, #httr::progress(),
-                    httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T));
+                    httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
           utils::setTxtProgressBar(pb, i)
         }
         )
