@@ -6,7 +6,7 @@ import geobr
 def metadata_file():
     return geobr.utils.download_metadata()
 
-def test_utils(metadata_file):
+def test_download_metadata(metadata_file):
 
     # Check if it fails if it doesn't find a file
     with pytest.raises(Exception):
