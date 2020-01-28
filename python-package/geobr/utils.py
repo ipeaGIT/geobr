@@ -1,20 +1,37 @@
 import requests
+import pandas as pd
+import tempfile
 
-def download_metadata():
+def download_metadata(
+    url='http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'):
+    """Support function to download metadata internally used in geobr.
 
-    metadata_url = 'http://www.ipea.gov.br/geobr/metadata/metadata.rds'
+    Parameters
+    ----------
+    url : str, optional
+        Metadata url, by default 'http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
+    
+    Returns
+    -------
+    pd.DataFrame
+        Table with all metadata of geopackages
+    
+    Raises
+    ------
+    Exception
+        Leads user to Github issue page if metadata url is not found
 
-    metadata = requests.get(metadata_url)
+    Examples
+    --------
+    >>> metadata = download_metadata()
+    >>> metadata.head(1)
+                  geo  year code                                      download_path      code_abrev
+    0  amazonia_legal  2012   am  http://www.ipea.gov.br/geobr/data_gpkg/amazoni...  amazonia_legal
+    """
 
-    # return pd.DataFrame(metadata)
+    try:
+        return pd.read_csv(url)
 
-    return 'metadata'
-
-def get_metadata(geo):
-
-    metadata = download_metadata()
-
-    # select metadata based on geo
-    # ...
-
-    return 'metadata_selected_geo'
+    except HTTPError:
+        raise Exception('Metadata file not found. \
+            Please report to https://github.com/ipeaGIT/geobr/issues')
