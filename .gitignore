@@ -90,3 +90,4 @@ python-package/notebooks/
 
 # VSCODE
 *.vscode
+/r-package/.Rhistory
