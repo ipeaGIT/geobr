@@ -1,10 +1,14 @@
 import requests
 import pandas as pd
 import tempfile
+from functools import lru_cache
 
+@lru_cache(maxsize=124)
 def download_metadata(
     url='http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'):
     """Support function to download metadata internally used in geobr.
+
+    It caches the metadata file to avoid reloading it in the same session.
 
     Parameters
     ----------

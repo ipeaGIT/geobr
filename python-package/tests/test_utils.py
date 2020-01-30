@@ -1,6 +1,6 @@
 import pytest
-import pandas as pd
 import geobr
+from time import time
 
 @pytest.fixture
 def metadata_file():
@@ -19,3 +19,10 @@ def test_download_metadata(metadata_file):
 
     # Check if it has content
     assert len(metadata_file) > 0
+
+def test_download_metadata_cache():
+    
+    # Check if cache works
+    start_time = time()
+    geobr.utils.download_metadata()
+    assert time() - start_time < 1
