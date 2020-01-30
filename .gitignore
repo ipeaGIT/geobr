@@ -91,3 +91,6 @@ python-package/notebooks/
 # VSCODE
 *.vscode
 /r-package/.Rhistory
+__pycache__
+.pytest_cache
+
