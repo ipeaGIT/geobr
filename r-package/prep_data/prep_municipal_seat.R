@@ -26,7 +26,7 @@ dir.create(head_dir)
 url_h <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/"
 
 #base atual
-# url_a <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/localidades/Shapefile_SHP/"
+url_a <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/localidades/Shapefile_SHP/"
 
 # List files/folders available
 
@@ -35,8 +35,25 @@ years <- strsplit(years, "\r\n")
 years = unlist(years)
 # years = years[grepl("capital|sede",years)]
 
+years <- c(years, 2010)
 
 for (i in years){
+
+  if(year==2010){
+    # Download current file (2010)
+    file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    file_a <- strsplit(file_a, "\r\n")
+    file_a = unlist(file_a)
+
+    dir_2010 <- paste0(head_dir,"//",2010)
+    dir.create(dir_2010)
+    setwd(head_dir)
+
+    for (filename in file_a) {
+      url = paste(url_a, filename, sep = "")
+      download.file(url, destfile = paste0("./",2010,"/",filename) , mode = "wb")
+    }
+  }
 
   # list files
   subdir <- paste0(url_h, i,"/")
@@ -55,20 +72,6 @@ for (i in years){
     url = paste(subdir, filename, sep = "")
     download.file(url,destfile = paste0("./municipal_seat/",i,"/",filename))#, mode = "wb")
   }
-}
-
-# Download current file (2010)
-file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-file_a <- strsplit(file_a, "\r\n")
-file_a = unlist(file_a)
-
-dir_2010 <- paste0(head_dir,"//",2010)
-dir.create(dir_2010)
-setwd(head_dir)
-
-for (filename in file_a) {
-  url = paste(url_a, filename, sep = "")
-  download.file(url, destfile = paste0("./",2010,"/",filename) , mode = "wb")
 }
 
 
@@ -104,14 +107,13 @@ stopCluster(cl)
 
 
 #### 2. Create folders to save sf.rds files  -----------------
+setwd(head_dir)
 
 
 # create directory to save cleaned shape files in sf format
 dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 
 # create a subdirectory years
-#years <- c(years,"2010")
-
 for (i in years){
   dir.create(file.path("shapes_in_sf_all_years_cleaned", i), showWarnings = FALSE)
 }
@@ -121,7 +123,7 @@ for (i in years){
 # pegar apenas os shapes dessa lista
 # ou vai entrar no fo anterior ou vamos criar um novo for/function
 
-for (i in years){ #i=1970
+for (i in years){ # i=2010
   dir_years <- paste0(head_dir,"//",i)
   setwd(dir_years)
   dados <- list.files(pattern = "*.shp", full.names = T)
@@ -129,7 +131,7 @@ for (i in years){ #i=1970
   # retirando os arquivos .xml
   dados <- dados[!grepl(".xml",dados)]
 
-  for (z in 1:3){
+  for (z in 1:length(dados)){
 #i=1
     # Lendo os shapes
     setwd(paste0(head_dir,"//",i))
