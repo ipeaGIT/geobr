@@ -10,8 +10,13 @@ library(lwgeom)
 
 # Root directory
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
+# root_dir <- "C:/Users/rafa/Desktop/data"
+
+
 setwd(root_dir)
-head_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//headquarters"
+
+head_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//municipal_seat"
+# head_dir <- "C:/Users/rafa/Desktop/data/municipal_seat"
 dir.create(head_dir)
 #### 0. Download original data sets from IBGE ftp -----------------
 
@@ -48,20 +53,23 @@ for (i in years){
   # Download zipped files
   for (filename in files) {
     url = paste(subdir, filename, sep = "")
-    download.file(url,destfile = paste0("./headquarters/",i,"/",filename))#, mode = "wb")
+    download.file(url,destfile = paste0("./municipal_seat/",i,"/",filename))#, mode = "wb")
   }
 }
 
 # Download current file (2010)
-# file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-# file_a <- strsplit(file_a, "\r\n")
-# file_a = unlist(file_a)
-# file_a <- file_a[grepl(".shp",file_a)]
-#
-# dir_2010 <- paste0(head_dir,"//",2010)
-# dir.create(dir_2010)
-# setwd(head_dir)
-# download.file(paste0(url_a, file_a, sep = ""),destfile = paste0("./2010","/",file_a), mode = "wb")
+file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+file_a <- strsplit(file_a, "\r\n")
+file_a = unlist(file_a)
+
+dir_2010 <- paste0(head_dir,"//",2010)
+dir.create(dir_2010)
+setwd(head_dir)
+
+for (filename in file_a) {
+  url = paste(url_a, filename, sep = "")
+  download.file(url, destfile = paste0("./",2010,"/",filename) , mode = "wb")
+}
 
 
 
