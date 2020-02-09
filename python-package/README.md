@@ -14,5 +14,5 @@ To start the development envorinment run
 
 ```sh
 make
-. .env/bin/acitave
+. .env/bin/activate
 ```
