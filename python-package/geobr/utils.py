@@ -41,6 +41,26 @@ def download_metadata(
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
 def check_year(year,metadata):
+    """[summary]
+    
+    Parameters
+    ----------
+    year : [type]
+        [description]
+    metadata : [type]
+        [description]
+    
+    Returns
+    -------
+    [type]
+        [description]
+    
+    Raises
+    ------
+    Exception
+        [description]
+    """
+    
 
     if year is None:
         year = max(metadata["year"])
