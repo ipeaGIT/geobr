@@ -6,6 +6,8 @@ library(magrittr)
 library(data.table)
 library(parallel)
 library(lwgeom)
+library(geobr)
+library(mapview)
 
 
 # Root directory
@@ -33,13 +35,11 @@ url_a <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territori
 years = getURL(url_h, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 years <- strsplit(years, "\r\n")
 years = unlist(years)
-# years = years[grepl("capital|sede",years)]
-
 years <- c(years, 2010)
 
 for (i in years){
 
-  if(year==2010){
+  if(i=="2010"){
     # Download current file (2010)
     file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
     file_a <- strsplit(file_a, "\r\n")
@@ -60,7 +60,7 @@ for (i in years){
   files = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
   files <- strsplit(files, "\r\n")
   files = unlist(files)
-  files <- files[grepl("capital|sede",files)]
+  files <- files[grepl("municipal",files)]
 
 
   # create folder to download and store raw data of each year
@@ -70,7 +70,7 @@ for (i in years){
   # Download zipped files
   for (filename in files) {
     url = paste(subdir, filename, sep = "")
-    download.file(url,destfile = paste0("./municipal_seat/",i,"/",filename))#, mode = "wb")
+    download.file(url,destfile = paste0("./municipal_seat/",i,"/",filename))
   }
 }
 
@@ -86,7 +86,7 @@ all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
 
 
 # Select only files with capital and headquarter
-all_zipped_files <- all_zipped_files[all_zipped_files %like% "capital|sede"]
+all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipal"]
 
 
 # function to Unzip files in their original sub-dir
@@ -119,60 +119,93 @@ for (i in years){
 }
 
 
-#setwd(root_dir)
-# pegar apenas os shapes dessa lista
-# ou vai entrar no fo anterior ou vamos criar um novo for/function
-
-for (i in years){ # i=2010
+for (i in years){
+  # i=2010
   dir_years <- paste0(head_dir,"//",i)
   setwd(dir_years)
+
+  # selecionar apenas os arquivos .shp
   dados <- list.files(pattern = "*.shp", full.names = T)
 
-  # retirando os arquivos .xml
-  dados <- dados[!grepl(".xml",dados)]
+  if (i!=2010){
+    # retirando os arquivos .xml da lista
+    dados <- dados[!grepl(".xml",dados)]
 
-  for (z in 1:length(dados)){
-#i=1
-    # Lendo os shapes
-    setwd(paste0(head_dir,"//",i))
-    temp_sf <- st_read(dados[z], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-
-    # colocando o nome das colunas em letras minúsculas
-    names(temp_sf) <- names(temp_sf) %>% tolower()
-
-    # arrumando o nome e a posição das colunas
-    if("codigo" %in% names(temp_sf)){
-      temp_sf <- dplyr::rename(temp_sf, code_muni = codigo, name_muni = nome )
-    } else if ("br91poly_i" %in% names(temp_sf)){
-      temp_sf <- dplyr::rename(temp_sf, code_muni = br91poly_i, name_muni = nomemunicp )
-    } else {
-      temp_sf <- dplyr::rename(temp_sf, code_muni = geocodigo, name_muni = nome )
-    }
-    # else {
-    #   temp_sf <- dplyr::rename(temp_sf, code_muni = code_muni, name_muni = name_muni )
-    # }
-
-    # temp_sf <- dplyr::rename(temp_sf, code_muni = codigo|code_muni = geocodigo, name_muni = nome )
-    temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
-
-    # Use UTF-8 encoding
-    temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
-#str(temp_sf)
-    # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-    temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
-
-    # Convert columns from factors to characters
-    temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-
-    temp_sf$code_muni <- as.numeric(temp_sf$code_muni) # keep code as.numeric()
-
-    # Save cleaned sf in the cleaned directory
-    setwd(head_dir)
-    destdir <- file.path("./shapes_in_sf_all_years_cleaned",i)
-    data_save <- gsub(" ","_",dados)
-    data_save <- gsub("./","",data_save)
-    data_save <- gsub("-","",data_save)
-    readr::write_rds(temp_sf, path = paste0(destdir,"/", gsub(".shp","",data_save[z]), ".rds"), compress="gz" )
-
+    # mantendo apenas o arquivo de sede na lista
+    dados <- dados[grepl("sede",dados)]
   }
+
+  # Lendo os shapes
+  setwd(paste0(head_dir,"//",i))
+  temp_sf <- st_read(dados, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
+
+  # colocando o nome das colunas em letras minúsculas
+  names(temp_sf) <- names(temp_sf) %>% tolower()
+
+  # padroniza o nome da coluna para "code_muni"
+  if("codigo" %in% names(temp_sf)){
+    temp_sf <- dplyr::rename(temp_sf, code_muni = codigo)
+  } else if ("br91poly_i" %in% names(temp_sf)){
+    temp_sf <- dplyr::rename(temp_sf, code_muni = br91poly_i)
+  } else if ("geocodigo" %in% names(temp_sf)){
+    temp_sf <- dplyr::rename(temp_sf, code_muni = geocodigo)
+  } else {
+    temp_sf <- dplyr::rename(temp_sf, code_muni = cd_geocodm)
+  }
+
+
+  # arruma o name_muni
+
+  # seleciona apenas sede de municipios
+  #temp_sf <- subset(temp_sf, cd_nivel==1 )
+
+  # leitura dos municipios
+  municipios <- read_municipality(code_muni = 'all', year = i)
+
+  # seleciona apenas as colunas de name_muni e geometry
+  municipios <- municipios %>% select(-code_muni)
+
+  # harmoniza projecao
+  temp_sf <- st_transform(temp_sf, st_crs(municipios))
+
+  # faz intersecao
+  temp_sf <- st_join(temp_sf, municipios)
+
+  # organiza colunas
+  temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
+
+  # cria a coluna ano para 2010
+  temp_sf$year <- i
+
+  # cria coluna de região para 2010
+  temp_sf$code_region <-   substr(temp_sf$code_muni,1,1)
+
+  ### add region names
+  temp_sf$name_region <- ifelse(temp_sf$code_region==1, 'Norte',
+                                ifelse(temp_sf$code_region==2, 'Nordeste',
+                                       ifelse(temp_sf$code_region==3, 'Sudeste',
+                                              ifelse(temp_sf$code_region==4, 'Sul',
+                                                     ifelse(temp_sf$code_region==5, 'Centro Oeste', NA)))))
+
+  # organizando colunas
+  temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni','code_region','year', 'geometry'))
+
+  # Use UTF-8 encoding
+  temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
+
+  # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+  temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+  st_crs(temp_sf) <- 4674
+
+  # Convert columns from factors to characters
+  temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+
+  temp_sf$code_muni <- as.numeric(temp_sf$code_muni) # keep code as.numeric()
+
+  # Save cleaned sf in the cleaned directory
+  setwd(head_dir)
+  destdir <- file.path("./shapes_in_sf_all_years_cleaned",i)
+  sf::st_write(temp_sf, paste0(destdir,"/", "municipal_seat_",i, ".gpkg"))
+
+
 }
