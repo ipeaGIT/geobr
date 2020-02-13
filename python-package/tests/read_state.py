@@ -52,7 +52,7 @@ def read_state(code_state,year=None,mode = "simplified"):
     # Verify code_state input
 
     # Test if code_state input is null
-        if code_mun is None:
+        if code_state is None:
             sys.exit("Value to argument 'code_state' cannot be NULL")
     
         if code_state=="all":
@@ -60,19 +60,19 @@ def read_state(code_state,year=None,mode = "simplified"):
         
     # read files and pile them up
 
-        filesD = list(temp_meta.download_path.astype(str))
+            filesD = list(temp_meta.download_path.astype(str))
     
-        temp_sf = list()
+            temp_sf = list()
     
-        for fp in filesD:
+            for fp in filesD:
 
-            gdf = gpd.read_file(fp)
+                gdf = gpd.read_file(fp)
     
-            temp_sf.append(gdf)
+                temp_sf.append(gdf)
     
-        temp_sf = gpd.GeoDataFrame( pd.concat( temp_sf, ignore_index=True) )
+            temp_sf = gpd.GeoDataFrame( pd.concat( temp_sf, ignore_index=True) )
     
-        return(temp_sf)
+            return(temp_sf)
     
         if (str(code_state)[0:2] not in temp_meta.code.unique()) and (str(code_state)[0:2] not in temp_meta.code_abrev.unique()):
         
