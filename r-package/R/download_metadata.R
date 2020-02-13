@@ -1,6 +1,6 @@
 #' Support function to download metadata internally used in geobr
 #'
-#'
+#' @export
 #' @family general support functions
 #' @examples \donttest{
 #'

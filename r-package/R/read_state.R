@@ -129,10 +129,10 @@ if( x < 1992){
     if(nchar(code_state)==2){
       return(shape)
 
-    } else if(code_state %in% shape$code_state){
-      x <- code_state
-      shape <- subset(shape, code_state==x)
-      return(shape)
+    # } else if(code_state %in% shape$code_state){
+    #   x <- code_state
+    #   shape <- subset(shape, code_state==x)
+    #   return(shape)
 
     } else{
       stop("Error: Invalid Value to argument code_state.")

@@ -25,7 +25,7 @@ library(geobr)
   w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 
 # Read all weighting areas of a state at a given year
-  w <- read_weighting_area(code_weighting=53, year=2010); # or
+  w <- read_weighting_area(code_weighting=53, year=2010) # or
   w <- read_weighting_area(code_weighting="DF", year=2010)
   plot(w)
 

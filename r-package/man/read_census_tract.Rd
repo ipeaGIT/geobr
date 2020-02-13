@@ -27,7 +27,7 @@ library(geobr)
   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 
 # Read all census tracts of a state at a given year
-  c <- read_census_tract(code_tract=53, year=2010); # or
+  c <- read_census_tract(code_tract=53, year=2010) # or
   c <- read_census_tract(code_tract="DF", year=2010)
   plot(c)
 
