@@ -29,8 +29,12 @@ def test_download_metadata_cache():
     assert time() - start_time < 1
 
 def test_check_year(): 
-    metadata = pd.DataFrame([2004,2019],columns=["year"]) 
-    assert check_year(None, metadata) == 2019
-    assert check_year(2004, metadata) == 2004
+
+    metadata = pd.DataFrame([2004,2019], columns=["year"]) 
+    
+    assert check_year(metadata) == 2019
+    
+    assert check_year(metadata, 2004) == 2004
+    
     with pytest.raises(Exception):
-       assert check_year(2006, metadata) == 2004
+       assert check_year(metadata, 2006) == 2004

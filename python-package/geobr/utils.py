@@ -40,33 +40,36 @@ def download_metadata(
         raise Exception('Metadata file not found. \
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
-def check_year(year,metadata):
-    """[summary]
+def check_year(metadata, year=None):
+    """Check if year exists in metadata.
+
+    If it do not exist, raises an informative error.
     
     Parameters
     ----------
-    year : [type]
-        [description]
-    metadata : [type]
-        [description]
-    
+    metadata : pd.DataFrame
+        Filtered metadata table
+    year : int
+        Year selected by user
+
     Returns
     -------
-    [type]
-        [description]
+    int
+        The last year if year is None. The inputed year, if it exists.
     
     Raises
     ------
     Exception
-        [description]
+        If year does not exists, raises exception with available years.
     """
     
 
     if year is None:
-        year = max(metadata["year"])
+        year = max(metadata['year'])
       
-    elif not year in list(metadata["year"]):
+    elif not year in list(metadata['year']):
 
-        raise Exception("Error: Invalid Value to argument 'year'. It must be one of the following: " + 
-                        ', '.join([str (i) for i in metadata["year"].unique()]))
+        raise Exception('Error: Invalid Value to argument year. \
+                        It must be one of the following: ' + 
+                        ', '.join([str (i) for i in metadata['year'].unique()]))
     return year
