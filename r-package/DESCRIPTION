@@ -36,6 +36,7 @@ Suggests:
     testthat
 Imports:
       httr,
+      readr,
       sf,
       utils
 RoxygenNote: 7.0.2
