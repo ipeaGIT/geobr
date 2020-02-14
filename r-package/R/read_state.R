@@ -4,6 +4,7 @@
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -21,7 +22,7 @@
 #'
 #'}
 
-read_state <- function(code_state, year=NULL){
+read_state <- function(code_state, year=NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

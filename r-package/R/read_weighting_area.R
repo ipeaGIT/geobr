@@ -6,6 +6,7 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
 #'  all weighting areas of the country are loaded.
 #' @param year Year of the data (defaults to 2010)
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -32,7 +33,7 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting, year = NULL){ #code_weighting=1400100
+read_weighting_area <- function(code_weighting, year = NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

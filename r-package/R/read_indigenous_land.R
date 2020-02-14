@@ -7,6 +7,7 @@
 #'
 #'
 #' @param date A date numer in YYYYMM format.
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @examples \donttest{
 #'
@@ -18,7 +19,7 @@
 #' }
 #'
 
-read_indigenous_land <- function(date){
+read_indigenous_land <- function(date, mode="simplified"){
 
 
 # Get metadata with data addresses

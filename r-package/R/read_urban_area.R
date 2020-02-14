@@ -7,6 +7,7 @@
 #'
 #'
 #' @param year A year number in YYYY format (defaults to 2015)
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @examples \donttest{
 #'
@@ -18,7 +19,7 @@
 #' }
 #'
 #'
-read_urban_area <- function(year=NULL){
+read_urban_area <- function(year=NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

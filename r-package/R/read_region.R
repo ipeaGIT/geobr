@@ -3,6 +3,7 @@
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year Year of the data (defaults to 2010)
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -14,7 +15,7 @@
 #'
 #'}
 
-read_region <- function(year=NULL){
+read_region <- function(year=NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

@@ -4,6 +4,7 @@
 #' data comes from the Brazilian Institute of Geography and Statistics (IBGE) and can be found at https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads
 #'
 #' @param year A date number in YYYY format (defaults to 2017)
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -14,7 +15,7 @@
 #'   a <- read_semiarid(year=2017)
 #'}
 #'
-read_semiarid <- function(year=NULL){
+read_semiarid <- function(year=NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

@@ -9,7 +9,7 @@
 #' at https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html
 #'
 #' @param year A year number in YYYY format.
-#' @export
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)#' @export
 #' @examples \donttest{
 #'
 #' library(geobr)

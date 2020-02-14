@@ -7,6 +7,7 @@
 #' @param code_intermediate 4-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_intermediate="all",
 #'  all intermediate regions of the country are loaded (defaults to "all").
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -26,7 +27,7 @@
 #' }
 #'
 #'
-read_intermediate_region <- function(code_intermediate= NULL, year = NULL){
+read_intermediate_region <- function(code_intermediate= NULL, year = NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

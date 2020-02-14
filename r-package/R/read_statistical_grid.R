@@ -3,6 +3,7 @@
 #' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
 #' @param code_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
 #' the function will load all grid quadrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -17,7 +18,7 @@
 #'
 #'}
 
-read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
+read_statistical_grid <- function(code_grid, year=NULL, mode="simplified"){ # nocov start
 
 # Verify year input
   if (is.null(year)){ message("Using data from year 2010 /n")

@@ -6,6 +6,7 @@
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of that state. If code_micro="all",
 #'  all micro regions of the country are loaded.
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -25,7 +26,7 @@
 #'
 #'
 
-read_micro_region <- function(code_micro, year=NULL){
+read_micro_region <- function(code_micro, year=NULL, mode="simplified"){
 
 
   # Get metadata with data addresses
