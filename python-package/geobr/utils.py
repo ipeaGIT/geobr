@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import tempfile
+import geopandas as gpd
 from functools import lru_cache
 
 @lru_cache(maxsize=124)
@@ -40,8 +41,10 @@ def download_metadata(
         raise Exception('Metadata file not found. \
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
-def check_year(metadata, year=None):
+def apply_year(metadata, year=None, year_default=None):
     """Check if year exists in metadata.
+
+    TODO: rewrite docstring and tests
 
     If it do not exist, raises an informative error.
     
@@ -65,11 +68,55 @@ def check_year(metadata, year=None):
     
 
     if year is None:
-        year = max(metadata['year'])
+        if year_default is None:
+            year = max(metadata['year'])
+        else:
+            year = year_default
       
     elif not year in list(metadata['year']):
 
-        raise Exception('Error: Invalid Value to argument year. \
-                        It must be one of the following: ' + 
-                        ', '.join([str (i) for i in metadata['year'].unique()]))
-    return year
+        years = ', '.join([str(i) for i in metadata['year'].unique()])
+
+        raise Exception('Error: Invalid Value to argument year. '
+                        'It must be one of the following: ' + years 
+                        )
+    
+    return metadata.query(f'year == {year}')
+
+def apply_mode(metadata, mode):
+
+    # TODO: write docstring and tests
+
+    if mode == "simplified":    
+        return metadata[metadata['download_path'].str.contains("simplified")]
+    
+    elif mode =="normal":
+        return metadata[~metadata['download_path'].str.contains("simplified")]
+    
+    else:
+        raise Exception("Error: Invalid Value to argument 'mode'. \
+                        It must be 'simplified' or 'normal'")
+
+
+@lru_cache(maxsize=124)
+def load_gpkg(url):
+    
+    content = requests.get(url).content
+    
+    with tempfile.NamedTemporaryFile(suffix='.gpkg') as fp:
+
+        fp.write(content)
+
+        gdf = gpd.read_file(fp.name)
+        
+    return gdf
+
+def download_gpkg(metadata, n_processes=mp.cpu_count() - 1):
+    
+    # TODO: write docstring and tests
+    
+    urls = metadata['download_path'].tolist()
+
+    gpkgs = [load_gpkg(url) for url in urls]
+    
+    return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
