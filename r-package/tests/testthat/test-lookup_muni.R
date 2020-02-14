@@ -14,7 +14,6 @@ test_that("lookup_muni", {
   # skip_on_travis()
 
   # read data
-  expect_error(lookup_muni())
   test_sf <- lookup_muni(name_muni = "fortaleza")
 
   # check sf object
@@ -23,6 +22,8 @@ test_that("lookup_muni", {
   # check number of cols
   expect_equal(test_sf %>% ncol(), 13)
 
+  # When using two arguments (supposed to give a warning)
+  expect_warning(lookup_muni(name_muni="fortaleza", code_muni=2304400))
 })
 
 
@@ -35,6 +36,7 @@ test_that("lookup_muni", {
   #skip_on_cran()
   #skip_on_travis()
 
+  expect_error(lookup_muni())
 
   # Wrong name
   expect_error(lookup_muni(name_muni="arroz"))
@@ -44,8 +46,7 @@ test_that("lookup_muni", {
   expect_error(lookup_muni(code_muni=123))
   expect_error(lookup_muni(name_muni="teste"))
 
-  # When using two arguments (supposed to give a warning)
-  expect_warning(lookup_muni(name_muni="fortaleza", code_muni=2304400))
+
 
 })
 

@@ -44,7 +44,7 @@ test_that("read_weighting_area", {
   expect_equal(test_abrev$code_weighting %>% length(), 8)
 
   # check projection
-  expect_equal(sf::st_crs(test_abrev)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
+  expect_equal(sf::st_crs(test_abrev)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 

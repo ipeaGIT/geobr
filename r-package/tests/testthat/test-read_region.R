@@ -10,7 +10,6 @@ test_that("read_region", {
   skip_on_travis()
 
   # read data
-  expect_message(read_region(year=NULL))
   test_sf <- read_region(year=2010)
   test_2000_sf <- read_region(year=2000)
   test_2001_sf <- read_region(year=2001)

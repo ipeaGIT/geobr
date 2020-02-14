@@ -5,7 +5,7 @@
 #' data comes from MMA and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
 #'
 #' @param date A date number in YYYYMM format
-#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #'
 #' @export
 #' @family general area functions
@@ -16,13 +16,20 @@
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
 #'}
-read_conservation_units <- function(date=NULL, mode="simplified"){
+read_conservation_units <- function(date=NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
 
   # Select geo
   temp_meta <- subset(metadata, geo=="conservation_units")
+
+  # Select type
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
   # 1.1 Verify year input
   if (is.null(date)){ date <- 201909
@@ -45,6 +52,6 @@ read_conservation_units <- function(date=NULL, mode="simplified"){
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
   # read sf
-  temp_sf <- readr::read_rds(temps)
+  temp_sf <- sf::st_read(temps, quiet=T)
   return(temp_sf)
 }

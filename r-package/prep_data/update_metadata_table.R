@@ -10,26 +10,26 @@
   colnames(metadata) <- c("geo","year","code","download_path","code_abrev")
 
 # list all data files available in the geobr package
-  geo=list.files("//storage1/geobr/data")
+  geo=list.files("//storage1/geobr/data_gpkg")
 
   # populate the metadata table
   for (a in geo) {    # a="setor_censitario"
-    ano=list.files(paste("//storage1/geobr/data",a,sep="/"))
+    ano=list.files(paste("//storage1/geobr/data_gpkg",a,sep="/"))
     for (b in ano) { # b=2000
-      estado=list.files(paste("//storage1/geobr/data",a,b,sep="/"))
+      estado=list.files(paste("//storage1/geobr/data_gpkg",a,b,sep="/"))
       for (c in estado) { #c="Urbano"
         if (c=="Urbano"|c=="Rural"){
-          estado2=list.files(paste("//storage1/geobr/data",a,b,c,sep="/"))
+          estado2=list.files(paste("//storage1/geobr/data_gpkg",a,b,c,sep="/"))
           for (d in estado2) { #d=estado2[1]
             if (c=="Urbano") {
-              metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,b,c,d,sep="/"))
+              metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data_gpkg",a,b,c,d,sep="/"))
             }
             if (c=="Rural") {
-              metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data",a,b,c,d,sep="/"))
+              metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data_gpkg",a,b,c,d,sep="/"))
             }
           }
         } else {
-        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data",a,b,c,sep="/"))}
+        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data_gpkg",a,b,c,sep="/"))}
       }
     }
   }
@@ -80,5 +80,5 @@
   subset(metadata, geo == 'metropolitan_area')
 
 # save updated metadata table
-  # readr::write_rds(metadata,"//storage1/geobr/metadata/metadata.rds", compress = "gz")
+  # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_gpkg.csv")
 

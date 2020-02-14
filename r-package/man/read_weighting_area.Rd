@@ -4,7 +4,7 @@
 \alias{read_weighting_area}
 \title{Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.}
 \usage{
-read_weighting_area(code_weighting, year = NULL)
+read_weighting_area(code_weighting, year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
@@ -12,6 +12,8 @@ a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas 
 all weighting areas of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 Only 2010 data is currently available.

@@ -4,7 +4,7 @@
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
-#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -22,14 +22,20 @@
 #'
 #'}
 
-read_state <- function(code_state, year=NULL, mode="simplified"){
+read_state <- function(code_state, year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
 
-
   # Select geo
-  temp_meta <- subset(metadata, geo=="uf")
+  temp_meta <- subset(metadata, geo=="state")
+
+  # Select type
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")
@@ -68,7 +74,7 @@ if( x < 1992){
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
   # read sf
-  temp_sf <- readr::read_rds(temps)
+  temp_sf <- sf::st_read(temps, quiet=T)
 
   return(temp_sf)
 } else {
@@ -105,7 +111,7 @@ if( x < 1992){
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= readr::read_rds)
+      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
       shape <- do.call('rbind', files)
       return(shape)
     }
@@ -125,7 +131,7 @@ if( x < 1992){
     httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
 
     # read sf
-    shape <- readr::read_rds(temps)
+    shape <- sf::st_read(temps, quiet=T)
 
     if(nchar(code_state)==2){
       return(shape)

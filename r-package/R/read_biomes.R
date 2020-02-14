@@ -5,7 +5,7 @@
 #' the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 #'
 #' @param year A date number in YYYY format (defaults to 2019)
-#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #'
 #' @export
 #' @family general area functions
@@ -18,15 +18,20 @@
 #'
 #'}
 #'
-
-read_biomes <- function(year=NULL, mode="simplified"){
+read_biomes <- function(year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
 
-
   # Select geo
   temp_meta <- subset(metadata, geo=="biomes")
+
+  # Select mode
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
 
   # 1.1 Verify year input
@@ -37,7 +42,6 @@ read_biomes <- function(year=NULL, mode="simplified"){
   }
 
   message(paste0("Using data from year ", year))
-
 
 
   # Select metadata year
@@ -52,6 +56,6 @@ read_biomes <- function(year=NULL, mode="simplified"){
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
   # read sf
-  temp_sf <- readr::read_rds(temps)
+  temp_sf <- sf::st_read(temps, quiet=T)
   return(temp_sf)
 }

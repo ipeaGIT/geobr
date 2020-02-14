@@ -4,7 +4,11 @@
 \alias{read_intermediate_region}
 \title{Download shape files of Brazil's Intermediate Geographic Areas as sf objects.}
 \usage{
-read_intermediate_region(code_intermediate = NULL, year = NULL)
+read_intermediate_region(
+  code_intermediate = NULL,
+  year = NULL,
+  tp = "simplified"
+)
 }
 \arguments{
 \item{code_intermediate}{4-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
@@ -12,6 +16,8 @@ a state is passed, (e.g. 33 or "RJ") the function will load all intermediate reg
 all intermediate regions of the country are loaded (defaults to "all").}
 
 \item{year}{A date number in YYYY format (defaults to 2017)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 The intermediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE to

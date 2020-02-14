@@ -19,16 +19,13 @@
 #' mun <- lookup_muni(code_muni = 3304557)
 #'
 #' # Get lookup table for all municipalities
-#' mun_all <- lookup_muni(name_muni == "all")
+#' mun_all <- lookup_muni(name_muni = "all")
 #'
 #' # Or:
-#' mun_all <- lookup_muni(code_muni == "all")
-#'
+#' mun_all <- lookup_muni(code_muni = "all")
 #'}
-
+#'
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
-
-
 
   # Get metadata with data addresses
   metadata <- download_metadata()
@@ -44,7 +41,7 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
   # read file
-  lookup_table_2010 <- readr::read_rds(temps)
+  lookup_table_2010 <- utils::read.csv(temps, stringsAsFactors = F, encoding = 'UTF-8')
 
 
   # code_muni has priority over other arguments

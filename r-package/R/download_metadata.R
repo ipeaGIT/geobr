@@ -17,12 +17,12 @@ download_metadata <- function(){
 
   # check if metadata has already been downloaded
   if (file.exists(tempf)) {
-    metadata <- utils::read.csv(tempf)
+    metadata <- utils::read.csv(tempf, stringsAsFactors=F)
 
   } else {
     # download it and save to metadata
     httr::GET(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv", httr::write_disk(tempf, overwrite = T))
-    metadata <- utils::read.csv(tempf)
+    metadata <- utils::read.csv(tempf, stringsAsFactors=F)
   }
 
   return(metadata)

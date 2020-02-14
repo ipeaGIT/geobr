@@ -4,7 +4,7 @@
 \alias{read_immediate_region}
 \title{Download shape files of Brazil's Immediate Geographic Areas as sf objects}
 \usage{
-read_immediate_region(code_immediate = NULL, year = NULL)
+read_immediate_region(code_immediate = NULL, year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_immediate}{6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of
@@ -12,6 +12,8 @@ a state is passed, (e.g. 33 or "RJ") the function will load all immediate region
 all immediate regions of the country are loaded (defaults to "all").}
 
 \item{year}{A date number in YYYY format (defaults to 2017)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE to

@@ -32,10 +32,10 @@ mun <- lookup_muni(name_muni = "Rio de Janeiro")
 mun <- lookup_muni(code_muni = 3304557)
 
 # Get lookup table for all municipalities
-mun_all <- lookup_muni(name_muni == "all")
+mun_all <- lookup_muni(name_muni = "all")
 
 # Or:
-mun_all <- lookup_muni(code_muni == "all")
-
+mun_all <- lookup_muni(code_muni = "all")
 }
+
 }

@@ -24,6 +24,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
                                                         'abbrev_state',
                                                         'code_region',
                                                         'name_region',
+                                                        'name_muni_format',
                                                         'group_by'))
 
 .onLoad <- function(lib, pkg) {

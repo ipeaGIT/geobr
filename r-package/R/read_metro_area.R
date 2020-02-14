@@ -7,7 +7,7 @@
 #'
 #'
 #' @param year A year number in YYYY format
-#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @examples \donttest{
 #'
@@ -21,7 +21,7 @@
 #'
 #'
 #'
-read_metro_area <- function(year, mode="simplified"){
+read_metro_area <- function(year, tp="simplified"){
 
 
   # Get metadata with data addresses
@@ -29,6 +29,13 @@ read_metro_area <- function(year, mode="simplified"){
 
   # Select geo
   temp_meta <- subset(metadata, geo=="metropolitan_area")
+
+  # Select type
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
   # 1.1 Verify year input
   if (is.null(year)){  stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
@@ -49,6 +56,6 @@ read_metro_area <- function(year, mode="simplified"){
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
   # read sf
-  temp_sf <- readr::read_rds(temps)
+  temp_sf <- sf::st_read(temps, quiet=T)
   return(temp_sf)
 }
