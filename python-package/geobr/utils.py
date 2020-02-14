@@ -39,3 +39,34 @@ def download_metadata(
     except HTTPError:
         raise Exception('Metadata file not found. \
             Please report to https://github.com/ipeaGIT/geobr/issues')
+
+def check_year(year,metadata):
+    """[summary]
+    
+    Parameters
+    ----------
+    year : [type]
+        [description]
+    metadata : [type]
+        [description]
+    
+    Returns
+    -------
+    [type]
+        [description]
+    
+    Raises
+    ------
+    Exception
+        [description]
+    """
+    
+
+    if year is None:
+        year = max(metadata["year"])
+      
+    elif not year in list(metadata["year"]):
+
+        raise Exception("Error: Invalid Value to argument 'year'. It must be one of the following: " + 
+                        ', '.join([str (i) for i in metadata["year"].unique()]))
+    return year
