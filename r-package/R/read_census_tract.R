@@ -5,6 +5,8 @@
 #'  all census tracts of the country are loaded.
 #' @param year Year of the data (defaults to 2010)
 #' @param zone "urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -31,7 +33,7 @@
 #'
 #'
 #'
-read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
+read_census_tract <- function(code_tract, year = NULL, zone = "urban", mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

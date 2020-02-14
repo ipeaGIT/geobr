@@ -5,6 +5,8 @@
 #' the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 #'
 #' @param year A date number in YYYY format (defaults to 2019)
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -17,7 +19,7 @@
 #'}
 #'
 
-read_biomes <- function(year=NULL){
+read_biomes <- function(year=NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

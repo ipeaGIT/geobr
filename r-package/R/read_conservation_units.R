@@ -5,6 +5,8 @@
 #' data comes from MMA and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
 #'
 #' @param date A date number in YYYYMM format
+#' @param mode Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -14,7 +16,7 @@
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
 #'}
-read_conservation_units <- function(date=NULL){
+read_conservation_units <- function(date=NULL, mode="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()

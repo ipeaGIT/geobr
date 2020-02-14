@@ -12,7 +12,6 @@
 #'
 download_metadata <- function(){
 
-
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
 
