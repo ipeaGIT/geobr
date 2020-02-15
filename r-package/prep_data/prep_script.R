@@ -13,7 +13,7 @@
 # key-words:
 
 
-### Libraries (use any library necessary)
+### Libraries (use any library as necessary)
 
 library(geobr)
 library(RCurl)
@@ -130,13 +130,18 @@ temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::str
 
 
 
+###### 6. generate a lighter version of the dataset with simplified borders -----------------
+# this step is only necessary if the dataset has vector polygons
+
+# simplify
+  temp_sf6 <- st_transform(temp_sf5, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 500) %>% st_transform(crs=4674)
 
 
-
-###### 6. Clean data set and save it in compact .rds format-----------------
+###### 7. Clean data set and save it in compact .rds format-----------------
   
-# save
-  readr::write_rds(temp_sf5, path= paste0(destdir_clean, "/new_data_", update,".rds"), compress = "gz")
+# save original and simplified datasets
+sf::st_write(temp_sf5, path= paste0(destdir_clean, "/new_data_", update, ".gpkg"))
+sf::st_write(temp_sf6, path= paste0(destdir_clean, "/new_data_", update," _simplified", ".gpkg"))
 }
 
 
