@@ -131,7 +131,7 @@ temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::str
 
 
 ###### 6. generate a lighter version of the dataset with simplified borders -----------------
-# this step is only necessary if the dataset has vector polygons
+# skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
   temp_sf6 <- st_transform(temp_sf5, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 500) %>% st_transform(crs=4674)
