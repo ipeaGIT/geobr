@@ -7,6 +7,7 @@
 #' @param code_immediate 6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_immediate="all",
 #'  all immediate regions of the country are loaded (defaults to "all").
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -26,13 +27,20 @@
 #' }
 #'
 #'
-read_immediate_region <- function(code_immediate= NULL, year = NULL){
+read_immediate_region <- function(code_immediate= NULL, year = NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
 
   # Select geo
   temp_meta <- subset(metadata, geo=="immediate_regions")
+
+  # Select type
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
   # 1.1 Verify year input
   if (is.null(year)){ year <- 2017
@@ -54,7 +62,7 @@ read_immediate_region <- function(code_immediate= NULL, year = NULL){
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
   # read sf
-  temp_sf <- readr::read_rds(temps)
+  temp_sf <- sf::st_read(temps, quiet=T)
 
   }
 

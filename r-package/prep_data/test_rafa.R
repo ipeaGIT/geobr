@@ -190,7 +190,7 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
-  read_meso_region
+
 
 
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
@@ -213,6 +213,8 @@ function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
+
+function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_census_tract.R"))
 
 
 # create githubl shield with code coverage

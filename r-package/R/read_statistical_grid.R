@@ -72,7 +72,7 @@ read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= readr::read_rds)
+      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
       shape <- do.call('rbind', files)
       return(shape)
     }
@@ -109,7 +109,7 @@ read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= readr::read_rds)
+      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
       shape <- do.call('rbind', files)
       return(shape)
       }
@@ -128,7 +128,7 @@ read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
     httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
 
     # read sf
-    shape <- readr::read_rds(temps)
+    shape <- sf::st_read(temps, quiet=T)
     return(shape)
   }
 } # nocov end

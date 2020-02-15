@@ -33,7 +33,7 @@ test_that("read_micro_region", {
   expect_equal(test_all$code_micro %>% length(), 557)
 
   # check projection
-  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
+  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 

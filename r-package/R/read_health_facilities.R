@@ -29,10 +29,8 @@ read_health_facilities <- function(){
   # Get metadata with data addresses
   metadata <- download_metadata()
 
-
   # Select geo
   temp_meta <- subset(metadata, geo=="health_facilities")
-
 
   # list paths of files to download
     filesD <- as.character(temp_meta$download_path)
@@ -43,7 +41,7 @@ read_health_facilities <- function(){
 
 
   # read sf
-    temp_sf <- readr::read_rds(temps)
+    temp_sf <- sf::st_read(temps, quiet=T)
     return(temp_sf)
 
     }

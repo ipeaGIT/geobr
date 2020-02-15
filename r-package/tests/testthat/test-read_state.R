@@ -36,8 +36,7 @@ test_that("read_state", {
   expect_equal(test_all3$name_state %>% length(), 21)
 
   # check projection
-  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
-#  expect_equal(sf::st_crs(test_all3)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
+  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 

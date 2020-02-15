@@ -4,12 +4,14 @@
 \alias{read_state}
 \title{Download shape files of Brazilian states as sf objects.}
 \usage{
-read_state(code_state, year = NULL)
+read_state(code_state, year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_state}{The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

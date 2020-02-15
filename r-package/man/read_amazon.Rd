@@ -4,10 +4,12 @@
 \alias{read_amazon}
 \title{Download official data of Brazil's Legal Amazon as an sf object.}
 \usage{
-read_amazon(year = NULL)
+read_amazon(year = NULL, tp = "simplified")
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2012)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 This data set covers the whole of Brazil's Legal Amazon as defined in the federal law n. 12.651/2012). The original

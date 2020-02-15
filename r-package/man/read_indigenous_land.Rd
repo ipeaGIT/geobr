@@ -4,10 +4,12 @@
 \alias{read_indigenous_land}
 \title{Download official data of indigenous lands as an sf object.}
 \usage{
-read_indigenous_land(date)
+read_indigenous_land(date, tp = "simplified")
 }
 \arguments{
 \item{date}{A date numer in YYYYMM format.}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 The data set covers the whole of Brazil and it includes indigenous lands from all ethnicities and

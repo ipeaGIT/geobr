@@ -38,7 +38,6 @@ table_strig <- readme[table_start:table_end]
 # read table as a data.frame
 suppressWarnings({ df <- readr::read_delim(table_strig, delim = '|', trim_ws = T) })
 
-
 # clean colunms
   df$X1 <- NULL
   df$X6 <- NULL

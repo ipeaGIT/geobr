@@ -4,10 +4,12 @@
 \alias{read_semiarid}
 \title{Download official data of Brazilian Semiarid as an sf object.}
 \usage{
-read_semiarid(year = NULL)
+read_semiarid(year = NULL, tp = "simplified")
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2017)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 This data set covers the whole of Brazilian Semiarid as defined in the resolution in  23/11/2017). The original

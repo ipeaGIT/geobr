@@ -5,6 +5,7 @@
 #'  all census tracts of the country are loaded.
 #' @param year Year of the data (defaults to 2010)
 #' @param zone "urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -29,18 +30,20 @@
 #' }
 #'
 #'
-#'
-#'
-read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
+read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
 
-
   # Select geo
-  temp_meta <- subset(metadata, geo=="setor_censitario")
+  temp_meta <- subset(metadata, geo=="census_tract")
 
-
+  # Select mode
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")
@@ -90,7 +93,7 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
       # read files and pile them up
       files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
       files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= readr::read_rds)
+      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
       sf <- do.call('rbind', files)
       return(sf)
     }
@@ -126,7 +129,7 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban"){
       httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
 
       # read sf
-      sf <- readr::read_rds(temps)
+      sf <- sf::st_read(temps, quiet=T)
 
       if(nchar(code_tract)==2){
         return(sf)

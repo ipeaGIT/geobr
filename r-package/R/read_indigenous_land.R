@@ -7,6 +7,7 @@
 #'
 #'
 #' @param date A date numer in YYYYMM format.
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @examples \donttest{
 #'
@@ -18,7 +19,7 @@
 #' }
 #'
 
-read_indigenous_land <- function(date){
+read_indigenous_land <- function(date, tp="simplified"){
 
 
 # Get metadata with data addresses
@@ -28,6 +29,12 @@ read_indigenous_land <- function(date){
 # Select geo
   temp_meta <- subset(metadata, geo=="indigenous_land")
 
+# Select type
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
 
 # Verify date input
@@ -49,6 +56,6 @@ read_indigenous_land <- function(date){
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
 
 # read sf
-  temp_sf <- readr::read_rds(temps)
+  temp_sf <- sf::st_read(temps, quiet=T)
   return(temp_sf)
 }

@@ -6,6 +6,7 @@
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of that state. If code_micro="all",
 #'  all micro regions of the country are loaded.
+#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -25,7 +26,7 @@
 #'
 #'
 
-read_micro_region <- function(code_micro, year=NULL){
+read_micro_region <- function(code_micro, year=NULL, tp="simplified"){
 
 
   # Get metadata with data addresses
@@ -33,8 +34,14 @@ read_micro_region <- function(code_micro, year=NULL){
 
 
   # Select geo
-  temp_meta <- subset(metadata, geo=="micro_regiao")
+  temp_meta <- subset(metadata, geo=="micro_region")
 
+  # Select type
+  if(tp=="original"){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {
+    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
+  }
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")
@@ -76,7 +83,7 @@ read_micro_region <- function(code_micro, year=NULL){
     # read files and pile them up
     files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
     files <- paste0(tempdir(),"/",files)
-    files <- lapply(X=files, FUN= readr::read_rds)
+    files <- lapply(X=files, FUN= sf::st_read, quiet=T)
     shape <- do.call('rbind', files)
     return(shape)
   }
@@ -97,7 +104,7 @@ read_micro_region <- function(code_micro, year=NULL){
     httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
 
     # read sf
-    shape <- readr::read_rds(temps)
+    shape <- sf::st_read(temps, quiet=T)
 
     if(nchar(code_micro)==2){
       return(shape)

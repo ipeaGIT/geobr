@@ -4,7 +4,7 @@
 \alias{read_micro_region}
 \title{Download shape files of micro region as sf objects}
 \usage{
-read_micro_region(code_micro, year = NULL)
+read_micro_region(code_micro, year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_micro}{5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of
@@ -12,6 +12,8 @@ a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of
 all micro regions of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

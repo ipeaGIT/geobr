@@ -7,7 +7,7 @@ library(dplyr)
 library(readr)
 library(data.table)
 library(geobr)
-
+library(stringi)
 
 
 #> DATASET: lookup tables from census
@@ -98,6 +98,13 @@ if ( update == 2010){
     # select necessary columns
     select(code_immediate, name_immediate)
 
+
+# fix eventual topology errors
+    intermediates <- lwgeom::st_make_valid(intermediates)
+    immediates <- lwgeom::st_make_valid(immediates)
+    munis <- lwgeom::st_make_valid(munis)
+
+
   # Join munis to intermediates
   lookup1 <- st_join(munis, intermediates, largest = TRUE)
 
@@ -107,7 +114,7 @@ if ( update == 2010){
   # Delete geometry
   lookup2_nogeo <- st_set_geometry(lookup2, NULL)
 
-  # Bring these nwe informations to lookup_munis
+  # Bring new information to lookup_munis
   lookup_end <- lookup_munis %>%
     left_join(lookup2_nogeo, by = c("municipio" = "code_muni")) %>%
 
@@ -120,7 +127,7 @@ if ( update == 2010){
            code_intermediate, name_intermediate)
 
   # Save unformatted
-  write_rds(lookup_end, "lookup_muni/lookup_muni_2010_unformatted.rds")
+  write_csv(lookup_end, "lookup_muni/lookup_muni_2010_unformatted.csv")
 
 
 }
@@ -131,7 +138,7 @@ if ( update == 2010){
 #### 2. Format muni name -----------------
 
 # Open unformatted lookup muni
-lookup_end <- read_rds("lookup_muni/lookup_muni_2010_unformatted.rds")
+lookup_end <- read_csv("lookup_muni/lookup_muni_2010_unformatted.csv")
 
 lookup_end_format <- lookup_end %>%
 
@@ -180,9 +187,11 @@ lookup_end_format <- lookup_end_format %>%
 
 
 
+
 #### 5. Save it in compact .rds format-----------------
 
-write_rds(lookup_end_format, "lookup_muni/2010/lookup_muni_2010.rds", compress = "gz")
+write_csv(lookup_end_format, "lookup_muni/2010/lookup_muni_2010.csv")
+
 
 # setwd(project_wd)
 

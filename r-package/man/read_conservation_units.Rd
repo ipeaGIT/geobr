@@ -4,10 +4,12 @@
 \alias{read_conservation_units}
 \title{Download official data of Brazilian conservation untis as an sf object.}
 \usage{
-read_conservation_units(date = NULL)
+read_conservation_units(date = NULL, tp = "simplified")
 }
 \arguments{
 \item{date}{A date number in YYYYMM format}
+
+\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
 \description{
 This data set covers the whole of Brazil and it includes the polygons of all conservation untis present in Brazilian
