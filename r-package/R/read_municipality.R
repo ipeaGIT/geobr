@@ -25,7 +25,7 @@
 #'
 #'}
 
-read_municipality <- function(code_muni, year=NULL, tp="simplified"){
+read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
 
 # 1.1 Verify year input
   if (is.null(year)){ year <- 2010}
@@ -79,9 +79,6 @@ read_municipality <- function(code_muni, year=NULL, tp="simplified"){
 # BLOCK 2.2 From 2000 onwards  ----------------------------
 
 # 2.2 Verify code_muni Input
-
-  # Test if code_muni input is null
-    if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
 
   # if code_muni=="all", read the entire country
     if(code_muni=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")

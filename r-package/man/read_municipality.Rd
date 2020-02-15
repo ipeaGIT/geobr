@@ -4,7 +4,7 @@
 \alias{read_municipality}
 \title{Download shape files of Brazilian municipalities as sf objects.}
 \usage{
-read_municipality(code_muni, year = NULL, tp = "simplified")
+read_municipality(code_muni = "all", year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_muni}{The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of

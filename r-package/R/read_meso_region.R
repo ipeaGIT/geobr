@@ -25,7 +25,7 @@
 #' }
 #'
 
-read_meso_region <- function(code_meso, year=NULL, tp="simplified"){
+read_meso_region <- function(code_meso="all", year=NULL, tp="simplified"){
 
 
   # Get metadata with data addresses
@@ -53,10 +53,7 @@ read_meso_region <- function(code_meso, year=NULL, tp="simplified"){
   }
 
 
-  # Verify code_meso input
-
-  # Test if code_meso input is null
-  if(is.null(code_meso)){ stop("Value to argument 'code_meso' cannot be NULL") }
+# Verify code_meso input
 
   # if code_meso=="all", read the entire country
   if(code_meso=="all"){ message("Loading data for the whole country\n")

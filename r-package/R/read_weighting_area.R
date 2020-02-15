@@ -33,7 +33,7 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting, year = NULL, tp="simplified"){
+read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
@@ -59,10 +59,8 @@ read_weighting_area <- function(code_weighting, year = NULL, tp="simplified"){
                          paste(unique(temp_meta$year),collapse = " ")))
     }
 
-  # Verify code_weighting input
 
-  # Test if code_weighting input is null
-  if(is.null(code_weighting)){ stop("Value to argument 'code_weighting' cannot be NULL") }
+# Verify code_weighting input
 
   # if code_weighting=="all", read the entire country
     if(code_weighting=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")

@@ -17,8 +17,9 @@ test_that("read_meso_region", {
   test_state_code <- read_meso_region(code_meso=11, year=2010)
   test_state_code2 <- read_meso_region(code_meso=11, year=NULL)
 
-  test_all <- read_meso_region(code_meso="all", year=2010)
+  test_all <- read_meso_region( year=2010)
   test_all2 <- read_meso_region(code_meso="all", year=NULL)
+  expect_true(identical(test_all, test_all2))
 
   # check sf object
   expect_true(is(test_code, "sf"))

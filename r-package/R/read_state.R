@@ -22,7 +22,7 @@
 #'
 #'}
 
-read_state <- function(code_state, year=NULL, tp="simplified"){
+read_state <- function(code_state="all", year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
@@ -83,9 +83,6 @@ if( x < 1992){
 # BLOCK 2.2 From 2000 onwards  ----------------------------
 
   # Verify code_state input
-
-  # Test if code_state input is null
-  if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
 
   # if code_state=="all", read the entire country
     if(code_state=="all"){ message("Loading data for the whole country\n")

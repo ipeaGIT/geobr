@@ -27,7 +27,7 @@
 #' }
 #'
 #'
-read_immediate_region <- function(code_immediate= NULL, year = NULL, tp="simplified"){
+read_immediate_region <- function(code_immediate="all", year = NULL, tp="simplified"){
 
   # Get metadata with data addresses
   metadata <- download_metadata()
@@ -66,9 +66,8 @@ read_immediate_region <- function(code_immediate= NULL, year = NULL, tp="simplif
 
   }
 
-  if(is.null(code_immediate)){ message("Loading data for the whole country. This might take a few minutes.\n")
-
-    } else if(code_immediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  # check code_immediate input
+  if(code_immediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
   # abbrev_state
   } else if(code_immediate %in% temp_sf$abbrev_state){

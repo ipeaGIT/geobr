@@ -4,7 +4,7 @@
 \alias{read_weighting_area}
 \title{Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.}
 \usage{
-read_weighting_area(code_weighting, year = NULL, tp = "simplified")
+read_weighting_area(code_weighting = "all", year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of

@@ -5,7 +5,7 @@
 \title{Download shape files of Brazil's Intermediate Geographic Areas as sf objects.}
 \usage{
 read_intermediate_region(
-  code_intermediate = NULL,
+  code_intermediate = "all",
   year = NULL,
   tp = "simplified"
 )

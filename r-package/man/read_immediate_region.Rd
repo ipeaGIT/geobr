@@ -4,7 +4,7 @@
 \alias{read_immediate_region}
 \title{Download shape files of Brazil's Immediate Geographic Areas as sf objects}
 \usage{
-read_immediate_region(code_immediate = NULL, year = NULL, tp = "simplified")
+read_immediate_region(code_immediate = "all", year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_immediate}{6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of

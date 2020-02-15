@@ -4,7 +4,7 @@
 \alias{read_meso_region}
 \title{Download shape files of meso region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_meso_region(code_meso, year = NULL, tp = "simplified")
+read_meso_region(code_meso = "all", year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_meso}{The 4-digit code of a meso region. If the two-digit code or a two-letter uppercase abbreviation of

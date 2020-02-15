@@ -4,7 +4,7 @@
 \alias{read_state}
 \title{Download shape files of Brazilian states as sf objects.}
 \usage{
-read_state(code_state, year = NULL, tp = "simplified")
+read_state(code_state = "all", year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_state}{The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.}

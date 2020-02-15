@@ -4,7 +4,7 @@
 \alias{read_micro_region}
 \title{Download shape files of micro region as sf objects}
 \usage{
-read_micro_region(code_micro, year = NULL, tp = "simplified")
+read_micro_region(code_micro = "all", year = NULL, tp = "simplified")
 }
 \arguments{
 \item{code_micro}{5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of

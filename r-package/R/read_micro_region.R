@@ -26,7 +26,7 @@
 #'
 #'
 
-read_micro_region <- function(code_micro, year=NULL, tp="simplified"){
+read_micro_region <- function(code_micro="all", year=NULL, tp="simplified"){
 
 
   # Get metadata with data addresses
@@ -55,9 +55,6 @@ read_micro_region <- function(code_micro, year=NULL, tp="simplified"){
 
 
   # Verify code_micro input
-
-  # Test if code_micro input is null
-  if(is.null(code_micro)){ stop("Value to argument 'code_micro' cannot be NULL") }
 
   # if code_micro=="all", read the entire country
   if(code_micro=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
