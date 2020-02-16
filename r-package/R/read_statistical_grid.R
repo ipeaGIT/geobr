@@ -124,8 +124,7 @@ read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
     filesD <- as.character(subset(temp_meta, code== code_grid)$download_path)
 
     # download files
-    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
+    temps <- download_gpkg(filesD)
 
     # read sf
     shape <- sf::st_read(temps, quiet=T)

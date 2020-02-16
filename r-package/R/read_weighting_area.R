@@ -42,12 +42,8 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
   # Select geo
     temp_meta <- subset(metadata, geo=="weighting_area")
 
-  # Select type
-    if(tp=="original"){
-      temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-    } else {
-      temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
-    }
+  # Select data type
+    temp_meta <- select_data_type(temp_meta, tp)
 
     # Verify year input
     if (is.null(year)){ message("Using data from year 2010\n")
@@ -101,8 +97,7 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
       if (is.character(code_weighting)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_weighting, 1, 2))$download_path) }
 
     # download files
-      temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-      httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
+    temps <- download_gpkg(filesD)
 
     # read sf
       shape <- sf::st_read(temps, quiet=T)

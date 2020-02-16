@@ -23,12 +23,9 @@ read_amazon <- function(year=NULL, tp="simplified"){
   # Select geo
   temp_meta <- subset(metadata, geo=="amazonia_legal")
 
-  # Select type
-  if(tp=="original"){
-    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-    } else {
-    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
-  }
+  # Select data type
+  temp_meta <- select_data_type(temp_meta, tp)
+
 
   # 1.1 Verify year input
   if (is.null(year)){ year <- 2012}
@@ -40,7 +37,6 @@ read_amazon <- function(year=NULL, tp="simplified"){
   message(paste0("Using data from year ", year))
 
 
-
   # # Select metadata year
   # x <- year
   # temp_meta <- subset(temp_meta, year==x)
@@ -49,8 +45,7 @@ read_amazon <- function(year=NULL, tp="simplified"){
   filesD <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-  httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+  temps <- download_gpkg(filesD)
 
   # read sf
   temp_sf <- sf::st_read(temps, quiet=T)

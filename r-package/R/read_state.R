@@ -30,12 +30,8 @@ read_state <- function(code_state="all", year=NULL, tp="simplified"){
   # Select geo
   temp_meta <- subset(metadata, geo=="state")
 
-  # Select type
-  if(tp=="original"){
-    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-  } else {
-    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
-  }
+  # Select data type
+  temp_meta <- select_data_type(temp_meta, tp)
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")
@@ -70,8 +66,7 @@ if( x < 1992){
   filesD <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-  httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+  temps <- download_gpkg(filesD)
 
   # read sf
   temp_sf <- sf::st_read(temps, quiet=T)
@@ -124,8 +119,7 @@ if( x < 1992){
 
 
     # download files
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
+    temps <- download_gpkg(filesD)
 
     # read sf
     shape <- sf::st_read(temps, quiet=T)

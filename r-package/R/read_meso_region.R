@@ -35,12 +35,8 @@ read_meso_region <- function(code_meso="all", year=NULL, tp="simplified"){
   # Select geo
   temp_meta <- subset(metadata, geo=="meso_region")
 
-  # Select type
-  if(tp=="original"){
-    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-  } else {
-    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
-  }
+  # Select data type
+  temp_meta <- select_data_type(temp_meta, tp)
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")
@@ -96,8 +92,7 @@ read_meso_region <- function(code_meso="all", year=NULL, tp="simplified"){
 
 
     # download files
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD, httr::write_disk(temps, overwrite = T))
+    temps <- download_gpkg(filesD)
 
     # read sf
     shape <- sf::st_read(temps, quiet=T)
