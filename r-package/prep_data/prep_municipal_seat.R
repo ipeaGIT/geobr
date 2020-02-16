@@ -39,23 +39,8 @@ years <- c(years, 2010)
 
 for (i in years){
 
-  if(i=="2010"){
-    # Download current file (2010)
-    file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-    file_a <- strsplit(file_a, "\r\n")
-    file_a = unlist(file_a)
-
-    dir_2010 <- paste0(head_dir,"//",2010)
-    dir.create(dir_2010)
-    setwd(head_dir)
-
-    for (filename in file_a) {
-      url = paste(url_a, filename, sep = "")
-      download.file(url, destfile = paste0("./",2010,"/",filename) , mode = "wb")
-    }
-  }
-
   # list files
+  message(paste('Downloading', i))
   subdir <- paste0(url_h, i,"/")
   files = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
   files <- strsplit(files, "\r\n")
@@ -72,6 +57,25 @@ for (i in years){
     url = paste(subdir, filename, sep = "")
     download.file(url,destfile = paste0("./municipal_seat/",i,"/",filename))
   }
+
+  if(i=="2010"){
+    # Download current file (2010)
+
+    message(paste('Downloading', i))
+    file_a <- getURL(url_a, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    file_a <- strsplit(file_a, "\r\n")
+    file_a = unlist(file_a)
+
+    dir_2010 <- paste0(head_dir,"//",2010)
+    dir.create(dir_2010)
+    setwd(head_dir)
+
+    for (filename in file_a) {
+      url = paste(url_a, filename, sep = "")
+      download.file(url, destfile = paste0("./",2010,"/",filename) , mode = "wb")
+    }
+  }
+
 }
 
 
@@ -171,14 +175,57 @@ for (i in years){
   # faz intersecao
   temp_sf <- st_join(temp_sf, municipios)
 
+
+
+  # seleciona apenas a sede
+  if(i==2010){# table(temp_sf$nm_categor, temp_sf$cd_nivel)
+              temp_sf <- subset(temp_sf, nm_categor == "CIDADE")
+              }
+
   # organiza colunas
   temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
 
-  # cria a coluna ano para 2010
+  # cria a coluna ano
   temp_sf$year <- i
 
-  # cria coluna de região para 2010
-  temp_sf$code_region <-   substr(temp_sf$code_muni,1,1)
+
+  ### cria colunas de estado
+  # add State code
+  temp_sf$code_state <-  substr(temp_sf$code_muni,1,2)
+
+  # add State abbreviation
+  temp_sf <- temp_sf %>% mutate(abbrev_state =  ifelse(code_state== 11, "RO",
+                                                ifelse(code_state== 12, "AC",
+                                                ifelse(code_state== 13, "AM",
+                                                ifelse(code_state== 14, "RR",
+                                                ifelse(code_state== 15, "PA",
+                                                ifelse(code_state== 16, "AP",
+                                                ifelse(code_state== 17, "TO",
+                                                ifelse(code_state== 21, "MA",
+                                                ifelse(code_state== 22, "PI",
+                                                ifelse(code_state== 23, "CE",
+                                                ifelse(code_state== 24, "RN",
+                                                ifelse(code_state== 25, "PB",
+                                                ifelse(code_state== 26, "PE",
+                                                ifelse(code_state== 27, "AL",
+                                                ifelse(code_state== 28, "SE",
+                                                ifelse(code_state== 29, "BA",
+                                                ifelse(code_state== 31, "MG",
+                                                ifelse(code_state== 32, "ES",
+                                                ifelse(code_state== 33, "RJ",
+                                                ifelse(code_state== 35, "SP",
+                                                ifelse(code_state== 41, "PR",
+                                                ifelse(code_state== 42, "SC",
+                                                ifelse(code_state== 43, "RS",
+                                                ifelse(code_state== 50, "MS",
+                                                ifelse(code_state== 51, "MT",
+                                                ifelse(code_state== 52, "GO",
+                                                ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
+
+
+
+  # cria coluna de região
+  temp_sf$code_region <-  substr(temp_sf$code_muni,1,1)
 
   ### add region names
   temp_sf$name_region <- ifelse(temp_sf$code_region==1, 'Norte',
@@ -188,7 +235,7 @@ for (i in years){
                                                      ifelse(temp_sf$code_region==5, 'Centro Oeste', NA)))))
 
   # organizando colunas
-  temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni','code_region','year', 'geometry'))
+  temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_region', 'name_region', 'year', 'geometry'))
 
   # Use UTF-8 encoding
   temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
