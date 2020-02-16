@@ -29,6 +29,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
                                                         'name_muni_format',
                                                         'tp',
                                                         'filesD',
+                                                        'temp_meta',
                                                         'group_by'))
 
 .onLoad <- function(lib, pkg) {
