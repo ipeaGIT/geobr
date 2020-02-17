@@ -76,6 +76,9 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_urban_area` | Urban footprints | 2005, 2015 | IBGE | 
 |`read_semiarid` | Semi Arid region | 2005, 2017 | IBGE | 
 |`read_metro_area` (dev) | Metropolitan areas | 1970, 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE | 
+|`read_municipal_seat` | Municiopal seat (sede dos municipios | 1872 1900 1911 1920 1933 1940 1950 1960 1970 1980 1991 2010 | IBGE | 
+
+
 
 
 ## Other functions:
@@ -103,7 +106,6 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Longitudinal Database* of micro regions | various years | IBGE | 
 | Longitudinal Database* of Census tracts | various years | IBGE | 
 | Schools | 2019 | School Census (Inep) | 
-| Municipality seats (sedes municipais) | various years | IBGE | 
 | ... | ... | ... | 
 
 '*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
