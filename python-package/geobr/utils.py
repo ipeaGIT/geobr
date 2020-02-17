@@ -41,10 +41,8 @@ def download_metadata(
         raise Exception('Metadata file not found. \
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
-def apply_year(metadata, year=None, year_default=None):
-    """Check if year exists in metadata.
-
-    TODO: rewrite docstring and tests
+def apply_year(metadata, year):
+    """Apply year to metadata and checks its existence.
 
     If it do not exist, raises an informative error.
     
@@ -57,8 +55,8 @@ def apply_year(metadata, year=None, year_default=None):
 
     Returns
     -------
-    int
-        The last year if year is None. The inputed year, if it exists.
+    pd.DataFrame
+        Filtered dataframe by year.
     
     Raises
     ------
@@ -68,10 +66,7 @@ def apply_year(metadata, year=None, year_default=None):
     
 
     if year is None:
-        if year_default is None:
-            year = max(metadata['year'])
-        else:
-            year = year_default
+        year = max(metadata['year'])
       
     elif not year in list(metadata['year']):
 
@@ -83,18 +78,18 @@ def apply_year(metadata, year=None, year_default=None):
     
     return metadata.query(f'year == {year}')
 
-def apply_mode(metadata, mode):
+def apply_tp(metadata, tp):
 
     # TODO: write docstring and tests
 
-    if mode == "simplified":    
+    if tp == "simplified":    
         return metadata[metadata['download_path'].str.contains("simplified")]
     
-    elif mode =="normal":
+    elif tp =="normal":
         return metadata[~metadata['download_path'].str.contains("simplified")]
     
     else:
-        raise Exception("Error: Invalid Value to argument 'mode'. \
+        raise Exception("Error: Invalid Value to argument 'tp'. \
                         It must be 'simplified' or 'normal'")
 
 
@@ -111,7 +106,7 @@ def load_gpkg(url):
         
     return gdf
 
-def download_gpkg(metadata, n_processes=mp.cpu_count() - 1):
+def download_gpkg(metadata):
     
     # TODO: write docstring and tests
     
@@ -120,3 +115,19 @@ def download_gpkg(metadata, n_processes=mp.cpu_count() - 1):
     gpkgs = [load_gpkg(url) for url in urls]
     
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
+
+def get_metadata(geo, tp="simplified", year=None, year_default=None):
+
+    # Get metadata with data addresses
+    metadata = download_metadata()
+
+    # Select geo
+    metadata = metadata.query(f'geo == "{geo}"')
+
+    # Select mode
+    metadata = apply_tp(metadata, tp)
+    
+    # Verify year input
+    metadata = apply_year(metadata, year)
+
+    return metadata

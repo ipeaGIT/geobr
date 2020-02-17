@@ -1,8 +1,9 @@
 import pytest
 import geobr
 from time import time
-from geobr.utils import check_year
+from geobr.utils import apply_year, apply_tp
 import pandas as pd
+
 @pytest.fixture
 def metadata_file():
     return geobr.utils.download_metadata()
@@ -28,13 +29,19 @@ def test_download_metadata_cache():
     geobr.utils.download_metadata()
     assert time() - start_time < 1
 
-def test_check_year(): 
+def test_apply_year(): 
 
     metadata = pd.DataFrame([2004,2019], columns=["year"]) 
     
-    assert check_year(metadata) == 2019
+    assert apply_year(metadata, None)['year'].unique()[0] == 2019
     
-    assert check_year(metadata, 2004) == 2004
+    assert apply_year(metadata, 2004)['year'].unique()[0] == 2004
     
     with pytest.raises(Exception):
-       assert check_year(metadata, 2006) == 2004
+       assert apply_year(metadata, 2006)
+       assert apply_year(metadata, 'as')
+       assert apply_year(metadata, 2324.12)
+
+# def test_tp():
+
+#     apply_mode
