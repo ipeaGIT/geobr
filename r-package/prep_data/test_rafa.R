@@ -304,27 +304,11 @@ setwd("..")
   # system("R CMD INSTALL --build geobr")
 
 # build binary
-  system("R CMD build geobr --resave-data") # build tar.gz
-  # devtools::build(pkg = "geobr", path=".", binary = T, manual=T)
+  system("R CMD build . --resave-data") # build tar.gz
+  # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
 
 # Check package errors
    devtools::check(pkg = ".",  cran = TRUE)
-
-
-  # check
-    # system("R CMD check R:/Dropbox/git_projects/geobr")
-    devtools::check_win_devel("geobr", binary = T)
-
-    rhub::list_validated_emails()
-    rhub::validate_email()
-    rhub::validate_email(email = "rafa.pereira.br@gmail.com", token = 'xxx')
-
-    devtools::check_rhub(pkg="geobr", email = "rafa.pereira.br@gmail.com", interactive = TRUE)
-
-
-# Submit to CRAN
-    # setwd("R:/Dropbox/git_projects/geobr")
-    devtools::release(pkg=".")
 
 
 
