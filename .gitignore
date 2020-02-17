@@ -8,6 +8,7 @@
 *.out
 *.toc
 *.ind
+*.Rhistory
 /R/.Rhistory
 /.Rhistory
 /man/figures/.Rhistory
