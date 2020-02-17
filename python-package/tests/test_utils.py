@@ -42,6 +42,18 @@ def test_apply_year():
        assert apply_year(metadata, 'as')
        assert apply_year(metadata, 2324.12)
 
-# def test_tp():
+def test_tp():
 
-#     apply_mode
+    metadata = pd.DataFrame(['url_simplified', 'url'], 
+                            columns=["download_path"]) 
+    
+    assert apply_tp(metadata, 'simplified')['download_path'].unique()[0] \
+            == 'url_simplified'
+    
+    assert apply_tp(metadata, 'normal')['download_path'].unique()[0] \
+            == 'url'
+    
+    with pytest.raises(Exception):
+       assert apply_tp(metadata, 'slified')
+       assert apply_tp(metadata, None)
+       assert apply_tp(metadata, 2324.12)

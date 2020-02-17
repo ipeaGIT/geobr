@@ -79,13 +79,35 @@ def apply_year(metadata, year):
     return metadata.query(f'year == {year}')
 
 def apply_tp(metadata, tp):
+    """Filter metadata by data type. It can be simplified or normal. 
+    The 'simplified' returns a simplified version of the shapefiles.
+    'normal' returns the complete version. Usually, the complete version
+    if heavier than the simplified, demanding more resources.
 
-    # TODO: write docstring and tests
+    If tp is not found, raises informative error
+    
+    Parameters
+    ----------
+    metadata : pd.DataFrame
+        Filtered metadata table
+    tp : str
+        Data type, either 'simplified' or 'normal'
+    
+    Returns
+    -------
+    pd.DataFrame
+        Filtered metadata table by type
+    
+    Raises
+    ------
+    Exception
+        If 'tp' is not found.
+    """
 
     if tp == "simplified":    
         return metadata[metadata['download_path'].str.contains("simplified")]
     
-    elif tp =="normal":
+    elif tp == "normal":
         return metadata[~metadata['download_path'].str.contains("simplified")]
     
     else:
