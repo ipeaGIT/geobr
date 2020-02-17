@@ -38,9 +38,10 @@
 -------------------------------------------------------
 # geobr dev v1.2
 
-  * New function `lookup_muni` to look up municipality codes by their name, or the other way around (added in 2019-12)  - closes issue #58.
+ closes issue #58.
   * New data set `read_metro_area` to read official metropolitan areas - closes issue #2 (added in 2019-12).
-  * New function `list_geobr` to list all the datasets available in geobr - Closes issue #57.
+  * New data set `read_municipal_seat` to read the spatial coordinates of municipal seats- closes issue #86 (added in 2019-12).
+  * New function `lookup_muni` to look up municipality codes by their name, or the other way around (added in 2019-12)  -    * New function `list_geobr` to list all the datasets available in geobr - Closes issue #57.
   * MAJOR change of `geobr` to read `geopackage` files, instead of `.rds`. A structural change that will make it easier to maintain both versions of geobr in R and Python  (2020-02)
   * All functions now have an additional argument `tp` as in data 'type'. This argument defaults to read data sets with 'simplified' borders, what makes the package much more efficient for downloading and plotting the data. Closes issue #76 (2020-02)
   * Pretty much all functions now download the data for the entire country as a default. Closes issue #77. The only exceptions are the `read_statistical_grid` and `read_census_tract`. These two function do take a really long time to load the data for the whole country and it might crash R due to memory limits, so the user must be more 'aware' about her choice (2020-02)
