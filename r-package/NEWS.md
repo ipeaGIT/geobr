@@ -45,7 +45,7 @@
 ### Major changes
 * MAJOR change of `geobr` to read `geopackage` files, instead of `.rds`. A structural change that will make it easier to maintain both versions of geobr in R and Python  (2020-02)
 * All functions now have an additional argument `tp` as in data 'type'. This argument defaults to read data sets with 'simplified' borders, what makes the package much more efficient for downloading and plotting the data. Closes issue #76 (2020-02)
-* Pretty much all functions now download the data for the entire country as a default. Closes issue #77. The only exceptions are the `read_statistical_grid` and `read_census_tract`. These two function do take a really long time to load the data for the whole country and it might crash R due to memory limits, so the user must be more 'aware' about her choice (2020-02)
+* Pretty much all functions now download the data for the entire country as a default. Closes issue #77. The only exceptions are `read_statistical_grid` and `read_census_tract`. These two functions do take a really long time to load the data for the whole country and it might crash R due to memory limits, so the user must be more 'aware' about her choice (2020-02)
 
  ### Minor changes
  * New utils.R script containing support functions to reduce code redundancy (2020-02)
