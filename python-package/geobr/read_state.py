@@ -3,27 +3,28 @@ import geopandas as gpd
 
 from geobr.utils import get_metadata, download_gpkg
 
-def read_state(code_state, year=2010, tp="simplified", verbose=False):
-    """Download shape files of Brazilian states as geopandas objects.
+def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
+    """Download shapefiles of Brazilian states as geopandas objects.
 
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
     
     Parameters
     ----------
-    code_state : str
+    code_state : str, optional
         The two-digit code of a state or a two-letter uppercase abbreviation 
-        (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
+        (e.g. 33 or "RJ"). If code_state="all", all states will be loaded (Default).
     year : int, optional
         Year of the data, by default 2010
     tp : str, optional
-        Shapefile type, by default "simplified"
+        Data 'type', indicating whether the function returns the 'original' dataset 
+        with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
         by default False
     
     Returns
     -------
     gpd.GeoDataFrame
-        Metadata and shapefile of selected states
+        Metadata and geopackage of selected states
     
     Raises
     ------
@@ -37,7 +38,7 @@ def read_state(code_state, year=2010, tp="simplified", verbose=False):
     # Read specific state at a given year
     >>> uf = read_state(code_state=12, year=2017)
 
-     # Read specific state at a given year with normal shapefiles
+     # Read specific state at a given year with normal geopackages
     >>> uf = read_state(code_state="SC", year=2000, tp='normal')
 
      # Read all states at a given year
