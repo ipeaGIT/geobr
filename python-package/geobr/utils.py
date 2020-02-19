@@ -1,9 +1,9 @@
-import requests
-import pandas as pd
-import tempfile
-import geopandas as gpd
-from functools import lru_cache
 import os
+from functools import lru_cache
+
+import geopandas as gpd
+import pandas as pd
+import requests
 
 
 def _get_unique_values(_df, column):
@@ -233,3 +233,32 @@ def get_metadata(geo, data_type, year):
     metadata = apply_year(metadata, year)
 
     return metadata
+
+
+def list_geobr_functions():
+    """ Prints available functions, according to latest README.md file
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        Printing of each function, its available geographies, years available and source
+
+        Example output
+        ------------------------------
+        Function: read_immediate_region
+        Geographies available: Immediate region
+        Years available: 2017
+        Source: IBGE
+        ------------------------------
+
+        """
+
+    df = pd.read_html('https://github.com/ipeaGIT/geobr/blob/master/README.md')
+    df = df[1]
+    for i in range(len(df)):
+        for each in df.columns:
+            print(f'{each}: {df.loc[i, each]}')
+        print('------------------------------')
