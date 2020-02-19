@@ -1,4 +1,4 @@
-#' Download shape files of Brazilian states as sf objects.
+#' Download shapefiles of Brazilian states as sf objects.
 #'
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'

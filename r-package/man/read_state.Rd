@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_state.R
 \name{read_state}
 \alias{read_state}
-\title{Download shape files of Brazilian states as sf objects.}
+\title{Download shapefiles of Brazilian states as sf objects.}
 \usage{
 read_state(code_state = "all", year = NULL, tp = "simplified")
 }

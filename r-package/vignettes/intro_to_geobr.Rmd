@@ -14,66 +14,89 @@ knitr::opts_chunk$set(
 )
 ```
 
-The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil. The syntax of all **geobr** functions operate a simple logic that allows users to easily download a wide variety of official spatial data sets with updated geometries, harmonized attributes and geographic projections across geographies and years. This vignette presents is a quick intro to **geobr**.
+The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and easy access to official spatial data sets of Brazil. The syntax of all **geobr** functions operate on a simple logic that allows users to easily download a wide variety of data sets with updated geometries and harmonized attributes and geographic projections across geographies and years. This vignette presents a quick intro to **geobr**.
 
 
 ## Installation
 
-The package will soon be available on CRAN. In the meantime, you can install it using the `devtools` package.
+You can install geobr from CRAN or the development version to use the latest features.
 
-```{r message=FALSE, warning=FALSE}
-# Load geobr and other libraries we'll use
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# From CRAN
+  install.packages("geobr")
+
+# Development version
+  utils::remove.packages('geobr')
+  devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
+
+```
+
+Now let's load the libraries we'll use in this vignette.
+
+```{r message=FALSE, warning=FALSE, results='hide'}
   library(geobr)
   library(ggplot2)
   library(sf)
   library(dplyr)
   library(rio)
-
 ```
 
 
 
-## Download shape files as `sf` objects
+## General usage
 
-The territory of Brazil is organized in political-administrative and statistical areas at different levels: 
-* Country
-* States
-* Regions
-* Meso regions
-* Micro regions
-* Municipalities
-* Census weighting areas
-* Census tracts
-* Statistical Grid 
+### Available data sets
 
-The syntax of all *geobr* functions operate one the same logic, so the code to download and read those geographies is quite intuitive. Here are a few examples. Note the number of polygons and boundaries at each geographic level has changed over the years years, so it's important to specify the `year` of reference you want to download.
+The geobr package covers 21 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the `list_geobr()` function.
+
+```{r message=FALSE, warning=FALSE}
+# Available data sets
+datasets <- list_geobr()
+
+print(datasets, n=21)
+
+```
 
 
-Read an specific geographic area at a given year
+## Download spatial data as `sf` objects
+
+The syntax of all *geobr* functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.
+
+Download an specific geographic area at a given year
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+# State of Sergige
+  state <- read_state(code_state="SE", year=2018)
+
+# Municipality of Sao Paulo
+  muni <- read_municipality( code_muni = 3550308, year=2010 )
+
+```
+
+
+Download all geographic areas within a state at a given year
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+# All municipalities in the state of Alagoas
+  muni <- read_municipality(code_muni= "AL", year=2007)
+
+# All census tracts in the state of Rio de Janeiro
+  cntr <- read_census_tract(code_tract = "RJ", year = 2010)
+
+```
+
+If the paramter `code_` is not passed to the function, geobr returns the data for the whole country by default.
+
 ```{r message=FALSE, warning=FALSE, results='hide'}
-# download data
-  state <- read_state(code_state="SE", year=2018)          # State
-  micro <- read_micro_region(code_micro=160101, year=2000) # Micro region
+meso <- read_intermediate_region(year=2017)
+states <- read_state(year=2014)
 
 ```
 
 
-Read all geographic areas within a state at a given year
-```{r message=FALSE, warning=FALSE, results='hide'}
-# download data
-  meso <- read_meso_region(code_meso="PA", year=2018)      # Meso region
-  muni <- read_municipality(code_muni= "AL", year=2007)    # Municipality
+## Importante note about data resolution
 
-```
+All functions to download polygon data such as states, municipalites etc. have a `tp` argument as in data ***type***. When `tp = "original"`, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, `tp = "simplified"` and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.
 
 
-The user can also read all geographic areas in the country in a single line of code.
-```{r message=FALSE, warning=FALSE, results='hide'}
-# download data
-  state <- read_state(code_state="all", year=1991)         # State
-  meso <- read_meso_region(code_meso="all", year=2001)     # Meso region
-
-```
 
 
 ## Plot the data
@@ -83,8 +106,7 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 
 
 ```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
-
-# No plot axis
+# Remove plot axis
   no_axis <- theme(axis.title=element_blank(),
                    axis.text=element_blank(),
                    axis.ticks=element_blank())
@@ -92,15 +114,15 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 
 
 # Plot all Brazilian states
-  ggplot() + 
-    geom_sf(data=state, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) + 
-    labs(subtitle="States", size=8) + 
+  ggplot() +
+    geom_sf(data=states, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) +
+    labs(subtitle="States", size=8) +
     theme_minimal() +
     no_axis
-  
+
 ```
 
-All the municipalities of a particular state, such as Rio de Janeiro:
+Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
 ```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
 # Download all municipalities of Rio
@@ -110,9 +132,9 @@ All the municipalities of a particular state, such as Rio de Janeiro:
 ```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
 # plot
-  ggplot() + 
+  ggplot() +
     geom_sf(data=all_muni, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) +
-    labs(subtitle="Municipalities of Rio de Janeiro, 2000", size=8) + 
+    labs(subtitle="Municipalities of Rio de Janeiro, 2000", size=8) +
     theme_minimal() +
     no_axis
 ```
@@ -120,33 +142,32 @@ All the municipalities of a particular state, such as Rio de Janeiro:
 
 ## Thematic maps
 
-The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (a project of our colleagues at Ipea)[http://atlasbrasil.org.br/2013/pt/download/] to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.
+The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (a project of our colleagues at Ipea))[http://atlasbrasil.org.br/2013/pt/download/] to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.
 
 #### Merge external data
 
-First, we need to download the Life Expectancy data set and merge it to our spatial database. The two-digit abbreviation of state names is our key to join these two databases.
+First, we need to download the Life Expectancy data set and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.
 
 ```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
-
 # download Life Expectancy data
   adh <- rio::import("http://atlasbrasil.org.br/2013/data/rawData/Indicadores%20Atlas%20-%20RADAR%20IDHM.xlsx", which = "Dados")
 
 # keep only information for the year 2010 and the columns we want
   adh <- subset(adh, ANO == 2014)
-  
+
 # Download the sf of all Brazilian states
-  all_states <- read_state(code_state= "all", year= 2014)
-  
+  # states <- read_state(year= 2014)
+
 # joind the databases
-  all_states <-left_join(all_states, adh, by = c("abbrev_state" = "NOME_AGREGA"))
+  states <-left_join(states, adh, by = c("abbrev_state" = "NOME_AGREGA"))
 ```
 
 #### Plot thematic map
 
 ```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
-  ggplot() + 
-    geom_sf(data=all_states, aes(fill=ESPVIDA), color= NA, size=.15) + 
-      labs(subtitle="Life Expectancy at birth, Brazilian States, 2014", size=8) + 
+  ggplot() +
+    geom_sf(data=states, aes(fill=ESPVIDA), color= NA, size=.15) +
+      labs(subtitle="Life Expectancy at birth, Brazilian States, 2014", size=8) +
       scale_fill_distiller(palette = "Blues", name="Life Expectancy", limits = c(65,80)) +
       theme_minimal() +
       no_axis

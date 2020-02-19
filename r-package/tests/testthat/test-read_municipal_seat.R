@@ -6,7 +6,7 @@ context("Read")
 test_that("read_municipal_seat", {
 
   # # skip tests because they take too much time
-  # skip_on_cran()
+  skip_on_cran()
   # skip_on_travis()
 
   # read data and check sf object
@@ -25,7 +25,7 @@ test_that("read_municipal_seat", {
 test_that("read_municipal_seat", {
 
   # # skip tests because they take too much time
-  # skip_on_cran()
+  skip_on_cran()
   # skip_on_travis()
 
   # Wrong year
