@@ -3,9 +3,6 @@ context("Read")
 
 # Reading the data -----------------------
 
-if (Sys.getenv("TEST_ONE") == ""){
-
-
 
 test_that("lookup_muni", {
 
@@ -32,5 +29,3 @@ test_that("list_geobr", {
 
 })
 
-
-}
