@@ -1,11 +1,11 @@
 context("Read")
 
 
+# skip tests because they take too much time
+skip_if(Sys.getenv("TEST_ONE") != "")
+
+
 # Reading the data -----------------------
-
-if (Sys.getenv("TEST_ONE") == ""){
-
-
 
 test_that("read_amazon", {
 
@@ -46,4 +46,3 @@ test_that("read_amazon", {
 })
 
 
-}
