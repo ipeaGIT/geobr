@@ -7,7 +7,7 @@ test_that("read_metro_area", {
 
   # skip tests because they take too much time
   skip_on_cran()
-  skip_on_travis()
+  # skip_on_travis()
 
   # read data and check sf object
   expect_true(is(read_metro_area(year=1970), "sf"))
@@ -26,7 +26,7 @@ test_that("read_metro_area", {
 
   # skip tests because they take too much time
   skip_on_cran()
-  skip_on_travis()
+  # skip_on_travis()
 
   # Wrong year
   expect_error(read_metro_area(year=9999999))

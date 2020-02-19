@@ -5,7 +5,7 @@ test_that("read_census_tract", {
   # skip tests because they take too much time
   #skip_if(Sys.getenv("TEST_ONE") != "")
   skip_on_cran()
-  skip_on_travis()
+  # skip_on_travis()
 
   # read data
   test_code_2000 <- read_census_tract(code_tract = 1100023, year = 2000)
@@ -51,7 +51,7 @@ test_that("read_census_tract", {
   # skip tests because they take too much time
   #skip_if(Sys.getenv("TEST_ONE") != " ")
   skip_on_cran()
-  skip_on_travis()
+  # skip_on_travis()
 
   # Wrong year and code
   expect_error(read_census_tract(code_tract = 9999999, year = 9999999))
