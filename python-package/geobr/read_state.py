@@ -3,6 +3,7 @@ import geopandas as gpd
 
 from geobr.utils import get_metadata, download_gpkg
 
+
 def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
     """Download shapefiles of Brazilian states as geopandas objects.
 
@@ -62,7 +63,7 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
     else:
     
         if (str(code_state)[0:2] not in metadata['code'].unique() and
-            str(code_state)[0:2] not in metadata['code_abrev'].unique()):
+                str(code_state)[0:2] not in metadata['code_abrev'].unique()):
         
             raise Exception("Error: Invalid Value to argument code_state.")
         
@@ -84,3 +85,7 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
         
             else:
                 raise Exception("Error: Invalid Value to argument code_state.")
+
+
+if __name__ == '__main__':
+    uf = read_state(code_state=12, year=2017)

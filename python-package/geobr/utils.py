@@ -3,10 +3,13 @@ import pandas as pd
 import tempfile
 import geopandas as gpd
 from functools import lru_cache
+import os
+
 
 def _get_unique_values(_df, column):
 
     return ', '.join([str(i) for i in _df['{column}'].unique()])
+
 
 @lru_cache(maxsize=124)
 def download_metadata(
@@ -45,6 +48,7 @@ def download_metadata(
         raise Exception('Metadata file not found. \
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
+
 def apply_year(metadata, year):
     """Apply year to metadata and checks its existence.
 
@@ -67,12 +71,11 @@ def apply_year(metadata, year):
     Exception
         If year does not exists, raises exception with available years.
     """
-    
 
     if year is None:
         year = max(metadata['year'])
       
-    elif not year in list(metadata['year']):
+    elif year not in list(metadata['year']):
 
         years = ', '.join([str(i) for i in metadata['year'].unique()])
 
@@ -82,6 +85,7 @@ def apply_year(metadata, year):
                         )
     
     return metadata.query(f'year == {year}')
+
 
 def apply_data_type(metadata, data_type):
     """Filter metadata by data type. It can be simplified or normal. 
@@ -143,17 +147,26 @@ def load_gpkg(url):
     except Exception as e:
 
         raise Exception(
-            'Some interal url is broken.'
+            'Some internal url is broken.'
             'Please report to https://github.com/ipeaGIT/geobr/issues'
         )
-    
-    with tempfile.NamedTemporaryFile(suffix='.gpkg') as fp:
+
+    # This below does not work in Windows -- see the Docs
+    # Whether the name can be used to open the file a second time, while the named temporary file is still open,
+    # varies across platforms (it can be so used on Unix; it cannot on Windows NT or later).
+    # https://docs.python.org/2/library/tempfile.html
+
+    # with tempfile.NamedTemporaryFile(suffix='.gpkg') as fp:
+    with open('temp.gpkg', 'wb') as fp:
 
         fp.write(content)
 
         gdf = gpd.read_file(fp.name)
+
+    os.remove('temp.gpkg')
         
     return gdf
+
 
 def download_gpkg(metadata):
     """Generalizes gpkg dowload and conversion to geopandas
@@ -175,6 +188,7 @@ def download_gpkg(metadata):
     gpkgs = [load_gpkg(url) for url in urls]
     
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
+
 
 def get_metadata(geo, data_type, year):
     """Downloads and filters metadata given `geo`, `data_type` and `year`.
