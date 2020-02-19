@@ -289,10 +289,6 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
 
-  # temp files
-    usethis::use_build_ignore("crosswalk_pre.R")
-
-
 
 
 setwd("R:/Dropbox/git/geobr")
