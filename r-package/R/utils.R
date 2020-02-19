@@ -31,7 +31,7 @@ select_data_type <- function(temp_meta, tp){
 #' @export
 #' @family support functions
 #'
-download_gpkg <- function(filesD){
+download_gpkg <- function(filesD){ # showProgress = TRUE # TRUE displays progress bar
   temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
   httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
   return(temps)

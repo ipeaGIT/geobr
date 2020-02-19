@@ -222,7 +222,7 @@ function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_c
 
 # update Package coverage
   Sys.setenv(NOT_CRAN = "true")
-  geobr_cov <- covr::package_coverage()
+system.time(  geobr_cov <- covr::package_coverage() )
   x <- as.data.frame(geobr_cov)
   covr::codecov( coverage = geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
 
