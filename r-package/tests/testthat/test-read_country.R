@@ -6,7 +6,7 @@ context("Read")
 test_that("read_country", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
 
@@ -31,7 +31,7 @@ test_that("read_country", {
 test_that("read_country", {
 
   # skip tests because they take too much time
-  #skip_on_cran()
+  skip_on_cran()
   skip_on_travis()
 
   # Wrong date
