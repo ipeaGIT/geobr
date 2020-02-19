@@ -1,13 +1,15 @@
-context("Read")
+context("read_semiarid")
+
+
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 # Reading the data -----------------------
 
 test_that("read_semiarid", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
 
   # read data
   expect_message(read_semiarid(year=NULL))
@@ -29,11 +31,6 @@ test_that("read_semiarid", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_semiarid", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
-
 
   # Wrong year
   expect_error(read_semiarid(year=9999999))

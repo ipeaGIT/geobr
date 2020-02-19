@@ -1,14 +1,13 @@
-context("Read")
+context("read_indigenous_land")
 
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 # Reading the data -----------------------
 
 test_that("read_indigenous_land", {
-
-  # skip tests because they take too much time
-  Sys.setenv(NOT_CRAN = "true")
-  skip_on_cran()
-  skip_on_travis()
 
   # read data
   test_sf <- read_indigenous_land(date=201907)
@@ -28,11 +27,6 @@ test_that("read_indigenous_land", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_indigenous_land", {
-
-  # skip tests because they take too much time
-  Sys.setenv(NOT_CRAN = "true")
-  skip_on_cran()
-  skip_on_travis()
 
   # Wrong date
   expect_error(read_indigenous_land(date=9999999))

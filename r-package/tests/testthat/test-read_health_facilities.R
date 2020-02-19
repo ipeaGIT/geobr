@@ -1,13 +1,15 @@
-context("Read")
+context("read_health_facilities")
+
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 # Testing metadata -----------------------
 
 test_that("read_health_facilities", {
 
-  # # skip tests because they take too much time
-  # skip_on_cran()
-  # skip_on_travis()
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.rds")
@@ -39,10 +41,6 @@ test_that("read_health_facilities", {
 # Reading the data -----------------------
 
 test_that("read_health_facilities", {
-
-  # # skip tests because they take too much time
-  # skip_on_cran()
-  # skip_on_travis()
 
 
   # read data

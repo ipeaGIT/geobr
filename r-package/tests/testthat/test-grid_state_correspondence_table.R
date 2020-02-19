@@ -1,14 +1,13 @@
-context("Data")
+context("grid_state_correspondence_table")
 
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 test_that("grid_state_correspondence_table", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
-
-
-  # load data
+# load data
 #  load( system.file("data/grid_state_correspondence_table.RData", package="geobr") )
 
   data(grid_state_correspondence_table)

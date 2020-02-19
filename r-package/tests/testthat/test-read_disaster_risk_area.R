@@ -1,4 +1,10 @@
-context("Read")
+context("read_disaster_risk_area")
+
+
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 
@@ -7,9 +13,6 @@ context("Read")
 
 test_that("read_disaster_risk_area", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   # read data
   test_sf <- read_disaster_risk_area(year=2010)
@@ -28,9 +31,6 @@ test_that("read_disaster_risk_area", {
 
 test_that("read_disaster_risk_area", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   # read data
   test_sf <- read_disaster_risk_area(year=2010)

@@ -1,11 +1,12 @@
-context("Read")
+context("read_state")
+
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 test_that("read_state", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   # read data
   test_state_abrev <- read_state(code_state="AC", year=2010)
@@ -45,10 +46,6 @@ test_that("read_state", {
 
 # ERRORS
 test_that("read_state", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   # Wrong year and code
   expect_error(read_state(code_state=9999999, year=9999999))

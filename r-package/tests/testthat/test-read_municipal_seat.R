@@ -1,13 +1,13 @@
-context("Read")
+context("read_municipal_seat")
 
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 # Reading the data -----------------------
 
 test_that("read_municipal_seat", {
-
-  # # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
 
   # read data and check sf object
   expect_true(is(read_municipal_seat(year=NULL), "sf"))
@@ -23,10 +23,6 @@ test_that("read_municipal_seat", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_municipal_seat", {
-
-  # # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
 
   # Wrong year
   expect_error(read_municipal_seat(year=9999999))

@@ -306,8 +306,25 @@ setwd("..")
 # Check package errors
    devtools::check(pkg = ".",  cran = TRUE)
 
+ Sys.setenv(NOT_CRAN = "false")
+ system.time(  devtools::test(pkg = ".",  cran = TRUE) )
+ beepr::beep()
+
+ CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
+ OK:       37
+ Failed:   0
+ Warnings: 0
+ Skipped:  33
+ usuário   sistema decorrido
+ 10.31      1.74     24.77
 
 
+ OK:       329
+ Failed:   0
+ Warnings: 0
+ Skipped:  0
+ usuário   sistema decorrido
+ 264.21     12.42    487.20
 # pack <- "geobr"
 # path <- find.package(pack)
 # system(paste(shQuote(file.path(R.home("bin"), "R")),

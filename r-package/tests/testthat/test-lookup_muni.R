@@ -1,10 +1,12 @@
-context("Read")
+context("lookup_muni")
+
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 # Reading the data -----------------------
-
-if (Sys.getenv("TEST_ONE") == ""){
-
 
 
 test_that("lookup_muni", {
@@ -32,9 +34,6 @@ test_that("lookup_muni", {
 # ERRORS and messagens  -----------------------
 test_that("lookup_muni", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   expect_error(lookup_muni())
 
@@ -51,4 +50,3 @@ test_that("lookup_muni", {
 })
 
 
-}
