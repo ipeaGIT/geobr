@@ -1,16 +1,14 @@
-context("Read")
+context("read_biomes")
+
+# skip tests because they take too much time
+skip_if(Sys.getenv("TEST_ONE") != "")
+testthat::skip_on_cran()
+testthat::skip_on_travis()
 
 
 # Reading the data -----------------------
 
-
-
 test_that("read_biomes", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
-
 
   # read data
   expect_message(read_biomes(year=NULL))
@@ -23,7 +21,7 @@ test_that("read_biomes", {
   expect_equal(test_sf$code_biome %>% length(), 10)
 
   # check projection
-#  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +no_defs")
+  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
@@ -32,11 +30,6 @@ test_that("read_biomes", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_biomes", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
-
 
   # Wrong year
   expect_error(read_biomes(year=9999999))
