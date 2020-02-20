@@ -34,7 +34,7 @@
 * Shows a single download progress bar when `*_code="all"`. This fixes the output of vignette and closes issue #42 (2019-08-05)
 
 -------------------------------------------------------
-# geobr dev v1.2
+# geobr v1.2 (2020-02-20)
 
 ### New data sets/functions
 * data set `read_metro_area` to read official metropolitan areas - closes issue #2 (added in 2019-12).
