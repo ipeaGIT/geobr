@@ -8,7 +8,7 @@
 #
 # Update frequency: How often the data is updated
 #
-# Summary: one or two sentences to explain what the information in the dataset 
+# Summary: one or two sentences to explain what the information in the dataset
 #
 # key-words:
 
@@ -25,13 +25,18 @@ library(data.table)
 library(magrittr)
 library(lwgeom)
 library(stringi)
+library(mapview)
+library(furrr)
+# library(sp)
 
 
+####### Load Support functions to use in the preprocessing of the data
 
+source("./prep_data/prep_functions.R")
 
 
 # If the data set is updated regularly, you should create a function that will have
-# a `date` argument download the data 
+# a `date` argument download the data
 
 update <- 201910 # Example: October 2019
 
@@ -45,7 +50,7 @@ setwd(root_dir)
 
 
 # Create Directory to keep original downloaded files
-destdir_raw <- "./new_data" 
+destdir_raw <- "./new_data"
 dir.create(destdir_raw)
 
 
@@ -77,23 +82,23 @@ dir.create(destdir_clean, recursive =T)
 # list all files
   raw_shapes <- list.files(path= destdir_raw, full.names = T, pattern = ".shp")
 
-  
-  
-  
-  
+
+
+
+
 ### If there are various data sets for various dates, states etc etc. it ideal to create a
 ### function that will work over a list of all datasets and clean and save them accordingly
 
-  
-cleaning_data_fun <- function(f){  
-  
+
+cleaning_data_fun <- function(f){
+
 ### read data
   temp_sf1 <- st_read(f, quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
-  
 
-  
+
+
 ###### 2. rename column names -----------------
-  
+
 # Rename columns examples
   temp_sf2 <- temp_sf1 %>% dplyr::select(
                             code_muni = GEOCODIGO,
@@ -103,7 +108,7 @@ cleaning_data_fun <- function(f){
                             ...
                             geometry = geometry
                             )
-  
+
 
 ###### 3. ensure the data uses spatial projection SIRGAS 2000 epsg (SRID): 4674-----------------
 temp_sf3 <- if( is.na(st_crs(temp_sf2)) ){ st_set_crs(temp_sf2, 4674) } else { st_transform(temp_sf2, 4674) }
@@ -122,9 +127,9 @@ temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::str
 
 
 
-  
+
 ###### 5. fix eventual topology issues in the data-----------------
-  
+
 # Make any invalid geometry valid # st_is_valid( sf)
   temp_sf5 <- lwgeom::st_make_valid(temp_sf4)
 
@@ -138,7 +143,7 @@ temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::str
 
 
 ###### 7. Clean data set and save it in compact .rds format-----------------
-  
+
 # save original and simplified datasets
 sf::st_write(temp_sf5, path= paste0(destdir_clean, "/new_data_", update, ".gpkg"))
 sf::st_write(temp_sf6, path= paste0(destdir_clean, "/new_data_", update," _simplified", ".gpkg"))
