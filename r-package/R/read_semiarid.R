@@ -18,13 +18,8 @@
 read_semiarid <- function(year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="semiarid", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="semiarid")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # 1.1 Verify year input
   if (is.null(year)){ year <- 2017}

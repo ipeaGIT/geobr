@@ -25,13 +25,7 @@ read_metro_area <- function(year, tp="simplified"){
 
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
-
-  # Select geo
-  temp_meta <- subset(metadata, geo=="metropolitan_area")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+  temp_meta <- download_metadata(geography="metropolitan_area", data_type=tp)
 
 
   # 1.1 Verify year input

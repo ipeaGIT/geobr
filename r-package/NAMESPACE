@@ -3,6 +3,7 @@
 export(download_gpkg)
 export(download_metadata)
 export(list_geobr)
+export(load_gpkg)
 export(lookup_muni)
 export(read_amazon)
 export(read_biomes)

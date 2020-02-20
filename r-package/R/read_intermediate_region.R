@@ -30,13 +30,9 @@
 read_intermediate_region <- function(code_intermediate="all", year = NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="intermediate_regions", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="intermediate_regions")
 
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # 1.1 Verify year input
   if (is.null(year)){ year <- 2017

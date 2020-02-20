@@ -33,13 +33,8 @@
 read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="census_tract", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="census_tract")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")

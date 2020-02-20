@@ -34,12 +34,7 @@ read_statistical_grid <- function(code_grid, year=NULL){ # nocov start
 
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
-
-
-
-# Select geo
-  temp_meta <- subset(metadata, geo=="statistical_grid")
+  temp_meta <- download_metadata(geography="statistical_grid")
 
 
 

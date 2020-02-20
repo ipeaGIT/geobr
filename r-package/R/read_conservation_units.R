@@ -19,13 +19,8 @@
 read_conservation_units <- function(date=NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="conservation_units", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="conservation_units")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # 1.1 Verify year input
   if (is.null(date)){ date <- 201909

@@ -21,13 +21,7 @@
 read_biomes <- function(year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
-
-  # Select geo
-  temp_meta <- subset(metadata, geo=="biomes")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+  temp_meta <- download_metadata(geography="biomes", data_type=tp)
 
 
   # 1.1 Verify year input

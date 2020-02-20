@@ -18,13 +18,7 @@
 read_amazon <- function(year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
-
-  # Select geo
-  temp_meta <- subset(metadata, geo=="amazonia_legal")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+  temp_meta <- download_metadata(geography="amazonia_legal", data_type=tp)
 
 
   # 1.1 Verify year input

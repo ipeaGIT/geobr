@@ -25,13 +25,8 @@
 read_disaster_risk_area <- function(year, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="disaster_risk_area", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="disaster_risk_area")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # Verify year input
   if(is.null(year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",

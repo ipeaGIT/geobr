@@ -31,13 +31,7 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
   if (is.null(year)){ year <- 2010}
 
 # Get metadata with data addresses
-  metadata <- download_metadata()
-
-# Select metadata geo
-  temp_meta <- subset(metadata, geo=="municipality")
-
-# Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+  temp_meta <- download_metadata(geography="municipality", data_type=tp)
 
 
 

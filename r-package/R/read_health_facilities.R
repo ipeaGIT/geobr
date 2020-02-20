@@ -27,10 +27,8 @@
 read_health_facilities <- function(){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="health_facilities")
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="health_facilities")
 
   # list paths of files to download
     filesD <- as.character(temp_meta$download_path)

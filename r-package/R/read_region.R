@@ -18,13 +18,8 @@
 read_region <- function(year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="regions", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="regions")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # Verify year input
   if (is.null(year)){ message("Using data from year 2010\n")

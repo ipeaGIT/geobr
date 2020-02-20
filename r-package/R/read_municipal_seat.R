@@ -21,10 +21,8 @@
 read_municipal_seat <- function(year=NULL){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="municipal_seat")
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="municipal_seat")
 
   # Verify year input
   if (is.null(year)){ message("Using latest data from year 2010\n")

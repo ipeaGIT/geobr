@@ -22,13 +22,8 @@
 read_urban_area <- function(year=NULL, tp="simplified"){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="urban_area", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="urban_area")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
   # Verify year input
   if (is.null(year)){ message("Using latest data available, from year 2015\n")

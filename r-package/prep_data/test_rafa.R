@@ -295,9 +295,6 @@ setwd("R:/Dropbox/git/geobr")
 setwd("..")
 
 
-# Install package
-  # devtools::install("geobr", build_vignettes = T)
-  # system("R CMD INSTALL --build geobr")
 
 # build binary
   system("R CMD build . --resave-data") # build tar.gz
@@ -333,7 +330,6 @@ setwd("..")
 #
 #
 # install.packages("pdflatex", dependencies = T)
-
 
 # PLOT
     system.time( am <- read_census_tract(code_tract="am") )

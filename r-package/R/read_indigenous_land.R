@@ -23,14 +23,8 @@ read_indigenous_land <- function(date, tp="simplified"){
 
 
 # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="indigenous_land", data_type=tp)
 
-
-# Select geo
-  temp_meta <- subset(metadata, geo=="indigenous_land")
-
-# Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
 
 
 # Verify date input
