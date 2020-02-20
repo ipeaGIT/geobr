@@ -24,7 +24,7 @@
 #'
 #'}
 
-read_state <- function(code_state="all", year=NULL, tp="simplified", showProgress=TRUE){
+read_state <- function(code_state="all", year=2010, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- download_metadata(geography="state", data_type=tp)

@@ -17,6 +17,7 @@ Select data type: 'original' or 'simplified' (default)
 \seealso{
 Other support functions: 
 \code{\link{download_gpkg}()},
-\code{\link{load_gpkg}()}
+\code{\link{load_gpkg}()},
+\code{\link{test_year_input}()}
 }
 \concept{support functions}

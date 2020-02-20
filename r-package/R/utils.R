@@ -28,6 +28,40 @@ select_data_type <- function(temp_meta, tp=NULL){
 
 
 
+
+
+#' Test year input
+#'
+#'
+#'
+#' @param temp_meta A dataframe with the file_url addresses of geobr datasets
+#' @param y Year of the dataset (passed by red_ function)
+#' @export
+#' @family support functions
+#'
+test_year_input <- function(temp_meta, y=year){
+
+  # NULL
+  if (is.null(y)){  stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                                   paste(unique(temp_meta$year),collapse = " "))) }
+
+  # invalid input
+  else if (y %in% temp_meta$year){ message(paste0("Using year ", y))
+                                  temp_meta <- temp_meta[temp_meta[,2] == y,]
+                                  return(temp_meta) }
+
+  # invalid input
+  else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
+                         paste(unique(temp_meta$year), collapse = " ")))
+    }
+
+
+}
+
+
+
+
+
 #' Download geopackage to tempdir
 #'
 #'
@@ -38,7 +72,7 @@ select_data_type <- function(temp_meta, tp=NULL){
 #'
 download_gpkg <- function(file_url, progress_bar = showProgress){
 
-### one single file
+## one single file
 
   if(length(file_url)==1 & progress_bar == TRUE){
 
@@ -66,7 +100,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
 
 
-### multiple files
+## multiple files
 
   else if(length(file_url) > 1 & progress_bar == TRUE) {
 

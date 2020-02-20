@@ -6,7 +6,7 @@
 \usage{
 read_state(
   code_state = "all",
-  year = NULL,
+  year = 2010,
   tp = "simplified",
   showProgress = TRUE
 )
