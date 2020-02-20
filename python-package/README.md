@@ -5,7 +5,8 @@
 ```python
 python
 >>> import geobr
->>> geobr.read_biomes(year=2019)
+>>> states = geobr.read_state(year=2018)
+>>> states.columns
 ```
 
 ## Contribute
