@@ -7,6 +7,8 @@
 #'  all weighting areas of the country are loaded.
 #' @param year Year of the data (defaults to 2010)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -33,7 +35,7 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplified"){
+read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="weighting_area", data_type=tp)
@@ -56,15 +58,15 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
     if(code_weighting=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
         # list paths of files to download
-        filesD <- as.character(temp_meta$download_path)
+        file_url <- as.character(temp_meta$download_path)
 
         # input for progress bar
-        total <- length(filesD)
+        total <- length(file_url)
         pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
 
         # download files
-        lapply(X=filesD, function(x){
-          i <- match(c(x),filesD)
+        lapply(X=file_url, function(x){
+          i <- match(c(x),file_url)
           httr::GET(url=x, #httr::progress(),
                     httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
           utils::setTxtProgressBar(pb, i)
@@ -74,7 +76,7 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
         close(pb)
 
         # read files and pile them up
-        files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
+        files <- unlist(lapply(strsplit(file_url,"/"), tail, n = 1L))
         files <- paste0(tempdir(),"/",files)
         files <- lapply(X=files, FUN= sf::st_read, quiet=T)
         shape <- do.call('rbind', files)
@@ -87,14 +89,11 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
   }else{
 
     # list paths of files to download
-      if (is.numeric(code_weighting)){ filesD <- as.character(subset(temp_meta, code==substr(code_weighting, 1, 2))$download_path) }
-      if (is.character(code_weighting)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_weighting, 1, 2))$download_path) }
+      if (is.numeric(code_weighting)){ file_url <- as.character(subset(temp_meta, code==substr(code_weighting, 1, 2))$download_path) }
+      if (is.character(code_weighting)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_weighting, 1, 2))$download_path) }
 
     # download files
-    temps <- download_gpkg(filesD)
-
-    # read sf
-      shape <- sf::st_read(temps, quiet=T)
+    shape <- download_gpkg(file_url)
 
     # return whole state
     if(nchar(code_weighting)==2){

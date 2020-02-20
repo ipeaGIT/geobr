@@ -6,6 +6,8 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param zone "urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -30,7 +32,7 @@
 #' }
 #'
 #'
-read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simplified"){
+read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="census_tract", data_type=tp)
@@ -64,29 +66,11 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simpl
     if(code_tract=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
       # list paths of files to download
-      filesD <- as.character(temp_meta$download_path)
-
-      # input for progress bar
-      total <- length(filesD)
-      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+      file_url <- as.character(temp_meta$download_path)
 
       # download files
-      lapply(X=filesD, function(x){
-        i <- match(c(x),filesD)
-        httr::GET(url=x, #httr::progress(),
-                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-        utils::setTxtProgressBar(pb, i)
-      }
-      )
-      # closing progress bar
-      close(pb)
-
-      # read files and pile them up
-      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-      files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-      sf <- do.call('rbind', files)
-      return(sf)
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      return(temp_sf)
     }
 
     else if( (!(substr(x = code_tract, 1, 2) %in% temp_meta$code) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev)
@@ -101,25 +85,22 @@ read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simpl
       # list paths of files to download
       if (year<=2007 & zone == "urban") {
 
-        if (is.numeric(code_tract)){ filesD <- as.character(subset(temp_meta, code==paste0("U",substr(code_tract, 1, 2)))$download_path) }
-        if (is.character(code_tract)){ filesD <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
+        if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("U",substr(code_tract, 1, 2)))$download_path) }
+        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
       } else if (year<=2007 & zone == "rural") {
 
-        if (is.numeric(code_tract)){ filesD <- as.character(subset(temp_meta, code==paste0("R",substr(code_tract, 1, 2)))$download_path) }
-        if (is.character(code_tract)){ filesD <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
+        if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("R",substr(code_tract, 1, 2)))$download_path) }
+        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
       } else {
 
-      if (is.numeric(code_tract)){ filesD <- as.character(subset(temp_meta, code==substr(code_tract, 1, 2))$download_path) }
-      if (is.character(code_tract)){ filesD <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
+      if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==substr(code_tract, 1, 2))$download_path) }
+      if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
         }
       # download files
-      temps <- download_gpkg(filesD)
-
-      # read sf
-      sf <- sf::st_read(temps, quiet=T)
+      sf <- download_gpkg(file_url, progress_bar = showProgress)
 
       if(nchar(code_tract)==2){
         return(sf)

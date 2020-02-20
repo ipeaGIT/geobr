@@ -6,6 +6,7 @@
 #'
 #' @param date A date number in YYYYMM format
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
 #' @family general area functions
@@ -16,7 +17,7 @@
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
 #'}
-read_conservation_units <- function(date=NULL, tp="simplified"){
+read_conservation_units <- function(date=NULL, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="conservation_units", data_type=tp)
@@ -36,12 +37,9 @@ read_conservation_units <- function(date=NULL, tp="simplified"){
   # temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
 }

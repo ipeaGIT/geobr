@@ -6,6 +6,7 @@
 #' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -25,7 +26,7 @@
 
 read_state <- function(code_state="all", year=NULL, tp="simplified", showProgress=TRUE){
 
-  # Get metadata with data addresses
+  # Get metadata with data url addresses
   temp_meta <- download_metadata(geography="state", data_type=tp)
 
 
@@ -59,15 +60,12 @@ if( x < 1992){
   message("Loading data for the whole country\n")
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD, progress_bar = showProgress)
-
-  # load gpkg
-  temp_sf <- load_gpkg(filesD, temps)
-
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
+
 } else {
 
 
@@ -79,14 +77,12 @@ if( x < 1992){
     if(code_state=="all"){ message("Loading data for the whole country\n")
 
       # list paths of files to download
-      filesD <- as.character(temp_meta$download_path)
+      file_url <- as.character(temp_meta$download_path)
 
       # download gpkg
-      download_gpkg(filesD, progress_bar = showProgress)
-
-      # load gpkg
-      temp_sf <- load_gpkg(filesD)
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
       return(temp_sf)
+
     }
 
   if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
@@ -95,16 +91,12 @@ if( x < 1992){
   } else{
 
     # list paths of files to download
-    if (is.numeric(code_state)){ filesD <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
-    if (is.character(code_state)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
+    if (is.numeric(code_state)){ file_url <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
+    if (is.character(code_state)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
 
 
     # download gpkg
-    temps <- download_gpkg(filesD, progress_bar = showProgress)
-
-    # load gpkg
-    temp_sf <- load_gpkg(filesD, temps)
-
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
     if(nchar(code_state)==2){
       return(temp_sf)

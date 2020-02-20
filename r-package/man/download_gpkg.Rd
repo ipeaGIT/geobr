@@ -4,10 +4,10 @@
 \alias{download_gpkg}
 \title{Download geopackage to tempdir}
 \usage{
-download_gpkg(filesD, progress_bar = showProgress)
+download_gpkg(file_url, progress_bar = showProgress)
 }
 \arguments{
-\item{filesD}{A string with the url address of a geobr dataset}
+\item{file_url}{A string with the file_url address of a geobr dataset}
 
 \item{progress_bar}{Logical. Defaults to (TRUE) display progress bar}
 }

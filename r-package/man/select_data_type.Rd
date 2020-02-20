@@ -7,7 +7,7 @@
 select_data_type(temp_meta, tp = NULL)
 }
 \arguments{
-\item{temp_meta}{A dataframe with the url addresses of geobr datasets}
+\item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}
 
 \item{tp}{A string indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }

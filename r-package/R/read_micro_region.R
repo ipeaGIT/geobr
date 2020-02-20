@@ -7,6 +7,8 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of that state. If code_micro="all",
 #'  all micro regions of the country are loaded.
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -18,7 +20,7 @@
 #'
 #' # Read micro regions of a state at a given year
 #'   micro <- read_micro_region(code_micro=12, year=2017)
-#'   micro <- read_micro_region(code_meso="AM", year=2000)
+#'   micro <- read_micro_region(code_micro="AM", year=2000)
 #'
 #'# Read all micro regions at a given year
 #'   micro <- read_micro_region(code_micro="all", year=2010)
@@ -26,7 +28,7 @@
 #'
 #'
 
-read_micro_region <- function(code_micro="all", year=NULL, tp="simplified"){
+read_micro_region <- function(code_micro="all", year=NULL, tp="simplified", showProgress=TRUE){
 
 
   # Get metadata
@@ -50,29 +52,11 @@ read_micro_region <- function(code_micro="all", year=NULL, tp="simplified"){
   if(code_micro=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
     # list paths of files to download
-    filesD <- as.character(temp_meta$download_path)
-
-    # input for progress bar
-    total <- length(filesD)
-    pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+    file_url <- as.character(temp_meta$download_path)
 
     # download files
-    lapply(X=filesD, function(x){
-      i <- match(c(x),filesD)
-      httr::GET(url=x, #httr::progress(),
-                httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-      utils::setTxtProgressBar(pb, i)
-    }
-    )
-    # closing progress bar
-    close(pb)
-
-    # read files and pile them up
-    files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-    files <- paste0(tempdir(),"/",files)
-    files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-    shape <- do.call('rbind', files)
-    return(shape)
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    return(temp_sf)
   }
 
   if( !(substr(x = code_micro, 1, 2) %in% temp_meta$code) & !(substr(x = code_micro, 1, 2) %in% temp_meta$code_abrev)){
@@ -82,23 +66,20 @@ read_micro_region <- function(code_micro="all", year=NULL, tp="simplified"){
   } else{
 
     # list paths of files to download
-    if (is.numeric(code_micro)){ filesD <- as.character(subset(temp_meta, code==substr(code_micro, 1, 2))$download_path) }
-    if (is.character(code_micro)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_micro, 1, 2))$download_path) }
+    if (is.numeric(code_micro)){ file_url <- as.character(subset(temp_meta, code==substr(code_micro, 1, 2))$download_path) }
+    if (is.character(code_micro)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_micro, 1, 2))$download_path) }
 
 
     # download files
-    temps <- download_gpkg(filesD)
-
-    # read sf
-    shape <- sf::st_read(temps, quiet=T)
+    sf <- download_gpkg(file_url, progress_bar = showProgress)
 
     if(nchar(code_micro)==2){
-      return(shape)
+      return(sf)
 
-    } else if(code_micro %in% shape$code_micro){    # Get micro region
+    } else if(code_micro %in% sf$code_micro){    # Get micro region
       x <- code_micro
-      shape <- subset(shape, code_micro==x)
-      return(shape)
+      sf <- subset(sf, code_micro==x)
+      return(sf)
     } else{
       stop("Error: Invalid Value to argument code_micro. There was no micro region with this code in this year")
     }

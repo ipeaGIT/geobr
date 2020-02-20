@@ -7,6 +7,8 @@
 #'
 #'
 #' @param year A year number in YYYY format (Defaults to 2010)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @examples \donttest{
 #'
@@ -18,7 +20,7 @@
 #' }
 #'
 #'
-read_municipal_seat <- function(year=NULL){
+read_municipal_seat <- function(year=NULL, showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="municipal_seat")
@@ -37,13 +39,9 @@ read_municipal_seat <- function(year=NULL){
 
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
 }

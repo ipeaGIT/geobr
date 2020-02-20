@@ -8,6 +8,8 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_immediate="all",
 #'  all immediate regions of the country are loaded (defaults to "all").
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -27,7 +29,7 @@
 #' }
 #'
 #'
-read_immediate_region <- function(code_immediate="all", year = NULL, tp="simplified"){
+read_immediate_region <- function(code_immediate="all", year = NULL, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="immediate_regions", data_type=tp)
@@ -46,13 +48,10 @@ read_immediate_region <- function(code_immediate="all", year = NULL, tp="simplif
    temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
   }
 

@@ -8,6 +8,8 @@
 #'
 #' @param year A year number in YYYY format
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @examples \donttest{
 #'
@@ -21,7 +23,7 @@
 #'
 #'
 #'
-read_metro_area <- function(year, tp="simplified"){
+read_metro_area <- function(year, tp="simplified", showProgress=TRUE){
 
 
   # Get metadata with data addresses
@@ -40,12 +42,9 @@ read_metro_area <- function(year, tp="simplified"){
   }
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
 }

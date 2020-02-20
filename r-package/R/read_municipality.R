@@ -53,10 +53,10 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
   if( x < 1992){
 
     # list paths of files to download
-    filesD <- as.character(temp_meta$download_path)
+    file_url <- as.character(temp_meta$download_path)
 
     # download files
-    temps <- download_gpkg(filesD)
+    temps <- download_gpkg(file_url)
 
     # read sf
     temp_sf <- sf::st_read(temps, quiet=T)
@@ -73,29 +73,11 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
     if(code_muni=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
       # list paths of files to download
-      filesD <- as.character(temp_meta$download_path)
-
-      # input for progress bar
-      total <- length(filesD)
-      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+      file_url <- as.character(temp_meta$download_path)
 
       # download files
-      lapply(X=filesD, function(x){
-        i <- match(c(x),filesD)
-        httr::GET(url=x, #httr::progress(),
-                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-        utils::setTxtProgressBar(pb, i)
-      }
-      )
-      # closing progress bar
-      close(pb)
-
-      # read files and pile them up
-      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-      files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-      sf <- do.call('rbind', files)
-      return(sf)
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      return(temp_sf)
     }
 
   else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code) & !(substr(x = code_muni, 1, 2) %in% temp_meta$code_abrev)){
@@ -105,15 +87,11 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
   } else{
 
     # list paths of files to download
-    if (is.numeric(code_muni)){ filesD <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
-    if (is.character(code_muni)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_muni, 1, 2))$download_path) }
+    if (is.numeric(code_muni)){ file_url <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
+    if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_muni, 1, 2))$download_path) }
 
     # download files
-    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
-
-    # read sf
-    sf <- sf::st_read(temps, quiet=T)
+    sf <- download_gpkg(file_url, progress_bar = showProgress)
 
       if(nchar(code_muni)==2){
         return(sf)

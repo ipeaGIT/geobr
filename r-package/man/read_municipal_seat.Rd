@@ -4,10 +4,12 @@
 \alias{read_municipal_seat}
 \title{Download official data of municipal seats (sede dos municipios) in Brazil as an sf object.}
 \usage{
-read_municipal_seat(year = NULL)
+read_municipal_seat(year = NULL, showProgress = TRUE)
 }
 \arguments{
 \item{year}{A year number in YYYY format (Defaults to 2010)}
+
+\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
 This function reads the official data on the municipal seats (sede dos municipios) of Brazil.

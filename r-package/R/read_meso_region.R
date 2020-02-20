@@ -7,6 +7,7 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -50,36 +51,12 @@ read_meso_region <- function(code_meso="all", year=NULL, tp="simplified", showPr
   if(code_meso=="all"){ message("Loading data for the whole country\n")
 
     # list paths of files to download
-    filesD <- as.character(temp_meta$download_path)
+    file_url <- as.character(temp_meta$download_path)
 
-    # # input for progress bar
-    #   total <- length(filesD)
-    #   pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
-    #
-    # # download files
-    #   lapply(X=filesD, function(x){
-    #                                 i <- match(c(x),filesD)
-    #                                 httr::GET(url=x, #httr::progress(),
-    #                                         httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-    #                                 utils::setTxtProgressBar(pb, i)
-    #                               }
-    #          )
-    # # closing progress bar
-    #   close(pb)
-    #
-    # # read files and pile them up
-    # files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-    # files <- paste0(tempdir(),"/",files)
-    # files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-    # shape <- do.call('rbind', files)
-    # return(shape)
-
-    # download gpkg
-    temps <- download_gpkg(filesD, progress_bar = showProgress)
-
-    # load gpkg
-    temp_sf <- load_gpkg(filesD, temps)
+    # download files
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
     return(temp_sf)
+
   }
 
   if( !(substr(x = code_meso, 1, 2) %in% temp_meta$code) & !(substr(x = code_meso, 1, 2) %in% temp_meta$code_abrev)){
@@ -88,25 +65,22 @@ read_meso_region <- function(code_meso="all", year=NULL, tp="simplified", showPr
   } else{
 
     # list paths of files to download
-    if (is.numeric(code_meso)){ filesD <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path) }
-    if (is.character(code_meso)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_meso, 1, 2))$download_path) }
+    if (is.numeric(code_meso)){ file_url <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path) }
+    if (is.character(code_meso)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_meso, 1, 2))$download_path) }
 
 
 
     # download files
-    temps <- download_gpkg(filesD)
-
-    # load gpkg
-    temp_sf <- load_gpkg(filesD, temps)
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
 
     if(nchar(code_meso)==2){
-      return(shape)
+      return(temp_sf)
 
-    } else if(code_meso %in% shape$code_meso){    # Get meso region
+    } else if(code_meso %in% temp_sf$code_meso){    # Get meso region
       x <- code_meso
-      shape <- subset(shape, code_meso==x)
-      return(shape)
+      temp_sf <- subset(temp_sf, code_meso==x)
+      return(temp_sf)
     } else{
       stop("Error: Invalid Value to argument code_meso.")
     }

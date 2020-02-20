@@ -5,6 +5,7 @@
 #'
 #' @param year A date number in YYYY format (defaults to 2012)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -15,9 +16,9 @@
 #'   a <- read_amazon(year=2012)
 #'}
 #'
-read_amazon <- function(year=NULL, tp="simplified"){
+read_amazon <- function(year=NULL, tp="simplified", showProgress=TRUE){
 
-  # Get metadata with data addresses
+  # Get metadata with data url addresses
   temp_meta <- download_metadata(geography="amazonia_legal", data_type=tp)
 
 
@@ -31,17 +32,11 @@ read_amazon <- function(year=NULL, tp="simplified"){
   message(paste0("Using data from year ", year))
 
 
-  # # Select metadata year
-  # x <- year
-  # temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url)
   return(temp_sf)
 }
