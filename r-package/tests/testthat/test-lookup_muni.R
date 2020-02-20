@@ -11,10 +11,6 @@ testthat::skip_on_cran()
 
 test_that("lookup_muni", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
-
   # read data
   test_sf <- lookup_muni(name_muni = "fortaleza")
 
@@ -34,7 +30,6 @@ test_that("lookup_muni", {
 # ERRORS and messagens  -----------------------
 test_that("lookup_muni", {
 
-
   expect_error(lookup_muni())
 
   # Wrong name
@@ -44,8 +39,6 @@ test_that("lookup_muni", {
   # Wrong code
   expect_error(lookup_muni(code_muni=123))
   expect_error(lookup_muni(name_muni="teste"))
-
-
 
 })
 

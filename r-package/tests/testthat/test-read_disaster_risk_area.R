@@ -1,6 +1,5 @@
 context("read_disaster_risk_area")
 
-
 # skip tests because they take too much time
 testthat::skip_on_cran()
 # testthat::skip_on_travis()
@@ -13,12 +12,10 @@ testthat::skip_on_cran()
 
 test_that("read_disaster_risk_area", {
 
-
   # read data
   test_sf <- read_disaster_risk_area(year=2010)
     # test
     expect_equal(test_sf %>% length(), 10)
-
 
 }
 )
@@ -51,10 +48,6 @@ test_that("read_disaster_risk_area", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_disaster_risk_area", {
-
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   # Wrong year
   expect_error(read_disaster_risk_area(year=9999999))
