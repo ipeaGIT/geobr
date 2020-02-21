@@ -20,22 +20,14 @@
 #' }
 #'
 #'
-read_municipal_seat <- function(year=NULL, showProgress=TRUE){
+read_municipal_seat <- function(year=2010, showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="municipal_seat")
 
 
-  # Verify year input
-  if (is.null(year)){ message("Using latest data from year 2010\n")
-    year <- 2010
-    temp_meta <- subset(temp_meta, year==2010)
-
-  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
   # list paths of files to download

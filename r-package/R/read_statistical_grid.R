@@ -19,25 +19,16 @@
 #'
 #'}
 
-read_statistical_grid <- function(code_grid, year=NULL, showProgress=TRUE){ # nocov start
-
-# Verify year input
-  if (is.null(year)){ message("Using data from year 2010 /n")
-    # temp_meta <- subset(temp_meta, year==2010)
-
-  } else if (year != 2010){
-
-    stop(paste0("Error: Invalid Value to argument 'year'. The only year available is 2010."))
-  }
-
-
-# load correspondence table
-  data("grid_state_correspondence_table", envir=environment())
-
+read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # nocov start
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="statistical_grid")
 
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
+
+  # load correspondence table
+  data("grid_state_correspondence_table", envir=environment())
 
 
 # Verify code_grid input ----------------------------------

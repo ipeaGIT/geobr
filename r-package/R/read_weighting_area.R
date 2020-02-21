@@ -35,21 +35,14 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplified", showProgress=TRUE){
+read_weighting_area <- function(code_weighting="all", year=2010, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="weighting_area", data_type=tp)
 
 
-    # Verify year input
-    if (is.null(year)){ message("Using data from year 2010\n")
-      temp_meta <- subset(temp_meta, year==2010)
-
-    } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[as.vector(temp_meta[,2] == year), ]
-
-    } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                         paste(unique(temp_meta$year),collapse = " ")))
-    }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
 # Verify code_weighting input

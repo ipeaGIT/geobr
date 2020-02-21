@@ -4,7 +4,7 @@
 \alias{read_region}
 \title{Download shape file of Brazil Regions as sf objects.}
 \usage{
-read_region(year = NULL, tp = "simplified", showProgress = TRUE)
+read_region(year = 2010, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
 \item{year}{Year of the data (defaults to 2010)}

@@ -6,7 +6,7 @@
 \usage{
 read_micro_region(
   code_micro = "all",
-  year = NULL,
+  year = 2010,
   tp = "simplified",
   showProgress = TRUE
 )

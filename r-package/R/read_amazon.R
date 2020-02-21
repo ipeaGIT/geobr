@@ -16,20 +16,14 @@
 #'   a <- read_amazon(year=2012)
 #'}
 #'
-read_amazon <- function(year=NULL, tp="simplified", showProgress=TRUE){
+read_amazon <- function(year=2012, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- download_metadata(geography="amazonia_legal", data_type=tp)
 
 
-  # 1.1 Verify year input
-  if (is.null(year)){ year <- 2012}
-
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
-  }
-
-  message(paste0("Using data from year ", year))
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
 

@@ -29,12 +29,14 @@
 #' }
 #'
 #'
-read_intermediate_region <- function(code_intermediate="all", year = NULL, tp="simplified", showProgress=TRUE){
+read_intermediate_region <- function(code_intermediate="all", year=2017, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="intermediate_regions", data_type=tp)
 
 
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
   # 1.1 Verify year input
   if (is.null(year)){ year <- 2017

@@ -28,15 +28,8 @@ read_indigenous_land <- function(date, tp="simplified", showProgress=TRUE){
   temp_meta <- download_metadata(geography="indigenous_land", data_type=tp)
 
 
-# Verify date input
-  if(is.null(date)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
-                                 paste(unique(temp_meta$year),collapse = " ")))
-
-  } else if (date %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == date, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
 # list paths of files to download

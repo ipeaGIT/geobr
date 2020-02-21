@@ -6,7 +6,7 @@
 \usage{
 read_intermediate_region(
   code_intermediate = "all",
-  year = NULL,
+  year = 2017,
   tp = "simplified",
   showProgress = TRUE
 )

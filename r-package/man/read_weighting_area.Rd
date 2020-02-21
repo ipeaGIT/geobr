@@ -6,7 +6,7 @@
 \usage{
 read_weighting_area(
   code_weighting = "all",
-  year = NULL,
+  year = 2010,
   tp = "simplified",
   showProgress = TRUE
 )

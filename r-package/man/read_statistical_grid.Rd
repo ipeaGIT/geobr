@@ -4,7 +4,7 @@
 \alias{read_statistical_grid}
 \title{Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_statistical_grid(code_grid, year = NULL, showProgress = TRUE)
+read_statistical_grid(code_grid, year = 2010, showProgress = TRUE)
 }
 \arguments{
 \item{code_grid}{The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,

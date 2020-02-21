@@ -4,7 +4,7 @@
 \alias{read_biomes}
 \title{Download official data of Brazilian biomes as an sf object.}
 \usage{
-read_biomes(year = NULL, tp = "simplified", showProgress = TRUE)
+read_biomes(year = 2019, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2019)}

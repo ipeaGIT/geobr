@@ -30,15 +30,8 @@ read_disaster_risk_area <- function(year, tp="simplified", showProgress=TRUE){
   temp_meta <- download_metadata(geography="disaster_risk_area", data_type=tp)
 
 
-  # Verify year input
-  if(is.null(year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                 paste(unique(temp_meta$year),collapse = " ")))
-
-  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
   # list paths of files to download

@@ -6,7 +6,7 @@
 \usage{
 read_meso_region(
   code_meso = "all",
-  year = NULL,
+  year = 2010,
   tp = "simplified",
   showProgress = TRUE
 )

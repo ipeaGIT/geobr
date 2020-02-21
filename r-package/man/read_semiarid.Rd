@@ -4,7 +4,7 @@
 \alias{read_semiarid}
 \title{Download official data of Brazilian Semiarid as an sf object.}
 \usage{
-read_semiarid(year = NULL, tp = "simplified", showProgress = TRUE)
+read_semiarid(year = 2017, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2017)}

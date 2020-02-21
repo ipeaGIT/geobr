@@ -4,7 +4,7 @@
 \alias{read_amazon}
 \title{Download official data of Brazil's Legal Amazon as an sf object.}
 \usage{
-read_amazon(year = NULL, tp = "simplified", showProgress = TRUE)
+read_amazon(year = 2012, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2012)}

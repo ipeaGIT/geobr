@@ -17,22 +17,15 @@
 #'   a <- read_semiarid(year=2017)
 #'}
 #'
-read_semiarid <- function(year=NULL, tp="simplified", showProgress=TRUE){
+read_semiarid <- function(year=2017, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="semiarid", data_type=tp)
 
 
-  # 1.1 Verify year input
-  if (is.null(year)){ year <- 2017}
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
-  }
-
-  message(paste0("Using data from year ", year))
-
-  x<-year
 
   file_url <- as.character(subset(temp_meta, year==x)$download_path)
 
