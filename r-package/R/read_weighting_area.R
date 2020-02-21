@@ -60,27 +60,10 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
         # list paths of files to download
         file_url <- as.character(temp_meta$download_path)
 
-        # input for progress bar
-        total <- length(file_url)
-        pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
-
         # download files
-        lapply(X=file_url, function(x){
-          i <- match(c(x),file_url)
-          httr::GET(url=x, #httr::progress(),
-                    httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-          utils::setTxtProgressBar(pb, i)
-        }
-        )
-        # closing progress bar
-        close(pb)
+        temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+        return(temp_sf)
 
-        # read files and pile them up
-        files <- unlist(lapply(strsplit(file_url,"/"), tail, n = 1L))
-        files <- paste0(tempdir(),"/",files)
-        files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-        shape <- do.call('rbind', files)
-        return(shape)
       }
 
   else if( !(substr(x = code_weighting, 1, 2) %in% temp_meta$code) & !(substr(x = code_weighting, 1, 2) %in% temp_meta$code_abrev)){
@@ -93,24 +76,25 @@ read_weighting_area <- function(code_weighting="all", year = NULL, tp="simplifie
       if (is.character(code_weighting)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_weighting, 1, 2))$download_path) }
 
     # download files
-    shape <- download_gpkg(file_url)
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    return(temp_sf)
 
     # return whole state
     if(nchar(code_weighting)==2){
-      return(shape)
+      return(temp_sf)
 
     # return municipality
-    } else if(code_weighting %in% shape$code_muni){    # Get weighting area
+    } else if(code_weighting %in% temp_sf$code_muni){    # Get weighting area
       x <- code_weighting
-      shape <- subset(shape, code_muni==x)
-      return(shape)
+      temp_sf <- subset(temp_sf, code_muni==x)
+      return(temp_sf)
 
     # return code weighting area
 
-    } else if(code_weighting %in% shape$code_weighting_area){    # Get weighting area
+    } else if(code_weighting %in% temp_sf$code_weighting_area){    # Get weighting area
       x <- code_weighting
-      shape <- subset(shape, code_weighting_area==x)
-      return(shape)
+      temp_sf <- subset(temp_sf, code_weighting_area==x)
+      return(temp_sf)
 
     } else{
       stop("Error: Invalid Value to argument code_weighting.")
