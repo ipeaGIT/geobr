@@ -38,39 +38,29 @@ read_intermediate_region <- function(code_intermediate="all", year=2017, tp="sim
   # Test year input
   temp_meta <- test_year_input(temp_meta, y=year)
 
-  # 1.1 Verify year input
-  if (is.null(year)){ year <- 2017
-  message(paste0("Using data from year ", year))}
+  # list paths of files to download
+  file_url <- as.character(temp_meta$download_path)
 
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
-  } else {
+  # download files
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
-    # # Select metadata year
-    x <- year
-    temp_meta <- subset(temp_meta, year==x)
 
-    # list paths of files to download
-    file_url <- as.character(temp_meta$download_path)
 
-    # download files
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-
-  }
-
+  # input "all"
   if(code_intermediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
-    # abbrev_state
+
+  # abbrev_state
   } else if(code_intermediate %in% temp_sf$abbrev_state){
     y <- code_intermediate
     temp_sf <- subset(temp_sf, abbrev_state == y)
 
-    # code_state
+  # code_state
   } else if(code_intermediate %in% temp_sf$code_state){
     y <- code_intermediate
     temp_sf <- subset(temp_sf, code_state == y)
 
-    # code_intermediate
+  # code_intermediate
   } else if(code_intermediate %in% temp_sf$code_intermediate){
     y <- code_intermediate
     temp_sf <- subset(temp_sf, code_intermediate == y)

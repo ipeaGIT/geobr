@@ -12,10 +12,10 @@
 #'
 #' # Read specific year
 #'   br <- read_country(year=2018)
-#'
 #'}
+#'
 
-read_country <- function(year=NULL, tp="simplified", showProgress=TRUE){
+read_country <- function(year=2010, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="country", data_type=tp)

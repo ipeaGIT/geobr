@@ -62,7 +62,7 @@ read_weighting_area <- function(code_weighting="all", year=2010, tp="simplified"
   else if( !(substr(x = code_weighting, 1, 2) %in% temp_meta$code) & !(substr(x = code_weighting, 1, 2) %in% temp_meta$code_abrev)){
       stop("Error: Invalid Value to argument code_weighting.")
 
-  }else{
+  } else {
 
     # list paths of files to download
       if (is.numeric(code_weighting)){ file_url <- as.character(subset(temp_meta, code==substr(code_weighting, 1, 2))$download_path) }
@@ -70,7 +70,6 @@ read_weighting_area <- function(code_weighting="all", year=2010, tp="simplified"
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-    return(temp_sf)
 
     # return whole state
     if(nchar(code_weighting)==2){

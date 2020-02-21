@@ -10,7 +10,7 @@ testthat::skip_on_cran()
 test_that("read_intermediate_region", {
 
   # read data
-  expect_message(read_intermediate_region(year=NULL))
+  test_sf0 <- read_intermediate_region()
   test_sf <- read_intermediate_region(year=2017)
 
   test_code_state <- read_intermediate_region(code_intermediate = 11)
@@ -18,6 +18,7 @@ test_that("read_intermediate_region", {
 
 
   # check sf object
+  expect_true(is(test_sf0, "sf"))
   expect_true(is(test_sf, "sf"))
   expect_true(is(test_code_state, "sf"))
   expect_true(is(test_code_state2, "sf"))

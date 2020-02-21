@@ -24,35 +24,24 @@
 #'
 #'# Read all municipalities of the country at a given year
 #'   mun <- read_municipality(code_muni="all", year=2018)
-#'
 #'}
+#'
 
-read_municipality <- function(code_muni="all", year=NULL, tp="simplified", showProgress=TRUE){
+read_municipality <- function(code_muni="all", year=2010, tp="simplified", showProgress=TRUE){
 
-# 1.1 Verify year input
-  if (is.null(year)){ year <- 2010}
 
-# Get metadata with data addresses
+  # Get metadata with data addresses
   temp_meta <- download_metadata(geography="municipality", data_type=tp)
 
 
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
-# 2.1 Verify year input
-
-  # Test if code_muni input is null
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                                paste(unique(temp_meta$year),collapse = " ")))
-    }
-
-# Select metadata year
-  x <- year
-  temp_meta <- subset(temp_meta, year==x)
-  message(paste0("Using data from year ", x))
 
 
 # BLOCK 2.1 From 1872 to 1991  ----------------------------
 
-  if( x < 1992){
+  if( year < 1992){
 
     # list paths of files to download
     file_url <- as.character(temp_meta$download_path)
@@ -61,7 +50,6 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified", showP
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
     return(temp_sf)
 
-    return(temp_sf)
     } else {
 
 
@@ -93,15 +81,18 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified", showP
     # download files
     sf <- download_gpkg(file_url, progress_bar = showProgress)
 
-      if(nchar(code_muni)==2){
-        return(sf)
+    # input is a state code
+    if(nchar(code_muni)==2){
+        return(sf) }
 
-      } else if(code_muni %in% sf$code_muni){    # Get Municipio
+    # input is a municipality code
+    else if(code_muni %in% sf$code_muni){
           x <- code_muni
           sf <- subset(sf, code_muni==x)
           return(sf)
       } else{
           stop("Error: Invalid Value to argument code_muni.")
       }
+    }
+    }
   }
-}}

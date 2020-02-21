@@ -6,63 +6,52 @@ testthat::skip_on_cran()
 testthat::skip_on_travis()
 
 
-test_that("read_census_tract", {
+ test_that("read_census_tract", {
+
+   # test_muni <- read_census_tract(code_tract=5201108, year=2010)
+   # test_abrev <- read_census_tract(code_tract="AC", year=2010)
+   # test_state <- read_census_tract(code_tract=11, year=2010)
+   # test_all <- read_census_tract(code_tract="all", year=2010)
+   #
+   # # check sf object
+   # expect_true(is(test_muni, "sf"))
+   # expect_true(is(test_abrev, "sf"))
+   # expect_true(is(test_state, "sf"))
+   # expect_true(is(test_all, "sf"))
+
 
   # read data
   test_code_2000 <- read_census_tract(code_tract = 1100023, year = 2000)
-  test_code2_2010 <- read_census_tract(code_tract = 1100023, year = NULL)
-
   test_zone_2000 <- read_census_tract(code_tract = "AC", zone = "rural", year=2000)
-  test_zone2_2010 <- read_census_tract(code_tract = "AP", zone = "rural", year=NULL)
-
-  test_state_code_2000 <- read_census_tract(code_tract = 11, year = 2000)
-  test_state_code2_2010 <- read_census_tract(code_tract = 11, year = NULL)
-
+  test_zone2_2010 <- read_census_tract(code_tract = "AP", zone = "rural")
+  test_zone1_2010 <- read_census_tract(code_tract = "AP", zone = "urban", year=2000)
   test_all_2000 <- read_census_tract(code_tract = 'all', year = 2000)
-  test_all2_2010 <- read_census_tract(code_tract = 'all', year = NULL)
 
-  # check sf object
+   # check sf object
   expect_true(is(test_code_2000, "sf"))
-  expect_true(is(test_code2_2010, "sf"))
   expect_true(is(test_zone_2000, "sf"))
+  expect_true(is(test_zone1_2010, "sf"))
   expect_true(is(test_zone2_2010, "sf"))
-  expect_true(is(test_state_code_2000, "sf"))
-  expect_true(is(test_state_code2_2010, "sf"))
+
   expect_true(is(test_all_2000, "sf"))
-  expect_true(is(test_all2_2010, "sf"))
 
   # check projection
   expect_equal(sf::st_crs(test_code_2000)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
-})
+ })
 
 
 # ERRORS
 test_that("read_census_tract", {
 
   # Wrong year and code
-  expect_error(read_census_tract(code_tract = 9999999, year = 9999999))
-  expect_error(read_census_tract(code_tract = 9999999, year = "xxx"))
-  expect_error(read_census_tract(code_tract = "xxx", year = 9999999))
-  expect_error(read_census_tract(code_tract = "xxx", year = "xxx"))
-  expect_error(read_census_tract(code_tract = 9999999, year = NULL))
-
-  # Wrong year  expect_error(read_census_tract(code_tract="xxx", year=NULL))
-  expect_error(read_census_tract(code_tract = 11, year = 9999999))
-  expect_error(read_census-tract(code_tract = 11, year = "xx"))
-  expect_error(read_census_tract(code_tract = 1401, year = 9999999))
-  expect_error(read_census_tract(code_tract = 1401, year = "xx"))
-
-  expect_error(read_census_tract(code_tract = "SC", year = 9999999))
-  expect_error(read_census_tract(code_tract = "SC", year = "xx"))
-
-  expect_error(read_census_tract(code_tract = "all", year = 9999999))
-  expect_error(read_census_tract(code_tract = "all", year = "xx"))
+  expect_error(read_census_tract(code_tract=9999999, year=9999999))
 
   # Wrong code
-  expect_error(read_census_tract(code_tract = 9999999, year = 2000))
-  expect_error(read_census_tract(code_tract = "XXX", year = 2000))
-  expect_error(read_census_tract(code_tract = "XXX", year = NULL))
-  expect_error(read_census_tract(code_tract = NULL, year = 2000))
+  expect_error(read_census_tract(code_tract=9999999))
+  expect_error(read_census_tract(code_tract=5201108312313213))
+
+  # Wrong year
+  expect_error(read_census_tract( year=9999999))
 
 })

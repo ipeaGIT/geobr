@@ -6,7 +6,7 @@
 \usage{
 read_immediate_region(
   code_immediate = "all",
-  year = NULL,
+  year = 2017,
   tp = "simplified",
   showProgress = TRUE
 )

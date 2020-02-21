@@ -4,10 +4,10 @@
 \alias{read_indigenous_land}
 \title{Download official data of indigenous lands as an sf object.}
 \usage{
-read_indigenous_land(date, tp = "simplified", showProgress = TRUE)
+read_indigenous_land(date = 201907, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
-\item{date}{A date numer in YYYYMM format.}
+\item{date}{A date numer in YYYYMM format (Defaults to 201907)}
 
 \item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 

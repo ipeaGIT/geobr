@@ -6,7 +6,7 @@
 #' the geobr package will only keep the data for a few months per year.
 #'
 #'
-#' @param date A date numer in YYYYMM format.
+#' @param date A date numer in YYYYMM format (Defaults to 201907)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
@@ -21,7 +21,7 @@
 #' }
 #'
 
-read_indigenous_land <- function(date, tp="simplified", showProgress=TRUE){
+read_indigenous_land <- function(date=201907, tp="simplified", showProgress=TRUE){
 
 
 # Get metadata with data addresses
@@ -29,7 +29,7 @@ read_indigenous_land <- function(date, tp="simplified", showProgress=TRUE){
 
 
   # Test year input
-  temp_meta <- test_year_input(temp_meta, y=year)
+  temp_meta <- test_year_input(temp_meta, y=date)
 
 
 # list paths of files to download

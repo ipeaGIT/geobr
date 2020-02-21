@@ -71,6 +71,8 @@ test_year_input <- function(temp_meta, y=year){
 #'
 download_gpkg <- function(file_url, progress_bar = showProgress){
 
+  if( !(progress_bar %in% c(T, F)) ){ stop("Value to argument 'showProgress' has to be either TRUE or FALSE") }
+
 ## one single file
 
   if(length(file_url)==1 & progress_bar == TRUE){

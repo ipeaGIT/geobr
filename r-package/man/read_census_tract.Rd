@@ -6,7 +6,7 @@
 \usage{
 read_census_tract(
   code_tract,
-  year = NULL,
+  year = 2010,
   zone = "urban",
   tp = "simplified",
   showProgress = TRUE

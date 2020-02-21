@@ -27,14 +27,8 @@ read_semiarid <- function(year=2017, tp="simplified", showProgress=TRUE){
   temp_meta <- test_year_input(temp_meta, y=year)
 
 
-  file_url <- as.character(subset(temp_meta, year==x)$download_path)
-
-  # # Select metadata year
-  # x <- year
-  # temp_meta <- subset(temp_meta, year==x)
-
-  # list paths of files to download
-  # file_url <- as.character(temp_meta$download_path)
+  #list paths of files to download
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)

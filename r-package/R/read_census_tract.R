@@ -32,28 +32,29 @@
 #' }
 #'
 #'
-read_census_tract <- function(code_tract, year = NULL, zone = "urban", tp="simplified", showProgress=TRUE){
+read_census_tract <- function(code_tract, year=2010, zone = "urban", tp="simplified", showProgress=TRUE){
+
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="census_tract", data_type=tp)
 
 
-  # Verify year input
-  if (is.null(year)){ message("Using data from year 2010\n")
-    temp_meta <- subset(temp_meta, year==2010)
-    year<-2010
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
-  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
 
-  if (year<=2007 & zone == "urban") {message("Using data of Urban census tracts\n")
-                                      temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "U", ]}
+  # Check zone input urban and rural inputs if year <=2007
+  if (year<=2007){
 
-  if (year<=2007 & zone == "rural") {message("Using data of Rural census tracts\n")
-                                          temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "R", ]}
+    if (zone == "urban") {message("Using data of Urban census tracts\n")
+                          temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "U", ] }
 
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+    else if (zone == "rural") {message("Using data of Rural census tracts\n")
+                                       temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "R", ] }
+
+    else { stop( paste0("Error: Invalid Value to argument 'zone'. It must be either 'urban' or 'rural'")) }
+    }
+
 
 
   # Verify code_tract input

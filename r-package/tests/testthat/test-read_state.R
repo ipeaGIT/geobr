@@ -10,15 +10,15 @@ test_that("read_state", {
 
   # read data
   test_state_abrev <- read_state(code_state="AC", year=2010)
-  test_state_abrev2 <- read_state(code_state="AP", year=NULL)
+  test_state_abrev2 <- read_state(code_state="AP")
   test_state_abrev3 <- read_state(code_state='all', year=1872)
 
   test_state_code <- read_state(code_state=11, year=2010)
-  test_state_code2 <- read_state(code_state=11, year=NULL)
+  test_state_code2 <- read_state(code_state=11)
 #  test_state_code3 <- read_state(code_state=11, year=1872)
 
   test_all <- read_state(code_state="all", year=2010)
-  test_all2 <- read_state(code_state="all", year=NULL)
+  test_all2 <- read_state(code_state="all")
   test_all3 <- read_state(code_state="all", year=1872)
 
   # check sf object
@@ -71,12 +71,12 @@ test_that("read_state", {
   # Wrong code
 #  expect_message(read_state(code_state=9999999, year=1991))
   expect_error(read_state(code_state=9999999, year=2000))
-  expect_error(read_state(code_state=9999999, year=NULL))
+  expect_error(read_state(code_state=9999999))
 #  expect_message(read_state(code_state="XXX", year=1991))
   expect_error(read_state(code_state="XXX", year=2000))
-  expect_error(read_state(code_state="XXX", year=NULL))
+  expect_error(read_state(code_state="XXX"))
 #  expect_message(read_state(code_state=NULL, year=1991))
   expect_error(read_state(code_state=NULL, year=2000))
-  expect_error(read_state(code_state=NULL, year=NULL))
+  expect_error(read_state(code_state=NULL))
 
 })

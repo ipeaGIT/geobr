@@ -6,7 +6,7 @@
 \usage{
 read_municipality(
   code_muni = "all",
-  year = NULL,
+  year = 2010,
   tp = "simplified",
   showProgress = TRUE
 )
@@ -38,8 +38,8 @@ library(geobr)
 
 # Read all municipalities of the country at a given year
   mun <- read_municipality(code_muni="all", year=2018)
-
 }
+
 }
 \seealso{
 Other general area functions: 

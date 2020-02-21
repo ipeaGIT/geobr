@@ -198,23 +198,23 @@ function_coverage(fun='grid_state_correspondence_table', test_file("tests/testth
 
 
 function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
-function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_semiarid.R"))
+function_coverage(fun=geobr::read_semiarid, test_file("tests/testthat/test-read_semiarid.R"))
 
 function_coverage(fun=geobr::read_indigenous_land, test_file("tests/testthat/test-read_indigenous_land.R"))
 
 function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-read_metro_area.R"))
 
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
-function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
-function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
-function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
 
+function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
 function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_census_tract.R"))
+function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
+function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
 
 
 # create githubl shield with code coverage
@@ -225,6 +225,10 @@ function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_c
   system.time(  geobr_cov <- covr::package_coverage() )
   x <- as.data.frame(geobr_cov)
   covr::codecov( coverage = geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
+
+
+
+
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check

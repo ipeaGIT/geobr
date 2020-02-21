@@ -11,10 +11,11 @@ context("read_amazon")
 test_that("read_amazon", {
 
   # read data
-  expect_message(read_amazon(year=NULL))
+  test_sf0 <- read_amazon()
   test_sf <- read_amazon(year=2012)
 
   # check sf object
+  expect_true(is(test_sf0, "sf"))
   expect_true(is(test_sf, "sf"))
 
   # check number of columns

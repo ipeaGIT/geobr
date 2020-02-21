@@ -27,21 +27,15 @@
 #'
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
-  # Get metadata with data addresses
-  metadata <- download_metadata()
 
-  # Open lookup table
-  temp_meta <- subset(metadata, geo == "lookup_muni")
+  # Get metadata with data addresses
+  temp_meta <- download_metadata(geography="lookup_muni")
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
-
-  # download files
-  temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-  httr::GET(url=filesD, httr::progress(), httr::write_disk(temps, overwrite = T))
+  file_url <- as.character(temp_meta$download_path)
 
   # read file
-  lookup_table_2010 <- utils::read.csv(temps, stringsAsFactors = F, encoding = 'UTF-8')
+  lookup_table_2010 <- utils::read.csv(file_url, stringsAsFactors = F, encoding = 'UTF-8')
 
 
   # code_muni has priority over other arguments

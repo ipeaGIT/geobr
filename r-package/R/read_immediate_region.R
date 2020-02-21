@@ -29,23 +29,15 @@
 #' }
 #'
 #'
-read_immediate_region <- function(code_immediate="all", year = NULL, tp="simplified", showProgress=TRUE){
+read_immediate_region <- function(code_immediate="all", year=2017, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
   temp_meta <- download_metadata(geography="immediate_regions", data_type=tp)
 
 
-  # 1.1 Verify year input
-  if (is.null(year)){ year <- 2017
-  message(paste0("Using data from year ", year))}
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
-  } else {
-
-  # # Select metadata year
-   x <- year
-   temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
@@ -53,7 +45,6 @@ read_immediate_region <- function(code_immediate="all", year = NULL, tp="simplif
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
-  }
 
   # check code_immediate input
   if(code_immediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")

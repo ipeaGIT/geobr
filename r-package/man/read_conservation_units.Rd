@@ -4,10 +4,10 @@
 \alias{read_conservation_units}
 \title{Download official data of Brazilian conservation untis as an sf object.}
 \usage{
-read_conservation_units(date = NULL, tp = "simplified", showProgress = TRUE)
+read_conservation_units(date = 201909, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
-\item{date}{A date number in YYYYMM format}
+\item{date}{A date number in YYYYMM format (Defaults to 201909)}
 
 \item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 

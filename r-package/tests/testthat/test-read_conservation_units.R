@@ -12,7 +12,7 @@ test_that("read_conservation_units", {
 
   # read data
   test_sf <- read_conservation_units(date=201909)
-  expect_output(read_conservation_units(date=NULL))
+  expect_output(read_conservation_units())
 
 
   # check sf object

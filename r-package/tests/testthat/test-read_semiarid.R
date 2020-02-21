@@ -12,10 +12,11 @@ testthat::skip_on_cran()
 test_that("read_semiarid", {
 
   # read data
-  expect_message(read_semiarid(year=NULL))
+  test_sf0 <- read_semiarid()
   test_sf <- read_semiarid(year=2017)
 
   # check sf object
+  expect_true(is(test_sf0, "sf"))
   expect_true(is(test_sf, "sf"))
 
   # check number of micro

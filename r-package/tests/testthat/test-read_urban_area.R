@@ -12,8 +12,10 @@ testthat::skip_on_cran()
 test_that("read_urban_area", {
 
   # read data and check sf object
-  expect_true(is(read_urban_area(year=NULL), "sf"))
+  test_sf0 <- read_urban_area()
   test_sf <- read_urban_area(year=2005)
+
+  expect_true(is(test_sf0, "sf"))
   expect_true(is(test_sf, "sf"))
 
   # check projection

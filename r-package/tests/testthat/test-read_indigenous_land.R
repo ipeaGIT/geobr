@@ -10,9 +10,11 @@ testthat::skip_on_cran()
 test_that("read_indigenous_land", {
 
   # read data
+  test_sf0 <- read_indigenous_land()
   test_sf <- read_indigenous_land(date=201907)
 
   # check sf object
+  expect_true(is(test_sf0, "sf"))
   expect_true(is(test_sf, "sf"))
 
   # check number of micro
