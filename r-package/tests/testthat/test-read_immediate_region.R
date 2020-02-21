@@ -47,6 +47,7 @@ test_that("read_immediate_region", {
   # Wrong year
   expect_error(read_immediate_region(year = 9999999))
   expect_error(read_immediate_region(year = "xxx"))
+  testthat::expect_error(read_immediate_region(code_immediate=5201108312313213))
 
 
 
@@ -55,3 +56,4 @@ test_that("read_immediate_region", {
   expect_error(read_immediate_region(code_immediate = 9999999, year="xxx"))
 
 })
+

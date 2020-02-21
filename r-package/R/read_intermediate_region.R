@@ -45,10 +45,8 @@ read_intermediate_region <- function(code_intermediate="all", year=2017, tp="sim
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
 
-
   # input "all"
   if(code_intermediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
-
 
   # abbrev_state
   } else if(code_intermediate %in% temp_sf$abbrev_state){

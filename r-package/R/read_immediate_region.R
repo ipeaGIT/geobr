@@ -38,7 +38,6 @@ read_immediate_region <- function(code_immediate="all", year=2017, tp="simplifie
   # Test year input
   temp_meta <- test_year_input(temp_meta, y=year)
 
-
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
