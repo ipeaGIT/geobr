@@ -7,6 +7,8 @@
 #' @param code_muni The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -25,7 +27,7 @@
 #'
 #'}
 
-read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
+read_municipality <- function(code_muni="all", year=NULL, tp="simplified", showProgress=TRUE){
 
 # 1.1 Verify year input
   if (is.null(year)){ year <- 2010}
@@ -56,10 +58,8 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
     file_url <- as.character(temp_meta$download_path)
 
     # download files
-    temps <- download_gpkg(file_url)
-
-    # read sf
-    temp_sf <- sf::st_read(temps, quiet=T)
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    return(temp_sf)
 
     return(temp_sf)
     } else {

@@ -31,6 +31,6 @@ read_amazon <- function(year=2012, tp="simplified", showProgress=TRUE){
   file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temp_sf <- download_gpkg(file_url)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
 }
