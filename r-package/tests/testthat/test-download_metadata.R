@@ -8,6 +8,8 @@ test_that("download_metadata", {
 
   expect_equal(ncol(metadata), 5)
 
+  # expect_true(file.exists(tempf))
+
 })
 
 

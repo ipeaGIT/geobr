@@ -19,14 +19,14 @@ test_that("read_weighting_area", {
   test_code <- read_weighting_area(code_weighting=5201108005004, year=2010)
 
   # check sf object
-   expect_true(is(test_code, "sf"))
+  testthat::expect_true(is(test_code, "sf"))
 
 
   # check number of weighting areas
-  expect_equal(nrow(test_code), 1)
+   testthat::expect_equal(nrow(test_code), 1)
 
   # check projection
-  expect_equal(sf::st_crs(test_code)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  testthat::expect_equal(sf::st_crs(test_code)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
@@ -35,14 +35,14 @@ test_that("read_weighting_area", {
 test_that("read_weighting_area", {
 
   # Wrong year and code
-  expect_error(read_weighting_area(code_weighting=9999999, year=9999999))
+  testthat::expect_error(read_weighting_area(code_weighting=9999999, year=9999999))
 
   # Wrong code
-  expect_error(read_weighting_area(code_weighting=9999999))
-  expect_error(read_weighting_area(code_weighting=5201108312313213123123123))
-  expect_error(read_weighting_area(code_weighting="AC_ABCD"))
+  testthat::expect_error(read_weighting_area(code_weighting=9999999))
+  testthat::expect_error(read_weighting_area(code_weighting=5201108312313213123123123))
+  testthat::expect_error(read_weighting_area(code_weighting="AC_ABCD"))
 
   # Wrong year
-  expect_error(read_weighting_area( year=9999999))
+  testthat::expect_error(read_weighting_area( year=9999999))
 
 })

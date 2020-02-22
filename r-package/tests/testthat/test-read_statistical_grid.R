@@ -9,8 +9,8 @@ testthat::skip_on_cran()
 test_that("read_statistical_grid", {
 
 
-   testthat::expect_output(read_statistical_grid(code_grid=44, year=2010))
-   testthat::expect_output(read_statistical_grid(code_grid="AC", year=2010))
+   testthat::expect_output(read_statistical_grid(code_grid=39, year=2010))
+   testthat::expect_output(read_statistical_grid(code_grid="DF", year=2010))
 
  # testthat::expect_message(read_statistical_grid(code_grid="all")) # TOO HEAVY
 

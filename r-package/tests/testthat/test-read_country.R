@@ -14,11 +14,11 @@ test_that("read_country", {
 
 
   # check sf object
-  expect_true(is(test_sf0, "sf"))
-  expect_true(is(test_sf, "sf"))
+  testthat::expect_true(is(test_sf0, "sf"))
+  testthat::expect_true(is(test_sf, "sf"))
 
   # check projection
-  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  testthat::expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
@@ -28,7 +28,7 @@ test_that("read_country", {
 test_that("read_country", {
 
   # Wrong date
-  expect_error(read_country(year=9999999))
-  expect_error(read_country(year="xxx"))
+  testthat::expect_error(read_country(year=9999999))
+  testthat::expect_error(read_country(year="xxx"))
 
 })

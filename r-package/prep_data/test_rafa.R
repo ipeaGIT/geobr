@@ -214,6 +214,12 @@ function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_me
 function_coverage(fun='read_micro_region', test_file("tests/testthat/test-read_micro_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
+function_coverage(fun='read_semiarid', test_file("tests/testthat/test-read_semiarid.R"))
+function_coverage(fun='read_amazon', test_file("tests/testthat/test-read_amazon.R"))
+function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))
+function_coverage(fun='read_urban_area', test_file("tests/testthat/test-read_urban_area.R"))
+
+function_coverage(fun='read_indigenous_land', test_file("tests/testthat/test-read_indigenous_land.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))

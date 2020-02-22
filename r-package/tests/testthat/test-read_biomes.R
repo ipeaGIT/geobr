@@ -13,17 +13,15 @@ test_that("read_biomes", {
 
   # read data
   test_sf0 <- read_biomes()
-  test_sf <- read_biomes(year=2004)
 
   # check sf object
-  expect_true(is(test_sf0, "sf"))
-  expect_true(is(test_sf, "sf"))
+  testthat::expect_true(is(test_sf0, "sf"))
 
   # check number of micro
-  expect_equal(test_sf$code_biome %>% length(), 10)
+  testthat::expect_equal( nrow(test_sf0), 7)
 
   # check projection
-  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  testthat::expect_equal(sf::st_crs(test_sf0)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
@@ -34,7 +32,7 @@ test_that("read_biomes", {
 test_that("read_biomes", {
 
   # Wrong year
-  expect_error(read_biomes(year=9999999))
-  expect_error(read_biomes(year="xxx"))
+  testthat::expect_error(read_biomes(year=9999999))
+  testthat::expect_error(read_biomes(year="xxx"))
 
 })

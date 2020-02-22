@@ -9,34 +9,21 @@ testthat::skip_on_cran()
 test_that("read_meso_region", {
 
   # read data
-  test_code <- read_meso_region(code_meso=1401, year=2010)
-  test_code2 <- read_meso_region(code_meso=1401)
+  testthat::expect_output(  read_meso_region(code_meso=1401) )
+  testthat::expect_output(  read_meso_region(code_meso="AC", year=2010) )
+  testthat::expect_output(  read_meso_region(code_meso=11, year=2010) )
+  testthat::expect_output(  read_meso_region(code_meso="all", year=2010) )
 
-  test_state_abrev <- read_meso_region(code_meso="AC", year=2010)
-  test_state_abrev2 <- read_meso_region(code_meso="AP")
-
-  test_state_code <- read_meso_region(code_meso=11, year=2010)
-  test_state_code2 <- read_meso_region(code_meso=11)
-
-  test_all <- read_meso_region( year=2010)
-  test_all2 <- read_meso_region(code_meso="all")
-  expect_true(identical(test_all, test_all2))
+  test_meso_code <-  read_meso_region(code_meso=1401, year=2010)
 
   # check sf object
-  expect_true(is(test_code, "sf"))
-  expect_true(is(test_code2, "sf"))
-  expect_true(is(test_state_abrev, "sf"))
-  expect_true(is(test_state_abrev2, "sf"))
-  expect_true(is(test_state_code, "sf"))
-  expect_true(is(test_state_code2, "sf"))
-  expect_true(is(test_all, "sf"))
-  expect_true(is(test_all2, "sf"))
+  expect_true(is(test_meso_code, "sf"))
 
   # check number of meso
-  expect_equal(test_all$code_meso %>% length(), 137)
+  expect_equal( nrow(test_meso_code), 1)
 
   # check projection
-  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  expect_equal(sf::st_crs(test_meso_code)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 

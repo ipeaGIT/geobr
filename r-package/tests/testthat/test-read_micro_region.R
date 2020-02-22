@@ -11,11 +11,8 @@ test_that("read_micro_region", {
   # read data
   testthat::expect_output(  read_micro_region(code_micro=11008) )
   testthat::expect_output(  read_micro_region(code_micro="AC", year=2010) )
-  testthat::expect_output(  read_micro_region(code_micro="AP") )
   testthat::expect_output(  read_micro_region(code_micro=11, year=2010) )
-  testthat::expect_output(  read_micro_region(code_micro=11) )
   testthat::expect_output(  read_micro_region(code_micro="all", year=2010) )
-  testthat::expect_output(  read_micro_region(code_micro="all") )
 
   test_micro_code <-  read_micro_region(code_micro=11008, year=2010)
 

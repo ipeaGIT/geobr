@@ -9,8 +9,8 @@ testthat::skip_on_cran()
 test_that("read_municipality", {
 
   # read data
-  testthat::expect_output( read_municipality(code_muni=1200179, year=1991) )
-  testthat::expect_output( read_municipality(code_muni=1200179, year=2010) )
+  test_1991 <- read_municipality(code_muni=1200179, year=1991)
+  test_2010 <- read_municipality(code_muni=1200179, year=2010)
 
   testthat::expect_output( read_municipality(code_muni='AC', year=1991) )
   testthat::expect_output( read_municipality(code_muni='AC', year=2010) )
@@ -18,16 +18,16 @@ test_that("read_municipality", {
   testthat::expect_output( read_municipality(code_muni=11, year=1991) )
   testthat::expect_output( read_municipality(code_muni=11, year=2010) )
 
-  test_all_1991 <- read_municipality(code_muni='all', year=1991)
-  test_all_2010 <- read_municipality(code_muni='all', year=2010)
+  testthat::expect_output( read_municipality(code_muni='all', year=1991) )
+  testthat::expect_output( read_municipality(code_muni='all', year=2010) )
 
 
   # check sf object
-  expect_true(is(test_all_1991, "sf"))
-  expect_true(is(test_all_2010, "sf"))
+  expect_true(is(test_1991, "sf"))
+  expect_true(is(test_2010, "sf"))
 
   # check projection
-  expect_equal(sf::st_crs(test_all_2010)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  expect_equal(sf::st_crs(test_2010)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
