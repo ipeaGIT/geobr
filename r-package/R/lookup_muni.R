@@ -35,7 +35,8 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   file_url <- as.character(temp_meta$download_path)
 
   # read file
-  lookup_table_2010 <- utils::read.csv(file_url, stringsAsFactors = F, encoding = 'UTF-8')
+    lookup_table_2010 <- readr::read_csv(file_url, col_types = cols() )
+    # lookup_table_2010 <- utils::read.csv(file_url, stringsAsFactors = F, encoding = 'UTF-8')
 
 
   # code_muni has priority over other arguments

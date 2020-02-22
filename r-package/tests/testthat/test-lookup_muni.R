@@ -13,33 +13,37 @@ test_that("lookup_muni", {
 
   # read data
   test_sf <- lookup_muni(name_muni = "fortaleza")
+  test_sf2 <- lookup_muni(code_muni=2304400)
+  test_sf3 <- lookup_muni(name_muni="all")
+  test_sf4 <- lookup_muni(code_muni="all")
 
   # check sf object
   expect_true(is(test_sf, "data.frame"))
+  expect_true(is(test_sf2, "data.frame"))
+  expect_true(is(test_sf3, "data.frame"))
+  expect_true(is(test_sf4, "data.frame"))
 
   # check number of cols
-  expect_equal(test_sf %>% ncol(), 13)
+  expect_equal( ncol(test_sf), 13)
 
   # When using two arguments (supposed to give a warning)
   expect_warning(lookup_muni(name_muni="fortaleza", code_muni=2304400))
+  expect_warning( lookup_muni(name_muni="arroz", code_muni=2304400) )
+
 })
-
-
 
 
 # ERRORS and messagens  -----------------------
 test_that("lookup_muni", {
 
-  expect_error(lookup_muni())
-  expect_error(lookup_muni(name_muni="arroz", code_muni=123213))
+   expect_error(lookup_muni())
+   expect_error(lookup_muni(name_muni="arroz", code_muni=123213))
 
   # Wrong name
-  expect_error(lookup_muni(name_muni="arroz"))
-  expect_error(lookup_muni(name_muni=123))
+   expect_error(lookup_muni(name_muni="arroz"))
 
   # Wrong code
-  expect_error(lookup_muni(code_muni=123))
-  expect_error(lookup_muni(name_muni="teste"))
+   expect_error(lookup_muni(code_muni=99999999))
 
 })
 

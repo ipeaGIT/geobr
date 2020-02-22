@@ -16,6 +16,7 @@ test_that("lookup_muni", {
 
   # check number of cols
   expect_equal(ncol(df), 4)
+  expect_true(is.data.frame(df))
 
 })
 

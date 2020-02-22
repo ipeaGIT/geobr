@@ -205,6 +205,11 @@ function_coverage(fun=geobr::read_indigenous_land, test_file("tests/testthat/tes
 function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-read_metro_area.R"))
 
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
+
+
+function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
+function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
+
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
 function_coverage(fun='read_micro_region', test_file("tests/testthat/test-read_micro_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
@@ -229,8 +234,11 @@ system.time( test_file("tests/testthat/test-read_census_tract.R") )
   # usethis::use_coverage( type = c("codecov"))
 
 # update Package coverage
-  Sys.setenv(NOT_CRAN = "false")
+  Sys.setenv(NOT_CRAN = "true")
   system.time(  geobr_cov <- covr::package_coverage() )
+  geobr_cov
+  beepr::beep()
+
   x <- as.data.frame(geobr_cov)
   covr::codecov( coverage = geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
 

@@ -22,7 +22,7 @@ test_that("read_weighting_area", {
 
 
   # check number of weighting areas
-  expect_equal(nrow(test_code), 68)
+  expect_equal(nrow(test_code), 1)
 
   # check projection
   expect_equal(sf::st_crs(test_code)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
@@ -38,7 +38,7 @@ test_that("read_weighting_area", {
 
   # Wrong code
   expect_error(read_weighting_area(code_weighting=9999999))
-  expect_error(read_weighting_area(code_weighting=5201108312313213))
+  expect_error(read_weighting_area(code_weighting=5201108312313213123123123))
 
   # Wrong year
   expect_error(read_weighting_area( year=9999999))
