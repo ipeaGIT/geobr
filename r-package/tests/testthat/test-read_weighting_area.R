@@ -9,26 +9,20 @@ testthat::skip_on_cran()
 
 test_that("read_weighting_area", {
 
-  # read data
+  # # read data
+  testthat::expect_output( read_weighting_area(code_weighting=5201108, year=2010) )
+  testthat::expect_output( read_weighting_area(code_weighting="AC", year=2010) )
+  testthat::expect_output( read_weighting_area(code_weighting=11, year=2010) )
+
+
   test_code <- read_weighting_area(code_weighting=5201108005004, year=2010)
-  test_muni <- read_weighting_area(code_weighting=5201108, year=2010)
-  test_abrev <- read_weighting_area(code_weighting="AC", year=2010)
-  test_state <- read_weighting_area(code_weighting=11, year=2010)
-  test_all <- read_weighting_area(code_weighting="all", year=2010)
-
-
-
 
   # check sf object
-  expect_true(is(test_code, "sf"))
-  expect_true(is(test_muni, "sf"))
-  expect_true(is(test_abrev, "sf"))
-  expect_true(is(test_state, "sf"))
-  expect_true(is(test_all, "sf"))
+   expect_true(is(test_code, "sf"))
 
 
   # check number of weighting areas
-  expect_equal(nrow(test_code), 1)
+  expect_equal(nrow(test_code), 68)
 
   # check projection
   expect_equal(sf::st_crs(test_code)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")

@@ -21,6 +21,7 @@ test_that("read_municipality", {
   test_all_1991 <- read_municipality(code_muni='all', year=1991)
   test_all_2010 <- read_municipality(code_muni='all', year=2010)
 
+
   # check sf object
   expect_true(is(test_all_1991, "sf"))
   expect_true(is(test_all_2010, "sf"))

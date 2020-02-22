@@ -9,33 +9,24 @@ testthat::skip_on_cran()
 test_that("read_micro_region", {
 
   # read data
-  test_micro_code <- read_micro_region(code_micro=11008, year=2010)
-  test_micro_code2 <- read_micro_region(code_micro=11008)
+  testthat::expect_output(  read_micro_region(code_micro=11008) )
+  testthat::expect_output(  read_micro_region(code_micro="AC", year=2010) )
+  testthat::expect_output(  read_micro_region(code_micro="AP") )
+  testthat::expect_output(  read_micro_region(code_micro=11, year=2010) )
+  testthat::expect_output(  read_micro_region(code_micro=11) )
+  testthat::expect_output(  read_micro_region(code_micro="all", year=2010) )
+  testthat::expect_output(  read_micro_region(code_micro="all") )
 
-  test_state_abrev <- read_micro_region(code_micro="AC", year=2010)
-  test_state_abrev2 <- read_micro_region(code_micro="AP")
-
-  test_state_code <- read_micro_region(code_micro=11, year=2010)
-  test_state_code2 <- read_micro_region(code_micro=11)
-
-  test_all <- read_micro_region(code_micro="all", year=2010)
-  test_all2 <- read_micro_region(code_micro="all")
+  test_micro_code <-  read_micro_region(code_micro=11008, year=2010)
 
   # check sf object
   expect_true(is(test_micro_code, "sf"))
-  expect_true(is(test_micro_code2, "sf"))
-  expect_true(is(test_state_abrev, "sf"))
-  expect_true(is(test_state_abrev2, "sf"))
-  expect_true(is(test_state_code, "sf"))
-  expect_true(is(test_state_code2, "sf"))
-  expect_true(is(test_all, "sf"))
-  expect_true(is(test_all2, "sf"))
 
   # check number of micro
-  expect_equal(test_all$code_micro %>% length(), 557)
+  expect_equal( nrow(test_micro_code), 1)
 
   # check projection
-  expect_equal(sf::st_crs(test_all)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  expect_equal(sf::st_crs(test_micro_code)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
@@ -43,6 +34,16 @@ test_that("read_micro_region", {
 
 # ERRORS
 test_that("read_micro_region", {
+
+
+  # expect_error(read_census_tract(code_tract=9999999, year=9999999))
+  #
+  # # Wrong code
+  # expect_error(read_census_tract(code_tract=9999999))
+  # expect_error(read_census_tract(code_tract=5201108312313213))
+  #
+  # # Wrong year
+  # expect_error(read_census_tract( year=9999999))
 
   # Wrong year and code
   expect_error(read_micro_region(code_micro=9999999, year=9999999))

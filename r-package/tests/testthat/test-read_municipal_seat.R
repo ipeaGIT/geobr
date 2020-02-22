@@ -10,10 +10,10 @@ testthat::skip_on_cran()
 test_that("read_municipal_seat", {
 
   # read data and check sf object
-  test_sf0 <- read_municipal_seat()
+  testthat::expect_output( read_municipal_seat() )
   test_sf <- read_municipal_seat(year=1991)
 
-  expect_true(is(test_sf0, "sf"))
+
   expect_true(is(test_sf, "sf"))
 
   # check projection

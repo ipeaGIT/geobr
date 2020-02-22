@@ -206,6 +206,7 @@ function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-rea
 
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
+function_coverage(fun='read_micro_region', test_file("tests/testthat/test-read_micro_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
@@ -222,6 +223,7 @@ function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_c
 function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
 function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
 
+system.time( test_file("tests/testthat/test-read_census_tract.R") )
 
 # create githubl shield with code coverage
   # usethis::use_coverage( type = c("codecov"))

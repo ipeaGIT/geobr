@@ -21,19 +21,13 @@ testthat::skip_on_cran()
 
 
   # read data
+  testthat::expect_output( read_census_tract(code_tract = "AC", zone = "rural", year=2000) )
+  testthat::expect_output( read_census_tract(code_tract = "AP", zone = "rural") )
+  testthat::expect_output( read_census_tract(code_tract = "AP", zone = "urban", year=2000) )
+  testthat::expect_output( read_census_tract(code_tract = 'all', year = 2000) )
+
+
   test_code_2000 <- read_census_tract(code_tract = 1100023, year = 2000)
-  test_zone_2000 <- read_census_tract(code_tract = "AC", zone = "rural", year=2000)
-  test_zone2_2010 <- read_census_tract(code_tract = "AP", zone = "rural")
-  test_zone1_2010 <- read_census_tract(code_tract = "AP", zone = "urban", year=2000)
-  test_all_2000 <- read_census_tract(code_tract = 'all', year = 2000)
-
-   # check sf object
-  expect_true(is(test_code_2000, "sf"))
-  expect_true(is(test_zone_2000, "sf"))
-  expect_true(is(test_zone1_2010, "sf"))
-  expect_true(is(test_zone2_2010, "sf"))
-
-  expect_true(is(test_all_2000, "sf"))
 
   # check projection
   expect_equal(sf::st_crs(test_code_2000)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
