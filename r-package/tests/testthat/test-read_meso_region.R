@@ -44,28 +44,14 @@ test_that("read_meso_region", {
 # ERRORS
 test_that("read_meso_region", {
 
-  # Wrong year and code
-    expect_error(read_meso_region(code_meso=9999999, year=9999999))
-    expect_error(read_meso_region(code_meso=9999999, year="xxx"))
-    expect_error(read_meso_region(code_meso="xxx", year=9999999))
-    expect_error(read_meso_region(code_meso="xxx", year="xxx"))
-    expect_error(read_meso_region(code_meso=9999999))
 
-  # Wrong year  expect_error(read_meso_region(code_meso="xxx"))
-    expect_error(read_meso_region(code_meso=11, year=9999999))
-    expect_error(read_meso_region(code_meso=11, year= "xx"))
-    expect_error(read_meso_region(code_meso=1401, year=9999999))
-    expect_error(read_meso_region(code_meso=1401, year= "xx"))
-
-    expect_error(read_meso_region(code_meso="SC", year=9999999))
-    expect_error(read_meso_region(code_meso="SC", year="xx"))
-
-    expect_error(read_meso_region(code_meso="all", year=9999999))
-    expect_error(read_meso_region(code_meso="all", year="xx"))
+  expect_error(read_meso_region(code_meso=9999999, year=9999999))
 
   # Wrong code
-     expect_error(read_meso_region(code_meso=9999999, year=2000))
-     expect_error(read_meso_region(code_meso="XXX", year=2000))
-     expect_error(read_meso_region(code_meso="XXX"))
-     expect_error(read_meso_region(code_meso=NULL, year=2000))
+  expect_error(read_meso_region(code_meso=9999999))
+  expect_error(read_meso_region(code_meso=5201108312313213))
+
+  # Wrong year
+  expect_error(read_meso_region( year=9999999))
+
 })

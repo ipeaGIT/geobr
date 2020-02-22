@@ -229,7 +229,7 @@ system.time( test_file("tests/testthat/test-read_census_tract.R") )
   # usethis::use_coverage( type = c("codecov"))
 
 # update Package coverage
-  Sys.setenv(NOT_CRAN = "true")
+  Sys.setenv(NOT_CRAN = "false")
   system.time(  geobr_cov <- covr::package_coverage() )
   x <- as.data.frame(geobr_cov)
   covr::codecov( coverage = geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
