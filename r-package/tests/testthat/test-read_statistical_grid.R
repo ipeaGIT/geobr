@@ -3,7 +3,7 @@ context("read_statistical_grid")
 # skip tests because they take too much time
 # skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
-testthat::skip_on_travis()
+# testthat::skip_on_travis()
 
 
 test_that("read_statistical_grid", {
