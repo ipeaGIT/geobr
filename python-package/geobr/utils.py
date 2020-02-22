@@ -261,4 +261,5 @@ def list_geobr_functions():
     for i in range(len(df)):
         for each in df.columns:
             print(f'{each}: {df.loc[i, each]}')
+
         print('------------------------------')
