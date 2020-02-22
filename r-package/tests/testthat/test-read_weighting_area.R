@@ -9,7 +9,8 @@ testthat::skip_on_cran()
 
 test_that("read_weighting_area", {
 
-  # # read data
+  # read data
+  testthat::expect_output( read_weighting_area() )
   testthat::expect_output( read_weighting_area(code_weighting=5201108, year=2010) )
   testthat::expect_output( read_weighting_area(code_weighting="AC", year=2010) )
   testthat::expect_output( read_weighting_area(code_weighting=11, year=2010) )
@@ -39,6 +40,7 @@ test_that("read_weighting_area", {
   # Wrong code
   expect_error(read_weighting_area(code_weighting=9999999))
   expect_error(read_weighting_area(code_weighting=5201108312313213123123123))
+  expect_error(read_weighting_area(code_weighting="AC_ABCD"))
 
   # Wrong year
   expect_error(read_weighting_area( year=9999999))
