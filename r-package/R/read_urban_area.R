@@ -8,6 +8,8 @@
 #'
 #' @param year A year number in YYYY format (defaults to 2015)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @examples \donttest{
 #'
@@ -19,37 +21,21 @@
 #' }
 #'
 #'
-read_urban_area <- function(year=NULL, tp="simplified"){
+read_urban_area <- function(year=2015, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="urban_area", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="urban_area")
 
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
-
-  # Verify year input
-  if (is.null(year)){ message("Using latest data available, from year 2015\n")
-    year <- 2015
-    temp_meta <- subset(temp_meta, year==2015)
-
-  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
+
 }

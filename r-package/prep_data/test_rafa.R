@@ -198,33 +198,59 @@ function_coverage(fun='grid_state_correspondence_table', test_file("tests/testth
 
 
 function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
-function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_semiarid.R"))
+function_coverage(fun=geobr::read_semiarid, test_file("tests/testthat/test-read_semiarid.R"))
 
 function_coverage(fun=geobr::read_indigenous_land, test_file("tests/testthat/test-read_indigenous_land.R"))
 
 function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-read_metro_area.R"))
 
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
-function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
-function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
+
+
+function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
+function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
+
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
+function_coverage(fun='read_micro_region', test_file("tests/testthat/test-read_micro_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
+function_coverage(fun='read_semiarid', test_file("tests/testthat/test-read_semiarid.R"))
+function_coverage(fun='read_amazon', test_file("tests/testthat/test-read_amazon.R"))
+function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))
+function_coverage(fun='read_urban_area', test_file("tests/testthat/test-read_urban_area.R"))
+
+function_coverage(fun='read_indigenous_land', test_file("tests/testthat/test-read_indigenous_land.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
+function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
+
+function_coverage(fun='read_intermediate_region', test_file("tests/testthat/test-read_intermediate_region.R"))
+function_coverage(fun='read_immediate_region', test_file("tests/testthat/test-read_immediate_region.R"))
+
+
+
+function_coverage(fun='read_municipality', test_file("tests/testthat/test-read_municipality.R"))
+function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_census_tract.R"))
+function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
 function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
 
-function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_census_tract.R"))
-
+system.time( test_file("tests/testthat/test-read_census_tract.R") )
 
 # create githubl shield with code coverage
   # usethis::use_coverage( type = c("codecov"))
 
 # update Package coverage
   Sys.setenv(NOT_CRAN = "true")
-system.time(  geobr_cov <- covr::package_coverage() )
+  system.time(  geobr_cov <- covr::package_coverage() )
+  geobr_cov
+  beepr::beep()
+
   x <- as.data.frame(geobr_cov)
   covr::codecov( coverage = geobr_cov, token ='e3532778-1d8d-4605-a151-2a88593e1612' )
+
+
+
+
 
 ### update package documentation ----------------
 # http://r-pkgs.had.co.nz/release.html#release-check
@@ -295,9 +321,6 @@ setwd("R:/Dropbox/git/geobr")
 setwd("..")
 
 
-# Install package
-  # devtools::install("geobr", build_vignettes = T)
-  # system("R CMD INSTALL --build geobr")
 
 # build binary
   system("R CMD build . --resave-data") # build tar.gz
@@ -306,8 +329,25 @@ setwd("..")
 # Check package errors
    devtools::check(pkg = ".",  cran = TRUE)
 
+ Sys.setenv(NOT_CRAN = "false")
+ system.time(  devtools::test(pkg = ".",  cran = TRUE) )
+ beepr::beep()
+
+ CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
+ OK:       37
+ Failed:   0
+ Warnings: 0
+ Skipped:  33
+ usuário   sistema decorrido
+ 10.31      1.74     24.77
 
 
+ OK:       329
+ Failed:   0
+ Warnings: 0
+ Skipped:  0
+ usuário   sistema decorrido
+ 264.21     12.42    487.20
 # pack <- "geobr"
 # path <- find.package(pack)
 # system(paste(shQuote(file.path(R.home("bin"), "R")),
@@ -316,7 +356,6 @@ setwd("..")
 #
 #
 # install.packages("pdflatex", dependencies = T)
-
 
 # PLOT
     system.time( am <- read_census_tract(code_tract="am") )

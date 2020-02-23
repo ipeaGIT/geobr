@@ -30,7 +30,10 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
                                                         'tp',
                                                         'filesD',
                                                         'temp_meta',
-                                                        'group_by'))
+                                                        'group_by',
+                                                        'showProgress',
+                                                        'year'
+                                                        ))
 
 .onLoad <- function(lib, pkg) {
   requireNamespace("sf")

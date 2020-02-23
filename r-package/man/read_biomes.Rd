@@ -4,12 +4,14 @@
 \alias{read_biomes}
 \title{Download official data of Brazilian biomes as an sf object.}
 \usage{
-read_biomes(year = NULL, tp = "simplified")
+read_biomes(year = 2019, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2019)}
 
 \item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+
+\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
 This data set includes  polygons of all biomes present in Brazilian territory and coastal area.

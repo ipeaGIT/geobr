@@ -4,12 +4,14 @@
 \alias{read_region}
 \title{Download shape file of Brazil Regions as sf objects.}
 \usage{
-read_region(year = NULL, tp = "simplified")
+read_region(year = 2010, tp = "simplified", showProgress = TRUE)
 }
 \arguments{
 \item{year}{Year of the data (defaults to 2010)}
 
 \item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+
+\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

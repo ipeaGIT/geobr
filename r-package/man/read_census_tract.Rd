@@ -4,7 +4,13 @@
 \alias{read_census_tract}
 \title{Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).}
 \usage{
-read_census_tract(code_tract, year = NULL, zone = "urban", tp = "simplified")
+read_census_tract(
+  code_tract,
+  year = 2010,
+  zone = "urban",
+  tp = "simplified",
+  showProgress = TRUE
+)
 }
 \arguments{
 \item{code_tract}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
@@ -16,6 +22,8 @@ all census tracts of the country are loaded.}
 \item{zone}{"urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")}
 
 \item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+
+\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
 Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).

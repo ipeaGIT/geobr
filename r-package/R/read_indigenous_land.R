@@ -6,8 +6,10 @@
 #' the geobr package will only keep the data for a few months per year.
 #'
 #'
-#' @param date A date numer in YYYYMM format.
+#' @param date A date numer in YYYYMM format (Defaults to 201907)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @examples \donttest{
 #'
@@ -19,38 +21,21 @@
 #' }
 #'
 
-read_indigenous_land <- function(date, tp="simplified"){
+read_indigenous_land <- function(date=201907, tp="simplified", showProgress=TRUE){
 
 
 # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="indigenous_land", data_type=tp)
 
 
-# Select geo
-  temp_meta <- subset(metadata, geo=="indigenous_land")
-
-# Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
-
-
-# Verify date input
-  if(is.null(date)){ stop(paste0("Error: Invalid Value to argument 'date'. It must be one of the following: ",
-                                 paste(unique(temp_meta$year),collapse = " ")))
-
-  } else if (date %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == date, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=date)
 
 
 # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
 # download files
-  temps <- download_gpkg(filesD)
-
-# read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
 }

@@ -1,17 +1,19 @@
-context("Read")
+context("read_urban_area")
+
+
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 # Reading the data -----------------------
 
 test_that("read_urban_area", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
-
   # read data and check sf object
-  expect_true(is(read_urban_area(year=NULL), "sf"))
-  test_sf <- read_urban_area(year=2005)
+  test_sf <- read_urban_area()
+
   expect_true(is(test_sf, "sf"))
 
   # check projection
@@ -24,12 +26,7 @@ test_that("read_urban_area", {
 # ERRORS and messagens  -----------------------
 test_that("read_urban_area", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  # skip_on_travis()
-
   # Wrong year
   expect_error(read_urban_area(year=9999999))
-  expect_error(read_urban_area(year="xxx"))
 
 })

@@ -7,6 +7,8 @@
 #' @param code_muni The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -22,52 +24,32 @@
 #'
 #'# Read all municipalities of the country at a given year
 #'   mun <- read_municipality(code_muni="all", year=2018)
-#'
 #'}
+#'
 
-read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
-
-# 1.1 Verify year input
-  if (is.null(year)){ year <- 2010}
-
-# Get metadata with data addresses
-  metadata <- download_metadata()
-
-# Select metadata geo
-  temp_meta <- subset(metadata, geo=="municipality")
-
-# Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+read_municipality <- function(code_muni="all", year=2010, tp="simplified", showProgress=TRUE){
 
 
+  # Get metadata with data addresses
+  temp_meta <- download_metadata(geography="municipality", data_type=tp)
 
-# 2.1 Verify year input
 
-  # Test if code_muni input is null
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                                paste(unique(temp_meta$year),collapse = " ")))
-    }
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
-# Select metadata year
-  x <- year
-  temp_meta <- subset(temp_meta, year==x)
-  message(paste0("Using data from year ", x))
 
 
 # BLOCK 2.1 From 1872 to 1991  ----------------------------
 
-  if( x < 1992){
+  if( year < 1992){
 
     # list paths of files to download
-    filesD <- as.character(temp_meta$download_path)
+    file_url <- as.character(temp_meta$download_path)
 
     # download files
-    temps <- download_gpkg(filesD)
-
-    # read sf
-    temp_sf <- sf::st_read(temps, quiet=T)
-
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
     return(temp_sf)
+
     } else {
 
 
@@ -79,29 +61,11 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
     if(code_muni=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
       # list paths of files to download
-      filesD <- as.character(temp_meta$download_path)
-
-      # input for progress bar
-      total <- length(filesD)
-      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+      file_url <- as.character(temp_meta$download_path)
 
       # download files
-      lapply(X=filesD, function(x){
-        i <- match(c(x),filesD)
-        httr::GET(url=x, #httr::progress(),
-                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-        utils::setTxtProgressBar(pb, i)
-      }
-      )
-      # closing progress bar
-      close(pb)
-
-      # read files and pile them up
-      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-      files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-      sf <- do.call('rbind', files)
-      return(sf)
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      return(temp_sf)
     }
 
   else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code) & !(substr(x = code_muni, 1, 2) %in% temp_meta$code_abrev)){
@@ -111,25 +75,24 @@ read_municipality <- function(code_muni="all", year=NULL, tp="simplified"){
   } else{
 
     # list paths of files to download
-    if (is.numeric(code_muni)){ filesD <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
-    if (is.character(code_muni)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_muni, 1, 2))$download_path) }
+    if (is.numeric(code_muni)){ file_url <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
+    if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_muni, 1, 2))$download_path) }
 
     # download files
-    temps <- paste0(tempdir(),"/",unlist(lapply(strsplit(filesD,"/"),tail,n=1L)))
-    httr::GET(url=filesD,  httr::progress(), httr::write_disk(temps, overwrite = T))
+    sf <- download_gpkg(file_url, progress_bar = showProgress)
 
-    # read sf
-    sf <- sf::st_read(temps, quiet=T)
+    # input is a state code
+    if(nchar(code_muni)==2){
+        return(sf) }
 
-      if(nchar(code_muni)==2){
-        return(sf)
-
-      } else if(code_muni %in% sf$code_muni){    # Get Municipio
+    # input is a municipality code
+    else if(code_muni %in% sf$code_muni){
           x <- code_muni
           sf <- subset(sf, code_muni==x)
           return(sf)
       } else{
           stop("Error: Invalid Value to argument code_muni.")
       }
+    }
+    }
   }
-}}

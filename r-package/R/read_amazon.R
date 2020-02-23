@@ -5,6 +5,7 @@
 #'
 #' @param year A date number in YYYY format (defaults to 2012)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -15,39 +16,21 @@
 #'   a <- read_amazon(year=2012)
 #'}
 #'
-read_amazon <- function(year=NULL, tp="simplified"){
+read_amazon <- function(year=2012, tp="simplified", showProgress=TRUE){
 
-  # Get metadata with data addresses
-  metadata <- download_metadata()
-
-  # Select geo
-  temp_meta <- subset(metadata, geo=="amazonia_legal")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+  # Get metadata with data url addresses
+  temp_meta <- download_metadata(geography="amazonia_legal", data_type=tp)
 
 
-  # 1.1 Verify year input
-  if (is.null(year)){ year <- 2012}
-
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
-  }
-
-  message(paste0("Using data from year ", year))
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
-  # # Select metadata year
-  # x <- year
-  # temp_meta <- subset(temp_meta, year==x)
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
 }

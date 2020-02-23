@@ -5,6 +5,8 @@
 #'
 #' @param year A date number in YYYY format (defaults to 2017)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -15,41 +17,21 @@
 #'   a <- read_semiarid(year=2017)
 #'}
 #'
-read_semiarid <- function(year=NULL, tp="simplified"){
+read_semiarid <- function(year=2017, tp="simplified", showProgress=TRUE){
 
   # Get metadata with data addresses
-  metadata <- download_metadata()
+  temp_meta <- download_metadata(geography="semiarid", data_type=tp)
 
-  # Select geo
-  temp_meta <- subset(metadata, geo=="semiarid")
 
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
-  # 1.1 Verify year input
-  if (is.null(year)){ year <- 2017}
 
-  if(!(year %in% temp_meta$year)){ stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                                               paste(unique(temp_meta$year),collapse = " ")))
-  }
-
-  message(paste0("Using data from year ", year))
-
-  x<-year
-
-  filesD <- as.character(subset(temp_meta, year==x)$download_path)
-
-  # # Select metadata year
-  # x <- year
-  # temp_meta <- subset(temp_meta, year==x)
-
-  # list paths of files to download
-  # filesD <- as.character(temp_meta$download_path)
+  #list paths of files to download
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
+
 }

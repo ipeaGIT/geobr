@@ -1,20 +1,22 @@
-context("Read")
+context("lookup_muni")
 
+# skip tests because they take too much time
+testthat::skip_on_cran()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 # Reading the data -----------------------
 
 
 test_that("lookup_muni", {
 
-  # skip tests because they take too much time
-  skip_on_cran()
-  skip_on_travis()
 
   # read data
   df <- list_geobr()
 
   # check number of cols
   expect_equal(ncol(df), 4)
+  expect_true(is.data.frame(df))
 
 })
 

@@ -5,6 +5,8 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
@@ -22,29 +24,14 @@
 #'
 #'}
 
-read_state <- function(code_state="all", year=NULL, tp="simplified"){
+read_state <- function(code_state="all", year=2010, tp="simplified", showProgress=TRUE){
 
-  # Get metadata with data addresses
-  metadata <- download_metadata()
-
-  # Select geo
-  temp_meta <- subset(metadata, geo=="state")
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, tp)
-
-  # Verify year input
-  if (is.null(year)){ message("Using data from year 2010\n")
-    year <- 2010
-    temp_meta <- subset(temp_meta, year==2010)
-
-  } else if (year %in% temp_meta$year){ temp_meta <- temp_meta[temp_meta[,2] == year, ]
-
-  } else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
-                       paste(unique(temp_meta$year),collapse = " ")))
-  }
+  # Get metadata with data url addresses
+  temp_meta <- download_metadata(geography="state", data_type=tp)
 
 
+  # Test year input
+  temp_meta <- test_year_input(temp_meta, y=year)
 
 
 # BLOCK 2.1 From 1872 to 1991  ----------------------------
@@ -63,15 +50,12 @@ if( x < 1992){
   message("Loading data for the whole country\n")
 
   # list paths of files to download
-  filesD <- as.character(temp_meta$download_path)
+  file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temps <- download_gpkg(filesD)
-
-  # read sf
-  temp_sf <- sf::st_read(temps, quiet=T)
-
+  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
   return(temp_sf)
+
 } else {
 
 
@@ -83,29 +67,12 @@ if( x < 1992){
     if(code_state=="all"){ message("Loading data for the whole country\n")
 
       # list paths of files to download
-      filesD <- as.character(temp_meta$download_path)
+      file_url <- as.character(temp_meta$download_path)
 
-      # input for progress bar
-      total <- length(filesD)
-      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+      # download gpkg
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      return(temp_sf)
 
-      # download files
-      lapply(X=filesD, function(x){
-        i <- match(c(x),filesD)
-        httr::GET(url=x, #httr::progress(),
-                  httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-        utils::setTxtProgressBar(pb, i)
-      }
-      )
-      # closing progress bar
-      close(pb)
-
-      # read files and pile them up
-      files <- unlist(lapply(strsplit(filesD,"/"), tail, n = 1L))
-      files <- paste0(tempdir(),"/",files)
-      files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-      shape <- do.call('rbind', files)
-      return(shape)
     }
 
   if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
@@ -114,18 +81,15 @@ if( x < 1992){
   } else{
 
     # list paths of files to download
-    if (is.numeric(code_state)){ filesD <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
-    if (is.character(code_state)){ filesD <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
+    if (is.numeric(code_state)){ file_url <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
+    if (is.character(code_state)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
 
 
-    # download files
-    temps <- download_gpkg(filesD)
-
-    # read sf
-    shape <- sf::st_read(temps, quiet=T)
+    # download gpkg
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
     if(nchar(code_state)==2){
-      return(shape)
+      return(temp_sf)
 
     # } else if(code_state %in% shape$code_state){
     #   x <- code_state

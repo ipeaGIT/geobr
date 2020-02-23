@@ -4,7 +4,10 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities as an sf object.}
 \usage{
-read_health_facilities()
+read_health_facilities(showProgress = TRUE)
+}
+\arguments{
+\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
 Data comes from the National Registry of Healthcare facilities (Cadastro Nacional de Estabelecimentos de Saude - CNES),

@@ -4,10 +4,10 @@
 \alias{select_data_type}
 \title{Select data type: 'original' or 'simplified' (default)}
 \usage{
-select_data_type(temp_meta, tp)
+select_data_type(temp_meta, tp = NULL)
 }
 \arguments{
-\item{temp_meta}{A dataframe with the url addresses of geobr datasets}
+\item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}
 
 \item{tp}{A string indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
 }
@@ -16,6 +16,8 @@ Select data type: 'original' or 'simplified' (default)
 }
 \seealso{
 Other support functions: 
-\code{\link{download_gpkg}()}
+\code{\link{download_gpkg}()},
+\code{\link{load_gpkg}()},
+\code{\link{test_year_input}()}
 }
 \concept{support functions}

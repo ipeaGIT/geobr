@@ -34,7 +34,7 @@
 * Shows a single download progress bar when `*_code="all"`. This fixes the output of vignette and closes issue #42 (2019-08-05)
 
 -------------------------------------------------------
-# geobr dev v1.2
+# geobr v1.2 (2020-02-20)
 
 ### New data sets/functions
 * data set `read_metro_area` to read official metropolitan areas - closes issue #2 (added in 2019-12).
@@ -47,10 +47,15 @@
 * All functions now have an additional argument `tp` as in data 'type'. This argument defaults to read data sets with 'simplified' borders, what makes the package much more efficient for downloading and plotting the data. Closes issue #76 (2020-02)
 * Pretty much all functions now download the data for the entire country as a default. Closes issue #77. The only exceptions are `read_statistical_grid` and `read_census_tract`. These two functions do take a really long time to load the data for the whole country and it might crash R due to memory limits, so the user must be more 'aware' about her choice (2020-02)
 
- ### Minor changes
+### Minor changes
  * New utils.R script containing support functions to reduce code redundancy (2020-02)
  
+-------------------------------------------------------
+# geobr dev v1.2.1
 
+### Minor changes
+* reorganization of internal support functions to reduce code redundancy
+* substantial increase in test coverage of functions
   
   
   

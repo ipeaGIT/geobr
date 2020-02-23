@@ -4,7 +4,12 @@
 \alias{read_meso_region}
 \title{Download shape files of meso region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_meso_region(code_meso = "all", year = NULL, tp = "simplified")
+read_meso_region(
+  code_meso = "all",
+  year = 2010,
+  tp = "simplified",
+  showProgress = TRUE
+)
 }
 \arguments{
 \item{code_meso}{The 4-digit code of a meso region. If the two-digit code or a two-letter uppercase abbreviation of
@@ -13,6 +18,8 @@ a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of 
 \item{year}{Year of the data (defaults to 2010)}
 
 \item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+
+\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

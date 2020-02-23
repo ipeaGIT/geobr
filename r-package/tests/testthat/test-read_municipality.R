@@ -1,46 +1,33 @@
 context("read_municipality")
 
 # skip tests because they take too much time
-skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
-testthat::skip_on_travis()
+# testthat::skip_on_travis()
+# skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 test_that("read_municipality", {
 
   # read data
-  test_code_1991 <- read_municipality(code_muni=1200179, year=1991)
-  test_code_2010 <- read_municipality(code_muni=1200179, year=2010)
-  test_code2_2010 <- read_municipality(code_muni=1200179, year=NULL)
+  test_1991 <- read_municipality(code_muni=1200179, year=1991)
+  test_2010 <- read_municipality(code_muni=1200179, year=2010)
 
-  test_state_abrev_1991 <- read_municipality(code_muni="AC", year=1991)
-  test_state_abrev_2010 <- read_municipality(code_muni="AC", year=2010)
-  test_state_abrev2_2010 <- read_municipality(code_muni="AP", year=NULL)
+  testthat::expect_output( read_municipality(code_muni='AC', year=1991) )
+  testthat::expect_output( read_municipality(code_muni='AC', year=2010) )
 
-  test_state_code_1991 <- read_municipality(code_muni=11, year=1991)
-  test_state_code_2010 <- read_municipality(code_muni=11, year=2010)
-  test_state_code2_2010 <- read_municipality(code_muni=11, year=NULL)
+  testthat::expect_output( read_municipality(code_muni=11, year=1991) )
+  testthat::expect_output( read_municipality(code_muni=11, year=2010) )
 
-  test_all_1991 <- read_municipality(code_muni='all', year=1991)
-  test_all_2010 <- read_municipality(code_muni='all', year=2010)
-  test_all2_2010 <- read_municipality(code_muni='all', year=NULL)
+  testthat::expect_output( read_municipality(code_muni='all', year=1991) )
+  testthat::expect_output( read_municipality(code_muni='all', year=2010) )
+
 
   # check sf object
-  expect_true(is(test_code_1991, "sf"))
-  expect_true(is(test_code_2010, "sf"))
-  expect_true(is(test_code2_2010, "sf"))
-  expect_true(is(test_state_abrev_1991, "sf"))
-  expect_true(is(test_state_abrev_2010, "sf"))
-  expect_true(is(test_state_abrev2_2010, "sf"))
-  expect_true(is(test_state_code_1991, "sf"))
-  expect_true(is(test_state_code_2010, "sf"))
-  expect_true(is(test_state_code2_2010, "sf"))
-  expect_true(is(test_all_1991, "sf"))
-  expect_true(is(test_all_2010, "sf"))
-  expect_true(is(test_all2_2010, "sf"))
+  expect_true(is(test_1991, "sf"))
+  expect_true(is(test_2010, "sf"))
 
   # check projection
-  expect_equal(sf::st_crs(test_code_2010)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  expect_equal(sf::st_crs(test_2010)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
 
 })
 
@@ -48,29 +35,14 @@ test_that("read_municipality", {
 # ERRORS
 test_that("read_municipality", {
 
-  # Wrong year and code
-  expect_error(read_municipality(code_muni=9999999, year=9999999))
-  expect_error(read_municipality(code_muni=9999999, year="xxx"))
-  expect_error(read_municipality(code_muni="xxx", year=9999999))
-  expect_error(read_municipality(code_muni="xxx", year="xxx"))
-  expect_error(read_municipality(code_muni=9999999, year=NULL))
-
-  # Wrong year  expect_error(read_municipality(code_muni="xxx", year=NULL))
-  expect_error(read_municipality(code_muni=11, year=9999999))
-  expect_error(read_municipality(code_muni=11, year= "xx"))
-  expect_error(read_municipality(code_muni=1401, year=9999999))
-  expect_error(read_municipality(code_muni=1401, year= "xx"))
-
-  expect_error(read_municipality(code_muni="SC", year=9999999))
-  expect_error(read_municipality(code_muni="SC", year="xx"))
-
-  expect_error(read_municipality(code_muni="all", year=9999999))
-  expect_error(read_municipality(code_muni="all", year="xx"))
-
   # Wrong code
-  expect_error(read_municipality(code_muni=9999999, year=2000))
-  expect_error(read_municipality(code_muni="XXX", year=2000))
-  expect_error(read_municipality(code_muni="XXX", year=NULL))
-  expect_error(read_municipality(code_muni=NULL, year=2000))
+  testthat::expect_error(read_municipality(code_muni=9999999))
+  testthat::expect_error(read_municipality(code_muni=5201108312313213))
+
+  testthat::expect_error(read_municipality(code_muni="RJ_ABC"))
+
+  # Wrong year
+  testthat::expect_error(read_municipality( year=9999999))
+
 
 })
