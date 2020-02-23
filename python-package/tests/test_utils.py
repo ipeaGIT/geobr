@@ -1,16 +1,19 @@
-import pytest
 from time import time
-import pandas as pd
+
+from urllib.error import HTTPError
 import geopandas as gpd
+import pandas as pd
+import pytest
 
 import geobr
-from geobr.utils import apply_year, apply_data_type, download_gpkg, load_gpkg,\
+from geobr.utils import apply_year, apply_data_type, download_gpkg, load_gpkg, \
     get_metadata
 
 
 @pytest.fixture
 def metadata_file():
     return geobr.utils.download_metadata()
+
 
 def test_download_metadata(metadata_file):
 
@@ -26,6 +29,7 @@ def test_download_metadata(metadata_file):
     # Check if it has content
     assert len(metadata_file) > 0
 
+
 def test_download_metadata_cache():
     
     # Check if cache works
@@ -33,34 +37,35 @@ def test_download_metadata_cache():
     geobr.utils.download_metadata()
     assert time() - start_time < 1
 
+
 def test_apply_year(): 
 
-    metadata = pd.DataFrame([2004,2019], columns=["year"]) 
+    metadata = pd.DataFrame([2004, 2019], columns=["year"])
     
     assert apply_year(metadata, None)['year'].unique()[0] == 2019
     
     assert apply_year(metadata, 2004)['year'].unique()[0] == 2004
     
     with pytest.raises(Exception):
-       assert apply_year(metadata, 2006)
-       assert apply_year(metadata, 'as')
-       assert apply_year(metadata, 2324.12)
+        assert apply_year(metadata, 2006)
+        assert apply_year(metadata, 'as')
+        assert apply_year(metadata, 2324.12)
+
 
 def test_data_type():
 
     metadata = pd.DataFrame(['url_simplified', 'url'], 
                             columns=["download_path"]) 
     
-    assert apply_data_type(metadata, 'simplified')['download_path'].unique()[0] \
-            == 'url_simplified'
+    assert apply_data_type(metadata, 'simplified')['download_path'].unique()[0] == 'url_simplified'
     
-    assert apply_data_type(metadata, 'normal')['download_path'].unique()[0] \
-            == 'url'
+    assert apply_data_type(metadata, 'normal')['download_path'].unique()[0] == 'url'
     
     with pytest.raises(Exception):
-       assert apply_data_type(metadata, 'slified')
-       assert apply_data_type(metadata, None)
-       assert apply_data_type(metadata, 2324.12)
+        assert apply_data_type(metadata, 'slified')
+        assert apply_data_type(metadata, None)
+        assert apply_data_type(metadata, 2324.12)
+
 
 def test_load_gpkg():
 
@@ -72,13 +77,13 @@ def test_load_gpkg():
     start_time = time()
     load_gpkg(valid_url)
     assert time() - start_time < 1
-    
 
     with pytest.raises(Exception):
         isinstance(load_gpkg('asd'), gpd.geodataframe.GeoDataFrame)
         isinstance(load_gpkg(1234), gpd.geodataframe.GeoDataFrame)
         isinstance(load_gpkg(valid_url + 'asdf'), 
                     gpd.geodataframe.GeoDataFrame)
+
 
 def test_download_gpkg():
 
@@ -96,6 +101,7 @@ def test_download_gpkg():
     assert isinstance(download_gpkg(single_metadata), 
                       gpd.geodataframe.GeoDataFrame)
 
+
 def test_get_metadata():
 
     assert isinstance(get_metadata('state', 'simplified', 2010), 
@@ -111,3 +117,18 @@ def test_get_metadata():
         get_metadata(123, 123, 123)
         get_metadata('state', 123, 123)
         get_metadata('state', 'simplified', 12334)
+
+
+def test_list_geobr_functions(capsys):
+    # Tests whether the function url is not broken
+
+    # Tests whether the function prints output
+    try:
+        geobr.utils.list_geobr_functions()
+    except HTTPError:
+        print('URL link is broken \n'
+              'Please report an issue at "https://github.com/ipeaGIT/geobr/issues"')
+
+    # Tests whether the function prints output
+    captured = capsys.readouterr()
+    assert len(captured.out) > 200
