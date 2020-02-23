@@ -28,7 +28,7 @@ def read_biomes(year=2019):
     """
 
     # 
-    metadata = utils.get_metadata(geo='biomes')
+    metadata = utils.download_metadata(geo='biomes')
 
     # check if year in metadata else raise error (probrably a utils func)
 
