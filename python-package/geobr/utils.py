@@ -49,7 +49,7 @@ def download_metadata(
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
 
-def apply_year(metadata, year):
+def test_year_input(metadata, year):
     """Apply year to metadata and checks its existence.
 
     If it do not exist, raises an informative error.
@@ -87,7 +87,7 @@ def apply_year(metadata, year):
     return metadata.query(f'year == {year}')
 
 
-def apply_data_type(metadata, data_type):
+def select_data_type(metadata, data_type):
     """Filter metadata by data type. It can be simplified or normal. 
     The 'simplified' returns a simplified version of the shapefiles.
     'normal' returns the complete version. Usually, the complete version
@@ -190,7 +190,7 @@ def download_gpkg(metadata):
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
-def get_metadata(geo, data_type, year):
+def download_metadata(geo, data_type, year):
     """Downloads and filters metadata given `geo`, `data_type` and `year`.
     
     Parameters
@@ -227,10 +227,10 @@ def get_metadata(geo, data_type, year):
     metadata = metadata.query(f'geo == "{geo}"')
 
     # Select data type
-    metadata = apply_data_type(metadata, data_type)
+    metadata = select_data_type(metadata, data_type)
     
     # Verify year input
-    metadata = apply_year(metadata, year)
+    metadata = test_year_input(metadata, year)
 
     return metadata
 

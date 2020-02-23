@@ -1,7 +1,7 @@
 
 import geopandas as gpd
 
-from geobr.utils import get_metadata, download_gpkg
+from geobr.utils import download_metadata, download_gpkg
 
 
 def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
@@ -46,7 +46,7 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
     >>> ufs = read_state(code_state="all", year=2010)
     """
 
-    metadata = get_metadata('state', year=year, data_type=tp)
+    metadata = download_metadata('state', year=year, data_type=tp)
     
     if code_state is None:
         raise Exception("Value to argument 'code_state' cannot be None")
