@@ -15,8 +15,6 @@ test_that("read_statistical_grid", {
  # testthat::expect_message(read_statistical_grid(code_grid="all")) # TOO HEAVY
 
 
-# 71.43%
-
   })
 
 
