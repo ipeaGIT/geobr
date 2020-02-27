@@ -17,6 +17,10 @@ make
 . .env/bin/activate
 ```
 
+Test with
+
+`python -t pytest`
+
 #### For Windows
 
 We recommend using conda  and creating an environment that includes all libraries simultaneously.
