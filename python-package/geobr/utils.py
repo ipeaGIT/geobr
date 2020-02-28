@@ -49,7 +49,7 @@ def download_metadata(
             Please report to https://github.com/ipeaGIT/geobr/issues')
 
 
-def test_year_input(metadata, year):
+def select_year(metadata, year):
     """Apply year to metadata and checks its existence.
 
     If it do not exist, raises an informative error.
@@ -190,7 +190,7 @@ def download_gpkg(metadata):
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
-def download_metadata(geo, data_type, year):
+def select_metadata(geo, data_type, year):
     """Downloads and filters metadata given `geo`, `data_type` and `year`.
     
     Parameters
@@ -230,21 +230,13 @@ def download_metadata(geo, data_type, year):
     metadata = select_data_type(metadata, data_type)
     
     # Verify year input
-    metadata = test_year_input(metadata, year)
+    metadata = select_year(metadata, year)
 
     return metadata
 
 
 def list_geobr_functions():
     """ Prints available functions, according to latest README.md file
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        Printing of each function, its available geographies, years available and source
 
         Example output
         ------------------------------
@@ -254,10 +246,15 @@ def list_geobr_functions():
         Source: IBGE
         ------------------------------
 
-        """
+    """
 
-    df = pd.read_html('https://github.com/ipeaGIT/geobr/blob/master/README.md')
-    df = df[1]
+    try:
+        df = pd.read_html('https://github.com/ipeaGIT/geobr/blob/master/README.md')[1]
+    
+    except HTTPError:
+        print('Geobr url functions list is broken'
+              'Please report an issue at "https://github.com/ipeaGIT/geobr/issues"')
+
     for i in range(len(df)):
         for each in df.columns:
             print(f'{each}: {df.loc[i, each]}')
