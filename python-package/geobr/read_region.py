@@ -2,17 +2,15 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_biomes(year=2019, tp='simplified', verbose=False):
-    """ Download official data of Brazilian biomes as an sf object.
+def read_region(year=2010, tp='simplified', verbose=False):
+    """ Download shape file of Brazil Regions as sf objects.
     
-     This data set includes  polygons of all biomes present in Brazilian territory and coastal area.
- The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
- the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
+     Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 
     Parameters
     ----------
     year : int, optional
-        Year of the data, by default 2019
+        Year of the data, by default 2010
     tp : str, optional
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
@@ -31,13 +29,13 @@ def read_biomes(year=2019, tp='simplified', verbose=False):
 
     Example
     -------
-    >>> from geobr import read_biomes
+    >>> from geobr import read_region
 
     # Read specific state at a given year
-    >>> df = read_biomes(year=2019)
+    >>> df = read_region(year=2010)
     """
 
-    metadata = select_metadata('biomes', year=year, data_type=tp)
+    metadata = select_metadata('regions', year=year, data_type=tp)
 
     gdf = download_gpkg(metadata)
 
