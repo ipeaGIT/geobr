@@ -21,6 +21,21 @@ Test with
 
 `python -t pytest`
 
+You can use a helper to translate a function from R.
+If you want to add `read_biomes`, just run
+
+`python helper/translate_from_R.py read_biomes`
+
+It will scrape the original R function to get documentation and metadata.
+It adds:
+- default year
+- function name
+- documentation one liner
+- larger documentation
+- very basic tests
+
+! Be aware that if the function that you are adding is more complicated than the template. So, double always double check !
+
 #### For Windows
 
 We recommend using conda  and creating an environment that includes all libraries simultaneously.
