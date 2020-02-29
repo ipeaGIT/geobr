@@ -4,7 +4,7 @@ from functools import lru_cache
 import geopandas as gpd
 import pandas as pd
 import requests
-
+from urllib.error import HTTPError
 
 def _get_unique_values(_df, column):
 
@@ -120,8 +120,8 @@ def select_data_type(metadata, data_type):
         return metadata[~metadata['download_path'].str.contains("simplified")]
     
     else:
-        raise Exception("Error: Invalid Value to argument 'tp'. \
-                        It must be 'simplified' or 'normal'")
+        raise Exception("Error: Invalid Value to argument 'tp'."
+                        " It must be 'simplified' or 'normal'")
 
 
 @lru_cache(maxsize=1240)
