@@ -113,6 +113,14 @@ def test_select_metadata():
     assert isinstance(select_metadata('state', 'normal', None), 
                     pd.core.frame.DataFrame)
 
+    # checks if None conditions are being applied
+    assert len(select_metadata('state', 'normal', None)) < \
+            len(select_metadata('state', False, False))
+
+    assert len(select_metadata('state', 'simplified', None)) < \
+            len(select_metadata('state', False, False))
+
+
     with pytest.raises(Exception):
         select_metadata(123, 123, 123)
         select_metadata('state', 123, 123)
