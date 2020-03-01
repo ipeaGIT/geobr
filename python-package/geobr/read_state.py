@@ -86,6 +86,3 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
             else:
                 raise Exception("Error: Invalid Value to argument code_state.")
 
-
-if __name__ == '__main__':
-    uf = read_state(code_state=12, year=2017)

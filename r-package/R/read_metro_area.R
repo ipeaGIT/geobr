@@ -6,7 +6,7 @@
 #' by Institute of Geography. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
 #'
-#' @param year A year number in YYYY format
+#' @param year A year number in YYYY format (defaults to 2018)
 #' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
@@ -23,7 +23,7 @@
 #'
 #'
 #'
-read_metro_area <- function(year, tp="simplified", showProgress=TRUE){
+read_metro_area <- function(year=2018, tp="simplified", showProgress=TRUE){
 
 
   # Get metadata with data addresses

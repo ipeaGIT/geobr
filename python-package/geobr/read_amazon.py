@@ -2,17 +2,16 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_biomes(year=2019, tp='simplified', verbose=False):
-    """ Download official data of Brazilian biomes as an sf object.
+def read_amazon(year=2012, tp='simplified', verbose=False):
+    """ Download official data of Brazil's Legal Amazon as an sf object.
     
-     This data set includes  polygons of all biomes present in Brazilian territory and coastal area.
- The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
- the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
+     This data set covers the whole of Brazil's Legal Amazon as defined in the federal law n. 12.651/2012). The original
+ data comes from the Brazilian Ministry of Environment (MMA) and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
 
     Parameters
     ----------
     year : int, optional
-        Year of the data, by default 2019
+        Year of the data, by default 2012
     tp : str, optional
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
@@ -31,13 +30,13 @@ def read_biomes(year=2019, tp='simplified', verbose=False):
 
     Example
     -------
-    >>> from geobr import read_biomes
+    >>> from geobr import read_amazon
 
     # Read specific state at a given year
-    >>> df = read_biomes(year=2019)
+    >>> df = read_amazon(year=2012)
     """
 
-    metadata = select_metadata('biomes', year=year, data_type=tp)
+    metadata = select_metadata('amazonia_legal', year=year, data_type=tp)
 
     gdf = download_gpkg(metadata)
 

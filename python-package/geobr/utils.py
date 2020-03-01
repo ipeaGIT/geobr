@@ -4,7 +4,7 @@ from functools import lru_cache
 import geopandas as gpd
 import pandas as pd
 import requests
-
+from urllib.error import HTTPError
 
 def _get_unique_values(_df, column):
 
@@ -120,8 +120,8 @@ def select_data_type(metadata, data_type):
         return metadata[~metadata['download_path'].str.contains("simplified")]
     
     else:
-        raise Exception("Error: Invalid Value to argument 'tp'. \
-                        It must be 'simplified' or 'normal'")
+        raise Exception("Error: Invalid Value to argument 'tp'."
+                        " It must be 'simplified' or 'normal'")
 
 
 @lru_cache(maxsize=1240)
@@ -190,7 +190,7 @@ def download_gpkg(metadata):
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
-def select_metadata(geo, data_type, year):
+def select_metadata(geo, data_type=False, year=False):
     """Downloads and filters metadata given `geo`, `data_type` and `year`.
     
     Parameters
@@ -226,11 +226,14 @@ def select_metadata(geo, data_type, year):
     # Select geo
     metadata = metadata.query(f'geo == "{geo}"')
 
-    # Select data type
-    metadata = select_data_type(metadata, data_type)
+    # Skips if no data_type or year is passed
+    if data_type != False: 
+        # Select data type
+        metadata = select_data_type(metadata, data_type)
     
-    # Verify year input
-    metadata = select_year(metadata, year)
+    if year != False:
+        # Verify year input
+        metadata = select_year(metadata, year)
 
     return metadata
 
