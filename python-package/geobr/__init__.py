@@ -9,3 +9,5 @@ from .read_disaster_risk_area import read_disaster_risk_area
 from .read_metro_area import read_metro_area
 from .read_conservation_units import read_conservation_units
 from .read_urban_area import read_urban_area
+from .read_health_facilities import read_health_facilities
+from .read_indigenous_land import read_indigenous_land
