@@ -5,3 +5,7 @@ from .read_country import read_country
 from .read_municipal_seat import read_municipal_seat
 from .read_region import read_region
 from .read_semiarid import read_semiarid
+from .read_disaster_risk_area import read_disaster_risk_area
+from .read_metro_area import read_metro_area
+from .read_conservation_units import read_conservation_units
+from .read_urban_area import read_urban_area
