@@ -7,7 +7,7 @@
 read_meso_region(
   code_meso = "all",
   year = 2010,
-  tp = "simplified",
+  simplified = TRUE,
   showProgress = TRUE
 )
 }
@@ -17,7 +17,7 @@ a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of 
 
 \item{year}{Year of the data (defaults to 2010)}
 
-\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+\item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }

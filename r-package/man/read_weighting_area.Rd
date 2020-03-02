@@ -7,7 +7,7 @@
 read_weighting_area(
   code_weighting = "all",
   year = 2010,
-  tp = "simplified",
+  simplified = TRUE,
   showProgress = TRUE
 )
 }
@@ -18,7 +18,7 @@ all weighting areas of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 
-\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+\item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }

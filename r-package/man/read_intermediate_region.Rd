@@ -7,7 +7,7 @@
 read_intermediate_region(
   code_intermediate = "all",
   year = 2017,
-  tp = "simplified",
+  simplified = TRUE,
   showProgress = TRUE
 )
 }
@@ -18,7 +18,7 @@ all intermediate regions of the country are loaded (defaults to "all").}
 
 \item{year}{A date number in YYYY format (defaults to 2017)}
 
-\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+\item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }

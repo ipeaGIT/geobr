@@ -8,7 +8,7 @@ read_census_tract(
   code_tract,
   year = 2010,
   zone = "urban",
-  tp = "simplified",
+  simplified = TRUE,
   showProgress = TRUE
 )
 }
@@ -21,7 +21,7 @@ all census tracts of the country are loaded.}
 
 \item{zone}{"urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")}
 
-\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+\item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }

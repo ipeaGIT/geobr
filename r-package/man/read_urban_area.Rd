@@ -4,12 +4,12 @@
 \alias{read_urban_area}
 \title{Download official data of urbanized areas in Brazil as an sf object.}
 \usage{
-read_urban_area(year = 2015, tp = "simplified", showProgress = TRUE)
+read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{A year number in YYYY format (defaults to 2015)}
 
-\item{tp}{Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)}
+\item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
