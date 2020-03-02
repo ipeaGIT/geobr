@@ -6,7 +6,7 @@
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of that state. If code_micro="all",
 #'  all micro regions of the country are loaded.
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -28,11 +28,11 @@
 #'
 #'
 
-read_micro_region <- function(code_micro="all", year=2010, tp="simplified", showProgress=TRUE){
+read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
 
   # Get metadata
-  temp_meta <- download_metadata(geography="micro_region", data_type=tp)
+  temp_meta <- download_metadata(geography="micro_region", data_type=simplified)
 
 
   # Test year input

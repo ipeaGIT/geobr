@@ -5,7 +5,7 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param code_meso The 4-digit code of a meso region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -27,11 +27,11 @@
 #' }
 #'
 
-read_meso_region <- function(code_meso="all", year=2010, tp="simplified", showProgress=TRUE){
+read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="meso_region", data_type=tp)
+  temp_meta <- download_metadata(geography="meso_region", data_type=simplified)
 
 
   # Test year input

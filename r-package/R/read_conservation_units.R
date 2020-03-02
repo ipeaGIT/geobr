@@ -5,7 +5,7 @@
 #' data comes from MMA and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
 #'
 #' @param date A date number in YYYYMM format (Defaults to 201909)
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -17,10 +17,10 @@
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
 #'}
-read_conservation_units <- function(date=201909, tp="simplified", showProgress=TRUE){
+read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="conservation_units", data_type=tp)
+  temp_meta <- download_metadata(geography="conservation_units", data_type=simplified)
 
 
   # Test date input

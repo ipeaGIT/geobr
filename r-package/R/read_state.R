@@ -4,7 +4,7 @@
 #'
 #' @param year Year of the data (defaults to 2010)
 #' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -24,10 +24,10 @@
 #'
 #'}
 
-read_state <- function(code_state="all", year=2010, tp="simplified", showProgress=TRUE){
+read_state <- function(code_state="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- download_metadata(geography="state", data_type=tp)
+  temp_meta <- download_metadata(geography="state", data_type=simplified)
 
 
   # Test year input

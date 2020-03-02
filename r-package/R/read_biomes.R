@@ -5,7 +5,7 @@
 #' the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
 #'
 #' @param year A date number in YYYY format (defaults to 2019)
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -19,10 +19,10 @@
 #'
 #'}
 #'
-read_biomes <- function(year=2019, tp="simplified", showProgress=TRUE){
+read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="biomes", data_type=tp)
+  temp_meta <- download_metadata(geography="biomes", data_type=simplified)
 
 
   # Test year input

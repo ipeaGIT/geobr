@@ -123,6 +123,8 @@ for (i in years){
 }
 
 
+
+#i=2010
 for (i in years){
   # i=2010
   dir_years <- paste0(head_dir,"//",i)
@@ -158,16 +160,14 @@ for (i in years){
   }
 
 
-  # arruma o name_muni
+  # seleciona apenas a sede
+  if(i==2010){# table(temp_sf$nm_categor, temp_sf$cd_nivel)
+    temp_sf <- subset(temp_sf, nm_categor == "CIDADE")
+  }
 
-  # seleciona apenas sede de municipios
-  #temp_sf <- subset(temp_sf, cd_nivel==1 )
 
   # leitura dos municipios
-  municipios <- read_municipality(code_muni = 'all', year = i)
-
-  # seleciona apenas as colunas de name_muni e geometry
-  municipios <- municipios %>% select(-code_muni)
+  municipios <- read_municipality(code_muni = 'all', year = i, tp='original')
 
   # harmoniza projecao
   temp_sf <- st_transform(temp_sf, st_crs(municipios))
@@ -176,11 +176,12 @@ for (i in years){
   temp_sf <- st_join(temp_sf, municipios)
 
 
+  # remover sedes duplicadas no municipio errado
+  temp_sf <- subset(temp_sf, code_muni.y == code_muni.x)
 
-  # seleciona apenas a sede
-  if(i==2010){# table(temp_sf$nm_categor, temp_sf$cd_nivel)
-              temp_sf <- subset(temp_sf, nm_categor == "CIDADE")
-              }
+
+
+
 
   # organiza colunas
   temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))

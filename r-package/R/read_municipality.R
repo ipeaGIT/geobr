@@ -6,7 +6,7 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param code_muni The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -27,11 +27,11 @@
 #'}
 #'
 
-read_municipality <- function(code_muni="all", year=2010, tp="simplified", showProgress=TRUE){
+read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="municipality", data_type=tp)
+  temp_meta <- download_metadata(geography="municipality", data_type=simplified)
 
 
   # Test year input

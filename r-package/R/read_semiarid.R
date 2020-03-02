@@ -4,7 +4,7 @@
 #' data comes from the Brazilian Institute of Geography and Statistics (IBGE) and can be found at https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads
 #'
 #' @param year A date number in YYYY format (defaults to 2017)
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -17,10 +17,10 @@
 #'   a <- read_semiarid(year=2017)
 #'}
 #'
-read_semiarid <- function(year=2017, tp="simplified", showProgress=TRUE){
+read_semiarid <- function(year=2017, simplifie=TRUE, showProgress=TRUE){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="semiarid", data_type=tp)
+  temp_meta <- download_metadata(geography="semiarid", data_type=simplified)
 
 
   # Test year input
