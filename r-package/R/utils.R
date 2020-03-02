@@ -7,20 +7,18 @@
 #'
 #'
 #' @param temp_meta A dataframe with the file_url addresses of geobr datasets
-#' @param tp A string indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @export
 #' @family support functions
 #'
-select_data_type <- function(temp_meta, tp=NULL){
+select_data_type <- function(temp_meta, simplified=NULL){
 
-  if(is.null(tp)){ return(temp_meta)
-    }
-  else if(tp=="original"){
-    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-  }
-  else if(tp=="simplified"){
+  if(isTRUE(simplified)){
     temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
   }
+  else if(isFALSE(simplified)){
+    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
+  } else {  stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE")) }
 
   return(temp_meta)
 }
