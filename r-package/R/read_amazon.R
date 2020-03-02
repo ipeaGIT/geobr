@@ -4,7 +4,7 @@
 #' data comes from the Brazilian Ministry of Environment (MMA) and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
 #'
 #' @param year A date number in YYYY format (defaults to 2012)
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @export
 #' @family general area functions
@@ -16,10 +16,10 @@
 #'   a <- read_amazon(year=2012)
 #'}
 #'
-read_amazon <- function(year=2012, tp="simplified", showProgress=TRUE){
+read_amazon <- function(year=2012, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- download_metadata(geography="amazonia_legal", data_type=tp)
+  temp_meta <- download_metadata(geography="amazonia_legal", data_type=simplified)
 
 
   # Test year input

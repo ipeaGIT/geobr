@@ -6,7 +6,7 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
 #'  all weighting areas of the country are loaded.
 #' @param year Year of the data (defaults to 2010)
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -35,10 +35,10 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting="all", year=2010, tp="simplified", showProgress=TRUE){
+read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="weighting_area", data_type=tp)
+  temp_meta <- download_metadata(geography="weighting_area", data_type=simplified)
 
 
   # Test year input

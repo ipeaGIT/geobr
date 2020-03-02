@@ -7,7 +7,7 @@
 #'
 #'
 #' @param year A year number in YYYY format (defaults to 2018)
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -23,11 +23,11 @@
 #'
 #'
 #'
-read_metro_area <- function(year=2018, tp="simplified", showProgress=TRUE){
+read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE){
 
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="metropolitan_area", data_type=tp)
+  temp_meta <- download_metadata(geography="metropolitan_area", data_type=simplified)
 
  # Test year input
   temp_meta <- test_year_input(temp_meta, y=year)

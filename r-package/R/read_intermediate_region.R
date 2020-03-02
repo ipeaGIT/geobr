@@ -7,7 +7,7 @@
 #' @param code_intermediate 4-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_intermediate="all",
 #'  all intermediate regions of the country are loaded (defaults to "all").
-#' @param tp Whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default)
+#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -29,10 +29,10 @@
 #' }
 #'
 #'
-read_intermediate_region <- function(code_intermediate="all", year=2017, tp="simplified", showProgress=TRUE){
+read_intermediate_region <- function(code_intermediate="all", year=2017, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="intermediate_regions", data_type=tp)
+  temp_meta <- download_metadata(geography="intermediate_regions", data_type=simplified)
 
 
   # Test year input
