@@ -29,8 +29,8 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
 
   # Get metadata with data addresses
-  simplified=T
-  temp_meta <- download_metadata(geography="lookup_muni", data_type=T)
+  simplified=F
+  temp_meta <- download_metadata(geography="lookup_muni", data_type=F)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
