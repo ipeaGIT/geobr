@@ -12,7 +12,7 @@
 #'
 #' }
 #'
-download_metadata <- function(geography=NULL, data_type=NULL){
+download_metadata <- function(geography=NULL, data_type=TRUE){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.csv")

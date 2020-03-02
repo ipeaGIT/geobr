@@ -2,11 +2,12 @@ context("Download")
 
 test_that("download_metadata", {
 
+
   metadata <- download_metadata()
 
-  expect_true(is(metadata, "data.frame"))
+  testthat::expect_true(is(metadata, "data.frame"))
 
-  expect_equal(ncol(metadata), 5)
+  testthat::expect_equal(ncol(metadata), 5)
 
   # expect_true(file.exists(tempf))
 
@@ -15,3 +16,11 @@ test_that("download_metadata", {
 
 
 
+test_that("download_metadata", {
+
+  testthat::expect_error( download_metadata(data_type="asdasd") )
+
+ # testthat::expect_error( download_metadata()  )
+
+
+})

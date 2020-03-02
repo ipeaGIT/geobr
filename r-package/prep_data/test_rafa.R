@@ -206,6 +206,7 @@ function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-rea
 
 function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
 
+function_coverage(fun='download_metadata', test_file("tests/testthat/test-download_metadata.R"))
 
 function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))

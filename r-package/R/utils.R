@@ -11,7 +11,7 @@
 #' @export
 #' @family support functions
 #'
-select_data_type <- function(temp_meta, simplified=NULL){
+select_data_type <- function(temp_meta, simplified=TRUE){
 
   if(isTRUE(simplified)){
     temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
