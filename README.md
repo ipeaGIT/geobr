@@ -17,7 +17,7 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 
 # or use the development version with latest features
   utils::remove.packages('geobr')
-  devtools::install_githqutiub("ipeaGIT/geobr", subdir = "r-package")
+  devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
   library(geobr)
 ```
 obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).
