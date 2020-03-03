@@ -23,7 +23,7 @@
 read_municipal_seat <- function(year=2010, showProgress=TRUE){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="municipal_seat")
+  temp_meta <- download_metadata(geography="municipal_seat", data_type = F)
 
 
   # Test year input

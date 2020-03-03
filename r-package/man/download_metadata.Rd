@@ -4,7 +4,7 @@
 \alias{download_metadata}
 \title{Support function to download metadata internally used in geobr}
 \usage{
-download_metadata(geography = NULL, data_type = NULL)
+download_metadata(geography = NULL, data_type = TRUE)
 }
 \arguments{
 \item{geography}{Which geography will be downloaded}

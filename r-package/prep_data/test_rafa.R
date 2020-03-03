@@ -184,45 +184,37 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 ### Test coverage  ----------------
 
-  library(covr)
-  library(testthat)
-  library(geobr)
+library(covr)
+library(testthat)
+library(geobr)
+Sys.setenv(NOT_CRAN = "true")
 
 
-
-
-
-
+function_coverage(fun='download_metadata', test_file("tests/testthat/test-download_metadata.R"))
+function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
+function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
 
+function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
+function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))
+function_coverage(fun= 'read_amazon', test_file("tests/testthat/test-read_amazon.R"))
+function_coverage(fun= 'read_semiarid', test_file("tests/testthat/test-read_semiarid.R"))
+function_coverage(fun= 'read_metro_area', test_file("tests/testthat/test-read_metro_area.R"))
+function_coverage(fun= 'read_conservation_units', test_file("tests/testthat/test-read_conservation_units.R"))
 
-function_coverage(fun=geobr::read_amazon, test_file("tests/testthat/test-read_amazon.R"))
-function_coverage(fun=geobr::read_semiarid, test_file("tests/testthat/test-read_semiarid.R"))
 
-function_coverage(fun=geobr::read_indigenous_land, test_file("tests/testthat/test-read_indigenous_land.R"))
+function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
+function_coverage(fun='read_municipal_seat', test_file("tests/testthat/test-read_municipal_seat.R"))
 
-function_coverage(fun=geobr::read_metro_area, test_file("tests/testthat/test-read_metro_area.R"))
-
-function_coverage(fun=geobr::read_conservation_units, test_file("tests/testthat/test-read_conservation_units.R"))
-
-function_coverage(fun='download_metadata', test_file("tests/testthat/test-download_metadata.R"))
-
-function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
-function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
 
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))
 function_coverage(fun='read_micro_region', test_file("tests/testthat/test-read_micro_region.R"))
 function_coverage(fun='read_state', test_file("tests/testthat/test-read_state.R"))
-function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
-function_coverage(fun='read_semiarid', test_file("tests/testthat/test-read_semiarid.R"))
-function_coverage(fun='read_amazon', test_file("tests/testthat/test-read_amazon.R"))
-function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))
 function_coverage(fun='read_urban_area', test_file("tests/testthat/test-read_urban_area.R"))
 
 function_coverage(fun='read_indigenous_land', test_file("tests/testthat/test-read_indigenous_land.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
-function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
 
 function_coverage(fun='read_intermediate_region', test_file("tests/testthat/test-read_intermediate_region.R"))
@@ -328,11 +320,9 @@ setwd("..")
   # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
 
 # Check package errors
-   devtools::check(pkg = ".",  cran = TRUE)
-
- Sys.setenv(NOT_CRAN = "false")
- system.time(  devtools::test(pkg = ".",  cran = TRUE) )
- beepr::beep()
+  Sys.setenv(NOT_CRAN = "false")
+  devtools::check(pkg = ".",  cran = TRUE)
+  beepr::beep()
 
  CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
  OK:       37

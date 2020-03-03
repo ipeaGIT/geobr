@@ -29,7 +29,7 @@
 read_health_facilities <- function( showProgress=TRUE ){
 
   # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="health_facilities")
+  temp_meta <- download_metadata(geography="health_facilities", data_type=F)
 
 
   # list paths of files to download

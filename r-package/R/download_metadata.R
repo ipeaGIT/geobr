@@ -29,7 +29,13 @@ download_metadata <- function(geography=NULL, data_type=TRUE){
 
 
   # Select geo
-  temp_meta <- subset(metadata, geo == geography)
+  if( is.null(geography) ){
+    stop(paste0("Error: Invalid Value to argument 'geography'. It must be one of the following: ",
+                paste(unique(metadata$geo), collapse = ", ")))
+  } else if( !(geography %in% metadata$geo)){
+    stop(paste0("Error: Invalid Value to argument 'geography'. It must be one of the following: ",
+                paste(unique(metadata$geo), collapse = ", ")))
+    } else { temp_meta <- subset(metadata, geo == geography) }
 
   # Select data type
   temp_meta <- select_data_type(temp_meta, simplified=data_type)

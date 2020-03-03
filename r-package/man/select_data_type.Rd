@@ -4,7 +4,7 @@
 \alias{select_data_type}
 \title{Select data type: 'original' or 'simplified' (default)}
 \usage{
-select_data_type(temp_meta, simplified = NULL)
+select_data_type(temp_meta, simplified = TRUE)
 }
 \arguments{
 \item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}
