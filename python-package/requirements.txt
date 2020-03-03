@@ -26,6 +26,6 @@ pytz==2019.3
 requests==2.20.0
 Shapely==1.7.0
 six==1.14.0
-urllib3==1.22
+urllib3>=1.24.2
 wcwidth==0.1.8
 zipp==3.0.0
