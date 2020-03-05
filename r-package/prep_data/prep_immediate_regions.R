@@ -30,6 +30,18 @@ library(stringi)
 # Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
 
+
+
+
+
+####### Load Support functions to use in the preprocessing of the data -----------------
+source("./prep_data/prep_functions.R")
+
+
+
+
+###### 0. Create directories to downlod and save the data -----------------
+
 # Root directory
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
@@ -42,12 +54,13 @@ setwd("./immediate_regions")
 
 
 # Create folders to save clean sf.rds files
-dir.create("./shapes_in_sf_cleaned", showWarnings = FALSE)
+destdir_clean <- "./shapes_in_sf_cleaned"
+dir.create( destdir_clean , showWarnings = FALSE)
 
 
 
 
-#### 0. Download original Immediate Regions data sets from IBGE ftp -----------------
+###### 1. download the raw data from the original website source -----------------
 
 ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/divisao_regional/divisao_regional_do_brasil/divisao_regional_do_brasil_em_regioes_geograficas_2017/shp/RG2017_rgi_20180911.zip"
 
@@ -55,19 +68,21 @@ download.file(url = ftp, destfile = "RG2017_rgi_20180911.zip")
 
 
 
-########  1. Unzip original data sets downloaded from IBGE -----------------
+###### 1.1. Unzip data files if necessary -----------------
 unzip("RG2017_rgi_20180911.zip")
 
 
 
 
 
-##### Rename columns -------------------------
+###### 2. rename column names -----------------
 
 # read data
 temp_sf <- st_read("RG2017_rgi.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
 
-temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rgi) %>%
+temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rgi)
+
+temp_sf <- temp_sf %>%
   dplyr::mutate(year = 2017,
 
                 # code_state
@@ -142,24 +157,60 @@ temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rg
 temp_sf <- dplyr::select(temp_sf, 'code_immediate', 'name_immediate','code_state', 'abbrev_state',
                          'name_state', 'code_region', 'name_region', 'geometry')
 
-# Convert columns from factors to characters
-temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
+
+
+
+
+
+
+###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
+
+  # convert all factor columns to character
+  temp_sf <- temp_sf %>% mutate_if(is.factor, function(x){ x %>% as.character() } )
+
+  # convert all character columns to UTF-8
+  # temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+
+
+
+
+
+
+
+###### Harmonize spatial projection -----------------
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
-st_crs(temp_sf) <- 4674
+temp_sf <- harmonize_projection(temp_sf)
 
-# Make any invalid geometry valid # st_is_valid( sf)
+
+
+###### 5. remove Z dimension of spatial data-----------------
+temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
+head(temp_sf)
+
+
+###### 6. fix eventual topology issues in the data-----------------
 temp_sf <- lwgeom::st_make_valid(temp_sf)
 
 # keep code as.numeric()
 temp_sf$code_state <- as.numeric(temp_sf$code_state)
+temp_sf$ode_region <- as.numeric(temp_sf$ode_region)
+temp_sf$code_immediate <- as.numeric(temp_sf$code_immediate )
+
+
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 
 
 ##### Save data -------------------------
-readr::write_rds(temp_sf, path = "./shapes_in_sf_cleaned/immediate_regions_2017.rds", compress="gz" )
 
+###### 8. Clean data set and save it in compact .rds format-----------------
 
-
+# save original and simplified datasets
+sf::st_write(temp_sf, paste0(destdir_clean, "/immediate_regions_2017.gpkg") )
+sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/immediate_regions_2017_simplified.gpkg") )
 

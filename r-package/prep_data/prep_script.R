@@ -111,9 +111,8 @@ cleaning_data_fun <- function(f){
 
 
 ###### 3. ensure the data uses spatial projection SIRGAS 2000 epsg (SRID): 4674-----------------
-temp_sf3 <- if( is.na(st_crs(temp_sf2)) ){ st_set_crs(temp_sf2, 4674) } else { st_transform(temp_sf2, 4674) }
-st_crs(temp_sf3) <- 4674
 
+temp_sf3 <- harmonize_projection(temp_sf2)
 
 
 ###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
@@ -125,28 +124,32 @@ temp_sf4 <- temp_sf3 %>% mutate_if(is.factor, function(x){ x %>% as.character() 
 temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
 
 
+###### 5. remove Z dimension of spatial data-----------------
+
+# remove Z dimension of spatial data
+temp_sf5 <- temp_sf4 %>% st_sf() %>% st_zm( drop = T, what = "ZM")
 
 
 
-###### 5. fix eventual topology issues in the data-----------------
+###### 6. fix eventual topology issues in the data-----------------
 
 # Make any invalid geometry valid # st_is_valid( sf)
-  temp_sf5 <- lwgeom::st_make_valid(temp_sf4)
+temp_sf6 <- lwgeom::st_make_valid(temp_sf5)
 
 
 
-###### 6. generate a lighter version of the dataset with simplified borders -----------------
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-  temp_sf6 <- st_transform(temp_sf5, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 500) %>% st_transform(crs=4674)
+temp_sf7 <- st_transform(temp_sf6, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 
-###### 7. Clean data set and save it in compact .rds format-----------------
+###### 8. Clean data set and save it in compact .rds format-----------------
 
 # save original and simplified datasets
-sf::st_write(temp_sf5, path= paste0(destdir_clean, "/new_data_", update, ".gpkg"))
-sf::st_write(temp_sf6, path= paste0(destdir_clean, "/new_data_", update," _simplified", ".gpkg"))
+sf::st_write(temp_sf6, path= paste0(destdir_clean, "/new_data_", update, ".gpkg"))
+sf::st_write(temp_sf7, path= paste0(destdir_clean, "/new_data_", update," _simplified", ".gpkg"))
 }
 
 
