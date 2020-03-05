@@ -75,7 +75,7 @@ Finally, if **not** using conda, try:
 | read_health_facilities   | Yes         | Super |
 | read_immediate_region    |             | Yes   |
 | read_indigenous_land     | Yes         | Super |
-| read_intermediate_region |             | Yes   |
+| read_intermediate_region | Yes         | Yes   |
 | read_meso_region         |             | No    |
 | read_metro_area          | Yes         | Super |
 | read_micro_region        |             | No    |
