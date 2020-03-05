@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 
 import geobr
-from geobr.utils import select_year, select_simplify, download_gpkg, load_gpkg, \
+from geobr.utils import select_year, select_simplified, download_gpkg, load_gpkg, \
     select_metadata, list_geobr_functions
 
 
@@ -52,19 +52,19 @@ def test_select_year():
         assert select_year(metadata, 2324.12)
 
 
-def test_select_simplify():
+def test_select_simplified():
 
     metadata = pd.DataFrame(['url_simplified', 'url'], 
                             columns=["download_path"]) 
     
-    assert select_simplify(metadata, True)['download_path'].unique()[0] == 'url_simplified'
+    assert select_simplified(metadata, True)['download_path'].unique()[0] == 'url_simplified'
     
-    assert select_simplify(metadata, False)['download_path'].unique()[0] == 'url'
+    assert select_simplified(metadata, False)['download_path'].unique()[0] == 'url'
     
     with pytest.raises(Exception):
-        assert select_simplify(metadata, 'slified')
-        assert select_simplify(metadata, None)
-        assert select_simplify(metadata, 2324.12)
+        assert select_simplified(metadata, 'slified')
+        assert select_simplified(metadata, None)
+        assert select_simplified(metadata, 2324.12)
 
 
 def test_load_gpkg():
@@ -89,7 +89,7 @@ def test_download_gpkg():
 
     multiple_metadata = pd.DataFrame([
         'http://www.ipea.gov.br/geobr/data_gpkg/amazonia_legal/2012/amazonia_legal.gpkg',
-        'http://www.ipea.gov.br/geobr/data_gpkg/meso_regiao/2014/17ME_simplify.gpkg'], 
+        'http://www.ipea.gov.br/geobr/data_gpkg/meso_regiao/2014/17ME_simplified.gpkg'], 
                             columns=["download_path"]) 
 
     single_metadata = pd.DataFrame([
@@ -104,10 +104,10 @@ def test_download_gpkg():
 
 def test_select_metadata():
 
-    assert isinstance(select_metadata('state', 'simplify', 2010), 
+    assert isinstance(select_metadata('state', 'simplified', 2010), 
                     pd.core.frame.DataFrame)
 
-    assert isinstance(select_metadata('state', 'simplify', None), 
+    assert isinstance(select_metadata('state', 'simplified', None), 
                     pd.core.frame.DataFrame)
 
     assert isinstance(select_metadata('state', 'normal', None), 
@@ -117,14 +117,14 @@ def test_select_metadata():
     assert len(select_metadata('state', 'normal', None)) < \
             len(select_metadata('state', False, False))
 
-    assert len(select_metadata('state', 'simplify', None)) < \
+    assert len(select_metadata('state', 'simplified', None)) < \
             len(select_metadata('state', False, False))
 
 
     with pytest.raises(Exception):
         select_metadata(123, 123, 123)
         select_metadata('state', 123, 123)
-        select_metadata('state', 'simplify', 12334)
+        select_metadata('state', 'simplified', 12334)
 
 
 def test_list_geobr_functions(capsys):

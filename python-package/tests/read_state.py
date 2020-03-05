@@ -6,7 +6,7 @@ import tempfile
 import sys
 import fiona
 
-def read_state(code_state,year=None,mode = "simplify"):
+def read_state(code_state,year=None,mode = "simplified"):
 
     # Get metadata with data addresses
     metadata = download_metadata()
@@ -15,10 +15,10 @@ def read_state(code_state,year=None,mode = "simplify"):
     temp_meta = metadata.query('geo=="uf"')
 
     # Select mode
-    if mode == "simplify":
-        temp_meta = temp_meta[temp_meta['download_path'].str.contains("simplify")]
+    if mode == "simplified":
+        temp_meta = temp_meta[temp_meta['download_path'].str.contains("simplified")]
     elif mode =="normal":
-        temp_meta = temp_meta[~temp_meta['download_path'].str.contains("simplify")]
+        temp_meta = temp_meta[~temp_meta['download_path'].str.contains("simplified")]
     else:
         print("not a valid argument for mode")
     

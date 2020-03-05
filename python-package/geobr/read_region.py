@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_region(year=2010, simplify=True, verbose=False):
+def read_region(year=2010, simplified=True, verbose=False):
     """ Download shape file of Brazil Regions as sf objects.
     
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -11,9 +11,9 @@ def read_region(year=2010, simplify=True, verbose=False):
     ----------
     year : int, optional
         Year of the data, by default 2010
-    simplify: boolean, by default True
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplify' borders (Default)
+        with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
         by default False
     
@@ -35,7 +35,7 @@ def read_region(year=2010, simplify=True, verbose=False):
     >>> df = read_region(year=2010)
     """
 
-    metadata = select_metadata('regions', year=year, simplify=simplify)
+    metadata = select_metadata('regions', year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

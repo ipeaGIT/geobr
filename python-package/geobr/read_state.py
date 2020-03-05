@@ -4,7 +4,7 @@ import geopandas as gpd
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_state(code_state='all', year=2010, simplify=True, verbose=False):
+def read_state(code_state='all', year=2010, simplified=True, verbose=False):
     """Download shapefiles of Brazilian states as geopandas objects.
 
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -16,9 +16,9 @@ def read_state(code_state='all', year=2010, simplify=True, verbose=False):
         (e.g. 33 or "RJ"). If code_state="all", all states will be loaded (Default).
     year : int, optional
         Year of the data, by default 2010
-    simplify: boolean, by default True
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplify' borders (Default)
+        with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
         by default False
     
@@ -46,7 +46,7 @@ def read_state(code_state='all', year=2010, simplify=True, verbose=False):
     >>> ufs = read_state(code_state="all", year=2010)
     """
 
-    metadata = select_metadata('state', year=year, simplify=simplify)
+    metadata = select_metadata('state', year=year, simplified=simplified)
     
     if code_state is None:
         raise Exception("Value to argument 'code_state' cannot be None")

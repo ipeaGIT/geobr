@@ -87,18 +87,18 @@ def select_year(metadata, year):
     return metadata.query(f'year == {year}')
 
 
-def select_simplify(metadata, simplify):
-    """Filter metadata by data type. It can be simplify or normal. 
-    If 'simplify' is True, it returns a simplify version of the shapefiles.
+def select_simplified(metadata, simplified):
+    """Filter metadata by data type. It can be simplified or normal. 
+    If 'simplified' is True, it returns a simplified version of the shapefiles.
     'normal' returns the complete version. Usually, the complete version
-    if heavier than the simplify, demanding more resources.
+    if heavier than the simplified, demanding more resources.
     
     Parameters
     ----------
     metadata : pd.DataFrame
         Filtered metadata table
-    simplify : boolean
-        Data type, either True for 'simplify' or False for 'normal'
+    simplified : boolean
+        Data type, either True for 'simplified' or False for 'normal'
     
     Returns
     -------
@@ -107,7 +107,7 @@ def select_simplify(metadata, simplify):
     
     """
 
-    if simplify:    
+    if simplified:    
         return metadata[metadata['download_path'].str.contains("simplified")]
     
     else: 
@@ -180,15 +180,15 @@ def download_gpkg(metadata):
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
-def select_metadata(geo, simplify=None, year=False):
-    """Downloads and filters metadata given `geo`, `simplify` and `year`.
+def select_metadata(geo, simplified=None, year=False):
+    """Downloads and filters metadata given `geo`, `simplified` and `year`.
     
     Parameters
     ----------
     geo : str
         Shapefile category. I.e: state, biome, etc...
-    simplify : boolean
-        `simplify` or `normal` shapefiles
+    simplified : boolean
+        `simplified` or `normal` shapefiles
     year : int
         Year of the data
     
@@ -216,9 +216,9 @@ def select_metadata(geo, simplify=None, year=False):
     # Select geo
     metadata = metadata.query(f'geo == "{geo}"')
 
-    if simplify is not None:
+    if simplified is not None:
         # Select data type
-        metadata = select_simplify(metadata, simplify)
+        metadata = select_simplified(metadata, simplified)
     
     if year != False:
         # Verify year input
