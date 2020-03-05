@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_biomes(year=2019, tp='simplified', verbose=False):
+def read_biomes(year=2019, simplify=True, verbose=False):
     """ Download official data of Brazilian biomes as an sf object.
     
      This data set includes  polygons of all biomes present in Brazilian territory and coastal area.
@@ -13,9 +13,9 @@ def read_biomes(year=2019, tp='simplified', verbose=False):
     ----------
     year : int, optional
         Year of the data, by default 2019
-    tp : str, optional
+    simplify: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
+        with high resolution or a dataset with 'simplify' borders (Default)
     verbose : bool, optional
         by default False
     
@@ -37,7 +37,7 @@ def read_biomes(year=2019, tp='simplified', verbose=False):
     >>> df = read_biomes(year=2019)
     """
 
-    metadata = select_metadata('biomes', year=year, data_type=tp)
+    metadata = select_metadata('biomes', year=year, simplify=simplify)
 
     gdf = download_gpkg(metadata)
 

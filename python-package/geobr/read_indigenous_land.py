@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_indigenous_land(date=201907, tp='simplified', verbose=False):
+def read_indigenous_land(date=201907, simplify=True, verbose=False):
     """ Download official data of indigenous lands as an sf object.
     
      The data set covers the whole of Brazil and it includes indigenous lands from all ethnicities and
@@ -14,9 +14,9 @@ def read_indigenous_land(date=201907, tp='simplified', verbose=False):
     ----------
     date : int, optional
         A date numer in YYYYMM format, by default 201907
-    tp : str, optional
+    simplify: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
+        with high resolution or a dataset with 'simplify' borders (Default)
     verbose : bool, optional
         by default False
     
@@ -38,7 +38,7 @@ def read_indigenous_land(date=201907, tp='simplified', verbose=False):
     >>> df = read_indigenous_land(date=201907)
     """
 
-    metadata = select_metadata('indigenous_land', year=date, data_type=tp)
+    metadata = select_metadata('indigenous_land', year=date, simplify=simplify)
 
     gdf = download_gpkg(metadata)
 

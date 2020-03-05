@@ -87,41 +87,31 @@ def select_year(metadata, year):
     return metadata.query(f'year == {year}')
 
 
-def select_data_type(metadata, data_type):
-    """Filter metadata by data type. It can be simplified or normal. 
-    The 'simplified' returns a simplified version of the shapefiles.
+def select_simplify(metadata, simplify):
+    """Filter metadata by data type. It can be simplify or normal. 
+    If 'simplify' is True, it returns a simplify version of the shapefiles.
     'normal' returns the complete version. Usually, the complete version
-    if heavier than the simplified, demanding more resources.
-
-    If tp is not found, raises informative error
+    if heavier than the simplify, demanding more resources.
     
     Parameters
     ----------
     metadata : pd.DataFrame
         Filtered metadata table
-    tp : str
-        Data type, either 'simplified' or 'normal'
+    simplify : boolean
+        Data type, either True for 'simplify' or False for 'normal'
     
     Returns
     -------
     pd.DataFrame
         Filtered metadata table by type
     
-    Raises
-    ------
-    Exception
-        If 'tp' is not found.
     """
 
-    if data_type == "simplified":    
+    if simplify:    
         return metadata[metadata['download_path'].str.contains("simplified")]
     
-    elif data_type == "normal":
+    else: 
         return metadata[~metadata['download_path'].str.contains("simplified")]
-    
-    else:
-        raise Exception("Error: Invalid Value to argument 'tp'."
-                        " It must be 'simplified' or 'normal'")
 
 
 @lru_cache(maxsize=1240)
@@ -190,15 +180,15 @@ def download_gpkg(metadata):
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
-def select_metadata(geo, data_type=False, year=False):
-    """Downloads and filters metadata given `geo`, `data_type` and `year`.
+def select_metadata(geo, simplify=None, year=False):
+    """Downloads and filters metadata given `geo`, `simplify` and `year`.
     
     Parameters
     ----------
     geo : str
         Shapefile category. I.e: state, biome, etc...
-    data_type : str
-        `simplified` or `normal` shapefiles
+    simplify : boolean
+        `simplify` or `normal` shapefiles
     year : int
         Year of the data
     
@@ -226,10 +216,9 @@ def select_metadata(geo, data_type=False, year=False):
     # Select geo
     metadata = metadata.query(f'geo == "{geo}"')
 
-    # Skips if no data_type or year is passed
-    if data_type != False: 
+    if simplify is not None:
         # Select data type
-        metadata = select_data_type(metadata, data_type)
+        metadata = select_simplify(metadata, simplify)
     
     if year != False:
         # Verify year input

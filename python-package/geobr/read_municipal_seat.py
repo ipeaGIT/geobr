@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_municipal_seat(year=2010, tp='normal', verbose=False):
+def read_municipal_seat(year=2010, verbose=False):
     """ Download official data of municipal seats (sede dos municipios) in Brazil as an sf object.
     
      This function reads the official data on the municipal seats (sede dos municipios) of Brazil.
@@ -14,9 +14,6 @@ def read_municipal_seat(year=2010, tp='normal', verbose=False):
     ----------
     year : int, optional
         Year of the data, by default 2010
-    tp : str, optional
-        Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
         by default False
     
@@ -38,7 +35,7 @@ def read_municipal_seat(year=2010, tp='normal', verbose=False):
     >>> df = read_municipal_seat(year=2010)
     """
 
-    metadata = select_metadata('municipal_seat', year=year, data_type=tp)
+    metadata = select_metadata('municipal_seat', year=year)
 
     gdf = download_gpkg(metadata)
 

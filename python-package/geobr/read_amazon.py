@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_amazon(year=2012, tp='simplified', verbose=False):
+def read_amazon(year=2012, simplify=True, verbose=False):
     """ Download official data of Brazil's Legal Amazon as an sf object.
     
      This data set covers the whole of Brazil's Legal Amazon as defined in the federal law n. 12.651/2012). The original
@@ -12,9 +12,9 @@ def read_amazon(year=2012, tp='simplified', verbose=False):
     ----------
     year : int, optional
         Year of the data, by default 2012
-    tp : str, optional
+    simplify: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
+        with high resolution or a dataset with 'simplify' borders (Default)
     verbose : bool, optional
         by default False
     
@@ -36,7 +36,7 @@ def read_amazon(year=2012, tp='simplified', verbose=False):
     >>> df = read_amazon(year=2012)
     """
 
-    metadata = select_metadata('amazonia_legal', year=year, data_type=tp)
+    metadata = select_metadata('amazonia_legal', year=year, simplify=simplify)
 
     gdf = download_gpkg(metadata)
 
