@@ -4,7 +4,7 @@ import geopandas as gpd
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
+def read_state(code_state='all', year=2010, simplified=True, verbose=False):
     """Download shapefiles of Brazilian states as geopandas objects.
 
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -16,7 +16,7 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
         (e.g. 33 or "RJ"). If code_state="all", all states will be loaded (Default).
     year : int, optional
         Year of the data, by default 2010
-    tp : str, optional
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
@@ -46,7 +46,7 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
     >>> ufs = read_state(code_state="all", year=2010)
     """
 
-    metadata = select_metadata('state', year=year, data_type=tp)
+    metadata = select_metadata('state', year=year, simplified=simplified)
     
     if code_state is None:
         raise Exception("Value to argument 'code_state' cannot be None")
@@ -69,15 +69,15 @@ def read_state(code_state='all', year=2010, tp='simplified', verbose=False):
         
         else:
         
-            if isinstance(code_state, int) :
+            if isinstance(code_state, int):
                 metadata = metadata.query(f'code == "{str(code_state)[0:2]}"')
         
-            if isinstance(code_state, str) :                         
+            if isinstance(code_state, str):                         
                 metadata = metadata.query(f'code_abrev == "{code_state[0:2]}"')
 
             gdf = download_gpkg(metadata)
                                           
-            if len(str(code_state)) == 2 :
+            if len(str(code_state)) == 2:
                 return gdf 
             
             elif code_state in list(gdf['code_state']):

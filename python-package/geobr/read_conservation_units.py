@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_conservation_units(date=201909, tp='simplified', verbose=False):
+def read_conservation_units(date=201909, simplified=True, verbose=False):
     """ Download official data of Brazilian conservation untis as an sf object.
     
      This data set covers the whole of Brazil and it includes the polygons of all conservation untis present in Brazilian
@@ -13,7 +13,7 @@ def read_conservation_units(date=201909, tp='simplified', verbose=False):
     ----------
     date : int, optional
         A date number in YYYYMM format, by default 201909
-    tp : str, optional
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
@@ -37,7 +37,7 @@ def read_conservation_units(date=201909, tp='simplified', verbose=False):
     >>> df = read_conservation_units(date=201909)
     """
 
-    metadata = select_metadata('conservation_units', year=date, data_type=tp)
+    metadata = select_metadata('conservation_units', year=date, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 
