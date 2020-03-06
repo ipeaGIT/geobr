@@ -17,3 +17,4 @@ from .read_census_tract import read_census_tract
 from .read_meso_region import read_meso_region
 from .read_micro_region import read_micro_region
 from .read_municipality import read_municipality
+from .read_weighting_area import read_weighting_area
