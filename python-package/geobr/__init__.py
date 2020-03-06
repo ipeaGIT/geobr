@@ -14,3 +14,5 @@ from .read_indigenous_land import read_indigenous_land
 from .read_immediate_region import read_immediate_region
 from .list_geobr import list_geobr
 from .read_census_tract import read_census_tract
+from .read_meso_region import read_meso_region
+from .read_micro_region import read_micro_region

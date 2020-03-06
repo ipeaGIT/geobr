@@ -68,7 +68,7 @@ Finally, if **not** using conda, try:
 |--------------------------|-------------|-------|
 | read_amazon              | Yes         | Super |
 | read_biomes              | Yes         | Super |
-| read_census_tract        |             | No    |
+| read_census_tract        | Yes         | No    |
 | read_conservation_units  | Yes         | Super |
 | read_country             | Yes         | Super |
 | read_disaster_risk_area  | Yes         | Super |
@@ -76,9 +76,9 @@ Finally, if **not** using conda, try:
 | read_immediate_region    | Yes         | Yes   |
 | read_indigenous_land     | Yes         | Super |
 | read_intermediate_region | Yes         | Yes   |
-| read_meso_region         |             | No    |
+| read_meso_region         | Yes         | No    |
 | read_metro_area          | Yes         | Super |
-| read_micro_region        |             | No    |
+| read_micro_region        | Yes         | No    |
 | read_municipal_seat      | Yes         | Super |
 | read_municipality        |             | No    |
 | read_region              | Yes         | Super |
