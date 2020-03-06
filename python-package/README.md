@@ -73,7 +73,7 @@ Finally, if **not** using conda, try:
 | read_country             | Yes         | Super |
 | read_disaster_risk_area  | Yes         | Super |
 | read_health_facilities   | Yes         | Super |
-| read_immediate_region    |             | Yes   |
+| read_immediate_region    | Yes         | Yes   |
 | read_indigenous_land     | Yes         | Super |
 | read_intermediate_region | Yes         | Yes   |
 | read_meso_region         |             | No    |
@@ -87,5 +87,5 @@ Finally, if **not** using conda, try:
 | read_statistical_grid    |             | No    |
 | read_urban_area          | Yes         | Super |
 | read_weighting_area      |             | No    |
-| list_geobr               | Partialy    | Yes   |
+| list_geobr               | Yes         | Yes   |
 | lookup_muni              |             | No    |
