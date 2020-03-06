@@ -80,12 +80,12 @@ Finally, if **not** using conda, try:
 | read_metro_area          | Yes         | Super |
 | read_micro_region        | Yes         | No    |
 | read_municipal_seat      | Yes         | Super |
-| read_municipality        |             | No    |
+| read_municipality        | Yes         | No    |
 | read_region              | Yes         | Super |
 | read_semiarid            | Yes         | Super |
 | read_state               | Yes         | Super |
 | read_statistical_grid    |             | No    |
 | read_urban_area          | Yes         | Super |
-| read_weighting_area      |             | No    |
+| read_weighting_area      | Yes         | No    |
 | list_geobr               | Yes         | Yes   |
 | lookup_muni              |             | No    |
