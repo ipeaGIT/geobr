@@ -172,7 +172,7 @@ def download_gpkg(metadata):
     gpd.GeoDataFrame
         Table with metadata and shapefiles contained in urls.
     """
-    
+
     urls = metadata['download_path'].tolist()
 
     gpkgs = [load_gpkg(url) for url in urls]

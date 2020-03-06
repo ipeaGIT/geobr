@@ -82,14 +82,11 @@ def read_census_tract(code_tract, year=2010, zone='urban', simplified=True, verb
     gdf = download_gpkg(metadata)
     
     if len(str(code_tract)) == 2:
-
         return gdf
     
     elif  code_tract in gdf['code_muni'].tolist():
-        
         return gdf.query(f'code_muni == {code_tract}')
     
     else:
-
         raise Exception('Invalid Value to argument code_tract.')
 
