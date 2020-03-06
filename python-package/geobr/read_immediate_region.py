@@ -1,6 +1,5 @@
 
-from geobr.utils import select_metadata, download_gpkg
-
+from geobr.utils import select_metadata, download_gpkg, change_type_list
 
 def read_immediate_region(code_immediate='all', 
                           year=2017, 
@@ -52,6 +51,9 @@ def read_immediate_region(code_immediate='all',
 
     gdf = download_gpkg(metadata)
 
+    # ensure type
+    code_immediate = str(code_immediate)
+
     if code_immediate == 'all':
 
         if verbose:
@@ -64,11 +66,11 @@ def read_immediate_region(code_immediate='all',
 
         return gdf.query(f'abbrev_state == "{code_immediate}"')
 
-    elif code_immediate in gdf['code_state'].tolist():
+    elif code_immediate in change_type_list(gdf['code_state'].tolist()):
 
         return gdf.query(f'code_state == "{code_immediate}"')
 
-    elif code_immediate in gdf['code_immediate'].tolist():
+    elif code_immediate in change_type_list(gdf['code_immediate'].tolist()):
 
         return gdf.query(f'code_immediate == "{code_immediate}"')
     

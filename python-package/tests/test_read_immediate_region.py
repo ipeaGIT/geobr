@@ -13,7 +13,7 @@ def test_read_immediate_region():
     assert isinstance(read_immediate_region(code_immediate='AC'), 
                       gpd.geodataframe.GeoDataFrame)
 
-    assert len(read_immediate_region(code_immediate=110002)) == 8
+    assert len(read_immediate_region(code_immediate=110002).columns) == 8
 
     with pytest.raises(Exception):
         read_immediate_region(year=9999999)
