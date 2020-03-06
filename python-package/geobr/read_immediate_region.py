@@ -1,5 +1,5 @@
 
-from geobr.utils import select_metadata, download_gpkg, change_type_list
+from geobr.utils import select_metadata, download_gpkg, change_type_list, test_options
 
 def read_immediate_region(code_immediate='all', 
                           year=2017, 
@@ -46,6 +46,8 @@ def read_immediate_region(code_immediate='all',
     # Read specific state at a given year
     >>> df = read_immediate_region(year=2017)
     """
+
+    test_options(code_immediate, 'code_immediate', not_allowed=[None])
 
     metadata = select_metadata('immediate_regions', year=year, simplified=simplified)
 
