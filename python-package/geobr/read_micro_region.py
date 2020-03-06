@@ -36,14 +36,14 @@ def read_micro_region(code_micro='all', year=2010, simplified=True, verbose=Fals
     >>> from geobr import read_micro_region
 
     # Read specific meso region at a given year
-    >>> df = read_meso_region(code_meso=11008, year=2018)
+    >>> df = read_micro_region(code_meso=11008, year=2018)
 
     # Read all meso regions of a state at a given year
-    >>> df = read_meso_region(code_meso=12, year=2017)
-    >>> df = read_meso_region(code_meso="AM", year=2000)
+    >>> df = read_micro_region(code_meso=12, year=2017)
+    >>> df = read_micro_region(code_meso="AM", year=2000)
 
     # Read all meso regions of the country at a given year
-    >>> df = read_meso_region(code_meso="all", year=2010)
+    >>> df = read_micro_region(code_meso="all", year=2010)
     """
 
     metadata = select_metadata('micro_region', year=year, simplified=simplified)
