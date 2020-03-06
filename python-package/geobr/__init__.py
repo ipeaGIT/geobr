@@ -13,3 +13,4 @@ from .read_health_facilities import read_health_facilities
 from .read_indigenous_land import read_indigenous_land
 from .read_immediate_region import read_immediate_region
 from .list_geobr import list_geobr
+from .read_census_tract import read_census_tract
