@@ -1,14 +1,11 @@
 from time import time
-
-from urllib.error import HTTPError
 import geopandas as gpd
 import pandas as pd
 import pytest
 
 import geobr
 from geobr.utils import select_year, select_simplified, download_gpkg, load_gpkg, \
-    select_metadata, list_geobr_functions
-
+    select_metadata
 
 @pytest.fixture
 def metadata_file():
@@ -127,10 +124,3 @@ def test_select_metadata():
         select_metadata('state', 'simplified', 12334)
 
 
-def test_list_geobr_functions(capsys):
-
-    list_geobr_functions()
-
-    # Tests whether the function prints output
-    captured = capsys.readouterr()
-    assert len(captured.out) > 200
