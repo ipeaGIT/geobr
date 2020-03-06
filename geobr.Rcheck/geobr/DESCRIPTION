@@ -1,0 +1,48 @@
+Type: Package
+Package: geobr
+Title: Loads Shapefiles of Official Spatial Data Sets of Brazil
+Version: 1.2.1
+Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.br@gmail.com", role=c("aut", "cre"), comment = c(ORCID = "0000-0003-2125-7465")),
+            person(given="Caio Nogueira", family="Goncalves", role=c("aut")),
+            person(given="Paulo Henrique Fernandes de", family="Araujo", role=c("aut")),
+            person(given="Guilherme Duarte", family="Carvalho", role=c("ctb")),
+            person(given="Rodrigo Almeida de", family="Arruda", role=c("ctb")),
+            person(given="Igor", family="Nascimento", role="ctb"), 
+            person(given="Barbara Santiago Pedreira da ", family="Costa", role="ctb"), 
+            person(given="Welligtton Silva ", family="Cavedo", role="ctb"),
+            person(given="Pedro R.", family="Andrade", role="ctb"),
+            person(given="Alan da", family="Silva", role="ctb"),
+	          person(given="Carlos Kauê Vieira", family="Braga", role="ctb"),   
+            person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
+Date: 2020-02-14
+URL: https://github.com/ipeaGIT/geobr
+BugReports: https://github.com/ipeaGIT/geobr/issues
+Description: Easy access to official spatial data sets of Brazil as 'sf' objects in R.
+	     The package includes a wide range of geospatial data available at various 
+             geographic scales and for various years with harmonized attributes, projection and topology.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: TRUE
+Depends: R (>= 3.5.0)
+Suggests: covr, dplyr, ggplot2, knitr, mapview, rio, rmarkdown,
+        testthat
+Imports: httr, readr, sf, utils
+RoxygenNote: 7.0.2
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2020-03-06 17:40:36 UTC; R1701707
+Author: Rafael H. M. Pereira [aut, cre]
+    (<https://orcid.org/0000-0003-2125-7465>),
+  Caio Nogueira Goncalves [aut],
+  Paulo Henrique Fernandes de Araujo [aut],
+  Guilherme Duarte Carvalho [ctb],
+  Rodrigo Almeida de Arruda [ctb],
+  Igor Nascimento [ctb],
+  Barbara Santiago Pedreira da Costa [ctb],
+  Welligtton Silva Cavedo [ctb],
+  Pedro R. Andrade [ctb],
+  Alan da Silva [ctb],
+  Carlos Kauê Vieira Braga [ctb],
+  Ipea - Institue for Applied Economic Research [cph, fnd]
+Maintainer: Rafael H. M. Pereira <rafa.pereira.br@gmail.com>
+Built: R 3.6.1; ; 2020-03-06 17:40:53 UTC; windows
