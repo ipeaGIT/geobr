@@ -98,3 +98,5 @@ __pycache__
 
 /r-package/.Rhistory
 /r-package/.Rhistory
+
+.ipynb_checkpoints
