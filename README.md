@@ -61,6 +61,7 @@ mun = read_municipality(code_muni="RJ", year=2010)
 # Read all municipalities in the country at a given year
 mun = read_municipality(code_muni="all", year=2018)
 ```
+More examples [here](python-package/examples) 
 
 # Available datasets:
 
