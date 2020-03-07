@@ -172,7 +172,7 @@ def download_gpkg(metadata):
     gpd.GeoDataFrame
         Table with metadata and shapefiles contained in urls.
     """
-    
+
     urls = metadata['download_path'].tolist()
 
     gpkgs = [load_gpkg(url) for url in urls]
@@ -227,28 +227,17 @@ def select_metadata(geo, simplified=None, year=False):
     return metadata
 
 
-def list_geobr_functions():
-    """ Prints available functions, according to latest README.md file
+def change_type_list(lst, astype=str):
+    return [astype(l) for l in lst]
 
-        Example output
-        ------------------------------
-        Function: read_immediate_region
-        Geographies available: Immediate region
-        Years available: 2017
-        Source: IBGE
-        ------------------------------
+def test_options(choosen, name, allowed=None, not_allowed=None):
 
-    """
+    if allowed is not None:
+        if choosen not in allowed:
+            raise Exception(f"Invalid value to argument '{name}'. " 
+                            f"It must be either {' or '.join(change_type_list(allowed))}")
 
-    try:
-        df = pd.read_html('https://github.com/ipeaGIT/geobr/blob/master/README.md')[1]
-    
-    except HTTPError:
-        print('Geobr url functions list is broken'
-              'Please report an issue at "https://github.com/ipeaGIT/geobr/issues"')
-
-    for i in range(len(df)):
-        for each in df.columns:
-            print(f'{each}: {df.loc[i, each]}')
-
-        print('------------------------------')
+    if not_allowed is not None:
+        if choosen in not_allowed:
+            raise Exception(f"Invalid value to argument '{name}'. " 
+                            f"It cannot be {' or '.join(change_type_list(allowed))}")
