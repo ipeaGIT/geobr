@@ -1,0 +1,140 @@
+name_uf,code_state,code_grid
+Acre,AC,ID_50
+Acre,AC,ID_51
+Acre,AC,ID_60
+Acre,AC,ID_61
+Amazonas,AM,ID_51
+Amazonas,AM,ID_60
+Amazonas,AM,ID_61
+Amazonas,AM,ID_62
+Amazonas,AM,ID_63
+Amazonas,AM,ID_70
+Amazonas,AM,ID_71
+Amazonas,AM,ID_72
+Amazonas,AM,ID_73
+Amazonas,AM,ID_80
+Amazonas,AM,ID_81
+Amazonas,AM,ID_82
+Roraima,RR,ID_72
+Roraima,RR,ID_81
+Roraima,RR,ID_82
+Roraima,RR,ID_83
+Roraima,RR,ID_92
+Roraima,RR,ID_93
+Amapá,AP,ID_74
+Amapá,AP,ID_75
+Amapá,AP,ID_84
+Amapá,AP,ID_85
+Pará,PA,ID_53
+Pará,PA,ID_54
+Pará,PA,ID_55
+Pará,PA,ID_63
+Pará,PA,ID_64
+Pará,PA,ID_65
+Pará,PA,ID_73
+Pará,PA,ID_74
+Pará,PA,ID_75
+Pará,PA,ID_76
+Pará,PA,ID_83
+Pará,PA,ID_84
+Pará,PA,ID_85
+Maranhão,MA,ID_55
+Maranhão,MA,ID_56
+Maranhão,MA,ID_65
+Maranhão,MA,ID_66
+Maranhão,MA,ID_75
+Maranhão,MA,ID_76
+Maranhão,MA,ID_77
+Piauí,PI,ID_56
+Piauí,PI,ID_57
+Piauí,PI,ID_66
+Piauí,PI,ID_67
+Piauí,PI,ID_76
+Piauí,PI,ID_77
+Ceará,CE,ID_67
+Ceará,CE,ID_68
+Ceará,CE,ID_77
+Rio Grande do Norte,RN,ID_67
+Rio Grande do Norte,RN,ID_68
+Paraíba,PB,ID_67
+Paraíba,PB,ID_68
+Pernanbuco,PE,ID_57
+Pernanbuco,PE,ID_58
+Pernanbuco,PE,ID_67
+Pernanbuco,PE,ID_68
+Pernanbuco,PE,ID_69
+Alagoas,AL,ID_57
+Alagoas,AL,ID_58
+Sergipe,SE,ID_57
+Sergipe,SE,ID_58
+Bahia,BA,ID_37
+Bahia,BA,ID_46
+Bahia,BA,ID_47
+Bahia,BA,ID_56
+Bahia,BA,ID_57
+Espírito Santo,ES,ID_36
+Espírito Santo,ES,ID_37
+Espírito Santo,ES,ID_39
+Rio de Janeiro,RJ,ID_26
+Rio de Janeiro,RJ,ID_27
+Rio de Janeiro,RJ,ID_36
+Rio de Janeiro,RJ,ID_37
+São Paulo,SP,ID_24
+São Paulo,SP,ID_25
+São Paulo,SP,ID_26
+São Paulo,SP,ID_34
+São Paulo,SP,ID_35
+Paraná,PR,ID_24
+Paraná,PR,ID_25
+Santa Catarina,SC,ID_14
+Santa Catarina,SC,ID_15
+Santa Catarina,SC,ID_24
+Santa Catarina,SC,ID_25
+Rio Grande do Sul,RS,ID_4
+Rio Grande do Sul,RS,ID_13
+Rio Grande do Sul,RS,ID_14
+Rio Grande do Sul,RS,ID_15
+Mato Grosso do Sul,MS,ID_23
+Mato Grosso do Sul,MS,ID_24
+Mato Grosso do Sul,MS,ID_33
+Mato Grosso do Sul,MS,ID_34
+Mato Grosso do Sul,MS,ID_35
+Mato Grosso do Sul,MS,ID_43
+Mato Grosso do Sul,MS,ID_44
+Minas Gerais,MG,ID_25
+Minas Gerais,MG,ID_26
+Minas Gerais,MG,ID_35
+Minas Gerais,MG,ID_36
+Minas Gerais,MG,ID_37
+Minas Gerais,MG,ID_45
+Minas Gerais,MG,ID_46
+Minas Gerais,MG,ID_47
+Goiás,GO,ID_34
+Goiás,GO,ID_35
+Goiás,GO,ID_44
+Goiás,GO,ID_45
+Goiás,GO,ID_46
+Goiás,GO,ID_55
+Goiás,GO,ID_56
+Distrito Federal,DF,ID_45
+Tocantins,TO,ID_45
+Tocantins,TO,ID_55
+Tocantins,TO,ID_56
+Tocantins,TO,ID_65
+Tocantins,TO,ID_66
+Mato Grosso,MT,ID_33
+Mato Grosso,MT,ID_34
+Mato Grosso,MT,ID_43
+Mato Grosso,MT,ID_44
+Mato Grosso,MT,ID_45
+Mato Grosso,MT,ID_52
+Mato Grosso,MT,ID_53
+Mato Grosso,MT,ID_54
+Mato Grosso,MT,ID_55
+Mato Grosso,MT,ID_63
+Rondônia,RO,ID_42
+Rondônia,RO,ID_43
+Rondônia,RO,ID_51
+Rondônia,RO,ID_52
+Rondônia,RO,ID_53
+Rondônia,RO,ID_62
