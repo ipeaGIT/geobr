@@ -137,6 +137,10 @@ temp_sf <- dplyr::select(temp_sf, 'code_intermediate', 'name_intermediate','code
 # Convert columns from factors to characters
 temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 
+# remove Z dimension of spatial data
+temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
+head(temp_sf)
+
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
 temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 st_crs(temp_sf) <- 4674
