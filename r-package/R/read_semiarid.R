@@ -6,6 +6,7 @@
 #' @param year A date number in YYYY format (defaults to 2017)
 #' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -17,15 +18,13 @@
 #'   a <- read_semiarid(year=2017)
 #'}
 #'
-read_semiarid <- function(year=2017, simplified=TRUE, showProgress=TRUE){
+read_semiarid <- function(year=2017, simplified=TRUE, showProgress=TRUE, tp){
 
-  # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="semiarid", data_type=simplified)
+  # deprecated 'tp' argument
+  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
-
-  # Test year input
-  temp_meta <- test_year_input(temp_meta, y=year)
-
+  # Get metadata with data url addresses
+  temp_meta <- select_metadata(geography="semiarid", year=year, simplified=simplified)
 
   #list paths of files to download
   file_url <- as.character(temp_meta$download_path)

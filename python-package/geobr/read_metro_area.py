@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_metro_area(year=2018, tp='simplified', verbose=False):
+def read_metro_area(year=2018, simplified=True, verbose=False):
     """ Download shape files of official metropolitan areas in Brazil as an sf object.
     
      The function returns the shapes of municipalities grouped by their respective metro areas.
@@ -14,7 +14,7 @@ def read_metro_area(year=2018, tp='simplified', verbose=False):
     ----------
     year : int, optional
         Year of the data, by default 2018
-    tp : str, optional
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
@@ -38,7 +38,7 @@ def read_metro_area(year=2018, tp='simplified', verbose=False):
     >>> df = read_metro_area(year=2018)
     """
 
-    metadata = select_metadata('metropolitan_area', year=year, data_type=tp)
+    metadata = select_metadata('metropolitan_area', year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

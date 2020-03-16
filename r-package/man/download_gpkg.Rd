@@ -18,6 +18,7 @@ Download geopackage to tempdir
 Other support functions: 
 \code{\link{load_gpkg}()},
 \code{\link{select_data_type}()},
-\code{\link{test_year_input}()}
+\code{\link{select_metadata}()},
+\code{\link{select_year_input}()}
 }
 \concept{support functions}

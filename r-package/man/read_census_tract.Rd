@@ -9,7 +9,8 @@ read_census_tract(
   year = 2010,
   zone = "urban",
   simplified = TRUE,
-  showProgress = TRUE
+  showProgress = TRUE,
+  tp
 )
 }
 \arguments{
@@ -24,6 +25,8 @@ all census tracts of the country are loaded.}
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).

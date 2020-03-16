@@ -7,6 +7,7 @@
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
 #' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -27,16 +28,13 @@
 #' }
 #'
 
-read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showProgress=TRUE){
+read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showProgress=TRUE, tp){
 
+  # deprecated 'tp' argument
+  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
-  # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="meso_region", data_type=simplified)
-
-
-  # Test year input
-  temp_meta <- test_year_input(temp_meta, y=year)
-
+  # Get metadata with data url addresses
+  temp_meta <- select_metadata(geography="meso_region", year=year, simplified=simplified)
 
 # Verify code_meso input
 

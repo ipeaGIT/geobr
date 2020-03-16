@@ -8,7 +8,8 @@ read_intermediate_region(
   code_intermediate = "all",
   year = 2017,
   simplified = TRUE,
-  showProgress = TRUE
+  showProgress = TRUE,
+  tp
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ all intermediate regions of the country are loaded (defaults to "all").}
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 The intermediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE to

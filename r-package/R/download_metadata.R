@@ -1,7 +1,5 @@
 #' Support function to download metadata internally used in geobr
 #'
-#' @param geography Which geography will be downloaded
-#' @param data_type Data type (passed as 'simplified' from read_ functions)
 #' @export
 #' @family general support functions
 #' @examples \donttest{
@@ -12,7 +10,7 @@
 #'
 #' }
 #'
-download_metadata <- function(geography=NULL, data_type=TRUE){
+download_metadata <- function(){
 
   # Get metadata with data addresses
   tempf <- file.path(tempdir(), "metadata.csv")
@@ -27,18 +25,5 @@ download_metadata <- function(geography=NULL, data_type=TRUE){
     metadata <- utils::read.csv(tempf, stringsAsFactors=F)
   }
 
-
-  # Select geo
-  if( is.null(geography) ){
-    stop(paste0("Error: Invalid Value to argument 'geography'. It must be one of the following: ",
-                paste(unique(metadata$geo), collapse = ", ")))
-  } else if( !(geography %in% metadata$geo)){
-    stop(paste0("Error: Invalid Value to argument 'geography'. It must be one of the following: ",
-                paste(unique(metadata$geo), collapse = ", ")))
-    } else { temp_meta <- subset(metadata, geo == geography) }
-
-  # Select data type
-  temp_meta <- select_data_type(temp_meta, simplified=data_type)
-
-  return(temp_meta)
+  return(metadata)
   }

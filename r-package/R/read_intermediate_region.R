@@ -9,6 +9,7 @@
 #'  all intermediate regions of the country are loaded (defaults to "all").
 #' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -29,14 +30,13 @@
 #' }
 #'
 #'
-read_intermediate_region <- function(code_intermediate="all", year=2017, simplified=TRUE, showProgress=TRUE){
+read_intermediate_region <- function(code_intermediate="all", year=2017, simplified=TRUE, showProgress=TRUE, tp){
 
-  # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="intermediate_regions", data_type=simplified)
+  # deprecated 'tp' argument
+  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
-
-  # Test year input
-  temp_meta <- test_year_input(temp_meta, y=year)
+  # Get metadata with data url addresses
+  temp_meta <- select_metadata(geography="intermediate_regions", year=year, simplified=simplified)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)

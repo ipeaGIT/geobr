@@ -87,41 +87,31 @@ def select_year(metadata, year):
     return metadata.query(f'year == {year}')
 
 
-def select_data_type(metadata, data_type):
+def select_simplified(metadata, simplified):
     """Filter metadata by data type. It can be simplified or normal. 
-    The 'simplified' returns a simplified version of the shapefiles.
+    If 'simplified' is True, it returns a simplified version of the shapefiles.
     'normal' returns the complete version. Usually, the complete version
     if heavier than the simplified, demanding more resources.
-
-    If tp is not found, raises informative error
     
     Parameters
     ----------
     metadata : pd.DataFrame
         Filtered metadata table
-    tp : str
-        Data type, either 'simplified' or 'normal'
+    simplified : boolean
+        Data type, either True for 'simplified' or False for 'normal'
     
     Returns
     -------
     pd.DataFrame
         Filtered metadata table by type
     
-    Raises
-    ------
-    Exception
-        If 'tp' is not found.
     """
 
-    if data_type == "simplified":    
+    if simplified:    
         return metadata[metadata['download_path'].str.contains("simplified")]
     
-    elif data_type == "normal":
+    else: 
         return metadata[~metadata['download_path'].str.contains("simplified")]
-    
-    else:
-        raise Exception("Error: Invalid Value to argument 'tp'."
-                        " It must be 'simplified' or 'normal'")
 
 
 @lru_cache(maxsize=1240)
@@ -182,7 +172,7 @@ def download_gpkg(metadata):
     gpd.GeoDataFrame
         Table with metadata and shapefiles contained in urls.
     """
-    
+
     urls = metadata['download_path'].tolist()
 
     gpkgs = [load_gpkg(url) for url in urls]
@@ -190,14 +180,14 @@ def download_gpkg(metadata):
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
-def select_metadata(geo, data_type=False, year=False):
-    """Downloads and filters metadata given `geo`, `data_type` and `year`.
+def select_metadata(geo, simplified=None, year=False):
+    """Downloads and filters metadata given `geo`, `simplified` and `year`.
     
     Parameters
     ----------
     geo : str
         Shapefile category. I.e: state, biome, etc...
-    data_type : str
+    simplified : boolean
         `simplified` or `normal` shapefiles
     year : int
         Year of the data
@@ -226,10 +216,9 @@ def select_metadata(geo, data_type=False, year=False):
     # Select geo
     metadata = metadata.query(f'geo == "{geo}"')
 
-    # Skips if no data_type or year is passed
-    if data_type != False: 
+    if simplified is not None:
         # Select data type
-        metadata = select_data_type(metadata, data_type)
+        metadata = select_simplified(metadata, simplified)
     
     if year != False:
         # Verify year input
@@ -238,28 +227,17 @@ def select_metadata(geo, data_type=False, year=False):
     return metadata
 
 
-def list_geobr_functions():
-    """ Prints available functions, according to latest README.md file
+def change_type_list(lst, astype=str):
+    return [astype(l) for l in lst]
 
-        Example output
-        ------------------------------
-        Function: read_immediate_region
-        Geographies available: Immediate region
-        Years available: 2017
-        Source: IBGE
-        ------------------------------
+def test_options(choosen, name, allowed=None, not_allowed=None):
 
-    """
+    if allowed is not None:
+        if choosen not in allowed:
+            raise Exception(f"Invalid value to argument '{name}'. " 
+                            f"It must be either {' or '.join(change_type_list(allowed))}")
 
-    try:
-        df = pd.read_html('https://github.com/ipeaGIT/geobr/blob/master/README.md')[1]
-    
-    except HTTPError:
-        print('Geobr url functions list is broken'
-              'Please report an issue at "https://github.com/ipeaGIT/geobr/issues"')
-
-    for i in range(len(df)):
-        for each in df.columns:
-            print(f'{each}: {df.loc[i, each]}')
-
-        print('------------------------------')
+    if not_allowed is not None:
+        if choosen in not_allowed:
+            raise Exception(f"Invalid value to argument '{name}'. " 
+                            f"It cannot be {' or '.join(change_type_list(allowed))}")

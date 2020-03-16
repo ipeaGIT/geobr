@@ -4,12 +4,7 @@
 \alias{download_metadata}
 \title{Support function to download metadata internally used in geobr}
 \usage{
-download_metadata(geography = NULL, data_type = TRUE)
-}
-\arguments{
-\item{geography}{Which geography will be downloaded}
-
-\item{data_type}{Data type (passed as 'simplified' from read_ functions)}
+download_metadata()
 }
 \description{
 Support function to download metadata internally used in geobr

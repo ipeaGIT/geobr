@@ -11,7 +11,7 @@
 #' @export
 #' @family support functions
 #'
-select_data_type <- function(temp_meta, simplified=TRUE){
+select_data_type <- function(temp_meta, simplified=NULL){
 
   if(isTRUE(simplified)){
     temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
@@ -27,7 +27,7 @@ select_data_type <- function(temp_meta, simplified=TRUE){
 
 
 
-#' Test year input
+#' Select year input
 #'
 #'
 #'
@@ -36,7 +36,7 @@ select_data_type <- function(temp_meta, simplified=TRUE){
 #' @export
 #' @family support functions
 #'
-test_year_input <- function(temp_meta, y=year){
+select_year_input <- function(temp_meta, y=year){
 
   # NULL
   if (is.null(y)){  stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
@@ -51,10 +51,41 @@ test_year_input <- function(temp_meta, y=year){
   else { stop(paste0("Error: Invalid Value to argument 'year'. It must be one of the following: ",
                          paste(unique(temp_meta$year), collapse = " ")))
     }
-
-
 }
 
+
+#' Select metadata
+#'
+#' @param geography Which geography will be downloaded
+#' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param year Year of the dataset (passed by red_ function)
+#'
+#' @export
+#' @family support functions
+#' @examples \donttest{
+#'
+#' library(geobr)
+#'
+#' df <- download_metadata()
+#'
+#' }
+#'
+select_metadata <- function(geography, year=NULL, simplified=NULL){
+
+# download metadata
+  metadata <- download_metadata()
+
+  # Select geo
+  temp_meta <- subset(metadata, geo == geography)
+
+  # Select year input
+  temp_meta <- select_year_input(temp_meta, y=year)
+
+  # Select data type
+  temp_meta <- select_data_type(temp_meta, simplified=simplified)
+
+  return(temp_meta)
+}
 
 
 

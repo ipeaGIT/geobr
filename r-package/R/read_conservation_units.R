@@ -7,6 +7,7 @@
 #' @param date A date number in YYYYMM format (Defaults to 201909)
 #' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Default to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -17,15 +18,13 @@
 #' # Read conservation_units
 #'   b <- read_conservation_units(date=201909)
 #'}
-read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE){
+read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE, tp){
 
-  # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="conservation_units", data_type=simplified)
+  # deprecated 'tp' argument
+  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
-
-  # Test date input
-  temp_meta <- test_year_input(temp_meta, y=date)
-
+  # Get metadata with data url addresses
+  temp_meta <- select_metadata(geography="conservation_units", year=date, simplified=simplified)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)

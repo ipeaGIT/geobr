@@ -22,13 +22,8 @@
 #'
 read_municipal_seat <- function(year=2010, showProgress=TRUE){
 
-  # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="municipal_seat", data_type = F)
-
-
-  # Test year input
-  temp_meta <- test_year_input(temp_meta, y=year)
-
+  # Get metadata with data url addresses
+  temp_meta <- select_metadata(geography="municipal_seat", year=year, simplified=F)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)

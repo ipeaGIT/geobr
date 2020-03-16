@@ -4,7 +4,7 @@
 \alias{select_data_type}
 \title{Select data type: 'original' or 'simplified' (default)}
 \usage{
-select_data_type(temp_meta, simplified = TRUE)
+select_data_type(temp_meta, simplified = NULL)
 }
 \arguments{
 \item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}
@@ -18,6 +18,7 @@ Select data type: 'original' or 'simplified' (default)
 Other support functions: 
 \code{\link{download_gpkg}()},
 \code{\link{load_gpkg}()},
-\code{\link{test_year_input}()}
+\code{\link{select_metadata}()},
+\code{\link{select_year_input}()}
 }
 \concept{support functions}

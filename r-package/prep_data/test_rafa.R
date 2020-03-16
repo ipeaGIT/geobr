@@ -227,7 +227,6 @@ function_coverage(fun='read_census_tract', test_file("tests/testthat/test-read_c
 function_coverage(fun='read_weighting_area', test_file("tests/testthat/test-read_weighting_area.R"))
 function_coverage(fun='read_statistical_grid', test_file("tests/testthat/test-read_statistical_grid.R"))
 
-system.time( test_file("tests/testthat/test-read_census_tract.R") )
 
 # create githubl shield with code coverage
   # usethis::use_coverage( type = c("codecov"))
@@ -272,10 +271,6 @@ setwd("..")
 # checks spelling
 library(spelling)
 devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
-
-# Update documentation
-  devtools::document(pkg = ".")
-
 
 # Write package manual.pdf
   system("R CMD Rd2pdf --title=Package geobr --output=./geobr/manual.pdf")

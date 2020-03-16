@@ -4,7 +4,7 @@
 \alias{read_urban_area}
 \title{Download official data of urbanized areas in Brazil as an sf object.}
 \usage{
-read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE)
+read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE, tp)
 }
 \arguments{
 \item{year}{A year number in YYYY format (defaults to 2015)}
@@ -12,6 +12,8 @@ read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE)
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 This function reads the official data on the urban footprint of Brazilian cities

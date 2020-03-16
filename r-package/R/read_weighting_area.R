@@ -8,6 +8,7 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -35,20 +36,17 @@
 #'
 #'
 #'
-read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE, showProgress=TRUE){
+read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE, showProgress=TRUE, tp){
 
-  # Get metadata with data addresses
-  temp_meta <- download_metadata(geography="weighting_area", data_type=simplified)
+  # deprecated 'tp' argument
+  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
+  # Get metadata with data url addresses
+  temp_meta <- select_metadata(geography="weighting_area", year=year, simplified=simplified)
 
-  # Test year input
-  temp_meta <- test_year_input(temp_meta, y=year)
-
-
-# Verify code_weighting input
-
-  # if code_weighting=="all", read the entire country
-    if(code_weighting=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  # Verify code_weighting input
+        # if code_weighting=="all", read the entire country
+        if(code_weighting=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
 
         # list paths of files to download
         file_url <- as.character(temp_meta$download_path)

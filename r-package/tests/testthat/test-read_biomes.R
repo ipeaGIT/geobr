@@ -34,5 +34,6 @@ test_that("read_biomes", {
   # Wrong year
   testthat::expect_error(read_biomes(year=9999999))
   testthat::expect_error(read_biomes(year="xxx"))
+  testthat::expect_error(read_biomes(tp="xxx"))
 
 })

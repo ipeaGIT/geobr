@@ -11,3 +11,10 @@ from .read_conservation_units import read_conservation_units
 from .read_urban_area import read_urban_area
 from .read_health_facilities import read_health_facilities
 from .read_indigenous_land import read_indigenous_land
+from .read_immediate_region import read_immediate_region
+from .list_geobr import list_geobr
+from .read_census_tract import read_census_tract
+from .read_meso_region import read_meso_region
+from .read_micro_region import read_micro_region
+from .read_municipality import read_municipality
+from .read_weighting_area import read_weighting_area

@@ -4,7 +4,7 @@
 \alias{read_semiarid}
 \title{Download official data of Brazilian Semiarid as an sf object.}
 \usage{
-read_semiarid(year = 2017, simplified = TRUE, showProgress = TRUE)
+read_semiarid(year = 2017, simplified = TRUE, showProgress = TRUE, tp)
 }
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2017)}
@@ -12,6 +12,8 @@ read_semiarid(year = 2017, simplified = TRUE, showProgress = TRUE)
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 This data set covers the whole of Brazilian Semiarid as defined in the resolution in  23/11/2017). The original

@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_urban_area(year=2015, tp='simplified', verbose=False):
+def read_urban_area(year=2015, simplified=True, verbose=False):
     """ Download official data of urbanized areas in Brazil as an sf object.
     
      This function reads the official data on the urban footprint of Brazilian cities
@@ -14,7 +14,7 @@ def read_urban_area(year=2015, tp='simplified', verbose=False):
     ----------
     year : int, optional
         Year of the data, by default 2015
-    tp : str, optional
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
@@ -38,7 +38,7 @@ def read_urban_area(year=2015, tp='simplified', verbose=False):
     >>> df = read_urban_area(year=2015)
     """
 
-    metadata = select_metadata('urban_area', year=year, data_type=tp)
+    metadata = select_metadata('urban_area', year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

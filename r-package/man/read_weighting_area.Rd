@@ -8,7 +8,8 @@ read_weighting_area(
   code_weighting = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE
+  showProgress = TRUE,
+  tp
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ all weighting areas of the country are loaded.}
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 Only 2010 data is currently available.

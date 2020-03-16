@@ -1,14 +1,11 @@
 from time import time
-
-from urllib.error import HTTPError
 import geopandas as gpd
 import pandas as pd
 import pytest
 
 import geobr
-from geobr.utils import select_year, select_data_type, download_gpkg, load_gpkg, \
-    select_metadata, list_geobr_functions
-
+from geobr.utils import select_year, select_simplified, download_gpkg, load_gpkg, \
+    select_metadata
 
 @pytest.fixture
 def metadata_file():
@@ -52,19 +49,19 @@ def test_select_year():
         assert select_year(metadata, 2324.12)
 
 
-def test_select_data_type():
+def test_select_simplified():
 
     metadata = pd.DataFrame(['url_simplified', 'url'], 
                             columns=["download_path"]) 
     
-    assert select_data_type(metadata, 'simplified')['download_path'].unique()[0] == 'url_simplified'
+    assert select_simplified(metadata, True)['download_path'].unique()[0] == 'url_simplified'
     
-    assert select_data_type(metadata, 'normal')['download_path'].unique()[0] == 'url'
+    assert select_simplified(metadata, False)['download_path'].unique()[0] == 'url'
     
     with pytest.raises(Exception):
-        assert apply_data_type(metadata, 'slified')
-        assert apply_data_type(metadata, None)
-        assert apply_data_type(metadata, 2324.12)
+        assert select_simplified(metadata, 'slified')
+        assert select_simplified(metadata, None)
+        assert select_simplified(metadata, 2324.12)
 
 
 def test_load_gpkg():
@@ -127,10 +124,3 @@ def test_select_metadata():
         select_metadata('state', 'simplified', 12334)
 
 
-def test_list_geobr_functions(capsys):
-
-    list_geobr_functions()
-
-    # Tests whether the function prints output
-    captured = capsys.readouterr()
-    assert len(captured.out) > 200

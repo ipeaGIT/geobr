@@ -8,7 +8,8 @@ read_micro_region(
   code_micro = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE
+  showProgress = TRUE,
+  tp
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ all micro regions of the country are loaded.}
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

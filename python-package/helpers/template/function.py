@@ -2,7 +2,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def {{ name }}(year={{ default_year }}, tp='simplified', verbose=False):
+def {{ name }}(year={{ default_year }}, simplified=True, verbose=False):
     """{{ first_liner }}
     
     {{ documentation }}
@@ -11,7 +11,7 @@ def {{ name }}(year={{ default_year }}, tp='simplified', verbose=False):
     ----------
     year : int, optional
         Year of the data, by default {{ default_year }}
-    tp : str, optional
+    simplified: boolean, by default True
         Data 'type', indicating whether the function returns the 'original' dataset 
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
@@ -35,7 +35,7 @@ def {{ name }}(year={{ default_year }}, tp='simplified', verbose=False):
     >>> df = {{ name }}(year={{ default_year }})
     """
 
-    metadata = select_metadata('{{ metadata_key }}', year=year, data_type=tp)
+    metadata = select_metadata('{{ metadata_key }}', year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 
