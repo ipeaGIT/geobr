@@ -212,7 +212,7 @@ gc(reset = T)
   setwd(root_dir)
 
 # List shapes for all years
-  all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp")
+  all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
 
 
 shp_to_sf_rds <- function(x){
@@ -376,12 +376,24 @@ shp_to_sf_rds <- function(x){
       # Make any invalid geometry valid # st_is_valid( sf)
         temp_sf <- lwgeom::st_make_valid(temp_sf)
 
-        # keep code as.numeric()
+      # keep code as.numeric()
         temp_sf$code_state <- as.numeric(temp_sf$code_state)
+
+      # simplify
+        temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i, compress="gz" )
+      # write_rds(temp_sf, path = i, compress="gz" )
+
+      i <- gsub(".rds", ".gpkg", i)
+
+      sf::st_write(temp_sf, i )
+
+      i <- gsub(".gpkg", "_simplified.gpkg", i)
+
+      sf::st_write(temp_sf_simplified, i )
+
       }
   }
 
@@ -467,9 +479,20 @@ shp_to_sf_rds <- function(x){
         # keep code as.numeric()
         temp_sf$code_meso <- as.numeric(temp_sf$code_meso)
 
-      # Save cleaned sf in the cleaned directory
+        # simplify
+        temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+
+        # Save cleaned sf in the cleaned directory
         i <- gsub("original", "cleaned", i)
-        write_rds(temp_sf, path = i, compress="gz" )
+        # write_rds(temp_sf, path = i, compress="gz" )
+
+        i <- gsub(".rds", ".gpkg", i)
+
+        sf::st_write(temp_sf, i )
+
+        i <- gsub(".gpkg", "_simplified.gpkg", i)
+
+        sf::st_write(temp_sf_simplified, i )
       }
     }
 
@@ -556,9 +579,20 @@ shp_to_sf_rds <- function(x){
       # keep code as.numeric()
       temp_sf$code_micro <- as.numeric(temp_sf$code_micro)
 
+      # simplify
+      temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+
       # Save cleaned sf in the cleaned directory
       i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i, compress="gz" )
+      # write_rds(temp_sf, path = i, compress="gz" )
+
+      i <- gsub(".rds", ".gpkg", i)
+
+      sf::st_write(temp_sf, i )
+
+      i <- gsub(".gpkg", "_simplified.gpkg", i)
+
+      sf::st_write(temp_sf_simplified, i )
     }
   }
 
@@ -650,6 +684,14 @@ shp_to_sf_rds <- function(x){
       # names(temp_sf) %>% tolower()  %in% "cd_geocmu" %>% sum()
       # names(temp_sf) %>% tolower()  %in% "nm_municip" %>% sum()
 
+      if ( any(st_is_valid(temp_sf))==FALSE ) {
+        temp_sf <- st_make_valid(temp_sf)
+      }
+
+      if (i == "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_original/municipio/2000/42MU.rds") {
+        temp_sf <- temp_sf[-c(278),]
+      }
+
 # add State code and name
   temp_sf$code_state <- substr(temp_sf$code_muni, 1, 2)
   temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
@@ -684,6 +726,8 @@ shp_to_sf_rds <- function(x){
   temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
 
 
+    temp_sf <-  temp_sf %>% group_by(code_muni,name_muni,code_state, abbrev_state) %>% summarise() %>% ungroup()
+
       # Use UTF-8 encoding
         temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
 
@@ -702,11 +746,24 @@ shp_to_sf_rds <- function(x){
       # Make an invalid geometry valid # st_is_valid( sf)
         temp_sf <- lwgeom::st_make_valid(temp_sf)
 
-      # Save cleaned sf in the cleaned directory
-      i <- gsub("original", "cleaned", i)
-      write_rds(temp_sf, path = i, compress="gz" )
+      # simplify
+        temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+
+        # Save cleaned sf in the cleaned directory
+        i <- gsub("original", "cleaned", i)
+        # write_rds(temp_sf, path = i, compress="gz" )
+
+        i <- gsub(".rds", ".gpkg", i)
+
+        sf::st_write(temp_sf, i )
+
+        i <- gsub(".gpkg", "_simplified.gpkg", i)
+
+        sf::st_write(temp_sf_simplified, i )
     }
   }
+
+
 
 
 # Apply function to save original data sets in rds format
@@ -750,25 +807,36 @@ shp_to_sf_rds <- function(x){
 
 
 # list sf files in each dir
-  sf_files_2010 <- list.files(sub_dir_2010, full.names = T, pattern = ".rds")
-  sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".rds")
+  sf_files_2010 <- list.files(sub_dir_2010, full.names = T, pattern = ".gpkg")
+  sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".gpkg")
 
 
 # Create function to correct number of digits of meso regions in 2010
 
 # use data of 2013 to add code and name of meso regions in the 2010 data
-correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_files_2010[1]
+correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_files_2010[5]
 
     # Get UF of the file
-      get_uf <- function(x){substr(x, nchar(x)-7, nchar(x)-6)}
+      get_uf <- function(x){if (grepl("simplified",x)) {
+        substr(x, nchar(x)-19, nchar(x)-18)
+      } else {substr(x, nchar(x)-8, nchar(x)-7)}
+        }
       uf <- get_uf(a2010_sf_meso_file)
 
+
+
     # read 2010 file
-      temp2010 <- read_rds(a2010_sf_meso_file)
+      temp2010 <- st_read(a2010_sf_meso_file)
 
     # read 2013 file
-      temp2013 <- sf_files_2013[ get_uf(sf_files_2013) %like% uf]
-      temp2013 <- read_rds(temp2013)
+
+
+      temp2013 <- sf_files_2013[ if (grepl("simplified",a2010_sf_meso_file)) {
+        (sf_files_2013 %like% paste0("/",uf)) & (sf_files_2013 %like% "simplified")
+      } else {
+        (sf_files_2013 %like% paste0("/",uf)) & !(sf_files_2013 %like% "simplified")
+      }]
+      temp2013 <- st_read(temp2013)
 
     # keep only code and name columns
       table2013 <- temp2013 %>% as.data.frame()
@@ -776,10 +844,10 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
     # update code_meso
       sf2010 <- left_join(temp2010, table2013, by="name_meso")
-      sf2010 <- dplyr::select(sf2010, code_meso=code_meso.y, name_meso, geometry)
+      sf2010 <- dplyr::select(sf2010, code_meso=code_meso.y, name_meso, geom)
 
     # Save file
-      write_rds(sf2010, path = a2010_sf_meso_file, compress="gz" )
+      st_write(sf2010,a2010_sf_meso_file,update = FALSE,delete_dsn =T,delete_layer=T)
       }
 
 # Apply function
@@ -800,8 +868,8 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
 
   # list sf files in each dir
-  sf_files_2010 <- list.files(sub_dir_2010, full.names = T, pattern = ".rds")
-  sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".rds")
+  sf_files_2010 <- list.files(sub_dir_2010, full.names = T, pattern = ".gpkg")
+  sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".gpkg")
 
 
 # Create function to correct number of digits of meso regions in 2010, based on 2013 data
@@ -809,15 +877,22 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[1]
 
     # Get UF of the file
-    get_uf <- function(x){substr(x, nchar(x)-7, nchar(x)-6)}
+    get_uf <- function(x){if (grepl("simplified",x)) {
+      substr(x, nchar(x)-19, nchar(x)-18)
+    } else {substr(x, nchar(x)-8, nchar(x)-7)}
+    }
     uf <- get_uf(a2010_sf_micro_file)
 
     # read 2010 file
-    temp2010 <- read_rds(a2010_sf_micro_file)
+    temp2010 <- st_read(a2010_sf_micro_file)
 
     # read 2013 file
-    temp2013 <- sf_files_2013[ get_uf(sf_files_2013) %like% uf]
-    temp2013 <- read_rds(temp2013)
+    temp2013 <- sf_files_2013[if (grepl("simplified",a2010_sf_micro_file)) {
+      (sf_files_2013 %like% paste0("/",uf)) & (sf_files_2013 %like% "simplified")
+    } else {
+      (sf_files_2013 %like% paste0("/",uf)) & !(sf_files_2013 %like% "simplified")
+    }]
+    temp2013 <- st_read(temp2013)
 
     # keep only code and name columns
     table2013 <- temp2013 %>% as.data.frame()
@@ -825,10 +900,11 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
     # update code_micro
     sf2010 <- left_join(temp2010, table2013, by="name_micro")
-    sf2010 <- dplyr::select(sf2010, code_micro=code_micro.y, name_micro, geometry)
+    sf2010 <- dplyr::select(sf2010, code_micro=code_micro.y, name_micro, geom)
 
     # Save file
-    write_rds(sf2010, path = a2010_sf_micro_file, compress="gz" )
+    # write_rds(sf2010, path = a2010_sf_micro_file, compress="gz" )
+    st_write(sf2010,a2010_sf_micro_file,update = FALSE,delete_dsn =T,delete_layer=T)
   }
 
   # Apply function
@@ -925,27 +1001,67 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
   # read clean muni data of 2010
   muni_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_cleaned/municipio"
-  muni_files <- list.files(muni_dir, full.names = T, recursive = T, pattern = ".rds")
+  muni_files <- list.files(muni_dir, full.names = T, recursive = T, pattern = ".gpkg")
 
   # All muni 2010 files
   muni_files_2010 <- muni_files[muni_files %like% 2010]
 
+  muni_files_2010_full <- muni_files_2010[!(muni_files_2010 %like% "simplified")]
+
+  # All muni 2010 files simplified
+  muni_files_2010_sp <- muni_files_2010[(muni_files_2010 %like% "simplified")]
+
+
   # Read all
-  sf_2010 <- lapply(X=muni_files_2010, FUN= readr::read_rds)
-  sf_2010 <- do.call('rbind', sf_2010)
+  sf_2010_full <- lapply(X=muni_files_2010_full, FUN= st_read)
+  sf_2010_full <- do.call('rbind', sf_2010_full)
+
+  # Read all simplified
+  sf_2010_sp <- lapply(X=muni_files_2010_sp, FUN= st_read)
+  sf_2010_sp <- do.call('rbind', sf_2010_sp)
+
 
   # Add geometry
-  brazil_2010 <- dplyr::left_join(sf_2010, table_2010, by='code_muni')
+  # brazil_2010 <- dplyr::left_join(sf_2010, table_2010, by='code_muni')
+  brazil_2010_full <- dplyr::left_join(sf_2010_full, table_2010, by='code_muni')
+
 
   # fix names
-  brazil_2010$name_muni.x <- NULL
-  brazil_2010 <- dplyr::rename(brazil_2010, name_muni = 'name_muni.y')
-  head(brazil_2010)
+  brazil_2010_full$name_muni.x <- NULL
+  brazil_2010_full <- dplyr::rename(brazil_2010_full, name_muni = 'name_muni.y')
+  head(brazil_2010_full)
 
+  del_name <- grep(".x$",names(brazil_2010_full), value = T)
+  keep_name <- grep(".y$",names(brazil_2010_full), value = T)
+
+  brazil_2010_full <- brazil_2010_full %>% select(-del_name)
+  setnames(brazil_2010_full,keep_name,substr(keep_name,0,nchar(keep_name)-2))
 
 
 # remove two lagoons
-  brazil_2010 <- subset(brazil_2010, !is.na(code_state))
+  brazil_2010_full <- subset(brazil_2010_full, !is.na(code_state))
+
+
+
+  # Add geometry
+  # brazil_2010 <- dplyr::left_join(sf_2010, table_2010, by='code_muni')
+  brazil_2010_sp <- dplyr::left_join(sf_2010_sp, table_2010, by='code_muni')
+
+
+  # fix names
+  brazil_2010_sp$name_muni.x <- NULL
+  brazil_2010_sp <- dplyr::rename(brazil_2010_sp, name_muni = 'name_muni.y')
+  head(brazil_2010_sp)
+
+  del_name <- grep(".x$",names(brazil_2010_sp), value = T)
+  keep_name <- grep(".y$",names(brazil_2010_sp), value = T)
+
+  brazil_2010_sp <- brazil_2010_sp %>% select(-del_name)
+  setnames(brazil_2010_sp,keep_name,substr(keep_name,0,nchar(keep_name)-2))
+
+
+  # remove two lagoons
+  brazil_2010_sp <- subset(brazil_2010_sp, !is.na(code_state))
 
 # save .Rdata
   save(brazil_2010, file = "../data/brazil_2010.RData", compress='gzip', compression_level=1)
