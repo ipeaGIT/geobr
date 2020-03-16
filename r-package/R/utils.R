@@ -57,9 +57,9 @@ select_year_input <- function(temp_meta, y=year){
 #' Select metadata
 #'
 #' @param geography Which geography will be downloaded
-#' @param data_type Data type (passed as 'simplified' from read_ functions)
-#' @param data_type Data type (passed as 'simplified' from read_ functions)
-
+#' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param y Year of the dataset (passed by red_ function)
+#'
 #' @export
 #' @family support functions
 #' @examples \donttest{

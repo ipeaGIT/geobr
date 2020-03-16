@@ -1,7 +1,5 @@
 #' Support function to download metadata internally used in geobr
 #'
-#' @param geography Which geography will be downloaded
-#' @param data_type Data type (passed as 'simplified' from read_ functions)
 #' @export
 #' @family general support functions
 #' @examples \donttest{

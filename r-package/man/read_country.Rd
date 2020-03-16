@@ -4,7 +4,7 @@
 \alias{read_country}
 \title{Download shape file of Brazil as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
+read_country(year = 2010, simplified = TRUE, showProgress = TRUE, tp)
 }
 \arguments{
 \item{year}{Year of the data (defaults to 2010)}
@@ -12,6 +12,8 @@ read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
 \item{simplified}{Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+
+\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 Download shape file of Brazil as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

@@ -6,11 +6,6 @@
 \usage{
 download_metadata()
 }
-\arguments{
-\item{geography}{Which geography will be downloaded}
-
-\item{data_type}{Data type (passed as 'simplified' from read_ functions)}
-}
 \description{
 Support function to download metadata internally used in geobr
 }

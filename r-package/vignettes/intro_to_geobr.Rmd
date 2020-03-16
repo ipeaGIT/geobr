@@ -94,7 +94,7 @@ states <- read_state(year=2014)
 
 ## Importante note about data resolution
 
-All functions to download polygon data such as states, municipalites etc. have a `tp` argument as in data ***type***. When `tp = "original"`, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, `tp = "simplified"` and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.
+All functions to download polygon data such as states, municipalites etc. have a `simplified` argument. When `simplified = FALSE`, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, `simplified = TRUE` and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.
 
 
 

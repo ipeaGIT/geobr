@@ -9,7 +9,9 @@ select_metadata(geography, year = NULL, simplified = NULL)
 \arguments{
 \item{geography}{Which geography will be downloaded}
 
-\item{data_type}{Data type (passed as 'simplified' from read_ functions)}
+\item{simplified}{Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
+
+\item{y}{Year of the dataset (passed by red_ function)}
 }
 \description{
 Select metadata

@@ -8,6 +8,7 @@
 #'  all micro regions of the country are loaded.
 #' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -28,7 +29,10 @@
 #'
 #'
 
-read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE){
+read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE, tp){
+
+  # deprecated 'tp' argument
+  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="micro_region", year=year, simplified=simplified)
