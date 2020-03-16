@@ -272,10 +272,6 @@ setwd("..")
 library(spelling)
 devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
-# Update documentation
-  devtools::document(pkg = ".")
-
-
 # Write package manual.pdf
   system("R CMD Rd2pdf --title=Package geobr --output=./geobr/manual.pdf")
   # system("R CMD Rd2pdf geobr")

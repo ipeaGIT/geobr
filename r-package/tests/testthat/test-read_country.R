@@ -30,5 +30,6 @@ test_that("read_country", {
   # Wrong date
   testthat::expect_error(read_country(year=9999999))
   testthat::expect_error(read_country(year="xxx"))
+  testthat::expect_error(read_country(tp="xxx"))
 
 })

@@ -32,5 +32,6 @@ test_that("read_conservation_units", {
   # Wrong date
   testthat::expect_error(read_conservation_units(date=9999999))
   testthat::expect_error(read_conservation_units(date="xxx"))
+  testthat::expect_error(read_conservation_units(tp="xxx"))
 
 })

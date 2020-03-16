@@ -58,7 +58,7 @@ select_year_input <- function(temp_meta, y=year){
 #'
 #' @param geography Which geography will be downloaded
 #' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
-#' @param y Year of the dataset (passed by red_ function)
+#' @param year Year of the dataset (passed by red_ function)
 #'
 #' @export
 #' @family support functions

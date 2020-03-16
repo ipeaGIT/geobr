@@ -33,5 +33,7 @@ test_that("read_amazon", {
   # Wrong year
   testthat::expect_error(read_amazon(year=9999999))
   testthat::expect_error(read_amazon(year="xxx"))
+  testthat::expect_error(read_amazon(tp="xxx"))
+
 
 })
