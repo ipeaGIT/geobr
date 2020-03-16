@@ -38,8 +38,11 @@ setwd(root_dir)
 dir.create("./intermediate_regions")
 setwd("./intermediate_regions")
 
+
+
 # Create folders to save clean sf.rds files
-dir.create("./shapes_in_sf_cleaned", showWarnings = FALSE)
+destdir_clean <- "./shapes_in_sf_cleaned"
+dir.create( destdir_clean , showWarnings = FALSE)
 
 
 
@@ -54,7 +57,7 @@ download.file(url = ftp, destfile = "RG2017_rgint_20180911.zip")
 unzip("RG2017_rgint_20180911.zip")
 
 
-##### Rename columns -------------------------
+##### 2. Rename columns -------------------------
 
 # read data
 temp_sf <- st_read("RG2017_rgint.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
@@ -141,17 +144,30 @@ temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
 head(temp_sf)
 
+# Make any invalid geometry valid # st_is_valid( sf)
+temp_sf <- lwgeom::st_make_valid(temp_sf)
+
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
 temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 st_crs(temp_sf) <- 4674
 
-# Make any invalid geometry valid # st_is_valid( sf)
-temp_sf <- lwgeom::st_make_valid(temp_sf)
 
 # keep code as.numeric()
 temp_sf$code_state <- as.numeric(temp_sf$code_state)
 
 
-##### Save data -------------------------
-readr::write_rds(temp_sf, path = "./shapes_in_sf_cleaned/intermediate_regions_2017.rds", compress="gz" )
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
 
+# simplify
+temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+
+
+
+##### Save data -------------------------
+
+###### 8. Clean data set and save it in compact .rds format-----------------
+
+# save original and simplified datasets
+sf::st_write(temp_sf, paste0(destdir_clean, "/intermediate_regions_2017.gpkg") )
+sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/intermediate_regions_2017_simplified.gpkg") )

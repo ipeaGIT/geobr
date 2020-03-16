@@ -194,7 +194,7 @@ temp_sf <- lwgeom::st_make_valid(temp_sf)
 
 # keep code as.numeric()
 temp_sf$code_state <- as.numeric(temp_sf$code_state)
-temp_sf$ode_region <- as.numeric(temp_sf$ode_region)
+temp_sf$code_region <- as.numeric(temp_sf$code_region)
 temp_sf$code_immediate <- as.numeric(temp_sf$code_immediate )
 
 
