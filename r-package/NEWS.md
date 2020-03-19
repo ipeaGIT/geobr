@@ -53,9 +53,13 @@
 -------------------------------------------------------
 # geobr dev v1.2.1
 
+
+### Major changes
+* New argument `showProgress` to display progress bar. Defaults to `TRUE`
+* Argument `tp` was deprecated and replaced by argument `simplified` that needs to be either `TRUE` or `FALSE`
+
 ### Minor changes
 * reorganization of internal support functions to reduce code redundancy
-* substantial increase in test coverage of functions
-  
+* substantial improvment in test coverage of functions
   
   

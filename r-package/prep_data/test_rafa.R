@@ -177,12 +177,22 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
+### Test examples  ----------------
+library(devtools)
+
+
+devtools::run_examples(pkg = ".", test = T, run = T)
+
+
+
+
+
+
+### Test coverage  ----------------
 
 
 # TRAVIS
 #  https://travis-ci.org/ipeaGIT/geobr
-
-### Test coverage  ----------------
 
 library(covr)
 library(testthat)
@@ -305,15 +315,8 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
 
-setwd("R:/Dropbox/git/geobr")
-setwd("..")
 
-
-
-# build binary
-  system("R CMD build . --resave-data") # build tar.gz
-  # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
-
+### CMD Check ----------------
 # Check package errors
   Sys.setenv(NOT_CRAN = "false")
   devtools::check(pkg = ".",  cran = TRUE)
@@ -334,6 +337,19 @@ setwd("..")
  Skipped:  0
  usuário   sistema decorrido
  264.21     12.42    487.20
+
+
+ setwd("R:/Dropbox/git/geobr")
+ setwd("..")
+
+
+
+ # build binary
+ system("R CMD build . --resave-data") # build tar.gz
+ # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
+
+
+
 # pack <- "geobr"
 # path <- find.package(pack)
 # system(paste(shQuote(file.path(R.home("bin"), "R")),

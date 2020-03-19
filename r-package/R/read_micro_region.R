@@ -23,7 +23,7 @@
 #'   micro <- read_micro_region(code_micro=12, year=2017)
 #'   micro <- read_micro_region(code_micro="AM", year=2000)
 #'
-#'# Read all micro regions at a given year
+#' # Read all micro regions at a given year
 #'   micro <- read_micro_region(code_micro="all", year=2010)
 #' }
 #'
