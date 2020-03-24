@@ -1,10 +1,12 @@
 import os
 from functools import lru_cache
+from urllib.error import HTTPError
 
 import geopandas as gpd
 import pandas as pd
 import requests
-from urllib.error import HTTPError
+import unicodedata
+
 
 def _get_unique_values(_df, column):
 
@@ -230,6 +232,7 @@ def select_metadata(geo, simplified=None, year=False):
 def change_type_list(lst, astype=str):
     return [astype(l) for l in lst]
 
+
 def test_options(choosen, name, allowed=None, not_allowed=None):
 
     if allowed is not None:
@@ -241,3 +244,19 @@ def test_options(choosen, name, allowed=None, not_allowed=None):
         if choosen in not_allowed:
             raise Exception(f"Invalid value to argument '{name}'. " 
                             f"It cannot be {' or '.join(change_type_list(allowed))}")
+
+
+def strip_accents(text):
+    """
+    Strip accents from input String.
+
+    :param text: The input string.
+    :type text: String.
+
+    :returns: The processed String.
+    :rtype: String.
+    """
+    text = unicodedata.normalize('NFD', text)
+    text = text.encode('ascii', 'ignore')
+    text = text.decode("utf-8")
+    return str(text)
