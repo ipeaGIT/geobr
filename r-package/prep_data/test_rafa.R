@@ -322,29 +322,26 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
   devtools::check(pkg = ".",  cran = TRUE)
   beepr::beep()
 
- CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
- OK:       37
- Failed:   0
- Warnings: 0
- Skipped:  33
- usuário   sistema decorrido
- 10.31      1.74     24.77
+# CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
 
+  # Linux
+  library(rhub)
 
- OK:       329
- Failed:   0
- Warnings: 0
- Skipped:  0
- usuário   sistema decorrido
- 264.21     12.42    487.20
+   list_validated_emails()
+   validate_email(email = 'rafa.pereira.br@gmail.com', toke='b1a30b9fda0341e2a80e6b7cd96ef8ec')
 
+#  mycheck <- rhub::check_for_cran( path='./geobr_1.2-1.tar.gz' )
 
- setwd("R:/Dropbox/git/geobr")
- setwd("..")
+  mycheck <- rhub::check(path='./geobr_1.2-1.tar.gz', platform = 'fedora-clang-devel', email = 'rafa.pereira.br@gmail.com')
+  mycheck$browse()
+  mycheck$print()
+  mycheck$livelog()
+  mycheck$urls()
 
 
 
- # build binary
+
+# build binary
  system("R CMD build . --resave-data") # build tar.gz
  # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
 
