@@ -11,7 +11,7 @@ context("read_amazon")
 test_that("read_amazon", {
 
   # read data
-  test_sf <- read_amazon()
+  test_sf <- read_amazon(showProgress = F)
 
   # check sf object
   testthat::expect_true(is(test_sf, "sf"))

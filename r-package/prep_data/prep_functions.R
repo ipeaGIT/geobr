@@ -85,3 +85,20 @@ add_region_info <- function(temp_sf){
                                               }
 
 
+###### Simplify temp_sf -----------------
+
+simplify_temp_sf <- function(temp_sf, tolerance=100){
+
+  # reproject to utm
+  temp_gpkg_simplified <- sf::st_transform(temp_sf, crs=3857)
+
+  # simplify with tolerance
+  temp_gpkg_simplified <- sf::st_simplify(temp_gpkg_simplified, preserveTopology = T, dTolerance = tolerance)
+
+  # reproject to utm
+  temp_gpkg_simplified <- sf::st_transform(temp_gpkg_simplified, crs=4674)
+
+  # Make any invalid geometry valid # st_is_valid( sf)
+  temp_gpkg_simplified <- lwgeom::st_make_valid(temp_gpkg_simplified)
+  return(temp_gpkg_simplified)
+}

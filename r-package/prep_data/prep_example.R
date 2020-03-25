@@ -114,6 +114,10 @@ cleaning_data_fun <- function(f){
 
 temp_sf3 <- harmonize_projection(temp_sf2)
 
+st_crs(temp_sf3)$epsg
+st_crs(temp_sf3)$input
+st_crs(temp_sf3)$proj4string
+st_crs(st_crs(temp_sf3)$wkt) == st_crs(temp_sf3)
 
 ###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
 
@@ -145,7 +149,7 @@ temp_sf6 <- lwgeom::st_make_valid(temp_sf5)
 temp_sf7 <- st_transform(temp_sf6, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 
-###### 8. Clean data set and save it in compact .rds format-----------------
+###### 8. Clean data set and save it in geopackage format-----------------
 
 # save original and simplified datasets
 sf::st_write(temp_sf6, path= paste0(destdir_clean, "/new_data_", update, ".gpkg"))

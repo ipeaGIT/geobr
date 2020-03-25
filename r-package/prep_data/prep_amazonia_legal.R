@@ -1,18 +1,3 @@
-update <- 2012
-
-library(RCurl)
-library(stringr)
-library(sf)
-library(dplyr)
-library(readr)
-library(data.table)
-library(magrittr)
-library(lwgeom)
-library(stringi)
-
-
-
-
 #> DATASET: legal amazon
 #> Source: MMA - http://mapas.mma.gov.br/i3geo/datadownload.htm
 #> Metadata:
@@ -34,12 +19,34 @@ library(stringi)
 
 
 
+### Libraries (use any library as necessary)
+
+library(RCurl)
+library(stringr)
+library(sf)
+library(dplyr)
+library(readr)
+library(data.table)
+library(magrittr)
+library(lwgeom)
+library(stringi)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
 
 
-getwd()
 
 
-###### 0. Create Root folder to save the data -----------------
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+
+update <- 2012
+
+
+
+###### 0. Create directories to downlod and save the data -----------------
+
 # Root directory
 root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
 setwd(root_dir)
@@ -59,61 +66,90 @@ dir.create(destdir_clean)
 
 
 
-#### 0. Download original data sets from source website -----------------
+###### 1. download the raw data from the original website source -----------------
 
 # Download and read into CSV at the same time
-ftp_shp <- 'http://mapas.mma.gov.br/ms_tmp/amazonia_legal.shp'
-ftp_shx <- 'http://mapas.mma.gov.br/ms_tmp/amazonia_legal.shx'
-ftp_dbf <- 'http://mapas.mma.gov.br/ms_tmp/amazonia_legal.dbf'
+ftp_shp <- 'http://mapas.mma.gov.br/ms_tmp/amazlegal.shp'
+ftp_shx <- 'http://mapas.mma.gov.br/ms_tmp/amazlegal.shx'
+ftp_dbf <- 'http://mapas.mma.gov.br/ms_tmp/amazlegal.dbf'
 ftp <- c(ftp_shp,ftp_shx,ftp_dbf)
 aux_ft <- c("shp","shx","dbf")
 
 for(i in 1:length(ftp)){
-  download.file(url = ftp[i],
-                destfile = paste0(destdir_raw,"/","amazonia_legal.",aux_ft[i]) )
-}
+
+    # download.file(url = ftp[i],
+    #               destfile = paste0(destdir_raw,"/","amazonia_legal.",aux_ft[i]) )
+  httr::GET(url=ftp[i],
+            httr::write_disk(path=paste0(destdir_raw,"/","amazonia_legal.",aux_ft[i]), overwrite = F))
+
+  }
 
 
 
 
 
-
-#### 2. Unzipe shape files -----------------
+###### 2. rename column names -----------------
 setwd(destdir_raw)
 
-# list and unzip zipped files
-#zipfiles <- list.files(pattern = ".zip")
-#unzip(zipfiles)
-
-
-
-
-
-
-
-
-#### 3. Clean data set and save it in compact .rds format-----------------
-
-
 # read data
-temp_sf <- st_read("./amazonia_legal.shp", quiet = F, stringsAsFactors=F)
+temp_sf <- sf::st_read("./amazonia_legal.shp", quiet = F, stringsAsFactors=F)
 
 
 # Rename columns
 temp_sf$GID0 <- NULL
+temp_sf$ID1 <- NULL
 
+
+
+###### 3. ensure the data uses spatial projection SIRGAS 2000 epsg (SRID): 4674-----------------
+
+temp_sf3 <- harmonize_projection(temp_sf)
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
 temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
 st_crs(temp_sf)
 
+st_crs(temp_sf3)$epsg
+st_crs(temp_sf3)$input
+st_crs(temp_sf3)$proj4string
+st_crs(st_crs(temp_sf3)$wkt) == st_crs(temp_sf3)
+
+
+
+
+###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
+
+# not necessary here
+
+
+
+###### 5. remove Z dimension of spatial data-----------------
+
+# remove Z dimension of spatial data
+temp_sf5 <- temp_sf3 %>% st_sf() %>% st_zm( drop = T, what = "ZM")
+
+
+
+###### 6. fix eventual topology issues in the data-----------------
 
 # Make any invalid geometry valid # st_is_valid( sf)
-temp_sf <- lwgeom::st_make_valid(temp_sf)
+temp_sf6 <- lwgeom::st_make_valid(temp_sf5)
 
 
-# Save cleaned sf in the cleaned directory
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+temp_sf7 <- simplify_temp_sf(temp_sf6)
+head(temp_sf7)
+
+
+
+###### 8. Clean data set and save it in geopackage format-----------------
 setwd(root_dir)
-readr::write_rds(temp_sf, path= paste0(destdir_clean,"/amazonia_legal",".rds"), compress = "gz")
+
+# save original and simplified datasets
+sf::st_write(temp_sf6, dsn= paste0(destdir_clean, "/amazonia_legal_", update, ".gpkg") )
+sf::st_write(temp_sf7, dsn= paste0(destdir_clean, "/amazonia_legal_", update," _simplified", ".gpkg"))
 
 
