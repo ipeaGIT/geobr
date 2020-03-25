@@ -17,7 +17,7 @@ test_that("read_urban_area", {
   expect_true(is(test_sf, "sf"))
 
   # check projection
-    expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+    expect_equal(sf::st_crs(test_sf)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
 
 })
 

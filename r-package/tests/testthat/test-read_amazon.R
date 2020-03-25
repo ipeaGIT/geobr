@@ -20,7 +20,7 @@ test_that("read_amazon", {
   testthat::expect_equal(ncol(test_sf), 2)
 
   # check projection
-  testthat::expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  testthat::expect_equal(sf::st_crs(test_sf)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
 
 })
 

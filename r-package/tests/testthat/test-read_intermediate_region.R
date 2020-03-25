@@ -20,7 +20,7 @@ test_that("read_intermediate_region", {
   testthat::expect_equal(nrow(test_code_muni), 1)
 
   # check projection
-  testthat::expect_equal(sf::st_crs(test_code_muni)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+  testthat::expect_equal(sf::st_crs(test_code_muni)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
 
 })
 
