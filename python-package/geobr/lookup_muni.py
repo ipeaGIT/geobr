@@ -40,15 +40,11 @@ def lookup_muni(name_muni='', code_muni='', verbose=False):
     >>> mun_all = lookup_muni("all")
     """
     # Get metadata with data url addresses
-    temp_meta = utils.download_metadata()
-    temp_meta = temp_meta[(temp_meta.geo == 'lookup_muni') & (temp_meta.year == 2010)]
-
-    # For the specific case in which there is just one year. For more years, change for a list result of urls
-    url = temp_meta.loc[:, 'download_path'].to_list()[0]
+    temp_meta = utils.select_metadata(geo='lookup_muni', year=2010)
 
     # Read DataFrame available at provided url
-    lookup_table_2010 = pd.read_csv(url)
-    lookup_table_2010.name_muni_format = lookup_table_2010.name_muni_format.str.lower()
+    lookup_table_2010 = utils.download_metadata(temp_meta.loc[:, 'download_path'].to_list()[0])
+    lookup_table_2010['name_muni_format'] = lookup_table_2010['name_muni_format'].str.lower()
 
     # Search by inputs
     if code_muni == 'all' or name_muni == 'all':
@@ -59,14 +55,14 @@ def lookup_muni(name_muni='', code_muni='', verbose=False):
         if name_muni != '':
             if verbose:
                 print("Ignoring argument name_muni")
-        output = lookup_table_2010[lookup_table_2010.code_muni == int(code_muni)].iloc[:, :-1]
+        output = lookup_table_2010[lookup_table_2010['code_muni'] == int(code_muni)].iloc[:, :-1]
         if verbose:
             print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
         return output
     elif name_muni != '':
         # Cleaning from accents and turning into lower cases without spaces
         name_muni = utils.strip_accents(str(name_muni).lower().strip())
-        output = lookup_table_2010[lookup_table_2010.name_muni_format == name_muni]
+        output = lookup_table_2010[lookup_table_2010['name_muni_format'] == name_muni]
         if len(output) == 0:
             if verbose:
                 print("Please insert a valid municipality name")
