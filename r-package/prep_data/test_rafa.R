@@ -332,7 +332,7 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 #  mycheck <- rhub::check_for_cran( path='./geobr_1.2-1.tar.gz' )
 
-  mycheck <- rhub::check(path='./geobr_1.2-1.tar.gz', platform = 'fedora-clang-devel', email = 'rafa.pereira.br@gmail.com')
+  mycheck <- rhub::check(path='./geobr_1.2-1.tar.gz', platform = 'debian-clang-devel', email = 'rafa.pereira.br@gmail.com')
   mycheck$browse()
   mycheck$print()
   mycheck$livelog()

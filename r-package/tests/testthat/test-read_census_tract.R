@@ -17,12 +17,7 @@ test_that("read_census_tract", {
   testthat::expect_output( read_census_tract(code_tract = "AP", zone = "urban", year=2010) )
   testthat::expect_output( read_census_tract(code_tract = 'all', year = 2000) )
 
-
-
-  test_code_2000 <- read_census_tract(code_tract = 1100023, year = 2000)
-
-  # check projection
-  testthat::expect_equal(sf::st_crs(test_code_2000)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
+  testthat::expect_output( read_census_tract(code_tract = 1100023, year = 2000) )
 
 })
 

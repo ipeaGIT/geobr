@@ -26,9 +26,6 @@ test_that("read_municipality", {
   expect_true(is(test_1991, "sf"))
   expect_true(is(test_2010, "sf"))
 
-  # check projection
-  expect_equal(sf::st_crs(test_2010)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
-
 })
 
 

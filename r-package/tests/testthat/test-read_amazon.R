@@ -17,13 +17,12 @@ test_that("read_amazon", {
   testthat::expect_true(is(test_sf, "sf"))
 
   # check number of columns
-  testthat::expect_equal(ncol(test_sf), 2)
+  testthat::expect_equal(ncol(test_sf), 1)
 
-  # check projection
-  testthat::expect_equal(sf::st_crs(test_sf)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
+  # # check projection
+  # testthat::expect_equal(sf::st_crs(test_sf)$epsg, 4674)
 
 })
-
 
 
 

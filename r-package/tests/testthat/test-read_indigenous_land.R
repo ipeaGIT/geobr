@@ -19,9 +19,6 @@ test_that("read_indigenous_land", {
   # check number of micro
   testthat::expect_equal(test_sf$code_terrai %>% length(), 615)
 
-  # check projection
-  testthat::expect_equal(sf::st_crs(test_sf)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
-
 })
 
 

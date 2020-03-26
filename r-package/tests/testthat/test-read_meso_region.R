@@ -22,9 +22,6 @@ test_that("read_meso_region", {
   # check number of meso
   expect_equal( nrow(test_meso_code), 1)
 
-  # check projection
-  expect_equal(sf::st_crs(test_meso_code)$proj4string, "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ")
-
 })
 
 
