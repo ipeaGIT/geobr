@@ -1,35 +1,44 @@
-""" Lookup municipality codes and names
 
-Input a municipality NAME or CODE and get the names and codes of the municipality's corresponding state, meso, micro,
-intermediate, and immediate regions.
-
-:param name_muni -- The municipality name to be looked up
-:param code_muni -- The municipality code to be looked up
-
-:return data.frame with 13 columns identifying the geographies information of that municipality
-
-Details Only available from 2010 Census data so far
-
-example
-
-import geobr
-
-# Lookup table for municipality of Rio de Janeiro
-
-mun = lookup_muni('Rio de Janeiro)
-or
-mun = lookup_muni(3304557)
-
-lookup table for all municipalities
-mun_all = lookup_muni("all")
-
-mun_all <- lookup_muni(code_muni = "all")
-"""
 import pandas as pd
 import utils
 
 
-def lookup_muni(name_muni='', code_muni=''):
+def lookup_muni(name_muni='', code_muni='', verbose=False):
+    """ Lookup municipality codes and names.
+
+    Input a municipality NAME or CODE and get the names and codes of the municipality's corresponding state, meso, micro,
+    intermediate, and immediate regions.
+
+    Parameters
+    ----------
+
+    name_muni : str, optional
+    The municipality name to be looked up
+
+    code_muni: str, optional
+    The municipality code to be looked up
+
+    verbose : bool, optional
+    by default False
+
+    Returns
+    -------
+    data.frame with 13 columns identifying the geographies information of that municipality
+
+    Details Only available from 2010 Census data so far
+
+    Example
+    -------
+    >>> import geobr
+
+    # Lookup table for municipality of Rio de Janeiro
+    >>> mun = lookup_muni('Rio de Janeiro)
+    or
+    >>> mun = lookup_muni(3304557)
+
+    # lookup table for all municipalities
+    >>> mun_all = lookup_muni("all")
+    """
     # Get metadata with data url addresses
     temp_meta = utils.download_metadata()
     temp_meta = temp_meta[(temp_meta.geo == 'lookup_muni') & (temp_meta.year == 2010)]
@@ -43,29 +52,28 @@ def lookup_muni(name_muni='', code_muni=''):
 
     # Search by inputs
     if code_muni == 'all' or name_muni == 'all':
-        print(f"Returning results for all municipalities")
+        if verbose:
+            print(f"Returning results for all municipalities")
         return lookup_table_2010.iloc[:, :-1]
     elif code_muni != '':
         if name_muni != '':
-            print("Ignoring argument name_muni")
+            if verbose:
+                print("Ignoring argument name_muni")
         output = lookup_table_2010[lookup_table_2010.code_muni == int(code_muni)].iloc[:, :-1]
-        print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
+        if verbose:
+            print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
         return output
     elif name_muni != '':
         # Cleaning from accents and turning into lower cases without spaces
         name_muni = utils.strip_accents(str(name_muni).lower().strip())
         output = lookup_table_2010[lookup_table_2010.name_muni_format == name_muni]
         if len(output) == 0:
-            print("Please insert a valid municipality name")
+            if verbose:
+                print("Please insert a valid municipality name")
         else:
-            print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
+            if verbose:
+                print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
             return output.iloc[:, :-1]
     elif code_muni == 'all' and name_muni == 'all':
-        print("Please insert either a municipality name or a municipality code")
-
-
-if __name__ == '__main__':
-    out = lookup_muni(name_muni='maricá')
-    out = lookup_muni(name_muni=' Rio de janeiro ')
-    out = lookup_muni(code_muni=3304557)
-    out = lookup_muni(code_muni='all')
+        if verbose:
+            print("Please insert either a municipality name or a municipality code")

@@ -250,11 +250,13 @@ def strip_accents(text):
     """
     Strip accents from input String.
 
-    :param text: The input string.
-    :type text: String.
+    Parameters
+    ----------
+    text: str, The input string
 
-    :returns: The processed String.
-    :rtype: String.
+    Returns
+    ----------
+    str, The processed string
     """
     text = unicodedata.normalize('NFD', text)
     text = text.encode('ascii', 'ignore')
