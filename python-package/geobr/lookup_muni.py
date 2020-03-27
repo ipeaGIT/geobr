@@ -1,9 +1,10 @@
+try:
+    import utils
+except ModuleNotFoundError:
+    import geobr.utils as utils
 
-import pandas as pd
-import utils
 
-
-def lookup_muni(name_muni=None, code_muni='all', verbose=False):
+def lookup_muni(name_muni=None, code_muni=None, verbose=False):
     """ Lookup municipality codes and names.
 
     Input a municipality NAME or CODE and get the names and codes of the municipality's corresponding state, meso, micro,
@@ -51,7 +52,7 @@ def lookup_muni(name_muni=None, code_muni='all', verbose=False):
     lookup_table_2010['name_muni_format'] = lookup_table_2010['name_muni_format'].str.lower()
 
     # Search by inputs
-    if code_muni == 'all' or name_muni == 'all':
+    if code_muni == 'all' or name_muni == 'all' or (code_muni is None and name_muni is None):
         if verbose:
             print(f"Returning results for all municipalities")
         return lookup_table_2010.iloc[:, :-1]
@@ -70,16 +71,20 @@ def lookup_muni(name_muni=None, code_muni='all', verbose=False):
         # Cleaning from accents and turning into lower cases without spaces
         name_muni = utils.strip_accents(str(name_muni).lower().strip())
         output = lookup_table_2010[lookup_table_2010['name_muni_format'] == name_muni]
+
         if len(output) == 0:
             if verbose:
                 print("Please insert a valid municipality name")
+            raise Exception(f'The `name_muni` argument {name_muni} was not found in the database.')
         else:
-            try:
-                if verbose:
-                    print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
-                return output.iloc[:, :-1]
-            except KeyError:
-                raise Exception(f'The `name_muni` argument {name_muni} was not found in the database.')
+            if verbose:
+                print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
+            return output.iloc[:, :-1]
     elif code_muni == 'all' and name_muni == 'all':
         if verbose:
             print("Please insert either a municipality name or a municipality code")
+
+
+
+if __name__ == '__main__':
+    lookup_muni(name_muni='alem paraiba do longinquo caminho curto')
