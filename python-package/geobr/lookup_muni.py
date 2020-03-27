@@ -3,11 +3,11 @@ import pandas as pd
 import utils
 
 
-def lookup_muni(name_muni='', code_muni='', verbose=False):
+def lookup_muni(name_muni=None, code_muni='all', verbose=False):
     """ Lookup municipality codes and names.
 
     Input a municipality NAME or CODE and get the names and codes of the municipality's corresponding state, meso, micro,
-    intermediate, and immediate regions.
+    intermediate, and immediate regions. You should not select both code_muni and name_muni
 
     Parameters
     ----------
@@ -26,6 +26,10 @@ def lookup_muni(name_muni='', code_muni='', verbose=False):
     data.frame with 13 columns identifying the geographies information of that municipality
 
     Details Only available from 2010 Census data so far
+
+    Raise
+    -------
+    Exception if code_muni or name_muni cannot be found
 
     Example
     -------
@@ -51,15 +55,18 @@ def lookup_muni(name_muni='', code_muni='', verbose=False):
         if verbose:
             print(f"Returning results for all municipalities")
         return lookup_table_2010.iloc[:, :-1]
-    elif code_muni != '':
-        if name_muni != '':
+    elif code_muni is not None:
+        if name_muni is not None:
             if verbose:
                 print("Ignoring argument name_muni")
-        output = lookup_table_2010[lookup_table_2010['code_muni'] == int(code_muni)].iloc[:, :-1]
-        if verbose:
-            print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
-        return output
-    elif name_muni != '':
+        try:
+            output = lookup_table_2010[lookup_table_2010['code_muni'] == int(code_muni)].iloc[:, :-1]
+            if verbose:
+                print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
+            return output
+        except KeyError:
+            raise Exception(f'The `code_muni` argument {code_muni} was not found in the database.')
+    elif name_muni is not None:
         # Cleaning from accents and turning into lower cases without spaces
         name_muni = utils.strip_accents(str(name_muni).lower().strip())
         output = lookup_table_2010[lookup_table_2010['name_muni_format'] == name_muni]
@@ -67,9 +74,12 @@ def lookup_muni(name_muni='', code_muni='', verbose=False):
             if verbose:
                 print("Please insert a valid municipality name")
         else:
-            if verbose:
-                print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
-            return output.iloc[:, :-1]
+            try:
+                if verbose:
+                    print(f"Returning results for municipality {output.loc[:, 'name_muni'].to_list()[0]}")
+                return output.iloc[:, :-1]
+            except KeyError:
+                raise Exception(f'The `name_muni` argument {name_muni} was not found in the database.')
     elif code_muni == 'all' and name_muni == 'all':
         if verbose:
             print("Please insert either a municipality name or a municipality code")
