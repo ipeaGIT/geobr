@@ -83,8 +83,3 @@ def lookup_muni(name_muni=None, code_muni=None, verbose=False):
     elif code_muni == 'all' and name_muni == 'all':
         if verbose:
             print("Please insert either a municipality name or a municipality code")
-
-
-
-if __name__ == '__main__':
-    lookup_muni(name_muni='alem paraiba do longinquo caminho curto')
