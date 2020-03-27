@@ -20,9 +20,6 @@ test_that("read_semiarid", {
   # check number of micro
   expect_equal(test_sf %>% length(), 5)
 
-  # check projection
-  expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
-
 })
 
 

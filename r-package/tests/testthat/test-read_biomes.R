@@ -20,9 +20,6 @@ test_that("read_biomes", {
   # check number of micro
   testthat::expect_equal( nrow(test_sf0), 7)
 
-  # check projection
-  testthat::expect_equal(sf::st_crs(test_sf0)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
-
 })
 
 

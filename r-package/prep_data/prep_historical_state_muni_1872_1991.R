@@ -152,6 +152,14 @@ gc(reset = T)
     if (year %like% "1991"){
         temp_sf <- dplyr::rename(temp_sf, code_muni = br91poly_i, name_muni = nomemunicp )
         temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
+        
+        # to title case
+        a <- temp_sf$name_muni
+        a <- stringr::str_to_title(a)
+        # fix de, da, do, das  
+        a <- gsub("(De |Da | Do| Das)", replacement = "\\L\\1", a, perl = TRUE)
+        # fix d'
+        a <- gsub("(D')([[:lower:]]{1})", replacement = "\\L\\1\\U\\2", a, perl = TRUE)
         } else {
       
     # other years
