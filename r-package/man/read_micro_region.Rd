@@ -57,6 +57,7 @@ Other general area functions:
 \code{\link{read_intermediate_region}()},
 \code{\link{read_meso_region}()},
 \code{\link{read_municipality}()},
+\code{\link{read_neighborhood}()},
 \code{\link{read_region}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},

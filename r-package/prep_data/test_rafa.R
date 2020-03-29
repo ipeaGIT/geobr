@@ -205,7 +205,9 @@ function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
+read_neighborhood
 
+function_coverage(fun='read_neighborhood', test_file("tests/testthat/test-read_neighborhood.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))
 function_coverage(fun= 'read_amazon', test_file("tests/testthat/test-read_amazon.R"))
