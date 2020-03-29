@@ -8,10 +8,6 @@
 ### New data sets/functions
 * data set `read_neighborhood` to read neighborhood limits of Brazilian municipalities - closes issue #104 (added in 2020-03).
 
-
--------------------------------------------------------
-# geobr dev v1.2-1
-
 ### Major changes
 * New argument `showProgress` to display progress bar. Defaults to `TRUE`
 * Argument `tp` was deprecated and replaced by argument `simplified` that needs to be either `TRUE` or `FALSE`. This should only affect user who have previously used `tp=TRUE`, who now should write `simplified=FALSE`

@@ -32,7 +32,7 @@ all census tracts of the country are loaded.}
 Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 

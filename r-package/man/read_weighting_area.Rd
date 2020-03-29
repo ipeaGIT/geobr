@@ -29,7 +29,7 @@ all weighting areas of the country are loaded.}
 Only 2010 data is currently available.
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 

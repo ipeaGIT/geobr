@@ -28,7 +28,7 @@ a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of 
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 

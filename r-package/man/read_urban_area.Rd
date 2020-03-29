@@ -22,7 +22,7 @@ and Statistics (IBGE)  For more information about the methodology, see deails at
 https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 

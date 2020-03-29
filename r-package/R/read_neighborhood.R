@@ -9,7 +9,7 @@
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{
 #'
 #' library(geobr)
 #'

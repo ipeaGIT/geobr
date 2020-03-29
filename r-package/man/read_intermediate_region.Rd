@@ -30,7 +30,7 @@ The intermediate Geographic Areas are part of the geographic division of Brazil 
 replace the "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 

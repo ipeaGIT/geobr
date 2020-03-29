@@ -19,7 +19,7 @@ It is based on aggregations of the census tracts from the Brazilian
 census. Only 2010 data is currently available.
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 

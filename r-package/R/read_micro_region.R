@@ -12,7 +12,7 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{
 #'
 #' library(geobr)
 #'
