@@ -58,7 +58,6 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_immediate_region`| Immediate region | 2017 |  IBGE |
 |`read_municipality`| Municipality | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |IBGE |
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2010 | IBGE |
-|`read_neighborhood`| Neighborhood limits |  2010 | IBGE |
 |`read_census_tract`| Census tract (setor censitário) |  2000, 2010 | IBGE |
 |`read_municipal_seat`| Municipality seats (sedes municipais) |  1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2010 | IBGE |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
@@ -71,6 +70,7 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_indigenous_land` | Indigenous lands | 201907 | FUNAI | 
 |`read_semiarid` | Semi Arid region | 2005, 2017 | IBGE | 
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
+|`read_neighborhood` (dev) | Neighborhood limits |  2010 | IBGE |
 
 
 
