@@ -3,7 +3,7 @@
 
 
 -------------------------------------------------------
-# geobr dev v1.3
+# geobr v1.3 (2020-03-30)
 
 ### New data sets/functions
 * data set `read_neighborhood` to read neighborhood limits of Brazilian municipalities - closes issue #104 (added in 2020-03).
