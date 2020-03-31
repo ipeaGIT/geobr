@@ -32,7 +32,7 @@ all census tracts of the country are loaded.}
 Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 
@@ -66,6 +66,7 @@ Other general area functions:
 \code{\link{read_meso_region}()},
 \code{\link{read_micro_region}()},
 \code{\link{read_municipality}()},
+\code{\link{read_neighborhood}()},
 \code{\link{read_region}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},

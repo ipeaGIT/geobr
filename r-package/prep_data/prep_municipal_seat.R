@@ -167,7 +167,7 @@ for (i in years){
 
 
   # leitura dos municipios
-  municipios <- read_municipality(code_muni = 'all', year = i, tp='original')
+  municipios <- read_municipality(code_muni = 'all', year = i)
 
   # harmoniza projecao
   temp_sf <- st_transform(temp_sf, st_crs(municipios))
@@ -184,7 +184,7 @@ for (i in years){
 
 
   # organiza colunas
-  temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
+  temp_sf <- dplyr::select(temp_sf, code_muni = code_muni.x, name_muni, geometry)
 
   # cria a coluna ano
   temp_sf$year <- i

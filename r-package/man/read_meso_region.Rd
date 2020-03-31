@@ -28,7 +28,7 @@ a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of 
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 
@@ -56,6 +56,7 @@ Other general area functions:
 \code{\link{read_intermediate_region}()},
 \code{\link{read_micro_region}()},
 \code{\link{read_municipality}()},
+\code{\link{read_neighborhood}()},
 \code{\link{read_region}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},

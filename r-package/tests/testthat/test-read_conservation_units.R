@@ -18,10 +18,6 @@ test_that("read_conservation_units", {
   # check sf object
   testthat::expect_true(is(test_sf, "sf"))
 
-
-  # check projection
-  testthat::expect_equal(sf::st_crs(test_sf)[[2]], "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
-
 })
 
 

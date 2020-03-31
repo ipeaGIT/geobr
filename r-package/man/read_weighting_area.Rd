@@ -29,7 +29,7 @@ all weighting areas of the country are loaded.}
 Only 2010 data is currently available.
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(geobr)
 
@@ -66,6 +66,7 @@ Other general area functions:
 \code{\link{read_meso_region}()},
 \code{\link{read_micro_region}()},
 \code{\link{read_municipality}()},
+\code{\link{read_neighborhood}()},
 \code{\link{read_region}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},

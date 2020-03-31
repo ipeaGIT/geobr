@@ -12,7 +12,7 @@
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
-#' @examples \donttest{
+#' @examples \dontrun{
 #'
 #' library(geobr)
 #'

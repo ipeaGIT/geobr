@@ -177,12 +177,22 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
+### Test examples  ----------------
+library(devtools)
+
+
+devtools::run_examples(pkg = ".", test = T, run = T)
+
+
+
+
+
+
+### Test coverage  ----------------
 
 
 # TRAVIS
 #  https://travis-ci.org/ipeaGIT/geobr
-
-### Test coverage  ----------------
 
 library(covr)
 library(testthat)
@@ -195,7 +205,9 @@ function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 
+read_neighborhood
 
+function_coverage(fun='read_neighborhood', test_file("tests/testthat/test-read_neighborhood.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))
 function_coverage(fun= 'read_amazon', test_file("tests/testthat/test-read_amazon.R"))
@@ -305,35 +317,38 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
 
-setwd("R:/Dropbox/git/geobr")
-setwd("..")
 
-
-
-# build binary
-  system("R CMD build . --resave-data") # build tar.gz
-  # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
-
+### CMD Check ----------------
 # Check package errors
   Sys.setenv(NOT_CRAN = "false")
   devtools::check(pkg = ".",  cran = TRUE)
   beepr::beep()
 
- CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
- OK:       37
- Failed:   0
- Warnings: 0
- Skipped:  33
- usuário   sistema decorrido
- 10.31      1.74     24.77
+# CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
+
+  # Linux
+  library(rhub)
+
+   list_validated_emails()
+   validate_email(email = 'rafa.pereira.br@gmail.com', toke='b1a30b9fda0341e2a80e6b7cd96ef8ec')
+
+#  mycheck <- rhub::check_for_cran( path='./geobr_1.2-1.tar.gz' )
+
+  mycheck <- rhub::check(path='./geobr_1.2-1.tar.gz', platform = 'debian-clang-devel', email = 'rafa.pereira.br@gmail.com')
+  mycheck$browse()
+  mycheck$print()
+  mycheck$livelog()
+  mycheck$urls()
 
 
- OK:       329
- Failed:   0
- Warnings: 0
- Skipped:  0
- usuário   sistema decorrido
- 264.21     12.42    487.20
+
+
+# build binary
+ system("R CMD build . --resave-data") # build tar.gz
+ # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
+
+
+
 # pack <- "geobr"
 # path <- find.package(pack)
 # system(paste(shQuote(file.path(R.home("bin"), "R")),

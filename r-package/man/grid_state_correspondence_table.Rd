@@ -4,7 +4,9 @@
 \name{grid_state_correspondence_table}
 \alias{grid_state_correspondence_table}
 \title{A correspondence table indicating what quadrants of IBGE's statistical grid intersect with each Brazilian state}
-\format{A data frame sf with 139 rows and 3 columns}
+\format{
+A data frame sf with 139 rows and 3 columns
+}
 \usage{
 data(grid_state_correspondence_table)
 }

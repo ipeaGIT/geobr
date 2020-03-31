@@ -59,16 +59,19 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 |`read_municipality`| Municipality | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018 |IBGE |
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2010 | IBGE |
 |`read_census_tract`| Census tract (setor censitário) |  2000, 2010 | IBGE |
+|`read_municipal_seat`| Municipality seats (sedes municipais) |  1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2010 | IBGE |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
-|`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
-|`read_indigenous_land` | Indigenous lands | 201907 | FUNAI | 
-|`read_biomes` | Biomes | 2004, 2019 | IBGE | 
-|`read_disaster_risk_area` | Disaster risk areas | 2010 | CEMADEN and IBGE | 
-|`read_amazon` | Brazil's Legal Amazon | 2012 | MMA | 
-|`read_conservation_units` | Environmental Conservation Units | 201909 | MMA | 
+|`read_metro_area` | Metropolitan areas | 1970, 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE | 
 |`read_urban_area` | Urban footprints | 2005, 2015 | IBGE | 
+|`read_amazon` | Brazil's Legal Amazon | 2012 | MMA | 
+|`read_biomes` | Biomes | 2004, 2019 | IBGE | 
+|`read_conservation_units` | Environmental Conservation Units | 201909 | MMA | 
+|`read_disaster_risk_area` | Disaster risk areas | 2010 | CEMADEN and IBGE | 
+|`read_indigenous_land` | Indigenous lands | 201907 | FUNAI | 
 |`read_semiarid` | Semi Arid region | 2005, 2017 | IBGE | 
-|`read_metro_area` (dev) | Metropolitan areas | 1970, 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE | 
+|`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
+|`read_neighborhood` (dev) | Neighborhood limits |  2010 | IBGE |
+
 
 
 ## Other functions:
@@ -76,8 +79,8 @@ More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c45
 
 | Function | Action|
 |-----|-----|
-| `list_geobr` (dev) | List all datasets available in the geobr package |
-|`lookup_muni` (dev)| Look up municipality codes by their name, or the other way around |
+| `list_geobr` | List all datasets available in the geobr package |
+|`lookup_muni` | Look up municipality codes by their name, or the other way around |
 |`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
 | ... | ... |
 
@@ -96,7 +99,6 @@ Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most
 | Longitudinal Database* of micro regions | various years | IBGE | 
 | Longitudinal Database* of Census tracts | various years | IBGE | 
 | Schools | 2019 | School Census (Inep) | 
-| Municipality seats (sedes municipais) | various years | IBGE | 
 | ... | ... | ... | 
 
 '*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
