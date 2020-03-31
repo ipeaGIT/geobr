@@ -12,7 +12,7 @@ library(magrittr)
 library(devtools)
 library(lwgeom)
 library(stringi)
-
+library(geobr)
 
 
 
@@ -414,8 +414,100 @@ shp_to_sf_rds <- function(x){
     # rm(list= ls())
     gc(reset = T)
 
-
-
+    # #####fixing state repetition---------
+    #
+    #
+    # # Root directory
+    # root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
+    # setwd(root_dir)
+    #
+    #
+    # # create directory to save cleaned shape files in sf format
+    # # dir.create(file.path("./shapes_in_sf_all_years_cleaned/country"), showWarnings = T)
+    #
+    #
+    # # List years for which we have data
+    # dirs <- list.dirs("./shapes_in_sf_all_years_cleaned/uf")[-1]
+    # years <- stringi::stri_sub(dirs,-4,-1)
+    #
+    # hist_dirs <- list.dirs("../historical_state_muni_1872_1991/shapes_in_sf_all_years_cleaned/uf")[-1]
+    # hist_years <- stringi::stri_sub(hist_dirs,-4,-1)
+    #
+    # # all years
+    # years <- c(years, hist_years) %>% sort()
+    # years <- years[!(years %in% c("aned","inal"))]
+    # years <- years[!(years %in% c(2005, 2007))]
+    #
+    #
+    # # count <-0
+    # # coutlist<-NULL
+    # # for (y in years) {
+    # #   sf_states <- read_state(year= y , code_state = "all",simplified = FALSE)
+    # #
+    # #   vars<-names(sf_states)[-length(names(sf_states))]
+    # #
+    # #   sf_states <- sf_states %>% group_by_at(vars) %>%  summarise()
+    # #   if(nrow(sf_states)>27){
+    # #     count <- count + 1
+    # #     coutlist<-c(coutlist,y)
+    # #   }
+    # # }
+    #
+    # for (y in years) { #y<- 2000
+    #   sf_states <- read_state(year= y , code_state = "all",simplified = FALSE)
+    #
+    #   if (y==2001) {
+    #     sf_states <- sf_states %>% mutate(name_state=ifelse(name_state=="Espirito Santo","Espírito Santo",as.character(name_state) ))
+    #   }
+    #
+    #   if (y==2000) {
+    #     sf_states <- sf_states %>% filter(!name_state=="0")
+    #   }
+    #
+    #
+    #   vars<-names(sf_states)[-length(names(sf_states))]
+    #
+    #   sf_states <- sf_states %>% group_by_at(vars) %>%  summarise()
+    #
+    #
+    #   original_crs <- st_crs(sf_states)
+    #
+    #   if (y<2000) {
+    #     temp_sf_simplified <- st_transform(sf_states, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+    #
+    #     dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/state/",y)
+    #     dir.create(dest_dir, showWarnings = FALSE)
+    #
+    #     # g) save as an sf file
+    #     # readr::write_rds(outerBounds, path = paste0(dest_dir,"/state_",y,".rds"), compress="gz" )
+    #
+    #     sf::st_write(sf_states, paste0(dest_dir,"/states_",y,".gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+    #
+    #     sf::st_write(temp_sf_simplified, paste0(dest_dir,"/states_",y,"_simplified.gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+    #
+    #   }else{
+    #
+    #     for (cd in as.character(sf_states$code_state) ) {
+    #       sf_states_uf <- sf_states %>% filter(code_state == cd)
+    #
+    #       temp_sf_simplified <- st_transform(sf_states_uf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+    #
+    #       dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/state/",y)
+    #       dir.create(dest_dir, showWarnings = FALSE)
+    #
+    #       # g) save as an sf file
+    #       # readr::write_rds(outerBounds, path = paste0(dest_dir,"/state_",y,".rds"), compress="gz" )
+    #
+    #       sf::st_write(sf_states_uf, paste0(dest_dir,"/",cd,"UF",".gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+    #
+    #       sf::st_write(temp_sf_simplified, paste0(dest_dir,"/",cd,"UF","_simplified.gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+    #
+    #     }
+    #
+    #   }
+    #
+    # }
+    #
 
 
 ###### 5. Cleaning MESO files --------------------------------
@@ -781,6 +873,99 @@ shp_to_sf_rds <- function(x){
   # rm(list= ls())
   gc(reset = T)
 
+  #####fixing municipality repetition---------
+
+
+  # Root directory
+  root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
+  setwd(root_dir)
+
+
+  # create directory to save cleaned shape files in sf format
+  # dir.create(file.path("./shapes_in_sf_all_years_cleaned/country"), showWarnings = T)
+
+
+  # List years for which we have data
+  dirs <- list.dirs("./shapes_in_sf_all_years_cleaned/uf")[-1]
+  years <- stringi::stri_sub(dirs,-4,-1)
+
+  hist_dirs <- list.dirs("../historical_state_muni_1872_1991/shapes_in_sf_all_years_cleaned/uf")[-1]
+  hist_years <- stringi::stri_sub(hist_dirs,-4,-1)
+
+  # all years
+  years <- c(years, hist_years) %>% sort()
+  years <- years[!(years %in% c("aned","inal"))]
+  years <- years[!(years %in% c(2005, 2007))]
+
+
+  # count <-0
+  # coutlist<-NULL
+  # for (y in years) {
+  #   sf_states <- read_state(year= y , code_state = "all",simplified = FALSE)
+  #
+  #   vars<-names(sf_states)[-length(names(sf_states))]
+  #
+  #   sf_states <- sf_states %>% group_by_at(vars) %>%  summarise()
+  #   if(nrow(sf_states)>27){
+  #     count <- count + 1
+  #     coutlist<-c(coutlist,y)
+  #   }
+  # }
+
+#   for (y in years) { #y<- 1991
+#     sf_states <- read_municipality(year= y , code_muni = "all",simplified = FALSE)
+#
+#     if (y==2001) {
+#       sf_states <- sf_states %>% mutate(name_state=ifelse(name_state=="Espirito Santo","Espírito Santo",as.character(name_state) ))
+#     }
+#
+#     if (y==2000) {
+#       sf_states <- sf_states %>% filter(!name_state=="0")
+#     }
+#
+#
+#     vars<-names(sf_states)[-length(names(sf_states))]
+#
+#     sf_states <- sf_states %>% group_by_at(vars) %>%  summarise()
+#
+#
+#     original_crs <- st_crs(sf_states)
+#
+#   if (y<2000) {
+#   temp_sf_simplified <- st_transform(sf_states, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+#
+#   dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/state/",y)
+#   dir.create(dest_dir, showWarnings = FALSE)
+#
+#   # g) save as an sf file
+#   # readr::write_rds(outerBounds, path = paste0(dest_dir,"/state_",y,".rds"), compress="gz" )
+#
+#   sf::st_write(sf_states, paste0(dest_dir,"/states_",y,".gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+#
+#   sf::st_write(temp_sf_simplified, paste0(dest_dir,"/states_",y,"_simplified.gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+#
+#   }else{
+#
+#   for (cd in as.character(sf_states$code_state) ) {
+#     sf_states_uf <- sf_states %>% filter(code_state == cd)
+#
+#     temp_sf_simplified <- st_transform(sf_states_uf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+#
+#     dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/state/",y)
+#     dir.create(dest_dir, showWarnings = FALSE)
+#
+#     # g) save as an sf file
+#     # readr::write_rds(outerBounds, path = paste0(dest_dir,"/state_",y,".rds"), compress="gz" )
+#
+#     sf::st_write(sf_states_uf, paste0(dest_dir,"/",cd,"UF",".gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+#
+#     sf::st_write(temp_sf_simplified, paste0(dest_dir,"/",cd,"UF","_simplified.gpkg"),append = FALSE,delete_dsn =T,delete_layer=T )
+#
+#   }
+#
+# }
+#
+#   }
 
 
 # DO NOT run
@@ -847,7 +1032,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
       sf2010 <- dplyr::select(sf2010, code_meso=code_meso.y, name_meso, geom)
 
     # Save file
-      st_write(sf2010,a2010_sf_meso_file,update = FALSE,delete_dsn =T,delete_layer=T)
+      st_write(sf2010,a2010_sf_meso_file,append = FALSE,delete_dsn =T,delete_layer=T)
       }
 
 # Apply function
@@ -904,7 +1089,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
     # Save file
     # write_rds(sf2010, path = a2010_sf_micro_file, compress="gz" )
-    st_write(sf2010,a2010_sf_micro_file,update = FALSE,delete_dsn =T,delete_layer=T)
+    st_write(sf2010,a2010_sf_micro_file,append = FALSE,delete_dsn =T,delete_layer=T)
   }
 
   # Apply function
