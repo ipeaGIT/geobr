@@ -1,3 +1,5 @@
+### Libraries (use any library as necessary)
+
 library(RCurl)
 library(tidyverse)
 library(stringr)
@@ -8,6 +10,11 @@ library(parallel)
 library(lwgeom)
 library(geobr)
 library(mapview)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
 
 
 # Root directory
@@ -249,11 +256,12 @@ for (i in years){
   temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 
   temp_sf$code_muni <- as.numeric(temp_sf$code_muni) # keep code as.numeric()
-
+  
   # Save cleaned sf in the cleaned directory
   setwd(head_dir)
   destdir <- file.path("./shapes_in_sf_all_years_cleaned",i)
-  sf::st_write(temp_sf, paste0(destdir,"/", "municipal_seat_",i, ".gpkg"))
+  readr::write_rds(temp_sf, path= paste0(destdir,"/", "municipal_seat_",i, ".rds"), compress = "gz")
+  sf::st_write(temp_sf,  dsn= paste0(destdir,"/", "municipal_seat_",i, ".gpkg") )
 
 
 }

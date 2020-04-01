@@ -18,8 +18,7 @@
 # Estado: Em desenvolvimento
 # Informacao do Sistema de Referencia: SIRGAS 2000
 
-
-
+### Libraries (use any library as necessary)
 
 library(RCurl)
 library(stringr)
@@ -30,6 +29,11 @@ library(data.table)
 library(magrittr)
 library(lwgeom)
 library(stringi)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
 
 
 ###### 0. Create Root folder to save the data -----------------
@@ -148,12 +152,21 @@ semi_arid_sf <- subset(all_munis, code_muni %in% semi_arid_munis$code_muni)
 semi_arid_sf <- if( is.na(st_crs(semi_arid_sf)) ){ st_set_crs(semi_arid_sf, 4674) } else { st_transform(semi_arid_sf, 4674) }
 st_crs(semi_arid_sf) <- 4674
 
-
 # Make any invalid geometry valid # st_is_valid( sf)
 semi_arid_sf <- lwgeom::st_make_valid(semi_arid_sf)
 
+###### 6. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+semi_arid_sf_simplified <- st_transform(semi_arid_sf, crs=3857) %>% 
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(crs=4674)
+head(semi_arid_sf_simplified)
 
 # Save cleaned sf in the cleaned directory
 setwd(root_dir)
 readr::write_rds(semi_arid_sf, path= paste0(dir_clean_2017,"/semiarid_2017",".rds"), compress = "gz")
+sf::st_write(semi_arid_sf, dsn= paste0(dir_clean_2017,"/semiarid_2017",".gpkg") )
+sf::st_write(semi_arid_sf_simplified, dsn= paste0(dir_clean_2017,"/semiarid_2017"," _simplified", ".gpkg"))
 

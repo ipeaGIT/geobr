@@ -36,6 +36,8 @@ library(stringi)
 
 
 
+####### Load Support functions to use in the preprocessing of the data -----------------
+source("./prep_data/prep_functions.R")
 
 
 
@@ -61,7 +63,7 @@ setwd(root_dir)
 
 
 
-#### 0. Download original data sets from FUNAI website -----------------
+#### 1. Download original data sets from FUNAI website -----------------
 
 # Download and read into CSV at the same time
   ftp <- "http://mapas2.funai.gov.br/portal_mapas/shapes/ti_sirgas.zip"
@@ -169,7 +171,9 @@ setwd(root_dir)
 
 # Save cleaned sf in the cleaned directory
   readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
+  sf::st_write(temp_sf, paste0(destdir_clean, "/immediate_regions_2017.gpkg") )
+  sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/immediate_regions_2017_simplified.gpkg") )
+  
 
 
-
-  indigenous
+  

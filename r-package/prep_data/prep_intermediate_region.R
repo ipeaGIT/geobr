@@ -1,17 +1,3 @@
-library(RCurl)
-library(stringr)
-library(sf)
-library(janitor)
-library(dplyr)
-library(readr)
-library(parallel)
-library(data.table)
-library(xlsx)
-library(magrittr)
-library(devtools)
-library(lwgeom)
-library(stringi)
-
 #> DATASET: Intermediate Geographic Regions - 2017
 #> Source: IBGE - https://www.ibge.gov.br/geociencias/organizacao-do-territorio/divisao-regional/15778-divisoes-regionais-do-brasil.html?=&t=o-que-e
 #> scale 1:5.000.000 ?????????????
@@ -29,6 +15,29 @@ library(stringi)
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
+
+### Libraries (use any library as necessary)
+
+library(RCurl)
+library(stringr)
+library(sf)
+library(janitor)
+library(dplyr)
+library(readr)
+library(parallel)
+library(data.table)
+library(xlsx)
+library(magrittr)
+library(devtools)
+library(lwgeom)
+library(stringi)
+
+####### Load Support functions to use in the preprocessing of the data -----------------
+source("./prep_data/prep_functions.R")
+
+
+
+
 
 # Root directory
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
@@ -160,7 +169,8 @@ temp_sf$code_state <- as.numeric(temp_sf$code_state)
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 
 
@@ -169,5 +179,5 @@ temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preser
 ###### 8. Clean data set and save it in compact .rds format-----------------
 
 # save original and simplified datasets
-sf::st_write(temp_sf, paste0(destdir_clean, "/intermediate_regions_2017.gpkg") )
-sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/intermediate_regions_2017_simplified.gpkg") )
+sf::st_write(temp_sf, dsn = paste0(destdir_clean, "/intermediate_regions_2017.gpkg") )
+sf::st_write(temp_sf_simplified, dsn = paste0(destdir_clean, "/intermediate_regions_2017_simplified.gpkg") )

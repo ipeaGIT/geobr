@@ -1,3 +1,21 @@
+#> DATASET: metropolitan areas 2000 - 2018
+#> Source: IBGE - "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/"
+#: scale ________
+#> Metadata:
+# Titulo: Regioes Metropolitanas
+# Frequencia de atualizacao: Anual
+#
+# Forma de apresentação: Shape
+# Linguagem: Pt-BR
+# Character set: Utf-8
+#
+# Resumo: Poligonos de municipios de regioes metropolitanas do Brasil
+# Informações adicionais: Regioes metropolitanas definidas por legislacao estadual
+#
+# Informacao do Sistema de Referencia: SIRGAS 2000
+
+### Libraries (use any library as necessary)
+
 library(data.table)
 library(readxl)
 library(xlsx)
@@ -16,22 +34,8 @@ library(stringr)
 library(devtools)
 
 
-
-#> DATASET: metropolitan areas 2000 - 2018
-#> Source: IBGE - "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/"
-#: scale ________
-#> Metadata:
-# Titulo: Regioes Metropolitanas
-# Frequencia de atualizacao: Anual
-#
-# Forma de apresentação: Shape
-# Linguagem: Pt-BR
-# Character set: Utf-8
-#
-# Resumo: Poligonos de municipios de regioes metropolitanas do Brasil
-# Informações adicionais: Regioes metropolitanas definidas por legislacao estadual
-#
-# Informacao do Sistema de Referencia: SIRGAS 2000
+####### Load Support functions to use in the preprocessing of the data -----------------
+source("./prep_data/prep_functions.R")
 
 
 
@@ -231,14 +235,18 @@ for (i in 1:4){
 # Conver factor columns to character AND Use UTF-8 encoding in all character
   temp_sf <- temp_sf %>%
     mutate_if(is.factor, function(x){ x %>% as.character()  } )
-
+  
+  # simplify
+  temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
+    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 # create dir to save data
   dir.create(paste(dest_dir,year_RM,"/",sep = ""))
 
 ### Save data
   readr::write_rds(temp_sf, path=paste0(dest_dir,year_RM,"/",'metro_',year_RM,".rds"), compress = "gz")
-
+  sf::st_write(data1970_sf, dsn =paste0(dest_dir,year_RM,"/",'metro_',year_RM,".gpkg"))
+  sf::st_write(data1970_sf_simplified, dsn =paste0(dest_dir,year_RM,"/",'metro_',year_RM,"_simplified.gpkg"))
 }
 
 # encoding 2002 e 2003: WINDOWS-1252
@@ -363,13 +371,18 @@ fun_clean_2010_2018 <- function(i){
 
   temp_sf <- temp_sf %>%
     mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+  
+  # simplify
+  temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
+    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
   # create dir to save data
   dir.create(paste(dest_dir,year_RM2,"/",sep = ""))
-
+  
   ### Save data
   readr::write_rds(temp_sf, path=paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".rds"), compress = "gz")
-
+  sf::st_write(temp_sf, dsn =paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".gpkg"))
+  sf::st_write(temp_sf_simplified, dsn =paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,"_simplified.gpkg"))
 }
 
 
@@ -564,9 +577,14 @@ data1970_sf$name_metro %>%  as.character() %>% unique()
 data1970_sf <- data1970_sf %>%
   mutate_if(is.factor, function(x){ x %>% as.character()  } )
 
+# simplify
+data1970_sf_simplified <- st_transform(data1970_sf, crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 # mapview::mapview(data1970_sf)
 
 
 ### save data
-readr::write_rds(data1970_sf, path=paste0(dest_dir, 1970, "/", 'metro_', 1970,".rds"), compress = "gz")
+readr::write_rds(data1970_sf,    path=paste0(dest_dir, 1970, "/", 'metro_', 1970,".rds"), compress = "gz")
+sf::st_write(data1970_sf,        dsn = paste0(dest_dir, 1970, "/", 'metro_', 1970,".gpkg"))
+sf::st_write(data1970_sf_simplified, dsn = paste0(destdir_clean, "/intermediate_regions_2017_simplified.gpkg"))

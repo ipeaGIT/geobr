@@ -1,3 +1,5 @@
+### Libraries (use any library as necessary)
+
 library(RCurl)
 library(tidyverse)
 library(stringr)
@@ -7,7 +9,16 @@ library(data.table)
 library(parallel)
 library(lwgeom)
 
+####### Load Support functions to use in the preprocessing of the data
 
+source("./prep_data/prep_functions.R")
+
+
+
+
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+# unnecessary
 
 
 # Root directory
@@ -69,14 +80,6 @@ gc(reset = T)
   
 # Select only files with municipalities and states 
   all_zipped_files <- all_zipped_files[all_zipped_files %like% "limite|malha|litigio"]
-
-
-
-# function to Unzip files in their original sub-dir
-unzip_fun <- function(f){
-    unzip(f, exdir = file.path(root_dir, substr(f, 3, 6)))
-}
-
 
 # create computing clusters
   cl <- parallel::makeCluster(detectCores())
@@ -206,11 +209,19 @@ gc(reset = T)
       liti <- lwgeom::st_make_valid(liti)
       
       temp_sf <- do.call('rbind', list(temp_sf, liti))
+      
+      # simplify
+      temp_sf7 <- st_transform(temp_sf, crs=3857) %>% 
+        sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+        st_transform(crs=4674)
+      
     }
     
     # Save cleaned sf in the cleaned directory
     destdir <- file.path("./shapes_in_sf_all_years_cleaned", "municipio",year)
     readr::write_rds(temp_sf, path = paste0(destdir,"/municipios_", year, ".rds"), compress="gz" )
+    sf::st_write(temp_sf,     dsn  = paste0(destdir,"/municipios_", year, ".gpkg") )
+    sf::st_write(temp_sf7,    dsn  = paste0(destdir,"/municipios", year, " _simplified", ".gpkg"))
   }
 
 # Apply function to save original data sets in rds format
@@ -312,11 +323,20 @@ clean_state <- function(year){
       
     # pile states and diputed land
       temp_sf <- do.call('rbind', list(temp_sf, liti))
+    
+    # simplify
+      temp_sf7 <- st_transform(temp_sf, crs=3857) %>% 
+        sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+        st_transform(crs=4674)
+      
+      
     }
     
     # Save cleaned sf in the cleaned directory
     destdir <- file.path("./shapes_in_sf_all_years_cleaned", "uf",year)
     readr::write_rds(temp_sf, path = paste0(destdir,"/states_", year, ".rds"), compress="gz" )
+    sf::st_write(temp_sf,     dsn  = paste0(destdir,"/states_", year, ".gpkg") )
+    sf::st_write(temp_sf7,    dsn  = paste0(destdir,"/states_", year, " _simplified", ".gpkg"))
   }
   
 

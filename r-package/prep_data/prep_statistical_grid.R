@@ -1,9 +1,17 @@
+### Libraries (use any library as necessary)
+
 library(RCurl)
 library(stringr)
 library(sf)
 library(magrittr)
 library(data.table)
 library(dplyr)
+
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
 
 
 ###### 0. Create folders to save the data -----------------
@@ -87,12 +95,23 @@ shp_to_sf_rds <- function(x){
 # drop unecessary columns
   shape$Shape_Leng <- NULL
   shape$Shape_Area <- NULL
+  
+  ###### 6. generate a lighter version of the dataset with simplified borders -----------------
+  # skip this step if the dataset is made of points, regular spatial grids or rater data
+  
+  # simplify
+  shape_simplified <- st_transform(shape, crs=3857) %>% 
+    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+    st_transform(crs=4674)
+  head(shape)
 
 # get file name
   file_name <- paste0(substr(x, 11, 12), "grid.rds")
 
 # save in .rds
-  readr::write_rds(x=shape, path = paste0("../shapes_in_sf_all_years_cleaned/2010/", file_name), compress="gz" )
+  readr::write_rds(x=shape, path = paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid.rds"), compress="gz" )
+  sf::st_write(temp_sf,  dsn= paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid.gpkg") )
+  sf::st_write(temp_sf7, dsn= paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid_simplified", ".gpkg"))
   }
 
 

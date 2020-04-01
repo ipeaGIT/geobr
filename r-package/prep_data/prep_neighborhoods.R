@@ -1,6 +1,6 @@
-
-
 ### Create a neighborhood data set from Census Tract data ------------
+
+### Libraries (use any library as necessary)
 
 library(geobr)
 library(magrittr)
@@ -152,7 +152,8 @@ head(brazil_neibhd)
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-brazil_neibhd_simp <- st_transform(brazil_neibhd, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+brazil_neibhd_simp <- st_transform(brazil_neibhd, crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 as.numeric(object.size(brazil_neibhd_simp)) / as.numeric(object.size(brazil_neibhd))
 

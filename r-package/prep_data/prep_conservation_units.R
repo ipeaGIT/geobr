@@ -1,18 +1,3 @@
-update <- 201909
-
-library(RCurl)
-library(stringr)
-library(sf)
-library(dplyr)
-library(readr)
-library(data.table)
-library(magrittr)
-library(lwgeom)
-library(stringi)
-library(rgdal)
-
-
-
 #> DATASET: conservation unit
 #> Source: MMA - http://mapas.mma.gov.br/i3geo/datadownload.htm
 #> Metadata:
@@ -31,6 +16,36 @@ library(rgdal)
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
 # Informação do Sistema de Referência: SIRGAS 2000
+
+### Libraries (use any library as necessary)
+
+library(RCurl)
+library(stringr)
+library(sf)
+library(dplyr)
+library(readr)
+library(data.table)
+library(magrittr)
+library(lwgeom)
+library(stringi)
+library(rgdal)
+
+
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
+
+
+
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+
+update <- 201909
+
+
+
 
 
 
@@ -59,7 +74,7 @@ dir.create(destdir_clean)
 
 
 
-#### 0. Download original data sets from MMA website -----------------
+#### 1. Download original data sets from MMA website -----------------
 
 # Download and read into CSV at the same time
 ftp <- 'http://mapas.mma.gov.br/ms_tmp/ucstodas.shp'
@@ -149,6 +164,23 @@ temp_sf <- temp_sf %>%
   mutate_if(is.factor, function(x){ x %>% as.character() %>%
       stringi::stri_encode("UTF-8") } )
 
-# Save cleaned sf in the cleaned directory
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+temp_sf7 <- simplify_temp_sf(temp_sf)
+head(temp_sf7)
+
+
+
+
+###### 8. Clean data set and save it in geopackage format-----------------
 setwd(root_dir)
+
+
+
+# Save cleaned sf in the cleaned directory
 readr::write_rds(temp_sf, path= paste0(destdir_clean,'/conservation_units_', update,'.rds'), compress = "gz")
+sf::st_write(temp_sf, dsn= paste0(destdir_clean,"/conservation_units_", update,".gpkg") )
+sf::st_write(temp_sf7, dsn= paste0(destdir_clean,"/conservation_units_", update," _simplified", ".gpkg"))
+

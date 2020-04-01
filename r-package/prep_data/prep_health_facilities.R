@@ -1,3 +1,11 @@
+#> DATASET: Localização dos estabelecimentos registrados no Cadastro Nacional de Estabelecimentos de Saúde. Sobre o CNES
+#> Source: Cadastro Nacional de Estabelecimentos de Saúde - CNES
+
+
+
+### Libraries (use any library as necessary)
+
+
 library(RCurl)
 #library(tidyverse)
 library(stringr)
@@ -12,12 +20,11 @@ library(magrittr)
 library(devtools)
 library(lwgeom)
 library(stringi)
-
 library(geobr)
 
+####### Load Support functions to use in the preprocessing of the data
 
-#> DATASET: Localização dos estabelecimentos registrados no Cadastro Nacional de Estabelecimentos de Saúde. Sobre o CNES
-#> Source: Cadastro Nacional de Estabelecimentos de Saúde - CNES
+source("./prep_data/prep_functions.R")
 
 
 
@@ -33,7 +40,7 @@ setwd(root_dir)
   dir.create("./health_facilities")
 
 
-#### 0. Download original data sets from IBGE ftp -----------------
+#### 1. Download original data sets from IBGE ftp -----------------
 
 
 
@@ -159,10 +166,17 @@ rm(list=setdiff(ls(), c("root_dir")))
 # Change CRS to SIRGAS  Geodetic reference system "SIRGAS2000" , CRS(4674).  
   st_crs(cnes_sf)
   cnes_sf <- st_transform(cnes_sf, 4674)
+
   
+  
+  
+  
+  
+
   
 # Save raw file in sf format
   write_rds(cnes_sf, paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".rds"), compress = "gz")
+  sf::st_write(cnes_sf, dsn= paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".gpkg"))
 
   
   

@@ -1,3 +1,5 @@
+### Libraries (use any library as necessary)
+
 library(RCurl)
 library(dplyr)
 library(stringr)
@@ -8,6 +10,11 @@ library(parallel)
 library(lwgeom)
 library(readr)
 
+
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
 
 
 #### 0. Download original data sets from IBGE ftp -----------------
@@ -246,7 +253,12 @@ for (CODE in lista) {# CODE <- 33
     files <- lapply(X=files, FUN= as.data.frame)
     shape <- do.call('rbind', files)
     shape <- st_sf(shape)
+    shape_simplified <- st_transform(shape, crs=3857) %>% 
+      sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+      st_transform(crs=4674)
     readr::write_rds(shape,paste0("./",CODE,"AP.rds"), compress="gz")
+    sf::st_write(shape,dsn = paste0("./",CODE,"AP.gpkg") )
+    sf::st_write(shape_simplified, dsn= shape,paste0("./",CODE,"AP_simplified", ".gpkg"))
   }
 
 # mapview::mapview(shape)

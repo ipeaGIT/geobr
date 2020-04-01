@@ -1,3 +1,5 @@
+### Libraries (use any library as necessary)
+
 library(sp)
 library(sf)
 library(geobr)
@@ -5,6 +7,12 @@ library(dplyr)
 library(mapview)
 library(readr)
 library(future.apply)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
+
 
 
 ###### 0. Create Root folder to save the data -----------------
@@ -80,10 +88,10 @@ all_regions <- lapply(unique(sf_states1$code_region), dissolve_each_region)
 all_regions <- do.call('rbind', all_regions)
 ### add region names
 all_regions$name_region <- ifelse(all_regions$code_region==1, 'Norte',
-                                ifelse(all_regions$code_region==2, 'Nordeste',
-                                       ifelse(all_regions$code_region==3, 'Sudeste',
-                                              ifelse(all_regions$code_region==4, 'Sul',
-                                                     ifelse(all_regions$code_region==5, 'Centro Oeste', NA)))))
+                           ifelse(all_regions$code_region==2, 'Nordeste',
+                           ifelse(all_regions$code_region==3, 'Sudeste',
+                           ifelse(all_regions$code_region==4, 'Sul',
+                           ifelse(all_regions$code_region==5, 'Centro Oeste', NA)))))
 all_regions <- select(all_regions, c('code_region', 'name_region', 'geometry'))
 
 return(all_regions)
@@ -95,16 +103,27 @@ temp_sf <- do.call('rbind', temp_sf)
 
 ### add region names
   temp_sf$name_region <- ifelse(temp_sf$code_region==1, 'Norte',
-                                ifelse(temp_sf$code_region==2, 'Nordeste',
-                                       ifelse(temp_sf$code_region==3, 'Sudeste',
-                                              ifelse(temp_sf$code_region==4, 'Sul',
-                                                     ifelse(temp_sf$code_region==5, 'Centro Oeste', NA)))))
+                         ifelse(temp_sf$code_region==2, 'Nordeste',
+                         ifelse(temp_sf$code_region==3, 'Sudeste',
+                         ifelse(temp_sf$code_region==4, 'Sul',
+                         ifelse(temp_sf$code_region==5, 'Centro Oeste', NA)))))
 
   # redorder columns
   temp_sf <- dplyr::select(temp_sf, c('code_region', 'name_region', 'geometry'))
+  
+  ###### 7. generate a lighter version of the dataset with simplified borders -----------------
+  # skip this step if the dataset is made of points, regular spatial grids or rater data
+  
+  # simplify
+  temp_sf7 <- st_transform(temp_sf, crs=3857) %>% 
+    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+    st_transform(crs=4674)
 
+  
   # Save cleaned sf in the cleaned directory
   readr::write_rds(temp_sf, path= paste0(destdir,"/regions_",y,".rds"), compress = "gz")
+  sf::st_write(temp_sf, dsn= paste0(destdir,"/regions_",y,".gpkg"))
+  sf::st_write(temp_sf7, dsn= paste0(destdir,"/regions_",y," _simplified", ".gpkg"))
 
 }
 

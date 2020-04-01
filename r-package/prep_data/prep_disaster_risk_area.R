@@ -1,13 +1,3 @@
-update <- 2010
-
-
-library(sf)
-library(dplyr)
-library(tidyverse)
-library(data.table)
-library(mapview)
-
-
 #> DATASET: disaster_risk_areas 2010
 #> Source: IBGE - ftp://geoftp.ibge.gov.br/organizacao_do_territorio/tipologias_do_territorio/populacao_em_areas_de_risco_no_brasil
 #> Metadata:
@@ -25,6 +15,28 @@ library(mapview)
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
+
+### Libraries (use any library as necessary)
+
+library(sf)
+library(dplyr)
+library(tidyverse)
+library(data.table)
+library(mapview)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
+
+
+
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+
+update <- 2010
+
+
 
 
 
@@ -76,12 +88,12 @@ unzip(zipfiles)
 temp_sf <- st_read("PARBR2018_BATER.shp")
 
 
-# renomeando as vari?veis e excluindo algumas
+# renomeando as variáveis e excluindo algumas
 
 names(temp_sf)
 temp_sf$ID <- NULL
 temp_sf$AREA_GEO <- NULL
-temp_sf <- rename(temp_sf, code_state = GEO_UF)
+temp_sf <- rename(temp_sf, code_state = GEO_UF,)
 temp_sf <- rename(temp_sf, code_muni = GEO_MUN)
 temp_sf <- rename(temp_sf, name_muni = MUNICIPIO)
 temp_sf <- rename(temp_sf, geo_bater = GEO_BATER)
@@ -146,8 +158,20 @@ temp_sf <- lwgeom::st_make_valid(temp_sf)
 # reorder column names
 setcolorder(temp_sf, c('geo_bater', 'origem', 'acuracia', 'obs', 'num', 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry'))
 
+###### 6. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+temp_sf7 <- st_transform(temp_sf, crs=3857) %>% 
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(crs=4674)
+head(temp_sf7)
+
+
 # Save cleaned sf in the cleaned directory
 setwd(root_dir)
 readr::write_rds(temp_sf, path= paste0(destdir_clean,"/disaster_risk_area2010.rds"), compress = "gz")
+sf::st_write(temp_sf,     dsn=  paste0(destdir_clean,"/disaster_risk_area2010.gpkg") )
+sf::st_write(temp_sf7,    dsn=  paste0(destdir_clean,"/disaster_risk_area2010 _simplified", ".gpkg"))
 
 

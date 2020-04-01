@@ -1,18 +1,3 @@
-update <- 2019
-
-library(RCurl)
-library(stringr)
-library(sf)
-library(dplyr)
-library(readr)
-library(data.table)
-library(magrittr)
-library(lwgeom)
-library(stringi)
-
-
-
-
 #> DATASET: biomes 2004, 2019
 #> Source: IBGE - https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/
 #: scale 1:5.000.000
@@ -33,11 +18,31 @@ library(stringi)
 # Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
 
+### Libraries (use any library as necessary)
+
+library(RCurl)
+library(stringr)
+library(sf)
+library(dplyr)
+library(readr)
+library(data.table)
+library(magrittr)
+library(lwgeom)
+library(stringi)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
 
 
 
 
-getwd()
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+
+update <- 2019
+
+
 
 
 ###### 0. Create Root folder to save the data -----------------
@@ -64,7 +69,7 @@ dir.create(destdir_clean)
 
 
 
-#### 0. Download original data sets from source website -----------------
+#### 1. Download original data sets from source website -----------------
 
 if ( update == 2004){
 # Download and read into CSV at the same time
@@ -127,7 +132,7 @@ if ( update == 2019){
 
 
 
-##### Rename columns -------------------------
+##### 4. Rename columns -------------------------
 
 if ( update == 2004){
   temp_sf <- dplyr::rename(temp_sf, code_biome = COD_BIOMA, name_biome = NOM_BIOMA)
@@ -162,7 +167,7 @@ temp_sf <- rbind(temp_sf, temp_sf_costeiro)
 
 
 
-##### Check projection, UTF, topology, etc -------------------------
+##### 5. Check projection, UTF, topology, etc -------------------------
 
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
@@ -184,12 +189,29 @@ temp_sf <- temp_sf %>%
 
 
 
+###### 6. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(crs=4674)
+head(temp_sf_simplified)
+
+
+
+
+
+###### 8. Clean data set and save it in geopackage format-----------------
+setwd(root_dir)
+
 
 ##### Save file -------------------------
 
-# Save cleaned sf in the cleaned directory
+# Save original and simplified datasets
 readr::write_rds(temp_sf, path= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update,".rds"), compress = "gz")
-
+sf::st_write(temp_sf, dsn= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update,".gpkg") )
+sf::st_write(temp_sf_simplified, dsn= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update," _simplified", ".gpkg"))
 
 
 

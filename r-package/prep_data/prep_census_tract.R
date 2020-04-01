@@ -1,3 +1,6 @@
+### Libraries (use any library as necessary)
+
+
 library(RCurl)
 #library(tidyverse)
 library(stringr)
@@ -13,8 +16,17 @@ library(devtools)
 library(lwgeom)
 library(stringi)
 
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
 
 
+
+
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+
+# unecessary
 
 
 #### 0. Download original data sets from IBGE ftp -----------------
@@ -557,6 +569,7 @@ rm(list= ls())
 gc(reset = T)
 
 
+
 ############juntando as bases por estado --------------
 
 dir.proj="L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//"
@@ -570,7 +583,12 @@ for (CODE in lista) {# CODE <- 33
   files <- lapply(X=files, FUN= as.data.frame)
   shape <- do.call('rbind', files)
   shape <- st_sf(shape)
+  shape7 <- st_transform(shape, crs=3857) %>%
+    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
   readr::write_rds(shape,paste0("./",CODE,"sc.rds"), compress="gz")
+  sf::st_write(shape, dsn= paste0("./",CODE,"sc.gpkg"))
+  sf::st_write(shape7, dsn= paste0("./",CODE,"sc_simplified", ".gpkg"))
+  
 }
 
 

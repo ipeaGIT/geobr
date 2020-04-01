@@ -18,7 +18,7 @@
 # keywords:****
 # Reference System Information: SIRGAS 2000
 
-
+### Libraries (use any library as necessary)
 
 library(sf)
 library(dplyr)
@@ -27,6 +27,14 @@ library(tidyr)
 library(data.table)
 library(mapview)
 library(geobr)
+
+
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
+
 
 
 ###### 1. Create Root folder to save the data -----------------
@@ -272,13 +280,29 @@ st_crs(urb_2015) <- 4674
 urb_2005 <- lwgeom::st_make_valid(urb_2005)
 urb_2015 <- lwgeom::st_make_valid(urb_2015)
 
+###### 6. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+
+# simplify
+urb_2015_simplified <- st_transform(urb_2015, crs=3857) %>% 
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(crs=4674)
+head(urb_2015_simplified)
+
+urb_2005_simplified <- st_transform(urb_2005, crs=3857) %>% 
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(crs=4674)
+head(urb_2005_simplified)
 
 ##### 4.4 Save  -------------------
 
 # Save cleaned sf in the cleaned directory
 readr::write_rds(urb_2005, path=paste0(destdir_clean_2005,"/urban_area_2005.rds"), compress = "gz")
 readr::write_rds(urb_2015, path=paste0(destdir_clean_2015,"/urban_area_2015.rds"), compress = "gz")
-
+sf::st_write(urb_2005, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
+sf::st_write(urb_2005, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005 _simplified", ".gpkg"))
+sf::st_write(urb_2005_simplified, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
+sf::st_write(urb_2015_simplified, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005 _simplified", ".gpkg"))
 # #### 4. 2015 Clean data set and save it in compact .rds format-----------------
 #
 #

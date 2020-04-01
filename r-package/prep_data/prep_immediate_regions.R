@@ -1,17 +1,3 @@
-library(RCurl)
-library(stringr)
-library(sf)
-library(janitor)
-library(dplyr)
-library(readr)
-library(parallel)
-library(data.table)
-library(xlsx)
-library(magrittr)
-library(devtools)
-library(lwgeom)
-library(stringi)
-
 #> DATASET: Immediate Geographic Regions - 2017
 #> Source: IBGE - https://www.ibge.gov.br/geociencias/organizacao-do-territorio/divisao-regional/15778-divisoes-regionais-do-brasil.html?=&t=o-que-e
 #> scale 1:5.000.000 ?????????????
@@ -30,8 +16,21 @@ library(stringi)
 # Palavras chaves descritivas:****
 # Informacao do Sistema de Referencia: SIRGAS 2000
 
+### Libraries (use any library as necessary)
 
-
+library(RCurl)
+library(stringr)
+library(sf)
+library(janitor)
+library(dplyr)
+library(readr)
+library(parallel)
+library(data.table)
+library(xlsx)
+library(magrittr)
+library(devtools)
+library(lwgeom)
+library(stringi)
 
 
 ####### Load Support functions to use in the preprocessing of the data -----------------
@@ -202,7 +201,8 @@ temp_sf$code_immediate <- as.numeric(temp_sf$code_immediate )
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% 
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 
 

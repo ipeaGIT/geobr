@@ -1,5 +1,7 @@
-library(geobr)
+### Libraries (use any library as necessary)
 
+
+library(geobr)
 library(dplyr)
 library(readr)
 library(sp)
@@ -9,6 +11,23 @@ library(rgeos)
 library(maptools)
 library(devtools)
 library(parallel)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
+
+
+
+
+# If the data set is updated regularly, you should create a function that will have
+# a `date` argument download the data
+
+# Not necessary
+
+
+
+
+
 
 #### Using data already in the geobr package -----------------
 
@@ -94,9 +113,18 @@ get_country <- function(y){
   # f) create a subdirectory of that year in the country directory
     dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/country/",y)
     dir.create(dest_dir, showWarnings = FALSE)
+    
+  # g) generate a lighter version of the dataset with simplified borders
+    outerBounds7 <- st_transform(outerBounds7, crs=3857) %>% 
+      sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+      st_transform(crs=4674)
+    
 
-  # g) save as an sf file
+  # h) save as an sf file
     readr::write_rds(outerBounds, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
+    sf::st_write(outerBounds, dsn=paste0(dest_dir,"/country_",y,".gpkg") )
+    sf::st_write(outerBounds7,dsn=paste0(dest_dir,"/country_",y," _simplified", ".gpkg"))
+    
 }
 
 
