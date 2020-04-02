@@ -19,7 +19,7 @@ make
 
 Test with
 
-`python -t pytest`
+`python -m pytest`
 
 You can use a helper to translate a function from R.
 If you want to add `read_biomes`, just run
