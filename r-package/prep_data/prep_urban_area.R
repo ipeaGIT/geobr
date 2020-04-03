@@ -31,7 +31,7 @@ library(geobr)
 
 
 ####### Load Support functions to use in the preprocessing of the data
-
+setwd("C:/Users/Babis/Documents/IPEA/geobr/r-package")
 source("./prep_data/prep_functions.R")
 
 
@@ -39,6 +39,7 @@ source("./prep_data/prep_functions.R")
 
 ###### 1. Create Root folder to save the data -----------------
 # Root directory
+# root_dir <- "C:/Users/Babis/Documents/IPEA/data-raw"
 root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
 setwd(root_dir)
 
@@ -148,9 +149,11 @@ setDT(cemk_urban_05)
 setcolorder(cost_urban_05, neworder= c(names(ACP_urban_05)) )
 setcolorder(cemk_urban_05, neworder=  c(names(ACP_urban_05)) )
 
-# Make any invalid geometry valid # st_is_valid( sf)
-  urb_2005 <- lwgeom::st_make_valid(urb_2005)
-  urb_2015 <- lwgeom::st_make_valid(urb_2015)
+
+# 
+# # Make any invalid geometry valid # st_is_valid( sf)
+#   urb_2005 <- lwgeom::st_make_valid(urb_2005)
+#   urb_2015 <- lwgeom::st_make_valid(urb_2015)
 
 # pile them up
 urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
@@ -228,7 +231,6 @@ urb_2015 <- urb_2015 %>% st_sf() %>% st_zm( drop = T, what = "ZM")
 urb_2005 <- urb_2005 %>% st_sf() %>% st_zm( drop = T, what = "ZM")
 
 
-
 # Recupera info de code_state e name_state
 
 # 2005
@@ -236,7 +238,6 @@ estados <- geobr::read_state(code_state = 'all', year=2010)
 estados$geometry <- NULL
 estados <- select(estados, 'code_state', 'abbrev_state', 'name_state')
 urb_2005 <- left_join(urb_2005, estados)
-
 
 # 2015
 municipios <- geobr::read_municipality(code_muni  = 'all', year=2015)
@@ -299,10 +300,10 @@ head(urb_2005_simplified)
 # Save cleaned sf in the cleaned directory
 readr::write_rds(urb_2005, path=paste0(destdir_clean_2005,"/urban_area_2005.rds"), compress = "gz")
 readr::write_rds(urb_2015, path=paste0(destdir_clean_2015,"/urban_area_2015.rds"), compress = "gz")
-sf::st_write(urb_2005, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
+sf::st_write(urb_2005, dsn=, path=paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
 sf::st_write(urb_2005, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005 _simplified", ".gpkg"))
-sf::st_write(urb_2005_simplified, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
-sf::st_write(urb_2015_simplified, dsn= path=paste0(destdir_clean_2005,"/urban_area_2005 _simplified", ".gpkg"))
+sf::st_write(urb_2005_simplified, dsn=paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
+sf::st_write(urb_2015_simplified, dsn=paste0(destdir_clean_2005,"/urban_area_2005 _simplified", ".gpkg"))
 # #### 4. 2015 Clean data set and save it in compact .rds format-----------------
 #
 #
