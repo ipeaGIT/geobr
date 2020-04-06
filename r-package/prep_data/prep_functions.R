@@ -85,6 +85,21 @@ add_region_info <- function(temp_sf){
                                               }
 
 
+
+###### Use UTF-8 encoding -----------------
+
+use_encoding_utf8 <- function(temp_sf){
+
+
+  temp_sf <- temp_sf %>%
+  mutate_if(is.factor, function(x){ x %>% as.character() %>%
+      stringi::stri_encode("UTF-8") } )
+
+  return(temp_sf)
+  }
+
+
+
 ###### Simplify temp_sf -----------------
 
 simplify_temp_sf <- function(temp_sf, tolerance=100){
