@@ -291,11 +291,14 @@ urb_2015_simplified <- lwgeom::st_make_valid(urb_2015_simplified)
 
 # Fix issue   #135
 # https://github.com/ipeaGIT/geobr/issues/135
-urb_2015 = st_collection_extract(urb_2015, "POLYGON")
-urb_2015_simplified = st_collection_extract(urb_2015_simplified, "POLYGON")
+    # urb_2015 = st_collection_extract(urb_2015, "POLYGON")
+    # urb_2015_simplified = st_collection_extract(urb_2015_simplified, "POLYGON")
+
+urb_2015 = st_cast(urb_2015, "MULTIPOLYGON")
+urb_2015_simplified = st_cast(urb_2015_simplified, "MULTIPOLYGON")
 
 
-class(p$geometry)
+
 
 ##### 4.4 Save  -------------------
 
