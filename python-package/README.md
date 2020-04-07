@@ -88,4 +88,4 @@ Finally, if **not** using conda, try:
 | read_urban_area          | Yes         | Super |
 | read_weighting_area      | Yes         | No    |
 | list_geobr               | Yes         | Yes   |
-| lookup_muni              |             | No    |
+| lookup_muni              | Yes         | No    |
