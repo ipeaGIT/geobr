@@ -26,17 +26,14 @@ obs. If you use **Linux**, you need to install a couple dependencies before inst
 
 ## Installation Python
 ```R
-under development
+pip install geobr
 ```
-
-obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).
-
-
 
 # Basic Usage
 
 The syntax of all `geobr` functions operate one the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
+## R
 ```R
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni=1200179, year=2017)
@@ -50,6 +47,21 @@ mun <- read_municipality(code_muni="all", year=2018)
 ```
 More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c459965c75b155) and in the [intro Vignette](https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html)
 
+## Python
+```python
+from geobr import read_municipality
+
+# Read specific municipality at a given year
+mun = read_municipality(code_muni=1200179, year=2017)
+
+# Read all municipalities of given state at a given year
+mun = read_municipality(code_muni=33, year=2010) # or
+mun = read_municipality(code_muni="RJ", year=2010)
+
+# Read all municipalities in the country at a given year
+mun = read_municipality(code_muni="all", year=2018)
+```
+More examples [here](python-package/examples) 
 
 # Available datasets:
 
