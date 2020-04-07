@@ -28,6 +28,14 @@ obs. If you use **Linux**, you need to install a couple dependencies before inst
 ```R
 pip install geobr
 ```
+*Windows users:*  
+
+conda create -n geo_env
+conda activate geo_env  
+conda config --env --add channels conda-forge  
+conda config --env --set channel_priority strict  
+conda install python=3 geopandas  
+pip install geobr  
 
 # Basic Usage
 
