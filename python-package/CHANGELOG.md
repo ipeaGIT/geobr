@@ -6,6 +6,7 @@
 * Expecting to Launch **geobr** v0.1 to pip with the following data sets:
 
  * list_geobr.py
+ * lookup_muni.py
  * read_amazon.py
  * read_biomes.py
  * read_census_tract.py

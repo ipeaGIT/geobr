@@ -6,7 +6,7 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 
 | ***R*** | ***Python*** | 
 |-----|-----|
-| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> | (under development) |
+| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) ![PyPI - Downloads](https://img.shields.io/pypi/dm/geobr) |
  
 ## Installation R
 
@@ -26,17 +26,14 @@ obs. If you use **Linux**, you need to install a couple dependencies before inst
 
 ## Installation Python
 ```R
-under development
+pip install geobr
 ```
-
-obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).
-
-
 
 # Basic Usage
 
 The syntax of all `geobr` functions operate one the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
+## R
 ```R
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni=1200179, year=2017)
@@ -50,6 +47,21 @@ mun <- read_municipality(code_muni="all", year=2018)
 ```
 More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c459965c75b155) and in the [intro Vignette](https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html)
 
+## Python
+```python
+from geobr import read_municipality
+
+# Read specific municipality at a given year
+mun = read_municipality(code_muni=1200179, year=2017)
+
+# Read all municipalities of given state at a given year
+mun = read_municipality(code_muni=33, year=2010) # or
+mun = read_municipality(code_muni="RJ", year=2010)
+
+# Read all municipalities in the country at a given year
+mun = read_municipality(code_muni="all", year=2018)
+```
+More examples [here](python-package/examples) 
 
 # Available datasets:
 
