@@ -155,12 +155,14 @@ lookup_end_format <- lookup_end %>%
 
 lookup_state <- data.frame(name_uf = c("Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo",
                                        "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais",
-                                       "Pará", "Paraíba", "Paraná", "Pernanbuco", "Piauí", "Rio de Janeiro",
+                                       "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                                        "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima",
                                        "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"),
-                           abrev_state = c("AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS",
-                                          "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR",
-                                          "RS", "SC", "SE", "SP", "TO"))
+                           abrev_state = c("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", 
+                                           "GO", "MA", "MT", "MS", "MG",
+                                           "PA", "PB", "PR", "PE", "PI", "RJ", 
+                                           "RN", "RS", "RO", "RR",
+                                           "SC", "SP", "SE", "TO"))
 
 # bring abrev state
 lookup_end_format <- lookup_end_format %>%
