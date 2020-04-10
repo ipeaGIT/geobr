@@ -72,7 +72,7 @@ mun = read_municipality(code_muni="RJ", year=2010)
 # Read all municipalities in the country at a given year
 mun = read_municipality(code_muni="all", year=2018)
 ```
-More examples [here](python-package/examples) 
+More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package/examples) 
 
 # Available datasets:
 
