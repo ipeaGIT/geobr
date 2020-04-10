@@ -1,7 +1,7 @@
 # log history of geobr package development in Python
 
 -------------------------------------------------------
-# geobr v0.1 (dev)
+# geobr v0.1.5 
 
 * Expecting to Launch **geobr** v0.1 to pip with the following data sets:
 
