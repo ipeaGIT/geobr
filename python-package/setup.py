@@ -2,7 +2,7 @@
 
 # coding: utf-8
 
-import os
+franimport os
 from setuptools import setup
 
 
