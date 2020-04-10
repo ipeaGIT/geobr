@@ -6,7 +6,7 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 
 | ***R*** | ***Python*** | 
 |-----|-----|
-| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) ![PyPI - Downloads](https://img.shields.io/pypi/dm/geobr) |
+| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master) <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) <br />  [![Downloads](https://pepy.tech/badge/geobr)](https://pepy.tech/project/geobr) <br />  [![Downloads](https://pepy.tech/badge/geobr/month)](https://pepy.tech/project/geobr/month)|
  
 ## Installation R
 
@@ -25,7 +25,17 @@ obs. If you use **Linux**, you need to install a couple dependencies before inst
 
 
 ## Installation Python
-```R
+```bash
+pip install geobr
+```
+*Windows users:*  
+
+```bash
+conda create -n geo_env
+conda activate geo_env  
+conda config --env --add channels conda-forge  
+conda config --env --set channel_priority strict  
+conda install python=3 geopandas  
 pip install geobr
 ```
 
