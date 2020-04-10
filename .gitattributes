@@ -1,1 +1,2 @@
 python-package/examples/* linguist-documentation
+*.ipynb -linguist-detectable
