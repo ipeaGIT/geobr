@@ -5,7 +5,7 @@ matrix:
       sudo: required
       cache: packages
       r_packages:
-       - devtool
+       - devtools
       r_github_packages:
        - r-lib/covr
       before_install:
