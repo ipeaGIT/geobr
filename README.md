@@ -1,6 +1,6 @@
 # geobr <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="170"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="170">
 
-<p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data geopackages (like shapefiles but better), available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
+<p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data in geopackage format (like shapefiles but better), available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
 
 The package is currently available in [**R**](https://CRAN.R-project.org/package=geobr) and [**Python**](https://pypi.org/project/geobr/).
 
@@ -44,8 +44,10 @@ pip install geobr
 
 The syntax of all `geobr` functions operate one the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
-## R
+## R, reading the data as an `sf` object
 ```R
+library(geobr)
+
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni=1200179, year=2017)
 
@@ -58,7 +60,7 @@ mun <- read_municipality(code_muni="all", year=2018)
 ```
 More examples [here](https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c459965c75b155) and in the [intro Vignette](https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html)
 
-## Python
+## Python, reading the data as a `geopandas` object
 ```python
 from geobr import read_municipality
 
