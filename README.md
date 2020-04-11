@@ -1,6 +1,6 @@
 # geobr <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="170"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="170">
 
-<p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data as simple features or geopackages, available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
+<p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data geopackages (like shapefiles but better), available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
 
 The package is currently available in [**R**](https://CRAN.R-project.org/package=geobr) and [**Python**](https://pypi.org/project/geobr/).
 
