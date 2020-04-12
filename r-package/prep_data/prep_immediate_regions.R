@@ -212,5 +212,5 @@ temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
 
 # save original and simplified datasets
 sf::st_write(temp_sf, paste0(destdir_clean, "/immediate_regions_2017.gpkg") )
-sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/immediate_regions_2017_simplified.gpkg") )
+sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/immediate_regions_2017_simplified.gpkg"), update = TRUE)
 

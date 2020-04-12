@@ -1,20 +1,3 @@
-# To Update the data, input the date YYYYMM and run the code
-
-update <- 201909
-
-library(RCurl)
-library(stringr)
-library(sf)
-library(dplyr)
-library(readr)
-library(data.table)
-library(magrittr)
-library(lwgeom)
-library(stringi)
-
-
-
-
 #> DATASET: indigenous Lands
 #> Source: FUNAI - http://www.funai.gov.br/index.php/shape
 #> Metadata:
@@ -40,8 +23,23 @@ library(stringi)
 source("./prep_data/prep_functions.R")
 
 
+# To Update the data, input the date YYYYMM and run the code
 
+update <- 201909
 
+library(RCurl)
+library(stringr)
+library(sf)
+library(dplyr)
+library(readr)
+library(data.table)
+library(magrittr)
+library(lwgeom)
+library(stringi)
+
+####### Load Support functions to use in the preprocessing of the data
+
+source("./prep_data/prep_functions.R")
 
 ###### 0. Create Root folder to save the data -----------------
 # Root directory
@@ -169,10 +167,18 @@ setwd(root_dir)
     mutate_if(is.factor, function(x){ x %>% as.character() %>%
         stringi::stri_encode("UTF-8") } )
 
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
+# skip this step if the dataset is made of points, regular spatial grids or rater data
+  
+# simplify
+  temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
+    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+  
+  
 # Save cleaned sf in the cleaned directory
   readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
-  sf::st_write(temp_sf, paste0(destdir_clean, "/immediate_regions_2017.gpkg") )
-  sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/immediate_regions_2017_simplified.gpkg") )
+  sf::st_write(temp_sf, dsn = paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".gpkg") )
+  sf::st_write(temp_sf_simplified, dsn = paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,"_simplified.gpkg") )
   
 
 

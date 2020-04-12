@@ -258,7 +258,7 @@ for (CODE in lista) {# CODE <- 33
       st_transform(crs=4674)
     readr::write_rds(shape,paste0("./",CODE,"AP.rds"), compress="gz")
     sf::st_write(shape,dsn = paste0("./",CODE,"AP.gpkg") )
-    sf::st_write(shape_simplified, dsn= shape,paste0("./",CODE,"AP_simplified", ".gpkg"))
+    sf::st_write(shape_simplified,paste0("./",CODE,"AP_simplified", ".gpkg"))
   }
 
 # mapview::mapview(shape)
