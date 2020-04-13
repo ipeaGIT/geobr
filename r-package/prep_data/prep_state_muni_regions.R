@@ -744,6 +744,12 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_micro = cd_geocodu, name_micro = nm_micro)
       temp_sf <- dplyr::select(temp_sf, c('code_micro', 'name_micro', 'geometry'))
+      temp_sf <- dplyr::mutate(name_micro = ifelse(name_micro == "Moji Das Cruzes","Mogi Das Cruzes",
+                                            ifelse(name_micro == "Piraçununga","Pirassununga",
+                                            ifelse(name_micro == "Moji-Mirim","Moji Mirim",
+                                            ifelse(name_micro == "São Miguel D'oeste","	São Miguel Do Oeste",
+                                            ifelse(name_micro == "Serras Do Sudeste","Serras De Sudeste",
+                                            ifelse(name_micro == "Vão do Paraná","Vão do Paranã",name_muni)))))))
     }
     
     
@@ -859,12 +865,7 @@ clean_muni <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2001]
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_muni = cd_geocodm, name_muni = nm_municip)
       temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
-      temp_sf <- dplyr::mutate(name_muni = ifelse(name_muni == "Moji Das Cruzes","Mogi Das Cruzes",
-                                           ifelse(name_muni == "Piraçununga","Pirassununga",
-                                           ifelse(name_muni == "Moji-Mirim","Moji Mirim",
-                                           ifelse(name_muni == "São Miguel D'oeste","	São Miguel Do Oeste",
-                                           ifelse(name_muni == "Serras Do Sudeste","Serras De Sudeste",
-                                           ifelse(name_muni == "Vão do Paraná","Vão do Paranã",name_muni)))))))
+
     }
     
     if (year %like% "2013|2014|2015|2016|2017|2018"){
