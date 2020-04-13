@@ -268,8 +268,8 @@ urb_2015 <- st_as_sf(urb_2015, crs=original_crs)
 
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-urb_2005 <- harmonize_projection(urb_2005)
-urb_2015 <- harmonize_projection(urb_2015)
+#urb_2005 <- harmonize_projection(urb_2005)
+#urb_2015 <- harmonize_projection(urb_2015)
 
 
 # Make any invalid geometry valid # st_is_valid( sf)
@@ -282,8 +282,12 @@ urb_2015 <- lwgeom::st_make_valid(urb_2015)
 ###### 6. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
-urb_2005_simplified <- simplify_temp_sf(urb_2005)
-urb_2015_simplified <- simplify_temp_sf(urb_2015)
+urb_2005_simplified <- st_transform(urb_2005, st_crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(st_crs=4674)
+urb_2015_simplified <- st_transform(urb_2015, st_crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  st_transform(st_crs=4674)
 
 # Make any invalid geometry valid # st_is_valid( sf)
 urb_2005_simplified <- lwgeom::st_make_valid(urb_2005_simplified)
@@ -294,6 +298,9 @@ urb_2015_simplified <- lwgeom::st_make_valid(urb_2015_simplified)
     # urb_2015 = st_collection_extract(urb_2015, "POLYGON")
     # urb_2015_simplified = st_collection_extract(urb_2015_simplified, "POLYGON")
 
+urb_2005 = st_cast(urb_2005, "MULTIPOLYGON")
+urb_2005_simplified = st_cast(urb_2005_simplified, "MULTIPOLYGON")
+
 urb_2015 = st_cast(urb_2015, "MULTIPOLYGON")
 urb_2015_simplified = st_cast(urb_2015_simplified, "MULTIPOLYGON")
 
@@ -303,10 +310,10 @@ urb_2015_simplified = st_cast(urb_2015_simplified, "MULTIPOLYGON")
 ##### 4.4 Save  -------------------
 
 # Save cleaned sf in the cleaned directory
-sf::st_write(urb_2005, dsn= paste0(destdir_clean_2005,"/urban_area_2005.gpkg") )
-sf::st_write(urb_2005_simplified, dsn= paste0(destdir_clean_2005,"/urban_area_2005_simplified.gpkg"))
+sf::st_write(urb_2005, dsn= paste0(destdir_clean_2005,"/urban_area_2005.gpkg"), update = TRUE)
+sf::st_write(urb_2005_simplified, dsn= paste0(destdir_clean_2005,"/urban_area_2005_simplified.gpkg"), update = TRUE)
 
 
-sf::st_write(urb_2015, dsn=paste0(destdir_clean_2015,"/urban_area_2015.gpkg") )
-sf::st_write(urb_2015_simplified, dsn=paste0(destdir_clean_2015,"/urban_area_2015_simplified.gpkg"))
+sf::st_write(urb_2015, dsn=paste0(destdir_clean_2015,"/urban_area_2015.gpkg"), update = TRUE)
+sf::st_write(urb_2015_simplified, dsn=paste0(destdir_clean_2015,"/urban_area_2015_simplified.gpkg"), update = TRUE)
 
