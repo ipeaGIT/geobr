@@ -89,7 +89,7 @@ Finally, if **not** using conda, try:
 | read_weighting_area      | Yes         | No    |
 | list_geobr               | Yes         | Yes   |
 | lookup_muni              | Yes         | No    |
-| read_neighborhood        | No          | Yes   |
+| read_neighborhood        | Yes         | Yes   |
 
 
 
