@@ -30,13 +30,11 @@ Suggests:
     dplyr (>= 0.8-3),
     ggplot2,
     knitr,
-    lwgeom (>= 0.2-1),
     magrittr,
     mapview,
     rio,
     rmarkdown,
-    testthat,
-    tmap
+    testthat
 Imports:
       httr,
       readr,
