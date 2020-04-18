@@ -162,17 +162,18 @@ dissolve_polygons <- function(mysf, group_column){
     # e) convert back to sf data
     outerBounds <- st_as_sf(outerBounds)
     outerBounds <- st_set_crs(outerBounds, st_crs(mysf))
-    st_crs(outerBounds) <- 4674
+    st_crs(outerBounds) <- st_crs(mysf)
 
     # retrieve code_region info and reorder columns
     outerBounds <- dplyr::mutate(outerBounds, group_column = grp)
     outerBounds <- dplyr::select(outerBounds, group_column, geometry)
+    names(outerBounds)[1] <- group_column
     return(outerBounds)
   }
 
 
   # Apply sub-function
-  groups_sf <- pbapply::pblapply(X = unique(get(group_column, mysf)), FUN = dissolvefun )
+  groups_sf <- lapply(X = unique(get(group_column, mysf)), FUN = dissolvefun )
 
   # rbind results
   temp_sf <- do.call('rbind', groups_sf)
