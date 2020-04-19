@@ -95,6 +95,7 @@ python-package/notebooks/
 /r-package/.Rhistory
 __pycache__
 .pytest_cache
+.DS_Store
 
 /r-package/.Rhistory
 /r-package/.Rhistory

@@ -9,8 +9,8 @@
 # Linguagem: Pt-BR
 # Character set: Latin1
 #
-# Resumo: Polígonos e Pontos das unidades de conservação brasileiras.
-# Informações adicionais: Dados produzidos pelo MMA, e utilizados na elaboração do shape de biomas com a melhor base oficial disponível.
+# Resumo: Pol�?gonos e Pontos das unidades de conservação brasileiras.
+# Informações adicionais: Dados produzidos pelo MMA, e utilizados na elaboração do shape de biomas com a melhor base oficial dispon�?vel.
 # Propósito: Identificação das unidades de conservação brasileiras.
 #
 # Estado: Em desenvolvimento
@@ -68,7 +68,7 @@ dir.create(destdir_raw)
 # Create folders to save clean sf.rds files  -----------------
 dir.create("./conservation_units/shapes_in_sf_cleaned", showWarnings = FALSE)
 destdir_clean <- paste0("./conservation_units/shapes_in_sf_cleaned/",update)
-dir.create(destdir_clean)
+#dir.create(destdir_clean)
 
 
 
@@ -168,7 +168,8 @@ temp_sf <- temp_sf %>%
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf7 <- simplify_temp_sf(temp_sf)
+temp_sf7 <- st_transform(temp_sf, crs=3857) %>%
+  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 head(temp_sf7)
 
 

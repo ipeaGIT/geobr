@@ -9,7 +9,7 @@ The inclusion of every dataset in geobr follows a three-step process, as follows
 ### Step 1. Data preparation
 In the first step, the contributor should write an `R` script that will prepare the raw original data set to be used in geobr. This script should (1) download the raw data from the original website source, (2) rename column names following a simple spelling convention*, (3) ensure the data uses spatial projection EPSG 4674, (4) ensure every string column is `as.character` with UTF-8 encoding, (5) fix eventual topology issues in the data, and (6) save the data in `.rds` format.
 
-This script can use any `R` package, but it needs to be 100% reproducible. There is a simple model [here](https://github.com/ipeaGIT/geobr/blob/master/r-package/prep_data/prep_script.R) and various preparation scripts in the [prep_data directory](https://github.com/ipeaGIT/geobr/blob/master/r-package/prep_data) that you can use as a reference. Mind you though that every data set has its own particularities so every prep_ script will be a little bit different accordingly.
+This script can use any `R` package, but it needs to be 100% reproducible. There is a simple model [here](https://github.com/ipeaGIT/geobr/blob/master/r-package/prep_data/prep_example.R) and various preparation scripts in the [prep_data directory](https://github.com/ipeaGIT/geobr/blob/master/r-package/prep_data) that you can use as a reference. Mind you though that every data set has its own particularities so every prep_ script will be a little bit different accordingly.
 
 
 ### Step 2. Data validation and upload

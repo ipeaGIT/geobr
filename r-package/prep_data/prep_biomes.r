@@ -200,8 +200,6 @@ head(temp_sf_simplified)
 
 
 
-
-
 ###### 8. Clean data set and save it in geopackage format-----------------
 setwd(root_dir)
 
@@ -210,8 +208,8 @@ setwd(root_dir)
 
 # Save original and simplified datasets
 readr::write_rds(temp_sf, path= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update,".rds"), compress = "gz")
-sf::st_write(temp_sf, dsn= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update,".gpkg") )
-sf::st_write(temp_sf_simplified, dsn= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update," _simplified", ".gpkg"))
+sf::st_write(temp_sf, dsn= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update,".gpkg"), update = TRUE)
+sf::st_write(temp_sf_simplified, dsn= paste0("./shapes_in_sf_cleaned/",update,"/biomes_", update," _simplified", ".gpkg"), update = TRUE)
 
 
 
