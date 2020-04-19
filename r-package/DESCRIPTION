@@ -34,8 +34,7 @@ Suggests:
     mapview,
     rio,
     rmarkdown,
-    testthat,
-    tmap
+    testthat
 Imports:
       httr,
       readr,
