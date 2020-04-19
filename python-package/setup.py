@@ -2,13 +2,13 @@
 
 # coding: utf-8
 
-franimport os
+import os
 from setuptools import setup
 
 
 MAJOR = 0
 MINOR = 1
-MICRO = 5
+MICRO = 6
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 ISRELEASED = True
 

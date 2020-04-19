@@ -1,7 +1,11 @@
 # log history of geobr package development in Python
 
 -------------------------------------------------------
-# geobr v0.1.5 
+# v0.1.6
+
+* Adds read_neighborhood.py
+
+# v0.1.5 
 
 * Expecting to Launch **geobr** v0.1 to pip with the following data sets:
 
