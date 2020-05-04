@@ -95,12 +95,12 @@ shp_to_sf_rds <- function(x){
 # drop unecessary columns
   shape$Shape_Leng <- NULL
   shape$Shape_Area <- NULL
-  
+
   ###### 6. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
-  
+
   # simplify
-  shape_simplified <- st_transform(shape, crs=3857) %>% 
+  shape_simplified <- st_transform(shape, crs=3857) %>%
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
     st_transform(crs=4674)
   head(shape)
@@ -150,8 +150,8 @@ grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "A
                                   "Maranhão", "Maranhão", "Maranhão", "Maranhão", "Maranhão", "Maranhão",
                                   "Maranhão", "Piauí", "Piauí", "Piauí", "Piauí", "Piauí", "Piauí",
                                   "Ceará", "Ceará", "Ceará", "Rio Grande do Norte", "Rio Grande do Norte",
-                                  "Paraíba", "Paraíba", "Pernanbuco", "Pernanbuco", "Pernanbuco",
-                                  "Pernanbuco", "Pernanbuco", "Alagoas", "Alagoas", "Sergipe",
+                                  "Paraíba", "Paraíba", "Pernambuco", "Pernambuco", "Pernambuco",
+                                  "Pernambuco", "Pernambuco", "Alagoas", "Alagoas", "Sergipe",
                                   "Sergipe", "Bahia", "Bahia", "Bahia", "Bahia", "Bahia", "Espírito Santo",
                                   "Espírito Santo", "Espírito Santo", "Rio de Janeiro", "Rio de Janeiro",
                                   "Rio de Janeiro", "Rio de Janeiro", "São Paulo", "São Paulo",
