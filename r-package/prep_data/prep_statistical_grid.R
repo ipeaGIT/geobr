@@ -99,11 +99,11 @@ shp_to_sf_rds <- function(x){
   ###### 6. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
 
-  # simplify
-  shape_simplified <- st_transform(shape, crs=3857) %>%
-    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
-    st_transform(crs=4674)
-  head(shape)
+  # # simplify
+  # shape_simplified <- st_transform(shape, crs=3857) %>%
+  #   sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
+  #   st_transform(crs=4674)
+  # head(shape)
 
 # get file name
   file_name <- paste0(substr(x, 11, 12), "grid.rds")
@@ -111,7 +111,7 @@ shp_to_sf_rds <- function(x){
 # save in .rds
   readr::write_rds(x=shape, path = paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid.rds"), compress="gz" )
   sf::st_write(temp_sf,  dsn= paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid.gpkg") )
-  sf::st_write(temp_sf7, dsn= paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid_simplified", ".gpkg"))
+  # sf::st_write(temp_sf7, dsn= paste0("../shapes_in_sf_all_years_cleaned/2010/", substr(x, 11, 12), "grid_simplified", ".gpkg"))
   }
 
 
@@ -204,13 +204,9 @@ grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "A
                                                                                                                                                                                                  "code_grid"), row.names = c(NA, -139L), class = "data.frame")
 
 # Use UTF-8 encoding in all character columns
-  grid_state_correspondence_table <- grid_state_correspondence_table %>%
-    mutate_if(is.factor, function(x){ x %>% as.character() %>%
-        stringi::stri_encode(from = "latin1", to="UTF-8") } )
 
-  grid_state_correspondence_table <- grid_state_correspondence_table %>%
-    mutate_if(is.character, function(x){ x %>%
-        stringi::stri_encode(from = "latin1", to="UTF-8") } )
+  grid_state_correspondence_table <- use_encoding_utf8(grid_state_correspondence_table)
+
 
 
 
