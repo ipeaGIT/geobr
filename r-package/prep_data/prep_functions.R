@@ -2,6 +2,22 @@
 
 
 
+###### list ftp folders -----------------
+
+# function to list ftp folders from their original sub-dir
+list_foulders <- function(ftp){
+
+  if (substr(ftp, nchar(ftp), nchar(ftp)) != "/") {
+    ftp<-paste0(ftp,"/")
+  }
+  ##List Years/folders available
+  years = getURL(ftp, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  years <- strsplit(years, "\r\n")
+  years = unlist(years)
+
+  return(years)
+
+}
 
 ###### Download data -----------------
 
