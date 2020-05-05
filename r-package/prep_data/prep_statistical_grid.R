@@ -208,7 +208,8 @@ grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "A
   grid_state_correspondence_table <- use_encoding_utf8(grid_state_correspondence_table)
 
 
-
+# sort data alphabetically
+grid_state_correspondence_table <- grid_state_correspondence_table[order(grid_state_correspondence_table$name_uf),]
 
 # save table
   save(grid_state_correspondence_table, file = "./data/grid_state_correspondence_table.RData", compress = T)
