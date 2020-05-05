@@ -11,62 +11,11 @@ library(beepr)
 library(pbapply)
 library(furrr)
 library(mapview)
-# library(rmapshaper)
+library(rmapshaper)
 library(magrittr)
+library(data.table)
 
-
-
-            # # read original data
-            # # o <- geobr::read_municipality(code_muni = 4106902, tp = "original")
-            # # a <- geobr::read_municipality(code_muni = 4106902, tp = "simplified")
-            #
-            # o <- geobr::read_metro_area(year=2013, tp = "original")
-            # a <- geobr::read_metro_area(year=2013, tp = "simplified")
-            #
-            # o <- subset(o, name_metro == "RM São Paulo")
-            # a <- subset(a, name_metro == "RM São Paulo")
-            #
-            #
-            #
-            #
-            #
-            # # simplify
-            # system.time(  b <- st_transform(o, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674) )
-            #
-            # system.time(  c <- st_transform(o, crs=3857)  %>% rmapshaper::ms_simplify(keep = .5) %>% st_transform(crs=4674) )
-            #
-            # 5000 8%
-            # 500 9%
-            # 50 16%
-            # 10 33%
-            # 5 45%
-            #
-            # identical(b, c)
-            #
-            #
-            # plot(o)
-            # plot(a)
-            # plot(b)
-            # plot(c)
-            #
-            #
-            #   as.numeric(object.size(a)) / as.numeric(object.size(o)) # reducao em __ vezes
-            #   as.numeric(object.size(b)) / as.numeric(object.size(o)) # reducao em __ vezes
-            #   as.numeric(object.size(c)) / as.numeric(object.size(o)) # reducao em __ vezes
-            #
-            #
-            #   mapview(o) + a + b + c
-            #
-            #
-            # # save data
-            #   sf::st_write(o, 'test.gpkg')
-            #   sf::st_write(b, 'test_simplified100.gpkg')
-            #   sf::st_write(c, 'test_simplified.gpkg')
-            #
-            #   beepr::beep()
-            #
-            # mapview::mapview(b)
-            #
+rmapshaper::ms_simplify
 
 ### Function to simplify data sets
 
@@ -83,14 +32,17 @@ temp_gpkg <- sf::st_read(original_file_address, quiet=T)
 
 # simplify with tolerance
   temp_gpkg_simplified <- sf::st_transform(temp_gpkg, crs=3857)
-  temp_gpkg_simplified <- sf::st_simplify(temp_gpkg_simplified, preserveTopology = T, dTolerance = tolerance)
+
+  temp_gpkg_simplified <- rmapshaper::ms_simplify(temp_gpkg, keep=.7)
+
+#  temp_gpkg_simplified <- sf::st_simplify(temp_gpkg_simplified, preserveTopology = T, dTolerance = tolerance)
   temp_gpkg_simplified <- sf::st_transform(temp_gpkg_simplified, crs=4674)
 
 # Make any invalid geometry valid # st_is_valid( sf)
 temp_gpkg_simplified <- lwgeom::st_make_valid(temp_gpkg_simplified)
 
 # as.numeric(object.size(temp_gpkg_simplified)) / as.numeric(object.size(temp_gpkg)) # reducao em __ vezes
-# mapview(temp_gpkg) + temp_gpkg_simplified
+# mapview(temp_gpkg_simplified, plataform='leafgl') +  temp_gpkg
 
 # delete previous file
 message('deleting old file')
@@ -106,11 +58,20 @@ sf::st_write(temp_gpkg_simplified, simplified_file_address, quiet = TRUE)
 # list all simplified data sets
 simplified_files <- list.files(path = '//storage1/geobr/data_gpkg', pattern = 'simplified', recursive = T, full.names = T)
 
+# data at more local level should not be simplified too much
+simplified_files_30 <- simplified_files[simplified_files %like% 'weighting_area|census_tract|urban_area|indigenous_land|disaster_risk_area']
+
+# t <- simplify_gpkg(simplified_files_20[57])
+#
+# file_address <- simplified_files_30[57]
+
+
 
 # aplicar funcao
 
 # i core
 pbapply::pblapply(X=simplified_files, FUN = simplify_gpkg)
+pbapply::pblapply(X=simplified_files_30, FUN = simplify_gpkg, tolerance=30)
 
   ## em paralelo
   # future::plan(future::multiprocess)
