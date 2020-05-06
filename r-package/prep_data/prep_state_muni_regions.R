@@ -623,10 +623,23 @@ for( e in sub_dirs ){
   year <- last4(e)
 
   # list all sf files in that year/folder
-  sf_files <- list.files(e, full.names = T)
+  sf_files <- list.files(e, full.names = T, pattern = ".rds")
+
+  # count <-0
+  # coutlist<-NULL
+  # for (y in sf_files) { #  y <- sf_files[20]
+  #   sf_states <- read_rds(y)
+  #
+  #   x<-sf_states$name_micro == "Moji Das Cruzes"
+  #
+  #   if(any(x==TRUE)){
+  #     count <- count + 1
+  #     coutlist<-c(coutlist,y)
+  #   }
+  # }
 
   # for each file
-  for (i in sf_files){ #  i <- sf_files[1]
+  for (i in sf_files){ #  i <- sf_files[20]
 
     # read sf file
     temp_sf <- read_rds(i)
@@ -648,9 +661,9 @@ for( e in sub_dirs ){
       temp_sf <- temp_sf %>%  dplyr::mutate(name_micro = ifelse(name_micro == "Moji Das Cruzes","Mogi Das Cruzes",
                                                    ifelse(name_micro == "Piraçununga","Pirassununga",
                                                           ifelse(name_micro == "Moji-Mirim","Moji Mirim",
-                                                                 ifelse(name_micro == "São Miguel D'oeste","	São Miguel Do Oeste",
+                                                                 ifelse(name_micro == "S O Miguel Do Oeste","	São Miguel Do Oeste",
                                                                         ifelse(name_micro == "Serras Do Sudeste","Serras De Sudeste",
-                                                                               ifelse(name_micro == "Vão do Paraná","Vão do Paranã",name_micro)))))))
+                                                                               ifelse(name_micro == "Vão Do Paraná","Vão do Paranã",name_micro)))))))
     }
 
     if (year %like% "2013|2014|2015|2016|2017|2018"){
@@ -904,7 +917,7 @@ years <- c(years, hist_years) %>% sort()
 years <- years[!(years %in% c("aned","inal"))]
 years <- years[!(years %in% c(2005, 2007))]
 
-
+# x<-read_micro_region(code_micro = "all",year = 2010)
 # count <-0
 # coutlist<-NULL
 # for (y in years) {
@@ -919,7 +932,7 @@ years <- years[!(years %in% c(2005, 2007))]
 #   }
 # }
 
-  for (y in years) { #y<- 2000
+  for (y in years) { #y<- 1991
     sf_states <- read_municipality(year= y , code_muni = "all",simplified = FALSE)
 
     if (y==1991) {
@@ -1013,7 +1026,7 @@ sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".gpkg")
 # Create function to correct number of digits of meso regions in 2010
 
 # use data of 2013 to add code and name of meso regions in the 2010 data
-correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_files_2010[5]
+correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_files_2010[40]
 
   # Get UF of the file
   get_uf <- function(x){if (grepl("simplified",x)) {
@@ -1073,7 +1086,9 @@ sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".gpkg")
 
 # Create function to correct number of digits of meso regions in 2010, based on 2013 data
 
-correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[1]
+# correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[44]
+
+  for (a2010_sf_micro_file in sf_files_2010) {
 
   # Get UF of the file
   get_uf <- function(x){if (grepl("simplified",x)) {
@@ -1084,6 +1099,19 @@ correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- 
 
   # read 2010 file
   temp2010 <- st_read(a2010_sf_micro_file)
+
+    # dplyr::rename and subset columns
+    names(temp2010) <- names(temp2010) %>% tolower()
+    # temp2010 <- dplyr::rename(temp2010, code_micro = cd_geocodu, name_micro = nm_micro)
+    temp2010 <- dplyr::select(temp2010, c('code_micro', 'name_micro', 'geom'))
+    temp2010 <- temp2010 %>%  dplyr::mutate(name_micro =as.character(name_micro))
+    temp2010 <- temp2010 %>%  dplyr::mutate(name_micro = ifelse(name_micro == "Moji Das Cruzes","Mogi Das Cruzes",
+                                                              ifelse(name_micro == "Piraçununga","Pirassununga",
+                                                                     ifelse(name_micro == "Moji-Mirim","Moji Mirim",
+                                                                            ifelse(name_micro == "São Miguel D'oeste","São Miguel Do Oeste",
+                                                                                   ifelse(name_micro == "Serras Do Sudeste","Serras De Sudeste",
+                                                                                          ifelse(name_micro == "Vão Do Paraná","Vão Do Paranã",name_micro)))))))
+
 
   # read 2013 file
   temp2013 <- sf_files_2013[if (grepl("simplified",a2010_sf_micro_file)) {
@@ -1107,7 +1135,7 @@ correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- 
 }
 
 # Apply function
-lapply(sf_files_2010, correct_micro_digits)
+# lapply(sf_files_2010, correct_micro_digits)
 
 
 
