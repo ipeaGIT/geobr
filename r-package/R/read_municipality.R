@@ -6,7 +6,10 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param code_muni The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
-#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
+#' data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
+#' For spatial analysis and statistics users should set simplified = FALSE. Borders have been
+#' simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'
