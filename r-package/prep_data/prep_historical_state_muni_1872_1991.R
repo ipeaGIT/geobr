@@ -194,8 +194,8 @@ gc(reset = T)
       names(liti) <- names(liti) %>% tolower()
 
       liti <- dplyr::rename(liti, code_muni = id, name_muni = nome )
-      liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudese', 'longitudes' da sede do municipio
-
+      liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudes', 'longitudes' da sede do municipio
+    
       # Use UTF-8 encoding
       liti <- use_encoding_utf8(liti)
 
@@ -209,6 +209,40 @@ gc(reset = T)
 
     }
 
+    temp_sf$code_state <- substr(temp_sf$code_muni, 1, 2)
+    temp_sf <- temp_sf %>% mutate(abbrev_state = 
+                                       ifelse(code_state== 11, "RO",
+                                       ifelse(code_state== 12, "AC",
+                                       ifelse(code_state== 13, "AM",
+                                       ifelse(code_state== 14, "RR",
+                                       ifelse(code_state== 15, "PA",
+                                       ifelse(code_state== 16, "AP",
+                                       ifelse(code_state== 17, "TO",
+                                       ifelse(code_state== 21, "MA",
+                                       ifelse(code_state== 22, "PI",
+                                       ifelse(code_state== 23, "CE",
+                                       ifelse(code_state== 24, "RN",
+                                       ifelse(code_state== 25, "PB",
+                                       ifelse(code_state== 26, "PE",
+                                       ifelse(code_state== 27, "AL",
+                                       ifelse(code_state== 28, "SE",
+                                       ifelse(code_state== 29, "BA",
+                                       ifelse(code_state== 31, "MG",
+                                       ifelse(code_state== 32, "ES",
+                                       ifelse(code_state== 33, "RJ",
+                                       ifelse(code_state== 35, "SP",
+                                       ifelse(code_state== 41, "PR",
+                                       ifelse(code_state== 42, "SC",
+                                       ifelse(code_state== 43, "RS",
+                                       ifelse(code_state== 50, "MS",
+                                       ifelse(code_state== 51, "MT",
+                                       ifelse(code_state== 52, "GO",
+                                       ifelse(code_state== 53, "DF",NA
+                                       ))))))))))))))))))))))))))))
+
+    # reorder columns
+    temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')  
+    
     # simplify
     temp_sf_simp <- simplify_temp_sf(temp_sf)
 
@@ -280,8 +314,77 @@ clean_state <- function(year){
 
                 temp_sf <- dplyr::rename(temp_sf, name_state = nome )
                 temp_sf <- dplyr::select(temp_sf, c('name_state', 'geometry'))
+                
+                # Add code_state
+                
+                temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia",11,
+                                                      ifelse(name_state== "Acre",12,
+                                                      ifelse(name_state== "Amazonas",13,
+                                                      ifelse(name_state== "Roraima",14,
+                                                      ifelse(name_state== "Pará",15,
+                                                      ifelse(name_state== "Amapá",16,
+                                                      ifelse(name_state== "Tocantins",17,
+                                                      ifelse(name_state== "Maranhão",21,
+                                                      ifelse(name_state== "Piauí",22,
+                                                      ifelse(name_state== "Ceará",23,
+                                                      ifelse(name_state== "Rio Grande do Norte",24,
+                                                      ifelse(name_state== "Paraiba",25,
+                                                      ifelse(name_state== "Pernambuco",26,
+                                                      ifelse(name_state== "Alagoas",27,
+                                                      ifelse(name_state== "Sergipe",28,
+                                                      ifelse(name_state== "Bahia",29,
+                                                      ifelse(name_state== "Minas Gerais",31,
+                                                      ifelse(name_state== "Espirito Santo",32,
+                                                      ifelse(name_state== "Rio de Janeiro",33,
+                                                      ifelse(name_state== "São Paulo",35,
+                                                      ifelse(name_state== "Paraná",41,
+                                                      ifelse(name_state== "Santa Catarina",42,
+                                                      ifelse(name_state== "Rio Grande do Sul",43,
+                                                      ifelse(name_state== "Mato Grosso do Sul",50,
+                                                      ifelse(name_state== "Mato Grosso",51,
+                                                      ifelse(name_state== "Goiás",52,
+                                                      ifelse(name_state== "Distrito Federal",53,NA
+                                                             ))))))))))))))))))))))))))))
 
+                # add State abbreviation
+                temp_sf <- temp_sf %>% mutate(abbrev_state =  ifelse(code_state== 11, "RO",
+                                                              ifelse(code_state== 12, "AC",
+                                                              ifelse(code_state== 13, "AM",
+                                                              ifelse(code_state== 14, "RR",
+                                                              ifelse(code_state== 15, "PA",
+                                                              ifelse(code_state== 16, "AP",
+                                                              ifelse(code_state== 17, "TO",
+                                                              ifelse(code_state== 21, "MA",
+                                                              ifelse(code_state== 22, "PI",
+                                                              ifelse(code_state== 23, "CE",
+                                                              ifelse(code_state== 24, "RN",
+                                                              ifelse(code_state== 25, "PB",
+                                                              ifelse(code_state== 26, "PE",
+                                                              ifelse(code_state== 27, "AL",
+                                                              ifelse(code_state== 28, "SE",
+                                                              ifelse(code_state== 29, "BA",
+                                                              ifelse(code_state== 31, "MG",
+                                                              ifelse(code_state== 32, "ES",
+                                                              ifelse(code_state== 33, "RJ",
+                                                              ifelse(code_state== 35, "SP",
+                                                              ifelse(code_state== 41, "PR",
+                                                              ifelse(code_state== 42, "SC",
+                                                              ifelse(code_state== 43, "RS",
+                                                              ifelse(code_state== 50, "MS",
+                                                              ifelse(code_state== 51, "MT",
+                                                              ifelse(code_state== 52, "GO",
+                                                              ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
 
+                # Add Region codes and names
+                temp_sf$code_region <- substr(temp_sf$code_state, 1,1) %>% as.numeric()
+                temp_sf <- temp_sf %>% dplyr::mutate(name_region = ifelse(code_region==1, 'Norte',
+                                                                   ifelse(code_region==2, 'Nordeste',
+                                                                   ifelse(code_region==3, 'Sudeste',
+                                                                   ifelse(code_region==4, 'Sul',
+                                                                   ifelse(code_region==5, 'Centro Oeste', NA))))))
+                # reorder columns
+                temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')              
+                
   # Use UTF-8 encoding
     temp_sf$name_state <- stringi::stri_encode(as.character(temp_sf$name_state), "UTF-8")
 
