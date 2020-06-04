@@ -78,6 +78,8 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 
 # Available datasets:
 
+:point_right:  **All datasets use geodetic reference system "SIRGAS2000", CRS(4674).** 
+
 |Function|Geographies available|Years available|Source|
 |-----|-----|-----|-----|
 |`read_country`| Country | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE |
@@ -114,10 +116,9 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
 | ... | ... |
 
-
 Note 1. Data sets and Functions marked with "dev" are only available in the development version of `geobr`.
 
-Note 2. All datasets use geodetic reference system "SIRGAS2000", CRS(4674). Most data sets are available at scale 1:250,000 (see documentation for details).
+Note 2. Most data sets are available at scale 1:250,000 (see documentation for details).
  
 ## Coming soon:
 
