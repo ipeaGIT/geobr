@@ -44,12 +44,34 @@ read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showP
 
   if( year < 1992){
 
-    # list paths of files to download
-    file_url <- as.character(temp_meta$download_path)
-
-    # download files
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-    return(temp_sf)
+    if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
+    
+    if(code_muni=="all"){ message("Loading data for the whole country\n")
+      
+      # list paths of files to download
+      file_url <- as.character(temp_meta$download_path)
+      
+      # download gpkg
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      
+      
+      return(temp_sf)
+      
+    }
+    
+    if(nchar(code_muni)==2){
+      
+      # list paths of files to download
+      file_url <- as.character(temp_meta$download_path)
+      
+      # download gpkg
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      
+      x <- code_muni
+      temp_sf <- filter(temp_sf,substr(code_muni,1,2)==x)
+      return(temp_sf)
+    }
+    
 
     } else {
 
@@ -84,6 +106,7 @@ read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showP
 
     # input is a state code
     if(nchar(code_muni)==2){
+      sf <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2)))
         return(sf) }
 
     # input is a municipality code
@@ -97,3 +120,4 @@ read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showP
     }
     }
   }
+
