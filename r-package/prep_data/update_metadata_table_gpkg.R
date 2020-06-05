@@ -36,7 +36,7 @@ for (a in geo) {    # a="setor_censitario"
 
 
 # table(metadata$geo)
-# temp_ano <- subset(metadata, geo=="biomes")
+# temp_ano <- subset(metadata, geo=="immediate_regions")
 # temp_ano <- subset(metadata, geo=="country")
 
 
