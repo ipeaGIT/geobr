@@ -107,7 +107,7 @@ add_state_info <- function(temp_sf, column){
                                                 ifelse(code_state== 43, "Rio Grande do Sul",
                                                 ifelse(code_state== 50, "Mato Grosso do Sul",
                                                 ifelse(code_state== 51, "Mato Grosso",
-                                                ifelse(code_state== 52, "Goiás",
+                                                ifelse(code_state== 52, utf8::as_utf8("Goiás"),
                                                 ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))))
   return(temp_sf)
   }
