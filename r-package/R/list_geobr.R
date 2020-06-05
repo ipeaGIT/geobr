@@ -30,7 +30,7 @@ if (file.exists(tempf)) {
 
 
 # find start and end of table
-table_start <- grep("Available datasets:", readme) + 1
+table_start <- grep("Available datasets:", readme) + 4
 table_end <- grep("Other functions", readme) -1
 
 # get table string in Markdown
