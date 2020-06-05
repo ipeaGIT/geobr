@@ -106,3 +106,4 @@ python-package/dist
 *.egg-info
 python-package/master-README.md
 python-package/.coverage
+/r-package/prep_data/.Rhistory

@@ -6,9 +6,9 @@
 #' @param code_meso The 4-digit code of a meso region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
 #' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#' data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#' For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#' simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.
+#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
+#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
+#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'

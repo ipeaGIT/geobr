@@ -48,10 +48,11 @@ harmonize_projection <- function(temp_sf){
 
 ###### Add State abbreviation -----------------
 
-add_state_info <- function(temp_sf){
+add_state_info <- function(temp_sf, column){
 
   # add code_state
-  temp_sf$code_state <- substr(temp_sf$code_muni, 1, 2)
+  temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) %>% as.numeric()
+
 
   temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
                                                ifelse(code_state== 12, "AC",
@@ -80,6 +81,34 @@ add_state_info <- function(temp_sf){
                                                ifelse(code_state== 51, "MT",
                                                ifelse(code_state== 52, "GO",
                                                ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
+# name_state
+  temp_sf <- temp_sf %>% mutate( name_state =  ifelse(code_state== 11, "Rondônia",
+                                                ifelse(code_state== 12, "Acre",
+                                                ifelse(code_state== 13, "Amazônia",
+                                                ifelse(code_state== 14, "Roraima",
+                                                ifelse(code_state== 15, "Pará",
+                                                ifelse(code_state== 16, "Amapá",
+                                                ifelse(code_state== 17, "Tocantins",
+                                                ifelse(code_state== 21, "Maranhão",
+                                                ifelse(code_state== 22, "Piauí",
+                                                ifelse(code_state== 23, "Ceará",
+                                                ifelse(code_state== 24, "Rio Grande do Norte",
+                                                ifelse(code_state== 25, "Paraíba",
+                                                ifelse(code_state== 26, "Pernambuco",
+                                                ifelse(code_state== 27, "Alagoas",
+                                                ifelse(code_state== 28, "Sergipe",
+                                                ifelse(code_state== 29, "Bahia",
+                                                ifelse(code_state== 31, "Minas Gerais",
+                                                ifelse(code_state== 32, "Espírito Santo",
+                                                ifelse(code_state== 33, "Rio de Janeiro",
+                                                ifelse(code_state== 35, "São Paulo",
+                                                ifelse(code_state== 41, "Paraná",
+                                                ifelse(code_state== 42, "Santa Catarina",
+                                                ifelse(code_state== 43, "Rio Grande do Sul",
+                                                ifelse(code_state== 50, "Mato Grosso do Sul",
+                                                ifelse(code_state== 51, "Mato Grosso",
+                                                ifelse(code_state== 52, utf8::as_utf8("Goiás"),
+                                                ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))))
   return(temp_sf)
   }
 
@@ -87,10 +116,10 @@ add_state_info <- function(temp_sf){
 
 ###### Add Region info -----------------
 
-add_region_info <- function(temp_sf){
+add_region_info <- function(temp_sf, column){
 
   # add code_region
-  temp_sf$code_region <- substr(temp_sf$code_muni, 1,1)
+  temp_sf$code_region <- substr( temp_sf[[ column ]] , 1,1) %>% as.numeric()
 
   # add name_region
   temp_sf <- temp_sf %>% mutate(name_region = ifelse(code_region==1, 'Norte',
@@ -98,6 +127,7 @@ add_region_info <- function(temp_sf){
                                               ifelse(code_region==3, 'Sudeste',
                                               ifelse(code_region==4, 'Sul',
                                               ifelse(code_region==5, 'Centro Oeste', NA))))))
+  return(temp_sf)
                                               }
 
 

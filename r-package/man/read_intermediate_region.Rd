@@ -6,7 +6,7 @@
 \usage{
 read_intermediate_region(
   code_intermediate = "all",
-  year = 2017,
+  year = 2019,
   simplified = TRUE,
   showProgress = TRUE,
   tp
@@ -17,20 +17,20 @@ read_intermediate_region(
 a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_intermediate="all",
 all intermediate regions of the country are loaded (defaults to "all").}
 
-\item{year}{A date number in YYYY format (defaults to 2017)}
+\item{year}{A date number in YYYY format (defaults to 2019)}
 
 \item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
 data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
 For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.}
+simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 
 \item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
-The intermediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE to
-replace the "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+The intermediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
+were created to replace the "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{

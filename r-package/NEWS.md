@@ -5,10 +5,11 @@
 # geobr v1.3.1 dev
 
 
+### New data sets/functions
+* 2019 data sets of `intermediate` and `immediate` regions 
 
 ### Minor changes
 * improved documentation of argument `simplified`
-
 
 
 -------------------------------------------------------
