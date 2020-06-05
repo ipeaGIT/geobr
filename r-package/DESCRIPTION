@@ -36,9 +36,9 @@ Suggests:
     rmarkdown,
     testthat
 Imports:
-      httr,
+      httr (>= 1.4.1),
       readr,
-      sf (>= 0.9-0),
+      sf (>= 0.9-3),
       utils
 RoxygenNote: 7.1.0
 VignetteBuilder: knitr

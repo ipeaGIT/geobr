@@ -1,6 +1,15 @@
 # log history of geobr package development
 
 
+-------------------------------------------------------
+# geobr v1.3.1 dev
+
+
+
+### Minor changes
+* improved documentation of argument `simplified`
+
+
 
 -------------------------------------------------------
 # geobr v1.3 (2020-03-30)
@@ -13,6 +22,7 @@
 * Argument `tp` was deprecated and replaced by argument `simplified` that needs to be either `TRUE` or `FALSE`. This should only affect user who have previously used `tp=TRUE`, who now should write `simplified=FALSE`
 
 ### Minor changes
+
 * reorganization of internal support functions to reduce code redundancy
 * substantial improvment in test coverage of functions
 * substantial improvment in test coverage of functions

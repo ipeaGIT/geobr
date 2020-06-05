@@ -4,7 +4,10 @@
 #' data comes from the Brazilian Institute of Geography and Statistics (IBGE) and can be found at https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads
 #'
 #' @param year A date number in YYYY format (defaults to 2017)
-#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
+#' data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
+#' For spatial analysis and statistics users should set simplified = FALSE. Borders have been
+#' simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'

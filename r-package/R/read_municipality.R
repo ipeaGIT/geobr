@@ -6,7 +6,10 @@
 #' @param year Year of the data (defaults to 2010)
 #' @param code_muni The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.
-#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
+#' data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
+#' For spatial analysis and statistics users should set simplified = FALSE. Borders have been
+#' simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'
@@ -41,12 +44,34 @@ read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showP
 
   if( year < 1992){
 
-    # list paths of files to download
-    file_url <- as.character(temp_meta$download_path)
-
-    # download files
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-    return(temp_sf)
+    if(is.null(code_muni)){ stop("Value to argument 'code_muni' cannot be NULL") }
+    
+    if(code_muni=="all"){ message("Loading data for the whole country\n")
+      
+      # list paths of files to download
+      file_url <- as.character(temp_meta$download_path)
+      
+      # download gpkg
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      
+      
+      return(temp_sf)
+      
+    }
+    
+    if(nchar(code_muni)==2){
+      
+      # list paths of files to download
+      file_url <- as.character(temp_meta$download_path)
+      
+      # download gpkg
+      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      
+      x <- code_muni
+      temp_sf <- filter(temp_sf,substr(code_muni,1,2)==x)
+      return(temp_sf)
+    }
+    
 
     } else {
 
@@ -81,6 +106,7 @@ read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showP
 
     # input is a state code
     if(nchar(code_muni)==2){
+      sf <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2)))
         return(sf) }
 
     # input is a municipality code
@@ -94,3 +120,4 @@ read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showP
     }
     }
   }
+
