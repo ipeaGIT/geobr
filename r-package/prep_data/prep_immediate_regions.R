@@ -168,9 +168,8 @@ temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
 
 
 
-##### Save data -------------------------
 
-###### 8. Clean data set and save it in compact .rds format-----------------
+###### 8. Clean data set and save it -----------------
 
 # save original and simplified datasets
   sf::st_write(temp_sf, paste0(destdir_clean, "/immediate_regions_",update,".gpkg") )
