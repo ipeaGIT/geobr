@@ -10,6 +10,7 @@
 
 ### Minor changes
 * improved documentation of argument `simplified`
+* `read_municipality()` function now also takes additional inputs for data sets before 1992. Closes issue #163 (added in 2020-06)
 
 
 -------------------------------------------------------
