@@ -125,11 +125,12 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
 ```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
-# Download all municipalities of Rio
-  all_muni <- read_municipality( code_muni = "RJ", year= 2000)
-```
 
-```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
+library(ggplot2)
+
+# Download all municipalities of Rio
+  all_muni <- read_municipality( code_muni = "RJ", year= 2010)
+
 
 # plot
   ggplot() +
