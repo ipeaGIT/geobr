@@ -11,7 +11,7 @@ library(lwgeom)
 
 ####### Load Support functions to use in the preprocessing of the data
 
-source("./prep_data/prep_functions.R")
+source("C:/Users/canog/Documents/Projetos/geobr/r-package/prep_data/prep_functions.R")
 
 
 
@@ -22,7 +22,9 @@ source("./prep_data/prep_functions.R")
 
 
 # Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
+# root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
+root_dir <- "C:/Users/canog/Documents/Projetos/repositorios"
+head_dir<-root_dir
 setwd(root_dir)
 
 
@@ -34,9 +36,7 @@ setwd(root_dir)
   url <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/"
 
   # List Years/folders available
-    years = getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-    years <- strsplit(years, "\r\n")
-    years = unlist(years)
+    years <- list_foulders(url)
 
 # create folders to download and store raw data of each year
   dir.create("./historical_state_muni_1872_1991")
@@ -46,10 +46,7 @@ setwd(root_dir)
 
   # list files
     subdir <- paste0(url, i,"/")
-    files = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-    files <- strsplit(files, "\r\n")
-    files = unlist(files)
-
+    files <-list_foulders(subdir)
 
   # create folder to download and store raw data of each year
     dir.create(paste0("./historical_state_muni_1872_1991/",i))
@@ -76,14 +73,14 @@ gc(reset = T)
 # List all zip files for all years
   all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
 
-
+unzip_fun(all_zipped_files[1])
 
 # Select only files with municipalities and states
   all_zipped_files <- all_zipped_files[all_zipped_files %like% "limite|malha|litigio"]
 
 # create computing clusters
   cl <- parallel::makeCluster(detectCores())
-  parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "root_dir"), envir=environment())
+  parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "head_dir"), envir=environment())
 
 # apply function in parallel
   parallel::parLapply(cl, all_zipped_files, unzip_fun)
@@ -134,7 +131,7 @@ gc(reset = T)
 # Create function to clean municipalities, additing dipusted lands in case they exist
   clean_muni <- function(year){
 
-  # year <- 1991
+  # year <- 1872
 
   # create a subdirectory of year
     dir.create(file.path("./shapes_in_sf_all_years_cleaned", "municipio",year), showWarnings = T)
@@ -195,7 +192,7 @@ gc(reset = T)
 
       liti <- dplyr::rename(liti, code_muni = id, name_muni = nome )
       liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudes', 'longitudes' da sede do municipio
-    
+
       # Use UTF-8 encoding
       liti <- use_encoding_utf8(liti)
 
@@ -210,7 +207,7 @@ gc(reset = T)
     }
 
     temp_sf$code_state <- substr(temp_sf$code_muni, 1, 2)
-    temp_sf <- temp_sf %>% mutate(abbrev_state = 
+    temp_sf <- temp_sf %>% mutate(abbrev_state =
                                        ifelse(code_state== 11, "RO",
                                        ifelse(code_state== 12, "AC",
                                        ifelse(code_state== 13, "AM",
@@ -241,8 +238,8 @@ gc(reset = T)
                                        ))))))))))))))))))))))))))))
 
     # reorder columns
-    temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')  
-    
+    temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
+
     # simplify
     temp_sf_simp <- simplify_temp_sf(temp_sf)
 
@@ -314,19 +311,19 @@ clean_state <- function(year){
 
                 temp_sf <- dplyr::rename(temp_sf, name_state = nome )
                 temp_sf <- dplyr::select(temp_sf, c('name_state', 'geometry'))
-                
+
                 # Add code_state
-                
+
                 temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia",11,
                                                       ifelse(name_state== "Acre",12,
                                                       ifelse(name_state== "Amazonas",13,
                                                       ifelse(name_state== "Roraima",14,
-                                                      ifelse(name_state== "Pará",15,
-                                                      ifelse(name_state== "Amapá",16,
+                                                      ifelse(name_state== "Par?",15,
+                                                      ifelse(name_state== "Amap?",16,
                                                       ifelse(name_state== "Tocantins",17,
-                                                      ifelse(name_state== "Maranhão",21,
-                                                      ifelse(name_state== "Piauí",22,
-                                                      ifelse(name_state== "Ceará",23,
+                                                      ifelse(name_state== "Maranh?o",21,
+                                                      ifelse(name_state== "Piau?",22,
+                                                      ifelse(name_state== "Cear?",23,
                                                       ifelse(name_state== "Rio Grande do Norte",24,
                                                       ifelse(name_state== "Paraiba",25,
                                                       ifelse(name_state== "Pernambuco",26,
@@ -336,13 +333,13 @@ clean_state <- function(year){
                                                       ifelse(name_state== "Minas Gerais",31,
                                                       ifelse(name_state== "Espirito Santo",32,
                                                       ifelse(name_state== "Rio de Janeiro",33,
-                                                      ifelse(name_state== "São Paulo",35,
-                                                      ifelse(name_state== "Paraná",41,
+                                                      ifelse(name_state== "S?o Paulo",35,
+                                                      ifelse(name_state== "Paran?",41,
                                                       ifelse(name_state== "Santa Catarina",42,
                                                       ifelse(name_state== "Rio Grande do Sul",43,
                                                       ifelse(name_state== "Mato Grosso do Sul",50,
                                                       ifelse(name_state== "Mato Grosso",51,
-                                                      ifelse(name_state== "Goiás",52,
+                                                      ifelse(name_state== "Goi?s",52,
                                                       ifelse(name_state== "Distrito Federal",53,NA
                                                              ))))))))))))))))))))))))))))
 
@@ -383,8 +380,8 @@ clean_state <- function(year){
                                                                    ifelse(code_region==4, 'Sul',
                                                                    ifelse(code_region==5, 'Centro Oeste', NA))))))
                 # reorder columns
-                temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')              
-                
+                temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')
+
   # Use UTF-8 encoding
     temp_sf$name_state <- stringi::stri_encode(as.character(temp_sf$name_state), "UTF-8")
 
