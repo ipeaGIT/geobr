@@ -8,6 +8,7 @@
 #'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
 #'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
 #'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
+#' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'
