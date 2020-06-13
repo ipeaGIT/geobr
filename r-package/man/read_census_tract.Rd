@@ -20,12 +20,12 @@ all census tracts of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 
-\item{zone}{"urban" or "rural" census tracts come in separate files in the year 2000 (defaults to "urban")}
+\item{zone}{For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.}
 
 \item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
 data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
 For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.}
+simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 

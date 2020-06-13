@@ -1,13 +1,16 @@
 #' Download shape files of Brazil's Immediate Geographic Areas as sf objects
 #'
-#' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE to
-#' replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
+#' were created to replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year A date number in YYYY format (defaults to 2019)
 #' @param code_immediate 6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of
 #'  a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_immediate="all",
 #'  all immediate regions of the country are loaded (defaults to "all").
-#' @param simplified Logic TRUE or FALSE, indicating whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
+#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
+#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
+#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #' @param tp Argument deprecated. Please use argument 'simplified'
 #'

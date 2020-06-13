@@ -12,7 +12,7 @@ read_neighborhood(year = 2010, simplified = TRUE, showProgress = TRUE)
 \item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
 data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
 For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices using st_simplify{sf} preserving topology with a dTolerance of 100.}
+simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
