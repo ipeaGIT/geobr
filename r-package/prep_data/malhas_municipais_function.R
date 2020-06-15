@@ -1,3 +1,20 @@
+library(RCurl)
+#library(tidyverse)
+library(stringr)
+library(sf)
+library(janitor)
+library(dplyr)
+library(readr)
+library(parallel)
+library(furrr)
+library(data.table)
+library(xlsx)
+library(magrittr)
+library(devtools)
+library(lwgeom)
+library(stringi)
+library(geobr)
+
 # Region options:
 # uf, municipio, meso_regiao, micro_regiao
 
@@ -161,14 +178,15 @@ malhas_municipais <- function(region=NULL){
     all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
     
     if (region == "uf"){all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")]}
-    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "mesorregioes|ME500|ME2500|ME1000|ME500|ME2500|ME1000"]}
-    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI500|MI2500|MI1000|mi500|mi2500|mi1000|Microrregioes"]}
-    if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU500|MU2500|MU1000|mu500|mu2500|mu1000|municipios"]}
+    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "ME|Mesorregioes"]}
+    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes"]}
+    if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
     
     shp_to_sf_rds <- function(x){
       
       
       # get corresponding year of the file
+      #x <- all_shapes[389]
       year <- substr(x, 13, 16)
       
       region <- region
@@ -192,34 +210,30 @@ malhas_municipais <- function(region=NULL){
       
       
       # get destination subdirectory based on abbreviation of the geography
-      last15 <- substr(x, nchar(x)-15, nchar(x))   # function to get the last 4 digits of a string
+      last15 <- substr(x, nchar(x)-15, nchar(x)) # function to get the last 4 digits of a string
+      if( year %like% "2019" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
+      if( year %like% "2019" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
+      if( year %like% "2019" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
       
-      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|municipio"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
+      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
 
       # name of the file that will be saved
-      if( year %like% "2000|2001|2010|2013|2014"){ file_name <- paste0(toupper(substr(x, 21, 24)), ".rds") }
-      if( year %like% "2005"){ file_name <- paste0( toupper(substr(x, 67, 70)), ".rds") }
-      if( year %like% "2007"){ file_name <- paste0( toupper(substr(x, 66, 69)), ".rds") }
-      if( year %like% "2015|2016|2017|2018|2019"){ file_name <- paste0( toupper(substr(x, 25, 28)), ".rds") }
+      if( year %like% "2000|2001|2010|2013|2014"){ file_name <- paste0(toupper(substr(x, 21, 24)), ".gpkg") }
+      if( year %like% "2005"){ file_name <- paste0( toupper(substr(x, 67, 70)), ".gpkg") }
+      if( year %like% "2007"){ file_name <- paste0( toupper(substr(x, 66, 69)), ".gpkg") }
+      if( year %like% "2015|2016|2017|2018"){ file_name <- paste0( toupper(substr(x, 25, 28)), ".gpkg") }
+      if( year %like% "2019"){ file_name <- paste0( toupper(substr(x, 25, 29)), ".gpkg") }
       
       # save in .rds
-      write_rds(shape, path = paste0(dest_dir,"/", file_name), compress="gz" )
+      sf::st_write(shape, dsn = paste0(dest_dir,"/", file_name), update = TRUE)
     }
     
     
-    # Apply function to save original data sets in rds format
+    future::plan(multiprocess)
     
-    # create computing clusters
-    cl <- parallel::makeCluster(detectCores())
+    future_map(all_shapes, shp_to_sf_rds)
     
-    clusterEvalQ(cl, c(library(data.table), library(readr), library(sf)))
-    parallel::clusterExport(cl=cl, varlist= c("all_shapes","region","malhas_municipais"), envir=environment())
-    
-    # apply function in parallel
-    parallel::parLapply(cl, all_shapes, shp_to_sf_rds)
-    stopCluster(cl)
-    
-    # rm(list= ls())
+    rm(list= ls())
     gc(reset = T)
 
   

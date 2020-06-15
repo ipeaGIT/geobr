@@ -11,7 +11,7 @@ library(lwgeom)
 
 ####### Load Support functions to use in the preprocessing of the data
 
-source("C:/Users/canog/Documents/Projetos/geobr/r-package/prep_data/prep_functions.R")
+source("./prep_data/prep_functions.R")
 
 
 
@@ -22,8 +22,7 @@ source("C:/Users/canog/Documents/Projetos/geobr/r-package/prep_data/prep_functio
 
 
 # Root directory
-# root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
-root_dir <- "C:/Users/canog/Documents/Projetos/repositorios"
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 head_dir<-root_dir
 setwd(root_dir)
 
@@ -36,7 +35,7 @@ setwd(root_dir)
 url <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/"
 
 # List Years/folders available
-    years <- list_foulders(url)
+years <- list_foulders(url)
 
 # create folders to download and store raw data of each year
 dir.create("./historical_state_muni_1872_1991")
@@ -46,7 +45,7 @@ for (i in years){ # i <- years[4]
   
   # list files
   subdir <- paste0(url, i,"/")
-    files <-list_foulders(subdir)
+  files <-list_foulders(subdir)
   
   # create folder to download and store raw data of each year
   dir.create(paste0("./historical_state_muni_1872_1991/",i))
@@ -67,7 +66,8 @@ gc(reset = T)
 ########  1. Unzip original data sets downloaded from IBGE -----------------
 
 # Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw/historical_state_muni_1872_1991"
+root_dir <- "./prep_data/data-raw/historical_state_muni_1872_1991"
+head_dir<-root_dir
 setwd(root_dir)
 
 # List all zip files for all years
@@ -80,14 +80,14 @@ all_zipped_files <- all_zipped_files[all_zipped_files %like% "limite|malha|litig
 
 # create computing clusters
 cl <- parallel::makeCluster(detectCores())
-  parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "head_dir"), envir=environment())
+parallel::clusterExport(cl=cl, varlist= c("all_zipped_files", "head_dir"), envir=environment())
 
 # apply function in parallel
 parallel::parLapply(cl, all_zipped_files, unzip_fun)
 stopCluster(cl)
 
 
-rm(list=setdiff(ls(), c("root_dir")))
+#rm(list=setdiff(ls(), c("root_dir")))
 gc(reset = T)
 
 
@@ -117,7 +117,7 @@ dir.create(file.path("shapes_in_sf_all_years_cleaned", "municipio"), showWarning
 #### 3. Clean Municipalities  -----------------
 
 # Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw/historical_state_muni_1872_1991"
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//historical_state_muni_1872_1991"
 setwd(root_dir)
 
 # List years of data available
@@ -131,7 +131,7 @@ years <- substr(years, 3, 6)
 # Create function to clean municipalities, additing dipusted lands in case they exist
 clean_muni <- function(year){
   
-  # year <- 1872
+  #year <- 1872
   
   # create a subdirectory of year
   dir.create(file.path("./shapes_in_sf_all_years_cleaned", "municipio",year), showWarnings = T)
@@ -179,7 +179,8 @@ clean_muni <- function(year){
   
   
   # Make an invalid geometry valid # st_is_valid( sf)
-  temp_sf <- lwgeom::st_make_valid(temp_sf)
+  
+  temp_sf <- sf::st_make_valid(temp_sf)
   
   
   ## Treat Litigio (disputed territory) file
@@ -192,7 +193,7 @@ clean_muni <- function(year){
     
     liti <- dplyr::rename(liti, code_muni = id, name_muni = nome )
     liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudes', 'longitudes' da sede do municipio
-
+    
     # Use UTF-8 encoding
     liti <- use_encoding_utf8(liti)
     
@@ -200,7 +201,7 @@ clean_muni <- function(year){
     liti <- harmonize_projection(liti)
     
     # Make an invalid geometry valid # st_is_valid( sf)
-    liti <- lwgeom::st_make_valid(liti)
+    liti <- sf::st_make_valid(liti)
     
     temp_sf <- do.call('rbind', list(temp_sf, liti))
     
@@ -209,11 +210,11 @@ clean_muni <- function(year){
   
   # Add State Info
   
-  temp_sf <- add_state_info(temp_sf)
-
+  temp_sf <- add_state_info(temp_sf,"code_muni")
+  
   # reorder columns
-    temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
-
+  temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
+  
   # simplify
   temp_sf_simp <- simplify_temp_sf(temp_sf)
   
@@ -234,13 +235,14 @@ clean_muni <- function(year){
 cl <- parallel::makeCluster(detectCores())
 
 clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("years"), envir=environment())
+parallel::clusterExport(cl=cl, varlist= c("years","use_encoding_utf8","simplify_temp_sf",
+                                          "harmonize_projection","add_state_info"), envir=environment())
 
 # apply function in parallel
 parallel::parLapply(cl, years, clean_muni)
 stopCluster(cl)
 
-rm(list=setdiff(ls(), c("root_dir")))
+#rm(list=setdiff(ls(), c("root_dir")))
 gc(reset = T)
 
 
@@ -308,7 +310,7 @@ clean_state <- function(year){
   
   
   # Make an invalid geometry valid # st_is_valid( sf)
-  temp_sf <- lwgeom::st_make_valid(temp_sf)
+  temp_sf <- sf::st_make_valid(temp_sf)
   
   
   ## Treat Litigio (disputed territory) file
@@ -333,7 +335,7 @@ clean_state <- function(year){
     liti %>% dplyr::mutate_if(is.factor, as.character) -> liti
     
     # Make an invalid geometry valid # st_is_valid( sf)
-    liti <- lwgeom::st_make_valid(liti)
+    liti <- sf::st_make_valid(liti)
     
     # pile states and diputed land
     temp_sf <- do.call('rbind', list(temp_sf, liti))
@@ -375,8 +377,6 @@ gc(reset = T)
 # DO NOT run
 ## remove all unzipped shape files
 #   # list all unzipped shapes
-# root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw/historical_state_muni_1872_1991"
+# root_dir <- "D:/geobr/r-package/prep_data/data-raw/historical_state_muni_1872_1991"
 # f <- list.files(path = root_dir, full.names = T, recursive = T, pattern = ".shx|.shp|.prj|.dbf|.cpg|.sbx|.sbn|.xml")
 # file.remove(f)
-
-

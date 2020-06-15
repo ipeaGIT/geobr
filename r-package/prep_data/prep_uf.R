@@ -1,36 +1,22 @@
-library(RCurl)
-#library(tidyverse)
-library(stringr)
-library(sf)
-library(janitor)
-library(dplyr)
-library(readr)
-library(parallel)
-library(data.table)
-library(xlsx)
-library(magrittr)
-library(devtools)
-library(lwgeom)
-library(stringi)
-library(geobr)
+####### Load Support functions to use in the preprocessing of the data
 
-###### Function for malha municipal --------------------------------
-
-source('malhas_municipais_function.R')
-
-malhas_municipais(region='uf')
-
+source("./prep_data/prep_functions.R")
+source('./prep_data/malhas_municipais_function.R')
 
 ###### Cleaning UF files --------------------------------
 
+## function for malha municipal
+
+malhas_municipais(region='uf')
 
 uf_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_original/uf"
 sub_dirs <- list.dirs(path =uf_dir, recursive = F)
 
 
+
 # create a function that will clean the sf files according to particularities of the data in each year
 clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
-  
+
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
   year <- last4(e)
@@ -39,16 +25,10 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
   sf_files <- list.files(e, full.names = T)
   
   # for each file
-  for (i in sf_files){ #  i <- sf_files[2]
+  for (i in sf_files){ #  i <- sf_files[3]
     
     # read sf file
-    temp_sf <- read_rds(i)
-    
-    if(year %like% "2000|2001"){
-      names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- dplyr::rename(temp_sf, code_state = BR91POLY_I, name_state = NOMEMUNICP)
-      temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
-    }
+    temp_sf <- st_read(i)
     
     if (year %like% "2000|2001"){
       # dplyr::rename and subset columns
@@ -64,20 +44,27 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
       temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
     }
     
-    if (year %like% "2013|2014|2015|2016|2017|2018|2019"){
+    if (year %like% "2013|2014|2015|2016|2017|2018"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_state = cd_geocuf, name_state = nm_estado)
       temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
     }
     
+    if (year %like% "2019"){
+      # dplyr::rename and subset columns
+      names(temp_sf) <- names(temp_sf) %>% tolower()
+      temp_sf <- dplyr::rename(temp_sf, code_state = cd_uf, name_state = nm_uf)
+      temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geometry'))
+    }
+    
     # add State abbreviation
     
-    temp_sf <- add_state_info(temp_sf)
+    temp_sf <- add_state_info(temp_sf,'code_muni')
     
     # Add Region codes and names
     
-    temp_sf <- add_region_info(temp_sf)
+    temp_sf <- add_region_info(temp_sf,'code_state')
     
     # reorder columns
     temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')
@@ -95,7 +82,7 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
     
     # Make any invalid geometry valid # st_is_valid( sf)
-    temp_sf <- lwgeom::st_make_valid(temp_sf)
+    temp_sf <- sf::st_make_valid(temp_sf)
     
     # keep code as.numeric()
     temp_sf$code_state <- as.numeric(temp_sf$code_state)
@@ -109,28 +96,18 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     
     i <- gsub(".rds", ".gpkg", i)
     
-    sf::st_write(temp_sf, i )
+    sf::st_write(temp_sf, i , update = TRUE)
     
     i <- gsub(".gpkg", "_simplified.gpkg", i)
     
-    sf::st_write(temp_sf_simplified, i )
+    sf::st_write(temp_sf_simplified, i , update = TRUE)
     
   }
 }
 
+future::plan(multiprocess)
 
+future_map(sub_dirs, clean_states)
 
-# Apply function to save original data sets in rds format
-
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-
-clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("sub_dirs"), envir=environment())
-
-# apply function in parallel
-parallel::parLapply(cl, sub_dirs, clean_states)
-stopCluster(cl)
-
-# rm(list= ls())
+rm(list= ls())
 gc(reset = T)
