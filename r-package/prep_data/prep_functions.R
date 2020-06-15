@@ -61,12 +61,12 @@ add_state_info <- function(temp_sf, column){
     
     # Add code_state
     
-    temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rond?nia"  | name_state== "Territ?rio de Rond?nia",11,
+    temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondônia"  | name_state== "Território de Rondônia",11,
                                           ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
                                           ifelse(name_state== "Amazonas",13,
                                           ifelse(name_state== "Roraima" | name_state=="Território de Roraima",14,
                                           ifelse(name_state== "Pará",15,
-                                          ifelse(name_state== "Amapá" | name_state=="Territorio do Amap?",16,
+                                          ifelse(name_state== "Amapá" | name_state=="Territorio do Amapá",16,
                                           ifelse(name_state== "Tocantins",17,
                                           ifelse(name_state== "Maranhão",21,
                                           ifelse(name_state== "Piaui" | name_state== "Piauhy",22,
