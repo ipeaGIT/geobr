@@ -1,8 +1,28 @@
-###### 4. Cleaning UF files --------------------------------
+library(RCurl)
+#library(tidyverse)
+library(stringr)
+library(sf)
+library(janitor)
+library(dplyr)
+library(readr)
+library(parallel)
+library(data.table)
+library(xlsx)
+library(magrittr)
+library(devtools)
+library(lwgeom)
+library(stringi)
+library(geobr)
 
-## function for malha municipal
+###### Function for malha municipal --------------------------------
+
+source('malhas_municipais_function.R')
 
 malhas_municipais(region='uf')
+
+
+###### Cleaning UF files --------------------------------
+
 
 uf_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais//shapes_in_sf_all_years_original/uf"
 sub_dirs <- list.dirs(path =uf_dir, recursive = F)
