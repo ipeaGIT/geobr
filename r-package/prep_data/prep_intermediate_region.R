@@ -153,8 +153,7 @@ temp_sf$code_intermediate <- as.numeric(temp_sf$code_intermediate )
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
-  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+temp_sf_simplified <- simplify_temp_sf(temp_sf)
 
 
 

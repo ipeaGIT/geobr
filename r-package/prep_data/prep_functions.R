@@ -160,7 +160,7 @@ simplify_temp_sf <- function(temp_sf, tolerance=100){
   temp_gpkg_simplified <- sf::st_transform(temp_gpkg_simplified, crs=4674)
 
   # Make any invalid geometry valid # st_is_valid( sf)
-  temp_gpkg_simplified <- lwgeom::st_make_valid(temp_gpkg_simplified)
+  temp_gpkg_simplified <- sf::st_make_valid(temp_gpkg_simplified)
   return(temp_gpkg_simplified)
 }
 
