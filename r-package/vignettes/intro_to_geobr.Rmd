@@ -125,11 +125,12 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
 ```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
-# Download all municipalities of Rio
-  all_muni <- read_municipality( code_muni = "RJ", year= 2000)
-```
 
-```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
+library(ggplot2)
+
+# Download all municipalities of Rio
+  all_muni <- read_municipality( code_muni = "RJ", year= 2010)
+
 
 # plot
   ggplot() +
@@ -148,7 +149,7 @@ The next step is to combine  data from ***geobr*** package with other data sets 
 
 First, we need to download the Life Expectancy data set and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.
 
-```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
+```{r message=FALSE, warning=FALSE, results='hide'}
 # download Life Expectancy data
   adh <- rio::import("http://atlasbrasil.org.br/2013/data/rawData/Indicadores%20Atlas%20-%20RADAR%20IDHM.xlsx", which = "Dados")
 

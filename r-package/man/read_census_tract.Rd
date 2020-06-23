@@ -20,6 +20,8 @@ all census tracts of the country are loaded.}
 
 \item{year}{Year of the data (defaults to 2010)}
 
+\item{zone}{For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.}
+
 \item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
 data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
 For spatial analysis and statistics users should set simplified = FALSE. Borders have been

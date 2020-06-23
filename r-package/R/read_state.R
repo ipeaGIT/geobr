@@ -48,18 +48,30 @@ if( x < 1992){
 #       stop("Error: Invalid Value to argument code_state.")
 #       }
 
-  if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL") }
+  if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL")}
 
-  message("Loading data for the whole country\n")
+  if(code_state=="all"){ message("Loading data for the whole country\n")
 
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
+    # list paths of files to download
+    file_url <- as.character(temp_meta$download_path)
 
-  # download files
-  temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-  return(temp_sf)
+    # download gpkg
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    return(temp_sf)
 
-} else {
+  } else if(nchar(code_state)==2){
+
+    # list paths of files to download
+    file_url <- as.character(temp_meta$download_path)
+
+    # download gpkg
+    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    temp_sf <- subset(temp_sf,code_state==substr(code_state, 1, 2))
+    return(temp_sf)
+  }
+
+}  else {
 
 
 # BLOCK 2.2 From 2000 onwards  ----------------------------
