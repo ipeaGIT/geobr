@@ -136,8 +136,9 @@ furrr::future_map(.x=all_shapes, .f=shp_to_sf_rds)
   sf_files <- sf_files[ !(sf_files %like% "35SEE250GC_SIR_area_de_ponderacao.rds")]
 
 # Remove areas definidas para evitar duplicacao
+   sf_files <- sf_files[!(sf_files %like% 'municipios_areas_redefinidas')]
   # areas_redefinidas <- sf_files[sf_files %like% 'municipios_areas_redefinidas']
-  sf_files <- sf_files[! (sf_files %like% '2010/Caxias_do_Sul_area_de_ponderacao|2010/FEIRA_DE_SANTANA_area_de_ponderacao|2010/IMPERATRIZ_area_de_ponderacao|2010/MARINGA_area_de_ponderacao|2010/NATAL_area_de_ponderacao|2010/NOVO HAMBURGO_area de ponderacao|2010/PORTO ALEGRE_area de ponderacao|2010/RIO DE JANEIRO_area de ponderacao|2010/RIO GRANDE_area de ponderacao|2010/SALVADOR_area de ponderacao|2010/SANTA MARIA_area de ponderacao|2010/VIAMAO_area de ponderacao|2010/FEIRA DE SANTANA_area de ponderacao')]
+  # sf_files <- sf_files[! (sf_files %like% '2010/Caxias_do_Sul_area_de_ponderacao|2010/FEIRA_DE_SANTANA_area_de_ponderacao|2010/IMPERATRIZ_area_de_ponderacao|2010/MARINGA_area_de_ponderacao|2010/NATAL_area_de_ponderacao|2010/NOVO HAMBURGO_area de ponderacao|2010/PORTO ALEGRE_area de ponderacao|2010/RIO DE JANEIRO_area de ponderacao|2010/RIO GRANDE_area de ponderacao|2010/SALVADOR_area de ponderacao|2010/SANTA MARIA_area de ponderacao|2010/VIAMAO_area de ponderacao|2010/FEIRA DE SANTANA_area de ponderacao')]
 
 '2010/Caxias_do_Sul_area_de_ponderacao.rds'
 '2010/FEIRA_DE_SANTANA_area_de_ponderacao.rds'
@@ -151,7 +152,6 @@ furrr::future_map(.x=all_shapes, .f=shp_to_sf_rds)
 '2010/SALVADOR_area de ponderacao.rds'
 '2010/SANTA MARIA_area de ponderacao.rds'
 '2010/VIAMAO_area de ponderacao.rds'
-
 
 
 
@@ -201,11 +201,11 @@ clean_weighting_area <- function( i ){  # i <- sf_files[50]
 
 # Save cleaned sf in the cleaned directory
 
-      # name of the file that will be saved
-      dest_dir <- "./shapes_in_sf_all_years_cleaned/2010/"
-      # if( !i %like% "municipios_areas_redefinidas"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//areas_de_ponderacao//shapes_in_sf_all_years_cleaned//2010//"}
+    # name of the file that will be saved
+      #dest_dir <- "./shapes_in_sf_all_years_cleaned/2010/"
+       if( !i %like% "municipios_areas_redefinidas"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//areas_de_ponderacao//shapes_in_sf_all_years_cleaned//2010//"}
 
-      # if( i %like% "municipios_areas_redefinidas"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//areas_de_ponderacao//shapes_in_sf_all_years_cleaned//2010//municipios_areas_redefinidas//"}
+       if( i %like% "municipios_areas_redefinidas"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//areas_de_ponderacao//shapes_in_sf_all_years_cleaned//2010//municipios_areas_redefinidas//"}
 
     # Save sf data as .rds
       readr::write_rds(temp_sf, path = paste0(dest_dir,as.character(temp_sf$code_muni[1]),".rds") )
@@ -225,15 +225,54 @@ gc(reset = T)
 # juntando as bases por estado
   dir <- "./shapes_in_sf_all_years_cleaned/2010"
   dir.files <- list.files(dir,pattern = ".rds$", recursive = T, full.names = T)
-  lista_uf <- unique(substr(dir.files,1,2))
+  lista_uf <- unique(substr(dir.files,39, 40))
 
 
-for (CODE in lista_uf) {# CODE <- 33
+for (CODE in lista_uf) {# CODE <- 41
 
     files <- dir.files[ substr(dir.files, 39, 40) ==CODE ]
     files <- lapply(X=files, FUN= readr::read_rds)
     shape <- do.call('rbind', files)
     shape <- st_sf(shape)
+
+# # fix code digit 10th (issue 174)
+# if(CODE %in% c(21, 24, 29, 33, 41, 43)){
+#   shape$code_weighting_area <- as.character(shape$code_weighting_area)
+#
+#   ## Replace digits
+#     # geobr::lookup_muni(name_muni = 'IMPERATRIz')
+#
+#     # Rio
+#     substr( shape$code_weighting_area[which(shape$code_muni==3304557)] , 10, 10) <- '5'
+#     # Natal
+#     substr( shape$code_weighting_area[which(shape$code_muni==2408102)] , 10, 10) <- '4'
+#     # Caxias do Sul
+#     substr( shape$code_weighting_area[which(shape$code_muni==4305108)] , 10, 10) <- '4'
+#     # Porto Alegre
+#     substr( shape$code_weighting_area[which(shape$code_muni==4314902)] , 10, 10) <- '4'
+#     # novo hamburgo
+#     substr( shape$code_weighting_area[which(shape$code_muni==4313409)] , 10, 10) <- '4'
+#     # Rio Grande
+#     substr( shape$code_weighting_area[which(shape$code_muni==4315602)] , 10, 10) <- '4'
+#     # Santa Maria
+#     substr( shape$code_weighting_area[which(shape$code_muni==4316907)] , 10, 10) <- '4'
+#     # Viamao
+#     substr( shape$code_weighting_area[which(shape$code_muni==4323002)] , 10, 10) <- '4'
+#     # maringa
+#     substr( shape$code_weighting_area[which(shape$code_muni==4115200)] , 10, 10) <- '4'
+#     # FEIRA_DE_SANTANA
+#     substr( shape$code_weighting_area[which(shape$code_muni==2910800)] , 10, 10) <- '4'
+#     # Salvador
+#     substr( shape$code_weighting_area[which(shape$code_muni==2927408 )] , 10, 10) <- '5'
+#     # Imperatriz
+#     substr( shape$code_weighting_area[which(shape$code_muni==2105302 )] , 10, 10) <- '4'
+#
+#     # back to numeric
+#     shape$code_weighting_area <- as.numeric(shape$code_weighting_area)
+# }
+
+
+
 
     # simplify borders
     shape_simplified <- simplify_temp_sf(shape)
