@@ -20,28 +20,28 @@ library(geobr)
 
 malhas_municipais <- function(region,year){
   
+  ########  0. Download original data sets from IBGE ftp     -----------------
+  
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais"
+  
+  ########  1. Unzip original data sets downloaded from IBGE -----------------
+  
+  # Root directory
+  root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
+  setwd(root_dir)
+  
+  #### 1.1. GROUP 1/3 - Data available separately by state in a single resolution E -----------------
+  # 2000, 2001, 2010, 2013, 2014
+  
+  # List all zip files for all years
+  all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
+  
+  if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_")]}
+  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|me"]}
+  if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi"]}
+  if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000"]}
+  
   if(year=="all"){
-    
-    ########  0. Download original data sets from IBGE ftp     -----------------
-    
-    ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais"
-    
-    ########  1. Unzip original data sets downloaded from IBGE -----------------
-    
-    # Root directory
-    root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
-    setwd(root_dir)
-    
-    #### 1.1. GROUP 1/3 - Data available separately by state in a single resolution E -----------------
-    # 2000, 2001, 2010, 2013, 2014
-    
-    # List all zip files for all years
-    all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
-    
-    if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_")]}
-    if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|me"]}
-    if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi"]}
-    if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000"]}
     
     # Select files of selected years
     # 540 files (4 geographies x 27 states x 5 years) 4*27*5
@@ -238,28 +238,7 @@ malhas_municipais <- function(region,year){
   } else {
     if(year %like% "2000|2001|2005|2007|2010|2013|2014|2015|2016|2017|2018|2019"){
 
-      ########  0. Download original data sets from IBGE ftp     -----------------
-      
-      ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais"
-      
-      ########  1. Unzip original data sets downloaded from IBGE -----------------
-      
-      # Root directory
-      root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
-      setwd(root_dir)
-      
-      #### 1.1. GROUP 1/3 - Data available separately by state in a single resolution E -----------------
-      # 2000, 2001, 2010, 2013, 2014
-      
-      # List all zip files for all years
-      all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
-      
-      if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_")]}
-      if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|me"]}
-      if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi"]}
-      if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000"]}
-      
-      # Select files of selected years
+       # Select files of selected years
       # 540 files (4 geographies x 27 states x 5 years) 4*27*5
       
       files_1st_batch <- all_zipped_files[all_zipped_files %like% paste0(year)]
