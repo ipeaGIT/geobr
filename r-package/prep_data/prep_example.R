@@ -142,6 +142,12 @@ temp_sf6 <- lwgeom::st_make_valid(temp_sf5)
 
 
 
+
+###### convert to MULTIPOLYGON -----------------
+temp_sf6 <- to_multipolygon(temp_sf6)
+
+
+
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 

@@ -42,15 +42,15 @@ dir.create("./historical_state_muni_1872_1991")
 
 # For each year
 for (i in years){ # i <- years[4]
-  
+
   # list files
   subdir <- paste0(url, i,"/")
   files <-list_foulders(subdir)
-  
+
   # create folder to download and store raw data of each year
   dir.create(paste0("./historical_state_muni_1872_1991/",i))
-  
-  
+
+
   # Download zipped files
   for (filename in files) {
     download.file(url = paste(subdir, filename, sep = ""),
@@ -130,24 +130,24 @@ years <- substr(years, 3, 6)
 
 # Create function to clean municipalities, additing dipusted lands in case they exist
 clean_muni <- function(year){
-  
+
   #year <- 1872
-  
+
   # create a subdirectory of year
   dir.create(file.path("./shapes_in_sf_all_years_cleaned", "municipio",year), showWarnings = T)
-  
+
   # List of muni shape files of that year
   all_shps <- list.files(path = paste0("./",year), full.names = T, recursive = T, pattern = ".shp")
   all_shps <- all_shps[!(all_shps %like% ".xml")] # remove .xml files
   all_shps <- all_shps[all_shps %like% "malha|lit"]
-  
+
   ## Treat Muni file
   # read shapes
   temp_sf <- st_read(all_shps[1], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-  
+
   # dplyr::rename and subset columns
   names(temp_sf) <- names(temp_sf) %>% tolower()
-  
+
   if (year %like% "1911"){
     temp_sf <- dplyr::rename(temp_sf, code_muni = geocodigo, name_muni = nomemuni )
     temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
@@ -155,7 +155,7 @@ clean_muni <- function(year){
     if (year %like% "1991"){
       temp_sf <- dplyr::rename(temp_sf, code_muni = br91poly_i, name_muni = nomemunicp )
       temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
-      
+
       # to title case
       a <- temp_sf$name_muni
       a <- stringr::str_to_title(a)
@@ -165,61 +165,65 @@ clean_muni <- function(year){
       a <- gsub("(D')([[:lower:]]{1})", replacement = "\\L\\1\\U\\2", a, perl = TRUE)
       temp_sf$name_muni <- a
     } else {
-      
+
       # other years
       temp_sf <- dplyr::rename(temp_sf, code_muni = codigo, name_muni = nome )
       temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
     }}
-  
+
   # Use UTF-8 encoding
   temp_sf <- use_encoding_utf8(temp_sf)
-  
+
   # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
   temp_sf <- harmonize_projection(temp_sf)
-  
-  
+
+
   # Make an invalid geometry valid # st_is_valid( sf)
-  
+
   temp_sf <- sf::st_make_valid(temp_sf)
-  
-  
+
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf <- to_multipolygon(temp_sf)
+
+
   ## Treat Litigio (disputed territory) file
   if(length(all_shps) > 1){
-    
+
     liti <- st_read(all_shps[2], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-    
+
     # dplyr::rename and subset columns
     names(liti) <- names(liti) %>% tolower()
-    
+
     liti <- dplyr::rename(liti, code_muni = id, name_muni = nome )
     liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudes', 'longitudes' da sede do municipio
-    
+
     # Use UTF-8 encoding
     liti <- use_encoding_utf8(liti)
-    
+
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
     liti <- harmonize_projection(liti)
-    
+
     # Make an invalid geometry valid # st_is_valid( sf)
     liti <- sf::st_make_valid(liti)
-    
+
     temp_sf <- do.call('rbind', list(temp_sf, liti))
-    
+
   }
-  
-  
+
+
   # Add State Info
-  
+
   temp_sf <- add_state_info(temp_sf,"code_muni")
-  
+
   # reorder columns
   temp_sf <- dplyr::select(temp_sf, 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry')
-  
+
   # simplify
   temp_sf_simp <- simplify_temp_sf(temp_sf)
-  
+
   as.numeric(object.size(temp_sf_simp)) /     as.numeric(object.size(temp_sf))
-  
+
   # Save cleaned sf in the cleaned directory
   destdir <- file.path("./shapes_in_sf_all_years_cleaned", "municipio",year)
   # readr::write_rds(temp_sf, path = paste0(destdir,"/municipios_", year, ".rds"), compress="gz" )
@@ -267,87 +271,88 @@ years <- substr(years, 3, 6)
 
 # Create function to clean municipalities, additing dipusted lands in case they exist
 clean_state <- function(year){
-  
+
   # year <- 1872
-  
+
   # create a subdirectory of year
   dir.create(file.path("./shapes_in_sf_all_years_cleaned", "uf",year), showWarnings = FALSE)
-  
+
   # List of muni shape files of that year
   all_shps <- list.files(path = paste0("./",year), full.names = T, recursive = T, pattern = ".shp")
   all_shps <- all_shps[!(all_shps %like% ".xml")] # remove .xml files
   all_shps <- all_shps[all_shps %like% "limite|lit"]
-  
+
   ## Treat Muni file
   # read shapes
   temp_sf <- st_read(all_shps[1], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-  
+
   # dplyr::rename and subset columns
   names(temp_sf) <- names(temp_sf) %>% tolower()
-  
+
   temp_sf <- dplyr::rename(temp_sf, name_state = nome )
   temp_sf <- dplyr::select(temp_sf, c('name_state', 'geometry'))
-  
+
   # Add State Info
-  
   temp_sf <- add_state_info(temp_sf)
-  
+
   # Add Region Info
-  
   temp_sf <- add_region_info(temp_sf)
-  
+
   # reorder columns
-  temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')              
-  
+  temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geometry')
+
   # Use UTF-8 encoding
   temp_sf$name_state <- stringi::stri_encode(as.character(temp_sf$name_state), "UTF-8")
-  
+
   # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
   temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
-  
+
   # Convert columns from factors to characters
   temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-  
-  
+
+
   # Make an invalid geometry valid # st_is_valid( sf)
   temp_sf <- sf::st_make_valid(temp_sf)
-  
-  
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf <- to_multipolygon(temp_sf)
+
+
   ## Treat Litigio (disputed territory) file
   if(length(all_shps) > 1){
-    
+
     liti <- st_read(all_shps[2], quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-    
+
     # dplyr::rename and subset columns
     names(liti) <- names(liti) %>% tolower()
-    
+
     liti$id <- NULL
     liti <- dplyr::rename(liti, name_state = nome )
     liti <- dplyr::select(liti, c('name_state', 'geometry'))
-    
+
     # Use UTF-8 encoding
     liti$name_state <- stringi::stri_encode(as.character(liti$name_state), "UTF-8")
-    
+
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
     liti <- if( is.na(st_crs(liti)) ){ st_set_crs(liti, 4674) } else { st_transform(liti, 4674) }
-    
+
     # Convert columns from factors to characters
     liti %>% dplyr::mutate_if(is.factor, as.character) -> liti
-    
+
     # Make an invalid geometry valid # st_is_valid( sf)
     liti <- sf::st_make_valid(liti)
-    
+
     # pile states and diputed land
     temp_sf <- do.call('rbind', list(temp_sf, liti))
-    
+
     # simplify
     temp_sf7 <- st_transform(temp_sf, crs=3857) %>%
       sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
       st_transform(crs=4674)
-    
-    
+
+
   }
-  
+
   # Save cleaned sf in the cleaned directory
   destdir <- file.path("./shapes_in_sf_all_years_cleaned", "uf",year)
   readr::write_rds(temp_sf, path = paste0(destdir,"/states_", year, ".rds"), compress="gz" )

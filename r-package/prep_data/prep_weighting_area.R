@@ -188,11 +188,10 @@ clean_weighting_area <- function( i ){  # i <- sf_files[50]
     # Make an invalid geometry valid # st_is_valid( sf)
       temp_sf <- sf::st_make_valid(temp_sf)
 
-    # make everything a MULTIPOLYGON
-      if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
-          any(  !( st_geometry_type(temp_sf) %>% unique() %>% as.character() %like% "MULTIPOLYGON"))) {
-        temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
-      }
+      ###### convert to MULTIPOLYGON -----------------
+      temp_sf <- to_multipolygon(temp_sf)
+
+
 
       # reorder columns
       temp_sf <- select(temp_sf, code_weighting_area, code_muni, code_state, abbrev_state, abbrev_state, code_region, name_region, geometry )

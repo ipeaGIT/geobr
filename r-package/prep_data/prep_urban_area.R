@@ -278,6 +278,12 @@ urb_2015 <- lwgeom::st_make_valid(urb_2015)
 
 
 
+###### convert to MULTIPOLYGON -----------------
+urb_2005 <- to_multipolygon(urb_2005)
+urb_2015 <- to_multipolygon(urb_2015)
+
+
+
 
 ###### 6. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data

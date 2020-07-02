@@ -147,6 +147,8 @@ temp_sf$code_intermediate <- as.numeric(temp_sf$code_intermediate )
 
 
 
+###### convert to MULTIPOLYGON -----------------
+temp_sf <- to_multipolygon(temp_sf)
 
 
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------

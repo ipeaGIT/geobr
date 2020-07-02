@@ -376,6 +376,9 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     # Make any invalid geometry valid # st_is_valid( sf)
     temp_sf <- lwgeom::st_make_valid(temp_sf)
 
+    ###### convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+
     # keep code as.numeric()
     temp_sf$code_state <- as.numeric(temp_sf$code_state)
 
@@ -568,6 +571,9 @@ clean_meso <- function( e ){ #  e <- sub_dirs[1]
     # Make an invalid geometry valid # st_is_valid( sf)
     temp_sf <- lwgeom::st_make_valid(temp_sf)
 
+    ###### convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+
     # keep code as.numeric()
     temp_sf$code_meso <- as.numeric(temp_sf$code_meso)
 
@@ -690,6 +696,9 @@ for( e in sub_dirs ){
 
     # keep code as.numeric()
     temp_sf$code_micro <- as.numeric(temp_sf$code_micro)
+
+    ###### convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
 
     # simplify
     temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
@@ -857,6 +866,9 @@ clean_muni <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2001]
 
     # Make an invalid geometry valid # st_is_valid( sf)
     temp_sf <- lwgeom::st_make_valid(temp_sf)
+
+    ###### convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
 
     # simplify
     temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)

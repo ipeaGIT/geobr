@@ -49,18 +49,18 @@ harmonize_projection <- function(temp_sf){
 ###### Add State abbreviation -----------------
 
 add_state_info <- function(temp_sf, column){
-  
+
   if("code_muni" %in% colnames(temp_sf)){
-    
+
     # add code_state
     temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) %>% as.numeric()
-    
-    
-    
+
+
+
   } else {
-    
+
     # Add code_state
-    
+
     temp_sf <- temp_sf %>% dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondônia"  | name_state== "Território de Rondõnia",11,
                                                       ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
                                                       ifelse(name_state== "Amazonas",13,
@@ -89,11 +89,11 @@ add_state_info <- function(temp_sf, column){
                                                       ifelse(name_state== "Goiás" | name_state== "Goyaz",52,
                                                       ifelse((name_state== "Distrito Federal" | name_state=="Brasilia") & (year>1950),53,NA
                                                       ))))))))))))))))))))))))))))
-    
-    
+
+
   }
-  
-  
+
+
   temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
                                                ifelse(code_state== 12, "AC",
                                                ifelse(code_state== 13, "AM",
@@ -121,7 +121,7 @@ add_state_info <- function(temp_sf, column){
                                                ifelse(code_state== 51, "MT",
                                                ifelse(code_state== 52, "GO",
                                                ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
-  
+
   # name_state
   temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, "Rondônia",
                                               ifelse(code_state== 12, "Acre",
@@ -185,6 +185,17 @@ use_encoding_utf8 <- function(temp_sf){
   return(temp_sf)
   }
 
+
+###### convert to MULTIPOLYGON -----------------
+
+to_multipolygon <- function(temp_sf){
+if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
+    any(  !( st_geometry_type(temp_sf) %>% unique() %>% as.character() %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
+  # remove linstring
+  temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
+  temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+  return(temp_sf)
+}}
 
 
 ###### Simplify temp_sf -----------------

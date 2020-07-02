@@ -11,7 +11,7 @@
 ### Minor changes
 * improved documentation of argument `simplified`
 * `read_municipality()` function now also takes additional inputs for data sets before 1992. Closes issue #163 (added in 2020-06)
-
+* harmonized the `st_geometry_type()` of data sets to `MULTIPOLYGON`, when appropriate. Closes issues #41 #151  #135 #172
 
 -------------------------------------------------------
 # geobr v1.3 (2020-03-30)

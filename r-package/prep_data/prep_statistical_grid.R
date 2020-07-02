@@ -96,6 +96,11 @@ shp_to_sf_rds <- function(x){
   shape$Shape_Leng <- NULL
   shape$Shape_Area <- NULL
 
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf <- to_multipolygon(temp_sf)
+
+
   ###### 6. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
 
