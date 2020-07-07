@@ -35,7 +35,16 @@ library(maptools)
 # Informacao do Sistema de Referdncia: DATASUS
 
 
-##### dowload, read e saverds ####
+
+####### Load Support functions to use in the preprocessing of the data -----------------
+source("./prep_data/prep_functions.R")
+
+
+
+
+
+
+###### 0. Create directories to save the data -----------------
 
 dir.shapes <- "L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus"
 
@@ -55,6 +64,11 @@ dir.2013 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\2013")
 
 
 
+###### 1. download the raw data from the original website source -----------------
+
+
+
+###### 1.1. Unzip data files if necessary -----------------
 
 
 # list address of original files
@@ -64,12 +78,21 @@ map_files <- list.files('C:/Users/rafa/Downloads/todos_mapas_2013', pattern = '_
 # regioes de cada estado
 map_files <- map_files[ substr(map_files, 44,44) == "_" ]
 
-####### read original data in .MAP format ------------------
+
+
+
+
+
+
+
+
+
+####### Function to read original data in .MAP format ------------------
 
 
 ## read function to get names in correct encoding
 # source: https://repositorio.ufrn.br/jspui/bitstream/123456789/17008/1/DanielMC_DISSERT.pdf
-read.map = function(filename){
+basic_read_map = function(filename){
   zz=file(filename,"rb")
   #
   # header of .map
@@ -139,40 +162,85 @@ read.map = function(filename){
 
 
 
-i <- map_files[17]
+prep_map <- function(i){ # i <- map_files[17]
 
-prep_map <- function(i){
+# get year and state
+  year <- substr(i, 37,40)
+  state <- substr(i, 42,43) %>% toupper()
 
-# names of regions
-mp <- read.map( i )
+
+# part1 - get names of regions --------------------------------------
+mp <- basic_read_map( i )
 name_health_region <- attr(mp,"region.name")
 code_health_region <- attr(mp,"region.id")
 
-
-# convert to sf
+# part2 - get regions as sf objects ---------------------------------
 o <- maptools:::readMAP2polylist( i )
 oo <- maptools:::.makePolylistValid(o)
 ooo <- maptools:::.polylist2SpP(oo, tol=.Machine$double.eps^(1/4))
 rn <- row.names(ooo)
-names <- attr(o,"region.name")
-df <- data.frame(code_health_region=rn, row.names=rn, name_health_region=names, stringsAsFactors=FALSE)
+
+df <- data.frame(code_health_region=code_health_region, row.names=rn, name_health_region=name_health_region, stringsAsFactors=FALSE)
 res <- SpatialPolygonsDataFrame(ooo, data=df)
 
 # fix “orphaned hole” in a polygon
 slot(res, "polygons") <- lapply(slot(res, "polygons"), checkPolygonsHoles)
 
 # convert to sf
-res_sf <- st_as_sf(res)
-res_sf
-
+temp_sf <- st_as_sf(res)
+temp_sf
 
 # fix row names
-rownames(res_sf) <- 1:nrow(res_sf)
+rownames(temp_sf) <- 1:nrow(temp_sf)
 
-# update attributes
-res_sf$code_health_region <- as.numeric(code_health_region)
-res_sf$name_health_region <- name_health_region
 
+# Add state and region information
+ #temp_sf <- add_region_info(temp_sf, column='code_health_region')
+ temp_sf <- add_state_info(temp_sf, column='code_health_region')
+
+# reorder columns
+ temp_sf <- dplyr::select(temp_sf,
+                           "code_health_region", "name_health_region",
+                           "code_state", "abbrev_state", "name_state", 'geometry')
+
+
+# 4. every string column with UTF-8 encoding -----------------
+
+ # convert all factor columns to character
+ temp_sf <- use_encoding_utf8(temp_sf)
+
+ ###### Harmonize spatial projection -----------------
+
+ # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+ temp_sf <- harmonize_projection(temp_sf)
+ st_crs(temp_sf)
+
+
+ ###### 5. remove Z dimension of spatial data-----------------
+ temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
+ head(temp_sf)
+
+
+ ###### 6. fix eventual topology issues in the data-----------------
+ temp_sf <- sf::st_make_valid(temp_sf)
+
+
+ ###### convert to MULTIPOLYGON -----------------
+ temp_sf <- to_multipolygon(temp_sf)
+
+ ###### 7. generate a lighter version of the dataset with simplified borders -----------------
+ # skip this step if the dataset is made of points, regular spatial grids or rater data
+
+ # simplify
+ temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
+   sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+
+
+ ###### 8. Clean data set and save it -----------------
+
+ # save original and simplified datasets
+ sf::st_write(temp_sf,  paste0("/health_regions/", year,"/", state,".gpkg") )
+ sf::st_write(temp_sf_simplified,paste0("/health_regions/", year,"/", state,"_simplified.gpkg") )
 
 }
 
