@@ -43,7 +43,7 @@ source("./prep_data/prep_functions.R")
 update <- 2019
 
 
-###### 0. Create directories to downlod and save the data -----------------
+###### 0. Create directories to download and save the data -----------------
 
 # Root directory
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
