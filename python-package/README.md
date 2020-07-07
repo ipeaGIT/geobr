@@ -24,7 +24,7 @@ Test with
 You can use a helper to translate a function from R.
 If you want to add `read_biomes`, just run
 
-`python helper/translate_from_R.py read_biomes`
+`python helpers/translate_from_R.py read_biomes`
 
 It will scrape the original R function to get documentation and metadata.
 It adds:
