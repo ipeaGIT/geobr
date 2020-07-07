@@ -110,21 +110,25 @@ get_country <- function(y){
     outerBounds <- st_as_sf(outerBounds)
     outerBounds <- st_set_crs(outerBounds, original_crs)
 
+
+    ###### convert to MULTIPOLYGON -----------------
+    temp_sf <- to_multipolygon(temp_sf)
+
+
   # f) create a subdirectory of that year in the country directory
     dest_dir <- paste0("./shapes_in_sf_all_years_cleaned/country/",y)
     dir.create(dest_dir, showWarnings = FALSE)
-    
+
   # g) generate a lighter version of the dataset with simplified borders
-    outerBounds7 <- st_transform(outerBounds7, crs=3857) %>% 
+    outerBounds7 <- st_transform(outerBounds7, crs=3857) %>%
       sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
       st_transform(crs=4674)
-    
+
 
   # h) save as an sf file
-    readr::write_rds(outerBounds, path = paste0(dest_dir,"/country_",y,".rds"), compress="gz" )
     sf::st_write(outerBounds, dsn=paste0(dest_dir,"/country_",y,".gpkg") )
     sf::st_write(outerBounds7,dsn=paste0(dest_dir,"/country_",y," _simplified", ".gpkg"))
-    
+
 }
 
 

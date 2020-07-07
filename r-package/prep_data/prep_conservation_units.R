@@ -9,8 +9,8 @@
 # Linguagem: Pt-BR
 # Character set: Latin1
 #
-# Resumo: Pol�?gonos e Pontos das unidades de conservação brasileiras.
-# Informações adicionais: Dados produzidos pelo MMA, e utilizados na elaboração do shape de biomas com a melhor base oficial dispon�?vel.
+# Resumo: Pol??gonos e Pontos das unidades de conservação brasileiras.
+# Informações adicionais: Dados produzidos pelo MMA, e utilizados na elaboração do shape de biomas com a melhor base oficial dispon??vel.
 # Propósito: Identificação das unidades de conservação brasileiras.
 #
 # Estado: Em desenvolvimento
@@ -163,6 +163,11 @@ temp_sf <- temp_sf %>%
 temp_sf <- temp_sf %>%
   mutate_if(is.factor, function(x){ x %>% as.character() %>%
       stringi::stri_encode("UTF-8") } )
+
+
+
+###### convert to MULTIPOLYGON -----------------
+temp_sf <- to_multipolygon(temp_sf)
 
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data

@@ -110,16 +110,21 @@ temp_sf <- do.call('rbind', temp_sf)
 
   # redorder columns
   temp_sf <- dplyr::select(temp_sf, c('code_region', 'name_region', 'geometry'))
-  
+
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf <- to_multipolygon(temp_sf)
+
+
   ###### 7. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
-  
+
   # simplify
-  temp_sf7 <- st_transform(temp_sf, crs=3857) %>% 
+  temp_sf7 <- st_transform(temp_sf, crs=3857) %>%
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
     st_transform(crs=4674)
 
-  
+
   # Save cleaned sf in the cleaned directory
   readr::write_rds(temp_sf, path= paste0(destdir,"/regions_",y,".rds"), compress = "gz")
   sf::st_write(temp_sf, dsn= paste0(destdir,"/regions_",y,".gpkg"))

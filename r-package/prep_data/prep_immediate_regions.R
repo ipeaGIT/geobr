@@ -159,6 +159,10 @@ temp_sf$code_region <- as.numeric(temp_sf$code_region)
 temp_sf$code_immediate <- as.numeric(temp_sf$code_immediate )
 
 
+###### convert to MULTIPOLYGON -----------------
+temp_sf <- to_multipolygon(temp_sf)
+
+
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 

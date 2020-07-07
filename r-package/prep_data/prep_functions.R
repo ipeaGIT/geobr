@@ -50,7 +50,7 @@ harmonize_projection <- function(temp_sf){
 
 add_state_info <- function(temp_sf, column){
 
-  if( column == 'name_state'){
+  if(!is.na(code_muni)){
   # Add code_state
   temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondonia"  | name_state== "Territorio de Rondonia",11,
                                         ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
@@ -145,7 +145,7 @@ add_state_info <- function(temp_sf, column){
                                                ifelse(code_state== 52, "GO",
                                                ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
 
-  return(temp_sf)
+return(temp_sf)
 }
 
 
@@ -181,6 +181,17 @@ use_encoding_utf8 <- function(temp_sf){
   }
 
 
+###### convert to MULTIPOLYGON -----------------
+
+to_multipolygon <- function(temp_sf){
+if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
+    any(  !( st_geometry_type(temp_sf) %>% unique() %>% as.character() %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
+  # remove linstring
+  temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
+  temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+  return(temp_sf)
+}}
+
 
 ###### Simplify temp_sf -----------------
 
@@ -196,7 +207,8 @@ simplify_temp_sf <- function(temp_sf, tolerance=100){
   temp_gpkg_simplified <- sf::st_transform(temp_gpkg_simplified, crs=4674)
 
   # Make any invalid geometry valid # st_is_valid( sf)
-  temp_gpkg_simplified <- lwgeom::st_make_valid(temp_gpkg_simplified)
+  temp_gpkg_simplified <- sf::st_make_valid(temp_gpkg_simplified)
+
   return(temp_gpkg_simplified)
 }
 
@@ -209,7 +221,7 @@ dissolve_polygons <- function(mysf, group_column){
 
 
   # a) make sure we have valid geometries
-  temp_sf <- lwgeom::st_make_valid(mysf)
+  temp_sf <- sf::st_make_valid(mysf)
   temp_sf <- temp_sf %>% st_buffer(0)
 
   # b) make sure we have sf MULTIPOLYGON

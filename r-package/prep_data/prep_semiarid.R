@@ -155,11 +155,17 @@ st_crs(semi_arid_sf) <- 4674
 # Make any invalid geometry valid # st_is_valid( sf)
 semi_arid_sf <- lwgeom::st_make_valid(semi_arid_sf)
 
+
+###### convert to MULTIPOLYGON -----------------
+semi_arid_sf <- to_multipolygon(semi_arid_sf)
+
+
+
 ###### 6. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-semi_arid_sf_simplified <- st_transform(semi_arid_sf, crs=3857) %>% 
+semi_arid_sf_simplified <- st_transform(semi_arid_sf, crs=3857) %>%
   sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
   st_transform(crs=4674)
 head(semi_arid_sf_simplified)

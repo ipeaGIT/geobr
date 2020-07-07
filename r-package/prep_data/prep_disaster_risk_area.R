@@ -158,11 +158,17 @@ temp_sf <- lwgeom::st_make_valid(temp_sf)
 # reorder column names
 setcolorder(temp_sf, c('geo_bater', 'origem', 'acuracia', 'obs', 'num', 'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'geometry'))
 
+
+
+###### convert to MULTIPOLYGON -----------------
+temp_sf <- to_multipolygon(temp_sf)
+
+
 ###### 6. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf7 <- st_transform(temp_sf, crs=3857) %>% 
+temp_sf7 <- st_transform(temp_sf, crs=3857) %>%
   sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
   st_transform(crs=4674)
 head(temp_sf7)

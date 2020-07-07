@@ -301,12 +301,15 @@ brazil$count <- NULL
 
 
 ###### Harmonize spatial projection -----------------
-
 brazil <- harmonize_projection(brazil)
 
 
-# cast all cities as MULTIPOLYGON
-brazil <- st_cast(brazil, to="MULTIPOLYGON")
+
+###### convert to MULTIPOLYGON -----------------
+brazil <- to_multipolygon(brazil)
+
+
+
 
 
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
