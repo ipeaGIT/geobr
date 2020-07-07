@@ -6,6 +6,7 @@
 
 
 ### New data sets/functions
+* data set `read_health_region` to read the health regions - closes issue #149 (added in 2020-07).
 * 2019 data sets of `intermediate` and `immediate` regions 
 
 ### Minor changes

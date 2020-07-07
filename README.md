@@ -103,6 +103,7 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_indigenous_land` | Indigenous lands | 201907 | FUNAI | 
 |`read_semiarid` | Semi Arid region | 2005, 2017 | IBGE | 
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
+|`read_health_region` | Health regions | 1991, 1994, 1997, 2001, 2005, 2013 | DataSUS |
 |`read_neighborhood` (dev) | Neighborhood limits |  2010 | IBGE |
 
 
