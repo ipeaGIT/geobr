@@ -34,7 +34,8 @@ library(maptools)
 # Palavras chaves descritivas: CIR; RAS; SUS
 # Informacao do Sistema de Referdncia: DATASUS
 
-
+# original data source
+ftp://ftp.datasus.gov.br/territorio/mapas/
 
 ####### Load Support functions to use in the preprocessing of the data -----------------
 source("./prep_data/prep_functions.R")
@@ -44,23 +45,33 @@ source("./prep_data/prep_functions.R")
 
 
 
-###### 0. Create directories to save the data -----------------
+###### 0. Create directories to download and save the data -----------------
 
-dir.shapes <- "L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus"
+# Root directory
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
+setwd(root_dir)
 
-dir.download <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\Shapes")
+# Directory to save clean files
+dir.create("./health_regions")
+setwd("./health_regions")
 
-dir.1991 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\1991")
 
-dir.1994 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\1994")
+# Directory to keep raw zipped files
+dir.create("./raw_data")
 
-dir.1997 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\1997")
+# Directory to save clean files
+dir.create("./shapes_in_sf_cleaned")
 
-dir.2001 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\2001")
 
-dir.2005 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\2005")
+# Create folders to save clean files
+years_available <- c(1991, 1994, 1997, 2001, 2005, 2013)
 
-dir.2013 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\2013")
+lapply(X=years_available, FUN= function(i){
+  destdir_clean <- paste0("./shapes_in_sf_cleaned/",i)
+  dir.create( destdir_clean , showWarnings = FALSE)}
+       )
+
+
 
 
 
@@ -70,20 +81,7 @@ dir.2013 <- paste0("L:\\\\# DIRUR #\\ASMEQ\\geobr\\data-raw\\regioes_sus\\2013")
 
 ###### 1.1. Unzip data files if necessary -----------------
 
-
-# list address of original files
-
-map_files <- list.files('C:/Users/rafa/Downloads/todos_mapas_2013', pattern = '_regsaud.MAP', full.names = T)
-
-# regioes de cada estado
-map_files <- map_files[ substr(map_files, 44,44) == "_" ]
-
-
-
-
-
-
-
+zip_files <- list.files('./raw_data', pattern = '.zip', full.names = T)
 
 
 
@@ -162,11 +160,15 @@ basic_read_map = function(filename){
 
 
 
-prep_map <- function(i){ # i <- map_files[17]
 
+
+##### START prep function ------------------------
+prep_map <- function(i){ # i <- map_files[5]
+
+  message(paste0('working on', i))
 # get year and state
-  year <- substr(i, 37,40)
-  state <- substr(i, 42,43) %>% toupper()
+  year <- substr(i, 24,27)
+  state <- substr(i, 29,30) %>% toupper()
 
 
 # part1 - get names of regions --------------------------------------
@@ -178,9 +180,9 @@ code_health_region <- attr(mp,"region.id")
 o <- maptools:::readMAP2polylist( i )
 oo <- maptools:::.makePolylistValid(o)
 ooo <- maptools:::.polylist2SpP(oo, tol=.Machine$double.eps^(1/4))
-rn <- row.names(ooo)
+#rn <- row.names(ooo)
 
-df <- data.frame(code_health_region=code_health_region, row.names=rn, name_health_region=name_health_region, stringsAsFactors=FALSE)
+df <- data.frame(code_health_region=code_health_region, row.names=code_health_region, name_health_region=name_health_region, stringsAsFactors=FALSE)
 res <- SpatialPolygonsDataFrame(ooo, data=df)
 
 # fix “orphaned hole” in a polygon
@@ -188,11 +190,13 @@ slot(res, "polygons") <- lapply(slot(res, "polygons"), checkPolygonsHoles)
 
 # convert to sf
 temp_sf <- st_as_sf(res)
-temp_sf
+# plot(temp_sf)
 
 # fix row names
 rownames(temp_sf) <- 1:nrow(temp_sf)
 
+        # temp_sf <- geobr::read_health_region(simplified = F)
+        # names(temp_sf)[1:2] <- c('code_health_region','name_health_region')
 
 # Add state and region information
  #temp_sf <- add_region_info(temp_sf, column='code_health_region')
@@ -232,25 +236,36 @@ rownames(temp_sf) <- 1:nrow(temp_sf)
  # skip this step if the dataset is made of points, regular spatial grids or rater data
 
  # simplify
- temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
-   sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+ temp_sf_simplified <- simplify_temp_sf(temp_sf)
 
 
  ###### 8. Clean data set and save it -----------------
 
  # save original and simplified datasets
- sf::st_write(temp_sf,  paste0("/health_regions/", year,"/", state,".gpkg") )
- sf::st_write(temp_sf_simplified,paste0("/health_regions/", year,"/", state,"_simplified.gpkg") )
+ sf::st_write(temp_sf,  paste0("./shapes_in_sf_cleaned/", year,"/", state,".gpkg") )
+ sf::st_write(temp_sf_simplified,paste0("./shapes_in_sf_cleaned/", year,"/", state,"_simplified.gpkg") )
 
 }
 
 
+##### Aplica para diferentes anos ------------------------
 
 
 
+# list address of original files
+map_files <- list.files('./raw_data', pattern = 'br_regsaud.MAP', full.names = T, recursive = T)
 
 
+  # # regioes de cada estado
+  # map_files <- map_files[ substr(map_files, 31,31) == "_" ]
 
+
+# Parallel processing using future.apply
+future::plan(future::multiprocess)
+future.apply::future_lapply(X =map_files[c(1,150)], FUN=prep_map)
+
+
+pbapply::pblapply(map_files, prep_map)
 
 
 

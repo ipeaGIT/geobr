@@ -5,7 +5,7 @@
 ###### list ftp folders -----------------
 
 # function to list ftp folders from their original sub-dir
-list_foulders <- function(ftp){
+list_folders <- function(ftp){
 
   if (substr(ftp, nchar(ftp), nchar(ftp)) != "/") {
     ftp<-paste0(ftp,"/")
@@ -26,7 +26,7 @@ list_foulders <- function(ftp){
 ###### Unzip data -----------------
 
 # function to Unzip files in their original sub-dir
-unzip_fun <- function(f){
+unzip_fun <- function(f, head_dir){
   unzip(f, exdir = file.path(head_dir, substr(f, 3, 6)))
 }
 
@@ -50,7 +50,7 @@ harmonize_projection <- function(temp_sf){
 
 add_state_info <- function(temp_sf, column){
 
-  if(!is.na(code_muni)){
+  if(!is.null(temp_sf$code_muni)){
   # Add code_state
   temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondonia"  | name_state== "Territorio de Rondonia",11,
                                         ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
@@ -87,18 +87,18 @@ add_state_info <- function(temp_sf, column){
   temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) %>% as.numeric()
 
   # add name_state
-  temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, "Rondônia",
+  temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
                                               ifelse(code_state== 12, "Acre",
-                                              ifelse(code_state== 13, "Amazônia",
+                                              ifelse(code_state== 13, utf8::as_utf8("Amazônas"),
                                               ifelse(code_state== 14, "Roraima",
-                                              ifelse(code_state== 15, "Pará",
-                                              ifelse(code_state== 16, "Amapá",
+                                              ifelse(code_state== 15, utf8::as_utf8("Pará"),
+                                              ifelse(code_state== 16, utf8::as_utf8("Amapá"),
                                               ifelse(code_state== 17, "Tocantins",
-                                              ifelse(code_state== 21, "Maranhão",
-                                              ifelse(code_state== 22, "Piauí",
-                                              ifelse(code_state== 23, "Ceará",
+                                              ifelse(code_state== 21, utf8::as_utf8("Maranhão"),
+                                              ifelse(code_state== 22, utf8::as_utf8("Piauí"),
+                                              ifelse(code_state== 23, utf8::as_utf8("Ceará"),
                                               ifelse(code_state== 24, "Rio Grande do Norte",
-                                              ifelse(code_state== 25, "Paraíba",
+                                              ifelse(code_state== 25, utf8::as_utf8("Paraíba"),
                                               ifelse(code_state== 26, "Pernambuco",
                                               ifelse(code_state== 27, "Alagoas",
                                               ifelse(code_state== 28, "Sergipe",
@@ -106,8 +106,8 @@ add_state_info <- function(temp_sf, column){
                                               ifelse(code_state== 31, "Minas Gerais",
                                               ifelse(code_state== 32, "Espírito Santo",
                                               ifelse(code_state== 33, "Rio de Janeiro",
-                                              ifelse(code_state== 35, "São Paulo",
-                                              ifelse(code_state== 41, "Paraná",
+                                              ifelse(code_state== 35, utf8::as_utf8("São Paulo"),
+                                              ifelse(code_state== 41, utf8::as_utf8("Paraná"),
                                               ifelse(code_state== 42, "Santa Catarina",
                                               ifelse(code_state== 43, "Rio Grande do Sul",
                                               ifelse(code_state== 50, "Mato Grosso do Sul",
@@ -190,7 +190,7 @@ if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
   temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
   temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
   return(temp_sf)
-}}
+}else{ return(temp_sf)}}
 
 
 ###### Simplify temp_sf -----------------

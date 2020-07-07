@@ -36,7 +36,7 @@ for (a in geo) {    # a="setor_censitario"
 
 
 # table(metadata$geo)
-# temp_ano <- subset(metadata, geo=="immediate_regions")
+# temp_ano <- subset(metadata, geo=="health_region")
 # temp_ano <- subset(metadata, geo=="country")
 
 
@@ -77,7 +77,7 @@ metadata <- as.data.frame(metadata)
 table(metadata$geo)
 table(metadata$year)
 
-subset(metadata, geo == 'metropolitan_area')
+subset(metadata, geo == 'health_region')
 
 # save updated metadata table
 # data.table::fwrite(metadata,"//storage1/geobr/metadata/metadata_gpkg.csv")
