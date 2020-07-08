@@ -268,7 +268,9 @@ future.apply::future_lapply(X =map_files[c(1,150)], FUN=prep_map)
 pbapply::pblapply(map_files, prep_map)
 
 
+prep_map(map_files[1])
 
 
-
+a <-  st_read("./shapes_in_sf_cleaned/1991/BR.gpkg")
+head(a)
 
