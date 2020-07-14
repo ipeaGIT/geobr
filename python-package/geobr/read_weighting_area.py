@@ -1,8 +1,9 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_weighting_area(code_weighting='all', year=2010, simplified=True, verbose=False):
+def read_weighting_area(
+    code_weighting="all", year=2010, simplified=True, verbose=False
+):
     """ Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.
     
      Only 2010 data is currently available.
@@ -39,31 +40,35 @@ def read_weighting_area(code_weighting='all', year=2010, simplified=True, verbos
     >>> df = read_weighting_area(year=2010)
     """
 
-    metadata = select_metadata('weighting_area', year=year, simplified=simplified)
+    metadata = select_metadata("weighting_area", year=year, simplified=simplified)
 
-    if code_weighting == 'all':
+    if code_weighting == "all":
 
         if verbose:
-            print('Loading data for the whole country. This might take a few minutes.')
-        
+            print("Loading data for the whole country. This might take a few minutes.")
+
         return download_gpkg(metadata)
 
-    metadata = metadata[metadata[['code', 'code_abrev']].apply(lambda x: 
-                                                    str(code_weighting)[:2] in str(x['code']) or    # if number e.g. 12
-                                                    str(code_weighting)[:2] in str(x['code_abrev']) # if UF e.g. RO
-                                                    , 1)]
+    metadata = metadata[
+        metadata[["code", "code_abrev"]].apply(
+            lambda x: str(code_weighting)[:2] in str(x["code"])
+            or str(code_weighting)[:2]  # if number e.g. 12
+            in str(x["code_abrev"]),  # if UF e.g. RO
+            1,
+        )
+    ]
 
     if not len(metadata):
-        raise Exception('Invalid Value to argument code_weighting.')
-    
+        raise Exception("Invalid Value to argument code_weighting.")
+
     gdf = download_gpkg(metadata)
 
     if len(str(code_weighting)) == 2:
         return gdf
 
-    elif code_weighting in gdf['code_muni'].tolist():
-        return gdf.query(f'code_muni == {code_weighting}')
+    elif code_weighting in gdf["code_muni"].tolist():
+        return gdf.query(f"code_muni == {code_weighting}")
 
-    elif code_weighting in gdf['code_weighting'].tolist():
-        return gdf.query(f'code_weighting == {code_weighting}')
+    elif code_weighting in gdf["code_weighting"].tolist():
+        return gdf.query(f"code_weighting == {code_weighting}")
     return gdf

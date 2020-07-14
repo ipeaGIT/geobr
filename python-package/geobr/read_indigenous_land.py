@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -38,7 +37,7 @@ def read_indigenous_land(date=201907, simplified=True, verbose=False):
     >>> df = read_indigenous_land(date=201907)
     """
 
-    metadata = select_metadata('indigenous_land', year=date, simplified=simplified)
+    metadata = select_metadata("indigenous_land", year=date, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

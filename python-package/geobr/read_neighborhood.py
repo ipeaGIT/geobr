@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -33,7 +32,7 @@ def read_neighborhood(year=2010, simplified=True, verbose=False):
     >>> df = read_neighborhood(year=2010)
     """
 
-    metadata = select_metadata('neighborhood', year=year, simplified=simplified)
+    metadata = select_metadata("neighborhood", year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

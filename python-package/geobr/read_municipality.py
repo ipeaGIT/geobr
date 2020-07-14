@@ -1,8 +1,7 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_municipality(code_muni='all', year=2010, simplified=True, verbose=False):
+def read_municipality(code_muni="all", year=2010, simplified=True, verbose=False):
     """ Download shape files of Brazilian municipalities as sf objects.
     
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -46,35 +45,39 @@ def read_municipality(code_muni='all', year=2010, simplified=True, verbose=False
     >>> df = read_municipality(code_muni="all", year=2010)
     """
 
-    metadata = select_metadata('municipality', year=year, simplified=simplified)
+    metadata = select_metadata("municipality", year=year, simplified=simplified)
 
     if year < 1992:
 
         return download_gpkg(metadata)
 
-    if code_muni == 'all':
+    if code_muni == "all":
 
         if verbose:
-            print('Loading data for the whole country. This might take a few minutes.')
+            print("Loading data for the whole country. This might take a few minutes.")
 
         return download_gpkg(metadata)
 
-    metadata = metadata[metadata[['code', 'code_abrev']].apply(lambda x: 
-                                                    str(code_muni)[:2] in str(x['code']) or    # if number e.g. 12
-                                                    str(code_muni)[:2] in str(x['code_abrev']) # if UF e.g. RO
-                                                    , 1)]
+    metadata = metadata[
+        metadata[["code", "code_abrev"]].apply(
+            lambda x: str(code_muni)[:2] in str(x["code"])
+            or str(code_muni)[:2]  # if number e.g. 12
+            in str(x["code_abrev"]),  # if UF e.g. RO
+            1,
+        )
+    ]
 
     if not len(metadata):
-        raise Exception('Invalid Value to argument code_muni.')
-    
+        raise Exception("Invalid Value to argument code_muni.")
+
     gdf = download_gpkg(metadata)
 
     if len(str(code_muni)) == 2:
         return gdf
 
-    elif  code_muni in gdf['code_muni'].tolist():
-        return gdf.query(f'code_muni == {code_muni}')
-    
+    elif code_muni in gdf["code_muni"].tolist():
+        return gdf.query(f"code_muni == {code_muni}")
+
     else:
-        raise Exception('Invalid Value to argument code_muni.')
+        raise Exception("Invalid Value to argument code_muni.")
     return gdf

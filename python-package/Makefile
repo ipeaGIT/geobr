@@ -1,9 +1,12 @@
 build-env-dev:
-	python3 -m venv .env;
-	. .env/bin/activate; pip install -r requirements.txt; pip install pytest;
+	python3 -m venv .venv;
+	. .venv/bin/activate; pip install -r requirements-dev.txt; pip install pytest;
 
 update-env:
-	@. .env/bin/activate; pip freeze > requirements.txt
+	@. .venv/bin/activate; pip freeze > requirements-dev.txt
+
+prepare-push:
+	black .
 
 publish:
 	@rm -rf dist

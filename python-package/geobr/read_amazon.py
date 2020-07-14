@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -36,7 +35,7 @@ def read_amazon(year=2012, simplified=True, verbose=False):
     >>> df = read_amazon(year=2012)
     """
 
-    metadata = select_metadata('amazonia_legal', year=year, simplified=simplified)
+    metadata = select_metadata("amazonia_legal", year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

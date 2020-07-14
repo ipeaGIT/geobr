@@ -1,8 +1,9 @@
-
 from geobr.utils import select_metadata, download_gpkg, test_options
 
 
-def read_census_tract(code_tract, year=2010, zone='urban', simplified=True, verbose=False):
+def read_census_tract(
+    code_tract, year=2010, zone="urban", simplified=True, verbose=False
+):
     """ Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
     
     Parameters
@@ -51,42 +52,46 @@ def read_census_tract(code_tract, year=2010, zone='urban', simplified=True, verb
 
     """
 
-    test_options(zone, 'zone', allowed=['urban', 'rural'])
-    test_options(code_tract, 'code_tract', not_allowed=[None])
+    test_options(zone, "zone", allowed=["urban", "rural"])
+    test_options(code_tract, "code_tract", not_allowed=[None])
 
-    metadata = select_metadata('census_tract', year=year, simplified=simplified)
+    metadata = select_metadata("census_tract", year=year, simplified=simplified)
 
     # For year <= 2007, the code, eg. U11, comes with a trailing letter U for urban and
     # R for rural. So, this code checks if the trailing code letter is the same as
-    # the argument zone. 
+    # the argument zone.
     if year <= 2007:
-        
-        metadata = metadata[metadata['code'].apply(
-                    lambda x: x[0].lower() == zone[0].lower())]
-                            #    [R]12      ==     [r]ural
 
-    if code_tract == 'all':
+        metadata = metadata[
+            metadata["code"].apply(lambda x: x[0].lower() == zone[0].lower())
+        ]
+        #    [R]12      ==     [r]ural
+
+    if code_tract == "all":
 
         if verbose:
-            print('Loading data for the whole country. This might take a few minutes.')
+            print("Loading data for the whole country. This might take a few minutes.")
 
         return download_gpkg(metadata)
 
     else:
-        
-        metadata = metadata[metadata[['code', 'code_abrev']].apply(lambda x: 
-                                                                str(code_tract)[:2] in str(x['code']) or    # if number e.g. 12
-                                                                str(code_tract)[:2] in str(x['code_abrev']) # if UF e.g. RO
-                                                                , 1)]
+
+        metadata = metadata[
+            metadata[["code", "code_abrev"]].apply(
+                lambda x: str(code_tract)[:2] in str(x["code"])
+                or str(code_tract)[:2]  # if number e.g. 12
+                in str(x["code_abrev"]),  # if UF e.g. RO
+                1,
+            )
+        ]
 
     gdf = download_gpkg(metadata)
-    
+
     if len(str(code_tract)) == 2:
         return gdf
-    
-    elif  code_tract in gdf['code_muni'].tolist():
-        return gdf.query(f'code_muni == {code_tract}')
-    
-    else:
-        raise Exception('Invalid Value to argument code_tract.')
 
+    elif code_tract in gdf["code_muni"].tolist():
+        return gdf.query(f"code_muni == {code_tract}")
+
+    else:
+        raise Exception("Invalid Value to argument code_tract.")

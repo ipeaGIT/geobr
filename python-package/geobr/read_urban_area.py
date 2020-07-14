@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -38,7 +37,7 @@ def read_urban_area(year=2015, simplified=True, verbose=False):
     >>> df = read_urban_area(year=2015)
     """
 
-    metadata = select_metadata('urban_area', year=year, simplified=simplified)
+    metadata = select_metadata("urban_area", year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 
