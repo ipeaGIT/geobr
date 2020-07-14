@@ -1,6 +1,10 @@
 # log history of geobr package development in Python
 
 -------------------------------------------------------
+# v0.1.7
+
+* Adds read_health_region.py
+
 # v0.1.6
 
 * Adds read_neighborhood.py
