@@ -14,7 +14,7 @@ To start the development environment run
 
 ```sh
 make
-. .env/bin/activate
+. .venv/bin/activate
 ```
 
 Test with
