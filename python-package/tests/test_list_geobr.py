@@ -1,5 +1,6 @@
 from geobr import list_geobr
 
+
 def test_list_geobr(capsys):
 
     list_geobr()

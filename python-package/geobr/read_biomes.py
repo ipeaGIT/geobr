@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -37,7 +36,7 @@ def read_biomes(year=2019, simplified=True, verbose=False):
     >>> df = read_biomes(year=2019)
     """
 
-    metadata = select_metadata('biomes', year=year, simplified=simplified)
+    metadata = select_metadata("biomes", year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

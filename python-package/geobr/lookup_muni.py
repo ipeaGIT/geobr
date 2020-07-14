@@ -50,54 +50,65 @@ def lookup_muni(name_muni=None, code_muni=None, verbose=False):
     >>> mun_all = lookup_muni()
     """
     # Get metadata with data url addresses
-    temp_meta = utils.select_metadata(geo='lookup_muni', year=2010)
+    temp_meta = utils.select_metadata(geo="lookup_muni", year=2010)
 
     # Read DataFrame available at provided url
     lookup_table = utils.download_metadata(
-                            temp_meta.loc[:, 'download_path'].to_list()[0])
-    lookup_table['name_muni_format'] = lookup_table['name_muni_format'].str.lower()
+        temp_meta.loc[:, "download_path"].to_list()[0]
+    )
+    lookup_table["name_muni_format"] = lookup_table["name_muni_format"].str.lower()
 
     # Search by inputs
-    if (code_muni == 'all' or name_muni == 'all' or 
-       (code_muni is None and name_muni is None)):
+    if (
+        code_muni == "all"
+        or name_muni == "all"
+        or (code_muni is None and name_muni is None)
+    ):
         if verbose:
-            print(f'Returning results for all municipalities')
+            print(f"Returning results for all municipalities")
         return lookup_table.iloc[:, :-1]
-    
+
     elif code_muni is not None:
         if name_muni is not None:
             if verbose:
-                print('Ignoring argument name_muni')
+                print("Ignoring argument name_muni")
         try:
-            output = lookup_table[lookup_table['code_muni'] == \
-                     int(code_muni)].iloc[:, :-1]
+            output = lookup_table[lookup_table["code_muni"] == int(code_muni)].iloc[
+                :, :-1
+            ]
             if verbose:
-                print('Returning results for municipality ',
-                      f'{output.loc[:, "name_muni"].to_list()[0]}')
+                print(
+                    "Returning results for municipality ",
+                    f'{output.loc[:, "name_muni"].to_list()[0]}',
+                )
             return output
 
         except KeyError:
-            raise Exception(f'The `code_muni` argument {code_muni}',
-                             'was not found in the database.')
-    
+            raise Exception(
+                f"The `code_muni` argument {code_muni}",
+                "was not found in the database.",
+            )
+
     elif name_muni is not None:
         # Cleaning from accents and turning into lower cases without spaces
         name_muni = utils.strip_accents(str(name_muni).lower().strip())
-        output = lookup_table[
-                    lookup_table['name_muni_format'] == name_muni]
+        output = lookup_table[lookup_table["name_muni_format"] == name_muni]
 
         if len(output) == 0:
             if verbose:
-                print('Please insert a valid municipality name')
-            raise Exception(f'The `name_muni` argument {name_muni} ',
-                             'was not found in the database.')
+                print("Please insert a valid municipality name")
+            raise Exception(
+                f"The `name_muni` argument {name_muni} ",
+                "was not found in the database.",
+            )
         else:
             if verbose:
-                print('Returning results for municipality' 
-                      f'{output.loc[:, "name_muni"].to_list()[0]}')
+                print(
+                    "Returning results for municipality"
+                    f'{output.loc[:, "name_muni"].to_list()[0]}'
+                )
             return output.iloc[:, :-1]
 
-    elif code_muni == 'all' and name_muni == 'all':
+    elif code_muni == "all" and name_muni == "all":
         if verbose:
-            print('Please insert either a municipality ',
-                  'name or a municipality code')
+            print("Please insert either a municipality ", "name or a municipality code")

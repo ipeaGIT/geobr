@@ -10,12 +10,11 @@ import unicodedata
 
 def _get_unique_values(_df, column):
 
-    return ', '.join([str(i) for i in _df['{column}'].unique()])
+    return ", ".join([str(i) for i in _df["{column}"].unique()])
 
 
 @lru_cache(maxsize=124)
-def download_metadata(
-    url='http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'):
+def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv"):
     """Support function to download metadata internally used in geobr.
 
     It caches the metadata file to avoid reloading it in the same session.
@@ -47,8 +46,10 @@ def download_metadata(
         return pd.read_csv(url)
 
     except HTTPError:
-        raise Exception('Metadata file not found. \
-            Please report to https://github.com/ipeaGIT/geobr/issues')
+        raise Exception(
+            "Metadata file not found. \
+            Please report to https://github.com/ipeaGIT/geobr/issues"
+        )
 
 
 def select_year(metadata, year):
@@ -75,18 +76,19 @@ def select_year(metadata, year):
     """
 
     if year is None:
-        year = max(metadata['year'])
-      
-    elif year not in list(metadata['year']):
+        year = max(metadata["year"])
 
-        years = ', '.join([str(i) for i in metadata['year'].unique()])
+    elif year not in list(metadata["year"]):
 
-        raise Exception('Error: Invalid Value to argument year. '
-                        'It must be one of the following: '
-                        f'{_get_unique_values[metadata, "year"]}'
-                        )
-    
-    return metadata.query(f'year == {year}')
+        years = ", ".join([str(i) for i in metadata["year"].unique()])
+
+        raise Exception(
+            "Error: Invalid Value to argument year. "
+            "It must be one of the following: "
+            f'{_get_unique_values[metadata, "year"]}'
+        )
+
+    return metadata.query(f"year == {year}")
 
 
 def select_simplified(metadata, simplified):
@@ -109,11 +111,11 @@ def select_simplified(metadata, simplified):
     
     """
 
-    if simplified:    
-        return metadata[metadata['download_path'].str.contains("simplified")]
-    
-    else: 
-        return metadata[~metadata['download_path'].str.contains("simplified")]
+    if simplified:
+        return metadata[metadata["download_path"].str.contains("simplified")]
+
+    else:
+        return metadata[~metadata["download_path"].str.contains("simplified")]
 
 
 @lru_cache(maxsize=1240)
@@ -132,15 +134,15 @@ def load_gpkg(url):
     gpd.GeoDataFrame
          Table with metadata and shapefiles contained in url.
     """
-    
+
     try:
         content = requests.get(url).content
 
     except Exception as e:
 
         raise Exception(
-            'Some internal url is broken.'
-            'Please report to https://github.com/ipeaGIT/geobr/issues'
+            "Some internal url is broken."
+            "Please report to https://github.com/ipeaGIT/geobr/issues"
         )
 
     # This below does not work in Windows -- see the Docs
@@ -149,14 +151,14 @@ def load_gpkg(url):
     # https://docs.python.org/2/library/tempfile.html
 
     # with tempfile.NamedTemporaryFile(suffix='.gpkg') as fp:
-    with open('temp.gpkg', 'wb') as fp:
+    with open("temp.gpkg", "wb") as fp:
 
         fp.write(content)
 
         gdf = gpd.read_file(fp.name)
 
-    os.remove('temp.gpkg')
-        
+    os.remove("temp.gpkg")
+
     return gdf
 
 
@@ -175,10 +177,10 @@ def download_gpkg(metadata):
         Table with metadata and shapefiles contained in urls.
     """
 
-    urls = metadata['download_path'].tolist()
+    urls = metadata["download_path"].tolist()
 
     gpkgs = [load_gpkg(url) for url in urls]
-    
+
     return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
 
 
@@ -210,10 +212,10 @@ def select_metadata(geo, simplified=None, year=False):
 
     if len(metadata.query(f'geo == "{geo}"')) == 0:
         raise Exception(
-            f'The `geo` argument {geo} does not exist.'
-            'Please, use one of the following:'
+            f"The `geo` argument {geo} does not exist."
+            "Please, use one of the following:"
             f'{_get_unique_values[metadata, "geo"]}'
-    )
+        )
 
     # Select geo
     metadata = metadata.query(f'geo == "{geo}"')
@@ -221,7 +223,7 @@ def select_metadata(geo, simplified=None, year=False):
     if simplified is not None:
         # Select data type
         metadata = select_simplified(metadata, simplified)
-    
+
     if year != False:
         # Verify year input
         metadata = select_year(metadata, year)
@@ -237,13 +239,17 @@ def test_options(choosen, name, allowed=None, not_allowed=None):
 
     if allowed is not None:
         if choosen not in allowed:
-            raise Exception(f"Invalid value to argument '{name}'. " 
-                            f"It must be either {' or '.join(change_type_list(allowed))}")
+            raise Exception(
+                f"Invalid value to argument '{name}'. "
+                f"It must be either {' or '.join(change_type_list(allowed))}"
+            )
 
     if not_allowed is not None:
         if choosen in not_allowed:
-            raise Exception(f"Invalid value to argument '{name}'. " 
-                            f"It cannot be {' or '.join(change_type_list(allowed))}")
+            raise Exception(
+                f"Invalid value to argument '{name}'. "
+                f"It cannot be {' or '.join(change_type_list(allowed))}"
+            )
 
 
 def strip_accents(text):
@@ -258,7 +264,7 @@ def strip_accents(text):
     ----------
     str, The processed string
     """
-    text = unicodedata.normalize('NFD', text)
-    text = text.encode('ascii', 'ignore')
+    text = unicodedata.normalize("NFD", text)
+    text = text.encode("ascii", "ignore")
     text = text.decode("utf-8")
     return str(text)

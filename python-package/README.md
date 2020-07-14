@@ -36,6 +36,10 @@ It adds:
 
 ! Be aware that if the function that you are adding is more complicated than the template. So, double always double check !
 
+Before pushing, run
+
+`make prepare-push`
+
 #### For Windows
 
 We recommend using conda  and creating an environment that includes all libraries simultaneously.

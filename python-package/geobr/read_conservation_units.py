@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -37,7 +36,7 @@ def read_conservation_units(date=201909, simplified=True, verbose=False):
     >>> df = read_conservation_units(date=201909)
     """
 
-    metadata = select_metadata('conservation_units', year=date, simplified=simplified)
+    metadata = select_metadata("conservation_units", year=date, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

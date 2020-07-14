@@ -1,0 +1,6 @@
+geopandas==0.7.0
+Jinja2==2.11.1
+requests==2.20.0
+Shapely==1.7.0
+lxml
+black
