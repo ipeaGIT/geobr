@@ -77,6 +77,7 @@ Finally, if **not** using conda, try:
 | read_country             | Yes         | Super |
 | read_disaster_risk_area  | Yes         | Super |
 | read_health_facilities   | Yes         | Super |
+| read_health_region       | Yes         | Super |
 | read_immediate_region    | Yes         | Yes   |
 | read_indigenous_land     | Yes         | Super |
 | read_intermediate_region | Yes         | Yes   |
