@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -41,7 +40,7 @@ def read_health_facilities(verbose=False):
     >>> df = read_health_facilities()
     """
 
-    metadata = select_metadata('health_facilities')
+    metadata = select_metadata("health_facilities", year=2015, simplified=False)
 
     gdf = download_gpkg(metadata)
 

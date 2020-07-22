@@ -8,30 +8,30 @@ library(readr)
 library(maptools)
 
 #> Metadata:
-# Titulo: ?reas do SUS
-# Titulo alternativo:
-# Data: Atualizado em 07/10/2019
+# Titulo: Health regions
+# Titulo alternativo: Regioes de Saude do SUS
+# Data: Atualizado em 07/07/2020
 #
 # Forma de apresentação: Shape
 # Linguagem: Pt-BR
 # Character set: 2005 - WINDOWS-1252
 #                2015 - UTF-8
 #
-# Resumo: Criado a partir do Decreto n? 7508 de junho de 2011, em substitui??o aos
-# Colegiados de Gest?o Regional (oriundos do Pacto pela Sa?de), o CIR ? um colegiado
-# no qual participam as Secretarias Municipais de Sa?de, de uma dada regi?o, e a Secretaria
-# de Estado de Sa?de com o objetivo de promover a gest?o colaborativa no setor sa?de do estado.
-# Essa inst?ncia veio aprimorar o processo de regionaliza??o no SUS. Os problemas de sa?de s?o
-# identificados e analisados conjuntamente. A partir dessa avalia??o procede-se a identifica??o
-# e pactuar?o das a??es priorit?rias, com objetivo de melhorar a situa??o de sa?de e garantir a
-# aten??o integral na regi?o.  A CIR ? um ambiente de debate e negocia??o que promove a gest?o
-# colaborativa na sa?de. Caracteriza-se como um espa?o de governan?a regional.  Cabe ?s CIR a
-# pactuar?o,  organiza??o e o funcionamento em n?vel regional das a??es e servi?os de sa?de
-# integrados na rede de aten??o ? sa?de - RAS.
+# Resumo: Criado a partir do Decreto n. 7508 de junho de 2011, em substituicao aos
+# Colegiados de Gestao Regional (oriundos do Pacto pela Saude), o CIR a um colegiado
+# no qual participam as Secretarias Municipais de Saude, de uma dada regiao, e a Secretaria
+# de Estado de saude com o objetivo de promover a gestao colaborativa no setor saude do estado.
+# Essa instancia veio aprimorar o processo de regionalizacao no SUS. Os problemas de saude sao
+# identificados e analisados conjuntamente. A partir dessa avaliacao procede-se a identificacao
+# e pactuar?o das acoes prioritarias, com objetivo de melhorar a situacao de saude e garantir a
+# atencao integral na regiao.  A CIR a um ambiente de debate e negociacao que promove a gestao
+# colaborativa na saude. Caracteriza-se como um espaco de governanca regional.  Cabe as CIR a
+# pactuar?o,  organizaaco e o funcionamento em nivel regional das acoes e servicos de saude
+# integrados na rede de atencao a saude - RAS.
 #
 # Estado: Em desenvolvimento
 # Palavras chaves descritivas: CIR; RAS; SUS
-# Informa??o do Sistema de Refer?ncia: DATASUS
+# Informacao do Sistema de Referdncia: DATASUS
 
 
 ##### dowload, read e saverds ####

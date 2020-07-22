@@ -1,8 +1,7 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_micro_region(code_micro='all', year=2010, simplified=True, verbose=False):
+def read_micro_region(code_micro="all", year=2010, simplified=True, verbose=False):
     """ Download shape files of micro region as sf objects
     
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -46,30 +45,34 @@ def read_micro_region(code_micro='all', year=2010, simplified=True, verbose=Fals
     >>> df = read_micro_region(code_micro="all", year=2010)
     """
 
-    metadata = select_metadata('micro_region', year=year, simplified=simplified)
+    metadata = select_metadata("micro_region", year=year, simplified=simplified)
 
-    if code_micro == 'all':
+    if code_micro == "all":
 
         if verbose:
-            print('Loading data for the whole country. This might take a few minutes.')
+            print("Loading data for the whole country. This might take a few minutes.")
 
         return download_gpkg(metadata)
 
-    metadata = metadata[metadata[['code', 'code_abrev']].apply(lambda x: 
-                                                    str(code_micro)[:2] in str(x['code']) or    # if number e.g. 12
-                                                    str(code_micro)[:2] in str(x['code_abrev']) # if UF e.g. RO
-                                                    , 1)]
+    metadata = metadata[
+        metadata[["code", "code_abrev"]].apply(
+            lambda x: str(code_micro)[:2] in str(x["code"])
+            or str(code_micro)[:2]  # if number e.g. 12
+            in str(x["code_abrev"]),  # if UF e.g. RO
+            1,
+        )
+    ]
 
     if not len(metadata):
-        raise Exception('Invalid Value to argument code_micro.')
-    
+        raise Exception("Invalid Value to argument code_micro.")
+
     gdf = download_gpkg(metadata)
 
     if len(str(code_micro)) == 2:
         return gdf
 
-    elif  code_micro in gdf['code_micro'].tolist():
-        return gdf.query(f'code_micro == {code_micro}')
-    
+    elif code_micro in gdf["code_micro"].tolist():
+        return gdf.query(f"code_micro == {code_micro}")
+
     else:
-        raise Exception('Invalid Value to argument code_micro.')
+        raise Exception("Invalid Value to argument code_micro.")

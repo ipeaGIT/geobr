@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -36,7 +35,7 @@ def read_semiarid(year=2017, simplified=True, verbose=False):
     >>> df = read_semiarid(year=2017)
     """
 
-    metadata = select_metadata('semiarid', year=year, simplified=simplified)
+    metadata = select_metadata("semiarid", year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 

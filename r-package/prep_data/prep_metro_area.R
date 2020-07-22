@@ -235,7 +235,7 @@ for (i in 1:4){
 # Conver factor columns to character AND Use UTF-8 encoding in all character
   temp_sf <- temp_sf %>%
     mutate_if(is.factor, function(x){ x %>% as.character()  } )
-  
+
   # simplify
   temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
@@ -371,14 +371,19 @@ fun_clean_2010_2018 <- function(i){
 
   temp_sf <- temp_sf %>%
     mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
-  
+
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf <- to_multipolygon(temp_sf)
+
+
   # simplify
   temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
   # create dir to save data
   dir.create(paste(dest_dir,year_RM2,"/",sep = ""))
-  
+
   ### Save data
   readr::write_rds(temp_sf, path=paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".rds"), compress = "gz")
   sf::st_write(temp_sf, dsn =paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".gpkg"))

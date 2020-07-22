@@ -16,9 +16,11 @@ def test_lookup_muni():
     df = lookup_muni.lookup_muni(name_muni="rio de janeiro")
     assert len(df.columns) == 13
 
-    assert len(lookup_muni.lookup_muni()) > len(lookup_muni.lookup_muni(code_muni=2304400))
+    assert len(lookup_muni.lookup_muni()) > len(
+        lookup_muni.lookup_muni(code_muni=2304400)
+    )
 
     # When using two arguments (supposed to give a warning)
     with pytest.raises(Exception):
         lookup_muni.lookup_muni(code_muni=9999999)
-        lookup_muni.lookup_muni(name_muni='alem paraiba do longinquo caminho curto')
+        lookup_muni.lookup_muni(name_muni="alem paraiba do longinquo caminho curto")

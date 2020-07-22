@@ -1,4 +1,3 @@
-
 from geobr.utils import select_metadata, download_gpkg
 
 
@@ -35,7 +34,7 @@ def read_municipal_seat(year=2010, verbose=False):
     >>> df = read_municipal_seat(year=2010)
     """
 
-    metadata = select_metadata('municipal_seat', year=year)
+    metadata = select_metadata("municipal_seat", year=year)
 
     gdf = download_gpkg(metadata)
 

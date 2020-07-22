@@ -167,19 +167,24 @@ setwd(root_dir)
     mutate_if(is.factor, function(x){ x %>% as.character() %>%
         stringi::stri_encode("UTF-8") } )
 
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf <- to_multipolygon(temp_sf)
+
+
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
-  
+
 # simplify
   temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
-  
-  
+
+
 # Save cleaned sf in the cleaned directory
   readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
   sf::st_write(temp_sf, dsn = paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".gpkg") )
   sf::st_write(temp_sf_simplified, dsn = paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,"_simplified.gpkg") )
-  
 
 
-  
+
+

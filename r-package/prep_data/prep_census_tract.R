@@ -532,6 +532,9 @@ clean_tracts <- function( sf_file ){
     # Make an invalid geometry valid # st_is_valid( sf)
       temp_sf <- lwgeom::st_make_valid(temp_sf)
 
+      ###### convert to MULTIPOLYGON
+      temp_sf <- to_multipolygon(temp_sf)
+
     # keep code as.numeric()
       #temp_sf %>% dplyr::mutate_at(vars(matches("code_")), funs(as.numeric))
       temp_sf$code_state <- as.numeric(temp_sf$code_state)
@@ -588,7 +591,7 @@ for (CODE in lista) {# CODE <- 33
   readr::write_rds(shape,paste0("./",CODE,"sc.rds"), compress="gz")
   sf::st_write(shape, dsn= paste0("./",CODE,"sc.gpkg"))
   sf::st_write(shape7, dsn= paste0("./",CODE,"sc_simplified", ".gpkg"))
-  
+
 }
 
 

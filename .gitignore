@@ -85,7 +85,7 @@ Meta
 /man/figures/Thumbs.db
 
 # Python Ignores
-python-package/.env/
+python-package/.venv/
 python-package/notebooks/
 
 *.pyc

@@ -1,11 +1,9 @@
-
 from geobr.utils import select_metadata, download_gpkg, change_type_list, test_options
 
-def read_immediate_region(code_immediate='all', 
-                          year=2017, 
-                          simplified=True, 
-                          verbose=False
-    ):
+
+def read_immediate_region(
+    code_immediate="all", year=2017, simplified=True, verbose=False
+):
     """ Download shape files of Brazil's Immediate Geographic Areas as sf objects
     
      The Immediate Geographic Areas are part of the geographic division of 
@@ -47,35 +45,37 @@ def read_immediate_region(code_immediate='all',
     >>> df = read_immediate_region(year=2017)
     """
 
-    test_options(code_immediate, 'code_immediate', not_allowed=[None])
+    test_options(code_immediate, "code_immediate", not_allowed=[None])
 
-    metadata = select_metadata('immediate_regions', year=year, simplified=simplified)
+    metadata = select_metadata("immediate_regions", year=year, simplified=simplified)
 
     gdf = download_gpkg(metadata)
 
     # ensure type
     code_immediate = str(code_immediate)
 
-    if code_immediate == 'all':
+    if code_immediate == "all":
 
         if verbose:
-            print('Loading data for the whole country. '
-                  'This might take a few minutes.\n')
+            print(
+                "Loading data for the whole country. "
+                "This might take a few minutes.\n"
+            )
 
         return gdf
-    
-    elif code_immediate in gdf['abbrev_state'].tolist():
+
+    elif code_immediate in gdf["abbrev_state"].tolist():
 
         return gdf.query(f'abbrev_state == "{code_immediate}"')
 
-    elif code_immediate in change_type_list(gdf['code_state'].tolist()):
+    elif code_immediate in change_type_list(gdf["code_state"].tolist()):
 
         return gdf.query(f'code_state == "{code_immediate}"')
 
-    elif code_immediate in change_type_list(gdf['code_immediate'].tolist()):
+    elif code_immediate in change_type_list(gdf["code_immediate"].tolist()):
 
         return gdf.query(f'code_immediate == "{code_immediate}"')
-    
+
     else:
 
         raise Exception("Invalid Value to argument 'code_immediate'")

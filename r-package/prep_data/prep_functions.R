@@ -5,7 +5,7 @@
 ###### list ftp folders -----------------
 
 # function to list ftp folders from their original sub-dir
-list_foulders <- function(ftp){
+list_folders <- function(ftp){
 
   if (substr(ftp, nchar(ftp), nchar(ftp)) != "/") {
     ftp<-paste0(ftp,"/")
@@ -26,7 +26,7 @@ list_foulders <- function(ftp){
 ###### Unzip data -----------------
 
 # function to Unzip files in their original sub-dir
-unzip_fun <- function(f){
+unzip_fun <- function(f, head_dir){
   unzip(f, exdir = file.path(head_dir, substr(f, 3, 6)))
 }
 
@@ -49,51 +49,74 @@ harmonize_projection <- function(temp_sf){
 ###### Add State abbreviation -----------------
 
 add_state_info <- function(temp_sf, column){
-  
-  if("code_muni" %in% colnames(temp_sf)){
-    
-    # add code_state
-    temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) %>% as.numeric()
-    
-    
-    
-  } else {
-    
-    # Add code_state
-    
-    temp_sf <- temp_sf %>% dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondônia"  | name_state== "Território de Rondõnia",11,
-                                                      ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
-                                                      ifelse(name_state== "Amazonas",13,
-                                                      ifelse(name_state== "Roraima" | name_state=="Território de Roraima",14,
-                                                      ifelse(name_state== "Pará",15,
-                                                      ifelse(name_state== "Amapá" | name_state=="Território do Amapá",16,
-                                                      ifelse(name_state== "Tocantins",17,
-                                                      ifelse(name_state== "Maranhão",21,
-                                                      ifelse(name_state== "Piaui" | name_state== "Piauhy",22,
-                                                      ifelse(name_state== "Ceará",23,
-                                                      ifelse(name_state== "Rio Grande do Norte",24,
-                                                      ifelse(name_state== "Paraiba" | name_state== "Parahyba",25,
-                                                      ifelse(name_state== "Pernambuco",26,
-                                                      ifelse(name_state== "Alagoas" | name_state=="Alagôas",27,
-                                                      ifelse(name_state== "Sergipe",28,
-                                                      ifelse(name_state== "Bahia",29,
-                                                      ifelse(name_state== "Minas Gerais" | name_state== "Minas Geraes",31,
-                                                      ifelse(name_state== "Espirito Santo" | name_state== "Espirito Santo",32,
-                                                      ifelse(name_state== "Rio de Janeiro",33,
-                                                      ifelse(name_state== "São Paulo",35,
-                                                      ifelse(name_state== "Paraná",41,
-                                                      ifelse(name_state== "Santa Catarina" | name_state== "Santa Catharina",42,
-                                                      ifelse(name_state== "Rio Grande do Sul",43,
-                                                      ifelse(name_state== "Mato Grosso do Sul",50,
-                                                      ifelse(name_state== "Mato Grosso" | name_state== "Matto Grosso",51,
-                                                      ifelse(name_state== "Goiás" | name_state== "Goyaz",52,
-                                                      ifelse((name_state== "Distrito Federal" | name_state=="Brasilia") & (year>1950),53,NA
-                                                      ))))))))))))))))))))))))))))
-    
-    
+
+  if(!is.null(temp_sf$code_muni)){
+  # Add code_state
+  temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondonia"  | name_state== "Territorio de Rondonia",11,
+                                        ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
+                                        ifelse(name_state== "Amazonas",13,
+                                        ifelse(name_state== "Roraima" | name_state=="Território de Roraima",14,
+                                        ifelse(name_state== "Pará",15,
+                                        ifelse(name_state== "Amapá" | name_state=="Territorio do Amapa",16,
+                                        ifelse(name_state== "Tocantins",17,
+                                        ifelse(name_state== "Maranhão",21,
+                                        ifelse(name_state== "Piaui" | name_state== "Piauhy",22,
+                                        ifelse(name_state== "Ceará",23,
+                                        ifelse(name_state== "Rio Grande do Norte",24,
+                                        ifelse(name_state== "Paraiba" | name_state== "Parahyba",25,
+                                        ifelse(name_state== "Pernambuco",26,
+                                        ifelse(name_state== "Alagoas" | name_state=="Alagôas",27,
+                                        ifelse(name_state== "Sergipe",28,
+                                        ifelse(name_state== "Bahia",29,
+                                        ifelse(name_state== "Minas Gerais" | name_state== "Minas Geraes",31,
+                                        ifelse(name_state== "Espirito Santo" | name_state== "Espirito Santo",32,
+                                        ifelse(name_state== "Rio de Janeiro",33,
+                                        ifelse(name_state== "São Paulo",35,
+                                        ifelse(name_state== "Paraná",41,
+                                        ifelse(name_state== "Santa Catarina" | name_state== "Santa Catharina",42,
+                                        ifelse(name_state== "Rio Grande do Sul",43,
+                                        ifelse(name_state== "Mato Grosso do Sul",50,
+                                        ifelse(name_state== "Mato Grosso" | name_state== "Matto Grosso",51,
+                                        ifelse(name_state== "Goiás" | name_state== "Goyaz",52,
+                                        ifelse((name_state== "Distrito Federal" | name_state=="Brasilia") & (year>1950),53,NA
+                                        ))))))))))))))))))))))))))))
   }
-  
-  
+  if( column != 'name_state'){
+
+  # add code_state
+  temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) %>% as.numeric()
+
+  # add name_state
+  temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
+                                              ifelse(code_state== 12, utf8::as_utf8("Acre"),
+                                              ifelse(code_state== 13, utf8::as_utf8("Amazônas"),
+                                              ifelse(code_state== 14, utf8::as_utf8("Roraima"),
+                                              ifelse(code_state== 15, utf8::as_utf8("Pará"),
+                                              ifelse(code_state== 16, utf8::as_utf8("Amapá"),
+                                              ifelse(code_state== 17, utf8::as_utf8("Tocantins"),
+                                              ifelse(code_state== 21, utf8::as_utf8("Maranhão"),
+                                              ifelse(code_state== 22, utf8::as_utf8("Piauí"),
+                                              ifelse(code_state== 23, utf8::as_utf8("Ceará"),
+                                              ifelse(code_state== 24, utf8::as_utf8("Rio Grande do Norte"),
+                                              ifelse(code_state== 25, utf8::as_utf8("Paraíba"),
+                                              ifelse(code_state== 26, utf8::as_utf8("Pernambuco"),
+                                              ifelse(code_state== 27, utf8::as_utf8("Alagoas"),
+                                              ifelse(code_state== 28, utf8::as_utf8("Sergipe"),
+                                              ifelse(code_state== 29, utf8::as_utf8("Bahia"),
+                                              ifelse(code_state== 31, utf8::as_utf8("Minas Gerais"),
+                                              ifelse(code_state== 32, utf8::as_utf8("Espírito Santo"),
+                                              ifelse(code_state== 33, utf8::as_utf8("Rio de Janeiro"),
+                                              ifelse(code_state== 35, utf8::as_utf8("São Paulo"),
+                                              ifelse(code_state== 41, utf8::as_utf8("Paraná"),
+                                              ifelse(code_state== 42, utf8::as_utf8("Santa Catarina"),
+                                              ifelse(code_state== 43, utf8::as_utf8("Rio Grande do Sul"),
+                                              ifelse(code_state== 50, utf8::as_utf8("Mato Grosso do Sul"),
+                                              ifelse(code_state== 51, utf8::as_utf8("Mato Grosso"),
+                                              ifelse(code_state== 52, utf8::as_utf8("Goiás"),
+                                              ifelse(code_state== 53, utf8::as_utf8("Distrito Federal"), "!error!"))))))))))))))))))))))))))))
+  }
+
+  # add abbrev state
   temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
                                                ifelse(code_state== 12, "AC",
                                                ifelse(code_state== 13, "AM",
@@ -121,35 +144,7 @@ add_state_info <- function(temp_sf, column){
                                                ifelse(code_state== 51, "MT",
                                                ifelse(code_state== 52, "GO",
                                                ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
-  
-  # name_state
-  temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, "Rondônia",
-                                              ifelse(code_state== 12, "Acre",
-                                              ifelse(code_state== 13, "Amazônia",
-                                              ifelse(code_state== 14, "Roraima",
-                                              ifelse(code_state== 15, "Pará",
-                                              ifelse(code_state== 16, "Amapá",
-                                              ifelse(code_state== 17, "Tocantins",
-                                              ifelse(code_state== 21, "Maranhão",
-                                              ifelse(code_state== 22, "Piauí",
-                                              ifelse(code_state== 23, "Ceará",
-                                              ifelse(code_state== 24, "Rio Grande do Norte",
-                                              ifelse(code_state== 25, "Paraíba",
-                                              ifelse(code_state== 26, "Pernambuco",
-                                              ifelse(code_state== 27, "Alagoas",
-                                              ifelse(code_state== 28, "Sergipe",
-                                              ifelse(code_state== 29, "Bahia",
-                                              ifelse(code_state== 31, "Minas Gerais",
-                                              ifelse(code_state== 32, "Espírito Santo",
-                                              ifelse(code_state== 33, "Rio de Janeiro",
-                                              ifelse(code_state== 35, "São Paulo",
-                                              ifelse(code_state== 41, "Paraná",
-                                              ifelse(code_state== 42, "Santa Catarina",
-                                              ifelse(code_state== 43, "Rio Grande do Sul",
-                                              ifelse(code_state== 50, "Mato Grosso do Sul",
-                                              ifelse(code_state== 51, "Mato Grosso",
-                                              ifelse(code_state== 52, utf8::as_utf8("Goiás"),
-                                              ifelse(code_state== 53, "Distrito Federal",NA))))))))))))))))))))))))))))
+
 return(temp_sf)
 }
 
@@ -185,6 +180,17 @@ use_encoding_utf8 <- function(temp_sf){
   return(temp_sf)
   }
 
+
+###### convert to MULTIPOLYGON -----------------
+
+to_multipolygon <- function(temp_sf){
+if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
+    any(  !( st_geometry_type(temp_sf) %>% unique() %>% as.character() %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
+  # remove linstring
+  temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
+  temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+  return(temp_sf)
+}else{ return(temp_sf)}}
 
 
 ###### Simplify temp_sf -----------------

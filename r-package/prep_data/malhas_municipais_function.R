@@ -254,7 +254,7 @@ malhas_municipais <- function(region,year){
       if( years %like% "2019" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
       if( years %like% "2019" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
 
-      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", years)}
+      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
 
       # name of the file that will be saved
       # if( years %like% "2000|2001|2010|2013|2014"){ file_name <- paste0(toupper(substr(x, 21, 24)), ".gpkg") }

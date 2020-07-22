@@ -43,7 +43,7 @@ source("./prep_data/prep_functions.R")
 update <- 2019
 
 
-###### 0. Create directories to downlod and save the data -----------------
+###### 0. Create directories to download and save the data -----------------
 
 # Root directory
 root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
@@ -157,6 +157,10 @@ temp_sf <- sf::st_make_valid(temp_sf)
 temp_sf$code_state <- as.numeric(temp_sf$code_state)
 temp_sf$code_region <- as.numeric(temp_sf$code_region)
 temp_sf$code_immediate <- as.numeric(temp_sf$code_immediate )
+
+
+###### convert to MULTIPOLYGON -----------------
+temp_sf <- to_multipolygon(temp_sf)
 
 
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------

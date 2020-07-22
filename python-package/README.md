@@ -14,7 +14,7 @@ To start the development environment run
 
 ```sh
 make
-. .env/bin/activate
+. .venv/bin/activate
 ```
 
 Test with
@@ -24,7 +24,7 @@ Test with
 You can use a helper to translate a function from R.
 If you want to add `read_biomes`, just run
 
-`python helper/translate_from_R.py read_biomes`
+`python helpers/translate_from_R.py read_biomes`
 
 It will scrape the original R function to get documentation and metadata.
 It adds:
@@ -35,6 +35,10 @@ It adds:
 - very basic tests
 
 ! Be aware that if the function that you are adding is more complicated than the template. So, double always double check !
+
+Before pushing, run
+
+`make prepare-push`
 
 #### For Windows
 
@@ -73,6 +77,7 @@ Finally, if **not** using conda, try:
 | read_country             | Yes         | Super |
 | read_disaster_risk_area  | Yes         | Super |
 | read_health_facilities   | Yes         | Super |
+| read_health_region       | Yes         | Super |
 | read_immediate_region    | Yes         | Yes   |
 | read_indigenous_land     | Yes         | Super |
 | read_intermediate_region | Yes         | Yes   |
