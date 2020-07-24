@@ -93,11 +93,11 @@ clean_meso <- function(e){ #  e <- sub_dirs[2]
     
     i <- gsub(".rds", ".gpkg", i)
     
-    sf::st_write(temp_sf, i,layer_options = 'OVERWRITE=YES',update=TRUE)
+    sf::st_write(temp_sf, i, delete_layer=TRUE,update=TRUE)
     
     i <- gsub(".gpkg", "_simplified.gpkg", i)
     
-    sf::st_write(temp_sf_simplified, i, layer_options = 'OVERWRITE=YES', update=TRUE)
+    sf::st_write(temp_sf_simplified, i, delete_layer=TRUE, update=TRUE)
     
   }
 }
