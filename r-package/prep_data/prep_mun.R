@@ -1,6 +1,6 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-# setwd("C:/Users/canog/Documents/Projetos/geobr/r-package")
+# setwd("D:\\Users\\B2466614\\Documents\\geobr\\r-package")
 
 source("./prep_data/prep_functions.R")
 source('./prep_data/malhas_municipais_function.R')
@@ -9,10 +9,10 @@ source('./prep_data/malhas_municipais_function.R')
 
 ## function for malha municipal
 
-malhas_municipais(region='municipio',year="all")
+# malhas_municipais(region='municipio',year="all")
 
 ## shapes directory
-shape_dir <- "C:/Users/canog/Documents/Projetos/repositorios"
+shape_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
 setwd(shape_dir)
 
 mun_dir <- ".//shapes_in_sf_all_years_original/municipio"
@@ -74,14 +74,17 @@ clean_mun <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2019]
     if (year %like% "2019"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- dplyr::rename(temp_sf, code_muni = cd_mun, name_muni = nm_mun)
-      temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geom'))
+      temp_sf <- dplyr::rename(temp_sf, Code_muni = cd_mun, name_muni = nm_mun)
+      temp_sf <- dplyr::select(temp_sf, c('Code_muni', 'name_muni', 'geom'))
     }
 
     # add State abbreviation
 
-    temp_sf <- add_state_info(temp_sf,'code_muni')
+    temp_sf <- add_state_info(temp_sf,'Code_muni')
 
+    if (year %like% "2019"){
+      temp_sf <- dplyr::rename(temp_sf, code_muni = Code_muni)
+    }
     # Add Region codes and names
 
     temp_sf <- add_region_info(temp_sf,'code_state')
@@ -112,9 +115,7 @@ clean_mun <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2019]
 
     # Save cleaned sf in the cleaned directory
     # i <- gsub("original", "cleaned", i)
-    dir.dest.file <- paste0(dir.dest,"/",unique(temp_sf$abbrev_state),"/")
-
-    dir.create(file.path(dir.dest.file), showWarnings = FALSE)
+    dir.dest.file <- paste0(dir.dest,"/")
 
     file.name <- paste0(unique(temp_sf$code_state),"MU",".gpkg")
 
