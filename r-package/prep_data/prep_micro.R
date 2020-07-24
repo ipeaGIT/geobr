@@ -52,13 +52,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[2]
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_micro = cd_geocodu, name_micro = nm_micro)
       temp_sf <- dplyr::select(temp_sf, c('code_micro', 'name_micro', 'geom'))
-      # temp_sf_ <- temp_sf %>%  dplyr::mutate(name_micro = ifelse(name_micro == "Moji Das Cruzes","Mogi Das Cruzes",
-      #                                                           ifelse(name_micro == "Piraçununga","Pirassununga",
-      #                                                                  ifelse(name_micro == "Moji-Mirim","Moji Mirim",
-      #                                                                         ifelse(name_micro == "S O Miguel Do Oeste","São Miguel Do Oeste",
-      #                                                                                ifelse(name_micro == "Serras Do Sudeste","Serras De Sudeste",
-      #                                                                                       ifelse(name_micro == "Vão Do Paraná","Vão do Paranã",name_micro)))))))
-    }
+     }
     
     if (year %like% "2013|2014|2015|2016|2017|2018"){
       # dplyr::rename and subset columns
@@ -150,9 +144,6 @@ correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- 
   temp2010 <- st_read(a2010_sf_micro_file)
   
   # dplyr::rename and subset columns
-  # names(temp2010) <- names(temp2010) %>% tolower()
-  # temp2010 <- dplyr::rename(temp2010, code_micro = cd_geocodu, name_micro = nm_micro)
-  # temp2010 <- dplyr::select(temp2010, c('code_micro', 'name_micro', 'geom'))
   temp2010 <- temp2010 %>%  dplyr::mutate(name_micro =as.character(name_micro))
   temp2010 <- temp2010 %>%  dplyr::mutate(name_micro = ifelse(name_micro == "Moji Das Cruzes","Mogi Das Cruzes",
                                                               ifelse(name_micro == "Piraçununga","Pirassununga",
