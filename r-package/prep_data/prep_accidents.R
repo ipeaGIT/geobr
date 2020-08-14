@@ -122,10 +122,10 @@ accidents_sf <-
 
 
 # Create dir to save data of that specific year
- dir.create(glue("./federal_roads_accidents/{year}"), showWarnings = FALSE)
+ dir.create(glue("data/federal_roads_accidents/{year}"), showWarnings = FALSE)
 # Save cleaned data
 saveRDS(data,
-        glue("./federal_roads_accidents/{year}/clean_prf_data.Rds"))
+        glue("data/federal_roads_accidents/{year}/clean_prf_data.Rds"))
 
 # Change CRS to SIRGAS  Geodetic reference system "SIRGAS2000" , CRS(4674).
 accidents_st <- st_transform(accidents_sf, 4674)
