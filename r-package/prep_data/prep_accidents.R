@@ -19,6 +19,7 @@ library(xml2)
 library(glue)
 library(rio)
 library(data.table)
+library(lubridate)
 library(magrittr)
 
 ####### Load Support functions to use in the preprocessing of the data
@@ -30,8 +31,8 @@ source("./prep_data/prep_functions.R")
 # Directory to keep raw zipped files
 dir.create("./federal_roads_accidents")
 
-ref_year <- 2020
-ref_state <- NULL
+year <- 2020
+state <- NULL
 
 #### 1. Download and clean data, given a year and possibly a state -----------------
 
@@ -43,8 +44,6 @@ get_raw_accidents <- function(reference_year,
     html_node("#acontent ul") %>%
     html_nodes("li")
 
-
-
   data <- tibble(
     href = {
       html_content %>%
@@ -54,7 +53,8 @@ get_raw_accidents <- function(reference_year,
     year = {
       html_content %>%
         html_text() %>%
-        as.numeric() }
+        as.numeric()
+      }
     ) %>%
     filter(year == reference_year) %>%
     mutate(href = glue("curl {href}/download | funzip")) %>%
@@ -63,11 +63,11 @@ get_raw_accidents <- function(reference_year,
     as_tibble()
 
   if(reference_state == "all") {
-    reference_state <- unique(data$uf)
+    reference_state <-
+      data %>%
+      pull(uf) %>%
+      unique()
   }
-
-
-
 
    data %<>%
      filter(uf %in% reference_state) %>%
@@ -81,11 +81,38 @@ get_raw_accidents <- function(reference_year,
 
 }
 
-#### 2. Create folders to save sf.rds files  -----------------
 
 accidents <- get_raw_accidents(year)
 
-#### 3. Save cleaned data sets in compact .rds format-----------------
+#### 2. Save cleaned data sets in compact .rds format-----------------
+
+accidents %<>%
+  mutate(timestamp = parse_date_time(glue("{data_inversa} {horario}"), "Ymd HMS", truncated = 3),
+         municipio = str_to_title(municipio),
+         data_inversa = NULL,
+         horario = NULL,
+         dia_semana = NULL,
+         feridos = NULL,
+         id = NULL) %>%
+  rename(municipality = municipio,
+         accident_cause = causa_acidente,
+         accident_type = tipo_acidente,
+         accident_classification = classificacao_acidente,
+         day_phase = fase_dia,
+         direction = sentido_via,
+         track_type = tipo_pista,
+         track_layout = tracado_via,
+         paved_track = uso_solo, # conferir isso aqui porque não está claro
+         people_involved = pessoas,
+         death_count = mortos,
+         lightly_injuried = feridos_leves,
+         heavily_injuried = feridos_graves,
+         not_injuried = ilesos,
+         ignored = ignorados,
+         vehicles_involved = veiculos,
+         regional_prf = regional,
+         prf_unit = delegacia)
+
 
 # Convert original data frame into sf
 accidents_sf <-
@@ -95,20 +122,15 @@ accidents_sf <-
 
 
 # Create dir to save data of that specific year
-dir.create(glue("./federal_roads_accidents/{reference_year}/prf_raw_data"),
-           showWarnings = FALSE)
-# Save original raw data
-write_csv2(data, glue("./federal_roads_accidents/{reference_year}/prf_raw_data/{reference_year}_{ifelse(length(reference_state) > 1, 'many', reference_state)}_raw.csv"))
+ dir.create(glue("./federal_roads_accidents/{year}"), showWarnings = FALSE)
+# Save cleaned data
+saveRDS(data,
+        glue("./federal_roads_accidents/{year}/clean_prf_data.Rds"))
 
-### Change colnames
 # Change CRS to SIRGAS  Geodetic reference system "SIRGAS2000" , CRS(4674).
 accidents_st <- st_transform(accidents_sf, 4674)
 
 
-
-# Save raw file in sf format
-write_rds(cnes_sf, paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",year,"/cnes_sf_",most_freq_year,".rds"), compress = "gz")
-sf::st_write(cnes_sf, dsn= paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".gpkg"))
 
 
 
