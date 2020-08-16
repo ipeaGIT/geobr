@@ -7,15 +7,20 @@ source('./prep_data/malhas_municipais_function.R')
 
 ## function for malha municipal
 
-#malhas_municipais(region='uf',year=2018)
+#malhas_municipais(region='uf',year=2019)
 
-uf_dir <- ".//shapes_in_sf_all_years_original/uf"
+uf_dir <-  "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
 sub_dirs <- list.dirs(path =uf_dir, recursive = F)
+
+sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2019,collapse = "|")]
 
 
 
 # create a function that will clean the sf files according to particularities of the data in each year
-clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
+# clean_states <- function( e ){ #  e <- sub_dirs[1]
+
+for (e in sub_dirs) {
+
 
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
@@ -31,9 +36,13 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
   dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/uf/",year)), showWarnings = FALSE)
   gc(reset = T)
 
+  dir.dest<- file.path(paste0("./shapes_in_sf_all_years_cleaned/uf/",year))
+
 
   # list all sf files in that year/folder
-  sf_files <- list.files(e, full.names = T)
+  sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
+
+  sf_files <- sf_files[sf_files %like% "_UF_"]
 
   # for each file
   for (i in sf_files){ #  i <- sf_files[3]
@@ -70,7 +79,66 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     }
 
     # add State abbreviation
-    temp_sf <- add_state_info(temp_sf,'code_muni')
+    # temp_sf <- add_state_info(temp_sf,'code_state')
+
+    # add name_state
+    temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
+                                                       ifelse(code_state== 12, utf8::as_utf8("Acre"),
+                                                              ifelse(code_state== 13, utf8::as_utf8("Amazônas"),
+                                                                     ifelse(code_state== 14, utf8::as_utf8("Roraima"),
+                                                                            ifelse(code_state== 15, utf8::as_utf8("Pará"),
+                                                                                   ifelse(code_state== 16, utf8::as_utf8("Amapá"),
+                                                                                          ifelse(code_state== 17, utf8::as_utf8("Tocantins"),
+                                                                                                 ifelse(code_state== 21, utf8::as_utf8("Maranhão"),
+                                                                                                        ifelse(code_state== 22, utf8::as_utf8("Piauí"),
+                                                                                                               ifelse(code_state== 23, utf8::as_utf8("Ceará"),
+                                                                                                                      ifelse(code_state== 24, utf8::as_utf8("Rio Grande do Norte"),
+                                                                                                                             ifelse(code_state== 25, utf8::as_utf8("Paraíba"),
+                                                                                                                                    ifelse(code_state== 26, utf8::as_utf8("Pernambuco"),
+                                                                                                                                           ifelse(code_state== 27, utf8::as_utf8("Alagoas"),
+                                                                                                                                                  ifelse(code_state== 28, utf8::as_utf8("Sergipe"),
+                                                                                                                                                         ifelse(code_state== 29, utf8::as_utf8("Bahia"),
+                                                                                                                                                                ifelse(code_state== 31, utf8::as_utf8("Minas Gerais"),
+                                                                                                                                                                       ifelse(code_state== 32, utf8::as_utf8("Espírito Santo"),
+                                                                                                                                                                              ifelse(code_state== 33, utf8::as_utf8("Rio de Janeiro"),
+                                                                                                                                                                                     ifelse(code_state== 35, utf8::as_utf8("São Paulo"),
+                                                                                                                                                                                            ifelse(code_state== 41, utf8::as_utf8("Paraná"),
+                                                                                                                                                                                                   ifelse(code_state== 42, utf8::as_utf8("Santa Catarina"),
+                                                                                                                                                                                                          ifelse(code_state== 43, utf8::as_utf8("Rio Grande do Sul"),
+                                                                                                                                                                                                                 ifelse(code_state== 50, utf8::as_utf8("Mato Grosso do Sul"),
+                                                                                                                                                                                                                        ifelse(code_state== 51, utf8::as_utf8("Mato Grosso"),
+                                                                                                                                                                                                                               ifelse(code_state== 52, utf8::as_utf8("Goiás"),
+                                                                                                                                                                                                                                      ifelse(code_state== 53, utf8::as_utf8("Distrito Federal"), "!error!"))))))))))))))))))))))))))))
+
+
+
+    temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
+                                                        ifelse(code_state== 12, "AC",
+                                                               ifelse(code_state== 13, "AM",
+                                                                      ifelse(code_state== 14, "RR",
+                                                                             ifelse(code_state== 15, "PA",
+                                                                                    ifelse(code_state== 16, "AP",
+                                                                                           ifelse(code_state== 17, "TO",
+                                                                                                  ifelse(code_state== 21, "MA",
+                                                                                                         ifelse(code_state== 22, "PI",
+                                                                                                                ifelse(code_state== 23, "CE",
+                                                                                                                       ifelse(code_state== 24, "RN",
+                                                                                                                              ifelse(code_state== 25, "PB",
+                                                                                                                                     ifelse(code_state== 26, "PE",
+                                                                                                                                            ifelse(code_state== 27, "AL",
+                                                                                                                                                   ifelse(code_state== 28, "SE",
+                                                                                                                                                          ifelse(code_state== 29, "BA",
+                                                                                                                                                                 ifelse(code_state== 31, "MG",
+                                                                                                                                                                        ifelse(code_state== 32, "ES",
+                                                                                                                                                                               ifelse(code_state== 33, "RJ",
+                                                                                                                                                                                      ifelse(code_state== 35, "SP",
+                                                                                                                                                                                             ifelse(code_state== 41, "PR",
+                                                                                                                                                                                                    ifelse(code_state== 42, "SC",
+                                                                                                                                                                                                           ifelse(code_state== 43, "RS",
+                                                                                                                                                                                                                  ifelse(code_state== 50, "MS",
+                                                                                                                                                                                                                         ifelse(code_state== 51, "MT",
+                                                                                                                                                                                                                                ifelse(code_state== 52, "GO",
+                                                                                                                                                                                                                                       ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
 
     # Add Region codes and names
     temp_sf <- add_region_info(temp_sf,'code_state')
@@ -104,23 +172,24 @@ clean_states <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2000]
     temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
     # Save cleaned sf in the cleaned directory
-    i <- gsub("original", "cleaned", i)
-    # write_rds(temp_sf, path = i, compress="gz" )
+    dir.dest.file <- paste0(dir.dest,"/")
 
-    i <- gsub(".rds", ".gpkg", i)
+    file.name <- paste0(unique(substr(temp_sf$code_state,1,2)),"UF",".gpkg")
 
-    sf::st_write(temp_sf, i, delete_layer=TRUE, update = TRUE)
+    i <- paste0(dir.dest.file,file.name)
+
+    sf::st_write(temp_sf, i, delete_layer=TRUE)
 
     i <- gsub(".gpkg", "_simplified.gpkg", i)
 
-    sf::st_write(temp_sf_simplified, i, delete_layer=TRUE, update = TRUE)
+    sf::st_write(temp_sf_simplified, i, delete_layer=TRUE)
 
   }
 }
 
-future::plan(multiprocess)
+# future::plan(multiprocess)
 
-future_map(sub_dirs, clean_states)
+# future_map(sub_dirs, clean_states)
 
 rm(list= ls())
 gc(reset = T)

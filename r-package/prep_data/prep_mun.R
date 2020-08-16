@@ -9,18 +9,20 @@ source('./prep_data/malhas_municipais_function.R')
 
 ## function for malha municipal
 
-# malhas_municipais(region='municipio',year="all")
+# malhas_municipais(region='municipio',year=2019)
 
 ## shapes directory
 shape_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
 setwd(shape_dir)
 
-mun_dir <- ".//shapes_in_sf_all_years_original/municipio"
+# mun_dir <- ".//shapes_in_sf_all_years_original/municipio"
+mun_dir <- shape_dir
+
 sub_dirs <- list.dirs(path =mun_dir, recursive = F)
 
 sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2019,collapse = "|")]
 
-sub_dirs <- sub_dirs[sub_dirs %like% 2019]
+# sub_dirs <- sub_dirs[sub_dirs %like% 2019]
 
 # create a function that will clean the sf files according to particularities of the data in each year
 clean_mun <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2019]
@@ -43,6 +45,9 @@ clean_mun <- function( e ){ #  e <- sub_dirs[sub_dirs %like% 2019]
 
   # list all sf files in that year/folder
   sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
+
+  sf_files <- sf_files[sf_files %like% "Municipios"]
+
 
   # for each file
   for (i in sf_files){ #  i <- sf_files[1]

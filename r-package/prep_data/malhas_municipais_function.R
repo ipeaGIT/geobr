@@ -27,7 +27,7 @@ malhas_municipais <- function(region,year){
   ########  1. Unzip original data sets downloaded from IBGE -----------------
 
   # Root directory
-  root_dir <- "C:/Users/canog/Documents/Projetos/repositorios"
+  root_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
   setwd(root_dir)
 
   # unzip function
@@ -48,7 +48,7 @@ malhas_municipais <- function(region,year){
   all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
 
   if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_")]}
-  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|me"]}
+  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes"]}
   if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi"]}
   if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000"]}
 
@@ -206,7 +206,7 @@ malhas_municipais <- function(region,year){
     all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
 
     if (region == "uf"){all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")]}
-    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "ME|Mesorregioes"]}
+    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes"]}
     if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes"]}
     if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
 
@@ -215,9 +215,9 @@ malhas_municipais <- function(region,year){
 
 
       # get corresponding year of the file
-      #x <- all_shapes[100]
+      #x <- all_shapes[1]
 
-          years <- lapply(strsplit(x, "/"), head, n = 4L)
+          years <- lapply(strsplit(x, "/"), head, n = 2L)
 
           years <- unlist(lapply(years, tail, n = 1L))
 
@@ -342,7 +342,7 @@ malhas_municipais <- function(region,year){
       all_shapes <- all_shapes[all_shapes %like% paste0(year)]
 
       if (region == "uf"){all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")]}
-      if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "ME|Mesorregioes"]}
+      if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes"]}
       if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes"]}
       if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
 
@@ -390,7 +390,7 @@ malhas_municipais <- function(region,year){
         file_name <- gsub(".shp$", ".gpkg", t, ignore.case = T)
 
         # save in .rds
-        sf::st_write(shape_i, dsn = paste0(dest_dir,"/", file_name), update = TRUE)
+        sf::st_write(shape_i, dsn = paste0(dest_dir,"/", file_name), delete_layer = TRUE)
       }
 
 
