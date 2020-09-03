@@ -16,3 +16,6 @@
 ^\.travis\.yml$
 ^README\.md$
 ^geobr_logo_b\.svg$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

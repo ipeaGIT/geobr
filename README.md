@@ -1,4 +1,4 @@
-# geobr <img align="right" src="r-package/man/figures/geobr_logo_b.png" alt="logo" width="170"> <img align="right" src="r-package/man/figures/geobr_logo_y.png" alt="logo" width="170">
+# geobr <img align="right" src="https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/geobr_logo_b.png?raw=true" alt="logo" width="170"> <img align="right" src="https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/geobr_logo_y.png?raw=true" alt="logo" width="170">
 
 <p align="justify">geobr is a computational package to download official spatial data sets of Brazil. The package includes a wide range of geospatial data in geopackage format (like shapefiles but better), available at various geographic scales and for various years with harmonized attributes, projection and topology (see detailed list of available data sets below). </p>
 
@@ -44,7 +44,7 @@ pip install geobr
 
 # Basic Usage
 
-The syntax of all `geobr` functions operate one the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
+The syntax of all `geobr` functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
 ## R, reading the data as an `sf` object
 ```R
@@ -158,7 +158,7 @@ As of today, there are two other R packages with similar functionalities: [simpl
 
 -----
 
-# Credits <img align="right" src="r-package/man/figures/ipea_logo.png" alt="ipea" width="300">
+# Credits <img align="right" src="https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/ipea_logo.png?raw=true" alt="ipea" width="300">
 
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
