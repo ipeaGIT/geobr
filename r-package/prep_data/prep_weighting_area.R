@@ -28,6 +28,7 @@ setwd(root_dir)
 # Create Directory to keep original downloaded files
 destdir_raw <- "./weighting_area"
 dir.create(destdir_raw)
+setwd(destdir_raw)
 
 # create directory to save original shape files in sf format
 dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
@@ -38,7 +39,8 @@ dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 
 ###### 1. download the raw data from the original website source -----------------
 
-ftp <- "ftp://geoftp.ibge.gov.br/recortes_para_fins_estatisticos/areas_de_ponderacao/"
+download.file("https://opendata.arcgis.com/datasets/ffc3ef46614d4a7987ef122c53fd621e_6.zip" ,
+              destfile = paste0(destdir_raw,".zip"))
 
 
 #####  1.1 Unzip original data set -----------------
