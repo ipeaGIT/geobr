@@ -11,8 +11,9 @@ library(lwgeom)
 library(readr)
 library(furrr)
 library(future)
+library(mapview)
 
-
+mapviewOptions(platform = 'leafgl')
 
 ####### Load Support functions to use in the preprocessing of the data
 
@@ -34,7 +35,7 @@ setwd(destdir_raw)
 dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
 
 # create directory to save cleaned shape files in sf format
-dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
+dir.create(file.path("sf_all_years_cleaned"), showWarnings = FALSE)
 
 
 ###### 1. download the raw data from the original website source -----------------
@@ -62,106 +63,118 @@ state <- geobr::read_state()
 state <- unique(state$code_state)
 
 # dividir o arquivo original em arquivos originais subsetados por UF
-# broke original files and save by state 
+# broke original files and save by state
+
+original_sf <- st_read(raw_shapes, quiet = T, stringsAsFactors=F, options = "ENCODING=UTF-8")
 
 for(i in state){#i=state[3]
-  temp_sf <- st_read(raw_shapes, quiet = T, stringsAsFactors=F, options = "ENCODING=UTF-8")
-  temp_sf <- subset(temp_sf,str_sub(temp_sf$CD_GEOCODM,1,2)==i)
-  
+  temp_sf <- subset(original_sf, str_sub(original_sf$CD_GEOCODM,1,2)==i)
+
   # save in .rds
   file_name <- paste0(i, ".rds")
-  readr::write_rds(temp_sf, path = paste0("./sf_all_states_original/", file_name), compress="gz" )
+  readr::write_rds(temp_sf, path = paste0("./shapes_in_sf_all_years_original/", file_name), compress="gz" )
 }
 
 # list all files
-original_shapes <- list.files(path="./sf_all_states_original" ,full.names = T, pattern = ".rds")
+original_shapes <- list.files(path="./shapes_in_sf_all_years_original" ,full.names = T, pattern = ".rds")
 
 
 
 ###### 4. Cleaning weighting area files --------------------------------
 
-cleaning_data_fun <- function(f){ # f=original_shapes[2]
-  
+munis <- geobr::read_municipality(year=2010)
+munis$geom <- NULL
+munis <- select(munis, code_muni, name_muni)
+munis$code_muni <- as.character(munis$code_muni)
+
+cleaning_data_fun <- function(f){ # f=original_shapes[20]
+
   ### read data
-  # temp <- readRDS(f, file = f) #o arquivo abre por aqui, logo não está corrompido
+  # temp <- readRDS(f, file = f) #o arquivo abre por aqui, logo n?o est? corrompido
   # temp_sf1 <- st_read(f, quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
-  temp_sf1 <- readRDS(f)
-  
+  temp_sf1 <- readr::read_rds(f)
+
   ###### 2. rename column names -----------------
-  
+
   names(temp_sf1) <- names(temp_sf1) %>% tolower()
   colnames(temp_sf1)[colnames(temp_sf1) %in% c("cd_aponde","area_pond")] <- "code_weighting_area"
+  temp_sf1 <- select(temp_sf1, 'code_weighting_area', 'geometry')
+
   temp_sf2 <- add_state_info(temp_sf1, 'code_weighting_area')
   temp_sf2 <- add_region_info(temp_sf2, 'code_weighting_area')
   temp_sf2 <- dplyr::mutate(temp_sf2, code_muni = str_sub(code_weighting_area,1,7))
-  
-  
+
+  # add municipality name
+  temp_sf2 <- left_join(temp_sf2, munis)
+
+
   ###### reorder columns -----------------
-  temp_sf2 <- select(temp_sf2, code_weighting_area, code_muni, code_state, abbrev_state, code_region, name_region, geometry )
-  
-  
+  temp_sf2 <- select(temp_sf2, code_weighting_area, code_muni, name_muni, code_state, abbrev_state, code_region, name_region, geometry )
+
+
   ###### 3. ensure the data uses spatial projection SIRGAS 2000 epsg (SRID): 4674-----------------
-  
+
   temp_sf3 <- harmonize_projection(temp_sf2)
-  
+
   st_crs(temp_sf3)$epsg
   st_crs(temp_sf3)$input
   st_crs(temp_sf3)$proj4string
   st_crs(st_crs(temp_sf3)$wkt) == st_crs(temp_sf3)
-  
+
+
+
   ###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
-  
+
   # convert all factor columns to character
   temp_sf4 <- temp_sf3 %>% mutate_if(is.factor, function(x){ x %>% as.character() } )
-  
+
   # convert all character columns to UTF-8
   temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
-  
-  
+
+
   ###### 5. remove Z dimension of spatial data-----------------
-  
+
   # remove Z dimension of spatial data
   temp_sf5 <- temp_sf4 %>% st_sf() %>% st_zm( drop = T, what = "ZM")
-  
-  
-  
+
+
+
   ###### 6. fix eventual topology issues in the data-----------------
-  
+
   # Make any invalid geometry valid # st_is_valid( sf)
   # temp_sf6 <- lwgeom::st_make_valid(temp_sf5)
   temp_sf6 <- st_make_valid(temp_sf5)
-  
-  
-  
-  
+
+
+
+
   ###### convert to MULTIPOLYGON -----------------
   temp_sf6 <- to_multipolygon(temp_sf6)
-  
 
-  
+
+
   ###### 7. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
-  
+
   # simplify
-  temp_sf7 <- st_transform(temp_sf6, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
-  
-  
+  temp_sf7 <- simplify_temp_sf(temp_sf6, tolerance=100)
+  # mapview(temp_sf7)
+
   ###### 8. Clean data set and save it in geopackage format-----------------
-  
+
   # save original and simplified datasets
-  i <- str_sub(f,26,27)
-  readr::write_rds(temp_sf6, path= paste0("./sf_all_states_cleaned/", i, ".rds"),compress = "gz")
-  sf::st_write(temp_sf6, dsn= paste0("./sf_all_states_cleaned/", i, ".gpkg"))
-  sf::st_write(temp_sf7, dsn= paste0("./sf_all_states_cleaned/", i," _simplified", ".gpkg"))
+  i <- as.numeric(gsub("\\D", "", f))
+
+  # readr::write_rds(temp_sf6, path= paste0("./sf_all_years_cleaned/", i, ".rds"),compress = "gz")
+  sf::st_write(temp_sf6, dsn= paste0("./sf_all_years_cleaned/", i, "AP.gpkg"))
+  sf::st_write(temp_sf7, dsn= paste0("./sf_all_years_cleaned/", i,"AP_simplified", ".gpkg"))
 }
 
 
 
 # Apply funtion to all raw data sets
 
-lapply(X=original_shapes, FUN = cleaning_data_fun)
-
-
+pbapply::pblapply(X=original_shapes, FUN = cleaning_data_fun)
 
 
 
@@ -172,10 +185,10 @@ lapply(X=original_shapes, FUN = cleaning_data_fun)
 #   dir <- "./shapes_in_sf_all_years_cleaned/2010"
 #   dir.files <- list.files(dir,pattern = ".rds$", recursive = T, full.names = T)
 #   lista_uf <- unique(substr(dir.files,39, 40))
-# 
-# 
+#
+#
 # for (CODE in lista_uf) {# CODE <- 41
-# 
+#
 #     files <- dir.files[ substr(dir.files, 39, 40) ==CODE ]
 #     files <- lapply(X=files, FUN= readr::read_rds)
 #     shape <- do.call('rbind', files)
@@ -222,7 +235,7 @@ lapply(X=original_shapes, FUN = cleaning_data_fun)
 
   #   # simplify borders
   #   shape_simplified <- simplify_temp_sf(shape)
-  # 
+  #
   #   sf::st_write(shape, dsn = paste0("./",CODE,"AP.gpkg") )
   #   sf::st_write(shape_simplified, paste0("./",CODE,"AP_simplified", ".gpkg"))
   # }
