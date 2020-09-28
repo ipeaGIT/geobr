@@ -106,8 +106,7 @@ semi_arid_sf <- subset(all_munis, code_muni %in% semi_arid_munis$code_muni)
 
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-semi_arid_sf <- if( is.na(st_crs(semi_arid_sf)) ){ st_set_crs(semi_arid_sf, 4674) } else { st_transform(semi_arid_sf, 4674) }
-st_crs(semi_arid_sf) <- 4674
+temp_sf <- harmonize_projection(temp_sf)
 
 
 # Make any invalid geometry valid # st_is_valid( sf)

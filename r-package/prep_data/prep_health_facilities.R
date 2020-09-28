@@ -51,7 +51,7 @@ setwd(root_dir)
 
 # create year_update column
   cnes$year_update <- as.Date(cnes$data_atualizacao) %>% format("%Y") %>% as.numeric()
-  table(cnes$year_update)  
+  table(cnes$year_update)
 
 # find most common year of update
   ux <- unique(cnes$year_update)
@@ -60,8 +60,8 @@ setwd(root_dir)
 
 # Create dir to save data of that specific year
   dir.create(paste0("./health_facilities/",most_freq_year))
-  
-  
+
+
 # Save original raw data
   fwrite(cnes, file = paste0("./health_facilities/",most_freq_year,"/cnes_rawdata_",most_freq_year,".csv"))
 
@@ -76,21 +76,21 @@ rm(list=setdiff(ls(), c("root_dir")))
 
 
 
-  
-  
+
+
 
 #### 3. Save cleaned data sets in compact .rds format-----------------
 
 # list all csv files
   all_csv <- list.files(path="./health_facilities", full.names = T, recursive = T, pattern = ".csv")
-  
+
 # read data
   cnes <- fread(all_csv)
   head(cnes)
 
 # Create column with state codes
   setDT(cnes)[, code_state := substr(co_ibge, 1, 2) %>% as.numeric() ]
-  
+
 # Create column with state abbreviations
   cnes[ code_state== 11, abbrev_state :=	"RO" ]
   cnes[ code_state== 12, abbrev_state :=	"AC" ]
@@ -120,38 +120,38 @@ rm(list=setdiff(ls(), c("root_dir")))
   cnes[ code_state== 52, abbrev_state :=	"GO" ]
   cnes[ code_state== 53, abbrev_state :=	"DF" ]
   head(cnes)
-  
-  
-# Convert originl data frame into sf  
-  cnes_sf <- st_as_sf(x = cnes, 
+
+
+# Convert originl data frame into sf
+  cnes_sf <- st_as_sf(x = cnes,
                           coords = c("long", "lat"),
                           crs = "+proj=longlat +datum=WGS84")
-  
+
 
   head(cnes_sf)
   table(cnes_sf$origem_dado)
-  
+
 # create year_update column
   cnes_sf$year_update <- as.Date(cnes_sf$data_atualizacao) %>% format("%Y") %>% as.numeric()
-  table(cnes_sf$year_update)  
-  
+  table(cnes_sf$year_update)
+
 # find most common year of update
   ux <- unique(cnes_sf$year_update)
   most_freq_year <- ux[which.max(tabulate(match(cnes_sf$year_update, ux)))]
-  
+
 
 # Create dir to save data of that specific year
   dir.create(paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year))
-  
 
-    
-  
 
-  
+
+
+
+
 ### Change colnames
   head(cnes_sf)
-  cnes_sf <- dplyr::select(cnes_sf, 
-                            code_cnes = co_cnes, 
+  cnes_sf <- dplyr::select(cnes_sf,
+                            code_cnes = co_cnes,
                             code_muni = co_ibge,
                             code_state= code_state,
                             abbrev_state= abbrev_state,
@@ -159,27 +159,25 @@ rm(list=setdiff(ls(), c("root_dir")))
                             year_update = year_update,
                             data_source = origem_dado,
                             geometry=geometry)
-  
+
   head(cnes_sf)
-  
 
-# Change CRS to SIRGAS  Geodetic reference system "SIRGAS2000" , CRS(4674).  
-  st_crs(cnes_sf)
-  cnes_sf <- st_transform(cnes_sf, 4674)
 
-  
-  
-  
-  
-  
+# Change CRS to SIRGAS  Geodetic reference system "SIRGAS2000" , CRS(4674).
+  temp_sf <- harmonize_projection(temp_sf)
 
-  
+
+
+
+
+
+
+
 # Save raw file in sf format
   write_rds(cnes_sf, paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".rds"), compress = "gz")
   sf::st_write(cnes_sf, dsn= paste0("./health_facilities/shapes_in_sf_all_years_cleaned/",most_freq_year,"/cnes_sf_",most_freq_year,".gpkg"))
 
-  
-  
-  
-  
-  
+
+
+
+

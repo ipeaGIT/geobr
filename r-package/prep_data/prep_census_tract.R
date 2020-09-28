@@ -523,7 +523,7 @@ clean_tracts <- function( sf_file ){
       }
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-      temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+      temp_sf <- harmonize_projection(temp_sf)
       # mapview::mapview(temp_sf)
 
     # Convert columns from factors to characters
