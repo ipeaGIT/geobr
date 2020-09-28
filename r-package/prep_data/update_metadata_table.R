@@ -37,7 +37,7 @@
 
   # table(metadata$geo)
   # temp_ano <- subset(metadata, geo=="biomes")
-  # temp_ano <- subset(metadata, geo=="country")
+  # temp_ano <- subset(metadata, geo=="weighting_area")
 
 
 
