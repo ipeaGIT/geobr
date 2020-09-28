@@ -97,19 +97,19 @@ cleaning_data_fun <- function(f){ # f=original_shapes[20]
   ###### 2. rename column names -----------------
 
   names(temp_sf1) <- names(temp_sf1) %>% tolower()
-  colnames(temp_sf1)[colnames(temp_sf1) %in% c("cd_aponde","area_pond")] <- "code_weighting_area"
-  temp_sf1 <- select(temp_sf1, 'code_weighting_area', 'geometry')
+  colnames(temp_sf1)[colnames(temp_sf1) %in% c("cd_aponde","area_pond")] <- "code_weighting"
+  temp_sf1 <- select(temp_sf1, 'code_weighting', 'geometry')
 
-  temp_sf2 <- add_state_info(temp_sf1, 'code_weighting_area')
-  temp_sf2 <- add_region_info(temp_sf2, 'code_weighting_area')
-  temp_sf2 <- dplyr::mutate(temp_sf2, code_muni = str_sub(code_weighting_area,1,7))
+  temp_sf2 <- add_state_info(temp_sf1, 'code_weighting')
+  temp_sf2 <- add_region_info(temp_sf2, 'code_weighting')
+  temp_sf2 <- dplyr::mutate(temp_sf2, code_muni = str_sub(code_weighting,1,7))
 
   # add municipality name
   temp_sf2 <- left_join(temp_sf2, munis)
 
 
   ###### reorder columns -----------------
-  temp_sf2 <- select(temp_sf2, code_weighting_area, code_muni, name_muni, code_state, abbrev_state, code_region, name_region, geometry )
+  temp_sf2 <- select(temp_sf2, code_weighting, code_muni, name_muni, code_state, abbrev_state, code_region, name_region, geometry )
 
 
   ###### 3. ensure the data uses spatial projection SIRGAS 2000 epsg (SRID): 4674-----------------
@@ -166,13 +166,13 @@ cleaning_data_fun <- function(f){ # f=original_shapes[20]
   i <- as.numeric(gsub("\\D", "", f))
 
   # readr::write_rds(temp_sf6, path= paste0("./sf_all_years_cleaned/", i, ".rds"),compress = "gz")
-  sf::st_write(temp_sf6, dsn= paste0("./sf_all_years_cleaned/", i, "AP.gpkg"))
-  sf::st_write(temp_sf7, dsn= paste0("./sf_all_years_cleaned/", i,"AP_simplified", ".gpkg"))
+  sf::st_write(temp_sf6, dsn= paste0("./sf_all_years_cleaned/", i, ".gpkg"))
+  sf::st_write(temp_sf7, dsn= paste0("./sf_all_years_cleaned/", i,"_simplified", ".gpkg"))
 }
 
 
 
-# Apply funtion to all raw data sets
+# Apply function to all raw data sets
 
 pbapply::pblapply(X=original_shapes, FUN = cleaning_data_fun)
 
@@ -196,38 +196,38 @@ pbapply::pblapply(X=original_shapes, FUN = cleaning_data_fun)
 
 # # fix code digit 10th (issue 174)
 # if(CODE %in% c(21, 24, 29, 33, 41, 43)){
-#   shape$code_weighting_area <- as.character(shape$code_weighting_area)
+#   shape$code_weighting <- as.character(shape$code_weighting)
 #
 #   ## Replace digits
 #     # geobr::lookup_muni(name_muni = 'IMPERATRIz')
 #
 #     # Rio
-#     substr( shape$code_weighting_area[which(shape$code_muni==3304557)] , 10, 10) <- '5'
+#     substr( shape$code_weighting[which(shape$code_muni==3304557)] , 10, 10) <- '5'
 #     # Natal
-#     substr( shape$code_weighting_area[which(shape$code_muni==2408102)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==2408102)] , 10, 10) <- '4'
 #     # Caxias do Sul
-#     substr( shape$code_weighting_area[which(shape$code_muni==4305108)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4305108)] , 10, 10) <- '4'
 #     # Porto Alegre
-#     substr( shape$code_weighting_area[which(shape$code_muni==4314902)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4314902)] , 10, 10) <- '4'
 #     # novo hamburgo
-#     substr( shape$code_weighting_area[which(shape$code_muni==4313409)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4313409)] , 10, 10) <- '4'
 #     # Rio Grande
-#     substr( shape$code_weighting_area[which(shape$code_muni==4315602)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4315602)] , 10, 10) <- '4'
 #     # Santa Maria
-#     substr( shape$code_weighting_area[which(shape$code_muni==4316907)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4316907)] , 10, 10) <- '4'
 #     # Viamao
-#     substr( shape$code_weighting_area[which(shape$code_muni==4323002)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4323002)] , 10, 10) <- '4'
 #     # maringa
-#     substr( shape$code_weighting_area[which(shape$code_muni==4115200)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==4115200)] , 10, 10) <- '4'
 #     # FEIRA_DE_SANTANA
-#     substr( shape$code_weighting_area[which(shape$code_muni==2910800)] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==2910800)] , 10, 10) <- '4'
 #     # Salvador
-#     substr( shape$code_weighting_area[which(shape$code_muni==2927408 )] , 10, 10) <- '5'
+#     substr( shape$code_weighting[which(shape$code_muni==2927408 )] , 10, 10) <- '5'
 #     # Imperatriz
-#     substr( shape$code_weighting_area[which(shape$code_muni==2105302 )] , 10, 10) <- '4'
+#     substr( shape$code_weighting[which(shape$code_muni==2105302 )] , 10, 10) <- '4'
 #
 #     # back to numeric
-#     shape$code_weighting_area <- as.numeric(shape$code_weighting_area)
+#     shape$code_weighting <- as.numeric(shape$code_weighting)
 # }
 
 
