@@ -2,7 +2,7 @@
 
 
 -------------------------------------------------------
-# geobr v1.3.1 dev
+# geobr v1.4 dev
 
 
 ### New data sets/functions
@@ -15,6 +15,7 @@
 * `read_municipality()` function now also takes additional inputs for data sets before 1992. Closes issue #163 (added in 2020-06)
 * harmonized the `st_geometry_type()` of data sets to `MULTIPOLYGON`, when appropriate. Closes issues #41 #151  #135 #172
 * fix typo in `geobr::grid_state_correspondence_table`. Closes #187
+* argument `tp` fully deprecated and replaced with `simplified`. No more warning message
 
 
 -------------------------------------------------------

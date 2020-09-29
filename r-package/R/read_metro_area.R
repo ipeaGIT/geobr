@@ -12,7 +12,6 @@
 #'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
 #'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
-#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @examples \dontrun{
@@ -28,9 +27,6 @@
 #'
 #'
 read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE, tp){
-
-  # deprecated 'tp' argument
-  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="metropolitan_area", year=year, simplified=simplified)
