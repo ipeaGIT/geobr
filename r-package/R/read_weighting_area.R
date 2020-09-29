@@ -84,9 +84,9 @@ read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE
 
     # return code weighting area
 
-    } else if(code_weighting %in% temp_sf$code_weighting_area){    # Get weighting area
+    } else if(code_weighting %in% temp_sf$code_weighting){    # Get weighting area
       x <- code_weighting
-      temp_sf <- subset(temp_sf, code_weighting_area==x)
+      temp_sf <- subset(temp_sf, code_weighting==x)
       return(temp_sf)
 
     } else{

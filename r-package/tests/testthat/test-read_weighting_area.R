@@ -16,7 +16,7 @@ test_that("read_weighting_area", {
   testthat::expect_output( read_weighting_area(code_weighting=11, year=2010) )
 
 
-  test_code <- read_weighting_area(code_weighting=5201108005004, year=2010)
+  test_code <- read_weighting_area(code_weighting=5205109003001, year=2010)
 
   # check sf object
   testthat::expect_true(is(test_code, "sf"))
