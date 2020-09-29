@@ -31,13 +31,17 @@ source("./prep_data/prep_functions.R")
 
 #### Using data already in the geobr package -----------------
 
+
 # Root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
+root_geobr <- getwd()
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
 
 
 # create directory to save cleaned shape files in sf format
-# dir.create(file.path("./shapes_in_sf_all_years_cleaned/country"), showWarnings = T)
+destdir_raw <- "./country"
+dir.create(destdir_raw)
+setwd(destdir_raw)
 
 
 # List years for which we have data
@@ -76,14 +80,14 @@ get_country <- function(y){
     original_crs <- st_crs(sf_states)
 
   # b) make sure we have valid geometries
-    temp_sf <- lwgeom::st_make_valid(sf_states)
+    temp_sf <- sf::st_make_valid(sf_states)
     temp_sf <- temp_sf %>% st_buffer(0)
 
     sf_states1 <- temp_sf %>% st_cast("MULTIPOLYGON")
 
   # c) create attribute with the number of points each polygon has
     points_in_each_polygon = sapply(1:dim(sf_states1)[1], function(i)
-      length(st_coordinates(sf_states1$geometry[i])))
+      length(st_coordinates(sf_states1$geom[i])))
 
     sf_states1$points_in_each_polygon <- points_in_each_polygon
     mypols <- sf_states1 %>% filter(points_in_each_polygon > 0)
@@ -120,14 +124,12 @@ get_country <- function(y){
     dir.create(dest_dir, showWarnings = FALSE)
 
   # g) generate a lighter version of the dataset with simplified borders
-    outerBounds7 <- st_transform(outerBounds7, crs=3857) %>%
-      sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
-      st_transform(crs=4674)
+    temp_sf_simp <- simplify_temp_sf(temp_sf)
 
 
   # h) save as an sf file
-    sf::st_write(outerBounds, dsn=paste0(dest_dir,"/country_",y,".gpkg") )
-    sf::st_write(outerBounds7,dsn=paste0(dest_dir,"/country_",y," _simplified", ".gpkg"))
+    sf::st_write(temp_sf, dsn=paste0("country_",y,".gpkg") )
+    sf::st_write(temp_sf_simp,dsn=paste0("country_",y," _simplified", ".gpkg"))
 
 }
 

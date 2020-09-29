@@ -1,5 +1,5 @@
 #### Support functions to use in the preprocessing of the data
-
+library(data.table)
 
 
 ###### list ftp folders -----------------
