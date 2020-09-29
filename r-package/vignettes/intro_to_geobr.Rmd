@@ -38,7 +38,6 @@ Now let's load the libraries we'll use in this vignette.
   library(ggplot2)
   library(sf)
   library(dplyr)
-  library(rio)
 ```
 
 
