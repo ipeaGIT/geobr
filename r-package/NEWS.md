@@ -7,7 +7,7 @@
 
 ### New data sets/functions
 * data set `read_health_region` to read the health regions - closes issue #149 (added in 2020-07).
-* 2019 data sets of `intermediate` and `immediate` regions 
+* updated 2019 data sets of `intermediate`, `immediate` `micro` and `meso` regions, `states` and `municipalities`.
 
 ### Minor changes
 * improved documentation of argument `simplified`
