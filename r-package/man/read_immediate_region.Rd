@@ -25,8 +25,6 @@ For spatial analysis and statistics users should set simplified = FALSE. Borders
 simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
-
-\item{tp}{Argument deprecated. Please use argument 'simplified'}
 }
 \description{
 The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions

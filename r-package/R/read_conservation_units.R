@@ -10,7 +10,6 @@
 #'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
 #'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
-#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -22,9 +21,6 @@
 #'   b <- read_conservation_units(date=201909)
 #'}
 read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE, tp){
-
-  # deprecated 'tp' argument
-  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="conservation_units", year=date, simplified=simplified)

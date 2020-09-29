@@ -10,7 +10,6 @@
 #'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
 #' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
-#' @param tp Argument deprecated. Please use argument 'simplified'
 #'
 #' @export
 #' @family general area functions
@@ -37,9 +36,6 @@
 #'
 #'
 read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=TRUE, showProgress=TRUE, tp){
-
-  # deprecated 'tp' argument
-  if (!missing("tp")){stop(" 'tp' argument deprecated. Please use argument 'simplified' TRUE or FALSE")}
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="census_tract", year=year, simplified=simplified)
