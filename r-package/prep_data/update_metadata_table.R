@@ -36,7 +36,7 @@
 
 
   # table(metadata$geo)
-  # temp_ano <- subset(metadata, geo=="biomes")
+  # temp_ano <- subset(metadata, geo=="regions")
   # temp_ano <- subset(metadata, geo=="weighting_area")
 
 
@@ -77,7 +77,7 @@
   table(metadata$geo)
   table(metadata$year)
 
-  subset(metadata, geo == 'metropolitan_area')
+  subset(metadata, geo == 'country')
 
 # save updated metadata table
   # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_gpkg.csv")

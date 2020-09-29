@@ -7,6 +7,7 @@ library(dplyr)
 library(mapview)
 library(readr)
 library(future.apply)
+library(data.table)
 
 ####### Load Support functions to use in the preprocessing of the data
 
@@ -32,7 +33,7 @@ prep_region <- function(year){
   dir.create(destdir)
 
   # a) reads all states sf files and pile them up
-  sf_states <- geobr::read_state(code_state = "all", year = y)
+  sf_states <- geobr::read_state(code_state = "all", year = y, simplified = F)
 
   # remove wrong-coded regions
   sf_states <- subset(sf_states, code_region %in% c(1:5))
@@ -42,7 +43,7 @@ prep_region <- function(year){
   original_crs <- st_crs(sf_states)
 
   # b) make sure we have valid geometries
-  temp_sf <- lwgeom::st_make_valid(sf_states)
+  temp_sf <- sf::st_make_valid(sf_states)
   temp_sf <- temp_sf %>% st_buffer(0)
 
   sf_states1 <- temp_sf %>% st_cast("MULTIPOLYGON")
@@ -56,7 +57,7 @@ dissolve_each_region <- function(region_code){
 
     # c) create attribute with the number of points each polygon has
     points_in_each_polygon = sapply(1:dim(tem_region)[1], function(i)
-      length(st_coordinates(tem_region$geometry[i])))
+      length(st_coordinates(tem_region$geom[i])))
 
     tem_region$points_in_each_polygon <- points_in_each_polygon
     mypols <- subset(tem_region, points_in_each_polygon > 0)
@@ -86,49 +87,26 @@ dissolve_each_region <- function(region_code){
 
 all_regions <- lapply(unique(sf_states1$code_region), dissolve_each_region)
 all_regions <- do.call('rbind', all_regions)
+
 ### add region names
-all_regions$name_region <- ifelse(all_regions$code_region==1, 'Norte',
-                           ifelse(all_regions$code_region==2, 'Nordeste',
-                           ifelse(all_regions$code_region==3, 'Sudeste',
-                           ifelse(all_regions$code_region==4, 'Sul',
-                           ifelse(all_regions$code_region==5, 'Centro Oeste', NA)))))
+all_regions <- add_region_info(temp_sf = all_regions, column = 'code_region')
 all_regions <- select(all_regions, c('code_region', 'name_region', 'geometry'))
 
-return(all_regions)
-}
-
-# aplicar para todas regioes e empilha resultados
-temp_sf <- lapply(unique(sf_states1$code_region), dissolve_each_region)
-temp_sf <- do.call('rbind', temp_sf)
-
-### add region names
-  temp_sf$name_region <- ifelse(temp_sf$code_region==1, 'Norte',
-                         ifelse(temp_sf$code_region==2, 'Nordeste',
-                         ifelse(temp_sf$code_region==3, 'Sudeste',
-                         ifelse(temp_sf$code_region==4, 'Sul',
-                         ifelse(temp_sf$code_region==5, 'Centro Oeste', NA)))))
-
-  # redorder columns
-  temp_sf <- dplyr::select(temp_sf, c('code_region', 'name_region', 'geometry'))
+###### convert to MULTIPOLYGON
+all_regions <- to_multipolygon(all_regions)
 
 
-  ###### convert to MULTIPOLYGON -----------------
-  temp_sf <- to_multipolygon(temp_sf)
 
-
-  ###### 7. generate a lighter version of the dataset with simplified borders -----------------
+###### 7. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
 
   # simplify
-  temp_sf7 <- st_transform(temp_sf, crs=3857) %>%
-    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>%
-    st_transform(crs=4674)
+  temp_sf7 <- simplify_temp_sf(all_regions)
 
 
   # Save cleaned sf in the cleaned directory
-  readr::write_rds(temp_sf, path= paste0(destdir,"/regions_",y,".rds"), compress = "gz")
-  sf::st_write(temp_sf, dsn= paste0(destdir,"/regions_",y,".gpkg"))
-  sf::st_write(temp_sf7, dsn= paste0(destdir,"/regions_",y," _simplified", ".gpkg"))
+  sf::st_write(all_regions, dsn= paste0(destdir,"/regions_",y,".gpkg"))
+  sf::st_write(temp_sf7, dsn= paste0(destdir,"/regions_",y,"_simplified", ".gpkg"))
 
 }
 

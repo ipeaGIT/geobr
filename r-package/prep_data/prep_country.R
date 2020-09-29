@@ -11,6 +11,7 @@ library(rgeos)
 library(maptools)
 library(devtools)
 library(parallel)
+library(data.table)
 
 ####### Load Support functions to use in the preprocessing of the data
 
@@ -74,7 +75,7 @@ get_country <- function(y){
 
   # a) reads all states sf files and pile them up
     # y <- 2018
-    sf_states <- read_state(year= y , code_state = "all")
+    sf_states <- read_state(year= y , code_state = "all", simplified = F)
 
   # store original crs
     original_crs <- st_crs(sf_states)
@@ -129,7 +130,7 @@ get_country <- function(y){
 
   # h) save as an sf file
     sf::st_write(temp_sf, dsn=paste0("country_",y,".gpkg") )
-    sf::st_write(temp_sf_simp,dsn=paste0("country_",y," _simplified", ".gpkg"))
+    sf::st_write(temp_sf_simp,dsn=paste0("country_",y,"_simplified", ".gpkg"))
 
 }
 
