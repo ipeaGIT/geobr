@@ -249,14 +249,13 @@ for (i in years){
   temp_sf$name_muni <- stringi::stri_encode(as.character(temp_sf$name_muni), "UTF-8")
 
   # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-  temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
-  st_crs(temp_sf) <- 4674
+  temp_sf <- harmonize_projection(temp_sf)
 
   # Convert columns from factors to characters
   temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
 
   temp_sf$code_muni <- as.numeric(temp_sf$code_muni) # keep code as.numeric()
-  
+
   # Save cleaned sf in the cleaned directory
   setwd(head_dir)
   destdir <- file.path("./shapes_in_sf_all_years_cleaned",i)

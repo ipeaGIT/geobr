@@ -150,7 +150,7 @@ head(temp_sf)
 temp_sf <- st_as_sf(temp_sf, crs=original_crs)
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+temp_sf <- harmonize_projection(temp_sf)
 
 # Make any invalid geometry valid # st_is_valid( sf)
 temp_sf <- lwgeom::st_make_valid(temp_sf)

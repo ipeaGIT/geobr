@@ -106,8 +106,7 @@ temp_sf$ID1 <- NULL
 temp_sf3 <- harmonize_projection(temp_sf)
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
-st_crs(temp_sf)
+temp_sf <- harmonize_projection(temp_sf)
 
 st_crs(temp_sf3)$epsg
 st_crs(temp_sf3)$input

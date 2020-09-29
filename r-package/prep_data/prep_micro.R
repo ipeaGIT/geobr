@@ -85,7 +85,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
     temp_sf$name_micro <- stringr::str_to_title(temp_sf$name_micro)
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-    temp_sf <- if( is.na(st_crs(temp_sf)) ){ st_set_crs(temp_sf, 4674) } else { st_transform(temp_sf, 4674) }
+    temp_sf <- harmonize_projection(temp_sf)
 
     # Convert columns from factors to characters
     temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf

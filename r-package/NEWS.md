@@ -7,13 +7,15 @@
 
 ### New data sets/functions
 * data set `read_health_region` to read the health regions - closes issue #149 (added in 2020-07).
-* 2019 data sets of `intermediate` and `immediate` regions 
+* updated 2019 data sets of `intermediate`, `immediate` `micro` and `meso` regions, `states` and `municipalities`.
 
 ### Minor changes
 * improved documentation of argument `simplified`
 * included documentation of argument `zone` in the `read_census_tract` function
 * `read_municipality()` function now also takes additional inputs for data sets before 1992. Closes issue #163 (added in 2020-06)
 * harmonized the `st_geometry_type()` of data sets to `MULTIPOLYGON`, when appropriate. Closes issues #41 #151  #135 #172
+* fix typo in `geobr::grid_state_correspondence_table`. Closes #187
+
 
 -------------------------------------------------------
 # geobr v1.3 (2020-03-30)
