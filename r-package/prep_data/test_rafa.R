@@ -227,6 +227,7 @@ function_coverage(fun='read_urban_area', test_file("tests/testthat/test-read_urb
 
 function_coverage(fun='read_indigenous_land', test_file("tests/testthat/test-read_indigenous_land.R"))
 function_coverage(fun='read_disaster_risk_area', test_file("tests/testthat/test-read_disaster_risk_area.R"))
+function_coverage(fun='read_health_region', test_file("tests/testthat/test-read_health_region.R"))
 
 
 function_coverage(fun='read_intermediate_region', test_file("tests/testthat/test-read_intermediate_region.R"))
