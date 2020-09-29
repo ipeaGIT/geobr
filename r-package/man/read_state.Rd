@@ -8,8 +8,7 @@ read_state(
   code_state = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{

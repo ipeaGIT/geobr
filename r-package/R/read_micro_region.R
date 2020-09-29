@@ -31,7 +31,7 @@
 #'
 #'
 
-read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE, tp){
+read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="micro_region", year=year, simplified=simplified)

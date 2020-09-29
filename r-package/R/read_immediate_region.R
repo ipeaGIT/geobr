@@ -32,7 +32,7 @@
 #' }
 #'
 #'
-read_immediate_region <- function(code_immediate="all", year=2019, simplified=TRUE, showProgress=TRUE, tp){
+read_immediate_region <- function(code_immediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="immediate_regions", year=year, simplified=simplified)

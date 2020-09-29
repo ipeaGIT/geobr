@@ -8,8 +8,7 @@ read_meso_region(
   code_meso = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{

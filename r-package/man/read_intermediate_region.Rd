@@ -8,8 +8,7 @@ read_intermediate_region(
   code_intermediate = "all",
   year = 2019,
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{

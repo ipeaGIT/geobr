@@ -4,12 +4,7 @@
 \alias{read_conservation_units}
 \title{Download official data of Brazilian conservation untis as an sf object.}
 \usage{
-read_conservation_units(
-  date = 201909,
-  simplified = TRUE,
-  showProgress = TRUE,
-  tp
-)
+read_conservation_units(date = 201909, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{date}{A date number in YYYYMM format (Defaults to 201909)}

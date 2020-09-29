@@ -32,7 +32,7 @@
 #' }
 #'
 #'
-read_intermediate_region <- function(code_intermediate="all", year=2019, simplified=TRUE, showProgress=TRUE, tp){
+read_intermediate_region <- function(code_intermediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="intermediate_regions", year=year, simplified=simplified)

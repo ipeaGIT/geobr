@@ -30,7 +30,7 @@
 #'}
 #'
 
-read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showProgress=TRUE, tp){
+read_municipality <- function(code_muni="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="municipality", year=year, simplified=simplified)

@@ -30,7 +30,7 @@
 #' }
 #'
 
-read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showProgress=TRUE, tp){
+read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="meso_region", year=year, simplified=simplified)

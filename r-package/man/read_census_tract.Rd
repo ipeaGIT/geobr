@@ -9,8 +9,7 @@ read_census_tract(
   year = 2010,
   zone = "urban",
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{

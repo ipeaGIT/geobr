@@ -19,7 +19,7 @@
 #'   a <- read_amazon(year=2012)
 #'}
 #'
-read_amazon <- function(year=2012, simplified=TRUE, showProgress=TRUE, tp){
+read_amazon <- function(year=2012, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="amazonia_legal", year=year, simplified=simplified)

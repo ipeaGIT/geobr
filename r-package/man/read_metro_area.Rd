@@ -4,7 +4,7 @@
 \alias{read_metro_area}
 \title{Download shape files of official metropolitan areas in Brazil as an sf object.}
 \usage{
-read_metro_area(year = 2018, simplified = TRUE, showProgress = TRUE, tp)
+read_metro_area(year = 2018, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{A year number in YYYY format (defaults to 2018)}

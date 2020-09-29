@@ -24,7 +24,7 @@
 #' }
 #'
 
-read_indigenous_land <- function(date=201907, simplified=TRUE, showProgress=TRUE, tp){
+read_indigenous_land <- function(date=201907, simplified=TRUE, showProgress=TRUE){
 
 # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="indigenous_land", year=date, simplified=simplified)

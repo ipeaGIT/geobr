@@ -22,7 +22,7 @@
 #'
 #'}
 #'
-read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE, tp){
+read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="biomes", year=year, simplified=simplified)

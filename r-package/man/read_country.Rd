@@ -4,7 +4,7 @@
 \alias{read_country}
 \title{Download shape file of Brazil as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
 \usage{
-read_country(year = 2010, simplified = TRUE, showProgress = TRUE, tp)
+read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{Year of the data (defaults to 2010)}
