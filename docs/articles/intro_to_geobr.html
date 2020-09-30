@@ -31,18 +31,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -97,18 +91,19 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install geobr from CRAN or the development version to use the latest features.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># From CRAN</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"geobr"</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># From CRAN</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"geobr"</span><span class="op">)</span>
 
 <span class="co"># Development version</span>
-  <span class="kw pkg">utils</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages</a></span>(<span class="st">'geobr'</span>)
-  <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"ipeaGIT/geobr"</span>, <span class="kw">subdir</span> <span class="kw">=</span> <span class="st">"r-package"</span>)</pre></body></html></div>
+  <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages</a></span><span class="op">(</span><span class="st">'geobr'</span><span class="op">)</span>
+  <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"ipeaGIT/geobr"</span>, subdir <span class="op">=</span> <span class="st">"r-package"</span><span class="op">)</span></pre></div>
 <p>Now let’s load the libraries we’ll use in this vignette.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r">  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">geobr</span>)
-  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
-  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rio</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr">geobr</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></pre></div>
 </div>
 <div id="general-usage" class="section level2">
 <h2 class="hasAnchor">
@@ -117,11 +112,12 @@
 <h3 class="hasAnchor">
 <a href="#available-data-sets" class="anchor"></a>Available data sets</h3>
 <p>The geobr package covers 21 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the <code><a href="../reference/list_geobr.html">list_geobr()</a></code> function.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Available data sets</span>
-<span class="no">datasets</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/list_geobr.html">list_geobr</a></span>()
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co"># Available data sets</span>
+<span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_geobr.html">list_geobr</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">datasets</span>, <span class="kw">n</span><span class="kw">=</span><span class="fl">21</span>)
-<span class="co">#&gt; # A tibble: 23 x 4</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">datasets</span>, n<span class="op">=</span><span class="fl">21</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 22 x 4</span>
 <span class="co">#&gt;    `function`       geography            years                         source   </span>
 <span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;                &lt;chr&gt;                         &lt;chr&gt;    </span>
 <span class="co">#&gt;  1 `read_country`   Country              1872, 1900, 1911, 1920, 1933~ IBGE     </span>
@@ -129,23 +125,23 @@
 <span class="co">#&gt;  3 `read_state`     States               1872, 1900, 1911, 1920, 1933~ IBGE     </span>
 <span class="co">#&gt;  4 `read_meso_regi~ Meso region          2000, 2001, 2010, 2013, 2014~ IBGE     </span>
 <span class="co">#&gt;  5 `read_micro_reg~ Micro region         2000, 2001, 2010, 2013, 2014~ IBGE     </span>
-<span class="co">#&gt;  6 `read_intermedi~ Intermediate region  2017                          IBGE     </span>
-<span class="co">#&gt;  7 `read_immediate~ Immediate region     2017                          IBGE     </span>
-<span class="co">#&gt;  8 `read_municipal~ Municipality         1872, 1900, 1911, 1920, 1933~ IBGE     </span>
-<span class="co">#&gt;  9 `read_weighting~ Census weighting ar~ 2010                          IBGE     </span>
-<span class="co">#&gt; 10 `read_census_tr~ Census tract (setor~ 2000, 2010                    IBGE     </span>
-<span class="co">#&gt; 11 `read_municipal~ Municipality seats ~ 1872, 1900, 1911, 1920, 1933~ IBGE     </span>
-<span class="co">#&gt; 12 `read_statistic~ Statistical Grid of~ 2010                          IBGE     </span>
-<span class="co">#&gt; 13 `read_metro_are~ Metropolitan areas   1970, 2001, 2002, 2003, 2005~ IBGE     </span>
-<span class="co">#&gt; 14 `read_urban_are~ Urban footprints     2005, 2015                    IBGE     </span>
-<span class="co">#&gt; 15 `read_amazon`    Brazil's Legal Amaz~ 2012                          MMA      </span>
-<span class="co">#&gt; 16 `read_biomes`    Biomes               2004, 2019                    IBGE     </span>
-<span class="co">#&gt; 17 `read_conservat~ Environmental Conse~ 201909                        MMA      </span>
-<span class="co">#&gt; 18 `read_disaster_~ Disaster risk areas  2010                          CEMADEN ~</span>
-<span class="co">#&gt; 19 `read_indigenou~ Indigenous lands     201907                        FUNAI    </span>
-<span class="co">#&gt; 20 `read_semiarid`  Semi Arid region     2005, 2017                    IBGE     </span>
-<span class="co">#&gt; 21 `read_health_fa~ Health facilities    2015                          CNES, Da~</span>
-<span class="co">#&gt; # ... with 2 more rows</span></pre></body></html></div>
+<span class="co">#&gt;  6 `read_intermedi~ Intermediate region  2017, 2019                    IBGE     </span>
+<span class="co">#&gt;  7 `read_immediate~ Immediate region     2017, 2019                    IBGE     </span>
+<span class="co">#&gt;  8 `read_weighting~ Census weighting ar~ 2010                          IBGE     </span>
+<span class="co">#&gt;  9 `read_census_tr~ Census tract (setor~ 2000, 2010                    IBGE     </span>
+<span class="co">#&gt; 10 `read_municipal~ Municipality seats ~ 1872, 1900, 1911, 1920, 1933~ IBGE     </span>
+<span class="co">#&gt; 11 `read_statistic~ Statistical Grid of~ 2010                          IBGE     </span>
+<span class="co">#&gt; 12 `read_metro_are~ Metropolitan areas   1970, 2001, 2002, 2003, 2005~ IBGE     </span>
+<span class="co">#&gt; 13 `read_urban_are~ Urban footprints     2005, 2015                    IBGE     </span>
+<span class="co">#&gt; 14 `read_amazon`    Brazil's Legal Amaz~ 2012                          MMA      </span>
+<span class="co">#&gt; 15 `read_biomes`    Biomes               2004, 2019                    IBGE     </span>
+<span class="co">#&gt; 16 `read_conservat~ Environmental Conse~ 201909                        MMA      </span>
+<span class="co">#&gt; 17 `read_disaster_~ Disaster risk areas  2010                          CEMADEN ~</span>
+<span class="co">#&gt; 18 `read_indigenou~ Indigenous lands     201907                        FUNAI    </span>
+<span class="co">#&gt; 19 `read_semiarid`  Semi Arid region     2005, 2017                    IBGE     </span>
+<span class="co">#&gt; 20 `read_health_fa~ Health facilities    2015                          CNES, Da~</span>
+<span class="co">#&gt; 21 `read_health_re~ Health regions       1991, 1994, 1997, 2001, 2005~ DataSUS  </span>
+<span class="co">#&gt; # ... with 1 more row</span></pre></div>
 </div>
 </div>
 <div id="download-spatial-data-as-sf-objects" class="section level2">
@@ -153,20 +149,23 @@
 <a href="#download-spatial-data-as-sf-objects" class="anchor"></a>Download spatial data as <code>sf</code> objects</h2>
 <p>The syntax of all <em>geobr</em> functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.</p>
 <p>Download an specific geographic area at a given year</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># State of Sergige</span>
-  <span class="no">state</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_state.html">read_state</a></span>(<span class="kw">code_state</span><span class="kw">=</span><span class="st">"SE"</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2018</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co"># State of Sergige</span>
+  <span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_state.html">read_state</a></span><span class="op">(</span>code_state<span class="op">=</span><span class="st">"SE"</span>, year<span class="op">=</span><span class="fl">2018</span><span class="op">)</span>
 
 <span class="co"># Municipality of Sao Paulo</span>
-  <span class="no">muni</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span>( <span class="kw">code_muni</span> <span class="kw">=</span> <span class="fl">3550308</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2010</span> )</pre></body></html></div>
+  <span class="va">muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span><span class="op">(</span> code_muni <span class="op">=</span> <span class="fl">3550308</span>, year<span class="op">=</span><span class="fl">2010</span> <span class="op">)</span></pre></div>
 <p>Download all geographic areas within a state at a given year</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># All municipalities in the state of Alagoas</span>
-  <span class="no">muni</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span>(<span class="kw">code_muni</span><span class="kw">=</span> <span class="st">"AL"</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2007</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># All municipalities in the state of Alagoas</span>
+  <span class="va">muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni<span class="op">=</span> <span class="st">"AL"</span>, year<span class="op">=</span><span class="fl">2007</span><span class="op">)</span>
 
 <span class="co"># All census tracts in the state of Rio de Janeiro</span>
-  <span class="no">cntr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_census_tract.html">read_census_tract</a></span>(<span class="kw">code_tract</span> <span class="kw">=</span> <span class="st">"RJ"</span>, <span class="kw">year</span> <span class="kw">=</span> <span class="fl">2010</span>)</pre></body></html></div>
+  <span class="va">cntr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_census_tract.html">read_census_tract</a></span><span class="op">(</span>code_tract <span class="op">=</span> <span class="st">"RJ"</span>, year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></pre></div>
 <p>If the paramter <code>code_</code> is not passed to the function, geobr returns the data for the whole country by default.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">meso</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_intermediate_region.html">read_intermediate_region</a></span>(<span class="kw">year</span><span class="kw">=</span><span class="fl">2017</span>)
-<span class="no">states</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_state.html">read_state</a></span>(<span class="kw">year</span><span class="kw">=</span><span class="fl">2014</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">meso</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_intermediate_region.html">read_intermediate_region</a></span><span class="op">(</span>year<span class="op">=</span><span class="fl">2017</span><span class="op">)</span>
+<span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_state.html">read_state</a></span><span class="op">(</span>year<span class="op">=</span><span class="fl">2019</span><span class="op">)</span></pre></div>
 </div>
 <div id="important-note-about-data-resolution" class="section level2">
 <h2 class="hasAnchor">
@@ -177,65 +176,68 @@
 <h2 class="hasAnchor">
 <a href="#plot-the-data" class="anchor"></a>Plot the data</h2>
 <p>Once you’ve downloaded the data, it is really simple to plot maps using <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Remove plot axis</span>
-  <span class="no">no_axis</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">axis.title</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-                   <span class="kw">axis.text</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-                   <span class="kw">axis.ticks</span><span class="kw">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>())
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="co"># Remove plot axis</span>
+  <span class="va">no_axis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+                   axis.text<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+                   axis.ticks<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 
 
 <span class="co"># Plot all Brazilian states</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span><span class="kw">=</span><span class="no">states</span>, <span class="kw">fill</span><span class="kw">=</span><span class="st">"#2D3E50"</span>, <span class="kw">color</span><span class="kw">=</span><span class="st">"#FEBF57"</span>, <span class="kw">size</span><span class="kw">=</span><span class="fl">.15</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">subtitle</span><span class="kw">=</span><span class="st">"States"</span>, <span class="kw">size</span><span class="kw">=</span><span class="fl">8</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() +
-    <span class="no">no_axis</span></pre></body></html></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">states</span>, fill<span class="op">=</span><span class="st">"#2D3E50"</span>, color<span class="op">=</span><span class="st">"#FEBF57"</span>, size<span class="op">=</span><span class="fl">.15</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle<span class="op">=</span><span class="st">"States"</span>, size<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="va">no_axis</span></pre></div>
 <p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;"></p>
 <p>Plot all the municipalities of a particular state, such as Rio de Janeiro:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># Download all municipalities of Rio</span>
-  <span class="no">all_muni</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span>( <span class="kw">code_muni</span> <span class="kw">=</span> <span class="st">"RJ"</span>, <span class="kw">year</span><span class="kw">=</span> <span class="fl">2010</span>)
+  <span class="va">all_muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span><span class="op">(</span> code_muni <span class="op">=</span> <span class="st">"RJ"</span>, year<span class="op">=</span> <span class="fl">2010</span><span class="op">)</span>
 
 
 <span class="co"># plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span><span class="kw">=</span><span class="no">all_muni</span>, <span class="kw">fill</span><span class="kw">=</span><span class="st">"#2D3E50"</span>, <span class="kw">color</span><span class="kw">=</span><span class="st">"#FEBF57"</span>, <span class="kw">size</span><span class="kw">=</span><span class="fl">.15</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">subtitle</span><span class="kw">=</span><span class="st">"Municipalities of Rio de Janeiro, 2000"</span>, <span class="kw">size</span><span class="kw">=</span><span class="fl">8</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() +
-    <span class="no">no_axis</span></pre></body></html></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">all_muni</span>, fill<span class="op">=</span><span class="st">"#2D3E50"</span>, color<span class="op">=</span><span class="st">"#FEBF57"</span>, size<span class="op">=</span><span class="fl">.15</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle<span class="op">=</span><span class="st">"Municipalities of Rio de Janeiro, 2000"</span>, size<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="va">no_axis</span></pre></div>
 <p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div id="thematic-maps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#thematic-maps" class="anchor"></a>Thematic maps</h2>
-<p>The next step is to combine data from <strong><em>geobr</em></strong> package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (a project of our colleagues at Ipea))[<a href="http://atlasbrasil.org.br/2013/pt/download/" class="uri">http://atlasbrasil.org.br/2013/pt/download/</a>] to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.</p>
+<p>The next step is to combine data from <strong><em>geobr</em></strong> package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (a project of our colleagues at Ipea))[<a href="https://atlasbrasil.org.br/" class="uri">https://atlasbrasil.org.br/</a>] to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.</p>
 <div id="merge-external-data" class="section level4">
 <h4 class="hasAnchor">
 <a href="#merge-external-data" class="anchor"></a>Merge external data</h4>
-<p>First, we need to download the Life Expectancy data set and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># download Life Expectancy data</span>
-  <span class="no">adh</span> <span class="kw">&lt;-</span> <span class="kw pkg">rio</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span>(<span class="st">"http://atlasbrasil.org.br/2013/data/rawData/Indicadores%20Atlas%20-%20RADAR%20IDHM.xlsx"</span>, <span class="kw">which</span> <span class="kw">=</span> <span class="st">"Dados"</span>)
+<p>First, we need a <code>data.frame</code> with estimates of Life Expectancy and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="co"># Read data.frame with life expectancy data</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/br_states_lifexpect2017.csv"</span>, package <span class="op">=</span> <span class="st">"geobr"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co"># keep only information for the year 2010 and the columns we want</span>
-  <span class="no">adh</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">adh</span>, <span class="no">ANO</span> <span class="kw">==</span> <span class="fl">2014</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span>, n<span class="op">=</span><span class="fl">5</span><span class="op">)</span>
 
-<span class="co"># Download the sf of all Brazilian states</span>
-  <span class="co"># states &lt;- read_state(year= 2014)</span>
+<span class="va">states</span><span class="op">$</span><span class="va">name_state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">states</span><span class="op">$</span><span class="va">name_state</span><span class="op">)</span>
+<span class="va">df</span><span class="op">$</span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">uf</span><span class="op">)</span>
 
-<span class="co"># joind the databases</span>
-  <span class="no">states</span> <span class="kw">&lt;-</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">states</span>, <span class="no">adh</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"abbrev_state"</span> <span class="kw">=</span> <span class="st">"NOME_AGREGA"</span>))</pre></body></html></div>
+<span class="co"># join the databases</span>
+  <span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">states</span>, <span class="va">df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name_state"</span> <span class="op">=</span> <span class="st">"uf"</span><span class="op">)</span><span class="op">)</span></pre></div>
 </div>
 <div id="plot-thematic-map" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot-thematic-map" class="anchor"></a>Plot thematic map</h4>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span><span class="kw">=</span><span class="no">states</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">fill</span><span class="kw">=</span><span class="no">ESPVIDA</span>), <span class="kw">color</span><span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">size</span><span class="kw">=</span><span class="fl">.15</span>) +
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">subtitle</span><span class="kw">=</span><span class="st">"Life Expectancy at birth, Brazilian States, 2014"</span>, <span class="kw">size</span><span class="kw">=</span><span class="fl">8</span>) +
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_distiller</a></span>(<span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Blues"</span>, <span class="kw">name</span><span class="kw">=</span><span class="st">"Life Expectancy"</span>, <span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">65</span>,<span class="fl">80</span>)) +
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() +
-      <span class="no">no_axis</span></pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">states</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">ESPVIDA2017</span><span class="op">)</span>, color<span class="op">=</span> <span class="cn">NA</span>, size<span class="op">=</span><span class="fl">.15</span><span class="op">)</span> <span class="op">+</span>
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle<span class="op">=</span><span class="st">"Life Expectancy at birth, Brazilian States, 2014"</span>, size<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="op">+</span>
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span>, name<span class="op">=</span><span class="st">"Life Expectancy"</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">65</span>,<span class="fl">80</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+      <span class="va">no_axis</span></pre></div>
 <p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-11-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -256,7 +258,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
