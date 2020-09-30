@@ -16,7 +16,7 @@
 * harmonized the `st_geometry_type()` of data sets to `MULTIPOLYGON`, when appropriate. Closes issues #41 #151  #135 #172
 * fix typo in `geobr::grid_state_correspondence_table`. Closes #187
 * argument `tp` fully deprecated and replaced with `simplified`. No more warning message
-
+* sample data with life expectancy of Brazilian states in 2017. To be used in vignette
 
 -------------------------------------------------------
 # geobr v1.3 (2020-03-30)
