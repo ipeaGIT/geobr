@@ -150,15 +150,14 @@ First, we need a `data.frame` with estimates of Life Expectancy and merge it to 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # Read data.frame with life expectancy data
-df <- read.csv(system.file("extdata/br_states_lifexpect2017.csv", package = "geobr"))
-
-head(df, n=5)
+df <- utils::read.csv(system.file("extdata/br_states_lifexpect2017.csv", package = "geobr"))
 
 states$name_state <- tolower(states$name_state)
 df$uf <- tolower(df$uf)
 
 # join the databases
-  states <- left_join(states, df, by = c("name_state" = "uf"))
+states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
+
 ```
 
 #### Plot thematic map
