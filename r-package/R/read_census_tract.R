@@ -34,7 +34,6 @@
 #'
 #' }
 #'
-#'
 read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

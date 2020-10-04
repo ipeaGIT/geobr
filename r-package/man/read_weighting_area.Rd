@@ -50,9 +50,6 @@ library(geobr)
 
 }
 
-
-
-
 }
 \seealso{
 Other general area functions: 
