@@ -35,7 +35,7 @@ setwd(root_dir)
 url <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/"
 
 # List Years/folders available
-years <- list_foulders(url)
+years <- list_folders(url)
 
 # create folders to download and store raw data of each year
 dir.create("./historical_state_muni_1872_1991")
@@ -45,7 +45,7 @@ for (i in years){ # i <- years[4]
 
   # list files
   subdir <- paste0(url, i,"/")
-  files <-list_foulders(subdir)
+  files <-list_folders(subdir)
 
   # create folder to download and store raw data of each year
   dir.create(paste0("./historical_state_muni_1872_1991/",i))
