@@ -170,6 +170,21 @@ clean_muni <- function(year){
       temp_sf <- dplyr::rename(temp_sf, code_muni = codigo, name_muni = nome )
       temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
     }}
+  
+  # fix name_muni 1872 
+  if (year %like% "1872"){
+    temp_sf <- temp_sf %>% mutate(name_muni = ifelse(code_muni == "2306405", "Itapipoca",
+                                                     ifelse(code_muni == "2407401", "Martins",
+                                                            ifelse(code_muni == "2709301", "União dos Palmares",name_muni)))) 
+  } else { 
+    if (year %like% 1900|year %like% 1920 & code_muni == "2306405"){
+      temp_sf <- temp_sf %>% mutate(name_muni = "Itapipoca")
+    }
+  }
+  
+  #fix code_muni Itapipoca
+  temp_sf <- temp_sf %>% mutate(code_muni = ifelse(name_muni == "Itapipoca", 2306405,code_muni)) 
+  
 
   # Use UTF-8 encoding
   temp_sf <- use_encoding_utf8(temp_sf)

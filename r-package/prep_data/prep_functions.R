@@ -28,10 +28,16 @@ list_folders <- function(ftp){
 ###### Unzip data -----------------
 
 # function to Unzip files in their original sub-dir
-unzip_fun <- function(f, head_dir){
-  unzip(f, exdir = file.path(head_dir, substr(f, 3, 6)))
+# unzip_fun <- function(f, head_dir){
+#   unzip(f, exdir = file.path(head_dir, substr(f, 3, 6)))
+# }
+unzip_fun <- function(f){
+  # f <- files_1st_batch[1]
+  t<-strsplit(f, "/")
+  t<-t[[1]][length(t[[1]])]
+  t<- nchar(t)
+  unzip(f, exdir = file.path(head_dir, substr(f, 3, nchar(f)-t) ))
 }
-
 
 
 
