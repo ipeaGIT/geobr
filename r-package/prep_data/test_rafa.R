@@ -207,6 +207,7 @@ function_coverage(fun='grid_state_correspondence_table', test_file("tests/testth
 
 
 
+function_coverage(fun='read_schools', test_file("tests/testthat/test-read_schools.R"))
 function_coverage(fun='read_neighborhood', test_file("tests/testthat/test-read_neighborhood.R"))
 function_coverage(fun='read_biomes', test_file("tests/testthat/test-read_biomes.R"))
 function_coverage(fun='read_region', test_file("tests/testthat/test-read_region.R"))

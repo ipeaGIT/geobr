@@ -106,6 +106,7 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
 |`read_health_region` | Health regions | 1991, 1994, 1997, 2001, 2005, 2013 | DataSUS |
 |`read_neighborhood` | Neighborhood limits |  2010 | IBGE |
+|`read_schools` (dev) | Schools |  2020 | INEP |
 
 
 

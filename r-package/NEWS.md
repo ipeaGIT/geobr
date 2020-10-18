@@ -2,7 +2,14 @@
 
 
 -------------------------------------------------------
-# geobr v1.4 dev
+# geobr v1.5 dev
+
+### New data sets/functions
+* data set `read_schools` to read the schools - closes issue #190 (added in 2020-10).
+
+
+-------------------------------------------------------
+# geobr v1.4
 
 
 ### New data sets/functions

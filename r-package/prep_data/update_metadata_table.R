@@ -77,7 +77,7 @@
   table(metadata$geo)
   table(metadata$year)
 
-  subset(metadata, geo == 'country')
+  subset(metadata, geo == 'schools')
 
 # save updated metadata table
   # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_gpkg.csv")
