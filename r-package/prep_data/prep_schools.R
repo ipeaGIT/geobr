@@ -138,21 +138,27 @@ df2 <-
                 code_school = 'Código INEP',
                 name_school = 'Escola',
                 education_level = 'Etapas e Modalidade de Ensino Oferecidas',
-                education_others = 'Outras Ofertas Educacionais',
+                education_level_others = 'Outras Ofertas Educacionais',
                 admin_category = 'Categoria Administrativa',
                 address = 'Endereço',
                 phone_number = 'Telefone',
                 government_level = 'Dependência Administrativa',
                 private_school_type = 'Categoria Escola Privada',
-                conveniada_governo = 'Conveniada Poder Público',
-                regulated_education_counsel = 'Regulamentação pelo Conselho de Educação',
+                private_government_partnership = 'Conveniada Poder Público',
+                regulated_education_counsil = 'Regulamentação pelo Conselho de Educação',
                 service_restriction ='Restrição de Atendimento',
                 size = 'Porte da Escola',
                 urban = 'Localização',
-                location = 'Localidade Diferenciada',
+                location_type = 'Localidade Diferenciada',
                 y = 'Latitude',
                 x = 'Longitude'
   )
+
+
+##### Recode columns
+
+
+table(df2$urban, useNA = 'always')
 
 
 # fix spatial coordinates
