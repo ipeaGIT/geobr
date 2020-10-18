@@ -18,7 +18,7 @@
 #'
 #'}
 #'
-read_health_region <- function(year=2013, simplified=TRUE, showProgress=TRUE, tp){
+read_health_region <- function(year=2013, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="health_region", year=year, simplified=simplified)

@@ -4,7 +4,7 @@
 \alias{read_indigenous_land}
 \title{Download official data of indigenous lands as an sf object.}
 \usage{
-read_indigenous_land(date = 201907, simplified = TRUE, showProgress = TRUE, tp)
+read_indigenous_land(date = 201907, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{date}{A date numer in YYYYMM format (Defaults to 201907)}

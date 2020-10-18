@@ -27,7 +27,7 @@
 #'
 #'
 
-read_disaster_risk_area <- function(year=2010, simplified=TRUE, showProgress=TRUE, tp){
+read_disaster_risk_area <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="disaster_risk_area", year=year, simplified=simplified)

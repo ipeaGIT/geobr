@@ -4,12 +4,7 @@
 \alias{read_disaster_risk_area}
 \title{Download official data of disaster risk areas as an sf object.}
 \usage{
-read_disaster_risk_area(
-  year = 2010,
-  simplified = TRUE,
-  showProgress = TRUE,
-  tp
-)
+read_disaster_risk_area(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{A year number in YYYY format (defaults to 2010)}

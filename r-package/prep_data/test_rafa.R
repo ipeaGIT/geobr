@@ -378,3 +378,25 @@ devtools::check_win_release(pkg = ".")
 
 2+2
 
+
+
+
+
+# encoding ------------------
+
+df <- utils::read.csv(system.file("extdata/br_states_lifexpect2017.csv", package = "geobr"), encoding = "UTF-8")
+df
+df$uf <- enc2utf8(df$uf)
+
+write.csv(df, 'br_states_lifexpect2017.csv', fileEncoding = "UTF-8")
+
+
+df2 <- utils::read.csv( "br_states_lifexpect2017.csv", encoding = "UTF-8")
+head(df2)
+
+use_encoding_utf8(df)
+
+
+
+stringi::stri_enc_detect(df$uf)
+

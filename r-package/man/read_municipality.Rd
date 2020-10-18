@@ -8,8 +8,7 @@ read_municipality(
   code_muni = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{

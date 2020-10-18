@@ -9,8 +9,7 @@ read_census_tract(
   year = 2010,
   zone = "urban",
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{
@@ -53,7 +52,6 @@ library(geobr)
   c <- read_census_tract(code_tract="all", year=2010)
 
 }
-
 
 }
 \seealso{

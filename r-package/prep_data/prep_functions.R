@@ -1,6 +1,8 @@
 #### Support functions to use in the preprocessing of the data
-library(data.table)
 
+library(dplyr)
+library(data.table)
+library(magrittr)
 
 ###### list ftp folders -----------------
 
@@ -26,10 +28,16 @@ list_folders <- function(ftp){
 ###### Unzip data -----------------
 
 # function to Unzip files in their original sub-dir
-unzip_fun <- function(f, head_dir){
-  unzip(f, exdir = file.path(head_dir, substr(f, 3, 6)))
+# unzip_fun <- function(f, head_dir){
+#   unzip(f, exdir = file.path(head_dir, substr(f, 3, 6)))
+# }
+unzip_fun <- function(f){
+  # f <- files_1st_batch[1]
+  t<-strsplit(f, "/")
+  t<-t[[1]][length(t[[1]])]
+  t<- nchar(t)
+  unzip(f, exdir = file.path(head_dir, substr(f, 3, nchar(f)-t) ))
 }
-
 
 
 
@@ -174,8 +182,12 @@ use_encoding_utf8 <- function(temp_sf){
 
 
   temp_sf <- temp_sf %>%
-  mutate_if(is.factor, function(x){ x %>% as.character() %>%
-      stringi::stri_encode("UTF-8") } )
+  mutate_if(is.factor, function(x){
+    x %>% as.character() %>% stringi::stri_encode("UTF-8") } )
+
+  temp_sf <- temp_sf %>%
+    mutate_if(is.character, function(x){
+      x  %>% stringi::stri_encode("UTF-8") } )
 
   return(temp_sf)
   }

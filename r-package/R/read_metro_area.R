@@ -26,7 +26,7 @@
 #'
 #'
 #'
-read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE, tp){
+read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="metropolitan_area", year=year, simplified=simplified)

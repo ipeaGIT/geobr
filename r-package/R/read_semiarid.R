@@ -20,7 +20,7 @@
 #'   a <- read_semiarid(year=2017)
 #'}
 #'
-read_semiarid <- function(year=2017, simplified=TRUE, showProgress=TRUE, tp){
+read_semiarid <- function(year=2017, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="semiarid", year=year, simplified=simplified)

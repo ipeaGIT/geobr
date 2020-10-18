@@ -8,8 +8,7 @@ read_micro_region(
   code_micro = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{

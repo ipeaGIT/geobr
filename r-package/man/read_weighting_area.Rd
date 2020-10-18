@@ -8,8 +8,7 @@ read_weighting_area(
   code_weighting = "all",
   year = 2010,
   simplified = TRUE,
-  showProgress = TRUE,
-  tp
+  showProgress = TRUE
 )
 }
 \arguments{
@@ -50,9 +49,6 @@ library(geobr)
   w <- read_weighting_area(code_weighting="all", year=2010)
 
 }
-
-
-
 
 }
 \seealso{

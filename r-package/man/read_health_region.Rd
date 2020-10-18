@@ -4,7 +4,7 @@
 \alias{read_health_region}
 \title{Download official data of Brazilian health regions as an sf object.}
 \usage{
-read_health_region(year = 2013, simplified = TRUE, showProgress = TRUE, tp)
+read_health_region(year = 2013, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{Year of the data (defaults to 2013, latest available)}

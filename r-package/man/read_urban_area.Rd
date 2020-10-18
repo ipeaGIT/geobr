@@ -4,7 +4,7 @@
 \alias{read_urban_area}
 \title{Download official data of urbanized areas in Brazil as an sf object.}
 \usage{
-read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE, tp)
+read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{A year number in YYYY format (defaults to 2015)}
