@@ -102,48 +102,50 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
   if( !(progress_bar %in% c(T, F)) ){ stop("Value to argument 'showProgress' has to be either TRUE or FALSE") }
 
-## one single file
-
+  ## one single file
   if(length(file_url)==1 & progress_bar == TRUE){
-
     # download file
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-    httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
-
-    # load gpkg
-    temp_sf <- load_gpkg(file_url, temps)
-    return(temp_sf)
-
-
+    
+    if (!file.exists(temps)) {
+      httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
     }
-
-  else if(length(file_url)==1 & progress_bar == FALSE){
-
-    # download file
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-    httr::GET(url=file_url, httr::write_disk(temps, overwrite = T))
 
     # load gpkg
     temp_sf <- load_gpkg(file_url, temps)
     return(temp_sf)
   }
 
+  else if(length(file_url)==1 & progress_bar == FALSE){
+    # download file
+    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
+    
+    if (!file.exists(temps)) {
+      httr::GET(url=file_url, httr::write_disk(temps, overwrite = T))
+    }
 
+    # load gpkg
+    temp_sf <- load_gpkg(file_url, temps)
+    return(temp_sf)
+  }
 
-## multiple files
-
+  ## multiple files
   else if(length(file_url) > 1 & progress_bar == TRUE) {
-
     # input for progress bar
     total <- length(file_url)
     pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
 
     # download files
     lapply(X=file_url, function(x){
-      i <- match(c(x),file_url)
-      httr::GET(url=x, #httr::progress(),
-                httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))
-      utils::setTxtProgressBar(pb, i)})
+      temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L)))
+
+      if (!file.exists(temps)) {
+        i <- match(c(x),file_url)
+        httr::GET(url=x, #httr::progress(),
+                  httr::write_disk(temps, overwrite = T))
+        utils::setTxtProgressBar(pb, i)
+      }
+    })
 
     # closing progress bar
     close(pb)
@@ -151,24 +153,24 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     # load gpkg
     temp_sf <- load_gpkg(file_url)
     return(temp_sf)
-
-
-    }
+  }
 
   else if(length(file_url) > 1 & progress_bar == FALSE) {
-
     # download files
     lapply(X=file_url, function(x){
-      i <- match(c(x),file_url)
-      httr::GET(url=x, #httr::progress(),
-                httr::write_disk(paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L))), overwrite = T))})
+      temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L)))
 
+      if (!file.exists(temps)) {
+        i <- match(c(x),file_url)
+        httr::GET(url=x, #httr::progress(),
+                  httr::write_disk(temps, overwrite = T))
+      }
+    })
 
     # load gpkg
     temp_sf <- load_gpkg(file_url)
     return(temp_sf)
-
-    }
+  }
 }
 
 
