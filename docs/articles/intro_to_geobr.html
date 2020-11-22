@@ -73,7 +73,8 @@
 
       
 
-      </header><script src="intro_to_geobr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="intro_to_geobr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="intro_to_geobr_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="intro_to_geobr_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to geobr</h1>
@@ -117,7 +118,7 @@
 <span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_geobr.html">list_geobr</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">datasets</span>, n<span class="op">=</span><span class="fl">21</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 22 x 4</span>
+<span class="co">#&gt; # A tibble: 23 x 4</span>
 <span class="co">#&gt;    `function`       geography            years                         source   </span>
 <span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;                &lt;chr&gt;                         &lt;chr&gt;    </span>
 <span class="co">#&gt;  1 `read_country`   Country              1872, 1900, 1911, 1920, 1933~ IBGE     </span>
@@ -141,7 +142,7 @@
 <span class="co">#&gt; 19 `read_semiarid`  Semi Arid region     2005, 2017                    IBGE     </span>
 <span class="co">#&gt; 20 `read_health_fa~ Health facilities    2015                          CNES, Da~</span>
 <span class="co">#&gt; 21 `read_health_re~ Health regions       1991, 1994, 1997, 2001, 2005~ DataSUS  </span>
-<span class="co">#&gt; # ... with 1 more row</span></pre></div>
+<span class="co">#&gt; # ... with 2 more rows</span></pre></div>
 </div>
 </div>
 <div id="download-spatial-data-as-sf-objects" class="section level2">
@@ -218,15 +219,13 @@
 <p>First, we need a <code>data.frame</code> with estimates of Life Expectancy and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># Read data.frame with life expectancy data</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/br_states_lifexpect2017.csv"</span>, package <span class="op">=</span> <span class="st">"geobr"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span>, n<span class="op">=</span><span class="fl">5</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/br_states_lifexpect2017.csv"</span>, package <span class="op">=</span> <span class="st">"geobr"</span><span class="op">)</span>, encoding <span class="op">=</span> <span class="st">"UTF-8"</span><span class="op">)</span>
 
 <span class="va">states</span><span class="op">$</span><span class="va">name_state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">states</span><span class="op">$</span><span class="va">name_state</span><span class="op">)</span>
 <span class="va">df</span><span class="op">$</span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">uf</span><span class="op">)</span>
 
 <span class="co"># join the databases</span>
-  <span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">states</span>, <span class="va">df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name_state"</span> <span class="op">=</span> <span class="st">"uf"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="va">states</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">states</span>, <span class="va">df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name_state"</span> <span class="op">=</span> <span class="st">"uf"</span><span class="op">)</span><span class="op">)</span></pre></div>
 </div>
 <div id="plot-thematic-map" class="section level4">
 <h4 class="hasAnchor">
