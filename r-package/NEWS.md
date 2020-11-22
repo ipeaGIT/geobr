@@ -7,6 +7,10 @@
 ### New data sets/functions
 * data set `read_schools` to read the schools - closes issue #190 (added in 2020-10).
 
+### Minor changes
+* geobr now automatically detects if there is an internet connection problem and
+throws an error. Closes issue #178
+
 
 -------------------------------------------------------
 # geobr v1.4
