@@ -185,7 +185,8 @@ devtools::run_examples(pkg = ".", test = T, run = T)
 
 
 
-
+a <- geobr::download_metadata()
+s <- geobr::read_state()
 
 
 ### Test coverage  ----------------

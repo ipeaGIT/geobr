@@ -24,9 +24,7 @@ download_metadata <- function(){
     # test server connection
     metadata_link <- 'http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
     t <- try( open.connection(con = url(metadata_link), open="rt", timeout=2),silent=T)
-    if("try-error" %in% class(t)){stop('Internet connection problem. If this is
-                                       not a connection problem in your network,
-                                       please try geobr again in a few minutes.')}
+    if("try-error" %in% class(t)){stop('Internet connection problem. If this is not a connection problem in your network, please try geobr again in a few minutes.')}
 
     suppressWarnings(try(close.connection(conn),silent=T))
 
