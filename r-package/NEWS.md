@@ -5,11 +5,11 @@
 # geobr v1.5 dev
 
 ### New data sets/functions
-* data set `read_schools` to read the schools - closes issue #190 (added in 2020-10).
+* function `read_schools` to read the schools data - closes issue #190 (added in 2020-10).
+* data of `census_tracts` 2017 from the agricultural census - closes issue #171 (added in 2020-11).
 
 ### Minor changes
-* geobr now automatically detects if there is an internet connection problem and
-throws an error. Closes issue #178
+* geobr now automatically detects if there is an internet connection problem and throws an error. Closes issue #178
 
 
 -------------------------------------------------------

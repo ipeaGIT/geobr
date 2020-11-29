@@ -121,12 +121,15 @@ st_crs(st_crs(temp_sf3)$wkt) == st_crs(temp_sf3)
 
 ###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
 
-# convert all factor columns to character
-temp_sf4 <- temp_sf3 %>% mutate_if(is.factor, function(x){ x %>% as.character() } )
+
 
 # convert all character columns to UTF-8
-temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+temp_sf4 <- use_encoding_utf8(temp_sf4)
 
+# keep code as.numeric()
+for (col in cols.names){
+  temp_sf4[[col]] <- as.numeric((temp_sf4[[col]]))
+}
 
 ###### 5. remove Z dimension of spatial data-----------------
 
@@ -138,7 +141,7 @@ temp_sf5 <- temp_sf4 %>% st_sf() %>% st_zm( drop = T, what = "ZM")
 ###### 6. fix eventual topology issues in the data-----------------
 
 # Make any invalid geometry valid # st_is_valid( sf)
-temp_sf6 <- lwgeom::st_make_valid(temp_sf5)
+temp_sf6 <- sf::st_make_valid(temp_sf5)
 
 
 
@@ -152,8 +155,7 @@ temp_sf6 <- to_multipolygon(temp_sf6)
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf7 <- st_transform(temp_sf6, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
-
+temp_sf7 <- simplify_temp_sf(temp_sf6)
 
 ###### 8. Clean data set and save it in geopackage format-----------------
 

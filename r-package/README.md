@@ -92,7 +92,7 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_intermediate_region`| Intermediate region | 2017, 2019 |  IBGE |
 |`read_immediate_region`| Immediate region | 2017, 2019 |  IBGE |
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2010 | IBGE |
-|`read_census_tract`| Census tract (setor censitário) |  2000, 2010 | IBGE |
+|`read_census_tract`| Census tract (setor censitário) |  2000, 2010, 2017 | IBGE |
 |`read_municipal_seat`| Municipality seats (sedes municipais) |  1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2010 | IBGE |
 |`read_statistical_grid` | Statistical Grid of 200 x 200 meters | 2010 | IBGE |
 |`read_metro_area` | Metropolitan areas | 1970, 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018 | IBGE | 
@@ -131,7 +131,6 @@ Note 2. Most data sets are available at scale 1:250,000 (see documentation for d
 | Longitudinal Database* of municipalities | various years | IBGE | 
 | Longitudinal Database* of micro regions | various years | IBGE | 
 | Longitudinal Database* of Census tracts | various years | IBGE | 
-| Schools | 2019 | School Census (Inep) | 
 | ... | ... | ... | 
 
 '*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
