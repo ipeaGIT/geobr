@@ -80,12 +80,6 @@ municipality's corresponding state, meso, micro, intermediate, and immediate reg
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -137,7 +131,7 @@ municipality's corresponding state, meso, micro, intermediate, and immediate reg
 municipality's corresponding state, meso, micro, intermediate, and immediate regions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>lookup_muni</span>(<span class='kw'>name_muni</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>code_muni</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>lookup_muni</span><span class='op'>(</span>name_muni <span class='op'>=</span> <span class='cn'>NULL</span>, code_muni <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,16 +155,20 @@ municipality's corresponding state, meso, micro, intermediate, and immediate reg
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>geobr</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ipeaGIT/geobr'>geobr</a></span><span class='op'>)</span>
 
 <span class='co'># Get lookup table for municipality Rio de Janeiro</span>
-<span class='no'>mun</span> <span class='kw'>&lt;-</span> <span class='fu'>lookup_muni</span>(<span class='kw'>name_muni</span> <span class='kw'>=</span> <span class='st'>"Rio de Janeiro"</span>)</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='output co'>#&gt; <span class='message'>Returning results for municipality Rio de Janeiro</span></div><div class='input'>
+<span class='va'>mun</span> <span class='op'>&lt;-</span> <span class='fu'>lookup_muni</span><span class='op'>(</span>name_muni <span class='op'>=</span> <span class='st'>"Rio de Janeiro"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='output co'>#&gt; <span class='message'>Returning results for municipality Rio de Janeiro</span></div><div class='input'>
 <span class='co'># Or you can get a lookup table for the same municipality searching for its code</span>
-<span class='no'>mun</span> <span class='kw'>&lt;-</span> <span class='fu'>lookup_muni</span>(<span class='kw'>code_muni</span> <span class='kw'>=</span> <span class='fl'>3304557</span>)</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='output co'>#&gt; <span class='message'>Returning results for municipality Rio de Janeiro</span></div><div class='input'>
+<span class='va'>mun</span> <span class='op'>&lt;-</span> <span class='fu'>lookup_muni</span><span class='op'>(</span>code_muni <span class='op'>=</span> <span class='fl'>3304557</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='output co'>#&gt; <span class='message'>Returning results for municipality Rio de Janeiro</span></div><div class='input'>
 <span class='co'># Get lookup table for all municipalities</span>
-<span class='no'>mun_all</span> <span class='kw'>&lt;-</span> <span class='fu'>lookup_muni</span>(<span class='kw'>name_muni</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='input'>
+<span class='va'>mun_all</span> <span class='op'>&lt;-</span> <span class='fu'>lookup_muni</span><span class='op'>(</span>name_muni <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='input'>
 <span class='co'># Or:</span>
-<span class='no'>mun_all</span> <span class='kw'>&lt;-</span> <span class='fu'>lookup_muni</span>(<span class='kw'>code_muni</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='input'># }
+<span class='va'>mun_all</span> <span class='op'>&lt;-</span> <span class='fu'>lookup_muni</span><span class='op'>(</span>code_muni <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Using year 2010</span></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>
@@ -188,7 +186,7 @@ municipality's corresponding state, meso, micro, intermediate, and immediate reg
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
