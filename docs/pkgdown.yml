@@ -1,7 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9000
-pkgdown_sha: e1e46f2e13c7efdb17bc4eae40bc3779c2b0b517
+pkgdown: 1.5.1
+pkgdown_sha: ~
 articles:
   intro_to_geobr: intro_to_geobr.html
-last_built: 2020-11-22T23:30Z
+  py-intro-to-geobr: python-intro/py-intro-to-geobr.html
+last_built: 2020-12-02T21:44Z
 

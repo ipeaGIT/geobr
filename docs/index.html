@@ -41,6 +41,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -52,6 +58,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="articles/intro_to_geobr.html">Introduction to geobr</a>
+    </li>
+    <li>
+      <a href="articles/python-intro/py-intro-to-geobr.html">Introduction to geobr (Python)</a>
     </li>
   </ul>
 </li>
@@ -113,15 +122,14 @@
 <div id="installation-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation-r" class="anchor"></a>Installation R</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># From CRAN</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"geobr"</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr">geobr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># From CRAN</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"geobr"</span>)
+  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">geobr</span>)
 
 <span class="co"># or use the development version with latest features</span>
-  <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages</a></span><span class="op">(</span><span class="st">'geobr'</span><span class="op">)</span>
-  <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"ipeaGIT/geobr"</span>, subdir <span class="op">=</span> <span class="st">"r-package"</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr">geobr</a></span><span class="op">)</span></pre></div>
+  <span class="kw pkg">utils</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages</a></span>(<span class="st">'geobr'</span>)
+  <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"ipeaGIT/geobr"</span>, <span class="kw">subdir</span> <span class="kw">=</span> <span class="st">"r-package"</span>)
+  <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">geobr</span>)</pre></div>
 <p>obs. If you use <strong>Linux</strong>, you need to install a couple dependencies before installing the libraries <code>sf</code> and <code>geobr</code>. <a href="https://github.com/r-spatial/sf#linux">More info here</a>.</p>
 </div>
 <div id="installation-python" class="section level2">
@@ -144,18 +152,17 @@
 <div id="r-reading-the-data-as-an-sf-object" class="section level2">
 <h2 class="hasAnchor">
 <a href="#r-reading-the-data-as-an-sf-object" class="anchor"></a>R, reading the data as an <code>sf</code> object</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr">geobr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">geobr</span>)
 
 <span class="co"># Read specific municipality at a given year</span>
-<span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni<span class="op">=</span><span class="fl">1200179</span>, year<span class="op">=</span><span class="fl">2017</span><span class="op">)</span>
+<span class="no">mun</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span>(<span class="kw">code_muni</span><span class="kw">=</span><span class="fl">1200179</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2017</span>)
 
 <span class="co"># Read all municipalities of given state at a given year</span>
-<span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni<span class="op">=</span><span class="fl">33</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span> <span class="co"># or</span>
-<span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni<span class="op">=</span><span class="st">"RJ"</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span>
+<span class="no">mun</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span>(<span class="kw">code_muni</span><span class="kw">=</span><span class="fl">33</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2010</span>) <span class="co"># or</span>
+<span class="no">mun</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span>(<span class="kw">code_muni</span><span class="kw">=</span><span class="st">"RJ"</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2010</span>)
 
 <span class="co"># Read all municipalities in the country at a given year</span>
-<span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="fl">2018</span><span class="op">)</span></pre></div>
+<span class="no">mun</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/read_municipality.html">read_municipality</a></span>(<span class="kw">code_muni</span><span class="kw">=</span><span class="st">"all"</span>, <span class="kw">year</span><span class="kw">=</span><span class="fl">2018</span>)</pre></div>
 <p>More examples <a href="https://gist.github.com/rafapereirabr/99c9a2d2aecae87219c459965c75b155">here</a> and in the <a href="https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html">intro Vignette</a></p>
 </div>
 <div id="python-reading-the-data-as-a-geopandas-object" class="section level2">
@@ -244,7 +251,7 @@
 <tr class="odd">
 <td><code>read_census_tract</code></td>
 <td>Census tract (setor censitário)</td>
-<td>2000, 2010</td>
+<td>2000, 2010, 2017</td>
 <td>IBGE</td>
 </tr>
 <tr class="even">
@@ -399,11 +406,6 @@
 <td>IBGE</td>
 </tr>
 <tr class="odd">
-<td>Schools</td>
-<td>2019</td>
-<td>School Census (Inep)</td>
-</tr>
-<tr class="even">
 <td>…</td>
 <td>…</td>
 <td>…</td>
@@ -487,7 +489,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
