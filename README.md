@@ -120,6 +120,7 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 | `list_geobr` | List all datasets available in the geobr package |
 |`lookup_muni`| Look up municipality codes by their name, or the other way around |
 |`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
+| `cet_to_state` (dev) | Determine the state of a given CEP postal code |
 | ... | ... |
 
 Note 1. Data sets and Functions marked with "dev" are only available in the development version of `geobr`.
