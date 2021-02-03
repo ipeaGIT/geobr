@@ -5,27 +5,22 @@ source('./prep_data/download_malhas_municipais_function.R')
 
 
 ###### download raw data --------------------------------
-# download_malhas_municipais(region='municipio',year="2019")
+# download_malhas_municipais(region='uf',year=2019)
 
 
-###### Cleaning municipality files --------------------------------
+###### Cleaning UF files --------------------------------
 
-## shapes directory
-shape_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
-# setwd(shape_dir)
-
-# mun_dir <- ".//shapes_in_sf_all_years_original/municipio"
-mun_dir <- shape_dir
-
-sub_dirs <- list.dirs(path =mun_dir, recursive = F)
+uf_dir <-  "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
+sub_dirs <- list.dirs(path =uf_dir, recursive = F)
 
 sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2019,collapse = "|")]
 
-# sub_dirs <- sub_dirs[sub_dirs %like% 2019]
+
 
 # create a function that will clean the sf files according to particularities of the data in each year
+# clean_states <- function( e ){ #  e <- sub_dirs[1]
 
-clean_muni <- function( e ){
+clean_states <- function( e ){
 
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
@@ -35,22 +30,22 @@ clean_muni <- function( e ){
   dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 
   # create a subdirectory of states, municipalities, micro and meso regions
-  dir.create(file.path("shapes_in_sf_all_years_cleaned/municipio/"), showWarnings = FALSE)
+  dir.create(file.path("shapes_in_sf_all_years_cleaned/uf/"), showWarnings = FALSE)
 
   # create a subdirectory of years
-  dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/municipio/",year)), showWarnings = FALSE)
+  dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/uf/",year)), showWarnings = FALSE)
   gc(reset = T)
 
-  dir.dest<- file.path(paste0("./shapes_in_sf_all_years_cleaned/municipio/",year))
+  dir.dest<- file.path(paste0("./shapes_in_sf_all_years_cleaned/uf/",year))
+
 
   # list all sf files in that year/folder
   sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
 
-  sf_files <- sf_files[sf_files %like% "Municipios"]
-
+  sf_files <- sf_files[sf_files %like% "_UF_"]
 
   # for each file
-  for (i in sf_files){ #  i <- sf_files[1]
+  for (i in sf_files){ #  i <- sf_files[3]
 
     # read sf file
     temp_sf <- st_read(i)
@@ -58,36 +53,33 @@ clean_muni <- function( e ){
     if (year %like% "2000|2001"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- dplyr::rename(temp_sf, code_muni = geocodigo, name_muni = nome )
-      temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geom'))
+      temp_sf <- dplyr::rename(temp_sf, code_state = geocodigo, name_state = nome)
+      temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geom'))
     }
 
     if (year %like% "2010"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- dplyr::rename(temp_sf, code_muni = cd_geocodm, name_muni = nm_municip)
-      temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geom'))
+      temp_sf <- dplyr::rename(temp_sf, code_state = cd_geocodu, name_state = nm_estado)
+      temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geom'))
     }
 
     if (year %like% "2013|2014|2015|2016|2017|2018"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- dplyr::rename(temp_sf, code_muni = cd_geocmu, name_muni = nm_municip)
-      temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geom'))
+      temp_sf <- dplyr::rename(temp_sf, code_state = cd_geocuf, name_state = nm_estado)
+      temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geom'))
     }
 
     if (year %like% "2019"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- dplyr::rename(temp_sf, code_muni = cd_mun, name_muni = nm_mun)
-      temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geom'))
+      temp_sf <- dplyr::rename(temp_sf, code_state = cd_uf, name_state = nm_uf)
+      temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geom'))
     }
 
     # add State abbreviation
-
-    # temp_sf <- add_state_info(temp_sf,'Code_muni')
-
-    temp_sf$code_state <- substr( temp_sf$code_muni , 1,2) %>% as.numeric()
+    # temp_sf <- add_state_info(temp_sf,'code_state')
 
     # add name_state
     temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
@@ -119,7 +111,7 @@ clean_muni <- function( e ){
                                                                                                                                                                                                                                       ifelse(code_state== 53, utf8::as_utf8("Distrito Federal"), "!error!"))))))))))))))))))))))))))))
 
 
-    # add abbrev state
+
     temp_sf <- temp_sf %>% mutate(abbrev_state = ifelse(code_state== 11, "RO",
                                                         ifelse(code_state== 12, "AC",
                                                                ifelse(code_state== 13, "AM",
@@ -148,18 +140,17 @@ clean_muni <- function( e ){
                                                                                                                                                                                                                                 ifelse(code_state== 52, "GO",
                                                                                                                                                                                                                                        ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
 
-
     # Add Region codes and names
     temp_sf <- add_region_info(temp_sf,'code_state')
 
     # reorder columns
-    temp_sf <- dplyr::select(temp_sf,'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geom')
+    temp_sf <- dplyr::select(temp_sf, 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region', 'geom')
 
     # Use UTF-8 encoding
     temp_sf <- use_encoding_utf8(temp_sf)
 
     # Capitalize the first letter
-    temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
+    temp_sf$name_state <- stringr::str_to_title(temp_sf$name_state)
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
     temp_sf <- harmonize_projection(temp_sf)
@@ -168,7 +159,7 @@ clean_muni <- function( e ){
     temp_sf <- sf::st_make_valid(temp_sf)
 
     # keep code as.numeric()
-    temp_sf$code_muni <- as.numeric(temp_sf$code_muni)
+    temp_sf$code_state <- as.numeric(temp_sf$code_state)
 
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf)
@@ -178,25 +169,24 @@ clean_muni <- function( e ){
     temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
 
     # Save cleaned sf in the cleaned directory
-    # i <- gsub("original", "cleaned", i)
     dir.dest.file <- paste0(dir.dest,"/")
 
-    file.name <- paste0(unique(temp_sf$code_state),"MU",".gpkg")
+    file.name <- paste0(unique(substr(temp_sf$code_state,1,2)),"UF",".gpkg")
 
     i <- paste0(dir.dest.file,file.name)
 
-    sf::st_write(temp_sf, i , delete_layer = TRUE)
+    sf::st_write(temp_sf, i, delete_layer=TRUE)
 
     i <- gsub(".gpkg", "_simplified.gpkg", i)
 
-    sf::st_write(temp_sf_simplified, i , delete_layer = TRUE)
+    sf::st_write(temp_sf_simplified, i, delete_layer=TRUE)
 
   }
 }
 
 # apply function in parallel
 future::plan(multisession)
-future_map(sub_dirs, clean_muni)
+future_map(sub_dirs, clean_states)
 
 rm(list= ls())
 gc(reset = T)

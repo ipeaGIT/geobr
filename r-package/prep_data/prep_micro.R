@@ -1,14 +1,15 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-# setwd("D:\\Users\\B2466614\\Documents\\geobr\\r-package\\prep_data")
+source("./prep_data/prep_functions.R")
+source('./prep_data/download_malhas_municipais_function.R')
 
 
-source("./prep_functions.R")
-source('./malhas_municipais_function.R')
+###### download raw data --------------------------------
+# download_malhas_municipais(region='micro_regiao', year='2019')
+
 
 ###### Cleaning MICRO files --------------------------------
 
-malhas_municipais(region='micro_regiao', year='2019')
 micro_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
 sub_dirs <- list.dirs(path=micro_dir, recursive = F)
 
@@ -35,7 +36,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
   dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/micro_regiao/",year)), showWarnings = FALSE)
   gc(reset = T)
 
-  dir.dest<- file.path(paste0("./shapes_in_sf_all_years_cleaned/micro_regiao/",year))
+  dir.dest <- file.path(paste0("./shapes_in_sf_all_years_cleaned/micro_regiao/",year))
 
 
   # list all sf files in that year/folder
@@ -43,7 +44,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
 
   sf_files <- sf_files[sf_files %like% "Microrregioes"]
   # for each file
-  for (i in sf_files){ #  i <- sf_files[3]
+  for (i in sf_files){ #  i <- sf_files[1]
 
     # read sf file
     temp_sf <- st_read(i)
@@ -79,17 +80,13 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
     }
 
     # Use UTF-8 encoding
-    temp_sf$name_micro <- stringi::stri_encode(as.character(temp_sf$name_micro), "UTF-8")
+    temp_sf <- use_encoding_utf8(temp_sf)
 
     # Capitalize the first letter
     temp_sf$name_micro <- stringr::str_to_title(temp_sf$name_micro)
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
     temp_sf <- harmonize_projection(temp_sf)
-
-    # Convert columns from factors to characters
-    temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-
 
     # Make an invalid geometry valid # st_is_valid( sf)
     temp_sf <- sf::st_make_valid(temp_sf)
@@ -98,7 +95,11 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
     temp_sf$code_micro <- as.numeric(temp_sf$code_micro)
 
     # simplify
-    temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>% sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+    temp_sf_simplified <- simplify_temp_sf(temp_sf)
+
+    # convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+    temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
 
     # Save cleaned sf in the cleaned directory
     dir.dest.file <- paste0(dir.dest,"/")
@@ -115,8 +116,9 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
   }
 }
 
-future::plan(multiprocess)
 
+# apply function in parallel
+future::plan(multisession)
 future_map(sub_dirs, clean_micro)
 
 rm(list= ls())
@@ -187,8 +189,8 @@ correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- 
 }
 
 
-future::plan(multiprocess)
-
+# apply function in parallel
+future::plan(multisession)
 future_map(a2010_sf_micro_file, correct_micro_digits)
 
 
