@@ -213,7 +213,7 @@ ax.axis("off")
 
 
     
-![](py-intro-to-geobr_files/1.%20intro-to-geobr_15_1.png)
+![](py-intro-to-geobr_files/1.intro-to-geobr_15_1.png)
     
 
 
@@ -248,7 +248,7 @@ ax.axis("off")
 
 
     
-![](py-intro-to-geobr_files/1.%20intro-to-geobr_18_1.png)
+![](py-intro-to-geobr_files/1.intro-to-geobr_18_1.png)
     
 
 
@@ -310,6 +310,6 @@ ax.axis("off")
 
 
     
-![](py-intro-to-geobr_files/1.%20intro-to-geobr_23_1.png)
+![](py-intro-to-geobr_files/1.intro-to-geobr_23_1.png)
     
 
