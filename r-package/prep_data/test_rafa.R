@@ -330,29 +330,18 @@ pkgdown::build_site()
 
 ### CMD Check ----------------
 # Check package errors
+
+# LOCAL
+Sys.setenv(NOT_CRAN = "true")
+devtools::check(pkg = ".",  cran = FALSE, env_vars = c(NOT_CRAN = "true"))
+
+# CRAN
 Sys.setenv(NOT_CRAN = "false")
-devtools::check(pkg = ".",  cran = TRUE)
 devtools::check(pkg = ".",  cran = TRUE, env_vars = c(NOT_CRAN = "false"))
 
 devtools::check_win_release(pkg = ".")
 
-# CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN CRAN
-
-  # Linux
-  library(rhub)
-
-   list_validated_emails()
-   validate_email(email = 'rafa.pereira.br@gmail.com', toke='b1a30b9fda0341e2a80e6b7cd96ef8ec')
-
-#  mycheck <- rhub::check_for_cran( path='./geobr_1.2-1.tar.gz' )
-
-  mycheck <- rhub::check(path='./geobr_1.2-1.tar.gz', platform = 'debian-clang-devel', email = 'rafa.pereira.br@gmail.com')
-  mycheck$browse()
-  mycheck$print()
-  mycheck$livelog()
-  mycheck$urls()
-
-
+beepr::beep()
 
 
 # build binary

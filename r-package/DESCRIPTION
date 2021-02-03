@@ -37,6 +37,7 @@ Suggests:
     rmarkdown,
     testthat
 Imports:
+      data.table,
       httr (>= 1.4.1),
       readr,
       sf (>= 0.9-3),
