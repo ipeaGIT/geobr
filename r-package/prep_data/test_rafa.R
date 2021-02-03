@@ -191,7 +191,6 @@ s <- geobr::read_state()
 
 ### Test coverage  ----------------
 
-
 # TRAVIS
 #  https://travis-ci.org/ipeaGIT/geobr
 
@@ -205,6 +204,7 @@ function_coverage(fun='download_metadata', test_file("tests/testthat/test-downlo
 function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
 function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
+function_coverage(fun='cep_to_state', test_file("tests/testthat/test-cep_to_state.R"))
 
 
 

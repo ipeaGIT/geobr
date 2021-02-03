@@ -24,9 +24,11 @@ cep_to_state <- function(cep){
 
   cep <- gsub("-", "", cep)
 
-  firstdigits1 <- as.numeric(substr(cep, 1,1))
-  firstdigits2 <- as.numeric(substr(cep, 1,2))
-  firstdigits3 <- as.numeric(substr(cep, 1,3))
+  suppressWarnings({ firstdigits1 <- as.numeric(substr(cep, 1,1)) })
+  suppressWarnings({ firstdigits2 <- as.numeric(substr(cep, 1,2)) })
+  suppressWarnings({ firstdigits3 <- as.numeric(substr(cep, 1,3)) })
+
+  if(is.na(firstdigits3)){stop("'cep' input must have numerical digits.")}
 
   ifelse( firstdigits1 == 0,   'SP',   # Sao Paulo
   ifelse( firstdigits1 == 1,   'SP',   # Sao Paulo
