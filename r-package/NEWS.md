@@ -7,7 +7,7 @@
 ### New data sets/functions
 * new function `read_schools` to read the schools data - closes issue #190 (added in 2020-10).
 * data of `census_tracts` 2017 from the agricultural census - closes issue #171 (added in 2020-11).
-* new function `cet_to_state` to determine the state of a given CEP postal code 
+* new function `cep_to_state` to determine the state of a given CEP postal code 
 (added in 2021-01).
 
 ### Minor changes

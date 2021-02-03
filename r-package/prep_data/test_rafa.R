@@ -344,9 +344,11 @@ devtools::check_win_release(pkg = ".")
 beepr::beep()
 
 
-# build binary
+# build binary --------------------------------
+
  system("R CMD build . --resave-data") # build tar.gz
  # devtools::build(pkg = ".", binary = T, manual=T) # build .zip
+
 
 
 
