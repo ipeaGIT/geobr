@@ -19,3 +19,4 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^vignettes/python-intro$
