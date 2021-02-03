@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5</span>
       </span>
     </div>
 
@@ -129,14 +129,14 @@ geobr is a computational package to download official spatial data sets of Brazi
 <div id="installation-python" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation-python" class="anchor"></a>Installation Python</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
 <p><em>Windows users:</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">conda</span> create -n geo_env</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">conda</span> activate geo_env  </span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="ex">conda</span> config --env --add channels conda-forge  </span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="ex">conda</span> config --env --set channel_priority strict  </span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">conda</span> install python=3 geopandas  </span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create -n geo_env</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate geo_env  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config --env --add channels conda-forge  </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config --env --set channel_priority strict  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install python=3 geopandas  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
 </div>
 </div>
 <div id="basic-usage" class="section level1">
@@ -163,17 +163,17 @@ geobr is a computational package to download official spatial data sets of Brazi
 <div id="python-reading-the-data-as-a-geopandas-object" class="section level2">
 <h2 class="hasAnchor">
 <a href="#python-reading-the-data-as-a-geopandas-object" class="anchor"></a>Python, reading the data as a <code>geopandas</code> object</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">from</span> geobr <span class="im">import</span> read_municipality</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># Read specific municipality at a given year</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">1200179</span>, year<span class="op">=</span><span class="dv">2017</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># Read all municipalities of given state at a given year</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">33</span>, year<span class="op">=</span><span class="dv">2010</span>) <span class="co"># or</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"RJ"</span>, year<span class="op">=</span><span class="dv">2010</span>)</span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># Read all municipalities in the country at a given year</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="dv">2018</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geobr <span class="im">import</span> read_municipality</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read specific municipality at a given year</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">1200179</span>, year<span class="op">=</span><span class="dv">2017</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Read all municipalities of given state at a given year</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">33</span>, year<span class="op">=</span><span class="dv">2010</span>) <span class="co"># or</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"RJ"</span>, year<span class="op">=</span><span class="dv">2010</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Read all municipalities in the country at a given year</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="dv">2018</span>)</span></code></pre></div>
 <p>More examples <a href="https://github.com/ipeaGIT/geobr/tree/master/python-package/examples">here</a></p>
 </div>
 </div>
@@ -363,7 +363,7 @@ geobr is a computational package to download official spatial data sets of Brazi
 </tr>
 <tr class="even">
 <td>
-<code>cet_to_state</code> (dev)</td>
+<code>cep_to_state</code> (dev)</td>
 <td>Determine the state of a given CEP postal code</td>
 </tr>
 <tr class="odd">
