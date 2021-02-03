@@ -125,11 +125,8 @@ cleaning_data_fun <- function(f){ # f=original_shapes[20]
 
   ###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
 
-  # convert all factor columns to character
-  temp_sf4 <- temp_sf3 %>% mutate_if(is.factor, function(x){ x %>% as.character() } )
-
   # convert all character columns to UTF-8
-  temp_sf4 <- temp_sf4 %>% mutate_if(is.character, function(x){ x %>% stringi::stri_encode("UTF-8") } )
+  temp_sf4 <- use_encoding_utf8(temp_sf3)
 
 
   ###### 5. remove Z dimension of spatial data-----------------
@@ -147,18 +144,17 @@ cleaning_data_fun <- function(f){ # f=original_shapes[20]
 
 
 
-
-  ###### convert to MULTIPOLYGON -----------------
-  temp_sf6 <- to_multipolygon(temp_sf6)
-
-
-
   ###### 7. generate a lighter version of the dataset with simplified borders -----------------
   # skip this step if the dataset is made of points, regular spatial grids or rater data
 
   # simplify
   temp_sf7 <- simplify_temp_sf(temp_sf6, tolerance=100)
   # mapview(temp_sf7)
+
+  ###### convert to MULTIPOLYGON -----------------
+  temp_sf6 <- to_multipolygon(temp_sf6)
+  temp_sf7 <- to_multipolygon(temp_sf7)
+
 
   ###### 8. Clean data set and save it in geopackage format-----------------
 
