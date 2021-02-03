@@ -202,7 +202,7 @@ load_gpkg <- function(file_url, temps=NULL){
     files <- unlist(lapply(strsplit(file_url,"/"), tail, n = 1L))
     files <- paste0(tempdir(),"/",files)
     files <- lapply(X=files, FUN= sf::st_read, quiet=T)
-    temp_sf <- do.call('rbind', files)
+    temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
     return(temp_sf)
   }
 

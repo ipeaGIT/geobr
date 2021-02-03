@@ -22,7 +22,8 @@ CEPs in Brazil are 8 digits long, with the format 'xxxxx-xxx'.
 library(geobr)
 
 uf <- cep_to_state(cep = '69900-000')
-# or
+
+# Or:
 uf <- cep_to_state(cep = 69900000)
 }
 

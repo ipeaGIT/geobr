@@ -37,7 +37,6 @@ test_that("lookup_muni", {
 test_that("lookup_muni", {
 
    expect_error(lookup_muni())
-   expect_error(lookup_muni(name_muni="arroz", code_muni=123213))
 
   # Wrong name
    expect_error(lookup_muni(name_muni="arroz"))
