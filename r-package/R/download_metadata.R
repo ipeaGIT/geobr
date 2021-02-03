@@ -26,7 +26,7 @@ download_metadata <- function(){
     t <- try( open.connection(con = url(metadata_link), open="rt", timeout=2),silent=T)
     if("try-error" %in% class(t)){stop('Internet connection problem. If this is not a connection problem in your network, please try geobr again in a few minutes.')}
 
-    suppressWarnings(try(close.connection(conn),silent=T))
+    suppressWarnings(try(close.connection(con),silent=T))
 
     # download it and save to metadata
     httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = T))

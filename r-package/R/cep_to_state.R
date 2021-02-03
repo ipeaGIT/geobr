@@ -58,7 +58,7 @@ cep_to_state <- function(cep){
   ifelse( firstdigits3 >694 & firstdigits3 <698, 'AM', # Amazonas
   ifelse( firstdigits3 >700 & firstdigits3 <727, 'DF', # Distrito Federal
   ifelse( firstdigits3 >730 & firstdigits3 <736, 'DF', # Distrito Federal
-  ifelse( firstdigits3 >768 & firstdigits3 <769, 'RO', # Rondônia
+  ifelse( firstdigits3 >768 & firstdigits3 <769, 'RO', # Rondonia
   ifelse( firstdigits3 >728 & firstdigits3 <729, 'GO', # Goias
   ifelse( firstdigits3 >737 & firstdigits3 <767, 'GO', 'ERROR')))))))))))))))))))))))))))))))
 }
