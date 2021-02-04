@@ -108,7 +108,7 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
 |`read_health_region` | Health regions | 1991, 1994, 1997, 2001, 2005, 2013 | DataSUS |
 |`read_neighborhood` | Neighborhood limits |  2010 | IBGE |
-|`read_schools` (dev) | Schools |  2020 | INEP |
+|`read_schools` | Schools |  2020 | INEP |
 
 
 
@@ -119,7 +119,7 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 | `list_geobr` | List all datasets available in the geobr package |
 |`lookup_muni`| Look up municipality codes by their name, or the other way around |
 |`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
-| `cep_to_state` (dev) | Determine the state of a given CEP postal code |
+| `cep_to_state` | Determine the state of a given CEP postal code |
 | ... | ... |
 
 Note 1. Data sets and Functions marked with "dev" are only available in the development version of `geobr`.
