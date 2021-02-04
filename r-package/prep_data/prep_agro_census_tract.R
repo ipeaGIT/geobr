@@ -191,7 +191,9 @@ temp_sf3 <- harmonize_projection(temp_sf2)
 temp_sf4 <- use_encoding_utf8(temp_sf3)
 
 # keep code as.numeric()
-for (col in cols.names){
+numeric_columns <- names(temp_sf4)[ names(temp_sf4) %like% 'code_' ]
+
+for (col in numeric_columns){
   temp_sf4[[col]] <- as.numeric((temp_sf4[[col]]))
 }
 
@@ -206,16 +208,16 @@ temp_sf6 <- sf::st_make_valid(temp_sf5)
 
 
 
-###### convert to MULTIPOLYGON -----------------
-temp_sf7 <- to_multipolygon(temp_sf6)
-
-
-
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
-temp_sf8 <- simplify_temp_sf(temp_sf7)
+temp_sf8 <- simplify_temp_sf(temp_sf6)
+
+
+###### convert to MULTIPOLYGON -----------------
+temp_sf7 <- to_multipolygon(temp_sf6)
+temp_sf8 <- to_multipolygon(temp_sf8)
 
 
 # Determine directory to save cleaned sf
@@ -233,6 +235,6 @@ sf::st_write(temp_sf8, dsn= paste0(dest_dir,'/', uf_code,"_simplified.gpkg"), ov
 # Apply function to save original data sets in rds format
 
 # apply function in parallel
-future::plan(multiprocess)
+future::plan(multisession)
 future_map(.x = all_shapes, .f = clean_tracts)
 gc(reset = T)

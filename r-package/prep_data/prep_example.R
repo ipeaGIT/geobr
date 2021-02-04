@@ -124,12 +124,16 @@ st_crs(st_crs(temp_sf3)$wkt) == st_crs(temp_sf3)
 
 
 # convert all character columns to UTF-8
-temp_sf4 <- use_encoding_utf8(temp_sf4)
+  temp_sf4 <- use_encoding_utf8(temp_sf4)
+
 
 # keep code as.numeric()
-for (col in cols.names){
-  temp_sf4[[col]] <- as.numeric((temp_sf4[[col]]))
-}
+  numeric_columns <- names(temp_sf4)[ names(temp_sf4) %like% 'code_' ]
+
+  for (col in numeric_columns){
+    temp_sf4[[col]] <- as.numeric((temp_sf4[[col]]))
+  }
+
 
 ###### 5. remove Z dimension of spatial data-----------------
 
@@ -146,16 +150,20 @@ temp_sf6 <- sf::st_make_valid(temp_sf5)
 
 
 
-###### convert to MULTIPOLYGON -----------------
-temp_sf6 <- to_multipolygon(temp_sf6)
-
-
-
 ###### 7. generate a lighter version of the dataset with simplified borders -----------------
 # skip this step if the dataset is made of points, regular spatial grids or rater data
 
 # simplify
 temp_sf7 <- simplify_temp_sf(temp_sf6)
+
+
+
+
+###### convert to MULTIPOLYGON -----------------
+  temp_sf6 <- to_multipolygon(temp_sf6)
+  temp_sf7 <- to_multipolygon(temp_sf7)
+
+
 
 ###### 8. Clean data set and save it in geopackage format-----------------
 
