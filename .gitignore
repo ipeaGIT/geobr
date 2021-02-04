@@ -10,6 +10,7 @@
 *.ind
 *.Rhistory
 /R/.Rhistory
+/r-package/.Rhistory
 /.Rhistory
 /man/figures/.Rhistory
 /r-package/.Rhistory
@@ -107,5 +108,6 @@ python-package/dist
 python-package/master-README.md
 python-package/.coverage
 /r-package/prep_data/.Rhistory
+/r-package/.Rhistory
 /r-package/.Rhistory
 /r-package/.Rhistory
