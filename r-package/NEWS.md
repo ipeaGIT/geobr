@@ -13,6 +13,7 @@
 ### Minor changes
 * geobr now automatically detects if there is an internet connection problem and throws an error. Closes issue #178
 * imports `data.table` to use `rbindlist` and improve package speed when downloading data for the whole country. Closes issue #199.
+* new intro vignette for Python users
 
 
 -------------------------------------------------------
