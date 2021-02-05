@@ -7,10 +7,14 @@
 read_statistical_grid(code_grid, year = 2010, showProgress = TRUE)
 }
 \arguments{
-\item{code_grid}{The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
-the function will load all grid quadrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.}
+\item{code_grid}{If two-letter abbreviation of a state is passed, the function
+will load all grid quadrants that intersect with that state.
+If code_grid="all", the grid of the whole country will be
+loaded. Users may also pass a 7-digit code of a grid quadrant
+to load an specific quadrant.}
 
-\item{year}{Year of the data (defaults to 2010). The only year available thus far is 2010.}
+\item{year}{Year of the data (defaults to 2010). The only year available thus
+far is 2010.}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }

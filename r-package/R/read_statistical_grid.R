@@ -1,8 +1,12 @@
 #' Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data (defaults to 2010). The only year available thus far is 2010.
-#' @param code_grid The 7-digit code of a grid quadrant If the two-letter abbreviation of a state is used,
-#' the function will load all grid quadrants that intersect with that state. If code_grid="all", the grid of the whole country will be loaded.
+#' @param year Year of the data (defaults to 2010). The only year available thus
+#'             far is 2010.
+#' @param code_grid If two-letter abbreviation of a state is passed, the function
+#'                  will load all grid quadrants that intersect with that state.
+#'                  If code_grid="all", the grid of the whole country will be
+#'                  loaded. Users may also pass a 7-digit code of a grid quadrant
+#'                  to load an specific quadrant.
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @export
@@ -48,9 +52,9 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
 # if code_grid is a state abbreviation  ----------------------------------
 
   # Error if the input does not match any state abbreviation
-  if(is.character(code_grid) & !(code_grid %in% grid_state_correspondence_table$code_state)) {
+  if(is.character(code_grid) & !(code_grid %in% grid_state_correspondence_table$abbrev_state)) {
     stop(paste0("Error: Invalid Value to argument 'code_grid'. It must be one of the following: ",
-                paste(unique(grid_state_correspondence_table$code_state),collapse = " ")))
+                paste(unique(grid_state_correspondence_table$abbrev_state),collapse = " ")))
 
     # MAKE this work
     # >>> https://stackoverflow.com/questions/54993463/include-image-in-r-packages
@@ -60,7 +64,7 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
     }
 
   # Valid state abbreviation
-    else if(is.character(code_grid) & code_grid %in% grid_state_correspondence_table$code_state) {
+    else if(is.character(code_grid) & code_grid %in% grid_state_correspondence_table$abbrev_state) {
 
       # find grid quadrants that intersect with the passed state abbreviation
       grid_state_correspondence_table_tmp <- grid_state_correspondence_table[grid_state_correspondence_table[,2] == code_grid, ]
