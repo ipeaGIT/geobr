@@ -344,6 +344,39 @@ devtools::check_win_release(pkg = ".")
 beepr::beep()
 
 
+####################################################3
+a <- grid_state_correspondence_table
+names(a)[2] <- 'abbrev_state'
+
+
+for (col in colnames(a)){
+  Encoding(a[[col]]) <- "ASCII"}
+
+
+stringi::stri_encode(a$abbrev_state, from='latin1', to="ASCII")
+
+Encoding(a$name_uf)
+Encoding(a$code_state)
+a
+Encoding(a$name_uf) <- stringi::stri_encode(a$name_uf, from='latin1', to="ASCII")
+a
+
+stringi::stri_encode(a$, from='latin1', to="ASCII")
+Encoding(a$name_uf)
+
+save
+Encoding(a$name_uf) <- "ASCII"
+
+grid_state_correspondence_table <- a
+
+save(grid_state_correspondence_table, file='grid_state_correspondence_table.RData', ascii = T)
+
+
+load(file='grid_state_correspondence_table.RData')
+Encoding(grid_state_correspondence_table$name_uf)
+Encoding(grid_state_correspondence_table$name_uf) <- "ASCII"
+grid_state_correspondence_table
+
 # build binary --------------------------------
 
  system("R CMD build . --resave-data") # build tar.gz
