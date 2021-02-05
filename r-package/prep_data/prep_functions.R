@@ -183,11 +183,11 @@ use_encoding_utf8 <- function(temp_sf){
 
   temp_sf <- temp_sf %>%
   mutate_if(is.factor, function(x){
-    x %>% as.character() %>% stringi::stri_encode("UTF-8") } )
+    x %>% as.character() %>% stringi::stri_encode(to="UTF-8") } )
 
   temp_sf <- temp_sf %>%
     mutate_if(is.character, function(x){
-      x  %>% stringi::stri_encode("UTF-8") } )
+      x  %>% stringi::stri_encode(to="UTF-8") } )
 
   return(temp_sf)
   }
