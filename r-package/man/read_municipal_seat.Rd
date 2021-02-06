@@ -19,13 +19,7 @@ and Statistics (IBGE).
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read municipal seats in an specific year
-  m <- read_municipal_seat(year=1991)
-
+m <- read_municipal_seat(year = 1991)
 }
-
-
 }

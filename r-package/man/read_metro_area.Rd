@@ -24,15 +24,9 @@ by Institute of Geography. Data at scale 1:250,000, using Geodetic reference sys
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read all official metropolitan areas for a given year
   m <- read_metro_area(2005)
 
   m <- read_metro_area(2018)
 }
-
-
-
 }

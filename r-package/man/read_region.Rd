@@ -21,12 +21,8 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read specific year
-  reg <- read_region(year=2018)
-
+reg <- read_region(year=2018)
 }
 }
 \seealso{

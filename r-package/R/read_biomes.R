@@ -14,14 +14,9 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read biomes
-#'   b <- read_biomes(year=2019)
-#'
+#' b <- read_biomes(year = 2019)
 #'}
-#'
 read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -30,9 +30,6 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read an specific micro region a given year
   micro <- read_micro_region(code_micro=11008, year=2018)
 
@@ -43,8 +40,6 @@ library(geobr)
 # Read all micro regions at a given year
   micro <- read_micro_region(code_micro="all", year=2010)
 }
-
-
 }
 \seealso{
 Other general area functions: 

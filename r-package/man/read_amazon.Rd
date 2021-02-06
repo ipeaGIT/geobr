@@ -22,13 +22,9 @@ data comes from the Brazilian Ministry of Environment (MMA) and can be found at 
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read Brazilian Legal Amazon
-  a <- read_amazon(year=2012)
+a <- read_amazon(year = 2012)
 }
-
 }
 \seealso{
 Other general area functions: 

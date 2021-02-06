@@ -11,13 +11,8 @@ Support function to download metadata internally used in geobr
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 df <- download_metadata()
-
 }
-
 }
 \seealso{
 Other general support functions: 

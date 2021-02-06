@@ -23,11 +23,8 @@ data comes from MMA and can be found at http://mapas.mma.gov.br/i3geo/datadownlo
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read conservation_units
-  b <- read_conservation_units(date=201909)
+b <- read_conservation_units(date = 201909)
 }
 }
 \seealso{

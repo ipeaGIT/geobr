@@ -8,8 +8,6 @@
 #' @return A character string with a state abbreviation
 #' @export
 #' @examples \donttest{
-#' library(geobr)
-#'
 #' uf <- cep_to_state(cep = '69900-000')
 #'
 #' # Or:

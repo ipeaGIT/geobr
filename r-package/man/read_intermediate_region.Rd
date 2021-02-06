@@ -31,9 +31,6 @@ were created to replace the "Meso Regions" division. Data at scale 1:250,000, us
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read an specific intermediate region
   im <- read_intermediate_region(code_intermediate=1202)
 
@@ -45,8 +42,6 @@ library(geobr)
   im <- read_intermediate_region()
   im <- read_intermediate_region(code_intermediate="all")
 }
-
-
 }
 \seealso{
 Other general area functions: 

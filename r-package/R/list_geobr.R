@@ -5,13 +5,8 @@
 #' @export
 #' @family general support functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' df <- list_geobr()
-#'
 #'}
-#'
 list_geobr <- function(){
 
 # Get readme.md file

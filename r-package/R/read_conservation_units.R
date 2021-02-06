@@ -14,11 +14,8 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read conservation_units
-#'   b <- read_conservation_units(date=201909)
+#' b <- read_conservation_units(date = 201909)
 #'}
 read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE){
 

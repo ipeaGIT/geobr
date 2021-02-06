@@ -21,14 +21,9 @@ Download official data of Brazilian health regions as an sf object.
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read all health regions for a given year
-  hr <- read_health_region( year=2013)
-
+hr <- read_health_region( year=2013)
 }
-
 }
 \seealso{
 Other general area functions: 

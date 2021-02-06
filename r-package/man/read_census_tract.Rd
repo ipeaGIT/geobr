@@ -33,9 +33,6 @@ Download shape files of census tracts of the Brazilian Population Census (Only y
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read rural census tracts for years before 2007
   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 
@@ -52,7 +49,6 @@ library(geobr)
   c <- read_census_tract(code_tract="all", year=2010)
 
 }
-
 }
 \seealso{
 Other general area functions: 

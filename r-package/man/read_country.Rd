@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_country.R
 \name{read_country}
 \alias{read_country}
-\title{Download shape file of Brazil as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
+\title{Download shape file of Brazil as sf objects}
 \usage{
 read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
@@ -12,22 +12,19 @@ read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
 \item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
 data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
 For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+simplified by removing vertices of borders using st_simplify{sf} preserving topology with a
+dTolerance of 100.}
 
 \item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
 }
 \description{
-Download shape file of Brazil as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read specific year
-  br <- read_country(year=2018)
+br <- read_country(year = 2018)
 }
-
 }
 \seealso{
 Other general area functions: 

@@ -13,15 +13,9 @@
 #'
 #' @export
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read all schools in the country
-#'   s <- read_schools( year = 2020)
-#'
+#' s <- read_schools( year = 2020)
 #' }
-#'
-
 read_schools <- function(year=2020, showProgress=TRUE ){
 
   # Get metadata with data url addresses
