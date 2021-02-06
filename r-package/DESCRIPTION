@@ -34,7 +34,7 @@ Suggests:
     knitr,
     magrittr,
     mapview,
-    rmarkdown,
+    rmarkdown (>= 2.6),
     testthat
 Imports:
       data.table,
