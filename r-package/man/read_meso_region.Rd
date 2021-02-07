@@ -29,9 +29,6 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read specific meso region at a given year
   meso <- read_meso_region(code_meso=3301, year=2018)
 
@@ -41,9 +38,7 @@ library(geobr)
 
 # Read all meso regions of the country at a given year
   meso <- read_meso_region(code_meso="all", year=2010)
-
 }
-
 }
 \seealso{
 Other general area functions: 

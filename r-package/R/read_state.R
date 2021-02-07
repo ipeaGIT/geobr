@@ -13,9 +13,6 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read specific state at a given year
 #'   uf <- read_state(code_state=12, year=2017)
 #'
@@ -24,9 +21,7 @@
 #'
 #' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
-#'
 #'}
-
 read_state <- function(code_state="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

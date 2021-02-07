@@ -30,26 +30,21 @@ Only 2010 data is currently available.
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read specific weighting area at a given year
-  w <- read_weighting_area(code_weighting=5201108005004, year=2010)
+w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 
 # Read all weighting areas of a state at a given year
-  w <- read_weighting_area(code_weighting=53, year=2010) # or
-  w <- read_weighting_area(code_weighting="DF", year=2010)
-  plot(w)
+w <- read_weighting_area(code_weighting=53, year=2010) # or
+w <- read_weighting_area(code_weighting="DF", year=2010)
+plot(w)
 
 # Read all weighting areas of a municipality at a given year
-  w <- read_weighting_area(code_weighting=5201108, year=2010)
-  plot(w)
+w <- read_weighting_area(code_weighting=5201108, year=2010)
+plot(w)
 
 # Read all weighting areas of the country at a given year
-  w <- read_weighting_area(code_weighting="all", year=2010)
-
+w <- read_weighting_area(code_weighting="all", year=2010)
 }
-
 }
 \seealso{
 Other general area functions: 

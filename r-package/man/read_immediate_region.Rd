@@ -31,9 +31,6 @@ were created to replace the "Micro Regions" division. Data at scale 1:250,000, u
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read an specific immediate region
   im <- read_immediate_region(code_immediate=110006)
 
@@ -45,8 +42,6 @@ library(geobr)
   im <- read_immediate_region()
   im <- read_immediate_region(code_immediate="all")
 }
-
-
 }
 \seealso{
 Other general area functions: 

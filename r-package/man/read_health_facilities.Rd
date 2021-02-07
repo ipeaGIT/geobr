@@ -25,12 +25,7 @@ available at http://dados.gov.br/dataset/cnes
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read all health facilities of the whole country
-  h <- read_health_facilities()
-
+h <- read_health_facilities()
 }
-
 }

@@ -23,15 +23,11 @@ Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read specific municipality at a given year
-  grid <- read_statistical_grid(code_grid = 45, year=2010)
+grid <- read_statistical_grid(code_grid = 45, year=2010)
 
 # Read all municipalities of a state at a given year
-  state_grid <- read_statistical_grid(code_grid = "RJ")
-
+state_grid <- read_statistical_grid(code_grid = "RJ")
 }
 }
 \seealso{

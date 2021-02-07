@@ -13,13 +13,9 @@
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#'
-#' library(geobr)
-#'
 #' # Read neighborhoods of Brazilian municipalities
-#'   n <- read_neighborhood(year=2010)
+#' n <- read_neighborhood(year=2010)
 #'}
-#'
 read_neighborhood <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -17,16 +17,9 @@
 #'
 #' @export
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read all disaster risk areas in an specific year
-#'   d <- read_disaster_risk_area(year=2010)
-#'
+#' d <- read_disaster_risk_area(year=2010)
 #' }
-#'
-#'
-
 read_disaster_risk_area <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

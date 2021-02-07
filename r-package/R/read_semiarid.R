@@ -13,13 +13,9 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read Brazilian semiarid
-#'   a <- read_semiarid(year=2017)
+#' a <- read_semiarid(year=2017)
 #'}
-#'
 read_semiarid <- function(year=2017, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

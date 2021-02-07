@@ -12,14 +12,9 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read specific year
-#'   reg <- read_region(year=2018)
-#'
+#' reg <- read_region(year=2018)
 #'}
-
 read_region <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

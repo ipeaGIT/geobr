@@ -16,9 +16,6 @@
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#'
-#' library(geobr)
-#'
 #' # Read an specific immediate region
 #'   im <- read_immediate_region(code_immediate=110006)
 #'
@@ -30,8 +27,6 @@
 #'   im <- read_immediate_region()
 #'   im <- read_immediate_region(code_immediate="all")
 #' }
-#'
-#'
 read_immediate_region <- function(code_immediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

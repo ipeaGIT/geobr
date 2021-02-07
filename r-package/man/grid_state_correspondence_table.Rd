@@ -13,11 +13,10 @@ data(grid_state_correspondence_table)
 \description{
 Built-in dataset
 
-
 \itemize{
-  \item \code{code_uf}: IBGE code of State (2-digit, numeric)
-  \item \code{name_state}: Title-case name of state (character)
-  \item \code{code_grid}: Unique code of each quadrant of IBGE's statistical grid
+\item \code{code_uf}: IBGE code of State (2-digit, numeric)
+\item \code{name_state}: Title-case name of state (character)
+\item \code{code_grid}: Unique code of each quadrant of IBGE's statistical grid
 }
 }
 \details{
