@@ -1,7 +1,7 @@
 # log history of geobr package development
 
 -------------------------------------------------------
-# geobr v1.5-1 (dev)
+# geobr v1.5-1
 
 ### Minor changes
 * Fixed unnecessary warning about internet connection. Closes #200.
