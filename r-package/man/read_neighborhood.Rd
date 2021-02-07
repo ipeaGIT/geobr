@@ -23,13 +23,9 @@ census. Only 2010 data is currently available.
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read neighborhoods of Brazilian municipalities
-  n <- read_neighborhood(year=2010)
+n <- read_neighborhood(year=2010)
 }
-
 }
 \seealso{
 Other general area functions: 

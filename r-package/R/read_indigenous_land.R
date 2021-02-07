@@ -15,15 +15,9 @@
 #'
 #' @export
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read all indigenous land in an specific date
-#'   i <- read_indigenous_land(date=201907)
-#'
+#' i <- read_indigenous_land(date=201907)
 #' }
-#'
-
 read_indigenous_land <- function(date=201907, simplified=TRUE, showProgress=TRUE){
 
 # Get metadata with data url addresses

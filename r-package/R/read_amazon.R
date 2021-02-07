@@ -12,13 +12,9 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read Brazilian Legal Amazon
-#'   a <- read_amazon(year=2012)
+#' a <- read_amazon(year = 2012)
 #'}
-#'
 read_amazon <- function(year=2012, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

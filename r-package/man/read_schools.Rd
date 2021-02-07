@@ -22,12 +22,7 @@ available at http://portal.inep.gov.br/web/guest/dados/catalogo-de-escolas
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read all schools in the country
-  s <- read_schools( year = 2020)
-
+s <- read_schools( year = 2020)
 }
-
 }

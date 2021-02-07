@@ -3,13 +3,8 @@
 #' @export
 #' @family general support functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' df <- download_metadata()
-#'
 #' }
-#'
 download_metadata <- function(){
 
   # create tempfile to save metadata

@@ -19,8 +19,6 @@ CEPs in Brazil are 8 digits long, with the format 'xxxxx-xxx'.
 }
 \examples{
 \donttest{
-library(geobr)
-
 uf <- cep_to_state(cep = '69900-000')
 
 # Or:

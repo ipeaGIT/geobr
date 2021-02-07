@@ -22,13 +22,9 @@ data comes from the Brazilian Institute of Geography and Statistics (IBGE) and c
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read Brazilian semiarid
-  a <- read_semiarid(year=2017)
+a <- read_semiarid(year=2017)
 }
-
 }
 \seealso{
 Other general area functions: 

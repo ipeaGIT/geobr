@@ -27,13 +27,7 @@ at https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-t
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read all disaster risk areas in an specific year
-  d <- read_disaster_risk_area(year=2010)
-
+d <- read_disaster_risk_area(year=2010)
 }
-
-
 }

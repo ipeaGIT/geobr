@@ -10,14 +10,9 @@
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read all health regions for a given year
-#'   hr <- read_health_region( year=2013)
-#'
+#' hr <- read_health_region( year=2013)
 #'}
-#'
 read_health_region <- function(year=2013, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

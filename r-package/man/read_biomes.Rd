@@ -23,14 +23,9 @@ the scale 1:5.000.000. The original data comes from IBGE. More information at ht
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read biomes
-  b <- read_biomes(year=2019)
-
+b <- read_biomes(year = 2019)
 }
-
 }
 \seealso{
 Other general area functions: 
