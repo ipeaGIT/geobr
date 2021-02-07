@@ -7,15 +7,15 @@
 cep_to_state(cep)
 }
 \arguments{
-\item{cep}{A numeric string with 8 digits in the format xxxxxxxx, or a
-character with the format 'xxxxx-xxx'.}
+\item{cep}{A numeric string with 8 digits in the format \code{xxxxxxxx}, or a
+character with the format \code{'xxxxx-xxx'}.}
 }
 \value{
 A character string with a state abbreviation
 }
 \description{
 Zips codes in Brazil are known as CEP, the abbreviation for postal code address.
-CEPs in Brazil are 8 digits long, with the format 'xxxxx-xxx'.
+CEPs in Brazil are 8 digits long, with the format \code{'xxxxx-xxx'}.
 }
 \examples{
 \donttest{

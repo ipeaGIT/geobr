@@ -1,16 +1,19 @@
 #' Download shape files of micro region as sf objects
 #'
+#' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data (defaults to 2010)
-#' @param code_micro 5-digit code of a micro region. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all micro regions of that state. If code_micro="all",
-#'  all micro regions of the country are loaded.
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year Year of the data. Defaults to `2010`
+#' @param code_micro 5-digit code of a micro region. If the two-digit code or a
+#' two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ") the
+#' function will load all micro regions of that state. If `code_micro="all"`, all
+#' micro regions of the country are loaded.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

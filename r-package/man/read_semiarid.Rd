@@ -9,16 +9,18 @@ read_semiarid(year = 2017, simplified = TRUE, showProgress = TRUE)
 \arguments{
 \item{year}{A date number in YYYY format (defaults to 2017)}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with 'original' resolution or a data set with 'simplified'
+borders. Defaults to \verb{TRUE)}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \verb{st_simplify\{sf\}} preserving topology with a dTolerance of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-This data set covers the whole of Brazilian Semiarid as defined in the resolution in  23/11/2017). The original
-data comes from the Brazilian Institute of Geography and Statistics (IBGE) and can be found at https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads
+This data set covers the whole of Brazilian Semiarid as defined in the resolution
+in  23/11/2017). The original data comes from the Brazilian Institute of Geography
+and Statistics (IBGE) and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
 }
 \examples{
 \donttest{

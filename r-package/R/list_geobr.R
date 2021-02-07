@@ -1,5 +1,6 @@
-#' List all datasets available in the geobr package
+#' List all data sets available in the geobr package
 #'
+#' @description
 #' Returns a data frame with all datasets available in the geobr package
 #'
 #' @export

@@ -1,19 +1,21 @@
 #' Download shape files of Brazilian municipalities as sf objects
 #'
+#' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param year Year of the data (defaults to 2010).
-#' @param code_muni The 7-digit identification code of a municipality. If `code_muni = "all"`
-#' (default), all municipalities of the country will be downloaded. Alternativelly, if the two-digit
-#' identification code or a two-letter uppercase abbreviation of a state is passed, e.g. `33` or
-#' `"RJ"`, all municipalities of that state will be downloaded. Municipality identification codes
-#' are defined in \url{https://www.ibge.gov.br/explica/codigos-dos-municipios.php}.
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the data set with
-#' 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE). For spatial
-#' analysis and statistics users should set `simplified = FALSE`. Borders have been simplified by
-#' removing vertices of borders using `sf::st_simplify()` preserving topology with a dTolerance of
-#' 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar.
+#' @param year Year of the data. Defaults to `2010`.
+#' @param code_muni The 7-digit identification code of a municipality. If
+#' `code_muni = "all"` (default), all municipalities of the country will be
+#' downloaded. Alternativelly, if the two-digit identification code or a
+#' two-letter uppercase abbreviation of a state is passed, e.g. `33` or `"RJ"`,
+#' all municipalities of that state will be downloaded. Municipality identification
+#' codes are defined in \url{https://www.ibge.gov.br/explica/codigos-dos-municipios.php}.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

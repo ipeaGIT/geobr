@@ -1,14 +1,18 @@
 #' Download official data of Brazil's Legal Amazon as an sf object.
 #'
-#' This data set covers the whole of Brazil's Legal Amazon as defined in the federal law n. 12.651/2012). The original
-#' data comes from the Brazilian Ministry of Environment (MMA) and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
+#' @description
+#' This data set covers the whole of Brazil's Legal Amazon as defined in the
+#' federal law n. 12.651/2012). The original data comes from the Brazilian
+#' Ministry of Environment (MMA) and can be found at
+#' \url{http://mapas.mma.gov.br/i3geo/datadownload.htm}.
 #'
-#' @param year A date number in YYYY format (defaults to 2012)
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year A date number in YYYY format. Defaults to `2012`
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #' @export
 #' @family general area functions
 #' @examples \donttest{

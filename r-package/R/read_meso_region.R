@@ -1,15 +1,19 @@
 #' Download shape files of meso region as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
+#' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data (defaults to 2010)
-#' @param code_meso The 4-digit code of a meso region. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all meso regions of that state. If code_meso="all", all meso regions of the country are loaded.
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year A year number in YYYY format. Defaults to `2010`
+#' @param code_meso The 4-digit code of a meso region. If the two-digit code or
+#' a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
+#' the function will load all meso regions of that state. If `code_meso="all"`,
+#' all meso regions of the country are loaded.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

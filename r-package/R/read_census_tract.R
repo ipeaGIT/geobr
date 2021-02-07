@@ -1,15 +1,18 @@
-#' Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
+#' Download shape files of census tracts of the Brazilian Population Census
 #'
-#' @param code_tract The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all census tracts of that state. If code_tract="all",
-#'  all census tracts of the country are loaded.
-#' @param year Year of the data (defaults to 2010)
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
+#' @description
+#' @param code_tract The 7-digit code of a Municipality. If the two-digit code
+#' or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
+#' the function will load all census tracts of that state. If `code_tract="all"`,
+#' all census tracts of the country are loaded.
+#' @param year Year of the data. Defaults to 2010
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

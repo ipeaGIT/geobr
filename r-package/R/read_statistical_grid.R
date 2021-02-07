@@ -1,13 +1,16 @@
-#' Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Download shape files of IBGE's statistical grid as sf objects.
 #'
-#' @param year Year of the data (defaults to 2010). The only year available thus
+#' @description
+#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#'
+#' @param year Year of the data. Defaults to 2010. The only year available thus
 #'             far is 2010.
 #' @param code_grid If two-letter abbreviation of a state is passed, the function
 #'                  will load all grid quadrants that intersect with that state.
-#'                  If code_grid="all", the grid of the whole country will be
+#'                  If `code_grid="all"`, the grid of the whole country will be
 #'                  loaded. Users may also pass a 7-digit code of a grid quadrant
 #'                  to load an specific quadrant.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

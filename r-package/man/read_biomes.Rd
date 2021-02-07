@@ -7,19 +7,21 @@
 read_biomes(year = 2019, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{year}{A date number in YYYY format (defaults to 2019)}
+\item{year}{A date number in YYYY format. Defaults to \code{2019}}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-This data set includes  polygons of all biomes present in Brazilian territory and coastal area.
-The latest data set dates to 2019 and it is available at scale 1:250.000. The 2004 data set is at
-the scale 1:5.000.000. The original data comes from IBGE. More information at https://www.ibge.gov.br/apps/biomas/
+This data set includes  polygons of all biomes present in Brazilian territory
+and coastal area. The latest data set dates to 2019 and it is available at
+scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
+data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 }
 \examples{
 \donttest{

@@ -1,15 +1,16 @@
 #' Download geolocated data of schools as an sf object.
 #'
+#' @description
 #' Data comes from the School Census collected by INEP, the National Institute
-#' for Educational Studies and Research "Anisio Teixeira". The date of the last
+#' for Educational Studies and Research Anisio Teixeira. The date of the last
 #' data update is registered in the database in the column 'date_update'. These
 #' data uses Geodetic reference system "SIRGAS2000" and CRS(4674). The coordinates
 #' of each school if collected by INEP. Periodically the coordinates are revised
 #' with the objective of improving the quality of the data. More information
-#' available at http://portal.inep.gov.br/web/guest/dados/catalogo-de-escolas
+#' available at \url{http://portal.inep.gov.br/web/guest/dados/catalogo-de-escolas}
 #'
-#' @param year A year number in YYYY format (defaults to 2020)
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year A year number in YYYY format. Defaults to `2020`
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @examples \donttest{

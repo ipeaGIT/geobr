@@ -2,24 +2,24 @@
 % Please edit documentation in R/read_statistical_grid.R
 \name{read_statistical_grid}
 \alias{read_statistical_grid}
-\title{Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)}
+\title{Download shape files of IBGE's statistical grid as sf objects.}
 \usage{
 read_statistical_grid(code_grid, year = 2010, showProgress = TRUE)
 }
 \arguments{
 \item{code_grid}{If two-letter abbreviation of a state is passed, the function
 will load all grid quadrants that intersect with that state.
-If code_grid="all", the grid of the whole country will be
+If \code{code_grid="all"}, the grid of the whole country will be
 loaded. Users may also pass a 7-digit code of a grid quadrant
 to load an specific quadrant.}
 
-\item{year}{Year of the data (defaults to 2010). The only year available thus
+\item{year}{Year of the data. Defaults to 2010. The only year available thus
 far is 2010.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-Download shape files of IBGE's statistical grid (200 x 200 meters) as sf objects. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{

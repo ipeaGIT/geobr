@@ -1,14 +1,17 @@
 #' Download shapefiles of Brazilian states as sf objects.
 #'
+#' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data (defaults to 2010)
-#' @param code_state The two-digit code of a state or a two-letter uppercase abbreviation (e.g. 33 or "RJ"). If code_state="all", all states will be loaded.
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year Year of the data. Defaults to 2010
+#' @param code_state The two-digit code of a state or a two-letter uppercase
+#' abbreviation (e.g. 33 or "RJ"). If `code_state="all"`, all states will be loaded.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with 'original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

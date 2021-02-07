@@ -1,16 +1,19 @@
 #' Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.
 #'
+#' @description
 #' Only 2010 data is currently available.
 #'
-#' @param code_weighting The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
-#'  all weighting areas of the country are loaded.
-#' @param year Year of the data (defaults to 2010)
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param code_weighting The 7-digit code of a Municipality. If the two-digit code
+#' or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
+#' the function will load all weighting areas of that state. If `code_weighting="all"`,
+#' all weighting areas of the country are loaded.
+#' @param year Year of the data. Defaults to `2010`
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function returns
+#' the data set with 'original' resolution or a data set with 'simplified' borders.
+#' Defaults to `TRUE`. For spatial analysis and statistics users should set
+#' `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

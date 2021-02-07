@@ -1,15 +1,18 @@
 #' Download official data of Brazilian conservation untis as an sf object.
 #'
-#' This data set covers the whole of Brazil and it includes the polygons of all conservation untis present in Brazilian
-#' territory. The last update of the data was 09-2019. The original
-#' data comes from MMA and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
+#' @description
+#' This data set covers the whole of Brazil and it includes the polygons of all
+#' conservation untis present in Brazilian territory. The last update of the data
+#' was 09-2019. The original data comes from MMA and can be found at
+#' \url{http://mapas.mma.gov.br/i3geo/datadownload.htm}.
 #'
-#' @param date A date number in YYYYMM format (Defaults to 201909)
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param date A date number in YYYYMM format. Defaults to `201909`
+#' @param simplified Logic FALSE or TRUE, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions

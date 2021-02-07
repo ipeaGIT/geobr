@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5-1</span>
       </span>
     </div>
 
@@ -123,9 +123,36 @@
       <small>Source: <a href='https://github.com/ipeaGIT/geobr/tree/master/r-package/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="geobr-v15-dev" class="section level1">
+    <div id="geobr-v16-dev" class="section level1">
+<h1 class="page-header" data-toc-text="1.6">
+<a href="#geobr-v16-dev" class="anchor"></a>geobr v1.6 (dev)<small> Unreleased </small>
+</h1>
+<div id="minor-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Improved documentation considering <code>Roxygen: list(markdown = TRUE)</code>
+</li>
+</ul>
+<hr>
+</div>
+</div>
+    <div id="geobr-v15-1" class="section level1">
+<h1 class="page-header" data-toc-text="1.5-1">
+<a href="#geobr-v15-1" class="anchor"></a>geobr v1.5-1<small> 2021-02-06 </small>
+</h1>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Fixed unnecessary warning about internet connection. Closes #200.</li>
+</ul>
+<hr>
+</div>
+</div>
+    <div id="geobr-v15" class="section level1">
 <h1 class="page-header" data-toc-text="1.5">
-<a href="#geobr-v15-dev" class="anchor"></a>geobr v1.5 dev<small> 2021-02-03 </small>
+<a href="#geobr-v15" class="anchor"></a>geobr v1.5<small> 2021-02-03 </small>
 </h1>
 <div id="new-data-setsfunctions" class="section level3">
 <h3 class="hasAnchor">
@@ -136,9 +163,9 @@
 <li>new function <code>cep_to_state</code> to determine the state of a given CEP postal code (added in 2021-01).</li>
 </ul>
 </div>
-<div id="minor-changes" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>geobr now automatically detects if there is an internet connection problem and throws an error. Closes issue #178</li>
 <li>imports <code>data.table</code> to use <code>rbindlist</code> and improve package speed when downloading data for the whole country. Closes issue #199.</li>
@@ -159,9 +186,9 @@
 <li>updated 2019 data sets of <code>intermediate</code>, <code>immediate</code> <code>micro</code> and <code>meso</code> regions, <code>states</code> and <code>municipalities</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>improved documentation of argument <code>simplified</code>
 </li>
@@ -197,9 +224,9 @@
 </li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>reorganization of internal support functions to reduce code redundancy</li>
 <li>substantial improvment in test coverage of functions</li>
@@ -233,9 +260,9 @@
 <li>Pretty much all functions now download the data for the entire country as a default. Closes issue #77. The only exceptions are <code>read_statistical_grid</code> and <code>read_census_tract</code>. These two functions do take a really long time to load the data for the whole country and it might crash R due to memory limits, so the user must be more ‘aware’ about her choice (2020-02)</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>New utils.R script containing support functions to reduce code redundancy (2020-02)</li>
 </ul>
@@ -262,9 +289,9 @@
 <li>function <code>download_metadata</code> simply the download of df with data set addresses.</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level3">
+<div id="minor-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Changes to <code>read_region</code> function to improve speed and remove <code>dplyr</code>dependency (added in 2019-10-22).</li>
 <li>Shows a single download progress bar when <code>*_code="all"</code>. This fixes the output of vignette and closes issue #42 (2019-08-05)</li>

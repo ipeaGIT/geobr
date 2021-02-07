@@ -1,5 +1,13 @@
 # log history of geobr package development
 
+
+-------------------------------------------------------
+# geobr v1.6 (dev)
+
+### Minor changes
+* Improved documentation considering `Roxygen: list(markdown = TRUE)`
+
+
 -------------------------------------------------------
 # geobr v1.5-1
 
