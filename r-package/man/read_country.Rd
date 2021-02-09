@@ -2,14 +2,14 @@
 % Please edit documentation in R/read_country.R
 \name{read_country}
 \alias{read_country}
-\title{Download shape file of Brazil as sf objects}
+\title{Download shape file of Brazil's national borders as sf objects}
 \usage{
 read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
 \item{year}{Year of the data. Defaults to \code{2010}}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 returns the data set with original' resolution or a data set with 'simplified'
 borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
 set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
