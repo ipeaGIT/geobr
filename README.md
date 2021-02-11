@@ -150,12 +150,13 @@ If you would like to contribute to geobr and add new functions or data sets, ple
 
 #### **Related projects**
 
-As of today, there are two other R packages with similar functionalities: [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr) and [brazilmaps](https://CRAN.R-project.org/package=brazilmaps). The **geobr** package has a few advantages when compared to these  other packages, including for example:
+As of today, there is another R package with similar functionalities: [simplefeaturesbr](https://github.com/RobertMyles/simplefeaturesbr). The **geobr** package has a few advantages when compared to *simplefeaturesbr*, including for example:
 - A same syntax structure across all functions, making the package very easy and intuitive to use
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
-
+- Option to dowlonad geometries with simplified borders for fast rendering
+- Stable version published on CRAN for R users, and on PyPI for Python users
 
 **Similar packages for other countries/continents**
 - Africa: [afrimapr](https://afrimapr.github.io/afrimapr.website/)
