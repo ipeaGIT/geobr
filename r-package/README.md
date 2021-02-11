@@ -159,6 +159,7 @@ As of today, there are two other R packages with similar functionalities: [simpl
 **Similar packages for other countries/continents**
 - Africa: [afrimapr](https://afrimapr.github.io/afrimapr.website/)
 - Brazil: [geobr](https://ipeagit.github.io/geobr/)
+- Canada: [cancensus](https://mountainmath.github.io/cancensus/index.html)
 - Chile: [chilemapas](https://pacha.dev/chilemapas/)
 - Finland: [geofi](https://ropengov.github.io/geofi/)
 - Urugay: [geouy](https://github.com/RichDeto/geouy)
