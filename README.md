@@ -156,6 +156,11 @@ As of today, there are two other R packages with similar functionalities: [simpl
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
 
+**Similar packages for other countries**
+- Finland: [geofi](https://ropengov.github.io/geofi/)
+- Urugay: [geouy](https://github.com/RichDeto/geouy)
+- Chile: [chilemapas](https://pacha.dev/chilemapas/)
+- USA: [tigris](https://github.com/walkerke/tigris)
 
 
 -----
@@ -165,4 +170,6 @@ As of today, there are two other R packages with similar functionalities: [simpl
 Original shapefiles are created by official government institutions. The **geobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
 * Pereira, R.H.M.; Gonçalves, C.N.; et. all (2019) **geobr: Loads Shapefiles of Official Spatial Data Sets of Brazil**. GitHub repository - https://github.com/ipeaGIT/geobr.
+
+
 
