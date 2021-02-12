@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_census_tract.R
 \name{read_census_tract}
 \alias{read_census_tract}
-\title{Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).}
+\title{Download shape files of census tracts of the Brazilian Population Census}
 \usage{
 read_census_tract(
   code_tract,
@@ -13,29 +13,28 @@ read_census_tract(
 )
 }
 \arguments{
-\item{code_tract}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
-a state is passed, (e.g. 33 or "RJ") the function will load all census tracts of that state. If code_tract="all",
+\item{code_tract}{The 7-digit code of a Municipality. If the two-digit code
+or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
+the function will load all census tracts of that state. If \code{code_tract="all"},
 all census tracts of the country are loaded.}
 
-\item{year}{Year of the data (defaults to 2010)}
+\item{year}{Year of the data. Defaults to 2010}
 
 \item{zone}{For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
+Download shape files of census tracts of the Brazilian Population Census
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read rural census tracts for years before 2007
   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 
@@ -52,7 +51,6 @@ library(geobr)
   c <- read_census_tract(code_tract="all", year=2010)
 
 }
-
 }
 \seealso{
 Other general area functions: 

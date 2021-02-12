@@ -12,19 +12,19 @@ lookup_muni(name_muni = NULL, code_muni = NULL)
 \item{code_muni}{The municipality code to be looked up}
 }
 \value{
-A data.frame with 13 columns identifying the geographies information of that municipality
+A \code{data.frame} with 13 columns identifying the geographies information
+of that municipality
 }
 \description{
-Input a municipality \strong{name} \emph{or} \strong{code} and get the names and codes of the
-municipality's corresponding state, meso, micro, intermediate, and immediate regions
+Input a municipality \strong{name} \emph{or} \strong{code} and get the names
+and codes of the municipality's corresponding state, meso, micro, intermediate,
+and immediate regions
 }
 \details{
 Only available from 2010 Census data so far
 }
 \examples{
 \donttest{
-library(geobr)
-
 # Get lookup table for municipality Rio de Janeiro
 mun <- lookup_muni(name_muni = "Rio de Janeiro")
 
@@ -37,5 +37,4 @@ mun_all <- lookup_muni(name_muni = "all")
 # Or:
 mun_all <- lookup_muni(code_muni = "all")
 }
-
 }

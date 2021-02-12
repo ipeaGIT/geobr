@@ -2,7 +2,21 @@
 
 
 -------------------------------------------------------
-# geobr v1.5 dev
+# geobr v1.6 (dev)
+
+### Minor changes
+* Improved documentation considering `Roxygen: list(markdown = TRUE)`
+
+
+-------------------------------------------------------
+# geobr v1.5-1
+
+### Minor changes
+* Fixed unnecessary warning about internet connection. Closes #200.
+
+
+-------------------------------------------------------
+# geobr v1.5
 
 ### New data sets/functions
 * new function `read_schools` to read the schools data - closes issue #190 (added in 2020-10).

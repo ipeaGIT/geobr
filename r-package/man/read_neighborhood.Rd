@@ -7,14 +7,15 @@
 read_neighborhood(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2010)}
+\item{year}{Year of the data. Defaults to \code{2010}}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with 'original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to `TRUE`` display progress bar}
 }
 \description{
 This data set includes the neighborhood limits of 720 Brazilian municipalities.
@@ -23,13 +24,9 @@ census. Only 2010 data is currently available.
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read neighborhoods of Brazilian municipalities
-  n <- read_neighborhood(year=2010)
+n <- read_neighborhood(year=2010)
 }
-
 }
 \seealso{
 Other general area functions: 

@@ -12,44 +12,41 @@ read_weighting_area(
 )
 }
 \arguments{
-\item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code or a two-letter uppercase abbreviation of
-a state is passed, (e.g. 33 or "RJ") the function will load all weighting areas of that state. If code_weighting="all",
+\item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code
+or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
+the function will load all weighting areas of that state. If \code{code_weighting="all"},
 all weighting areas of the country are loaded.}
 
-\item{year}{Year of the data (defaults to 2010)}
+\item{year}{Year of the data. Defaults to \code{2010}}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function returns
+the data set with 'original' resolution or a data set with 'simplified' borders.
+Defaults to \code{TRUE}. For spatial analysis and statistics users should set
+\code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
 Only 2010 data is currently available.
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read specific weighting area at a given year
-  w <- read_weighting_area(code_weighting=5201108005004, year=2010)
+w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 
 # Read all weighting areas of a state at a given year
-  w <- read_weighting_area(code_weighting=53, year=2010) # or
-  w <- read_weighting_area(code_weighting="DF", year=2010)
-  plot(w)
+w <- read_weighting_area(code_weighting=53, year=2010) # or
+w <- read_weighting_area(code_weighting="DF", year=2010)
+plot(w)
 
 # Read all weighting areas of a municipality at a given year
-  w <- read_weighting_area(code_weighting=5201108, year=2010)
-  plot(w)
+w <- read_weighting_area(code_weighting=5201108, year=2010)
+plot(w)
 
 # Read all weighting areas of the country at a given year
-  w <- read_weighting_area(code_weighting="all", year=2010)
-
+w <- read_weighting_area(code_weighting="all", year=2010)
 }
-
 }
 \seealso{
 Other general area functions: 

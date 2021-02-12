@@ -7,27 +7,26 @@
 read_conservation_units(date = 201909, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{date}{A date number in YYYYMM format (Defaults to 201909)}
+\item{date}{A date number in YYYYMM format. Defaults to \code{201909}}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic FALSE or TRUE, indicating whether the function
+returns the data set with original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-This data set covers the whole of Brazil and it includes the polygons of all conservation untis present in Brazilian
-territory. The last update of the data was 09-2019. The original
-data comes from MMA and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
+This data set covers the whole of Brazil and it includes the polygons of all
+conservation untis present in Brazilian territory. The last update of the data
+was 09-2019. The original data comes from MMA and can be found at
+\url{http://mapas.mma.gov.br/i3geo/datadownload.htm}.
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read conservation_units
-  b <- read_conservation_units(date=201909)
+b <- read_conservation_units(date = 201909)
 }
 }
 \seealso{

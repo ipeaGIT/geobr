@@ -1,25 +1,23 @@
 #' Download neighborhood limits of Brazilian municipalities as an sf object
 #'
+#' @description
 #' This data set includes the neighborhood limits of 720 Brazilian municipalities.
 #' It is based on aggregations of the census tracts from the Brazilian
 #' census. Only 2010 data is currently available.
 #'
-#' @param year Year of the data (defaults to 2010)
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year Year of the data. Defaults to `2010`
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with 'original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE`` display progress bar
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#'
-#' library(geobr)
-#'
 #' # Read neighborhoods of Brazilian municipalities
-#'   n <- read_neighborhood(year=2010)
+#' n <- read_neighborhood(year=2010)
 #'}
-#'
 read_neighborhood <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -1,24 +1,27 @@
 #' Download shape files of Brazil's Intermediate Geographic Areas as sf objects.
 #'
-#' The intermediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
-#' were created to replace the "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' @description
+#' The intermediate Geographic Areas are part of the geographic division of
+#' Brazil created in 2017 by IBGE. These regions were created to replace the
+#' "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
+#' system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year A date number in YYYY format (defaults to 2019)
-#' @param code_intermediate 4-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_intermediate="all",
-#'  all intermediate regions of the country are loaded (defaults to "all").
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param year A year number in YYYY format. Defaults to `2019`
+#' @param code_intermediate 4-digit code of an intermediate region. If the
+#' two-digit code or a two-letter uppercase abbreviation of a state is passed,
+#' (e.g. 33 or "RJ") the function will load all intermediate regions of that
+#' state. If `code_intermediate="all"` (Default), all intermediate regions of
+#' the country are loaded.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#'
-#' library(geobr)
-#'
 #' # Read an specific intermediate region
 #'   im <- read_intermediate_region(code_intermediate=1202)
 #'
@@ -30,8 +33,6 @@
 #'   im <- read_intermediate_region()
 #'   im <- read_intermediate_region(code_intermediate="all")
 #' }
-#'
-#'
 read_intermediate_region <- function(code_intermediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

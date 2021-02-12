@@ -7,28 +7,24 @@
 read_health_region(year = 2013, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{year}{Year of the data (defaults to 2013, latest available)}
+\item{year}{Year of the data. Ddefaults to 2013, latest available.}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
 Download official data of Brazilian health regions as an sf object.
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read all health regions for a given year
-  hr <- read_health_region( year=2013)
-
+hr <- read_health_region( year=2013)
 }
-
 }
 \seealso{
 Other general area functions: 

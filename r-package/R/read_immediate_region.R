@@ -1,24 +1,25 @@
 #' Download shape files of Brazil's Immediate Geographic Areas as sf objects
 #'
+#' @description
 #' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
 #' were created to replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
 #' @param year A date number in YYYY format (defaults to 2019)
-#' @param code_immediate 6-digit code of an immediate region. If the two-digit code or a two-letter uppercase abbreviation of
-#'  a state is passed, (e.g. 33 or "RJ") the function will load all immediate regions of that state. If code_immediate="all",
-#'  all immediate regions of the country are loaded (defaults to "all").
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @param code_immediate 6-digit code of an immediate region. If the two-digit
+#' code or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
+#' "RJ") the function will load all immediate regions of that state. If
+#' `code_immediate="all"` (Default), all immediate regions of the country are
+#' loaded.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions
 #' @examples \dontrun{
-#'
-#' library(geobr)
-#'
 #' # Read an specific immediate region
 #'   im <- read_immediate_region(code_immediate=110006)
 #'
@@ -30,8 +31,6 @@
 #'   im <- read_immediate_region()
 #'   im <- read_immediate_region(code_immediate="all")
 #' }
-#'
-#'
 read_immediate_region <- function(code_immediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

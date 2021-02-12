@@ -12,28 +12,30 @@ read_intermediate_region(
 )
 }
 \arguments{
-\item{code_intermediate}{4-digit code of an intermediate region. If the two-digit code or a two-letter uppercase abbreviation of
-a state is passed, (e.g. 33 or "RJ") the function will load all intermediate regions of that state. If code_intermediate="all",
-all intermediate regions of the country are loaded (defaults to "all").}
+\item{code_intermediate}{4-digit code of an intermediate region. If the
+two-digit code or a two-letter uppercase abbreviation of a state is passed,
+(e.g. 33 or "RJ") the function will load all intermediate regions of that
+state. If \code{code_intermediate="all"} (Default), all intermediate regions of
+the country are loaded.}
 
-\item{year}{A date number in YYYY format (defaults to 2019)}
+\item{year}{A year number in YYYY format. Defaults to \code{2019}}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-The intermediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
-were created to replace the "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+The intermediate Geographic Areas are part of the geographic division of
+Brazil created in 2017 by IBGE. These regions were created to replace the
+"Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
+system "SIRGAS2000" and CRS(4674)
 }
 \examples{
 \dontrun{
-
-library(geobr)
-
 # Read an specific intermediate region
   im <- read_intermediate_region(code_intermediate=1202)
 
@@ -45,8 +47,6 @@ library(geobr)
   im <- read_intermediate_region()
   im <- read_intermediate_region(code_intermediate="all")
 }
-
-
 }
 \seealso{
 Other general area functions: 

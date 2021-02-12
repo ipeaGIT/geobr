@@ -1,23 +1,20 @@
 #' Download official data of Brazilian health regions as an sf object.
 #'
-#' @param year Year of the data (defaults to 2013, latest available)
-#' @param simplified Logic FALSE or TRUE, indicating whether the function returns the
-#'  data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-#'  For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-#'  simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.
-#' @param showProgress Logical. Defaults to (TRUE) display progress bar
+#' @description
+#' @param year Year of the data. Ddefaults to 2013, latest available.
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
 #'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
-#'
-#' library(geobr)
-#'
 #' # Read all health regions for a given year
-#'   hr <- read_health_region( year=2013)
-#'
+#' hr <- read_health_region( year=2013)
 #'}
-#'
 read_health_region <- function(year=2013, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_municipality.R
 \name{read_municipality}
 \alias{read_municipality}
-\title{Download shape files of Brazilian municipalities as sf objects.}
+\title{Download shape files of Brazilian municipalities as sf objects}
 \usage{
 read_municipality(
   code_muni = "all",
@@ -12,35 +12,37 @@ read_municipality(
 )
 }
 \arguments{
-\item{code_muni}{The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
-a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state. If code_muni="all", all municipalities of the country will be loaded.}
+\item{code_muni}{The 7-digit identification code of a municipality. If
+\code{code_muni = "all"} (default), all municipalities of the country will be
+downloaded. Alternativelly, if the two-digit identification code or a
+two-letter uppercase abbreviation of a state is passed, e.g. \code{33} or \code{"RJ"},
+all municipalities of that state will be downloaded. Municipality identification
+codes are defined in \url{https://www.ibge.gov.br/explica/codigos-dos-municipios.php}.}
 
-\item{year}{Year of the data (defaults to 2010)}
+\item{year}{Year of the data. Defaults to \code{2010}.}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+returns the data set with original' resolution or a data set with 'simplified'
+borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
+set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
+borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
 \description{
-Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{
 \donttest{
-
-library(geobr)
-
 # Read specific municipality at a given year
-  mun <- read_municipality(code_muni=1200179, year=2017)
+mun <- read_municipality(code_muni = 1200179, year = 2017)
 
 # Read all municipalities of a state at a given year
-  mun <- read_municipality(code_muni=33, year=2010)
-  mun <- read_municipality(code_muni="RJ", year=2010)
+mun <- read_municipality(code_muni = 33, year = 2010)
+mun <- read_municipality(code_muni = "RJ", year = 2010)
 
 # Read all municipalities of the country at a given year
-  mun <- read_municipality(code_muni="all", year=2018)
+mun <- read_municipality(code_muni = "all", year = 2018)
 }
 
 }
