@@ -1,4 +1,4 @@
-#' Download official data of Brazil's Legal Amazon as an sf object.
+#' Download official data of Brazil's Legal Amazon
 #'
 #' @description
 #' This data set covers the whole of Brazil's Legal Amazon as defined in the
@@ -13,6 +13,9 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
+#'
 #' @export
 #' @family general area functions
 #' @examples \donttest{
