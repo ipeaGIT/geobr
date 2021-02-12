@@ -171,11 +171,11 @@ clean_muni <- function(year){
       temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
     }}
   
-  # fix name_muni 1872 
+  # fix name_muni 1872, 1900 and 1920
   if (year %like% "1872"){
     temp_sf <- temp_sf %>% mutate(name_muni = ifelse(code_muni == "2306405", "Itapipoca",
                                                      ifelse(code_muni == "2407401", "Martins",
-                                                            ifelse(code_muni == "2709301", "União dos Palmares",name_muni)))) 
+                                                            ifelse(code_muni == "2709301", "Uni?o dos Palmares",name_muni)))) 
   } else { 
     if (year %like% 1900|year %like% 1920 & code_muni == "2306405"){
       temp_sf <- temp_sf %>% mutate(name_muni = "Itapipoca")
