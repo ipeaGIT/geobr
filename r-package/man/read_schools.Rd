@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_schools.R
 \name{read_schools}
 \alias{read_schools}
-\title{Download geolocated data of schools as an sf object.}
+\title{Download geolocated data of schools}
 \usage{
 read_schools(year = 2020, showProgress = TRUE)
 }
@@ -10,6 +10,9 @@ read_schools(year = 2020, showProgress = TRUE)
 \item{year}{A year number in YYYY format. Defaults to \code{2020}}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data comes from the School Census collected by INEP, the National Institute

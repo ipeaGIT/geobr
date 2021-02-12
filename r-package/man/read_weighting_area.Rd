@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_weighting_area.R
 \name{read_weighting_area}
 \alias{read_weighting_area}
-\title{Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.}
+\title{Download spatial data of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census}
 \usage{
 read_weighting_area(
   code_weighting = "all",
@@ -26,6 +26,9 @@ Defaults to \code{TRUE}. For spatial analysis and statistics users should set
 borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Only 2010 data is currently available.

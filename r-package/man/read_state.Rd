@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_state.R
 \name{read_state}
 \alias{read_state}
-\title{Download shapefiles of Brazilian states as sf objects.}
+\title{Download spatil data of Brazilian states}
 \usage{
 read_state(
   code_state = "all",
@@ -24,6 +24,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

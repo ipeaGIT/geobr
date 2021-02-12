@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_country.R
 \name{read_country}
 \alias{read_country}
-\title{Download shape file of Brazil's national borders as sf objects}
+\title{Download spatial data of Brazil's national borders}
 \usage{
 read_country(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).

@@ -3,6 +3,8 @@
 #' @description
 #' Returns a data frame with all datasets available in the geobr package
 #'
+#' @return A `data.frame`
+#'
 #' @export
 #' @family general support functions
 #' @examples \donttest{

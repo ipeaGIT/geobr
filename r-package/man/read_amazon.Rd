@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_amazon.R
 \name{read_amazon}
 \alias{read_amazon}
-\title{Download official data of Brazil's Legal Amazon as an sf object.}
+\title{Download spatial data of Brazil's Legal Amazon}
 \usage{
 read_amazon(year = 2012, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This data set covers the whole of Brazil's Legal Amazon as defined in the

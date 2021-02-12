@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_urban_area.R
 \name{read_urban_area}
 \alias{read_urban_area}
-\title{Download official data of urbanized areas in Brazil as an sf object.}
+\title{Download spatial data of urbanized areas in Brazil}
 \usage{
 read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ Defaults to \code{TRUE}. For spatial analysis and statistics users should set
 borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This function reads the official data on the urban footprint of Brazilian cities

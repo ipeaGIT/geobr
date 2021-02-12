@@ -1,4 +1,4 @@
-#' Download official data of disaster risk areas as an sf object.
+#' Download spatial data of disaster risk areas
 #'
 #' @description
 #' This function reads the the official data of disaster risk areas in Brazil.
@@ -18,6 +18,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @examples \donttest{

@@ -1,4 +1,4 @@
-#' Download shape files of micro region as sf objects
+#' Download spatial data of micro regions
 #'
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -14,6 +14,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_municipal_seat.R
 \name{read_municipal_seat}
 \alias{read_municipal_seat}
-\title{Download official data of municipal seats (sede dos municipios) in Brazil as an sf object.}
+\title{Download spatial data of municipal seats (sede dos municipios) in Brazil}
 \usage{
 read_municipal_seat(year = 2010, showProgress = TRUE)
 }
@@ -10,6 +10,9 @@ read_municipal_seat(year = 2010, showProgress = TRUE)
 \item{year}{A year number in YYYY format. Defaults to \code{2010}}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This function reads the official data on the municipal seats (sede dos municipios)

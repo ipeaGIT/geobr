@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_indigenous_land.R
 \name{read_indigenous_land}
 \alias{read_indigenous_land}
-\title{Download official data of indigenous lands as an sf object.}
+\title{Download spatial data of indigenous lands in Brazil}
 \usage{
 read_indigenous_land(date = 201907, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 The data set covers the whole of Brazil and it includes indigenous lands from

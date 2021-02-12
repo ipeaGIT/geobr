@@ -1,4 +1,4 @@
-#' Download official data of indigenous lands as an sf object.
+#' Download spatial data of indigenous lands in Brazil
 #'
 #' @description
 #' The data set covers the whole of Brazil and it includes indigenous lands from
@@ -15,6 +15,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @examples \donttest{

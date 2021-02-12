@@ -1,4 +1,4 @@
-#' Download official data of Brazilian Semiarid as an sf object.
+#' Download spatial data of the Brazilian Semiarid region
 #'
 #' @description
 #' This data set covers the whole of Brazilian Semiarid as defined in the resolution
@@ -12,6 +12,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `st_simplify{sf}` preserving topology with a dTolerance of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

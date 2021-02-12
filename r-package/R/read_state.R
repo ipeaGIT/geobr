@@ -1,4 +1,4 @@
-#' Download shapefiles of Brazilian states as sf objects.
+#' Download spatil data of Brazilian states
 #'
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -12,6 +12,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

@@ -1,4 +1,4 @@
-#' Download shape files of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census.
+#' Download spatial data of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census
 #'
 #' @description
 #' Only 2010 data is currently available.
@@ -14,6 +14,8 @@
 #' `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

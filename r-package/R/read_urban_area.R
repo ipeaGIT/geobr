@@ -1,4 +1,4 @@
-#' Download official data of urbanized areas in Brazil as an sf object.
+#' Download spatial data of urbanized areas in Brazil
 #'
 #' @description
 #' This function reads the official data on the urban footprint of Brazilian cities
@@ -13,6 +13,8 @@
 #' `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @examples \dontrun{

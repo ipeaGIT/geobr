@@ -9,6 +9,9 @@
 #' @param code_muni The municipality code to be looked up
 #' @return A `data.frame` with 13 columns identifying the geographies information
 #' of that municipality
+#'
+#' @return A `data.frame`
+#'
 #' @export
 #' @details Only available from 2010 Census data so far
 #' @examples \donttest{

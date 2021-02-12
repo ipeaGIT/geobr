@@ -2,12 +2,15 @@
 % Please edit documentation in R/read_health_facilities.R
 \name{read_health_facilities}
 \alias{read_health_facilities}
-\title{Download geolocated data of health facilities as an sf object.}
+\title{Download geolocated data of health facilities}
 \usage{
 read_health_facilities(showProgress = TRUE)
 }
 \arguments{
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data comes from the National Registry of Healthcare facilities (Cadastro

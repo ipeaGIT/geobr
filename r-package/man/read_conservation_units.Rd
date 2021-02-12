@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_conservation_units.R
 \name{read_conservation_units}
 \alias{read_conservation_units}
-\title{Download official data of Brazilian conservation untis as an sf object.}
+\title{Download spatial data of Brazilian environmental conservation untis}
 \usage{
 read_conservation_units(date = 201909, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This data set covers the whole of Brazil and it includes the polygons of all

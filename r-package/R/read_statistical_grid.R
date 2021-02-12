@@ -1,4 +1,4 @@
-#' Download shape files of IBGE's statistical grid as sf objects.
+#' Download spatial data of IBGE's statistical grid
 #'
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
@@ -11,6 +11,8 @@
 #'                  loaded. Users may also pass a 7-digit code of a grid quadrant
 #'                  to load an specific quadrant.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_census_tract.R
 \name{read_census_tract}
 \alias{read_census_tract}
-\title{Download shape files of census tracts of the Brazilian Population Census}
+\title{Download spatial data of census tracts of the Brazilian Population Census}
 \usage{
 read_census_tract(
   code_tract,
@@ -30,8 +30,11 @@ borders using \code{sf::st_simplify()} preserving topology with a \code{dToleran
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
+\value{
+An \verb{"sf" "data.frame"} object
+}
 \description{
-Download shape files of census tracts of the Brazilian Population Census
+Download spatial data of census tracts of the Brazilian Population Census
 }
 \examples{
 \dontrun{

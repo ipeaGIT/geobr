@@ -1,4 +1,4 @@
-#' Download neighborhood limits of Brazilian municipalities as an sf object
+#' Download spatial data of neighborhood limits of Brazilian municipalities
 #'
 #' @description
 #' This data set includes the neighborhood limits of 720 Brazilian municipalities.
@@ -12,6 +12,9 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE`` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
+#'
 #' @export
 #' @family general area functions
 #' @examples \dontrun{

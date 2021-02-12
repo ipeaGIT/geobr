@@ -1,4 +1,4 @@
-#' Download geolocated data of schools as an sf object.
+#' Download geolocated data of schools
 #'
 #' @description
 #' Data comes from the School Census collected by INEP, the National Institute
@@ -11,6 +11,8 @@
 #'
 #' @param year A year number in YYYY format. Defaults to `2020`
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @examples \donttest{

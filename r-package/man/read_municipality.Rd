@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_municipality.R
 \name{read_municipality}
 \alias{read_municipality}
-\title{Download shape files of Brazilian municipalities as sf objects}
+\title{Download spatial data of Brazilian municipalities}
 \usage{
 read_municipality(
   code_muni = "all",
@@ -28,6 +28,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).

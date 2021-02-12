@@ -1,4 +1,4 @@
-#' Download geolocated data of health facilities as an sf object.
+#' Download geolocated data of health facilities
 #'
 #' @description
 #' Data comes from the National Registry of Healthcare facilities (Cadastro
@@ -18,6 +18,8 @@
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @examples \donttest{

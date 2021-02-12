@@ -1,4 +1,4 @@
-#' Download official data of municipal seats (sede dos municipios) in Brazil as an sf object.
+#' Download spatial data of municipal seats (sede dos municipios) in Brazil
 #'
 #' @description
 #' This function reads the official data on the municipal seats (sede dos municipios)
@@ -8,6 +8,8 @@
 #'
 #' @param year A year number in YYYY format. Defaults to `2010`
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @examples \donttest{

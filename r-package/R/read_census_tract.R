@@ -1,4 +1,4 @@
-#' Download shape files of census tracts of the Brazilian Population Census
+#' Download spatial data of census tracts of the Brazilian Population Census
 #'
 #' @description
 #' @param code_tract The 7-digit code of a Municipality. If the two-digit code
@@ -13,6 +13,8 @@
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions
