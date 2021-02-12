@@ -133,7 +133,9 @@ years <- substr(years, 3, 6)
 
 
 
-  #year <- 1872
+
+
+  #year <- 1900
 
   # create a subdirectory of year
   dir.create(file.path("./shapes_in_sf_all_years_cleaned", "municipio",year), showWarnings = T)
@@ -179,8 +181,9 @@ years <- substr(years, 3, 6)
                                                      ifelse(code_muni == "2407401", "Martins",
                                                             ifelse(code_muni == "2709301", "Uni?o dos Palmares",name_muni))))
   } else {
-    if (year %like% 1900|year %like% 1920 & temp_sf$code_muni == "2306405"){
-      temp_sf <- temp_sf %>% mutate(name_muni = "Itapipoca")
+    if ( (year %like% 1900|year %like% 1920)){
+
+      temp_sf <- temp_sf %>% mutate(name_muni = ifelse(code_muni == "2306405", "Itapipoca",name_muni))
     }
   }
 
