@@ -129,7 +129,9 @@ years <- substr(years, 3, 6)
 
 
 # Create function to clean municipalities, additing dipusted lands in case they exist
-clean_muni <- function(year){
+ clean_muni <- function(year){
+
+
 
   #year <- 1872
 
@@ -170,21 +172,21 @@ clean_muni <- function(year){
       temp_sf <- dplyr::rename(temp_sf, code_muni = codigo, name_muni = nome )
       temp_sf <- dplyr::select(temp_sf, c('code_muni', 'name_muni', 'geometry'))
     }}
-  
+
   # fix name_muni 1872, 1900 and 1920
   if (year %like% "1872"){
     temp_sf <- temp_sf %>% mutate(name_muni = ifelse(code_muni == "2306405", "Itapipoca",
                                                      ifelse(code_muni == "2407401", "Martins",
-                                                            ifelse(code_muni == "2709301", "Uni?o dos Palmares",name_muni)))) 
-  } else { 
-    if (year %like% 1900|year %like% 1920 & code_muni == "2306405"){
+                                                            ifelse(code_muni == "2709301", "Uni?o dos Palmares",name_muni))))
+  } else {
+    if (year %like% 1900|year %like% 1920 & temp_sf$code_muni == "2306405"){
       temp_sf <- temp_sf %>% mutate(name_muni = "Itapipoca")
     }
   }
-  
+
   #fix code_muni Itapipoca
-  temp_sf <- temp_sf %>% mutate(code_muni = ifelse(name_muni == "Itapipoca", 2306405,code_muni)) 
-  
+  temp_sf <- temp_sf %>% mutate(code_muni = ifelse(name_muni == "Itapipoca", 2306405,code_muni))
+
 
   # Use UTF-8 encoding
   temp_sf <- use_encoding_utf8(temp_sf)
@@ -242,8 +244,8 @@ clean_muni <- function(year){
   # Save cleaned sf in the cleaned directory
   destdir <- file.path("./shapes_in_sf_all_years_cleaned", "municipio",year)
   # readr::write_rds(temp_sf, path = paste0(destdir,"/municipios_", year, ".rds"), compress="gz" )
-  sf::st_write(temp_sf,     dsn  = paste0(destdir,"/municipios_", year, ".gpkg") )
-  sf::st_write(temp_sf_simp, dsn  = paste0(destdir,"/municipios_", year, "_simplified", ".gpkg"))
+  sf::st_write(temp_sf,     dsn  = paste0(destdir,"/municipios_", year, ".gpkg"),append=FALSE )
+  sf::st_write(temp_sf_simp, dsn  = paste0(destdir,"/municipios_", year, "_simplified", ".gpkg"),append=FALSE)
 }
 
 
@@ -252,6 +254,7 @@ clean_muni <- function(year){
 
 # create computing clusters
 cl <- parallel::makeCluster(detectCores())
+
 
 clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
 parallel::clusterExport(cl=cl, varlist= c("years","use_encoding_utf8","simplify_temp_sf",
