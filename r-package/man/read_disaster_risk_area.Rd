@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_disaster_risk_area.R
 \name{read_disaster_risk_area}
 \alias{read_disaster_risk_area}
-\title{Download official data of disaster risk areas as an sf object.}
+\title{Download spatial data of disaster risk areas}
 \usage{
 read_disaster_risk_area(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This function reads the the official data of disaster risk areas in Brazil.

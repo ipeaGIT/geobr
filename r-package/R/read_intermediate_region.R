@@ -1,4 +1,4 @@
-#' Download shape files of Brazil's Intermediate Geographic Areas as sf objects.
+#' Download spatial data of Brazil's Intermediate Geographic Areas
 #'
 #' @description
 #' The intermediate Geographic Areas are part of the geographic division of
@@ -18,6 +18,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

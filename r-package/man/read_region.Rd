@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_region.R
 \name{read_region}
 \alias{read_region}
-\title{Download shape file of Brazil Regions as sf objects.}
+\title{Download spatial data of Brazil Regions}
 \usage{
 read_region(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

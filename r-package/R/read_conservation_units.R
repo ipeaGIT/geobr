@@ -1,4 +1,4 @@
-#' Download official data of Brazilian conservation untis as an sf object.
+#' Download spatial data of Brazilian environmental conservation untis
 #'
 #' @description
 #' This data set covers the whole of Brazil and it includes the polygons of all
@@ -13,6 +13,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

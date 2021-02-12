@@ -14,6 +14,8 @@ lookup_muni(name_muni = NULL, code_muni = NULL)
 \value{
 A \code{data.frame} with 13 columns identifying the geographies information
 of that municipality
+
+A \code{data.frame}
 }
 \description{
 Input a municipality \strong{name} \emph{or} \strong{code} and get the names

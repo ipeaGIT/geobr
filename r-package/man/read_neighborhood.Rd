@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_neighborhood.R
 \name{read_neighborhood}
 \alias{read_neighborhood}
-\title{Download neighborhood limits of Brazilian municipalities as an sf object}
+\title{Download spatial data of neighborhood limits of Brazilian municipalities}
 \usage{
 read_neighborhood(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to `TRUE`` display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This data set includes the neighborhood limits of 720 Brazilian municipalities.

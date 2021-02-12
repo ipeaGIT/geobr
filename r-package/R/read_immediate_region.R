@@ -1,4 +1,4 @@
-#' Download shape files of Brazil's Immediate Geographic Areas as sf objects
+#' Download spatial data of Brazil's Immediate Geographic Areas
 #'
 #' @description
 #' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
@@ -16,6 +16,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

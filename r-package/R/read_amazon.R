@@ -1,4 +1,4 @@
-#' Download official data of Brazil's Legal Amazon
+#' Download spatial data of Brazil's Legal Amazon
 #'
 #' @description
 #' This data set covers the whole of Brazil's Legal Amazon as defined in the

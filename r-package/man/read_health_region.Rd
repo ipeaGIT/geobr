@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_health_region.R
 \name{read_health_region}
 \alias{read_health_region}
-\title{Download official data of Brazilian health regions as an sf object.}
+\title{Download spatial data of Brazilian health regions}
 \usage{
 read_health_region(year = 2013, simplified = TRUE, showProgress = TRUE)
 }
@@ -17,8 +17,11 @@ borders using \code{sf::st_simplify()} preserving topology with a \code{dToleran
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
+\value{
+An \verb{"sf" "data.frame"} object
+}
 \description{
-Download official data of Brazilian health regions as an sf object.
+Download spatial data of Brazilian health regions
 }
 \examples{
 \donttest{

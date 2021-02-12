@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_statistical_grid.R
 \name{read_statistical_grid}
 \alias{read_statistical_grid}
-\title{Download shape files of IBGE's statistical grid as sf objects.}
+\title{Download spatial data of IBGE's statistical grid}
 \usage{
 read_statistical_grid(code_grid, year = 2010, showProgress = TRUE)
 }
@@ -17,6 +17,9 @@ to load an specific quadrant.}
 far is 2010.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

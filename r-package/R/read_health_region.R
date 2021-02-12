@@ -1,4 +1,4 @@
-#' Download official data of Brazilian health regions as an sf object.
+#' Download spatial data of Brazilian health regions
 #'
 #' @description
 #' @param year Year of the data. Ddefaults to 2013, latest available.
@@ -8,6 +8,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

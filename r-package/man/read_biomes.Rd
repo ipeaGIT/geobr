@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_biomes.R
 \name{read_biomes}
 \alias{read_biomes}
-\title{Download official data of Brazilian biomes as an sf object.}
+\title{Download spatial data of Brazilian biomes}
 \usage{
 read_biomes(year = 2019, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This data set includes  polygons of all biomes present in Brazilian territory

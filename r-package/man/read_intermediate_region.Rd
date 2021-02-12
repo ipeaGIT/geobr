@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_intermediate_region.R
 \name{read_intermediate_region}
 \alias{read_intermediate_region}
-\title{Download shape files of Brazil's Intermediate Geographic Areas as sf objects.}
+\title{Download spatial data of Brazil's Intermediate Geographic Areas}
 \usage{
 read_intermediate_region(
   code_intermediate = "all",
@@ -27,6 +27,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 The intermediate Geographic Areas are part of the geographic division of

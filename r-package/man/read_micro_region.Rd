@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_micro_region.R
 \name{read_micro_region}
 \alias{read_micro_region}
-\title{Download shape files of micro region as sf objects}
+\title{Download spatial data of micro regions}
 \usage{
 read_micro_region(
   code_micro = "all",
@@ -26,6 +26,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

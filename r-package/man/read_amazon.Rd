@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_amazon.R
 \name{read_amazon}
 \alias{read_amazon}
-\title{Download official data of Brazil's Legal Amazon}
+\title{Download spatial data of Brazil's Legal Amazon}
 \usage{
 read_amazon(year = 2012, simplified = TRUE, showProgress = TRUE)
 }

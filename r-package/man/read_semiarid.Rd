@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_semiarid.R
 \name{read_semiarid}
 \alias{read_semiarid}
-\title{Download official data of Brazilian Semiarid as an sf object.}
+\title{Download spatial data of the Brazilian Semiarid region}
 \usage{
 read_semiarid(year = 2017, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \verb{st_simplify\{sf\}} preserving topology with a dTolerance of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 This data set covers the whole of Brazilian Semiarid as defined in the resolution

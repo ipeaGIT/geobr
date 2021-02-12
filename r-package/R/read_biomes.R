@@ -1,4 +1,4 @@
-#' Download official data of Brazilian biomes as an sf object.
+#' Download spatial data of Brazilian biomes
 #'
 #' @description
 #' This data set includes  polygons of all biomes present in Brazilian territory
@@ -13,6 +13,8 @@
 #' set `simplified = FALSE`. Borders have been simplified by removing vertices of
 #' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
 #' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
 #'
 #' @export
 #' @family general area functions

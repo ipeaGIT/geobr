@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_immediate_region.R
 \name{read_immediate_region}
 \alias{read_immediate_region}
-\title{Download shape files of Brazil's Immediate Geographic Areas as sf objects}
+\title{Download spatial data of Brazil's Immediate Geographic Areas}
 \usage{
 read_immediate_region(
   code_immediate = "all",
@@ -27,6 +27,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions

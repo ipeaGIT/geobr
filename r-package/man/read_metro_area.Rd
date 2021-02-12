@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_metro_area.R
 \name{read_metro_area}
 \alias{read_metro_area}
-\title{Download shape files of official metropolitan areas in Brazil as an sf object.}
+\title{Download spatial data of official metropolitan areas in Brazil}
 \usage{
 read_metro_area(year = 2018, simplified = TRUE, showProgress = TRUE)
 }
@@ -16,6 +16,9 @@ set \code{simplified = FALSE}. Borders have been simplified by removing vertices
 borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+}
+\value{
+An \verb{"sf" "data.frame"} object
 }
 \description{
 The function returns the shapes of municipalities grouped by their respective metro areas.
