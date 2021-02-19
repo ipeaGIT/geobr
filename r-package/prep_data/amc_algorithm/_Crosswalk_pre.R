@@ -12,7 +12,7 @@
 
 ##### 0) Read packages and database --------------
 
-rm(list = ls())	
+rm(list = ls())
 library(readxl)
 library(dplyr)
 library(tidyr)
@@ -21,7 +21,7 @@ library(readr)
 
 # Read IBGE raw database
 
-data_mun <- readRDS("IBGE_1872_2010_original.rds") %>% as.data.frame()
+data_mun <- readr::read_rds("./prep_data/amc_algorithm/IBGE_1872_2010_original.rds") %>% as.data.frame()
 head(data_mun)
 ##### 1) Accent and Uppercase formatting --------------
 
@@ -46,11 +46,11 @@ head(data_mun)
 
 # Create UF variable
 
-data_mun <- data_mun %>% 
+data_mun <- data_mun %>%
               mutate(data = muname ,
                      uf_amc = substr(code2010,1,2))
 
-       
+
 # assign number to state groups (historical groups)
 data_mun <- data_mun %>%
   mutate(
@@ -76,8 +76,8 @@ data_mun <- data_mun %>%
              ifelse(uf_amc %in% c(42),16,
              ifelse(uf_amc %in% c(43),17,
              ifelse(uf_amc %in% c(12),21,NA)))))
-             )))))))))))))))))) 
-  
+             ))))))))))))))))))
+
 ##### 3) Solve some problems --------------
 
 # Gen new variables
@@ -139,9 +139,9 @@ data_mun <-data_mun %>%
 
 
 #problem: other additional information in the mun-name that
-# doesn't add essential information for the AMCs 
+# doesn't add essential information for the AMCs
 # solution: delete this additional information
-	
+
 data_mun <-data_mun %>%
 	 mutate(muname = gsub(", poligono nao identificado","",muname),
 	 muname = gsub("depois a ","",muname),
@@ -156,7 +156,7 @@ data_mun <-data_mun %>%
 #	 ** solution: delete the blank entries
 
 data_mun <- data_mun %>%
-	 arrange(code2010 ,final_name, year, muname) %>% 
+	 arrange(code2010 ,final_name, year, muname) %>%
   mutate(ano = substr(year,7,11))
 
 data_mun <- data_mun %>%
@@ -177,7 +177,7 @@ data_mun <- data_mun %>%
 #	  ****************************************************
 #	  *** (3) problems with individual mun in the data ***
 #	  ****************************************************
-	
+
 data_mun <- data_mun %>%
 	 arrange(code2010, year)
 
@@ -247,7 +247,7 @@ data_mun <- data_mun %>%
 	 muname = ifelse((code2010==4321204 | code2010==4322509),gsub("desmembrado de Santo Antonio","desmembrado de Santo Antonio da Patrulha",muname),muname),
 	 muname = ifelse(code2010==3159605,gsub("Sao Goncalo","Sao Goncalo do Sapucahy",muname),muname)
 	 )
-	
+
 
 
 #	  ***********************************************************
@@ -255,7 +255,7 @@ data_mun <- data_mun %>%
 #	  *** IBGE's website
 #	  *** http://cidades.ibge.gov.br/.
 #	  ***********************************************************
-	
+
 #	  *** "Sao Jose do Cristianismo" simply does not exist.
 #	  // checking the maps (after the procedure) clearly reveals that
 #	  // the entire region goes back to "Castro".
@@ -265,7 +265,7 @@ data_mun <- data_mun %>%
 	 muname = gsub("desmembrado de Sao Jose do Cristianismo","desmembrado de Castro",muname),
 #	 // also misspecified to a mun that not even existed
 	 muname = ifelse(year==1872,gsub("desmembrado de Pacoti","desmembrado de Baturite",muname),muname),
-	
+
 	 muname = ifelse(year==1872,gsub("desmembrado de Pacoti","desmembrado de Baturite",muname),muname),
 #	  *** next problems is that desmembr. refers to future name of the mun
 	 muname = ifelse(year==1872,gsub("Cachoeiro de Santa Leopoldina","Santa Leopoldina",muname),muname),
@@ -275,10 +275,10 @@ data_mun <- data_mun %>%
 #	  ** problem: crossref. two mun out of themselves (out of nowhere)
 #	  // IBGE cidades says the following is right:
 	 muname = gsub("desmembrado de Santopolis do Aguapei","desmembrado de Birigui",muname))
-	
+
 #	  *** AMC territory is found to be inconsistent after the procedure.
 #	  ** 1. probable reason: typo --> clean up
-	
+
 data_mun <- data_mun %>%
 	 mutate(
 	 muname = gsub("desmembrado de Sao Jose do Cristianismo","desmembrado de Castro",muname),
@@ -293,7 +293,7 @@ data_mun <- data_mun %>%
 #	 // nevertheless the territory of Lins in 1872 was in the former territory of Baurú.
 
 	 muname = ifelse(year==1911,gsub("desmembrado de Piraju","desmembrado de Bauru",muname),muname),
-	
+
 #	  *** problem: territory is "contestado"
 #	  // Amapá was under dispute between Brazil and France until 1901.
 #	  ** solution: delete the entry before 1901 and start as a new territory in 1911
@@ -304,11 +304,11 @@ data_mun <- data_mun %>%
 #	  ** it thus needs to emerge out of nowhere in the data
 
     	 muname = gsub("O Acre nao era brasileiro","",muname))
-	
+
 #	  *** (6) problem: some mun have a destination/origin outside their own UF_amc
 #	  // therefore the matching partner cannot be found by the procedure
 #	  // these cases are:
-	
+
 #	  // is not a problem, since MT is part of the combined State already.
 #	  */
 #	  // do the procedure without these mun
@@ -318,7 +318,7 @@ data_mun <- data_mun %>%
 
 data_mun <- data_mun %>%
 	 arrange(code2010,year)
-	
+
 data_mun <- data_mun %>%
 	 mutate(muname = ifelse((code2010==2205706 & year==1872),
 	 lead(muname),muname),
@@ -359,7 +359,7 @@ data_mun <- data_mun %>%
 #	  ******************************************
 #	  **** preparation of the matching procedure
 #	  ******************************************
-	
+
 #	  ************
 #	  *** (7) treatment of changes:
 #	  *** delete desmem. and anex. in the names, to have only the origin/destiny mun name
@@ -372,7 +372,7 @@ data_mun <- data_mun %>%
 #	  // the note "populacao incluida" appears in the mun-name
 #	  // This is not important here; only geography matters for our purposes.
 #	  ** solve one typo:
-	
+
 data_mun <- data_mun %>%
 	 mutate(muname = gsub("inlcuida","incluida",muname),
 	        muname = gsub(", populacao incluida\\s.*","",muname),
@@ -386,7 +386,7 @@ data_mun <- data_mun %>%
 	        muname = gsub(", MT","",muname),
 	        muname = gsub(", PA","",muname),
 	        muname = gsub(", AM","",muname),
-	        muname = gsub(", PI","",muname), 
+	        muname = gsub(", PI","",muname),
 	        muname = gsub("Santo Antonio e Almas","Santo AntonioeAlmas",muname),
 	        muname = gsub("Passa e Fica","PassaeFica",muname),
 	        muname = gsub("Abreu e Lima","AbreueLima",muname),
@@ -410,32 +410,32 @@ data_mun <- separate_rows(data_mun,4, sep = ' e ') %>% as.data.frame()
 
 
 ## Fix some more problems
-data_mun <- data_mun %>% 
+data_mun <- data_mun %>%
   mutate(muname = gsub("Santo AntonioeAlmas","Santo Antonio e Almas",muname),
          muname = gsub("PassaeFica","Passa e Fica",muname),
          muname = gsub("AbreueLima","Abreu e Lima",muname),
          muname = gsub("PonteseLacerda","Pontes e Lacerda",muname))
 
 
-## Generate number of destinations 
+## Generate number of destinations
 
 data_mun <- data_mun %>%
-  mutate(n = rep(1:nrow(data_mun))) %>% 
-  dplyr::group_by(final_name,year,uf_amc) %>% 
+  mutate(n = rep(1:nrow(data_mun))) %>%
+  dplyr::group_by(final_name,year,uf_amc) %>%
   mutate(dest = ifelse(!is.na(muname),row_number(n),NA),
          num = ifelse(grepl("desmembrado",data) |
                       grepl("anexado",data) |
                       grepl("sede em",data),max(dest),0),
-         num = ifelse(is.na(num),1,num)) %>% 
+         num = ifelse(is.na(num),1,num)) %>%
   dplyr::select(-c(n)) %>% as.data.frame()
 
 head(data_mun)
-#### Clear columns with "desmembrado" or "anexado a" 
+#### Clear columns with "desmembrado" or "anexado a"
 
 data_mun <-data_mun %>%
   mutate(muname = sub("^\\s+", "", sub("\\s+$", "", muname)),
-         muname = gsub("  "," ",muname)) %>% 
-  rename(destiny = muname) %>% 
+         muname = gsub("  "," ",muname)) %>%
+  rename(destiny = muname) %>%
   mutate(
          muname = ifelse(grepl(".*desmembrado de\\s.*",data),"",
                          ifelse(grepl("anexado a ",data),"",destiny)),
@@ -447,11 +447,11 @@ head(data_mun)
 
 
 
- 
+
 ## Replace destino using loop to count number of destinations
 
-for(i in 1:(max(data_mun$dest, na.rm = T)-1)){ 
-  temp <- data_mun %>% filter(destino == 1) %>% 
+for(i in 1:(max(data_mun$dest, na.rm = T)-1)){
+  temp <- data_mun %>% filter(destino == 1) %>%
     mutate(destino=destino+i,
            muname = "")
   data_mun <- rbind(data_mun,temp)
@@ -464,28 +464,28 @@ head(data_mun)
 
 ## Gen columns to transform all to wide
 
-data_mun <- data_mun %>% 
-  arrange(code2010,final_name) %>% 
+data_mun <- data_mun %>%
+  arrange(code2010,final_name) %>%
   mutate(dest = ifelse(destino!=0,destino,dest),
          x = paste0("dest",dest,ano),
          n_dest = paste0("n_dest",ano), # Column to n destinies in x year
          x = gsub("NA","",x), # Column to dummy for destiny in x year
          exist = paste0("exist_d",ano)) %>%  # Column to exist in x year
-         ungroup() %>% 
+         ungroup() %>%
   select(-c("ano","dest"))
 
 
 ## Transform all these columns to wide
 
 data_mun <- data_mun %>%
-  group_by(x) %>% 
-  mutate(grouped_id = row_number()) %>% 
+  group_by(x) %>%
+  mutate(grouped_id = row_number()) %>%
   spread(key = c(x), # Dummy columns
-         value = c(destiny)) %>% 
+         value = c(destiny)) %>%
   spread(key = c(n_dest), # Number for destinies
-         value = c(num)) %>% 
+         value = c(num)) %>%
   spread(key = c(exist), # Dummy for exist in x year
-         value = c(destino)) %>% 
+         value = c(destino)) %>%
   spread(key = c(year), # Name of municipality in each year
          value = c(muname))
 
@@ -505,23 +505,23 @@ data_mun[is.na(data_mun)] <- ""
 
 ## Aggregate all lines to avoid cross lines
 
-data_mun2 <- data_mun %>% 
+data_mun2 <- data_mun %>%
   aggregate(by = list(data_mun$final_name,data_mun$code2010), paste, collapse = ", ")
 
 
 names(data_mun2)
 ## Remove all lines with ", " for all columns
 
-data_mun3 <- data.frame(data_mun2[,1:8],apply(data_mun2[,9:ncol(data_mun2)], 2, function(y) gsub(", ", "",y))) 
+data_mun3 <- data.frame(data_mun2[,1:8],apply(data_mun2[,9:ncol(data_mun2)], 2, function(y) gsub(", ", "",y)))
 
 
 ## Remove repeated columns and gen uf_amc variable
 
 data_mun4 <- as.data.frame(data_mun3) %>%
-  select(-c("code2010","final_name","data","outro_estado","grouped_id")) %>% 
-  rename(code2010 = "Group.2", final_name = "Group.1") %>% 
+  select(-c("code2010","final_name","data","outro_estado","grouped_id")) %>%
+  rename(code2010 = "Group.2", final_name = "Group.1") %>%
   mutate(
-    uf_amc = substr(code2010,1,2), 
+    uf_amc = substr(code2010,1,2),
     uf_amc = ifelse(uf_amc %in% c(11,50,51),20,
              ifelse(uf_amc %in% c(13, 14),1,
              ifelse(uf_amc %in% c(15, 16),2,
@@ -543,7 +543,7 @@ data_mun4 <- as.data.frame(data_mun3) %>%
              ifelse(uf_amc %in% c(42),16,
              ifelse(uf_amc %in% c(43),17,
              ifelse(uf_amc %in% c(12),21,NA)))))))))))))))))))))) %>%
-  arrange(code2010,uf_amc) %>% 
+  arrange(code2010,uf_amc) %>%
   select(-c(18:26))
 
 
@@ -597,7 +597,7 @@ data_mun <- data.frame(data_mun[,1:3],(apply(data_mun[,4:ncol(data_mun)], 2,
 data_mun <- data.frame(data_mun[,1:3],(apply(data_mun[,4:ncol(data_mun)], 2,
                              function(x) {
                                gsub("00", "0", x)})))
- 
+
 data_mun <- data.frame(lapply(data_mun, as.character), stringsAsFactors=FALSE)
 
 data_mun <- data.frame(data_mun[,1:3],(apply(data_mun[,4:ncol(data_mun)], 2,
@@ -627,4 +627,4 @@ head(data_mun)
 ##### 7) Save database --------------
 
 ## save data
-readr::write_rds(data_mun, "_Crosswalk_pre.rds")
+readr::write_rds(data_mun, "_Crosswalk_pre.rds", compress = 'gz')
