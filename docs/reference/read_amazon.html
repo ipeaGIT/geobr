@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download official data of Brazil's Legal Amazon as an sf object. — read_amazon • geobr</title>
+<title>Download spatial data of Brazil's Legal Amazon — read_amazon • geobr</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Download official data of Brazil's Legal Amazon as an sf object. — read_amazon" />
+<meta property="og:title" content="Download spatial data of Brazil's Legal Amazon — read_amazon" />
 <meta property="og:description" content="This data set covers the whole of Brazil's Legal Amazon as defined in the
 federal law n. 12.651/2012). The original data comes from the Brazilian
 Ministry of Environment (MMA) and can be found at
@@ -75,7 +75,7 @@ http://mapas.mma.gov.br/i3geo/datadownload.htm." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@ http://mapas.mma.gov.br/i3geo/datadownload.htm." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download official data of Brazil's Legal Amazon as an sf object.</h1>
+    <h1>Download spatial data of Brazil's Legal Amazon</h1>
     <small class="dont-index">Source: <a href='https://github.com/ipeaGIT/geobr/tree/master/r-package/R/read_amazon.R'><code>R/read_amazon.R</code></a></small>
     <div class="hidden name"><code>read_amazon.Rd</code></div>
     </div>
@@ -158,11 +158,15 @@ borders using <code><a href='https://r-spatial.github.io/sf/reference/geos_unary
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An <code>"sf" "data.frame"</code> object</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other general area functions: 
 <code><a href='read_biomes.html'>read_biomes</a>()</code>,
 <code><a href='read_census_tract.html'>read_census_tract</a>()</code>,
+<code><a href='read_comparable_areas.html'>read_comparable_areas</a>()</code>,
 <code><a href='read_conservation_units.html'>read_conservation_units</a>()</code>,
 <code><a href='read_country.html'>read_country</a>()</code>,
 <code><a href='read_health_region.html'>read_health_region</a>()</code>,
@@ -183,7 +187,7 @@ borders using <code><a href='https://r-spatial.github.io/sf/reference/geos_unary
 <span class='co'># Read Brazilian Legal Amazon</span>
 <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>read_amazon</span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>2012</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Using year 2012</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
-#&gt; Downloading: 1.2 kB     Downloading: 1.2 kB     Downloading: 2.1 kB     Downloading: 2.1 kB     Downloading: 2.1 kB     Downloading: 2.1 kB     Downloading: 2.1 kB     Downloading: 2.1 kB     Downloading: 18 kB     Downloading: 18 kB     Downloading: 26 kB     Downloading: 26 kB     Downloading: 34 kB     Downloading: 34 kB     Downloading: 51 kB     Downloading: 51 kB     Downloading: 67 kB     Downloading: 67 kB     Downloading: 75 kB     Downloading: 75 kB     Downloading: 83 kB     Downloading: 83 kB     Downloading: 91 kB     Downloading: 91 kB     Downloading: 91 kB     Downloading: 91 kB     Downloading: 91 kB     Downloading: 91 kB     Downloading: 110 kB     Downloading: 110 kB     Downloading: 120 kB     Downloading: 120 kB     Downloading: 130 kB     Downloading: 130 kB     Downloading: 160 kB     Downloading: 160 kB     Downloading: 170 kB     Downloading: 170 kB     Downloading: 170 kB     Downloading: 170 kB     </div><div class='input'><span class='co'># }</span>
+#&gt; Downloading: 1.7 kB     Downloading: 1.7 kB     Downloading: 2.1 kB     Downloading: 2.1 kB     Downloading: 2.4 kB     Downloading: 2.4 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 4.7 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 13 kB     Downloading: 21 kB     Downloading: 21 kB     Downloading: 21 kB     Downloading: 21 kB     Downloading: 21 kB     Downloading: 21 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 29 kB     Downloading: 37 kB     Downloading: 37 kB     Downloading: 37 kB     Downloading: 37 kB     Downloading: 45 kB     Downloading: 45 kB     Downloading: 45 kB     Downloading: 45 kB     Downloading: 53 kB     Downloading: 53 kB     Downloading: 53 kB     Downloading: 53 kB     Downloading: 61 kB     Downloading: 61 kB     Downloading: 61 kB     Downloading: 61 kB     Downloading: 61 kB     Downloading: 61 kB     Downloading: 70 kB     Downloading: 70 kB     Downloading: 70 kB     Downloading: 70 kB     Downloading: 78 kB     Downloading: 78 kB     Downloading: 86 kB     Downloading: 86 kB     Downloading: 86 kB     Downloading: 86 kB     Downloading: 86 kB     Downloading: 86 kB     Downloading: 94 kB     Downloading: 94 kB     Downloading: 94 kB     Downloading: 94 kB     Downloading: 100 kB     Downloading: 100 kB     Downloading: 100 kB     Downloading: 100 kB     Downloading: 100 kB     Downloading: 100 kB     Downloading: 110 kB     Downloading: 110 kB     Downloading: 110 kB     Downloading: 110 kB     Downloading: 110 kB     Downloading: 110 kB     Downloading: 120 kB     Downloading: 120 kB     Downloading: 130 kB     Downloading: 130 kB     Downloading: 130 kB     Downloading: 130 kB     Downloading: 130 kB     Downloading: 130 kB     Downloading: 140 kB     Downloading: 140 kB     Downloading: 150 kB     Downloading: 150 kB     Downloading: 160 kB     Downloading: 160 kB     Downloading: 170 kB     Downloading: 170 kB     Downloading: 170 kB     Downloading: 170 kB     Downloading: 170 kB     Downloading: 170 kB     </div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

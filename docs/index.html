@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6</span>
       </span>
     </div>
 
@@ -333,6 +333,13 @@ geobr is a computational package to download official spatial data sets of Brazi
 <td>2020</td>
 <td>INEP</td>
 </tr>
+<tr class="even">
+<td>
+<code>read_comparable_areas</code> (dev)</td>
+<td>Historically comparable municipalities, aka Areas minimas comparaveis (AMCs)</td>
+<td>1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010</td>
+<td>IBGE</td>
+</tr>
 </tbody>
 </table>
 <div id="other-functions" class="section level2">
@@ -389,21 +396,16 @@ geobr is a computational package to download official spatial data sets of Brazi
 <td>IBGE</td>
 </tr>
 <tr class="even">
-<td>Longitudinal Database* of municipalities</td>
-<td>various years</td>
-<td>IBGE</td>
-</tr>
-<tr class="odd">
 <td>Longitudinal Database* of micro regions</td>
 <td>various years</td>
 <td>IBGE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Longitudinal Database* of Census tracts</td>
 <td>various years</td>
 <td>IBGE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>…</td>
 <td>…</td>
 <td>…</td>
@@ -426,12 +428,33 @@ geobr is a computational package to download official spatial data sets of Brazi
 <h4 class="hasAnchor">
 <a href="#related-projects" class="anchor"></a><strong>Related projects</strong>
 </h4>
-<p>As of today, there are two other R packages with similar functionalities: <a href="https://github.com/RobertMyles/simplefeaturesbr">simplefeaturesbr</a> and <a href="https://CRAN.R-project.org/package=brazilmaps">brazilmaps</a>. The <strong>geobr</strong> package has a few advantages when compared to these other packages, including for example:</p>
+<p>As of today, there is another R package with similar functionalities: <a href="https://github.com/RobertMyles/simplefeaturesbr">simplefeaturesbr</a>. The <strong>geobr</strong> package has a few advantages when compared to <em>simplefeaturesbr</em>, including for example:</p>
 <ul>
 <li>A same syntax structure across all functions, making the package very easy and intuitive to use</li>
 <li>Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc</li>
 <li>Access to shapefiles with updated geometries for various years</li>
 <li>Harmonized attributes and geographic projections across geographies and years</li>
+<li>Option to dowlonad geometries with simplified borders for fast rendering</li>
+<li>Stable version published on CRAN for R users, and on PyPI for Python users</li>
+</ul>
+<p><strong>Similar packages for other countries/continents</strong></p>
+<ul>
+<li>Africa: <a href="https://afrimapr.github.io/afrimapr.website/">afrimapr</a>
+</li>
+<li>Brazil: <a href="https://ipeagit.github.io/geobr/">geobr</a>
+</li>
+<li>Canada: <a href="https://mountainmath.github.io/cancensus/index.html">cancensus</a>
+</li>
+<li>Chile: <a href="https://pacha.dev/chilemapas/">chilemapas</a>
+</li>
+<li>Finland: <a href="https://ropengov.github.io/geofi/">geofi</a>
+</li>
+<li>Uruguay: <a href="https://github.com/RichDeto/geouy">geouy</a>
+</li>
+<li>USA: <a href="https://github.com/walkerke/tigris">tigris</a>
+</li>
+<li>Global (political administrative boundaries): <a href="https://dickoa.gitlab.io/rgeoboundaries/">rgeoboundaries</a>
+</li>
 </ul>
 <hr>
 </div>

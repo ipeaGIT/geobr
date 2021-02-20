@@ -5,8 +5,8 @@
 #' municipalities, known in Portuguese as 'Areas minimas comparáveis (AMCs)'.
 #' The data is available for any combination of census years between 1872-2010.
 #' These data sets are generated based on the Stata code originally developed by
-#' Philipp Ehrl \url{https://doi.org/10.1590/0101-416147182phe}, and translated
-#' into `R` by the `geobr` team. \href{https://doi.org/10.1590/0101-416147182phe}{Philipp Ehrl}
+#' \href{https://doi.org/10.1590/0101-416147182phe}{Philipp Ehrl}, and translated
+#' into `R` by the `geobr` team.
 #'
 #' @param start_year Numeric. Start year to the period.
 #' @param end_year Numeric. End year to the period. (defaults to 2010)
@@ -17,6 +17,13 @@
 #' @param showProgress Logical. Defaults to (TRUE) display progress bar
 #'
 #' @return An `"sf" "data.frame"` object
+#'
+#' @details
+#' These data sets are generated based on the original Stata code developed by
+#' Philipp Ehrl. If you use these data, please cite:
+#' - Ehrl, P. (2017). Minimum comparable areas for the period 1872-2010: an
+#'   aggregation of Brazilian municipalities. Estudos Econômicos (São Paulo),
+#'   47(1), 215-229. https://doi.org/10.1590/0101-416147182phe
 #'
 #' @export
 #' @family general area functions
