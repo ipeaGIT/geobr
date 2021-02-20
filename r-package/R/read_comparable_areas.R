@@ -22,11 +22,11 @@
 #' @family general area functions
 #' @examples \donttest{
 #'
-#'   amc <- read_amc(start_year=1970, end_year=2010)
+#'   amc <- read_comparable_areas(start_year=1970, end_year=2010)
 #'}
 #'
 
-read_amc <- function(start_year=1970, end_year=2010, simplified=TRUE, showProgress=TRUE){
+read_comparable_areas <- function(start_year=1970, end_year=2010, simplified=TRUE, showProgress=TRUE){
 
   # tests
   years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010)

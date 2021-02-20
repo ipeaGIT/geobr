@@ -37,6 +37,7 @@ Other general area functions:
 \code{\link{read_amazon}()},
 \code{\link{read_biomes}()},
 \code{\link{read_census_tract}()},
+\code{\link{read_comparable_areas}()},
 \code{\link{read_country}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},

@@ -1,30 +1,5 @@
 #### testing functions of geobr
 
-
-a <- fread(nrows = 5,input = 'C:/Users/user/Downloads/part-00000-babe148b-d317-4664-b123-389f11f81cf7-c000.csv')
-df <- fread(input = 'C:/Users/user/Downloads/part-00000-babe148b-d317-4664-b123-389f11f81cf7-c000.csv')
-head(df)
-table(df$vacina_nome)
-table(df$paciente_racaCor_valor) / nrow(df)
-
-options(scipen = 999999)
-
-sc <- read_census_tract(code_tract = 3304557)
-
-library(httr)
-
-file_url <- "http://www.ipea.gov.br/geobr/data_gpkg/census_tract/2010/33_simplified.gpkg"
-
-httr::GET(url=file_url, httr::progress(type = "down") )
-
-
-# If file size is known, you get a progress bar:
-x <- GET("http://httpbin.org/bytes/102400", progress(), cap_speed)
-# Otherwise you get the number of bytes downloaded:
-x <- GET("http://httpbin.org/stream-bytes/102400", progress(), cap_speed)
-
-
-
 #library(magrittr)
 library(sf)
 library(dplyr)
@@ -245,6 +220,9 @@ function_coverage(fun= 'read_conservation_units', test_file("tests/testthat/test
 
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 function_coverage(fun='read_municipal_seat', test_file("tests/testthat/test-read_municipal_seat.R"))
+
+function_coverage(fun='read_comparable_areas', test_file("tests/testthat/test-read_comparable_areas.R"))
+
 
 
 function_coverage(fun='read_meso_region', test_file("tests/testthat/test-read_meso_region.R"))

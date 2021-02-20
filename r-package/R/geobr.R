@@ -9,6 +9,7 @@
 #' @docType package
 #' @name geobr
 #' @importFrom utils "tail"
+#' @importFrom data.table "%like%"
 
 # nocov start
 NULL

@@ -1,6 +1,8 @@
 #' Download spatial data of census tracts of the Brazilian Population Census
 #'
 #' @description
+#' Download spatial data of census tracts of the Brazilian Population Census
+#'
 #' @param code_tract The 7-digit code of a Municipality. If the two-digit code
 #' or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
 #' the function will load all census tracts of that state. If `code_tract="all"`,

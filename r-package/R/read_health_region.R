@@ -1,6 +1,8 @@
 #' Download spatial data of Brazilian health regions
 #'
 #' @description
+#' Download spatial data of Brazilian health regions
+#'
 #' @param year Year of the data. Ddefaults to 2013, latest available.
 #' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
 #' returns the data set with original' resolution or a data set with 'simplified'
