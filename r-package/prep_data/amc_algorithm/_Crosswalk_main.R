@@ -844,9 +844,9 @@ dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
 dir.create(file.path("shapes_in_sf_all_years_cleaned/amc/"), showWarnings = FALSE)
 
 # create a subdirectory of states, municipalities, micro and meso regions
-dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/amc/",startyear,"_",endyear,"/")), showWarnings = FALSE)
+dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/amc/",startyear,"/")), showWarnings = FALSE)
 
-dir <- paste0("./shapes_in_sf_all_years_cleaned/amc/",startyear,"_",endyear,"/")
+dir <- paste0("./shapes_in_sf_all_years_cleaned/amc/",startyear,"/")
 
 # ## save final table
 # saveRDS(data_mun,paste0(dir,"AMC_",startyear,"_",endyear,".rds"))

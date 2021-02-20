@@ -35,13 +35,7 @@
   }
 
 
-  # table(metadata$geo)
-  # temp_ano <- subset(metadata, geo=="regions")
-  # temp_ano <- subset(metadata, geo=="weighting_area")
-
-
-
-# get code abbreviations
+ # get code abbreviations
   library(data.table)
   setDT(metadata)
   metadata[ grepl("11", substr(code, 1, 3)), code_abrev :=	"RO" ]
@@ -77,7 +71,7 @@
   table(metadata$geo)
   table(metadata$year)
 
-  subset(metadata, geo == 'census_tract')
+  subset(metadata, geo == 'amc')
   subset(metadata, geo == 'census_tract' & year==2017)
 
 

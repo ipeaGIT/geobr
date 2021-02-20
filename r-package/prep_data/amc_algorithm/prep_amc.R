@@ -28,6 +28,9 @@ prep_amc <- function(i){
 
 # apply function in parallel
 future::plan("multisession")
-furrr::future_map(.x = 1:4, .f = prep_amc)
+furrr::future_map(.x = 1:nrow(all_combinations),
+                  .f = prep_amc,
+                  .progress = TRUE
+                  )
 
 

@@ -2,7 +2,7 @@
 #'
 #' @description
 #' This function downloads the shape file of minimum comparable area of
-#' municipalities, known in Portuguese as 'Áreas mínimas comparáveis (AMCs)'.
+#' municipalities, known in Portuguese as 'Areas minimas comparáveis (AMCs)'.
 #' The data is available for any combination of census years between 1872-2010.
 #' These data sets are generated based on the Stata code originally developed by
 #' Philipp Ehrl \url{https://doi.org/10.1590/0101-416147182phe}, and translated
@@ -41,13 +41,13 @@ read_amc <- function(start_year=1970, end_year=2010, simplified=TRUE, showProgre
 
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="amc_muni", year=start_year, simplified=simplified)
+  temp_meta <- select_metadata(geography="amc", year=start_year, simplified=simplified)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
   # subset based on end_year
-  target_year <- paste0(start_year, '-', end_year)
+  target_year <- paste0(start_year, '_', end_year)
   file_url <- file_url[ file_url %like% target_year]
 
   # download files
