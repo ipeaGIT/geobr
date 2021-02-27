@@ -859,7 +859,11 @@ assign(paste0("_Crosswalk_final_",startyear,"_",endyear),data_mun)
 map <- geobr::read_municipality(year= endyear, code_muni = 'all', simplified = FALSE)
 map$code_muni <- as.integer(map$code_muni)
 
-data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
+if(endyear <= 1970){
+data_mun_sf <- left_join(map %>% mutate(code_muni = as.numeric(substr(code_muni,1,6))), data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
+} else{
+data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))  
+}
 
 data_mun_sf <- data_mun_sf %>% filter(!is.na(code_amc))
 
