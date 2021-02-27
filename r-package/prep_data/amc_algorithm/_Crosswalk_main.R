@@ -730,6 +730,19 @@ if (startyear<=1940 | endyear>=1960){
 
 }
 
+## Fixing code_muni to 1970 code Mato Grosso do Sul and Tocantins
+if(endyear <= 1970){
+  
+  data_mun <- data_mun %>% 
+    mutate(code_state =  as.numeric(substr(code2010,1,2)),
+           code_state = ifelse(code_state == 50,51,code_state),
+           code_state = ifelse(code_state == 17,52,code_state),
+           code2010 = substr(code2010,3,6),
+           code2010 = as.numeric(paste0(code_state,code2010))) %>% 
+    select(-c(code_state))
+  
+}	
+	
 #  ******************************************
 #  *** generate a new code for the final AMCs
 #  *** generate common UF_AMCs first
@@ -859,7 +872,11 @@ assign(paste0("_Crosswalk_final_",startyear,"_",endyear),data_mun)
 map <- geobr::read_municipality(year= endyear, code_muni = 'all', simplified = FALSE)
 map$code_muni <- as.integer(map$code_muni)
 
-data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
+if(endyear <= 1970){
+data_mun_sf <- left_join(map %>% mutate(code_muni = as.numeric(substr(code_muni,1,6))), data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
+} else{
+data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))  
+}
 
 data_mun_sf <- data_mun_sf %>% filter(!is.na(code_amc))
 
