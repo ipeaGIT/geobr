@@ -5,7 +5,7 @@ source('./prep_data/download_malhas_municipais_function.R')
 
 
 ###### download raw data --------------------------------
-# download_malhas_municipais(region='uf',year=2019)
+# download_malhas_municipais(region='uf',year=2000)
 
 
 ###### Cleaning UF files --------------------------------

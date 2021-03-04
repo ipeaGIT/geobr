@@ -275,7 +275,7 @@ download_malhas_municipais <- function(region, year){
     }
 
 
-    future::plan(multiprocess)
+    future::plan(multisession)
 
     future_map(all_shapes, shp_to_sf_rds)
 
@@ -394,7 +394,7 @@ download_malhas_municipais <- function(region, year){
       }
 
 
-      future::plan(multiprocess)
+      future::plan(multisession)
 
       future_map(all_shapes, shp_to_sf_rds)
 
