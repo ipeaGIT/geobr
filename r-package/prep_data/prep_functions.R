@@ -195,15 +195,34 @@ use_encoding_utf8 <- function(temp_sf){
 
 ###### convert to MULTIPOLYGON -----------------
 
-to_multipolygon <- function(temp_sf){
-if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
-    any(  !( st_geometry_type(temp_sf) %>% unique() %>% as.character() %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
-  # remove linstring
-  temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
-  temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
-  return(temp_sf)
-}else{ return(temp_sf)}}
+# to_multipolygon <- function(temp_sf){
+# if( st_geometry_type(temp_sf) %>% unique() %>% as.character() %>% length() > 1 |
+#     any(  !( st_geometry_type(temp_sf) %>% unique() %>% as.character() %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
+#   # remove linstring
+#   temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
+#   temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+#   return(temp_sf)
+# }else{ return(temp_sf)}}
 
+to_multipolygon <- function(temp_sf=a){
+
+  # get geometry types
+  geom_types <- st_geometry_type(temp_sf) %>% unique() %>% as.character()
+
+  # checks
+  if( length(geom_types) > 1 | any(  !( geom_types %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
+
+      # remove linstring
+      temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
+
+      # get polyons
+      temp_sf <- st_collection_extract(temp_sf, "POLYGON")
+      temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+      return(temp_sf)
+
+    } else {
+       return(temp_sf) }
+  }
 
 ###### Simplify temp_sf -----------------
 

@@ -1,0 +1,69 @@
+---
+title: "Introduction to geobr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic-Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and easy access to official spatial data sets of Brazil. The syntax of all **geobr** functions operate on a simple logic that allows users to easily download a wide variety of data sets with updated geometries and harmonized attributes and geographic projections across geographies and years. This vignette presents a quick intro to **geobr**.
+
+
+## Installation
+
+You can install geobr from CRAN or the development version to use the latest features.
+
+# {.tabset}
+
+## R
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# From CRAN
+  install.packages("geobr")
+
+# Development version
+  utils::remove.packages('geobr')
+  devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
+
+```
+
+## Python
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+
+import geobr
+import matplotlib.pyplot as plt
+import pandas as pd
+
+%matplotlib inline
+```
+
+teste 2 
+
+## R
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# From CRAN
+  install.packages("geobr")
+
+# Development version
+  utils::remove.packages('geobr')
+  devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
+
+```
+
+## Python
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+
+import geobr
+import matplotlib.pyplot as plt
+import pandas as pd
+
+%matplotlib inline
+```
