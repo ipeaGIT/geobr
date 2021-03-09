@@ -1,19 +1,26 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-source("./prep_data/prep_functions.R")
-source('./prep_data/download_malhas_municipais_function.R')
+setwd("D:/temp/geobr/")
 
+source("./r-package/prep_data/prep_functions.R")
+source('./r-package/prep_data/download_malhas_municipais_function.R')
+
+dir.create("./malhas_municipais")
+
+#pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
 
 ###### download raw data --------------------------------
-# download_malhas_municipais(region='micro_regiao', year='2019')
+# unzip_to_geopackage(region='micro_regiao', year='2019')
+unzip_to_geopackage(region='micro_regiao', year='all')
 
 
 ###### Cleaning MICRO files --------------------------------
 
-micro_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//malhas_municipais"
+micro_dir <- paste0(getwd(),"/shapes_in_sf_all_years_original/micro_regiao")
+
 sub_dirs <- list.dirs(path=micro_dir, recursive = F)
 
-sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2019,collapse = "|")]
+sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 
 # sub_dirs <- sub_dirs[sub_dirs %like% 2019]
 
@@ -42,7 +49,8 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
   # list all sf files in that year/folder
   sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
 
-  sf_files <- sf_files[sf_files %like% "Microrregioes"]
+  #sf_files <- sf_files[sf_files %like% "Microrregioes"]
+  
   # for each file
   for (i in sf_files){ #  i <- sf_files[1]
 
@@ -72,7 +80,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
       temp_sf <- dplyr::select(temp_sf, c('code_micro', 'name_micro', 'geom'))
     }
 
-    if (year %like% "2019"){
+    if (year %like% "2019|2020"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_micro = cd_micro, name_micro = nm_micro, abrev_state = sigla_uf)
