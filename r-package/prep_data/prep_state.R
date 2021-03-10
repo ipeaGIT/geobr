@@ -1,24 +1,30 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-source("./prep_data/prep_functions.R")
-source('./prep_data/download_malhas_municipais_function.R')
+setwd("D:/temp/geobr/")
 
+source("./r-package/prep_data/prep_functions.R")
+source('./r-package/prep_data/download_malhas_municipais_function.R')
 
+dir.create("./malhas_municipais")
+
+pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
 ###### download raw data --------------------------------
+unzip_to_geopackage(region='uf',year='all')
 # download_malhas_municipais(region='uf',year=2000)
 
 
 ###### Cleaning UF files --------------------------------
 
+uf_dir <-  paste0(getwd(),"/shapes_in_sf_all_years_original/uf")
 uf_dir <-  "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
 sub_dirs <- list.dirs(path =uf_dir, recursive = F)
 
-sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2019,collapse = "|")]
+sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 
 
 
 # create a function that will clean the sf files according to particularities of the data in each year
-# clean_states <- function( e ){ #  e <- sub_dirs[1]
+# clean_states <- function( e ){ #  e <- sub_dirs[6]
 
 clean_states <- function( e ){
 
@@ -42,10 +48,10 @@ clean_states <- function( e ){
   # list all sf files in that year/folder
   sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
 
-  sf_files <- sf_files[sf_files %like% "_UF_"]
+  #sf_files <- sf_files[sf_files %like% "_UF_"]
 
   # for each file
-  for (i in sf_files){ #  i <- sf_files[3]
+  for (i in sf_files){ #  i <- sf_files[1]
 
     # read sf file
     temp_sf <- st_read(i)
@@ -71,7 +77,7 @@ clean_states <- function( e ){
       temp_sf <- dplyr::select(temp_sf, c('code_state', 'name_state', 'geom'))
     }
 
-    if (year %like% "2019"){
+    if (year %like% "2019|2020"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_state = cd_uf, name_state = nm_uf)
@@ -171,7 +177,8 @@ clean_states <- function( e ){
     # Save cleaned sf in the cleaned directory
     dir.dest.file <- paste0(dir.dest,"/")
 
-    file.name <- paste0(unique(substr(temp_sf$code_state,1,2)),"UF",".gpkg")
+    #file.name <- paste0(unique(substr(temp_sf$code_state,1,2)),"UF",".gpkg")
+    file.name <- paste0("UF",".gpkg")
 
     i <- paste0(dir.dest.file,file.name)
 

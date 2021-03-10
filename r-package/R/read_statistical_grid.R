@@ -29,8 +29,8 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
   temp_meta <- select_metadata(geography="statistical_grid", year=year, simplified=F)
 
   # load correspondence table
-  data("grid_state_correspondence_table", envir=environment())
-
+  # data("grid_state_correspondence_table", envir=environment())
+  grid_state_correspondence_table <- geobr::grid_state_correspondence_table
 
 # Verify code_grid input ----------------------------------
 
