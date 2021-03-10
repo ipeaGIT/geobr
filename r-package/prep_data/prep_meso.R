@@ -1,30 +1,37 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-source("./prep_data/prep_functions.R")
-source('./prep_data/download_malhas_municipais_function.R')
+setwd("D:/temp/geobr/")
 
+source("./r-package/prep_data/prep_functions.R")
+source('./r-package/prep_data/download_malhas_municipais_function.R')
+
+dir.create("./malhas_municipais")
+
+#pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
 
 ###### download raw data --------------------------------
-# download_malhas_municipais(region='meso_regiao', year='2019')
-#download_malhas_municipais(region='meso_regiao', year='all')
+#unzip_to_geopackage(region='meso_regiao', year='2019')
+unzip_to_geopackage(region='meso_regiao', year=2000)
 
 
 ###### Cleaning MESO files --------------------------------
 
 # Root directory
-meso_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
-setwd(meso_dir)
+#meso_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
+#setwd(meso_dir)
 
-meso_dir <-  "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
+#meso_dir <-  "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
+meso_dir <- paste0(getwd(),"/shapes_in_sf_all_years_original/meso_regiao")
+
 sub_dirs <- list.dirs(path = meso_dir, recursive = F)
 
-sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2019,collapse = "|")]
+sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 
 # sub_dirs <- sub_dirs[sub_dirs %like% 2019]
 
 
 # create a function that will clean the sf files according to particularities of the data in each year
-clean_meso <- function(e){ #  e <- sub_dirs[1]
+clean_meso <- function(e){ #  e <- sub_dirs[4]
 
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
@@ -45,7 +52,7 @@ clean_meso <- function(e){ #  e <- sub_dirs[1]
   # list all sf files in that year/folder
   sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
 
-  sf_files <- sf_files[sf_files %like% "Mesorregioes"]
+  #sf_files <- sf_files[sf_files %like% "Mesorregioes"]
 
   # for each file
   for (i in sf_files){ #  i <- sf_files[1]
@@ -75,7 +82,7 @@ clean_meso <- function(e){ #  e <- sub_dirs[1]
       temp_sf <- dplyr::select(temp_sf, c('code_meso', 'name_meso', 'geom'))
     }
 
-    if (year %like% "2019"){
+    if (year %like% "2019|2020"){
       # dplyr::rename and subset columns
       names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- dplyr::rename(temp_sf, code_meso = cd_meso, name_meso = nm_meso)
@@ -107,15 +114,15 @@ clean_meso <- function(e){ #  e <- sub_dirs[1]
     # Save cleaned sf in the cleaned directory
     dir.dest.file <- paste0(dir.dest,"/")
 
-    file.name <- paste0(unique(substr(temp_sf$code_meso,1,2)),"ME",".gpkg")
-
+    file.name <- paste0("MU",".gpkg")
+    
     i <- paste0(dir.dest.file,file.name)
-
-    sf::st_write(temp_sf, i,append = FALSE,delete_dsn =T,delete_layer=T)
-
+    
+    sf::st_write(temp_sf, i , delete_layer = TRUE)
+    
     i <- gsub(".gpkg", "_simplified.gpkg", i)
-
-    sf::st_write(temp_sf_simplified, i,append = FALSE,delete_dsn =T,delete_layer=T)
+    
+    sf::st_write(temp_sf_simplified, i , delete_layer = TRUE)
 
   }
 }
