@@ -41,12 +41,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
-      - name: Java setup
-        uses: actions/setup-java@v1
-        with:
-          java-version: '11'
-          java-package: jdk
-
       - name: Query dependencies
         run: |
           install.packages('remotes')
