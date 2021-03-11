@@ -1,15 +1,14 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-setwd("D:/temp/geobr/")
 
-source("./r-package/prep_data/prep_functions.R")
-source('./r-package/prep_data/download_malhas_municipais_function.R')
+source("./prep_data/prep_functions.R")
+source('./prep_data/download_malhas_municipais_function.R')
 
-dir.create("./malhas_municipais")
+setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw')
 
-#pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
+# pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
 ###### download raw data --------------------------------
-unzip_to_geopackage(region='municipio',year='all')
+unzip_to_geopackage(region='municipio', year='all')
 
 
 ###### Cleaning municipality files --------------------------------

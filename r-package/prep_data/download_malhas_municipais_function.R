@@ -174,6 +174,9 @@ unzip_to_geopackage <- function(region, year){
   # List all zip files for all years
   all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
 
+  # filter year
+  #  all_zipped_files[all_zipped_files %like% year]
+
   if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_|UF_|uf2500")]}
   if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|Mesorregioes"]}
   if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi|Microrregioes"]}
@@ -236,7 +239,7 @@ unzip_to_geopackage <- function(region, year){
 
     # Selc only zip files organized by UF at scale  1:2.500.000
     # 54 files (27 files x 2 years) 27*2
-    files_3rd_batch <- files_3rd_batch[files_3rd_batch %like% "escala_2500mil/proj_geografica/arcview_shp/uf|escala_2500mil/proj_geografica_sirgas2000/uf"]
+    files_3rd_batch <- files_3rd_batch[files_3rd_batch %like% "mu2500"]
 
     # function to Unzip files in their original sub-dir
     # unzip_fun <- function(f){
@@ -260,7 +263,7 @@ unzip_to_geopackage <- function(region, year){
     gc(reset = T)
 
 
-### 2. Save sf.rds files  -----------------
+### 2. Save gpkg files  -----------------
 
 
 #### 2.1 Create folders to save sf.rds files  -----------------
@@ -276,7 +279,7 @@ unzip_to_geopackage <- function(region, year){
     years <- unlist(lapply(strsplit(sub_dirs, "/"), tail, n = 1L))
     years <-  unlist(regmatches(years, gregexpr("[[:digit:]]+", years)))
     years <- unique(years)
-
+    years
 
     # create directory to save original shape files in sf format
     dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
@@ -381,7 +384,7 @@ unzip_to_geopackage <- function(region, year){
     # Select files of selected years
     # 540 files (4 geographies x 27 states x 5 years) 4*27*5
 
-    files_1st_batch <- all_zipped_files[all_zipped_files %like% paste0(year)]
+    files_1st_batch <- all_zipped_files[all_zipped_files %like% year]
 
     if(year!=2020){
       # remove Brazil files
@@ -393,7 +396,7 @@ unzip_to_geopackage <- function(region, year){
     # 540 files (4 geographies x 27 states x 4 years) 4*27*4
 
     if(year %like% "2005|2007"){
-      files_1st_batch <- files_1st_batch[files_1st_batch %like% "escala_2500mil/proj_geografica/arcview_shp/uf|escala_2500mil/proj_geografica_sirgas2000/uf"]
+      files_1st_batch <- files_1st_batch[files_1st_batch %like% "mu2500"]
     }
 
     if(year %like% "2015|2016|2017|2018|2019|2020"){
