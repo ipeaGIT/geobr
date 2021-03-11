@@ -1,16 +1,19 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-setwd("D:/temp/geobr/")
+source("./prep_data/prep_functions.R")
+source('./prep_data/download_malhas_municipais_function.R')
 
-source("./r-package/prep_data/prep_functions.R")
-source('./r-package/prep_data/download_malhas_municipais_function.R')
 
-dir.create("./malhas_municipais")
+setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw')
 
-pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
+
 ###### download raw data --------------------------------
+pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
+
+
+
+###### Unzip raw data --------------------------------
 unzip_to_geopackage(region='uf',year='all')
-# download_malhas_municipais(region='uf',year=2000)
 
 
 ###### Cleaning UF files --------------------------------
@@ -24,7 +27,7 @@ sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 
 
 # create a function that will clean the sf files according to particularities of the data in each year
-# clean_states <- function( e ){ #  e <- sub_dirs[6]
+# clean_states <- function( e ){ #  e <- sub_dirs[10]
 
 clean_states <- function( e ){
 
@@ -182,11 +185,11 @@ clean_states <- function( e ){
 
     i <- paste0(dir.dest.file,file.name)
 
-    sf::st_write(temp_sf, i, delete_layer=TRUE)
+    sf::st_write(temp_sf, i, overwrite=TRUE)
 
     i <- gsub(".gpkg", "_simplified.gpkg", i)
 
-    sf::st_write(temp_sf_simplified, i, delete_layer=TRUE)
+    sf::st_write(temp_sf_simplified, i, overwrite=TRUE)
 
   }
 }
