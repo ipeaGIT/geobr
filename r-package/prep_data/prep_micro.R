@@ -24,7 +24,18 @@ sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 # sub_dirs <- sub_dirs[sub_dirs %like% 2019]
 
 # create a function that will clean the sf files according to particularities of the data in each year0
-clean_micro <- function( e ){ #  e <- sub_dirs[ sub_dirs %like% 2000]
+clean_micro <- function( e , year){ #  e <- sub_dirs[ sub_dirs %like% 2000]
+
+  # select year
+  if (year == 'all') {
+    message(paste('Processing all years'))
+  } else{
+    if (!any(e %like% year)) {
+      return(NULL)
+    }
+  }
+
+  message(paste('Processing',year))
 
   options(encoding = "UTF-8")
 
@@ -151,7 +162,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[ sub_dirs %like% 2000]
 
 # apply function in parallel
 future::plan(multisession)
-future_map(sub_dirs, clean_micro)
+future_map(.x=sub_dirs, .f=clean_micro, year=2010)
 
 rm(list= ls())
 gc(reset = T)
@@ -176,8 +187,8 @@ sf_files_2013 <- list.files(sub_dir_2013, full.names = T, pattern = ".gpkg")
 
 
 # Create function to correct number of digits of meso regions in 2010, based on 2013 data
-correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[1]
-# for (a2010_sf_micro_file in sf_files_2010) {
+correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- sf_files_2010[39]
+
 
   # Get UF of the file
   get_uf <- function(x){if (grepl("simplified",x)) {
@@ -212,8 +223,12 @@ correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- 
   table2013 <- dplyr::select(table2013, code_micro, name_micro)
 
   # update code_micro
+    # subset(temp2010, name_micro %like% 'Moji')
+    # subset(temp2010, name_micro %like% 'Mogi')
+
   sf2010 <- left_join(temp2010, table2013, by="name_micro")
-  sf2010 <- dplyr::select(sf2010, code_micro=code_micro.y, name_micro, geom)
+  sf2010 <- dplyr::select(sf2010, code_state, abbrev_state, name_state, code_micro=code_micro.y, name_micro, geom)
+  head(sf2010)
 
   # Save file
   # write_rds(sf2010, path = a2010_sf_micro_file, compress="gz" )
@@ -223,6 +238,6 @@ correct_micro_digits <- function(a2010_sf_micro_file){ # a2010_sf_micro_file <- 
 
 # apply function in parallel
 future::plan(multisession)
-future_map(a2010_sf_micro_file, correct_micro_digits)
+future_map(sf_files_2010, correct_micro_digits)
 
 

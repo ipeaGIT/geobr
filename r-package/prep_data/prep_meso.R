@@ -26,13 +26,25 @@ sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 
 
 # create a function that will clean the sf files according to particularities of the data in each year
-clean_meso <- function(e){ #  e <- sub_dirs[sub_dirs %like% 2000 ]
+clean_meso <- function(e, year){ #  e <- sub_dirs[sub_dirs %like% 2000 ]
+
+  # select year
+  if (year == 'all') {
+    message(paste('Processing all years'))
+  } else{
+    if (!any(e %like% year)) {
+      return(NULL)
+    }
+  }
+  message(paste('Processing',year))
+
 
   options(encoding = "UTF-8")
 
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
   year <- last4(e)
+  year
 
   # create directory to save original shape files in sf format
   dir.create(file.path("shapes_in_sf_all_years_cleaned2"), showWarnings = FALSE)
@@ -103,8 +115,8 @@ clean_meso <- function(e){ #  e <- sub_dirs[sub_dirs %like% 2000 ]
     # mapview::mapview(micro_21) + temp_sf[c(2),]
 
     if (year==2000 & temp_sf$code_state[1]==21) {
-      temp_sf[3, c('code_state', 'abbrev_state', 'name_state', 'code_meso', 'name_meso')] <- c(21, 'MA', 'Maranhão', 210520, 'Gerais De Balsas' )
-      temp_sf[7, c('code_state', 'abbrev_state', 'name_state', 'code_meso', 'name_meso')] <- c(21, 'MA', 'Maranhão', 210521, 'Chapadas Das Mangabeiras' )
+      temp_sf[2, c('code_state', 'abbrev_state', 'name_state', 'code_meso', 'name_meso')] <- c(21, 'MA', 'Maranhão', 210520, 'Gerais De Balsas' )
+      temp_sf[6, c('code_state', 'abbrev_state', 'name_state', 'code_meso', 'name_meso')] <- c(21, 'MA', 'Maranhão', 210521, 'Chapadas Das Mangabeiras' )
     }
 
 
@@ -149,7 +161,7 @@ clean_meso <- function(e){ #  e <- sub_dirs[sub_dirs %like% 2000 ]
 
 # apply function in parallel
 future::plan(multisession)
-future_map(sub_dirs, clean_meso)
+future_map(.x=sub_dirs, .f=clean_meso, year=2000)
 
 rm(list= ls())
 gc(reset = T)
@@ -191,9 +203,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
   # read 2010 file
   temp2010 <- st_read(a2010_sf_meso_file)
 
-  # read 2019 file
-
-
+  # read 2013 file
   temp2013 <- sf_files_2013[ if (grepl("simplified",a2010_sf_meso_file)) {
     (sf_files_2013 %like% paste0("/",uf)) & (sf_files_2013 %like% "simplified")
  } else {
@@ -207,7 +217,7 @@ correct_meso_digits <- function(a2010_sf_meso_file){ # a2010_sf_meso_file <- sf_
 
   # update code_meso
   sf2010 <- left_join(temp2010, table2013, by="name_meso")
-  sf2010 <- dplyr::select(sf2010, code_meso=code_meso.y, name_meso, geom)
+  sf2010 <- dplyr::select(sf2010, code_state, abbrev_state, name_state, code_meso=code_meso.y, name_meso, geom)
 
   # Save file
   st_write(sf2010,a2010_sf_meso_file,append = FALSE,delete_dsn =T,delete_layer=T)

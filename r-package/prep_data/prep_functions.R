@@ -3,6 +3,9 @@
 library(dplyr)
 library(data.table)
 library(magrittr)
+library(mapview)
+
+mapviewOptions(platform = 'deckgl')
 
 ###### list ftp folders -----------------
 
