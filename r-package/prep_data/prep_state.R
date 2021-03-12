@@ -104,11 +104,10 @@ clean_states <- function( e ){  #  e <- sub_dirs[ sub_dirs %like% 2015 ]
     temp_sf <- harmonize_projection(temp_sf)
 
     # strange error in Bahia 2000
-    temp_sf <- subset(temp_sf, !is.na(abbrev_state))
     # remove geometries with area == 0
+    temp_sf <- subset(temp_sf, !is.na(abbrev_state))
     temp_sf <- temp_sf[ as.numeric(st_area(temp_sf)) != 0, ]
-    if (year==2000 & any(temp_sf$abbrev_state=='BA')) { temp_sf <- temp_sf[which.max(st_area(temp_sf)),] }
-
+    # if (year==2000 & any(temp_sf$abbrev_state=='BA')) { temp_sf <- temp_sf[which.max(st_area(temp_sf)),] }
 
     # Make any invalid geom valid # st_is_valid( sf)
     temp_sf <- sf::st_make_valid(temp_sf)

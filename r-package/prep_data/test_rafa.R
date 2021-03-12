@@ -352,9 +352,13 @@ a <- grid_state_correspondence_table
 names(a)[2] <- 'abbrev_state'
 
 
+stringi::stri_escape_unicode("Rondônia")
+
 for (col in colnames(a)){
   Encoding(a[[col]]) <- "ASCII"}
 
+
+intToUtf8('São p')
 
 stringi::stri_encode(a$abbrev_state, from='latin1', to="ASCII")
 

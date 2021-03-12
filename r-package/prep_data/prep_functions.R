@@ -94,6 +94,37 @@ add_state_info <- function(temp_sf, column){
   # add code_state
   temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) %>% as.numeric()
 
+
+  #   # add name_state
+  # temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, stringi::stri_escape_unicode("Rondônia"),
+  #                                             ifelse(code_state== 12, stringi::stri_escape_unicode("Acre"),
+  #                                             ifelse(code_state== 13, stringi::stri_escape_unicode("Amazônas"),
+  #                                             ifelse(code_state== 14, stringi::stri_escape_unicode("Roraima"),
+  #                                             ifelse(code_state== 15, stringi::stri_escape_unicode("Pará"),
+  #                                             ifelse(code_state== 16, stringi::stri_escape_unicode("Amapá"),
+  #                                             ifelse(code_state== 17, stringi::stri_escape_unicode("Tocantins"),
+  #                                             ifelse(code_state== 21, stringi::stri_escape_unicode("Maranhão"),
+  #                                             ifelse(code_state== 22, stringi::stri_escape_unicode("Piauí"),
+  #                                             ifelse(code_state== 23, stringi::stri_escape_unicode("Ceará"),
+  #                                             ifelse(code_state== 24, stringi::stri_escape_unicode("Rio Grande do Norte"),
+  #                                             ifelse(code_state== 25, stringi::stri_escape_unicode("Paraíba"),
+  #                                             ifelse(code_state== 26, stringi::stri_escape_unicode("Pernambuco"),
+  #                                             ifelse(code_state== 27, stringi::stri_escape_unicode("Alagoas"),
+  #                                             ifelse(code_state== 28, stringi::stri_escape_unicode("Sergipe"),
+  #                                             ifelse(code_state== 29, stringi::stri_escape_unicode("Bahia"),
+  #                                             ifelse(code_state== 31, stringi::stri_escape_unicode("Minas Gerais"),
+  #                                             ifelse(code_state== 32, stringi::stri_escape_unicode("Espírito Santo"),
+  #                                             ifelse(code_state== 33, stringi::stri_escape_unicode("Rio de Janeiro"),
+  #                                             ifelse(code_state== 35, stringi::stri_escape_unicode("São Paulo"),
+  #                                             ifelse(code_state== 41, stringi::stri_escape_unicode("Paraná"),
+  #                                             ifelse(code_state== 42, stringi::stri_escape_unicode("Santa Catarina"),
+  #                                             ifelse(code_state== 43, stringi::stri_escape_unicode("Rio Grande do Sul"),
+  #                                             ifelse(code_state== 50, stringi::stri_escape_unicode("Mato Grosso do Sul"),
+  #                                             ifelse(code_state== 51, stringi::stri_escape_unicode("Mato Grosso"),
+  #                                             ifelse(code_state== 52, stringi::stri_escape_unicode("Goiás"),
+  #                                             ifelse(code_state== 53, stringi::stri_escape_unicode("Distrito Federal"), "!error!"))))))))))))))))))))))))))))
+  #                                             }
+
   # add name_state
   temp_sf <- temp_sf %>% mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
                                               ifelse(code_state== 12, utf8::as_utf8("Acre"),
