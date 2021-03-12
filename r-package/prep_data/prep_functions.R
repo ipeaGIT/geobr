@@ -57,6 +57,7 @@ harmonize_projection <- function(temp_sf){
 ###### Add State abbreviation -----------------
 
 add_state_info <- function(temp_sf, column){
+  options(encoding = "UTF-8")
 
   if(!is.null(temp_sf$code_muni) & !is.null(temp_sf$name_state)){
   # Add code_state
