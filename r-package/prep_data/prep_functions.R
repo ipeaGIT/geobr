@@ -311,3 +311,25 @@ dissolve_polygons <- function(mysf, group_column){
 # a <- dissolve_polygons(states, group_column='code_region')
 # plot(a)
 
+
+# remove state repetition ----------------------
+remove_state_repetition <- function(temp_sf){
+
+  # know cases: Maranhao in 2000 and ES in 2001
+  if (nrow(temp_sf)>27 | any(year==2001 & temp_sf$abbrev_state=='ES')   ) {
+
+    # get colnames and summarize
+    vars <- names(temp_sf)[-length(names(temp_sf))]
+    temp_sf <- temp_sf %>% group_by_at(vars) %>% summarise()
+    temp_sf <- temp_sf %>% filter(!code_state=="0")
+    return(temp_sf)
+
+  } else { return(temp_sf) }
+}
+
+
+
+
+#####fixing municipality repetition---------
+
+# https://github.com/ipeaGIT/geobr/blob/49534a6b19dc765e43e4c2f4404342f4fd0fdb4e/r-package/prep_data/prep_state_muni_regions.R#L987
