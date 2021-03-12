@@ -353,6 +353,7 @@ names(a)[2] <- 'abbrev_state'
 
 
 stringi::stri_escape_unicode("Rondônia")
+stringi::stri_encode("Rondônia, goiás", from='latin1', to="ASCII")
 
 for (col in colnames(a)){
   Encoding(a[[col]]) <- "ASCII"}
@@ -365,7 +366,7 @@ stringi::stri_encode(a$abbrev_state, from='latin1', to="ASCII")
 Encoding(a$name_uf)
 Encoding(a$code_state)
 a
-Encoding(a$name_uf) <- stringi::stri_encode(a$name_uf, from='latin1', to="ASCII")
+Encoding(a$name_uf) <- stringi::stri_encode("Rondônia, goiás", from='latin1', to="utf8")
 a
 
 stringi::stri_encode(a$, from='latin1', to="ASCII")

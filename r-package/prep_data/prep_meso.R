@@ -28,6 +28,8 @@ sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 # create a function that will clean the sf files according to particularities of the data in each year
 clean_meso <- function(e){ #  e <- sub_dirs[sub_dirs %like% 2000 ]
 
+  options(encoding = "UTF-8")
+
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
   year <- last4(e)
