@@ -28,7 +28,7 @@ sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 
 # create a function that will clean the sf files according to particularities of the data in each year
 
-clean_states <- function( e ){  #  e <- sub_dirs[ sub_dirs %like% 2015 ]
+clean_states <- function( e ){  #  e <- sub_dirs[ sub_dirs %like% 2000 ]
 
   # get year of the folder
   last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
@@ -129,24 +129,12 @@ clean_states <- function( e ){  #  e <- sub_dirs[ sub_dirs %like% 2015 ]
     # Save cleaned sf in the cleaned directory
     dir.dest.file <- paste0(dir.dest,"/")
 
-    if (year < 2015) {
-    file.name <- paste0(unique(substr(temp_sf$code_state,1,2)),"UF",".gpkg")
-
-    # original
-    i <- paste0(dir.dest.file,file.name)
-    sf::st_write(temp_sf, i, overwrite=TRUE)
-
-    # simplified
-    i <- gsub(".gpkg", "_simplified.gpkg", i)
-    sf::st_write(temp_sf_simplified, i, overwrite=TRUE)
-    }
-
-
-    if (year >= 2015) {
-
-      for( c in temp_sf$code_state){ # c <-33
+    # save each state separately
+    for( c in unique(temp_sf$code_state)){ # c <- 11
 
       temp2 <- subset(temp_sf, code_state ==c)
+      temp2_simplified <- subset(temp_sf_simplified, code_state ==c)
+
       file.name <- paste0(unique(substr(temp2$code_state,1,2)),"UF",".gpkg")
 
       # original
@@ -155,9 +143,9 @@ clean_states <- function( e ){  #  e <- sub_dirs[ sub_dirs %like% 2015 ]
 
       # simplified
       i <- gsub(".gpkg", "_simplified.gpkg", i)
-      sf::st_write(temp2, i, overwrite=TRUE)
-      }
+      sf::st_write(temp2_simplified, i, overwrite=TRUE)
     }
+
   }
 }
 
