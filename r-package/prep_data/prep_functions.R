@@ -204,13 +204,13 @@ use_encoding_utf8 <- function(temp_sf){
 #   return(temp_sf)
 # }else{ return(temp_sf)}}
 
-to_multipolygon <- function(temp_sf=a){
+to_multipolygon <- function(temp_sf){
 
   # get geometry types
   geom_types <- st_geometry_type(temp_sf) %>% unique() %>% as.character()
 
   # checks
-  if( length(geom_types) > 1 | any(  !( geom_types %like% "MULTIPOLYGON|GEOMETRYCOLLECTION"))) {
+  if (length(geom_types) > 1 | any(  !( geom_types %like% "MULTIPOLYGON"))) {
 
       # remove linstring
       temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) %>% as.character() != "LINESTRING")
