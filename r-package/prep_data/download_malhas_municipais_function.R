@@ -178,8 +178,8 @@ unzip_to_geopackage <- function(region, year){
   #  all_zipped_files[all_zipped_files %like% year]
 
   if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_|UF_|uf2500")]}
-  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|Mesorregioes"]}
-  if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi|Microrregioes"]}
+  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|Mesorregioes|me2500"]}
+  if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi|Microrregioes|mi2500"]}
   if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000|Municipios"]}
 
   if(year=="all"){
@@ -308,9 +308,9 @@ unzip_to_geopackage <- function(region, year){
     all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
 
     if (region == "uf"){ all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")] }
-    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes"]}
-    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes"]}
-    if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
+    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "ME|Mesorregioes|me2500"] }
+    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes|mi2500"] }
+    if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"] }
 
     temp <- NULL
 
@@ -442,8 +442,8 @@ unzip_to_geopackage <- function(region, year){
     all_shapes <- all_shapes[all_shapes %like% paste0(year)]
 
     if (region == "uf"){all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")]}
-    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes|mesorregioes|ME500"]}
-    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes|microrregioes"]}
+    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes|mesorregioes|ME|me2500"]}
+    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes|microrregioes|mi2500"]}
     if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
 
     temp <- NULL

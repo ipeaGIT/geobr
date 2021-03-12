@@ -1,11 +1,9 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-setwd("D:/temp/geobr/")
+source("./prep_data/prep_functions.R")
+source('./prep_data/download_malhas_municipais_function.R')
 
-source("./r-package/prep_data/prep_functions.R")
-source('./r-package/prep_data/download_malhas_municipais_function.R')
-
-dir.create("./malhas_municipais")
+setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw')
 
 #pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
 
@@ -50,7 +48,7 @@ clean_micro <- function( e ){ #  e <- sub_dirs[1]
   sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
 
   #sf_files <- sf_files[sf_files %like% "Microrregioes"]
-  
+
   # for each file
   for (i in sf_files){ #  i <- sf_files[1]
 

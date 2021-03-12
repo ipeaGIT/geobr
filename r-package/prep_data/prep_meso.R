@@ -1,17 +1,15 @@
 ####### Load Support functions to use in the preprocessing of the data
 
-setwd("D:/temp/geobr/")
+source("./prep_data/prep_functions.R")
+source('./prep_data/download_malhas_municipais_function.R')
 
-source("./r-package/prep_data/prep_functions.R")
-source('./r-package/prep_data/download_malhas_municipais_function.R')
-
-dir.create("./malhas_municipais")
+setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw')
 
 #pblapply(X=c(2000,2001,2005,2007,2010,2013:2020), FUN=download_ibge)
 
 ###### download raw data --------------------------------
 #unzip_to_geopackage(region='meso_regiao', year='2019')
-unzip_to_geopackage(region='meso_regiao', year=2000)
+unzip_to_geopackage(region='meso_regiao', year='all')
 
 
 ###### Cleaning MESO files --------------------------------
@@ -115,13 +113,13 @@ clean_meso <- function(e){ #  e <- sub_dirs[4]
     dir.dest.file <- paste0(dir.dest,"/")
 
     file.name <- paste0("MU",".gpkg")
-    
+
     i <- paste0(dir.dest.file,file.name)
-    
+
     sf::st_write(temp_sf, i , delete_layer = TRUE)
-    
+
     i <- gsub(".gpkg", "_simplified.gpkg", i)
-    
+
     sf::st_write(temp_sf_simplified, i , delete_layer = TRUE)
 
   }
