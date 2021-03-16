@@ -73,6 +73,7 @@
 
   subset(metadata, geo == 'amc')
   subset(metadata, geo == 'census_tract' & year==2017)
+  subset(metadata, year==2020)
 
 
 # save updated metadata table

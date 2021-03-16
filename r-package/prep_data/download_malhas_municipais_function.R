@@ -24,16 +24,24 @@ library(pbapply)
 # Region options:
 # uf, municipio, meso_regiao, micro_regiao
 
+setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw')
+
 
 
 ########  0. Download Raw zipped files for all years ------------
 
 ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/"
 
-# create folders to download and store raw data of each year
-dir.create("./malhas_municipais")
-
+# Download function
 download_ibge <- function(year=2020){
+
+  message(paste0("Downloading year: ", year, '\n'))
+  message(paste0("Downloading year: ", year, '\n'))
+  message(paste0("Downloading year: ", year, '\n'))
+
+  # check what years have already been downloaded
+  years_already_downloaded <- list.dirs('./malhas_municipais/',recursive = F)
+  if( any(years_already_downloaded %like% year) ){ return(NULL) }
 
   ### LEVEL 1 - List Years/folders available
   all_years = RCurl::getURL(ftp, ftp.use.epsv = FALSE, dirlistonly = TRUE)
@@ -43,9 +51,9 @@ download_ibge <- function(year=2020){
   this_year <- all_years[all_years %like% year]
 
   # create folder to download and store raw data of each year
-  dir.create(paste0("./malhas_municipais/",this_year))
+  dir.create(paste0("./malhas_municipais/",year), showWarnings = F)
 
-  if( year > 2015){
+  if( year >= 2015){
 
     # list files
     subdir <- paste0(ftp, this_year,"/", 'Brasil', "/", 'BR', "/")
@@ -56,21 +64,62 @@ download_ibge <- function(year=2020){
     # Download zipped files
     for (filename in files) { # filename <-  files[1]
       download.file(url = paste(subdir, filename, sep = ""),
-                    destfile = paste0("./malhas_municipais/",this_year,"/",filename)
+                    destfile = paste0("./malhas_municipais/",year,"/",filename)
       )
     }
   }
 
-  if( year < 2015){
+  if( year %in% c(2005, 2007)){
 
     # list files
-    subdir <- paste0(ftp, "/",this_year,"/")
+    subdir <- paste0(ftp,this_year,"/")
+    folders = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    folders <- strsplit(folders, "\r\n")
+    folders = unlist(folders)
+    folders = subset(folders,!grepl(".pdf",folders))
+
+    # escala e projecao
+    folder = folders[ folders %like% 'escala_2500mil']
+    if(year==2005){subdir = paste0(ftp,this_year,"/",folder, "/proj_geografica/arcview_shp/uf/")}
+    if(year==2007){subdir = paste0(ftp,this_year,"/",folder, "/proj_geografica_sirgas2000/uf/")}
+    folders = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    folders = strsplit(folders, "\r\n")
+    folders = unlist(folders)
+    folders = subset(folders,!grepl(".pdf",folders))
+
+    # LEVEL 3
+    for (n2 in folders){ # n2 <- folders[2]
+
+      # list files
+      if(year==2005){subdir2 = paste0(ftp,this_year,"/",folder, "/proj_geografica/arcview_shp/uf/",n2,"/")}
+      if(year==2007){subdir2 = paste0(ftp,this_year,"/",folder, "/proj_geografica_sirgas2000/uf/",n2,"/")}
+      files = getURL(subdir2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+      files <- strsplit(files, "\r\n")
+      files = unlist(files)
+
+      # create folder to download and store raw data of each year
+      dest_dir <- paste0("./malhas_municipais/",year,"/",n2)
+      dir.create(dest_dir)
+
+      # Download zipped files
+      for (filename in files) { # filename <-  files[1]
+        download.file(url = paste(subdir2, filename, sep = ""),
+                      destfile = paste0(dest_dir, "/",filename) )
+      }
+    } }
+
+  else if( year < 2015 & year!=2005 & year!=2007){
+
+    # list files
+    subdir <- paste0(ftp,this_year,"/")
     folders = getURL(subdir, ftp.use.epsv = FALSE, dirlistonly = TRUE)
     folders <- strsplit(folders, "\r\n")
     folders = unlist(folders)
 
+    folders = subset(folders,!grepl(".pdf",folders))
+
     # LEVEL 2
-    for (n2 in folders){ # n2 <- folders[2]
+    for (n2 in folders){ # n2 <- folders[19]
 
       # list files
       subdir2 <- paste0(ftp, this_year,"/", n2,"/")
@@ -79,7 +128,7 @@ download_ibge <- function(year=2020){
       files = unlist(files)
 
       # create folder to download and store raw data of each year
-      dest_dir <- paste0("./malhas_municipais/",this_year,"/",n2)
+      dest_dir <- paste0("./malhas_municipais/",year,"/",n2)
       dir.create(dest_dir)
 
       # Download zipped files
@@ -90,24 +139,23 @@ download_ibge <- function(year=2020){
     } }
 }
 
-pblapply(X=c(2016, 2020), FUN=download_ibge)
+
+# lapply(X=c(2000, 2005, 2007, 2020), FUN=download_ibge)
 
 
 
+########  1. Unzip Raw zipped files for all years ------------
 
+unzip_to_geopackage <- function(region, year){
 
-!!! Essa funcao abaixo nao faz download do dado. Ela  unzipa e salva em geopackage. Dai sugiro
-mudar o nome para algo do tipo. 'unzip_to_geopackage()'
-####
-
-
-download_malhas_municipais <- function(region, year){
+  message(paste0("unziping\n"))
 
   ########  1. Unzip original data sets downloaded from IBGE -----------------
 
   # Root directory
-  root_dir <- "//STORAGE6/usuarios/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
+  root_dir <- "L:/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais"
   setwd(root_dir)
+
 
   # unzip function
   unzip_fun <- function(f){
@@ -126,10 +174,13 @@ download_malhas_municipais <- function(region, year){
   # List all zip files for all years
   all_zipped_files <- list.files(full.names = T, recursive = T, pattern = ".zip")
 
-  if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_")]}
-  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes"]}
-  if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi"]}
-  if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000"]}
+  # filter year
+  #  all_zipped_files[all_zipped_files %like% year]
+
+  if (region == "uf"){all_zipped_files <- all_zipped_files[(all_zipped_files %like% "unidades_da_|UF_|uf2500")]}
+  if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|Mesorregioes|me2500"]}
+  if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi|Microrregioes|mi2500"]}
+  if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000|Municipios"]}
 
   if(year=="all"){
 
@@ -139,11 +190,11 @@ download_malhas_municipais <- function(region, year){
 
     # function to Unzip files in their original sub-dir
     unzip_fun <- function(f){
-      # f <- files_1st_batch[1]
+      # g
       t<-strsplit(f, "/")
       t<-t[[1]][length(t[[1]])]
       t<- nchar(t)
-      unzip(f, exdir = file.path(root_dir, substr(f, 3, nchar(f)-t) ))
+      unzip(f, exdir = file.path(root_dir, substr(f, 3, nchar(f)-t)) )
     }
 
     # create computing clusters
@@ -157,31 +208,14 @@ download_malhas_municipais <- function(region, year){
 
     gc(reset = T)
 
-    #### 1.2 GROUP 2/3 - Data available separately by state in a single resolution and file -----------------
+    #### 1.2 GROUP 2/3 - Data available one file for the whole country -----------------
     # 2015, 2016, 2017, 2018
 
     # List all zip files for all years
     all_zipped_files
 
     # Select files of selected years
-    files_2nd_batch <- all_zipped_files[all_zipped_files %like% "2015|2016|2017|2018|2019"]
-
-    # remove Brazil files
-    files_2nd_batch <- files_2nd_batch[!(files_2nd_batch %like% "BR")]
-
-    # Select one file for each state
-    # 540 files (4 geographies x 27 states x 4 years) 4*27*4
-    files_2nd_batch <- files_2nd_batch[nchar(files_2nd_batch) > 30]
-
-
-    # function to Unzip files in their original sub-dir
-    # unzip_fun <- function(f){
-    #   # f <- files_2nd_batch[14]
-    #   t<-strsplit(f, "/")
-    #   t<-t[[1]][length(t[[1]])]
-    #   t<- nchar(t)
-    #   unzip(f, exdir = file.path(root_dir, substr(f, 3, nchar(f)-t) ))
-    # }
+    files_2nd_batch <- all_zipped_files[all_zipped_files %like% "2015|2016|2017|2018|2019|2020"]
 
     # create computing clusters
     cl <- parallel::makeCluster(detectCores())
@@ -194,7 +228,7 @@ download_malhas_municipais <- function(region, year){
     gc(reset = T)
 
 
-    #### 1.3 GROUP 3/3 - Data available separately by state in a single resolution and file -----------------
+    #### 1.3 GROUP 3/3 - Data available separately by state different resolution files -----------------
     # 2005, 2007
 
     # List all zip files for all years
@@ -205,7 +239,7 @@ download_malhas_municipais <- function(region, year){
 
     # Selc only zip files organized by UF at scale  1:2.500.000
     # 54 files (27 files x 2 years) 27*2
-    files_3rd_batch <- files_3rd_batch[files_3rd_batch %like% "escala_2500mil/proj_geografica/arcview_shp/uf|escala_2500mil/proj_geografica_sirgas2000/uf"]
+    files_3rd_batch <- files_3rd_batch[files_3rd_batch %like% "mu2500"]
 
     # function to Unzip files in their original sub-dir
     # unzip_fun <- function(f){
@@ -228,25 +262,24 @@ download_malhas_municipais <- function(region, year){
 
     gc(reset = T)
 
-    #### 2. Create folders to save sf.rds files  -----------------
+
+### 2. Save gpkg files  -----------------
+
+
+#### 2.1 Create folders to save sf.rds files  -----------------
+
+    message(paste0("saving gpkg\n"))
 
     sub_dirs <- list.dirs(path = root_dir, recursive = F)
 
-    sub_dirs <- sub_dirs[sub_dirs %like% "_all_years_original"]
-
-    sub_dirs <- list.dirs(path = paste0(sub_dirs,"/",region), recursive = F)
+    sub_dirs <- sub_dirs[! (sub_dirs %like% "_all_years_original")]
+    sub_dirs <- sub_dirs[! (sub_dirs %like% "_all_years_clean")]
 
     # get all years in the directory
     years <- unlist(lapply(strsplit(sub_dirs, "/"), tail, n = 1L))
-
     years <-  unlist(regmatches(years, gregexpr("[[:digit:]]+", years)))
-
     years <- unique(years)
-
-    # # get all years in the directory
-    # last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
-    # years <- lapply(sub_dirs, last4)
-    # years <-  unlist(years)
+    years
 
     # create directory to save original shape files in sf format
     dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
@@ -255,23 +288,13 @@ download_malhas_municipais <- function(region, year){
     dir.create(file.path("shapes_in_sf_all_years_original/",paste0(region)), showWarnings = FALSE)
 
     # create a subdirectory of years
-    sub_dirs <- paste0("./shapes_in_sf_all_years_original/",region)
+    sub_dirs_cleaned <- paste0("./shapes_in_sf_all_years_cleaned/",region)
+    sub_dirs_original <- paste0("./shapes_in_sf_all_years_original/",region)
 
-
-
-    for (i in sub_dirs){
-      for (y in years){
-        dir.create(file.path(i, y), showWarnings = FALSE)
+    for (y in years){
+        dir.create( file.path(sub_dirs_cleaned, y), showWarnings = FALSE)
+        dir.create( file.path(sub_dirs_original, y), showWarnings = FALSE)
       }
-    }
-
-    sub_dirs <- paste0("./shapes_in_sf_all_years_cleaned/",region)
-
-    for (i in sub_dirs){
-      for (y in years){
-        dir.create(file.path(i, y), showWarnings = FALSE)
-      }
-    }
 
     gc(reset = T)
 
@@ -279,38 +302,30 @@ download_malhas_municipais <- function(region, year){
 
 
 
-    #### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
+#### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
 
     # List shapes for all years
     all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp$")
 
-    if (region == "uf"){all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")]}
-    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes"]}
-    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes"]}
-    if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
+    if (region == "uf"){ all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")] }
+    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "ME|Mesorregioes|me2500"] }
+    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes|mi2500"] }
+    if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"] }
+
+    temp <- NULL
 
     shp_to_sf_rds <- function(x){
 
-
+      # select file
+      # x <- all_shapes[all_shapes %like% 2020][3]
+      # x <- all_shapes[1]
 
       # get corresponding year of the file
-      #x <- all_shapes[1]
-
       years <- lapply(strsplit(x, "/"), head, n = 2L)
-
       years <- unlist(lapply(years, tail, n = 1L))
-
       years <-  unlist(regmatches(years, gregexpr("[[:digit:]]+", years)))
-
       years <- unique(years)
-
-
-      # year <- substr(x, 13, 16)
-
-      region <- region
-
-      # select file
-      # x <- all_shapes[all_shapes %like% 2000][3]
+      years
 
 
       # Encoding for different years
@@ -322,18 +337,20 @@ download_malhas_municipais <- function(region, year){
         shape_i <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
       }
 
-      if (years %like% "2013|2014|2015|2016|2017|2018|2019"){
+      if (years %like% "2013|2014|2015|2016|2017|2018|2019|2020"){
         shape_i <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=UTF8")
       }
 
 
       # get destination subdirectory based on abbreviation of the geography
-      last15 <- substr(x, nchar(x)-15, nchar(x)) # function to get the last 4 digits of a string
-      if( years %like% "2019" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
-      if( years %like% "2019" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
-      if( years %like% "2019" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
+      last15 <- substr(x, nchar(x)-15, nchar(x)) # function to get the last 15 digits of a string
+      if( years %like% "2019|2020" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
+      if( years %like% "2019|2020" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
+      if( years %like% "2019|2020" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
 
-      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
+      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes") {
+        dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", years)
+        }
 
       # name of the file that will be saved
       # if( years %like% "2000|2001|2010|2013|2014"){ file_name <- paste0(toupper(substr(x, 21, 24)), ".gpkg") }
@@ -343,42 +360,46 @@ download_malhas_municipais <- function(region, year){
       # if( years %like% "2019"){ file_name <- paste0( toupper(substr(x, 25, 29)), ".gpkg") }
 
       # name of the file and directory that will be saved
-      t<-strsplit(x, "/")
-      t<-t[[1]][length(t[[1]])]
-      n<- nchar(t)
-      dest_dir <- substr(x, 3, nchar(x)-(n+1) )
+      t <- strsplit(x, "/")
+      t <- t[[1]][length(t[[1]])]
+      n <- nchar(t)
+      #dest_dir <- substr(x, 3, nchar(x)-(n+1) )
       file_name <- gsub(".shp$", ".gpkg", t, ignore.case = T)
 
+
+      temp <- rbind(temp,shape_i) %>% st_as_sf()
+
       # save in .rds
-      sf::st_write(shape_i, dsn = paste0(dest_dir,"/", file_name), delete_layer = TRUE)
+      sf::st_write(temp, dsn = paste0(dest_dir,"/", file_name), overwrite = TRUE)
     }
+666666
 
-
-    future::plan(multiprocess)
+    future::plan(multisession)
 
     future_map(all_shapes, shp_to_sf_rds)
 
 
-  } else if(year %like% "2000|2001|2005|2007|2010|2013|2014|2015|2016|2017|2018|2019"){
+  } else if(year %like% "2000|2001|2005|2007|2010|2013|2014|2015|2016|2017|2018|2019|2020"){
 
     # Select files of selected years
     # 540 files (4 geographies x 27 states x 5 years) 4*27*5
 
-    files_1st_batch <- all_zipped_files[all_zipped_files %like% paste0(year)]
+    files_1st_batch <- all_zipped_files[all_zipped_files %like% year]
 
-    # remove Brazil files
-    files_1st_batch <- files_1st_batch[!(files_1st_batch %like% "BR")]
+    if(year!=2020){
+      # remove Brazil files
+      files_1st_batch <- files_1st_batch[!(files_1st_batch %like% "BR")]
+
+    }
 
     # Select one file for each state
     # 540 files (4 geographies x 27 states x 4 years) 4*27*4
 
-
-
     if(year %like% "2005|2007"){
-      files_1st_batch <- files_1st_batch[files_1st_batch %like% "escala_2500mil/proj_geografica/arcview_shp/uf|escala_2500mil/proj_geografica_sirgas2000/uf"]
+      files_1st_batch <- files_1st_batch[files_1st_batch %like% "mu2500"]
     }
 
-    if(year %like% "2015|2016|2017|2018|2019"){
+    if(year %like% "2015|2016|2017|2018|2019|2020"){
       files_1st_batch <- files_1st_batch[nchar(files_1st_batch) > 30]
 
     }
@@ -396,7 +417,7 @@ download_malhas_municipais <- function(region, year){
     rm(list=setdiff(ls(), c("root_dir","all_zipped_files","region","year")))
     gc(reset = T)
 
-    #### 2. Create folders to save sf.rds files  -----------------
+#### 2. Create folders to save sf.rds files  -----------------
 
     sub_dirs <- list.dirs(path =root_dir, recursive = F)
 
@@ -421,17 +442,17 @@ download_malhas_municipais <- function(region, year){
     all_shapes <- all_shapes[all_shapes %like% paste0(year)]
 
     if (region == "uf"){all_shapes <- all_shapes[(all_shapes %like% "UFE250|uf500|UF2500|UF500|UF2500|UF_")]}
-    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes"]}
-    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes"]}
+    if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes|mesorregioes|ME|me2500"]}
+    if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes|microrregioes|mi2500"]}
     if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
 
-
+    temp <- NULL
 
     shp_to_sf_rds <- function(x){
 
 
       # get corresponding year of the file
-      #x <- all_shapes[26]
+      # x <- all_shapes[1]
       # select file
       # x <- all_shapes[all_shapes %like% 2000][3]
 
@@ -441,16 +462,16 @@ download_malhas_municipais <- function(region, year){
         shape_i <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=IBM437")
       } else if (year %like% "2001|2005|2007|2010"){
         shape_i <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
-      } else if (year %like% "2013|2014|2015|2016|2017|2018|2019"){
+      } else if (year %like% "2013|2014|2015|2016|2017|2018|2019|2020"){
         shape_i <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=UTF8")
       }
 
 
       # get destination subdirectory based on abbreviation of the geography
       last15 <- substr(x, nchar(x)-15, nchar(x)) # function to get the last 4 digits of a string
-      if( year %like% "2019" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
-      if( year %like% "2019" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
-      if( year %like% "2019" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
+      if( year %like% "2019|2020" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
+      if( year %like% "2019|2020" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
+      if( year %like% "2019|2020" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
 
       if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
 
@@ -465,15 +486,18 @@ download_malhas_municipais <- function(region, year){
       t<-strsplit(x, "/")
       t<-t[[1]][length(t[[1]])]
       n<- nchar(t)
-      dest_dir <- substr(x, 3, nchar(x)-(n+1) )
       file_name <- gsub(".shp$", ".gpkg", t, ignore.case = T)
 
+
+      temp <- shape_i %>% st_as_sf()
+
       # save in .rds
-      sf::st_write(shape_i, dsn = paste0(dest_dir,"/", file_name), delete_layer = TRUE)
+      sf::st_write(temp, dsn = paste0(dest_dir,"/", file_name), overwrite = TRUE)
     }
 
 
-    future::plan(multiprocess)
+    # apply function
+    future::plan(multisession)
 
     future_map(all_shapes, shp_to_sf_rds)
 
@@ -484,7 +508,4 @@ download_malhas_municipais <- function(region, year){
   } else {stop("Error: Invalid value to argument year")}
 
 }
-
-
-# }
 
