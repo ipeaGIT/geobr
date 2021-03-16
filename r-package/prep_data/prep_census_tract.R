@@ -40,33 +40,51 @@ source("./prep_data/prep_functions.R")
 # setores 2000 urbano
   ftp3 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_urbano/"
 
+# setores 2019
+ftp4 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2019/Malha_de_setores_(shp)_por_UFs/"
+  
+# setores 2020
+ftp5 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2020/Malha_de_setores_(shp)_por_UFs/"
+  
+  
+# lista de ftp de 2010,2019 e 2020
+ftplist <- C(ftp, ftp4, ftp5)
 
-### setor censitario censo 2010
-filenames = getURL(ftp, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filenames <- strsplit(filenames, "\r\n")
-filenames = unlist(filenames)
-filenames <- filenames[!grepl('leia_me', filenames)]
-
-filesurl<-paste(ftp, filenames[9],"/", sep = "")
-filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filesurl<-strsplit(filesurl, "\r\n")
-filesurl<-unlist(filesurl)
-
-
-#fazendo download dos dados zipados
-for (filename in filenames) {
-  filesurl<-paste(ftp, filename,"/", sep = "")
-  filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filesurl<-strsplit(filesurl, "\r\n")
-  filesurl<-unlist(filesurl)
-
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2010/",filename)
-  dir.create(dir.fonte,recursive = T)
-
-  for (files in filesurl) {
-    download.file(paste(ftp, filename,"/",files, sep = ""),paste(dir.fonte,"/",files,sep = ""))
+for (ftp1 in ftplist){ # ftp1 <- FTPLIST[3]
+  
+  ### setor censitario censo 2010
+  filenames = getURL(ftp1, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  filenames <- strsplit(filenames, "\r\n")
+  filenames = unlist(filenames)
+  filenames <- filenames[!grepl('leia_me', filenames)]
+  
+  # filesurl<-paste(ftp, filenames[9],"/", sep = "")
+  # filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  # filesurl<-strsplit(filesurl, "\r\n")
+  # filesurl<-unlist(filesurl)
+  
+  #fazendo download dos dados zipados
+  for (filename in filenames) {
+    filesurl<-paste(ftp1, filename,"/", sep = "")
+    filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+    filesurl<-strsplit(filesurl, "\r\n")
+    filesurl<-unlist(filesurl)
+    
+    dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2010/",filename)
+    fileyear <- regmatches(ftplist, gregexpr("[0-9]+",ftplist))
+    fileyear <- unlist(fileyear)
+    dir.fonte <- paste0("./setores_censitarios/",fileyear,"/",filename)
+    
+    for (fonte in dir.fonte){ # fonte <- dir.fonte[1]
+      dir.create(fonte,recursive = T)
+      
+      for (files in filesurl){ # files <- filesurl[1]
+        download.file(paste(ftp1, filename,"/", files, sep = ""),paste(fonte,"/",files, sep = ""))
+      }
+    }
   }
-}
+} 
+
 
 ### setor censitario rural censo 2000
 filenames = getURL(ftp2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
@@ -347,7 +365,7 @@ shp_to_sf_rds <- function(x){
     shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=IBM437")
   }
 
-  if (year %like% "2001|2005|2007|2010"){
+  if (year %like% "2001|2005|2007|2010|2019|2020"){
     shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
   }
 
@@ -427,7 +445,8 @@ clean_tracts <- function( sf_file ){
     if( sf_file %like% "/2000/" ){ year <- 2000}
     if( sf_file %like% "/2007/" ){ year <- 2007}
     if( sf_file %like% "/2010/" ){ year <- 2010}
-
+    if( sf_file %like% "/2019/" ){ year <- 2019}
+    if( sf_file %like% "/2020/" ){ year <- 2020}
 
   # rural tracts of year 2000
     if ((year %like% "2000") & (sf_file %like% "Rural")){
@@ -506,7 +525,51 @@ clean_tracts <- function( sf_file ){
                                'name_district',
                                'code_state',
                                'geometry')
-            }
+    }
+    
+    
+    # Tracts of year 2019 or 2020
+    if (year %like% "2019|2020"){
+      
+      # sf_file <- all_shapes[all_shapes %like% "2010"]
+      # sf_file <- sf_file[2]
+      # temp_sf <- read_rds(sf_file)
+      
+      # rename columns
+      names(temp_sf) <- names(temp_sf) %>% tolower()
+      temp_sf <- temp_sf %>% mutate(code_state=substr(cd_geocodm,1,2))
+      temp_sf <- dplyr::rename(temp_sf,
+                               code_tract = cd_geocodi,
+                               zone = tipo,
+                               code_muni = cd_geocodm,
+                               name_muni = nm_municip,
+                               name_neighborhood=nm_bairro,
+                               code_neighborhood=cd_geocodb,
+                               code_subdistrict=cd_geocods,
+                               name_subdistrict=nm_subdist,
+                               code_district=cd_geocodd,
+                               name_district=nm_distrit,
+                               name_micro=nm_micro,
+                               name_meso=nm_meso)
+      # filter columns
+      temp_sf <- dplyr::select(temp_sf,
+                               'code_tract',
+                               'zone',
+                               'code_muni',
+                               'name_muni',
+                               'code_state',
+                               'name_neighborhood',
+                               'code_neighborhood',
+                               'code_subdistrict',
+                               'name_subdistrict',
+                               'code_district',
+                               'name_district',
+                               'code_state',
+                               'name_micro',
+                               'name_meso',
+                               'geometry')
+      
+    }
 
 
     # Adjust string columns
@@ -545,6 +608,9 @@ clean_tracts <- function( sf_file ){
       if( sf_file %like% "/2010/"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//" }
       if( sf_file %like% "2000/Urbano"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//" }
       if( sf_file %like% "2000/Rural"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Rural//" }
+      if( sf_file %like% "/2019/"){ dest_dir <- "C://Users//Babis//Documents//IPEA//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2019//" }
+      if( sf_file %like% "/2020/"){ dest_dir <- "C://Users//Babis//Documents//IPEA//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2020//" }
+      
 
   # name of the file that will be saved (the whole string between './' and '.rds')
     file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
