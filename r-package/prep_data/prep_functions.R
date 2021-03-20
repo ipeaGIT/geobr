@@ -255,6 +255,9 @@ use_encoding_utf8 <- function(temp_sf){
     mutate_if(is.character, function(x){
       x  %>% stringi::stri_encode(to="UTF-8") } )
 
+  # code columns remain numeric
+  temp_sf <- temp_sf %>% mutate_at(vars(starts_with("code_")), .funs = function(x){ as.numeric(x) })
+
   return(temp_sf)
   }
 
