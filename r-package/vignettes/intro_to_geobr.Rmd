@@ -2,7 +2,7 @@
 title: "Introduction to geobr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basic-Usage}
+  %\VignetteIndexEntry{Introduction to geobr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

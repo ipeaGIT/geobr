@@ -124,10 +124,6 @@ clean_meso <- function(e, year){ #  e <- sub_dirs[sub_dirs %like% 2000 ]
     temp_sf <- sf::st_make_valid(temp_sf)
 
 
-    # keep code as.numeric()
-    temp_sf$code_meso <- as.numeric(temp_sf$code_meso)
-    temp_sf$code_state <- as.numeric(temp_sf$code_state)
-
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf)
 
