@@ -325,7 +325,8 @@ dissolve_polygons <- function(mysf, group_column){
   temp_sf <- temp_sf %>% st_buffer(0)
 
   # b) make sure we have sf MULTIPOLYGON
-  temp_sf1 <- temp_sf %>% st_cast("MULTIPOLYGON")
+  #temp_sf1 <- temp_sf %>% st_cast("MULTIPOLYGON")
+  temp_sf1 <- to_multipolygon(temp_sf)
 
   # c) long but complete dissolve function
   dissolvefun <- function(grp){
