@@ -8,11 +8,14 @@
 * New function `read_comparable_areas` to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17
 * New data set of macro regions og health, which can be accessed using the new `macro` parameter added to `read_health_region()` function. Closes issue #219.
 * updated data sets for 2020:
+  * Country
+  * Regions
   * Municipalities
   * States
   * Micro regions
   * Meso regions
   * Census tracts
+* Updated data of indigenous land March 2021
 
   
   
