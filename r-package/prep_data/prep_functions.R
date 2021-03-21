@@ -58,6 +58,7 @@ harmonize_projection <- function(temp_sf){
 
 
 ###### Add State abbreviation -----------------
+options(encoding = "UTF-8")
 
 add_state_info <- function(temp_sf, column){
   options(encoding = "UTF-8")
@@ -245,6 +246,8 @@ add_region_info <- function(temp_sf, column){
 ###### Use UTF-8 encoding -----------------
 
 use_encoding_utf8 <- function(temp_sf){
+
+  options(encoding = "UTF-8")
 
 
   temp_sf <- temp_sf %>%

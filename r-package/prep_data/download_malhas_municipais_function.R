@@ -181,6 +181,8 @@ unzip_to_geopackage <- function(region, year){
   if (region == "meso_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "mesorregioes|Mesorregioes|me2500"]}
   if (region == "micro_regiao"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "microrregioes|mi|Microrregioes|mi2500"]}
   if (region == "municipio"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "municipios|mu500|mu2500|mu1000|Municipios"]}
+  if (region == "imediata"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "RG_Imediatas"]}
+  if (region == "intermediaria"){all_zipped_files <- all_zipped_files[all_zipped_files %like% "RG_Intermediarias"]}
 
   if(year=="all"){
 
@@ -406,12 +408,9 @@ unzip_to_geopackage <- function(region, year){
 
 
     # create computing clusters
-    cl <- parallel::makeCluster(detectCores())
-    parallel::clusterExport(cl=cl, varlist= c("files_1st_batch", "root_dir"), envir=environment())
+    future::plan(future::multisession())
+    furrr::future_map(.x=files_1st_batch, .f = unzip_fun)
 
-    # apply function in parallel
-    parallel::parLapply(cl, files_1st_batch, unzip_fun)
-    stopCluster(cl)
 
 
     rm(list=setdiff(ls(), c("root_dir","all_zipped_files","region","year")))
@@ -445,6 +444,8 @@ unzip_to_geopackage <- function(region, year){
     if (region == "meso_regiao"){all_shapes <- all_shapes[all_shapes %like% "Mesorregioes|mesorregioes|ME|me2500"]}
     if (region == "micro_regiao"){all_shapes <- all_shapes[all_shapes %like% "MI|Microrregioes|microrregioes|mi2500"]}
     if (region == "municipio"){all_shapes <- all_shapes[all_shapes %like% "MU|mu500|mu2500|mu1000|Municipios"]}
+    if (region == "imediata"){all_shapes <- all_shapes[all_shapes %like% "RG_Imediatas"]}
+    if (region == "intermediaria"){all_shapes <- all_shapes[all_shapes %like% "RG_Intermediarias"]}
 
     temp <- NULL
 
@@ -468,12 +469,14 @@ unzip_to_geopackage <- function(region, year){
 
 
       # get destination subdirectory based on abbreviation of the geography
-      last15 <- substr(x, nchar(x)-15, nchar(x)) # function to get the last 4 digits of a string
-      if( year %like% "2019|2020" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
-      if( year %like% "2019|2020" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x))}
-      if( year %like% "2019|2020" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x))}
+      dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)
 
-      if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
+          # last15 <- substr(x, nchar(x)-15, nchar(x)) # function to get the last 4 digits of a string
+          # if( year %like% "2019|2020" & region %like% "Municipio|uf|municipio"){last15 <- substr(x, nchar(x)-18, nchar(x))}
+          # if( year %like% "2019|2020" & region %like% "meso_regiao"){last15 <- substr(x, nchar(x)-20, nchar(x)) }
+          # if( year %like% "2019|2020" & region %like% "micro_regiao"){last15 <- substr(x, nchar(x)-21, nchar(x)) }
+          #
+          # if ( last15 %like% "UF|uf|ME|me|MI|mi|MU|mu|Municipios|Mesorregioes|Microrregioes"){ dest_dir <- paste0("./shapes_in_sf_all_years_original/",region,"/", year)}
 
       # name of the file that will be saved
       # if( year %like% "2000|2001|2010|2013|2014"){ file_name <- paste0(toupper(substr(x, 21, 24)), ".gpkg")
@@ -498,7 +501,6 @@ unzip_to_geopackage <- function(region, year){
 
     # apply function
     future::plan(multisession)
-
     future_map(all_shapes, shp_to_sf_rds)
 
     rm(list= ls())

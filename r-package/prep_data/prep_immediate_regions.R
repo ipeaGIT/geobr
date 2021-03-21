@@ -35,12 +35,13 @@ library(stringi)
 
 ####### Load Support functions to use in the preprocessing of the data -----------------
 source("./prep_data/prep_functions.R")
+source('./prep_data/download_malhas_municipais_function.R')
 
 
 # If the data set is updated regularly, you should create a function that will have
 # a `date` argument download the data
 
-update <- 2019
+update <- 2020
 
 
 ###### 0. Create directories to download and save the data -----------------
@@ -89,94 +90,147 @@ if(update == 2017){
 }
 
 
+###### Unzip raw data --------------------------------
+unzip_to_geopackage(region='imediata', year=2020)
 
 
 
-###### 2. rename column names -----------------
 
-# read data
-if(update == 2019){
-  temp_sf <- st_read("BR_RG_Imediatas_2019.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
+###### Cleaning UF files --------------------------------
+setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais')
 
-  temp_sf <- dplyr::rename(temp_sf, code_immediate = CD_RGI, name_immediate = NM_RGI)
+# get folders with years
+data_dir <-  paste0(getwd(),"./shapes_in_sf_all_years_original/imediata")
+sub_dirs <- list.dirs(path =data_dir, recursive = F)
+sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
+
+
+
+
+# ###### 2. rename column names -----------------
+#
+# # read data
+# if(update == 2019){
+#   temp_sf <- st_read("BR_RG_Imediatas_2019.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
+#
+#   temp_sf <- dplyr::rename(temp_sf, code_immediate = CD_RGI, name_immediate = NM_RGI)
+# }
+#
+# if(update == 2017){
+#   temp_sf <- st_read("RG2017_rgi.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
+#
+#   temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rgi)
+# }
+#
+# # reorder columns
+# temp_sf <- dplyr::select(temp_sf, 'code_immediate', 'name_immediate','code_state', 'abbrev_state',
+#                          'name_state', 'code_region', 'name_region', 'geometry')
+
+
+
+# create a function that will clean the sf files according to particularities of the data in each year
+clean_immediate <- function( e , year){ #  e <- sub_dirs[ sub_dirs %like% 2020]
+
+  # select year
+  if (year == 'all') {
+    message(paste('Processing all years'))
+  } else{
+    if (!any(e %like% year)) {
+      return(NULL)
+    }
+  }
+
+  message(paste('Processing',year))
+
+  options(encoding = "UTF-8")
+
+  # get year of the folder
+  last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
+  year <- last4(e)
+  year
+
+  # create a subdirectory of years
+  dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned2/imediata/",year)), showWarnings = FALSE, recursive = T)
+  gc(reset = T)
+
+  dir.dest <- file.path(paste0("./shapes_in_sf_all_years_cleaned2/imediata/",year))
+
+
+  # list all sf files in that year/folder
+  sf_files <- list.files(e, full.names = T, recursive = T, pattern = ".gpkg$")
+
+  #sf_files <- sf_files[sf_files %like% "Microrregioes"]
+
+  # for each file
+  for (i in sf_files){ #  i <- sf_files[1]
+
+    # read sf file
+    temp_sf <- st_read(i)
+    names(temp_sf) <- names(temp_sf) %>% tolower()
+    head(temp_sf)
+
+
+    if (year %like% "2020"){
+      # dplyr::rename and subset columns
+      temp_sf <- dplyr::select(temp_sf, c('code_immediate'=cd_rgi,
+                                          'name_immediate'=nm_rgi,
+                                          'abbrev_state'=sigla_uf,
+                                          'geom'))
+    }
+
+    # Use UTF-8 encoding
+    temp_sf <- use_encoding_utf8(temp_sf)
+
+    # add name_state
+    temp_sf$code_state <- substring(temp_sf$code_immediate, 1,2)
+    temp_sf <- add_state_info(temp_sf,column = 'code_state')
+
+    # reorder columns
+    temp_sf <- dplyr::select(temp_sf, 'code_immediate', 'name_immediate', 'code_state', 'abbrev_state', 'name_state', 'geom')
+
+
+
+    # remove Z dimension of spatial data
+    temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
+    head(temp_sf)
+
+    # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+    temp_sf <- harmonize_projection(temp_sf)
+
+
+    # Make an invalid geometry valid # st_is_valid( sf)
+    temp_sf <- sf::st_make_valid(temp_sf)
+
+
+    # simplify
+    temp_sf_simplified <- simplify_temp_sf(temp_sf)
+
+    # convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+    temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
+
+    # Save cleaned sf in the cleaned directory
+    dir.dest.file <- paste0(dir.dest,"/")
+    file.name <- paste0("immediate_regions_",year,".gpkg")
+
+      # original
+      i <- paste0(dir.dest.file,file.name)
+      sf::st_write(temp_sf, i, overwrite=TRUE)
+
+      # simplified
+      i <- gsub(".gpkg", "_simplified.gpkg", i)
+      sf::st_write(temp_sf_simplified, i, overwrite=TRUE)
+    }
 }
 
-if(update == 2017){
-  temp_sf <- st_read("RG2017_rgi.shp", quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
-
-  temp_sf <- dplyr::rename(temp_sf, code_immediate = rgi, name_immediate = nome_rgi)
-}
 
 
+# apply function in parallel
+future::plan(multisession)
+future_map(.x=sub_dirs, .f=clean_immediate, year=2020)
 
-# Add state and region information
-temp_sf <- add_region_info(temp_sf, column='code_immediate')
-temp_sf <- add_state_info(temp_sf, column='code_immediate')
+rm(list= ls())
+gc(reset = T)
 
-
-
-
-# reorder columns
-temp_sf <- dplyr::select(temp_sf, 'code_immediate', 'name_immediate','code_state', 'abbrev_state',
-                         'name_state', 'code_region', 'name_region', 'geometry')
-
-
-
-
-
-
-
-###### 4. ensure every string column is as.character with UTF-8 encoding -----------------
-
-# convert all factor columns to character
-temp_sf <- use_encoding_utf8(temp_sf)
-
-
-
-
-
-
-
-
-###### Harmonize spatial projection -----------------
-
-# Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
-temp_sf <- harmonize_projection(temp_sf)
-st_crs(temp_sf)
-
-
-###### 5. remove Z dimension of spatial data-----------------
-temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
-head(temp_sf)
-
-
-###### 6. fix eventual topology issues in the data-----------------
-temp_sf <- sf::st_make_valid(temp_sf)
-
-# keep code as.numeric()
-temp_sf$code_state <- as.numeric(temp_sf$code_state)
-temp_sf$code_region <- as.numeric(temp_sf$code_region)
-temp_sf$code_immediate <- as.numeric(temp_sf$code_immediate )
-
-
-###### convert to MULTIPOLYGON -----------------
-temp_sf <- to_multipolygon(temp_sf)
-
-
-###### 7. generate a lighter version of the dataset with simplified borders -----------------
-# skip this step if the dataset is made of points, regular spatial grids or rater data
-
-# simplify
-temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
-  sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
-
-
-
-
-###### 8. Clean data set and save it -----------------
-
-# save original and simplified datasets
-  sf::st_write(temp_sf, paste0(destdir_clean, "/immediate_regions_",update,".gpkg") )
-  sf::st_write(temp_sf_simplified, paste0(destdir_clean, "/immediate_regions_",update,"_simplified.gpkg"))
 
 

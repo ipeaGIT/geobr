@@ -91,8 +91,8 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_state`| States | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 | IBGE |
 |`read_meso_region`| Meso region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 |  IBGE |
 |`read_micro_region`| Micro region | 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 | IBGE |
-|`read_intermediate_region`| Intermediate region | 2017, 2019 |  IBGE |
-|`read_immediate_region`| Immediate region | 2017, 2019 |  IBGE |
+|`read_intermediate_region`| Intermediate region | 2017, 2019, 2020 |  IBGE |
+|`read_immediate_region`| Immediate region | 2017, 2019, 2020 |  IBGE |
 |`read_municipality`| Municipality | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 | IBGE |
 |`read_municipal_seat`| Municipality seats (sedes municipais) |  1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2010 | IBGE |
 |`read_weighting_area`| Census weighting area (área de ponderação) |  2010 | IBGE |
