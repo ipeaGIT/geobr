@@ -10,10 +10,12 @@
 * updated data sets for 2020:
   * Country
   * Regions
-  * Municipalities
   * States
   * Micro regions
   * Meso regions
+  * Immediate regions
+  * Intermediate regions
+  * Municipalities
   * Census tracts
 * Updated data of indigenous land March 2021
 
