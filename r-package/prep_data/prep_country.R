@@ -84,7 +84,7 @@ get_country <- function(y){
     temp_sf <- sf::st_make_valid(sf_states)
     temp_sf <- temp_sf %>% st_buffer(0)
 
-    sf_states1 <- temp_sf %>% st_cast("MULTIPOLYGON")
+    sf_states1 <- to_multipolygon(temp_sf)
 
   # c) create attribute with the number of points each polygon has
     points_in_each_polygon = sapply(1:dim(sf_states1)[1], function(i)
@@ -116,8 +116,6 @@ get_country <- function(y){
     outerBounds <- st_set_crs(outerBounds, original_crs)
 
 
-    ###### convert to MULTIPOLYGON -----------------
-    temp_sf <- to_multipolygon(temp_sf)
 
 
   # f) create a subdirectory of that year in the country directory
@@ -127,6 +125,10 @@ get_country <- function(y){
   # g) generate a lighter version of the dataset with simplified borders
     temp_sf_simp <- simplify_temp_sf(temp_sf)
 
+    ###### convert to MULTIPOLYGON -----------------
+    temp_sf <- to_multipolygon(temp_sf)
+    temp_sf_simp <- to_multipolygon(temp_sf_simp)
+
 
   # h) save as an sf file
     sf::st_write(temp_sf, dsn=paste0("country_",y,".gpkg") )
@@ -135,7 +137,7 @@ get_country <- function(y){
 }
 
 
-
+get_country(y=2020)
 
 
 # Apply function to save original data sets in rds format
