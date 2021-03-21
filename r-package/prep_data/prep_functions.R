@@ -58,6 +58,7 @@ harmonize_projection <- function(temp_sf){
 
 
 ###### Add State abbreviation -----------------
+options(encoding = "UTF-8")
 
 add_state_info <- function(temp_sf, column){
   options(encoding = "UTF-8")
@@ -247,6 +248,8 @@ options(encoding = "UTF-8")
 
 use_encoding_utf8 <- function(temp_sf){
   options(encoding = "UTF-8")
+  options(encoding = "UTF-8")
+
 
   temp_sf <- temp_sf %>%
   mutate_if(is.factor, function(x){
@@ -326,7 +329,8 @@ dissolve_polygons <- function(mysf, group_column){
   temp_sf <- temp_sf %>% st_buffer(0)
 
   # b) make sure we have sf MULTIPOLYGON
-  temp_sf1 <- temp_sf %>% st_cast("MULTIPOLYGON")
+  #temp_sf1 <- temp_sf %>% st_cast("MULTIPOLYGON")
+  temp_sf1 <- to_multipolygon(temp_sf)
 
   # c) long but complete dissolve function
   dissolvefun <- function(grp){

@@ -15,11 +15,17 @@ library(magrittr)
 library(devtools)
 library(lwgeom)
 library(stringi)
+library(furrr)
+library(future)
 
 ####### Load Support functions to use in the preprocessing of the data
 
 source("./prep_data/prep_functions.R")
 
+
+# Set a root directory
+root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios"
+setwd(root_dir)
 
 
 
@@ -42,48 +48,56 @@ source("./prep_data/prep_functions.R")
 
 # setores 2019
 ftp4 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2019/Malha_de_setores_(shp)_por_UFs/"
-  
+
 # setores 2020
 ftp5 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2020/Malha_de_setores_(shp)_por_UFs/"
-  
-  
+
+
 # lista de ftp de 2010,2019 e 2020
-ftplist <- C(ftp, ftp4, ftp5)
+ftplist <- c(ftp, ftp4, ftp5)
+ftplist <- c(ftp4, ftp5)
 
 for (ftp1 in ftplist){ # ftp1 <- FTPLIST[3]
-  
-  ### setor censitario censo 2010
+
+ # year directory
+  if(ftp1 == ftp) { year_dir <- 2010}
+  if(ftp1 %in% c(ftp2, ftp3)) { year_dir <- 2010}
+  if(ftp1 ==ftp4) { year_dir <- 2019}
+  if(ftp1 ==ftp5) { year_dir <- 2020}
+
+  dir.create( paste0('./', year_dir),showWarnings = F )
+
+  ### setor censitario censo
   filenames = getURL(ftp1, ftp.use.epsv = FALSE, dirlistonly = TRUE)
   filenames <- strsplit(filenames, "\r\n")
   filenames = unlist(filenames)
   filenames <- filenames[!grepl('leia_me', filenames)]
-  
+
   # filesurl<-paste(ftp, filenames[9],"/", sep = "")
   # filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
   # filesurl<-strsplit(filesurl, "\r\n")
   # filesurl<-unlist(filesurl)
-  
+
   #fazendo download dos dados zipados
   for (filename in filenames) {
     filesurl<-paste(ftp1, filename,"/", sep = "")
     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
     filesurl<-strsplit(filesurl, "\r\n")
     filesurl<-unlist(filesurl)
-    
-    dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2010/",filename)
-    fileyear <- regmatches(ftplist, gregexpr("[0-9]+",ftplist))
+
+    fileyear <- regmatches(filesurl, gregexpr("[0-9]+",filesurl))
     fileyear <- unlist(fileyear)
-    dir.fonte <- paste0("./setores_censitarios/",fileyear,"/",filename)
-    
+    dir.fonte <- paste0("./",fileyear,"/",filename)
+
     for (fonte in dir.fonte){ # fonte <- dir.fonte[1]
-      dir.create(fonte,recursive = T)
-      
+      dir.create(fonte, recursive = T)
+
       for (files in filesurl){ # files <- filesurl[1]
         download.file(paste(ftp1, filename,"/", files, sep = ""),paste(fonte,"/",files, sep = ""))
       }
     }
   }
-} 
+}
 
 
 ### setor censitario rural censo 2000
@@ -149,86 +163,20 @@ for (filename in difflies) {
 
 ########  1. Unzip original data sets downloaded from IBGE -----------------
 
-# Root directory
-root_dir <- "//Storage6/usuarios/# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios"
-setwd(root_dir)
-
-
 # list all zipped files
   all_zipped_files <- list.files(pattern = ".zip", recursive = T, full.names = T)
-  all_zipped_files <- all_zipped_files[all_zipped_files %like% "_censitarios"]
+  all_zipped_files <- all_zipped_files[all_zipped_files %like% "setores|Setores"]
 
-  teste_zip<-unlist(all_zipped_files)
 
-# all_zipped_files <- list()
-#
-# # setor censitario rural censo 2010
-#   filenames = getURL(ftp, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-#   filenames <- strsplit(filenames, "\r\n")
-#   filenames = unlist(filenames)
-#   filenames <- filenames[!grepl('leia_me', filenames)]
-#
-#   for (filename in filenames) { # filename <- filenames[2]
-#
-#     filesurl<-paste(ftp, filename,"/", sep = "")
-#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-#     filesurl<-strsplit(filesurl, "\r\n")
-#     filesurl<-unlist(filesurl)
-#
-#   # incluir Goias
-#   all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_censitarios.zip"))
-#   }
-#
-#
-# # setor censitario rural censo 2000 rural
-#   filenames = getURL(ftp2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-#   filenames <- strsplit(filenames, "\r\n")
-#   filenames = unlist(filenames)
-#   filenames <- filenames[!grepl('leia_me', filenames)]
-#
-#
-#   for (filename in filenames) {
-#
-#     filesurl<-paste(ftp2, filename,"/", sep = "")
-#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-#     filesurl<-strsplit(filesurl, "\r\n")
-#     filesurl<-unlist(filesurl)
-#
-#     dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Rural/",filename)
-#
-#     all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = "_setores_censitarios.zip"))
-#   }
-#
-#
-# # setor censitario rural censo 2000 urbano
-#   filenames = getURL(ftp3, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-#   filenames <- strsplit(filenames, "\r\n")
-#   filenames = unlist(filenames)
-#   filenames <- filenames[!grepl('leia_me', filenames)]
-#
-#   filename <-filenames[1]
-#
-#   for (filename in filenames) {
-#
-#     filesurl<-paste(ftp3, filename,"/", sep = "")
-#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-#     filesurl<-strsplit(filesurl, "\r\n")
-#     filesurl<-unlist(filesurl)
-#
-#     dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/",filename)
-#
-#     all_zipped_files <- c(all_zipped_files,list.files(dir.fonte,full.names = T, recursive = T, pattern = ".zip"))
-#   }
-
+  # select years to unzip
+  all_zipped_files <- all_zipped_files[ all_zipped_files %like% '2019|2020' ]
 
 
 
 
 # function to Unzip files in their original sub-dir
-unzip_fun <- function(f){
-# f <- teste_zip[73]
-# f <- teste_zip[80]
-# f <- teste_zip[46]
+unzip_fun <- function(f){ # f <- all_zipped_files[10]
+                          # f <- all_zipped_files[54]
 
   if (grepl("Rural|Urbano",f)) {
     zip_path <- unlist(stringr::str_split(f,"/"))
@@ -270,22 +218,13 @@ unzip_fun <- function(f){
       # rename files
       file.rename(files,files_new)
     }
-
-
-
-
 }
 
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-parallel::clusterExport(cl=cl, varlist= c("teste_zip", "root_dir"), envir=environment())
 
 # apply function in parallel
-parallel::parLapply(cl, teste_zip, unzip_fun)
-stopCluster(cl)
+future::plan(strategy = 'multisession')
+furrr::future_map(.x=all_zipped_files, .f=unzip_fun, .progress = T)
 
-
-rm(list=setdiff(ls(), c("root_dir","teste_zip")))
 gc(reset = T)
 
 
@@ -294,24 +233,9 @@ gc(reset = T)
 
 #### 2. Create folders to save sf.rds files  -----------------
 
-
-# Root directory
-root_dir <- "//Storage6/usuarios/# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios"
-setwd(root_dir)
-sub_dirs <- list.dirs(path =root_dir, recursive = F)
-
-
-# get all years in the directory
-last4 <- function(x){substr(x, nchar(x)-3, nchar(x))}   # function to get the last 4 digits of a string
-years <- lapply(sub_dirs, last4)
-years <-  unlist(years)
-years <-gsub("[^0-9]",NA,years)
-years <-years[!is.na(years)]
-
 # create directory to save original and clean shape files in sf format
   dir.create(file.path("shapes_in_sf_all_years_original"), showWarnings = FALSE)
   dir.create(file.path("shapes_in_sf_all_years_cleaned"), showWarnings = FALSE)
-
 
 # year 2000
   dir.create(file.path("shapes_in_sf_all_years_original", "2000"), showWarnings = FALSE)
@@ -322,12 +246,12 @@ years <-years[!is.na(years)]
   dir.create(file.path("shapes_in_sf_all_years_cleaned/2000", "Rural"), showWarnings = FALSE)
   dir.create(file.path("shapes_in_sf_all_years_cleaned/2000", "Urbano"), showWarnings = FALSE)
 
-  # year 2010
-  dir.create(file.path("shapes_in_sf_all_years_original", "2010"), showWarnings = FALSE)
+# year 2010 onwards
+  for (i in c(2010, 2019, 2020)){
+    dir.create(file.path("shapes_in_sf_all_years_original", i), showWarnings = FALSE)
+    dir.create(file.path("shapes_in_sf_all_years_cleaned", i), showWarnings = FALSE)
+  }
 
-
-rm(list= ls())
-gc(reset = T)
 
 
 
@@ -336,28 +260,28 @@ gc(reset = T)
 
 #### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
 
-# Root directory
-root_dir <- "//Storage6/usuarios/# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios"
-setwd(root_dir)
-
 # List shapes for all years
 all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp|.SHP")
 head(all_shapes)
 
+# select years save
+all_shapes <- all_shapes[ all_shapes %like% '2019|2020' ]
+# all_shapes <- all_shapes[ all_shapes %nlike% '2000' ]
+
+
+
+# function to save original files in rds
 shp_to_sf_rds <- function(x){
 
-  # x <- all_shapes[1]
+  # x <- all_shapes[30]
 
   # get corresponding year of the file
   year <- unlist(stringr::str_split(x,"/"))
   year <- head(year , n=2)
   year <- tail(year , n=1)
-  year <-gsub("[^0-9]","",year)
-  year <-year[!is.na(year)]
+  year <- gsub("[^0-9]","",year)
+  year <- year[!is.na(year)]
 
-
-  # select file
-  # x <- all_shapes[all_shapes %like% 2000][3]
 
 
   # Encoding for different years
@@ -365,11 +289,11 @@ shp_to_sf_rds <- function(x){
     shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=IBM437")
   }
 
-  if (year %like% "2001|2005|2007|2010|2019|2020"){
+  if (year %like% "2001|2005|2007|2010"){
     shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
   }
 
-  if (year %like% "2013|2014|2015|2016|2017|2018"){
+  if (year %like% "2013|2014|2015|2016|2017|2018|2019|2020"){
     shape <- st_read(x, quiet = T, stringsAsFactors=F, options = "ENCODING=UTF8")
   }
 
@@ -386,28 +310,18 @@ shp_to_sf_rds <- function(x){
     substr(tail(unlist(stringr::str_split(x,"/")),n=1), 0, (nchar(tail(unlist(stringr::str_split(x,"/")),n=1))-4) )), ".rds") }
   if( year %like% "2000" & last30(x) %like% "Rural"){ file_name <- paste0(toupper(
     substr(tail(unlist(stringr::str_split(x,"/")),n=1),0,2)), ".rds") }
-  if( year %like% "2010"){ file_name <- paste0( toupper(
+  if( year %like% "2010|2019|2020"){ file_name <- paste0( toupper(
     substr(tail(unlist(stringr::str_split(x,"/")),n=1),0,2)), ".rds") }
 
   # save in .rds
-  write_rds(shape, path = paste0(dest_dir,"/", file_name), compress="gz" )
+  readr::write_rds(shape, file = paste0(dest_dir,"/", file_name), compress="gz" )
 }
 
 
-# Apply function to save original data sets in rds format
-
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-
-clusterEvalQ(cl, c(library(data.table), library(readr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("all_shapes"), envir=environment())
-
-# apply function in parallel
-parallel::parLapply(cl, all_shapes, shp_to_sf_rds)
-stopCluster(cl)
-
-rm(list= ls())
-gc(reset = T)
+# apply function in parallel to save original data sets in rds format
+future::plan(strategy = 'multisession')
+furrr::future_map(.x=all_shapes, .f=shp_to_sf_rds, .progress = T)
+gc(reset = T, full = T)
 
 
 
@@ -418,12 +332,13 @@ gc(reset = T)
 
 ###### 4. Cleaning files --------------------------------
 
-SC_dir <- "//Storage6/usuarios/# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_original/"
-setwd(SC_dir)
-
 # list all .rds files
-  all_shapes <- list.files(full.names = T, recursive = T, pattern = ".rds")
+  all_rds <- list.files(path = "./shapes_in_sf_all_years_original/",
+                           full.names = T, recursive = T, pattern = ".rds")
 
+# select years to process
+all_rds <- all_rds[ all_rds %like% '2019|2020' ]
+# all_rds <- all_rds[ all_rds %nlike% '2000' ]
 
 
 
@@ -432,11 +347,11 @@ clean_tracts <- function( sf_file ){
 
   # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Urbano"]
   # sf_file <- all_shapes[all_shapes %like% "2010"]
-
-  # sf_file <- sf_file[2]
+  # sf_file <- all_shapes[28]
 
   # read sf file
-    temp_sf <- read_rds(sf_file, quiet = T)
+    temp_sf <- read_rds(sf_file)
+    names(temp_sf) <- names(temp_sf) %>% tolower()
 
 
   # get year of the file
@@ -448,14 +363,10 @@ clean_tracts <- function( sf_file ){
     if( sf_file %like% "/2019/" ){ year <- 2019}
     if( sf_file %like% "/2020/" ){ year <- 2020}
 
+
   # rural tracts of year 2000
     if ((year %like% "2000") & (sf_file %like% "Rural")){
 
-      # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Rural"]
-      # sf_file <- sf_file[2]
-      # temp_sf <- read_rds(sf_file)
-
-      names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- temp_sf %>% mutate(code_state=substr(geocodigo,1,2),code_muni=substr(geocodigo,1,7))
       temp_sf <- dplyr::rename(temp_sf, code_tract = geocodigo, zone = situacao)
       temp_sf <- dplyr::select(temp_sf, c('code_tract', 'zone', 'code_muni', 'code_state', 'geometry'))
@@ -465,11 +376,6 @@ clean_tracts <- function( sf_file ){
   # Urban tracts of year 2000
     if ((year %like% "2000") & (sf_file %like% "Urbano")){
 
-      # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Urbano"]
-      # sf_file <- sf_file[2]
-      # temp_sf <- read_rds(sf_file)
-
-        names(temp_sf) <- names(temp_sf) %>% tolower()
         temp_sf <- temp_sf %>% mutate(code_state=substr(id_,1,2),code_muni=substr(id_,1,7))
         temp_sf <- dplyr::rename(temp_sf, code_tract = id_)
         temp_sf <- dplyr::select(temp_sf, c('code_tract', 'code_muni', 'code_state', 'geometry'))
@@ -493,52 +399,9 @@ clean_tracts <- function( sf_file ){
   # Tracts of year 2010
     if (year %like% "2010"){
 
-      # sf_file <- all_shapes[all_shapes %like% "2010"]
-      # sf_file <- sf_file[2]
-      # temp_sf <- read_rds(sf_file)
-
       # rename columns
-      names(temp_sf) <- names(temp_sf) %>% tolower()
       temp_sf <- temp_sf %>% mutate(code_state=substr(cd_geocodm,1,2))
-      temp_sf <- dplyr::rename(temp_sf,
-                               code_tract = cd_geocodi,
-                               zone = tipo,
-                               code_muni = cd_geocodm,
-                               name_muni = nm_municip,
-                               name_neighborhood=nm_bairro,
-                               code_neighborhood=cd_geocodb,
-                               code_subdistrict=cd_geocods,
-                               name_subdistrict=nm_subdist,
-                               code_district=cd_geocodd,
-                               name_district=nm_distrit)
-      # filter columns
       temp_sf <- dplyr::select(temp_sf,
-                               'code_tract',
-                               'zone',
-                               'code_muni',
-                               'name_muni',
-                               'name_neighborhood',
-                               'code_neighborhood',
-                               'code_subdistrict',
-                               'name_subdistrict',
-                               'code_district',
-                               'name_district',
-                               'code_state',
-                               'geometry')
-    }
-    
-    
-    # Tracts of year 2019 or 2020
-    if (year %like% "2019|2020"){
-      
-      # sf_file <- all_shapes[all_shapes %like% "2010"]
-      # sf_file <- sf_file[2]
-      # temp_sf <- read_rds(sf_file)
-      
-      # rename columns
-      names(temp_sf) <- names(temp_sf) %>% tolower()
-      temp_sf <- temp_sf %>% mutate(code_state=substr(cd_geocodm,1,2))
-      temp_sf <- dplyr::rename(temp_sf,
                                code_tract = cd_geocodi,
                                zone = tipo,
                                code_muni = cd_geocodm,
@@ -549,93 +412,79 @@ clean_tracts <- function( sf_file ){
                                name_subdistrict=nm_subdist,
                                code_district=cd_geocodd,
                                name_district=nm_distrit,
-                               name_micro=nm_micro,
-                               name_meso=nm_meso)
-      # filter columns
-      temp_sf <- dplyr::select(temp_sf,
-                               'code_tract',
-                               'zone',
-                               'code_muni',
-                               'name_muni',
-                               'code_state',
-                               'name_neighborhood',
-                               'code_neighborhood',
-                               'code_subdistrict',
-                               'name_subdistrict',
-                               'code_district',
-                               'name_district',
-                               'code_state',
-                               'name_micro',
-                               'name_meso',
-                               'geometry')
-      
+                               code_state,
+                               geometry)
+
     }
 
 
-    # Adjust string columns
-      cols.names <- grep("name",names(temp_sf),value = T)
+    # Tracts of year 2019 or 2020
+    if (year %like% "2019|2020"){
 
-      for (col in cols.names){
+      # rename columns
+      temp_sf <- dplyr::select(temp_sf,
+                               code_tract = cd_setor,
+                               zone = nm_sit,
+                               code_muni = cd_mun,
+                               name_muni = nm_mun,
+                               code_subdistrict=cd_subdist,
+                               name_subdistrict=nm_subdist,
+                               code_district=cd_dist,
+                               name_district=nm_dist,
+                               code_state=cd_uf,
+                               abbrev_state=sigla_uf,
+                               name_state=nm_uf,
+                               geometry )
 
-        # Use UTF-8 encoding
-        temp_sf[[col]] <- stringi::stri_encode(as.character((temp_sf[[col]]), "UTF-8"))
 
-        # Capitalize the first letter
-        temp_sf[[col]] <- stringr::str_to_title(temp_sf[[col]])
+    }
 
-      }
+
+    # Use UTF-8 encoding
+    temp_sf <- use_encoding_utf8(temp_sf)
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
       temp_sf <- harmonize_projection(temp_sf)
       # mapview::mapview(temp_sf)
 
-    # Convert columns from factors to characters
-      temp_sf %>% dplyr::mutate_if(is.factor, as.character) -> temp_sf
-
     # Make an invalid geometry valid # st_is_valid( sf)
-      temp_sf <- lwgeom::st_make_valid(temp_sf)
+    temp_sf <- sf::st_make_valid(temp_sf)
 
-      ###### convert to MULTIPOLYGON
-      temp_sf <- to_multipolygon(temp_sf)
 
-    # keep code as.numeric()
-      #temp_sf %>% dplyr::mutate_at(vars(matches("code_")), funs(as.numeric))
-      temp_sf$code_state <- as.numeric(temp_sf$code_state)
-      temp_sf$code_muni <- as.numeric(temp_sf$code_muni)
+    # simplify
+    temp_sf_simplified <- simplify_temp_sf(temp_sf)
+
+    # convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+    temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
 
 
   # Determine directory to save cleaned sf
-      if( sf_file %like% "/2010/"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2010//" }
-      if( sf_file %like% "2000/Urbano"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//" }
-      if( sf_file %like% "2000/Rural"){ dest_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Rural//" }
-      if( sf_file %like% "/2019/"){ dest_dir <- "C://Users//Babis//Documents//IPEA//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2019//" }
-      if( sf_file %like% "/2020/"){ dest_dir <- "C://Users//Babis//Documents//IPEA//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2020//" }
-      
+      if( sf_file %like% "/2010/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2010//" }
+      if( sf_file %like% "2000/Urbano"){ dest_dir <-"./shapes_in_sf_all_years_cleaned//2000//Urbano//" }
+      if( sf_file %like% "2000/Rural"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2000//Rural//" }
+      if( sf_file %like% "/2019/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2019//" }
+      if( sf_file %like% "/2020/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2020//" }
+
 
   # name of the file that will be saved (the whole string between './' and '.rds')
     file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
 
   # Save cleaned sf in the cleaned directory
-    write_rds(temp_sf, path = paste0(dest_dir, file_name,".rds"), compress="gz" )
+    sf::st_write(temp_sf, paste0(dest_dir, file_name,".gpkg") )
+    sf::st_write(temp_sf_simplified, paste0(dest_dir, file_name,"_simplified.gpkg"),)
 
 }
 
 
 
-# Apply function to save original data sets in rds format
-
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-
-clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("all_shapes"), envir=environment())
-
-# apply function in parallel
-parallel::parLapply(cl, all_shapes, clean_tracts)
-stopCluster(cl)
-
-rm(list= ls())
+# Apply function to save the data
 gc(reset = T)
+future::plan(strategy = 'multisession')
+furrr::future_map(.x=all_rds, .f=clean_tracts, .progress = T)
+gc(reset = T, full = T)
+
+
 
 
 

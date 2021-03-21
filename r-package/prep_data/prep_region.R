@@ -46,54 +46,17 @@ prep_region <- function(year){
   temp_sf <- sf::st_make_valid(sf_states)
   temp_sf <- temp_sf %>% st_buffer(0)
 
-  sf_states1 <- temp_sf %>% st_cast("MULTIPOLYGON")
-
-## Func to clean and dissolve each region
-dissolve_each_region <- function(region_code){
-
-    # subset region
-    tem_region <- subset(sf_states1, code_region == region_code )
+  sf_states1 <- to_multipolygon(temp_sf)
 
 
-    # c) create attribute with the number of points each polygon has
-    points_in_each_polygon = sapply(1:dim(tem_region)[1], function(i)
-      length(st_coordinates(tem_region$geom[i])))
+## Dissolve each region
+all_regions <- dissolve_polygons(mysf=temp_sf, group_column='code_region')
 
-    tem_region$points_in_each_polygon <- points_in_each_polygon
-    mypols <- subset(tem_region, points_in_each_polygon > 0)
-
-    # d) convert to sp
-    sf_regiona <- mypols %>% as("Spatial")
-    sf_regiona <- rgeos::gBuffer(sf_regiona, byid=TRUE, width=0) # correct eventual topology issues
-
-    # c) dissolve borders to create country file
-    result <- maptools::unionSpatialPolygons(sf_regiona, rep(TRUE, nrow(sf_regiona@data))) # dissolve
-
-
-    # d) get rid of holes
-    outerRings = Filter(function(f){f@ringDir==1},result@polygons[[1]]@Polygons)
-    outerBounds = SpatialPolygons(list(Polygons(outerRings,ID=1)))
-
-    # e) convert back to sf data
-    outerBounds <- st_as_sf(outerBounds)
-    outerBounds <- st_set_crs(outerBounds, original_crs)
-    st_crs(outerBounds) <- 4674
-
-    # retrieve code_region info
-    outerBounds$code_region <- region_code
-
-    return(outerBounds)
-    }
-
-all_regions <- lapply(unique(sf_states1$code_region), dissolve_each_region)
-all_regions <- do.call('rbind', all_regions)
 
 ### add region names
 all_regions <- add_region_info(temp_sf = all_regions, column = 'code_region')
 all_regions <- select(all_regions, c('code_region', 'name_region', 'geometry'))
 
-###### convert to MULTIPOLYGON
-all_regions <- to_multipolygon(all_regions)
 
 
 
@@ -103,6 +66,9 @@ all_regions <- to_multipolygon(all_regions)
   # simplify
   temp_sf7 <- simplify_temp_sf(all_regions)
 
+###### convert to MULTIPOLYGON
+all_regions <- to_multipolygon(all_regions)
+temp_sf7 <- to_multipolygon(temp_sf7)
 
   # Save cleaned sf in the cleaned directory
   sf::st_write(all_regions, dsn= paste0(destdir,"/regions_",y,".gpkg"))
@@ -114,6 +80,8 @@ all_regions <- to_multipolygon(all_regions)
 
 # Aplica para diferentes anos
 my_years <- c(2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018)
+
+prep_region(2020)
 
 # Parallel processing using future.apply
 future::plan(future::multiprocess)
