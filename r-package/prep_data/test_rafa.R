@@ -338,6 +338,8 @@ urlchecker::url_update()
 
 ### CMD Check ----------------
 # Check package errors
+rcmdcheck::rcmdcheck(build_args = c('--compact-vignettes=gs+qpdf'))
+
 
 # LOCAL
 Sys.setenv(NOT_CRAN = "true")
