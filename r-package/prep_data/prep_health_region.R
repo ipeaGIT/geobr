@@ -37,6 +37,8 @@ library(maptools)
 # original data source
 ftp://ftp.datasus.gov.br/territorio/mapas/
 
+
+
 ####### Load Support functions to use in the preprocessing of the data -----------------
 source("./prep_data/prep_functions.R")
 
@@ -67,9 +69,12 @@ dir.create("./shapes_in_sf_cleaned")
 years_available <- c(1991, 1994, 1997, 2001, 2005, 2013)
 
 lapply(X=years_available, FUN= function(i){
-  destdir_clean <- paste0("./shapes_in_sf_cleaned/",i)
-  dir.create( destdir_clean , showWarnings = FALSE)}
-       )
+                                destdir_clean1 <- paste0("./gpkg_cleaned_healthregion/",i)
+                                destdir_clean2 <- paste0("./gpkg_cleaned_macro/",i)
+                                dir.create( destdir_clean1 , showWarnings = FALSE, recursive = T)
+                                dir.create( destdir_clean2 , showWarnings = FALSE, recursive = T)
+                                }
+                              )
 
 
 
@@ -81,7 +86,7 @@ lapply(X=years_available, FUN= function(i){
 
 ###### 1.1. Unzip data files if necessary -----------------
 
-zip_files <- list.files('./raw_data', pattern = '.zip', full.names = T)
+zip_files <- list.files('./raw_data/', pattern = '.zip', full.names = T, recursive = T)
 
 
 
@@ -163,12 +168,18 @@ basic_read_map = function(filename){
 
 
 ##### START prep function ------------------------
-prep_map <- function(i){ # i <- map_files[5]
+prep_map <- function(i){ # i <- map_files[12]
 
   message(paste0('working on', i))
+
 # get year and state
   year <- substr(i, 24,27)
   state <- substr(i, 29,30) %>% toupper()
+
+# dest dir
+ if( i %like% 'regsaud.MAP' ){ destdir <- "./gpkg_cleaned_healthregion/" }
+ if( i %like% 'macsaud.MAP' ){ destdir <- "./gpkg_cleaned_macro/" }
+
 
 
 # part1 - get names of regions --------------------------------------
@@ -182,6 +193,8 @@ oo <- maptools:::.makePolylistValid(o)
 ooo <- maptools:::.polylist2SpP(oo, tol=.Machine$double.eps^(1/4))
 #rn <- row.names(ooo)
 
+
+
 df <- data.frame(code_health_region=code_health_region, row.names=code_health_region, name_health_region=name_health_region, stringsAsFactors=FALSE)
 res <- SpatialPolygonsDataFrame(ooo, data=df)
 
@@ -191,6 +204,7 @@ slot(res, "polygons") <- lapply(slot(res, "polygons"), checkPolygonsHoles)
 # convert to sf
 temp_sf <- st_as_sf(res)
 # plot(temp_sf)
+# head(temp_sf)
 
 # fix row names
 rownames(temp_sf) <- 1:nrow(temp_sf)
@@ -199,13 +213,24 @@ rownames(temp_sf) <- 1:nrow(temp_sf)
         # names(temp_sf)[1:2] <- c('code_health_region','name_health_region')
 
 # Add state and region information
- #temp_sf <- add_region_info(temp_sf, column='code_health_region')
- temp_sf <- add_state_info(temp_sf, column='code_health_region')
+options(encoding = "UTF-8")
+temp_sf <- add_state_info(temp_sf, column='code_health_region')
+
 
 # reorder columns
- temp_sf <- dplyr::select(temp_sf,
-                           "code_health_region", "name_health_region",
-                           "code_state", "abbrev_state", "name_state", 'geometry')
+ if (i %like% 'regsaud.MAP') {
+   temp_sf <- dplyr::select(temp_sf,
+                            "code_health_region", "name_health_region",
+                            "code_state", "abbrev_state", "name_state", 'geometry')
+                             }
+
+ if (i %like% 'macsaud.MAP') {
+   temp_sf <- dplyr::select(temp_sf,
+                            "code_health_marcroregion" = code_health_region,
+                            "name_health_macroregion" = name_health_region,
+                            "code_state", "abbrev_state", "name_state", 'geometry')
+                             }
+
 
 
 # 4. every string column with UTF-8 encoding -----------------
@@ -213,7 +238,10 @@ rownames(temp_sf) <- 1:nrow(temp_sf)
  # convert all factor columns to character
  temp_sf <- use_encoding_utf8(temp_sf)
 
- ###### Harmonize spatial projection -----------------
+
+
+
+###### Harmonize spatial projection -----------------
 
  # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
  temp_sf <- harmonize_projection(temp_sf)
@@ -225,35 +253,28 @@ rownames(temp_sf) <- 1:nrow(temp_sf)
  head(temp_sf)
 
 
- ###### 6. fix eventual topology issues in the data-----------------
- temp_sf <- sf::st_make_valid(temp_sf)
-
-
- ###### convert to MULTIPOLYGON -----------------
- temp_sf <- to_multipolygon(temp_sf)
-
- ###### 7. generate a lighter version of the dataset with simplified borders -----------------
- # skip this step if the dataset is made of points, regular spatial grids or rater data
-
  # simplify
  temp_sf_simplified <- simplify_temp_sf(temp_sf)
+
+ # convert to MULTIPOLYGON
+ temp_sf <- to_multipolygon(temp_sf)
+ temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
+
 
 
  ###### 8. Clean data set and save it -----------------
 
  # save original and simplified datasets
- sf::st_write(temp_sf,  paste0("./shapes_in_sf_cleaned/", year,"/", state,".gpkg") )
- sf::st_write(temp_sf_simplified,paste0("./shapes_in_sf_cleaned/", year,"/", state,"_simplified.gpkg") )
+ sf::st_write(temp_sf,  paste0( destdir,"/", year, "/", state,".gpkg") )
+ sf::st_write(temp_sf_simplified, paste0( destdir, year,"/", state,"_simplified.gpkg") )
 
 }
 
 
 ##### Aplica para diferentes anos ------------------------
 
-
-
 # list address of original files
-map_files <- list.files('./raw_data', pattern = 'br_regsaud.MAP', full.names = T, recursive = T)
+map_files <- list.files('./raw_data', pattern = 'br_regsaud.MAP|br_macsaud.MAP', full.names = T, recursive = T)
 
 
   # # regioes de cada estado
@@ -261,14 +282,13 @@ map_files <- list.files('./raw_data', pattern = 'br_regsaud.MAP', full.names = T
 
 
 # Parallel processing using future.apply
-future::plan(future::multiprocess)
-future.apply::future_lapply(X =map_files[c(1,150)], FUN=prep_map)
+future::plan(future::multisession)
+furrr::future_map(.x=map_files, .f = prep_map, .progress = T)
+
 
 
 pbapply::pblapply(map_files, prep_map)
 
-
-prep_map(map_files[1])
 
 
 a <-  st_read("./shapes_in_sf_cleaned/1991/BR.gpkg")

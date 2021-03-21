@@ -71,7 +71,7 @@
   table(metadata$geo)
   table(metadata$year)
 
-  subset(metadata, geo == 'amc')
+  subset(metadata, geo == 'health_region_macro')
   subset(metadata, geo == 'census_tract' & year==2020)
   subset(metadata, year==2020)
 
