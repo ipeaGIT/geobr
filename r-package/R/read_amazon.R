@@ -3,8 +3,7 @@
 #' @description
 #' This data set covers the whole of Brazil's Legal Amazon as defined in the
 #' federal law n. 12.651/2012). The original data comes from the Brazilian
-#' Ministry of Environment (MMA) and can be found at
-#' \url{http://mapas.mma.gov.br/i3geo/datadownload.htm}.
+#' Ministry of Environment (MMA) and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 #'
 #' @param year A date number in YYYY format. Defaults to `2012`
 #' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function

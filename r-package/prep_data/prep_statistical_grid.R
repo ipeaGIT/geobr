@@ -173,48 +173,51 @@ grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "A
                                   "Mato Grosso", "Mato Grosso", "Mato Grosso", "Mato Grosso", "Mato Grosso",
                                   "Mato Grosso", "Mato Grosso", "Mato Grosso", "Rondônia", "Rondônia",
                                   "Rondônia", "Rondônia", "Rondônia", "Rondônia"), code_state = c("AC",
-                                                                                              "AC", "AC", "AC", "AM", "AM", "AM", "AM", "AM", "AM", "AM", "AM",
-                                                                                              "AM", "AM", "AM", "AM", "RR", "RR", "RR", "RR", "RR", "RR", "AP",
-                                                                                              "AP", "AP", "AP", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
-                                                                                              "PA", "PA", "PA", "PA", "PA", "MA", "MA", "MA", "MA", "MA", "MA",
-                                                                                              "MA", "PI", "PI", "PI", "PI", "PI", "PI", "CE", "CE", "CE", "RN",
-                                                                                              "RN", "PB", "PB", "PE", "PE", "PE", "PE", "PE", "AL", "AL", "SE",
-                                                                                              "SE", "BA", "BA", "BA", "BA", "BA", "ES", "ES", "ES", "RJ", "RJ",
-                                                                                              "RJ", "RJ", "SP", "SP", "SP", "SP", "SP", "PR", "PR", "SC", "SC",
-                                                                                              "SC", "SC", "RS", "RS", "RS", "RS", "MS", "MS", "MS", "MS", "MS",
-                                                                                              "MS", "MS", "MG", "MG", "MG", "MG", "MG", "MG", "MG", "MG", "GO",
-                                                                                              "GO", "GO", "GO", "GO", "GO", "GO", "DF", "TO", "TO", "TO", "TO",
-                                                                                              "TO", "MT", "MT", "MT", "MT", "MT", "MT", "MT", "MT", "MT", "MT",
-                                                                                              "RO", "RO", "RO", "RO", "RO", "RO"), code_grid = c("ID_50", "ID_51",
-                                                                                                                                                "ID_60", "ID_61", "ID_51", "ID_60", "ID_61", "ID_62", "ID_63",
-                                                                                                                                                "ID_70", "ID_71", "ID_72", "ID_73", "ID_80", "ID_81", "ID_82",
-                                                                                                                                                "ID_72", "ID_81", "ID_82", "ID_83", "ID_92", "ID_93", "ID_74",
-                                                                                                                                                "ID_75", "ID_84", "ID_85", "ID_53", "ID_54", "ID_55", "ID_63",
-                                                                                                                                                "ID_64", "ID_65", "ID_73", "ID_74", "ID_75", "ID_76", "ID_83",
-                                                                                                                                                "ID_84", "ID_85", "ID_55", "ID_56", "ID_65", "ID_66", "ID_75",
-                                                                                                                                                "ID_76", "ID_77", "ID_56", "ID_57", "ID_66", "ID_67", "ID_76",
-                                                                                                                                                "ID_77", "ID_67", "ID_68", "ID_77", "ID_67", "ID_68", "ID_67",
-                                                                                                                                                "ID_68", "ID_57", "ID_58", "ID_67", "ID_68", "ID_69", "ID_57",
-                                                                                                                                                "ID_58", "ID_57", "ID_58", "ID_37", "ID_46", "ID_47", "ID_56",
-                                                                                                                                                "ID_57", "ID_36", "ID_37", "ID_39", "ID_26", "ID_27", "ID_36",
-                                                                                                                                                "ID_37", "ID_24", "ID_25", "ID_26", "ID_34", "ID_35", "ID_24",
-                                                                                                                                                "ID_25", "ID_14", "ID_15", "ID_24", "ID_25", "ID_4", "ID_13",
-                                                                                                                                                "ID_14", "ID_15", "ID_23", "ID_24", "ID_33", "ID_34", "ID_35",
-                                                                                                                                                "ID_43", "ID_44", "ID_25", "ID_26", "ID_35", "ID_36", "ID_37",
-                                                                                                                                           "ID_45", "ID_46", "ID_47", "ID_34", "ID_35", "ID_44", "ID_45",
-                                                                                                                                                "ID_46", "ID_55", "ID_56", "ID_45", "ID_45", "ID_55", "ID_56",
-                                                                                                                                                "ID_65", "ID_66", "ID_33", "ID_34", "ID_43", "ID_44", "ID_45",
-                                                                                                                                                "ID_52", "ID_53", "ID_54", "ID_55", "ID_63", "ID_42", "ID_43",
-                                                                                                                                                "ID_51", "ID_52", "ID_53", "ID_62")), .Names = c("name_uf", "code_state",
-                                                                                                                                                                                                 "code_grid"), row.names = c(NA, -139L), class = "data.frame")
+"AC", "AC", "AC", "AM", "AM", "AM", "AM", "AM", "AM", "AM", "AM",
+"AM", "AM", "AM", "AM", "RR", "RR", "RR", "RR", "RR", "RR", "AP",
+"AP", "AP", "AP", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+"PA", "PA", "PA", "PA", "PA", "MA", "MA", "MA", "MA", "MA", "MA",
+"MA", "PI", "PI", "PI", "PI", "PI", "PI", "CE", "CE", "CE", "RN",
+"RN", "PB", "PB", "PE", "PE", "PE", "PE", "PE", "AL", "AL", "SE",
+"SE", "BA", "BA", "BA", "BA", "BA", "ES", "ES", "ES", "RJ", "RJ",
+"RJ", "RJ", "SP", "SP", "SP", "SP", "SP", "PR", "PR", "SC", "SC",
+"SC", "SC", "RS", "RS", "RS", "RS", "MS", "MS", "MS", "MS", "MS",
+"MS", "MS", "MG", "MG", "MG", "MG", "MG", "MG", "MG", "MG", "GO",
+"GO", "GO", "GO", "GO", "GO", "GO", "DF", "TO", "TO", "TO", "TO",
+"TO", "MT", "MT", "MT", "MT", "MT", "MT", "MT", "MT", "MT", "MT",
+"RO", "RO", "RO", "RO", "RO", "RO"), code_grid = c("ID_50", "ID_51",
+"ID_60", "ID_61", "ID_51", "ID_60", "ID_61", "ID_62", "ID_63",
+"ID_70", "ID_71", "ID_72", "ID_73", "ID_80", "ID_81", "ID_82",
+"ID_72", "ID_81", "ID_82", "ID_83", "ID_92", "ID_93", "ID_74",
+"ID_75", "ID_84", "ID_85", "ID_53", "ID_54", "ID_55", "ID_63",
+"ID_64", "ID_65", "ID_73", "ID_74", "ID_75", "ID_76", "ID_83",
+"ID_84", "ID_85", "ID_55", "ID_56", "ID_65", "ID_66", "ID_75",
+"ID_76", "ID_77", "ID_56", "ID_57", "ID_66", "ID_67", "ID_76",
+"ID_77", "ID_67", "ID_68", "ID_77", "ID_67", "ID_68", "ID_67",
+"ID_68", "ID_57", "ID_58", "ID_67", "ID_68", "ID_69", "ID_57",
+"ID_58", "ID_57", "ID_58", "ID_37", "ID_46", "ID_47", "ID_56",
+"ID_57", "ID_36", "ID_37", "ID_39", "ID_26", "ID_27", "ID_36",
+"ID_37", "ID_24", "ID_25", "ID_26", "ID_34", "ID_35", "ID_24",
+"ID_25", "ID_14", "ID_15", "ID_24", "ID_25", "ID_4", "ID_13",
+"ID_14", "ID_15", "ID_23", "ID_24", "ID_33", "ID_34", "ID_35",
+"ID_43", "ID_44", "ID_25", "ID_26", "ID_35", "ID_36", "ID_37",
+"ID_45", "ID_46", "ID_47", "ID_34", "ID_35", "ID_44", "ID_45",
+"ID_46", "ID_55", "ID_56", "ID_45", "ID_45", "ID_55", "ID_56",
+"ID_65", "ID_66", "ID_33", "ID_34", "ID_43", "ID_44", "ID_45",
+"ID_52", "ID_53", "ID_54", "ID_55", "ID_63", "ID_42", "ID_43",
+"ID_51", "ID_52", "ID_53", "ID_62")), .Names = c("name_state", "abbrev_state",
+"code_grid"), row.names = c(NA, -139L), class = "data.frame")
 
 # Use UTF-8 encoding in all character columns
+  options(encoding = "UTF-8")
 
-  grid_state_correspondence_table <- use_encoding_utf8(grid_state_correspondence_table)
+  grid_state_correspondence_table <- grid_state_correspondence_table %>%
+    mutate_if(is.character, function(x){
+      x  %>% stringi::stri_encode(to="UTF-8") } )
 
 
 # sort data alphabetically
-grid_state_correspondence_table <- grid_state_correspondence_table[order(grid_state_correspondence_table$name_uf),]
+grid_state_correspondence_table <- grid_state_correspondence_table[order(grid_state_correspondence_table$name_state),]
 
 # save table
   save(grid_state_correspondence_table, file = "./data/grid_state_correspondence_table.RData", compress = T)

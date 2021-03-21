@@ -6,9 +6,21 @@
 
 ### New data sets/functions
 * New function `read_comparable_areas` to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17
+* New data set of macro regions og health, which can be accessed using the new `macro` parameter added to `read_health_region()` function. Closes issue #219.
+* updated data sets for 2020:
+  * Municipalities
+  * States
+  * Micro regions
+  * Meso regions
+  * Census tracts
 
+  
+  
+  
 ### Minor changes
 * Improved documentation considering `Roxygen: list(markdown = TRUE)`
+* fix column names of `grid_state_correspondence_table`
+* Improve warning message regarding connection to geobr server at Ipea
 
 
 -------------------------------------------------------
@@ -114,7 +126,7 @@
 -------------------------------------------------------
 # geobr v1.0 (2019-07-30)
 
-* Launch of **geobr** v1.0 on [CRAN](https://cran.r-project.org/web/packages/geobr/index.html) with the following data sets:
+* Launch of **geobr** v1.0 on [CRAN](https://CRAN.R-project.org/package=geobr) with the following data sets:
   * Country
   * States
   * Regions

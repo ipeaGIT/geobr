@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_state.R
 \name{read_state}
 \alias{read_state}
-\title{Download spatil data of Brazilian states}
+\title{Download spatial data of Brazilian states}
 \usage{
 read_state(
   code_state = "all",

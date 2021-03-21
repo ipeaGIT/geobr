@@ -2,18 +2,27 @@
 % Please edit documentation in R/read_health_region.R
 \name{read_health_region}
 \alias{read_health_region}
-\title{Download spatial data of Brazilian health regions}
+\title{Download spatial data of Brazilian health regions and health macro regions}
 \usage{
-read_health_region(year = 2013, simplified = TRUE, showProgress = TRUE)
+read_health_region(
+  year = 2013,
+  macro = FALSE,
+  simplified = TRUE,
+  showProgress = TRUE
+)
 }
 \arguments{
 \item{year}{Year of the data. Ddefaults to 2013, latest available.}
 
+\item{macro}{Logic. If \code{FALSE} (default), the function downloads health regions data.
+If \code{TRUE}, the function downloads macro regions data.}
+
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
-returns the data set with original' resolution or a data set with 'simplified'
-borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
-set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
-borders using \code{sf::st_simplify()} preserving topology with a \code{dTolerance} of 100.}
+returns the data set with original' resolution or a data set with
+'simplified' borders. Defaults to \code{TRUE}. For spatial analysis and
+statistics users should set \code{simplified = FALSE}. Borders have been
+simplified by removing vertices of borders using \code{sf::st_simplify()}
+preserving topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
 }
@@ -21,12 +30,16 @@ borders using \code{sf::st_simplify()} preserving topology with a \code{dToleran
 An \verb{"sf" "data.frame"} object
 }
 \description{
-Download spatial data of Brazilian health regions
+Health regions are used to guide the the regional and state planning of health services.
+Macro health regions, in particular, are used to guide the planning of high complexity
+health services. These services involve larger economics of scale and are concentrated in
+few municipalities because they are generally more technology intensive, costly and face
+shortages of specialized professionals. A macro region comprises one or more health regions.
 }
 \examples{
 \donttest{
 # Read all health regions for a given year
-hr <- read_health_region( year=2013)
+hr <- read_health_region( year=2013 )
 }
 }
 \seealso{
