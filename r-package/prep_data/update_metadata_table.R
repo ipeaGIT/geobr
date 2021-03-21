@@ -13,11 +13,11 @@
   geo=list.files("//storage1/geobr/data_gpkg")
 
   # populate the metadata table
-  for (a in geo) {    # a="setor_censitario"
+  for (a in geo) {    # a="census_tract"
     ano=list.files(paste("//storage1/geobr/data_gpkg",a,sep="/"))
     for (b in ano) { # b=2000
       estado=list.files(paste("//storage1/geobr/data_gpkg",a,b,sep="/"))
-      for (c in estado) { #c="Urbano"
+      for (c in estado) { #c="Urbano"   c= "AC.gpkg"
         if (c=="Urbano"|c=="Rural"){
           estado2=list.files(paste("//storage1/geobr/data_gpkg",a,b,c,sep="/"))
           for (d in estado2) { #d=estado2[1]

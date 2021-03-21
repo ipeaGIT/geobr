@@ -32,7 +32,7 @@ setwd(root_dir)
 # If the data set is updated regularly, you should create a function that will have
 # a `date` argument download the data
 
-# unecessary
+
 
 
 #### 0. Download original data sets from IBGE ftp -----------------
@@ -345,9 +345,10 @@ all_rds <- all_rds[ all_rds %like% '2019|2020' ]
 # create a function that will clean the sf files according to particularities of the data in each year
 clean_tracts <- function( sf_file ){
 
-  # sf_file <- all_shapes[all_shapes %like% "2000" & all_shapes %like% "Urbano"]
-  # sf_file <- all_shapes[all_shapes %like% "2010"]
-  # sf_file <- all_shapes[28]
+  message(paste0('\nworking on file ',sf_file , '\n'))
+  # sf_file <- all_rds[all_rds %like% "2000" & all_rds %like% "Urbano"]
+  # sf_file <- all_rds[all_rds %like% "2010"]
+  # sf_file <- all_rds[1]
 
   # read sf file
     temp_sf <- read_rds(sf_file)
@@ -450,6 +451,9 @@ clean_tracts <- function( sf_file ){
     # Make an invalid geometry valid # st_is_valid( sf)
     temp_sf <- sf::st_make_valid(temp_sf)
 
+    # remove lagoa dos patos no RS
+    temp_sf <- subset(temp_sf, !is.na(code_state))
+
 
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf)
@@ -460,15 +464,18 @@ clean_tracts <- function( sf_file ){
 
 
   # Determine directory to save cleaned sf
-      if( sf_file %like% "/2010/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2010//" }
       if( sf_file %like% "2000/Urbano"){ dest_dir <-"./shapes_in_sf_all_years_cleaned//2000//Urbano//" }
       if( sf_file %like% "2000/Rural"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2000//Rural//" }
-      if( sf_file %like% "/2019/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2019//" }
-      if( sf_file %like% "/2020/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2020//" }
+
+      if( sf_file %like% "2010|2019|2020"){ dest_dir <- paste0("./shapes_in_sf_all_years_cleaned//", year, "//") }
+      # if( sf_file %like% "/2010/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2010//" }
+      # if( sf_file %like% "/2019/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2019//" }
+      # if( sf_file %like% "/2020/"){ dest_dir <- "./shapes_in_sf_all_years_cleaned//2020//" }
 
 
   # name of the file that will be saved (the whole string between './' and '.rds')
-    file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
+    # file_name <- gsub(".*/(.+).rds.*", "\\1", sf_file)
+    file_name <- unique(temp_sf$code_state)
 
   # Save cleaned sf in the cleaned directory
     sf::st_write(temp_sf, paste0(dest_dir, file_name,".gpkg") )
@@ -484,30 +491,30 @@ future::plan(strategy = 'multisession')
 furrr::future_map(.x=all_rds, .f=clean_tracts, .progress = T)
 gc(reset = T, full = T)
 
+pbapply::pblapply(X=all_rds, FUN=clean_tracts)
 
 
 
-
-############juntando as bases por estado --------------
-
-dir.proj="L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//"
-setwd(dir.proj)
-lista <- unique(substr(list.files(dir.proj),1,2))
-
-for (CODE in lista) {# CODE <- 33
-
-  files <- list.files(full.names = T,pattern = paste0("^",CODE))
-  files <- lapply(X=files, FUN= readr::read_rds, quiet = T)
-  files <- lapply(X=files, FUN= as.data.frame)
-  shape <- do.call('rbind', files)
-  shape <- st_sf(shape)
-  shape7 <- st_transform(shape, crs=3857) %>%
-    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
-  readr::write_rds(shape,paste0("./",CODE,"sc.rds"), compress="gz")
-  sf::st_write(shape, dsn= paste0("./",CODE,"sc.gpkg"))
-  sf::st_write(shape7, dsn= paste0("./",CODE,"sc_simplified", ".gpkg"))
-
-}
-
-
-a <- read_municipality(code_muni = "11")
+# ############juntando as bases por estado --------------
+#
+# dir.proj="L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios//shapes_in_sf_all_years_cleaned//2000//Urbano//"
+# setwd(dir.proj)
+# lista <- unique(substr(list.files(dir.proj),1,2))
+#
+# for (CODE in lista) {# CODE <- 33
+#
+#   files <- list.files(full.names = T,pattern = paste0("^",CODE))
+#   files <- lapply(X=files, FUN= readr::read_rds, quiet = T)
+#   files <- lapply(X=files, FUN= as.data.frame)
+#   shape <- do.call('rbind', files)
+#   shape <- st_sf(shape)
+#   shape7 <- st_transform(shape, crs=3857) %>%
+#     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
+#   readr::write_rds(shape,paste0("./",CODE,"sc.rds"), compress="gz")
+#   sf::st_write(shape, dsn= paste0("./",CODE,"sc.gpkg"))
+#   sf::st_write(shape7, dsn= paste0("./",CODE,"sc_simplified", ".gpkg"))
+#
+# }
+#
+#
+# a <- read_municipality(code_muni = "11")

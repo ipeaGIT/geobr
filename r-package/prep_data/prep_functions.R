@@ -7,6 +7,9 @@ library(mapview)
 
 mapviewOptions(platform = 'deckgl')
 
+
+`%nlike%` <- Negate(`%like%`)
+
 ###### list ftp folders -----------------
 
 # function to list ftp folders from their original sub-dir
