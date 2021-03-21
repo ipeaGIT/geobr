@@ -114,7 +114,7 @@
 -------------------------------------------------------
 # geobr v1.0 (2019-07-30)
 
-* Launch of **geobr** v1.0 on [CRAN](https://cran.r-project.org/web/packages/geobr/index.html) with the following data sets:
+* Launch of **geobr** v1.0 on [CRAN](https://CRAN.R-project.org/package=geobr) with the following data sets:
   * Country
   * States
   * Regions

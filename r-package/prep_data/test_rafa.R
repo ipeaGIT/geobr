@@ -331,6 +331,11 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 pkgdown::build_site()
 
 
+### Check URL's----------------
+
+urlchecker::url_update()
+
+
 ### CMD Check ----------------
 # Check package errors
 

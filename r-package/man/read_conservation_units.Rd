@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_conservation_units.R
 \name{read_conservation_units}
 \alias{read_conservation_units}
-\title{Download spatial data of Brazilian environmental conservation untis}
+\title{Download spatial data of Brazilian environmental conservation units}
 \usage{
 read_conservation_units(date = 201909, simplified = TRUE, showProgress = TRUE)
 }
@@ -22,9 +22,8 @@ An \verb{"sf" "data.frame"} object
 }
 \description{
 This data set covers the whole of Brazil and it includes the polygons of all
-conservation untis present in Brazilian territory. The last update of the data
-was 09-2019. The original data comes from MMA and can be found at
-\url{http://mapas.mma.gov.br/i3geo/datadownload.htm}.
+conservation units present in Brazilian territory. The last update of the data
+was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 }
 \examples{
 \donttest{
