@@ -26,6 +26,7 @@ source("./prep_data/prep_functions.R")
 # To Update the data, input the date YYYYMM and run the code
 
 update <- 201909
+update <- 202103
 
 library(RCurl)
 library(stringr)
@@ -69,7 +70,8 @@ setwd(root_dir)
   download.file(url = ftp,
                 destfile = paste0(destdir_raw,"/","indigenous_land.zip"))
 
-
+# pelo menos desde 202103, download parece q tem q ser manual
+  #: https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas
 
 
 
@@ -99,10 +101,13 @@ setwd(root_dir)
 
 # read data
   temp_sf <- st_read(shape, quiet = F, stringsAsFactors=F, options = "ENCODING=UTF8")
-
+  head(temp_sf)
 
 # Rename columns
-  temp_sf <- dplyr::rename(temp_sf, abbrev_state = uf_sigla, name_muni = municipio_, code_terrai= terrai_cod)
+  temp_sf <- dplyr::rename(temp_sf,
+                           abbrev_state = uf_sigla,
+                           name_muni = municipio_,
+                           code_terrai= terrai_cod)
   head(temp_sf)
 
 
@@ -144,12 +149,12 @@ setwd(root_dir)
 
 
 
+# Use UTF-8 encoding
+  temp_sf <- use_encoding_utf8(temp_sf)
+
+
 # Convert data.table back into sf
   temp_sf <- st_as_sf(temp_sf, crs=original_crs)
-
-
-  # # Use UTF-8 encoding
-  # temp_sf$name_state <- stringi::stri_encode(as.character((temp_sf$name_state), "UTF-8"))
 
 
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
@@ -157,31 +162,22 @@ setwd(root_dir)
 
 
 # Make any invalid geometry valid # st_is_valid( sf)
-  temp_sf <- lwgeom::st_make_valid(temp_sf)
-
-  # Use UTF-8 encoding in all character columns
-  temp_sf <- temp_sf %>%
-    mutate_if(is.factor, function(x){ x %>% as.character() %>%
-        stringi::stri_encode("UTF-8") } )
-  temp_sf <- temp_sf %>%
-    mutate_if(is.factor, function(x){ x %>% as.character() %>%
-        stringi::stri_encode("UTF-8") } )
+  temp_sf <- sf::st_make_valid(temp_sf)
 
 
-  ###### convert to MULTIPOLYGON -----------------
+
+
+  # simplify
+  temp_sf_simplified <- simplify_temp_sf(temp_sf)
+
+  # convert to MULTIPOLYGON
   temp_sf <- to_multipolygon(temp_sf)
+  temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
 
 
-###### 7. generate a lighter version of the dataset with simplified borders -----------------
-# skip this step if the dataset is made of points, regular spatial grids or rater data
-
-# simplify
-  temp_sf_simplified <- st_transform(temp_sf, crs=3857) %>%
-    sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 
 # Save cleaned sf in the cleaned directory
-  readr::write_rds(temp_sf, path=paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".rds"), compress = "gz")
   sf::st_write(temp_sf, dsn = paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,".gpkg") )
   sf::st_write(temp_sf_simplified, dsn = paste0("./shapes_in_sf_all_years_cleaned/",update,"/indigenous_land_", update,"_simplified.gpkg") )
 
