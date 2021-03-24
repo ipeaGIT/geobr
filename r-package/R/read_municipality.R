@@ -60,7 +60,7 @@ read_municipality <-
       else if(nchar(code_muni)==2){
 
       # invalid state code
-      if( !(code_muni %in% substr(temp_sf$code_muni,1,2)) & !(code_muni %in% temp_meta$abbrev_state)){
+      if( !(code_muni %in% substr(temp_sf$code_muni,1,2)) & !(code_muni %in% temp_sf$abbrev_state)){
         stop("Error: Invalid value to argument code_muni")}
 
         else if (is.numeric(code_muni)){
