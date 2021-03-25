@@ -12,7 +12,7 @@ read_health_region(
 )
 }
 \arguments{
-\item{year}{Year of the data. Ddefaults to 2013, latest available.}
+\item{year}{Year of the data. Defaults to 2013, latest available.}
 
 \item{macro}{Logic. If \code{FALSE} (default), the function downloads health regions data.
 If \code{TRUE}, the function downloads macro regions data.}
@@ -40,6 +40,9 @@ shortages of specialized professionals. A macro region comprises one or more hea
 \donttest{
 # Read all health regions for a given year
 hr <- read_health_region( year=2013 )
+
+# Read all macro health regions
+mhr <- read_health_region( year=2013, macro =TRUE)
 }
 }
 \seealso{

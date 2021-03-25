@@ -76,7 +76,7 @@
 
       
 
-      </header><script src="intro_to_geobr_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="intro_to_geobr_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to geobr</h1>
@@ -120,7 +120,7 @@
 <span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_geobr.html">list_geobr</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">datasets</span>, n<span class="op">=</span><span class="fl">21</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 24 x 4</span>
+<span class="co">#&gt; # A tibble: 25 x 4</span>
 <span class="co">#&gt;    `function`       geography            years                         source   </span>
 <span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;                &lt;chr&gt;                         &lt;chr&gt;    </span>
 <span class="co">#&gt;  1 `read_country`   Country              1872, 1900, 1911, 1920, 1933~ IBGE     </span>
@@ -128,23 +128,23 @@
 <span class="co">#&gt;  3 `read_state`     States               1872, 1900, 1911, 1920, 1933~ IBGE     </span>
 <span class="co">#&gt;  4 `read_meso_regi~ Meso region          2000, 2001, 2010, 2013, 2014~ IBGE     </span>
 <span class="co">#&gt;  5 `read_micro_reg~ Micro region         2000, 2001, 2010, 2013, 2014~ IBGE     </span>
-<span class="co">#&gt;  6 `read_intermedi~ Intermediate region  2017, 2019                    IBGE     </span>
-<span class="co">#&gt;  7 `read_immediate~ Immediate region     2017, 2019                    IBGE     </span>
-<span class="co">#&gt;  8 `read_weighting~ Census weighting ar~ 2010                          IBGE     </span>
-<span class="co">#&gt;  9 `read_census_tr~ Census tract (setor~ 2000, 2010, 2017              IBGE     </span>
-<span class="co">#&gt; 10 `read_municipal~ Municipality seats ~ 1872, 1900, 1911, 1920, 1933~ IBGE     </span>
-<span class="co">#&gt; 11 `read_statistic~ Statistical Grid of~ 2010                          IBGE     </span>
-<span class="co">#&gt; 12 `read_metro_are~ Metropolitan areas   1970, 2001, 2002, 2003, 2005~ IBGE     </span>
-<span class="co">#&gt; 13 `read_urban_are~ Urban footprints     2005, 2015                    IBGE     </span>
-<span class="co">#&gt; 14 `read_amazon`    Brazil's Legal Amaz~ 2012                          MMA      </span>
-<span class="co">#&gt; 15 `read_biomes`    Biomes               2004, 2019                    IBGE     </span>
-<span class="co">#&gt; 16 `read_conservat~ Environmental Conse~ 201909                        MMA      </span>
-<span class="co">#&gt; 17 `read_disaster_~ Disaster risk areas  2010                          CEMADEN ~</span>
-<span class="co">#&gt; 18 `read_indigenou~ Indigenous lands     201907                        FUNAI    </span>
-<span class="co">#&gt; 19 `read_semiarid`  Semi Arid region     2005, 2017                    IBGE     </span>
-<span class="co">#&gt; 20 `read_health_fa~ Health facilities    2015                          CNES, Da~</span>
-<span class="co">#&gt; 21 `read_health_re~ Health regions       1991, 1994, 1997, 2001, 2005~ DataSUS  </span>
-<span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
+<span class="co">#&gt;  6 `read_intermedi~ Intermediate region  2017, 2019, 2020              IBGE     </span>
+<span class="co">#&gt;  7 `read_immediate~ Immediate region     2017, 2019, 2020              IBGE     </span>
+<span class="co">#&gt;  8 `read_municipal~ Municipality         1872, 1900, 1911, 1920, 1933~ IBGE     </span>
+<span class="co">#&gt;  9 `read_municipal~ Municipality seats ~ 1872, 1900, 1911, 1920, 1933~ IBGE     </span>
+<span class="co">#&gt; 10 `read_weighting~ Census weighting ar~ 2010                          IBGE     </span>
+<span class="co">#&gt; 11 `read_census_tr~ Census tract (setor~ 2000, 2010, 2017, 2019, 2020  IBGE     </span>
+<span class="co">#&gt; 12 `read_statistic~ Statistical Grid of~ 2010                          IBGE     </span>
+<span class="co">#&gt; 13 `read_metro_are~ Metropolitan areas   1970, 2001, 2002, 2003, 2005~ IBGE     </span>
+<span class="co">#&gt; 14 `read_urban_are~ Urban footprints     2005, 2015                    IBGE     </span>
+<span class="co">#&gt; 15 `read_amazon`    Brazil's Legal Amaz~ 2012                          MMA      </span>
+<span class="co">#&gt; 16 `read_biomes`    Biomes               2004, 2019                    IBGE     </span>
+<span class="co">#&gt; 17 `read_conservat~ Environmental Conse~ 201909                        MMA      </span>
+<span class="co">#&gt; 18 `read_disaster_~ Disaster risk areas  2010                          CEMADEN ~</span>
+<span class="co">#&gt; 19 `read_indigenou~ Indigenous lands     201907, 202103                FUNAI    </span>
+<span class="co">#&gt; 20 `read_semiarid`  Semi Arid region     2005, 2017                    IBGE     </span>
+<span class="co">#&gt; 21 `read_health_fa~ Health facilities    2015                          CNES, Da~</span>
+<span class="co">#&gt; # ... with 4 more rows</span></code></pre></div>
 </div>
 </div>
 <div id="download-spatial-data-as-sf-objects" class="section level2">
