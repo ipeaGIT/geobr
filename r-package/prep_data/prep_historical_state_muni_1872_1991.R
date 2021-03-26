@@ -132,9 +132,6 @@ years <- substr(years, 3, 6)
  clean_muni <- function(year){
 
 
-
-
-
   #year <- 1900
 
   # create a subdirectory of year
@@ -199,9 +196,31 @@ years <- substr(years, 3, 6)
 
 
   # Make an invalid geometry valid # st_is_valid( sf)
-
   temp_sf <- sf::st_make_valid(temp_sf)
 
+  # dissolve border of duplicated municipalities
+  # address issue #89 and #163
+    muni_count <- table(temp_sf$code_muni) %>% as.data.frame()
+    repeated <- subset(muni_count, Freq >1)
+
+    if (nrow(repeated)>0) {
+
+      # keep original codes and names
+      codes_names <- copy(temp_sf)
+      codes_names$geometry <- NULL
+      codes_names <- unique(codes_names)
+
+      # separate repeated and unique values
+      muni_unique <- subset(temp_sf, code_muni %nin% repeated$Var1)
+      muni_repeat <- subset(temp_sf, code_muni %in% repeated$Var1)
+
+      # dissolve borders of repeated and bring names back
+      muni_repeat <- dissolve_polygons(mysf=muni_repeat, group_column='code_muni')
+      muni_repeat <- left_join(muni_repeat, codes_names, by='code_muni')
+
+      # put pieces back together
+      temp_sf <- rbind(muni_unique, muni_repeat)
+   }
 
   ###### convert to MULTIPOLYGON -----------------
   temp_sf <- to_multipolygon(temp_sf)
@@ -214,9 +233,7 @@ years <- substr(years, 3, 6)
 
     # dplyr::rename and subset columns
     names(liti) <- names(liti) %>% tolower()
-
-    liti <- dplyr::rename(liti, code_muni = id, name_muni = nome )
-    liti <- dplyr::select(liti, c('code_muni', 'name_muni', 'geometry')) # 'latitudes', 'longitudes' da sede do municipio
+    liti <- dplyr::select(liti, c('code_muni'=id, 'name_muni'=nome, 'geometry')) # 'latitudes', 'longitudes' da sede do municipio
 
     # Use UTF-8 encoding
     liti <- use_encoding_utf8(liti)
@@ -233,7 +250,6 @@ years <- substr(years, 3, 6)
 
 
   # Add State Info
-
   temp_sf <- add_state_info(temp_sf,"code_muni")
 
   # reorder columns
@@ -242,7 +258,10 @@ years <- substr(years, 3, 6)
   # simplify
   temp_sf_simp <- simplify_temp_sf(temp_sf)
 
-  as.numeric(object.size(temp_sf_simp)) /     as.numeric(object.size(temp_sf))
+  # convert to MULTIPOLYGON
+  temp_sf <- to_multipolygon(temp_sf)
+  temp_sf_simp <- to_multipolygon(temp_sf_simp)
+
 
   # Save cleaned sf in the cleaned directory
   destdir <- file.path("./shapes_in_sf_all_years_cleaned", "municipio",year)
@@ -254,20 +273,10 @@ years <- substr(years, 3, 6)
 
 
 # Apply function to save original data sets in rds format
+ # apply function in parallel
+ future::plan(multisession)
+ future_map(.x=years, .f=clean_muni)
 
-# create computing clusters
-cl <- parallel::makeCluster(detectCores())
-
-
-clusterEvalQ(cl, c(library(data.table), library(dplyr), library(readr), library(stringr), library(sf)))
-parallel::clusterExport(cl=cl, varlist= c("years","use_encoding_utf8","simplify_temp_sf",
-                                          "harmonize_projection","add_state_info"), envir=environment())
-
-# apply function in parallel
-parallel::parLapply(cl, years, clean_muni)
-stopCluster(cl)
-
-#rm(list=setdiff(ls(), c("root_dir")))
 gc(reset = T)
 
 
@@ -290,7 +299,7 @@ years <- substr(years, 3, 6)
 
 
 
-# Create function to clean municipalities, additing dipusted lands in case they exist
+# Create function to clean municipalities, additing disputed lands in case they exist
 clean_state <- function(year){
 
   # year <- 1872
