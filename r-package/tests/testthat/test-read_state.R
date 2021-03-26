@@ -9,23 +9,23 @@ testthat::skip_on_cran()
 test_that("read_state", {
 
   # read data
+  testthat::expect_output( read_state(code_state=11, year=1970) )
+  testthat::expect_output( read_state(code_state='all', year=1970) )
+  testthat::expect_output( read_state(code_state='AC', year=1970) )
+
+
   testthat::expect_output( read_state() )
-  testthat::expect_output( read_state(code_state=11, year=1991) )
 
-  testthat::expect_output( read_state(code_state="AC", year=2010) )
   testthat::expect_output( read_state(code_state=11, year=2010) )
-  testthat::expect_output( read_state(code_state="all") )
+  testthat::expect_output( read_state(code_state='all', year=2010) )
+  testthat::expect_output( read_state(code_state='AC', year=2010) )
 
-
-
-
-  test_code <- read_state(code_state=11, year=2010)
 
   # check sf object
+  test_code <- read_state(code_state=11, year=2010)
   testthat::expect_true(is(test_code, "sf"))
 
-
-  # check number of weighting areas
+  # check number of rows in ouput
   testthat::expect_equal(nrow(test_code), 1)
 
 })
@@ -48,5 +48,7 @@ test_that("read_state", {
 
   # Wrong year
    testthat::expect_error(read_state( year=9999999))
+   testthat::expect_error(read_state(showProgress = 'aaaa'))
+
 
 })

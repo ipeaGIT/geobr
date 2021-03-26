@@ -132,14 +132,34 @@
 <a href="#new-data-setsfunctions" class="anchor"></a>New data sets/functions</h3>
 <ul>
 <li>New function <code>read_comparable_areas</code> to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17</li>
+<li>New data set of macro regions og health, which can be accessed using the new <code>macro</code> parameter added to <code><a href="../reference/read_health_region.html">read_health_region()</a></code> function. Closes issue #219.</li>
+<li>updated data sets for 2020:
+<ul>
+<li>Country</li>
+<li>Regions</li>
+<li>States</li>
+<li>Micro regions</li>
+<li>Meso regions</li>
+<li>Immediate regions</li>
+<li>Intermediate regions</li>
+<li>Municipalities</li>
+<li>Census tracts</li>
+</ul>
+</li>
+<li>Updated data of indigenous land March 2021</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
+<li>Improved package test coverage to 99.16%.</li>
 <li>Improved documentation considering <code>Roxygen: list(markdown = TRUE)</code>
 </li>
+<li>fix column names of <code>grid_state_correspondence_table</code>
+</li>
+<li>Improve warning message regarding connection to geobr server at Ipea</li>
+<li>Fix <code>read_municipality</code> when reading a state abbreviation before 1991.</li>
 </ul>
 <hr>
 </div>
@@ -311,7 +331,7 @@
 <a href="#geobr-v10-2019-07-30" class="anchor"></a>geobr v1.0 (2019-07-30)<small> 2019-08-05 </small>
 </h1>
 <ul>
-<li>Launch of <strong>geobr</strong> v1.0 on <a href="https://cran.r-project.org/web/packages/geobr/index.html">CRAN</a> with the following data sets:
+<li>Launch of <strong>geobr</strong> v1.0 on <a href="https://CRAN.R-project.org/package=geobr">CRAN</a> with the following data sets:
 <ul>
 <li>Country</li>
 <li>States</li>

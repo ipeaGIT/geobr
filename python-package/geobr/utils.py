@@ -47,8 +47,10 @@ def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.c
 
     except HTTPError:
         raise Exception(
-            "Metadata file not found. \
-            Please report to https://github.com/ipeaGIT/geobr/issues"
+            "Perhaps this is an internet connection problem."
+            "If this is not a connection problem in your network, "
+            " please try geobr again in a few minutes. "
+            "Please report to https://github.com/ipeaGIT/geobr/issues"
         )
 
 

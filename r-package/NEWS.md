@@ -23,9 +23,11 @@
   
   
 ### Minor changes
+* Improved package test coverage to 99.16%.
 * Improved documentation considering `Roxygen: list(markdown = TRUE)`
 * fix column names of `grid_state_correspondence_table`
 * Improve warning message regarding connection to geobr server at Ipea
+* Fix `read_municipality` when reading a state abbreviation before 1991.
 
 
 -------------------------------------------------------
