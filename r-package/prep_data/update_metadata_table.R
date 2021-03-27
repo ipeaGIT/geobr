@@ -22,14 +22,14 @@
           estado2=list.files(paste("//storage1/geobr/data_gpkg",a,b,c,sep="/"))
           for (d in estado2) { #d=estado2[1]
             if (c=="Urbano") {
-              metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data_gpkg",a,b,c,d,sep="/"))
+              metadata[nrow(metadata) + 1,] = list(a,b,paste0("U",substr(d, 1, 2)),paste("https://www.ipea.gov.br/geobr/data_gpkg",a,b,c,d,sep="/"))
             }
             if (c=="Rural") {
-              metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(d, 1, 2)),paste("http://www.ipea.gov.br/geobr/data_gpkg",a,b,c,d,sep="/"))
+              metadata[nrow(metadata) + 1,] = list(a,b,paste0("R",substr(d, 1, 2)),paste("https://www.ipea.gov.br/geobr/data_gpkg",a,b,c,d,sep="/"))
             }
           }
         } else {
-        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("http://www.ipea.gov.br/geobr/data_gpkg",a,b,c,sep="/"))}
+        metadata[nrow(metadata) + 1,] = list(a,b,substr(c, 1, 2),paste("https://www.ipea.gov.br/geobr/data_gpkg",a,b,c,sep="/"))}
       }
     }
   }
