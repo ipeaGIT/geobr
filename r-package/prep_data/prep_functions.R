@@ -9,6 +9,7 @@ mapviewOptions(platform = 'deckgl')
 
 
 `%nlike%` <- Negate(`%like%`)
+`%nin%` <- Negate(`%in%`)
 
 ###### list ftp folders -----------------
 
@@ -375,7 +376,7 @@ dissolve_polygons <- function(mysf, group_column){
 
 
   # Apply sub-function
-  groups_sf <- lapply(X = unique(get(group_column, mysf)), FUN = dissolvefun )
+  groups_sf <- pbapply::pblapply(X = unique(get(group_column, mysf)), FUN = dissolvefun )
 
   # rbind results
   temp_sf <- do.call('rbind', groups_sf)
