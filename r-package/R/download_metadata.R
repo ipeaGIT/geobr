@@ -28,7 +28,7 @@ download_metadata <- function(){
     con <- url(metadata_link)
     t <- suppressWarnings({ try( open.connection(con, open="rt", timeout=2), silent=T)[1] })
     if ("try-error" %in% class(t)) {stop('Internet connection problem. If this is not a connection problem in your network, please try geobr again in a few minutes.')}
-    suppressWarnings({ try(close.connection(con), silent=T) })
+    suppressWarnings({ try(close.connection(con), silent=TRUE) })
 
     # return with warnings
     options(warn = oldw)
@@ -39,6 +39,6 @@ download_metadata <- function(){
     }
 
   # read/return metadata
-  metadata <- utils::read.csv(tempf, stringsAsFactors=F)
+  metadata <- utils::read.csv(tempf, stringsAsFactors=FALSE)
   return(metadata)
   }

@@ -29,7 +29,10 @@ utils::remove.packages("geobr")
 devtools::uninstall(pkg = "geobr")
 
 
+system.time(
 
+b <-read_state(code_state = c('all'))
+)
 
 
 ### 0. Data tests  -------------------------
@@ -203,7 +206,7 @@ Sys.setenv(NOT_CRAN = "true")
 function_coverage(fun='download_metadata', test_file("tests/testthat/test-download_metadata.R"))
 function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))
-function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
+# function_coverage(fun='grid_state_correspondence_table', test_file("tests/testthat/test-grid_state_correspondence_table.R"))
 function_coverage(fun='cep_to_state', test_file("tests/testthat/test-cep_to_state.R"))
 
 
