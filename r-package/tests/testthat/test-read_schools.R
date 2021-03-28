@@ -12,7 +12,7 @@ testthat::skip_on_cran()
 test_that("read_schools", {
 
   # read data
-  test_sf0 <- read_schools()
+  test_sf0 <- geobr::read_schools()
 
   # check sf object
   testthat::expect_true(is(test_sf0, "sf"))

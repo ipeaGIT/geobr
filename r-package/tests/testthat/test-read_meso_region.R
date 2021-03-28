@@ -9,10 +9,10 @@ testthat::skip_on_cran()
 test_that("read_meso_region", {
 
   # read data
-  testthat::expect_output(  read_meso_region(code_meso=1401) )
-  testthat::expect_output(  read_meso_region(code_meso="AC", year=2010) )
-  testthat::expect_output(  read_meso_region(code_meso=11, year=2010) )
-  testthat::expect_output(  read_meso_region(code_meso="all", year=2010) )
+  expect_true(is(read_meso_region(code_meso=1401) , "sf"))
+  expect_true(is(read_meso_region(code_meso="AC", year=2010), "sf"))
+  expect_true(is(read_meso_region(code_meso=11, year=2010), "sf"))
+  expect_true(is(read_meso_region(code_meso="all", year=2010) , "sf"))
 
   test_meso_code <-  read_meso_region(code_meso=1401, year=2010)
 

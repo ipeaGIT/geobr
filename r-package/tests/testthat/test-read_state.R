@@ -9,16 +9,16 @@ testthat::skip_on_cran()
 test_that("read_state", {
 
   # read data
-  testthat::expect_output( read_state(code_state=11, year=1970) )
-  testthat::expect_output( read_state(code_state='all', year=1970) )
-  testthat::expect_output( read_state(code_state='AC', year=1970) )
+  expect_true(is( read_state(code_state=11, year=1970) , "sf"))
+  expect_true(is( read_state(code_state='all', year=1970) , "sf"))
+  expect_true(is( read_state(code_state='AC', year=1970) , "sf"))
 
 
-  testthat::expect_output( read_state() )
+  expect_true(is( read_state() , "sf"))
+  expect_true(is( read_state(code_state=11, year=2010) , "sf"))
+  expect_true(is( read_state(code_state='all', year=2010) , "sf"))
+  expect_true(is(  read_state(code_state='AC', year=2010) , "sf"))
 
-  testthat::expect_output( read_state(code_state=11, year=2010) )
-  testthat::expect_output( read_state(code_state='all', year=2010) )
-  testthat::expect_output( read_state(code_state='AC', year=2010) )
 
 
   # check sf object

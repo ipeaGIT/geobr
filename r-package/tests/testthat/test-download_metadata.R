@@ -6,6 +6,9 @@ test_that("download_metadata", {
   testthat::expect_true(is(metadata, "data.frame"))
   testthat::expect_equal(ncol(metadata), 5)
 
+  testthat::expect_true(is( download_metadata() , "data.frame"))
+
+
 })
 
 

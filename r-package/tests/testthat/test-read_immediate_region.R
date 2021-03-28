@@ -10,9 +10,9 @@ testthat::skip_on_cran()
 test_that("read_immediate_region", {
 
   # read data
-  testthat::expect_output( read_immediate_region() )
-  testthat::expect_output( read_immediate_region(code_immediate = 11) )
-  testthat::expect_output( read_immediate_region(code_immediate = "AC") )
+  expect_true(is(  read_immediate_region() , "sf"))
+  expect_true(is(  read_immediate_region(code_immediate = 11) , "sf"))
+  expect_true(is(  read_immediate_region(code_immediate = "AC") , "sf"))
 
   test_code_muni <- read_immediate_region(code_immediate =  110002)
 
