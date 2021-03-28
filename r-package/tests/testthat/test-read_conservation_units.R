@@ -11,12 +11,7 @@ testthat::skip_on_cran()
 test_that("read_conservation_units", {
 
   # read data
-  test_sf <- read_conservation_units(date=201909)
-  testthat::expect_output(read_conservation_units())
-
-
-  # check sf object
-  testthat::expect_true(is(test_sf, "sf"))
+  expect_true(is(  read_conservation_units() , "sf"))
 
 })
 
