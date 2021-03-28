@@ -26,10 +26,10 @@ federal law n. 12.651/2012). The original data comes from the Brazilian
 Ministry of Environment (MMA) and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read Brazilian Legal Amazon
 a <- read_amazon(year = 2012)
-}
+}}
 }
 \seealso{
 Other general area functions: 

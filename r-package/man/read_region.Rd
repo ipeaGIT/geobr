@@ -24,10 +24,10 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read specific year
 reg <- read_region(year=2018)
-}
+} }
 }
 \seealso{
 Other general area functions: 

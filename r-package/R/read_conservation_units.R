@@ -17,10 +17,10 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read conservation_units
 #' b <- read_conservation_units(date = 201909)
-#'}
+#'}}
 read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

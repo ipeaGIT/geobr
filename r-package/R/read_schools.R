@@ -15,10 +15,10 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read all schools in the country
 #' s <- read_schools( year = 2020)
-#' }
+#' }}
 read_schools <- function(year=2020, showProgress=TRUE ){
 
   # Get metadata with data url addresses

@@ -36,7 +36,7 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni = 1200179, year = 2017)
 
@@ -46,8 +46,7 @@ mun <- read_municipality(code_muni = "RJ", year = 2010)
 
 # Read all municipalities of the country at a given year
 mun <- read_municipality(code_muni = "all", year = 2018)
-}
-
+}}
 }
 \seealso{
 Other general area functions: 

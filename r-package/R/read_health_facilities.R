@@ -22,10 +22,10 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read all health facilities of the whole country
 #' h <- read_health_facilities()
-#' }
+#' }}
 read_health_facilities <- function( showProgress=TRUE ){
 
   # Get metadata with data url addresses

@@ -24,8 +24,8 @@ with the objective of improving the quality of the data. More information
 available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read all schools in the country
 s <- read_schools( year = 2020)
-}
+}}
 }

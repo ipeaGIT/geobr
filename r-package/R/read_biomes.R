@@ -18,10 +18,10 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read biomes
 #' b <- read_biomes(year = 2019)
-#'}
+#'}}
 read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

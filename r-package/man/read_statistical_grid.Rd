@@ -25,13 +25,13 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read specific municipality at a given year
 grid <- read_statistical_grid(code_grid = 45, year=2010)
 
 # Read all municipalities of a state at a given year
 state_grid <- read_statistical_grid(code_grid = "RJ")
-}
+}}
 }
 \seealso{
 Other general area functions: 

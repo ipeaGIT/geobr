@@ -27,10 +27,10 @@ scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
 data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read biomes
 b <- read_biomes(year = 2019)
-}
+}}
 }
 \seealso{
 Other general area functions: 

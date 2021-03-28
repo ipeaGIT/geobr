@@ -12,10 +12,10 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read municipal seats in an specific year
 #' m <- read_municipal_seat(year = 1991)
-#' }
+#' }}
 read_municipal_seat <- function(year=2010, showProgress=TRUE){
 
   # Get metadata with data url addresses

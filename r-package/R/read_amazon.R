@@ -17,10 +17,10 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read Brazilian Legal Amazon
 #' a <- read_amazon(year = 2012)
-#'}
+#'}}
 read_amazon <- function(year=2012, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

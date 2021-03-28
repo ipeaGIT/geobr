@@ -37,7 +37,7 @@ An \verb{"sf" "data.frame"} object
 Download spatial data of census tracts of the Brazilian Population Census
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read rural census tracts for years before 2007
   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 
@@ -53,7 +53,7 @@ Download spatial data of census tracts of the Brazilian Population Census
 # Read all census tracts of the country at a given year
   c <- read_census_tract(code_tract="all", year=2010)
 
-}
+}}
 }
 \seealso{
 Other general area functions: 

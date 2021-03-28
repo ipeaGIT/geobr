@@ -14,7 +14,7 @@
 #'
 #' @export
 #' @details Only available from 2010 Census data so far
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Get lookup table for municipality Rio de Janeiro
 #' mun <- lookup_muni(name_muni = "Rio de Janeiro")
 #'
@@ -26,7 +26,7 @@
 #'
 #' # Or:
 #' mun_all <- lookup_muni(code_muni = "all")
-#'}
+#'}}
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
 

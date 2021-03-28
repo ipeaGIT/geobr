@@ -37,13 +37,13 @@ few municipalities because they are generally more technology intensive, costly 
 shortages of specialized professionals. A macro region comprises one or more health regions.
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read all health regions for a given year
 hr <- read_health_region( year=2013 )
 
 # Read all macro health regions
 mhr <- read_health_region( year=2013, macro =TRUE)
-}
+}}
 }
 \seealso{
 Other general area functions: 

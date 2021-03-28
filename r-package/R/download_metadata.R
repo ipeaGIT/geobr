@@ -2,9 +2,9 @@
 #'
 #' @export
 #' @family general support functions
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' df <- download_metadata()
-#' }
+#' }}
 download_metadata <- function(){
 
   # create tempfile to save metadata

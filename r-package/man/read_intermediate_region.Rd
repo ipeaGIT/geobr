@@ -38,7 +38,7 @@ Brazil created in 2017 by IBGE. These regions were created to replace the
 system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read an specific intermediate region
   im <- read_intermediate_region(code_intermediate=1202)
 
@@ -49,7 +49,7 @@ system "SIRGAS2000" and CRS(4674)
 # Read all intermediate regions of the country
   im <- read_intermediate_region()
   im <- read_intermediate_region(code_intermediate="all")
-}
+}}
 }
 \seealso{
 Other general area functions: 

@@ -16,13 +16,13 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read specific municipality at a given year
 #' grid <- read_statistical_grid(code_grid = 45, year=2010)
 #'
 #' # Read all municipalities of a state at a given year
 #' state_grid <- read_statistical_grid(code_grid = "RJ")
-#'}
+#'}}
 read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # nocov start
 
   # Get metadata with data url addresses

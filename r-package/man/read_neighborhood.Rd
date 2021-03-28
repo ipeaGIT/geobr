@@ -26,10 +26,10 @@ It is based on aggregations of the census tracts from the Brazilian
 census. Only 2010 data is currently available.
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read neighborhoods of Brazilian municipalities
 n <- read_neighborhood(year=2010)
-}
+}}
 }
 \seealso{
 Other general area functions: 

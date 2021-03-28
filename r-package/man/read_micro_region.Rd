@@ -34,7 +34,7 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read an specific micro region a given year
   micro <- read_micro_region(code_micro=11008, year=2018)
 
@@ -44,7 +44,7 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 
 # Read all micro regions at a given year
   micro <- read_micro_region(code_micro="all", year=2010)
-}
+}}
 }
 \seealso{
 Other general area functions: 

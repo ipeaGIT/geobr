@@ -26,10 +26,10 @@ conservation units present in Brazilian territory. The last update of the data
 was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read conservation_units
 b <- read_conservation_units(date = 201909)
-}
+}}
 }
 \seealso{
 Other general area functions: 

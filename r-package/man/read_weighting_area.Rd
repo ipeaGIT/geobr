@@ -34,7 +34,7 @@ An \verb{"sf" "data.frame"} object
 Only 2010 data is currently available.
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read specific weighting area at a given year
 w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 
@@ -49,7 +49,7 @@ plot(w)
 
 # Read all weighting areas of the country at a given year
 w <- read_weighting_area(code_weighting="all", year=2010)
-}
+} }
 }
 \seealso{
 Other general area functions: 

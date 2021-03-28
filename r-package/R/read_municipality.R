@@ -21,7 +21,7 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read specific municipality at a given year
 #' mun <- read_municipality(code_muni = 1200179, year = 2017)
 #'
@@ -31,8 +31,7 @@
 #'
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
-#'}
-#'
+#'}}
 read_municipality <-
   function(code_muni = "all", year = 2010, simplified = TRUE, showProgress = TRUE) {
 

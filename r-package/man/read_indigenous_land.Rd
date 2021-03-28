@@ -29,8 +29,8 @@ updated monthly, the geobr package will only keep the data for a few months
 per year.
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read all indigenous land in an specific date
 i <- read_indigenous_land(date=201907)
-}
+}}
 }

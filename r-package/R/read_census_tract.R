@@ -20,7 +20,7 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read rural census tracts for years before 2007
 #'   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 #'
@@ -36,7 +36,7 @@
 #' # Read all census tracts of the country at a given year
 #'   c <- read_census_tract(code_tract="all", year=2010)
 #'
-#' }
+#' }}
 read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

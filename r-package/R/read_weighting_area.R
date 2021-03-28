@@ -19,7 +19,7 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read specific weighting area at a given year
 #' w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 #'
@@ -34,7 +34,7 @@
 #'
 #' # Read all weighting areas of the country at a given year
 #' w <- read_weighting_area(code_weighting="all", year=2010)
-#' }
+#' } }
 read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -27,12 +27,10 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \donttest{
+#' @examples \dontrun{ if (interactive()) {
 #'
 #'   amc <- read_comparable_areas(start_year=1970, end_year=2010)
-#'}
-#'
-
+#'}}
 read_comparable_areas <- function(start_year=1970, end_year=2010, simplified=TRUE, showProgress=TRUE){
 
   # tests

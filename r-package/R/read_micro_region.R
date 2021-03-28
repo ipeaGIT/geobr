@@ -19,7 +19,7 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \dontrun{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read an specific micro region a given year
 #'   micro <- read_micro_region(code_micro=11008, year=2018)
 #'
@@ -29,7 +29,7 @@
 #'
 #' # Read all micro regions at a given year
 #'   micro <- read_micro_region(code_micro="all", year=2010)
-#' }
+#' }}
 read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

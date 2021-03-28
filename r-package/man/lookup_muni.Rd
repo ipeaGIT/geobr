@@ -26,7 +26,7 @@ and immediate regions
 Only available from 2010 Census data so far
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Get lookup table for municipality Rio de Janeiro
 mun <- lookup_muni(name_muni = "Rio de Janeiro")
 
@@ -38,5 +38,5 @@ mun_all <- lookup_muni(name_muni = "all")
 
 # Or:
 mun_all <- lookup_muni(code_muni = "all")
-}
+}}
 }

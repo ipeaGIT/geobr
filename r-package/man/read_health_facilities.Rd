@@ -30,8 +30,8 @@ update is registered in the database in the columns \code{date_update} and
 These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read all health facilities of the whole country
 h <- read_health_facilities()
-}
+}}
 }

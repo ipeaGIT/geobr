@@ -17,10 +17,10 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{
+#' @examples \dontrun{ if (interactive()) {
 #' # Read urban footprint of Brazilian cities in an specific year
 #' d <- read_urban_area(year=2005)
-#' }
+#' } }
 read_urban_area <- function(year=2015, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

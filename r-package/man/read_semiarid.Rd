@@ -26,10 +26,10 @@ in  23/11/2017). The original data comes from the Brazilian Institute of Geograp
 and Statistics (IBGE) and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 # Read Brazilian semiarid
 a <- read_semiarid(year=2017)
-}
+}}
 }
 \seealso{
 Other general area functions: 

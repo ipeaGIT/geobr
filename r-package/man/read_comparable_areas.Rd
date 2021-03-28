@@ -44,11 +44,10 @@ aggregation of Brazilian municipalities. Estudos Econômicos (São Paulo),
 }
 }
 \examples{
-\donttest{
+\dontrun{ if (interactive()) {
 
   amc <- read_comparable_areas(start_year=1970, end_year=2010)
-}
-
+}}
 }
 \seealso{
 Other general area functions: 

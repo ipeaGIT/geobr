@@ -27,8 +27,8 @@ and Statistics (IBGE)  For more information about the methodology, see deails at
 \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf}
 }
 \examples{
-\dontrun{
+\dontrun{ if (interactive()) {
 # Read urban footprint of Brazilian cities in an specific year
 d <- read_urban_area(year=2005)
-}
+} }
 }
