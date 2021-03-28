@@ -5,6 +5,7 @@
 # geobr v1.6 (dev)
 
 ### New data sets/functions
+* From v1.6 onwards, `geobr` stores downloaded in temporary cache in `tempdir()`. Closes #225.
 * New function `read_comparable_areas` to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17
 * New data set of macro regions og health, which can be accessed using the new `macro` parameter added to `read_health_region()` function. Closes issue #219.
 * updated data sets for 2020:
@@ -19,8 +20,6 @@
   * Census tracts
 * Updated data of indigenous land March 2021
 
-  
-  
   
 ### Minor changes
 * Improved package test coverage to 99.16%.
