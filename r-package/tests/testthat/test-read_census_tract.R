@@ -11,10 +11,10 @@ test_that("read_census_tract", {
 # read data
   expect_true(is(  read_census_tract(code_tract = 11, zone = "rural", year=2000)  , "sf"))
   expect_true(is(  read_census_tract(code_tract = "AC", zone = "rural", year=2000)  , "sf"))
-  expect_true(is(  read_census_tract(code_tract = "AP", zone = "rural") , "sf"))
-  expect_true(is(  read_census_tract(code_tract = 11, zone = "urban", year=2000)  , "sf"))
+  # expect_true(is(  read_census_tract(code_tract = "AP", zone = "rural") , "sf"))
+  # expect_true(is(  read_census_tract(code_tract = 11, zone = "urban", year=2000)  , "sf"))
   expect_true(is(  read_census_tract(code_tract = "AP", zone = "urban", year=2000) , "sf"))
-  expect_true(is(  read_census_tract(code_tract = "AP", zone = "urban", year=2010) , "sf"))
+  # expect_true(is(  read_census_tract(code_tract = "AP", zone = "urban", year=2010) , "sf"))
   expect_true(is(  read_census_tract(code_tract = 'all', year = 2000)  , "sf"))
   expect_true(is(  read_census_tract(code_tract = 1100023, year = 2000) , "sf"))
 

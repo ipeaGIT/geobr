@@ -9,15 +9,12 @@ testthat::skip_on_cran()
 test_that("read_micro_region", {
 
   # read data
-  expect_true(is(  read_micro_region(code_micro=11008) , "sf"))
+  # expect_true(is(  read_micro_region(code_micro=11008) , "sf"))
   expect_true(is(  read_micro_region(code_micro="AC", year=2010) , "sf"))
-  expect_true(is(  read_micro_region(code_micro=11, year=2010) , "sf"))
+  # expect_true(is(  read_micro_region(code_micro=11, year=2010) , "sf"))
   expect_true(is(  read_micro_region(code_micro="all", year=2010)  , "sf"))
 
   test_micro_code <-  read_micro_region(code_micro=11008, year=2010)
-
-  # check sf object
-  expect_true(is(test_micro_code, "sf"))
 
   # check number of micro
   expect_equal( nrow(test_micro_code), 1)
