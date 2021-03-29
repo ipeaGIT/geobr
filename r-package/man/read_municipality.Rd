@@ -14,7 +14,7 @@ read_municipality(
 \arguments{
 \item{code_muni}{The 7-digit identification code of a municipality. If
 \code{code_muni = "all"} (default), all municipalities of the country will be
-downloaded. Alternativelly, if the two-digit identification code or a
+downloaded. Alternatively, if the two-digit identification code or a
 two-letter uppercase abbreviation of a state is passed, e.g. \code{33} or \code{"RJ"},
 all municipalities of that state will be downloaded. Municipality identification
 codes are defined in \url{https://www.ibge.gov.br/explica/codigos-dos-municipios.php}.}

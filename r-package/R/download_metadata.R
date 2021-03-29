@@ -5,7 +5,7 @@
 #' @examples \dontrun{ if (interactive()) {
 #' df <- download_metadata()
 #' }}
-download_metadata <- function(){
+download_metadata <- function(){ # nocov start
 
   # create tempfile to save metadata
   tempf <- file.path(tempdir(), "metadata_geobr.csv")
@@ -41,4 +41,4 @@ download_metadata <- function(){
   # read/return metadata
   metadata <- utils::read.csv(tempf, stringsAsFactors=FALSE)
   return(metadata)
-  }
+  } # nocov end

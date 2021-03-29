@@ -159,7 +159,7 @@ As of today, there is another R package with similar functionalities: [simplefea
 - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc
 - Access to shapefiles with updated geometries for various years
 - Harmonized attributes and geographic projections across geographies and years
-- Option to dowlonad geometries with simplified borders for fast rendering
+- Option to download geometries with simplified borders for fast rendering
 - Stable version published on CRAN for R users, and on PyPI for Python users
 
 **Similar packages for other countries/continents**

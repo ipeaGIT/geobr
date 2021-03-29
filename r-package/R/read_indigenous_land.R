@@ -8,7 +8,7 @@
 #' updated monthly, the geobr package will only keep the data for a few months
 #' per year.
 #'
-#' @param date A date numer in YYYYMM format. Defaults to `201907`
+#' @param date A date number in YYYYMM format. Defaults to `201907`
 #' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
 #' returns the data set with original' resolution or a data set with 'simplified'
 #' borders. Defaults to `TRUE`. For spatial analysis and statistics users should

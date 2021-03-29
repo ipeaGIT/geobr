@@ -82,7 +82,7 @@ Download all geographic areas within a state at a given year
 
 ```
 
-If the paramter `code_` is not passed to the function, geobr returns the data for the whole country by default.
+If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 meso <- read_intermediate_region(year=2017)
@@ -93,7 +93,7 @@ states <- read_state(year=2019)
 
 ## Important note about data resolution
 
-All functions to download polygon data such as states, municipalites etc. have a `simplified` argument. When `simplified = FALSE`, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, `simplified = TRUE` and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.
+All functions to download polygon data such as states, municipalities etc. have a `simplified` argument. When `simplified = FALSE`, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, `simplified = TRUE` and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.
 
 
 
