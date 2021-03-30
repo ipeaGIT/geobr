@@ -232,4 +232,36 @@ load_gpkg <- function(file_url, temps=NULL){
   return(temp_sf)
 }
 
+
+
+#' Check internet connection with Ipea server
+#'
+#' @description
+#' Checks if there is internet connection to Ipea server to download aop data.
+#'
+#' @param file_url A string with the file_url address of an aop dataset
+#'
+#' @return Logic `TRUE or `FALSE`.
+#'
+#' @export
+#' @family support functions
+#'
+is_online <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'){
+
+  # suppress warnings
+  oldw <- getOption("warn")
+  options(warn = -1)
+  on.exit(options(warn = oldw))
+
+  # test server connection
+  con <- url(file_url)
+  t <- suppressWarnings({ try( open.connection(con, open="rt", timeout=2), silent=T)[1] })
+  if(is.null(t)){t <- 'Ok'}
+  if ("try-error" %in% class(t) | t %like% 'Error'){
+    stop('Internet connection problem. If this is not a connection problem in your network, please try geobr again in a few minutes.')
+  }
+  suppressWarnings({ try(close.connection(con), silent=TRUE) })
+
+}
+
 # nocov end

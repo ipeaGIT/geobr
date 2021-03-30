@@ -29,6 +29,7 @@ df <- download_metadata()
 \seealso{
 Other support functions: 
 \code{\link{download_gpkg}()},
+\code{\link{is_online}()},
 \code{\link{load_gpkg}()},
 \code{\link{select_data_type}()},
 \code{\link{select_year_input}()}
