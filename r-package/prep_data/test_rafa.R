@@ -348,6 +348,7 @@ rcmdcheck::rcmdcheck(build_args = c('--compact-vignettes=gs+qpdf'))
 Sys.setenv(NOT_CRAN = "true")
 devtools::check(pkg = ".",  cran = FALSE, env_vars = c(NOT_CRAN = "true"))
 
+
 # CRAN
 Sys.setenv(NOT_CRAN = "false")
 devtools::check(pkg = ".",  cran = TRUE, env_vars = c(NOT_CRAN = "false"))

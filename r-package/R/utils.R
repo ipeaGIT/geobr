@@ -110,7 +110,12 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
     # check if file has not been downloaded already. If not, download it
     if (!file.exists(temps)) {
-        httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
+
+      # test server connection
+      is_online(file_url[1])
+
+      # download data
+      httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
       }
 
     # load gpkg to memory
@@ -125,7 +130,12 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
     # check if file has not been downloaded already. If not, download it
     if (!file.exists(temps)) {
-        httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
+
+      # test server connection
+      is_online(file_url[1])
+
+      # download data
+      httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
       }
 
     # load gpkg to memory
@@ -142,6 +152,9 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     # input for progress bar
     total <- length(file_url)
     pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+
+    # test server connection
+    is_online(file_url[1])
 
     # download files
     lapply(X=file_url, function(x){
@@ -169,6 +182,9 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     }
 
   else if(length(file_url) > 1 & progress_bar == FALSE) {
+
+    # test server connection
+    is_online(file_url[1])
 
     # download files
     lapply(X=file_url, function(x){
