@@ -16,8 +16,8 @@ Select data type: 'original' or 'simplified' (default)
 }
 \seealso{
 Other support functions: 
+\code{\link{check_connection}()},
 \code{\link{download_gpkg}()},
-\code{\link{is_online}()},
 \code{\link{load_gpkg}()},
 \code{\link{select_metadata}()},
 \code{\link{select_year_input}()}

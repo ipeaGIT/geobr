@@ -403,3 +403,196 @@ grid_state_correspondence_table
 
 
 
+
+# ------------------------------- arranjos de pop
+
+
+library(sf)
+library(data.table)
+library(mapview)
+
+mapviewOptions(platform = 'leafgl')
+
+https://www.ibge.gov.br/geociencias/organizacao-do-territorio/divisao-regional/15782-arranjos-populacionais-e-concentracoes-urbanas-do-brasil.html?=&t=downloads
+
+# raw-data file
+file <- 'C:/Users/user/Downloads/ArranjosPopulacionais_mbd_2ed/ArranjosPopulacionais_2ed.mdb'
+
+# available
+st_layers(file)
+
+# ap <- sf::st_read(file, layer = 'ArranjosPopulacionais_01')
+# cp <- sf::st_read(file, layer = 'ConcentracoesUrbanas_ConsideradasAnalise_01')
+
+# read data of municipalities
+mun <- sf::st_read(file,
+                   layer = 'ComposicaoRecortes_01_PorMunicipio'
+                   # ,options = "ENCODING=WINDOWS-874"
+                   )
+# unique(mun$NomeMediaConcUrbana)
+# en <- unique(mun$NomeMediaConcUrbana) %>% stringi::stri_enc_detect2()
+# en
+# en <- rbindlist(en)
+# subset(en, Confidence > .85) %>% unique()
+# subset(en, !is.na(Language ))
+
+mun <- sf::st_read('C:/Users/user/Downloads/ArranjosPopulacionais_mbd_2ed/mun.gpkg')
+
+
+
+
+
+
+# select / rename columns
+temp_sf <- dplyr::select(mun,
+                         code_muni = CodMunic,
+                         name_muni = NomMunic,
+                         pop_total_2010 = PopTot2010,
+                         pop_urban_2010 = Pess2010Urbano,
+                         pop_rural_2010 = Pess2010Rural,
+
+                         code_pop_arrangement = CodArranjoPop ,
+                         name_pop_arrangement = NomeArranjoPop ,
+
+                         code_urban_concentration_big = CodGrandeConcUrbana ,
+                         name_urban_concentration_big = NomeGrandeConcUrbana ,
+                         code_urban_concentration_mid = CodMediaConcUrbana ,
+                         name_urban_concentration_mid = NomeMediaConcUrbana ,
+                         geom = geom
+)
+
+head(temp_sf)
+
+# Use UTF-8 encoding
+temp_sf <- use_encoding_utf8(temp_sf)
+
+# create unique code for urban concentration areas
+setDT(temp_sf)
+temp_sf[, code_urban_concentration := code_urban_concentration_big]
+temp_sf[, code_urban_concentration := fifelse(is.na(code_urban_concentration),
+                                              code_urban_concentration_mid,
+                                              code_urban_concentration)]
+
+temp_sf[, name_urban_concentration := name_urban_concentration_big]
+temp_sf[, name_urban_concentration := fifelse(is.na(name_urban_concentration),
+                                              name_urban_concentration_mid,
+                                              name_urban_concentration)]
+
+# drop old columns
+temp_sf[, c('name_urban_concentration_mid', 'name_urban_concentration_big',
+            'code_urban_concentration_mid', 'code_urban_concentration_big') := NULL]
+
+
+# back to sf
+temp_sf <- st_sf(temp_sf)
+
+# add name_state
+temp_sf$code_state <- substring(temp_sf$code_muni, 1,2)
+temp_sf <- add_state_info(temp_sf,column = 'code_state')
+
+
+# remove Z dimension of spatial data
+temp_sf <- temp_sf %>% st_sf() %>% st_zm( drop = T, what = "ZM")
+head(temp_sf)
+
+# Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
+temp_sf <- harmonize_projection(temp_sf)
+
+# Make an invalid geometry valid # st_is_valid( sf)
+temp_sf <- sf::st_make_valid(temp_sf)
+
+
+
+###### ARRANJOS POPULACIONAIS
+
+# subset munis
+df1_arranjo <- subset(temp_sf, ! is.na(code_pop_arrangement))
+unique(df1_arranjo$code_pop_arrangement) %>% length()
+
+# reorder columns
+df1_arranjo <- dplyr::select(df1_arranjo, c(code_pop_arrangement, name_pop_arrangement, code_muni, name_muni, pop_total_2010, pop_urban_2010, pop_rural_2010,
+                                            code_state, abbrev_state, name_state, geom))
+
+
+
+# simplify
+temp_sf_simplified <- simplify_temp_sf(temp_sf)
+
+# convert to MULTIPOLYGON
+temp_sf <- to_multipolygon(temp_sf)
+temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
+
+
+
+
+###### CONCENTRACAO URBABA
+
+# subset munis
+df2_concentr <- subset(temp_sf, ! is.na(code_urban_concentration))
+unique(df2_concentr$code_urban_concentration) %>% length()
+
+# reorder columns
+df2_concentr <- dplyr::select(df2_concentr, c(code_urban_concentration, name_urban_concentration, code_muni, name_muni, pop_total_2010, pop_urban_2010, pop_rural_2010,
+                                            code_state, abbrev_state, name_state, geom))
+
+
+
+
+
+
+
+# Concentracao urb
+urb_concent <- subset(temp_sf, ! is.na(code_urban_concentration))
+unique(urb_concent$code_urban_concentration) %>% length()
+
+
+mapview(pop_arrangement) + urb_concent
+
+
+
+concen_big <- subset(temp_sf, ! is.na(code_urban_concentration_big))
+
+
+
+
+urban_concentration <- subset(temp_sf, ! is.na(code_urban_concentration))
+urban_concentration <- subset(urban_concentration, code_urban_concentration != '' )
+
+
+table(urban_concentration$code_urban_concentration_big)
+
+
+
+#' Download population arrangements in Brazil
+#'
+#' @description
+#' This function reads the official data on population arrangements (Arranjos
+#' Populacionais) of Brazil. Original data were generated by the Institute of
+#' Geography and Statistics (IBGE)  For more information about the methodology,
+#' see details at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
+
+#' pa <- read_pop_arrangements(year=2015)
+
+#' Download urban concentration areas in Brazil
+#'
+#' @description
+#' This function reads the official data on the urban concentration areas (Areas
+#' de Concentracao de Populacao) of Brazil. Original data were generated by the
+#' Institute of Geography and Statistics (IBGE)  For more information about the
+#' methodology, see details at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
+#'
+#' @param year A year number in YYYY format. Defaults to `2015`
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function returns
+#' the data set with 'original' resolution or a data set with 'simplified' borders.
+#' Defaults to `TRUE`. For spatial analysis and statistics users should set
+#' `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
+#'
+#' @export
+#' @examples \dontrun{ if (interactive()) {
+#' # Read urban footprint of Brazilian cities in an specific year
+#' uc <- read_urban_concentration(year=2015)
+#' } }

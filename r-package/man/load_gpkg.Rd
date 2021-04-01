@@ -16,8 +16,8 @@ Load geopackage from tempdir to global environment
 }
 \seealso{
 Other support functions: 
+\code{\link{check_connection}()},
 \code{\link{download_gpkg}()},
-\code{\link{is_online}()},
 \code{\link{select_data_type}()},
 \code{\link{select_metadata}()},
 \code{\link{select_year_input}()}

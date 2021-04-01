@@ -112,7 +112,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     if (!file.exists(temps)) {
 
       # test server connection
-      is_online(file_url[1])
+      check_connection(file_url[1])
 
       # download data
       httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
@@ -132,7 +132,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     if (!file.exists(temps)) {
 
       # test server connection
-      is_online(file_url[1])
+      check_connection(file_url[1])
 
       # download data
       httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
@@ -154,7 +154,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
 
     # test server connection
-    is_online(file_url[1])
+    check_connection(file_url[1])
 
     # download files
     lapply(X=file_url, function(x){
@@ -184,7 +184,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
   else if(length(file_url) > 1 & progress_bar == FALSE) {
 
     # test server connection
-    is_online(file_url[1])
+    check_connection(file_url[1])
 
     # download files
     lapply(X=file_url, function(x){
@@ -250,34 +250,36 @@ load_gpkg <- function(file_url, temps=NULL){
 
 
 
+
+
+
 #' Check internet connection with Ipea server
 #'
 #' @description
-#' Checks if there is internet connection to Ipea server to download aop data.
+#' Checks if there is internet connection to Ipea server to download geobr data.
 #'
-#' @param file_url A string with the file_url address of an aop dataset
+#' @param file_url A string with the file_url address of an geobr dataset
 #'
 #' @return Logic `TRUE or `FALSE`.
 #'
 #' @export
 #' @family support functions
 #'
-is_online <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'){
+check_connection <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'){
 
-  # suppress warnings
-  oldw <- getOption("warn")
-  options(warn = -1)
-  on.exit(options(warn = oldw))
+  # check internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection.")
+    return(invisible(NULL))
+  }
 
   # test server connection
-  con <- url(file_url)
-  t <- suppressWarnings({ try( open.connection(con, open="rt", timeout=2), silent=T)[1] })
-  if(is.null(t)){t <- 'Ok'}
-  if ("try-error" %in% class(t) | t %like% 'Error'){
-    stop('Internet connection problem. If this is not a connection problem in your network, please try geobr again in a few minutes.')
+  # crul::ok(file_url)
+  if (httr::http_error(httr::GET(file_url))) {
+    message("Problem connecting to data server. Please try geobr again in a few minutes.")
+    return(invisible(NULL))
   }
-  suppressWarnings({ try(close.connection(con), silent=TRUE) })
-
 }
+
 
 # nocov end

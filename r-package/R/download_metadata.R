@@ -19,7 +19,7 @@ download_metadata <- function(){ # nocov start
 
     # test server connection
     metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
-    is_online(metadata_link)
+    check_connection(metadata_link)
 
     # download metadata to temp file
     httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = T))
