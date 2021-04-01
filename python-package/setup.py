@@ -38,7 +38,7 @@ def write_version_py(filename=os.path.join(setup_dir, "feather/version.py")):
 
 # write_version_py()
 
-DESCRIPTION = "geobr: Loads Shapefiles of Official Spatial Data Sets of Brazil"
+DESCRIPTION = "geobr: Download Official Spatial Data Sets of Brazil"
 
 CLASSIFIERS = [
     "Intended Audience :: Science/Research",
