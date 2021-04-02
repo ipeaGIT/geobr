@@ -729,12 +729,25 @@ if (startyear<=1940 | endyear>=1960){
 
 }
 
-## Fixing code_muni to 1970 code Mato Grosso do Sul and Tocantins
+## Fixing code_muni to 1970 code Mato Grosso do Sul
 if(endyear <= 1970){
 
   data_mun <- data_mun %>%
     mutate(code_state =  as.numeric(substr(code2010,1,2)),
            code_state = ifelse(code_state == 50,51,code_state),
+           #code_state = ifelse(code_state == 17,52,code_state),
+           code2010 = substr(code2010,3,6),
+           code2010 = as.numeric(paste0(code_state,code2010))) %>%
+    select(-c(code_state))
+
+}
+	
+## Fixing code_muni to 1980 code Tocantins
+if(endyear <= 1980){
+
+  data_mun <- data_mun %>%
+    mutate(code_state =  as.numeric(substr(code2010,1,2)),
+           #code_state = ifelse(code_state == 50,51,code_state),
            code_state = ifelse(code_state == 17,52,code_state),
            code2010 = substr(code2010,3,6),
            code2010 = as.numeric(paste0(code_state,code2010))) %>%
