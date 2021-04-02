@@ -735,7 +735,7 @@ if(endyear <= 1970){
   data_mun <- data_mun %>%
     mutate(code_state =  as.numeric(substr(code2010,1,2)),
            code_state = ifelse(code_state == 50,51,code_state),
-           #code_state = ifelse(code_state == 17,52,code_state),
+           code_state = ifelse(code_state == 17,52,code_state),
            code2010 = substr(code2010,3,6),
            code2010 = as.numeric(paste0(code_state,code2010))) %>%
     select(-c(code_state))
@@ -743,7 +743,7 @@ if(endyear <= 1970){
 }
 	
 ## Fixing code_muni to 1980 code Tocantins
-if(endyear <= 1980){
+if(endyear == 1980){
 
   data_mun <- data_mun %>%
     mutate(code_state =  as.numeric(substr(code2010,1,2)),
@@ -884,7 +884,7 @@ dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/amc/",startyear,"/")
 dir <- paste0("./shapes_in_sf_all_years_cleaned/amc/",startyear,"/")
 
 # ## save final table
-# saveRDS(data_mun,paste0(dir,"AMC_",startyear,"_",endyear,".rds"))
+saveRDS(data_mun,paste0(dir,"AMC_",startyear,"_",endyear,".rds"))
 
 assign(paste0("_Crosswalk_final_",startyear,"_",endyear),data_mun)
 
@@ -894,7 +894,7 @@ assign(paste0("_Crosswalk_final_",startyear,"_",endyear),data_mun)
 map <- geobr::read_municipality(year= endyear, code_muni = 'all', simplified = FALSE)
 map$code_muni <- as.integer(map$code_muni)
 
-if(endyear <= 1970){
+if(endyear <= 1980){
 data_mun_sf <- left_join(map %>% mutate(code_muni = as.numeric(substr(code_muni,1,6))), data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
 } else{
 data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
