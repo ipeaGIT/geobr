@@ -24,6 +24,7 @@ Meta
 # Python Ignores
 python-package/.venv/
 python-package/notebooks/
+python-package/build/
 
 *.pyc
 
