@@ -3,7 +3,7 @@ from geobr.utils import select_metadata, download_gpkg
 
 
 def {{ name }}(year={{ default_year }}, simplified=True, verbose=False):
-    """{{ first_liner }}
+    r"""{{ first_liner }}
     
     {{ documentation }}
 
