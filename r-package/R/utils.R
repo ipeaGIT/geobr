@@ -135,7 +135,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       check_connection(file_url[1])
 
       # download data
-      httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
+      httr::GET(url=file_url, httr::write_disk(temps, overwrite = T))
       }
 
     # load gpkg to memory
