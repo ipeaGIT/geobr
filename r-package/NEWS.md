@@ -9,6 +9,8 @@
 * New function `read_comparable_areas` to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17
 * New data set of macro regions og health, which can be accessed using the new `macro` parameter added to `read_health_region()` function. Closes issue #219.
 * New internal support function `is_online()`to check internet connection with Ipea server. Closes #229
+* New data/function `read_urban_concentrations`. Closes #232
+* New data/function `read_pop_arrangements`. Closes #231
 * updated data sets for 2020:
   * Country
   * Regions

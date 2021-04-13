@@ -71,7 +71,10 @@
   table(metadata$geo)
   table(metadata$year)
 
-  subset(metadata, geo == 'health_region_macro')
+  subset(metadata, geo == 'pop_arrengements')
+  subset(metadata, geo == 'urban_concentrations')
+  subset(metadata, geo == 'meso_region')[1:4,]
+  subset(metadata, geo == 'micro_region')[1:4,]
   subset(metadata, geo == 'census_tract' & year==2020)
   subset(metadata, year==2020)
 

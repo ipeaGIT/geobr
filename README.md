@@ -113,7 +113,8 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_neighborhood` | Neighborhood limits |  2010 | IBGE |
 |`read_schools` | Schools |  2020 | INEP |
 |`read_comparable_areas` (dev) | Historically comparable municipalities, aka Areas minimas comparaveis (AMCs) |  1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010 | IBGE |
-
+|`read_urban_concentrations` (dev) | Urban concentration areas (concentrações urbanas) | 2015 | IBGE | 
+|`read_pop_arrangements` (dev) | Population arrangements (arranjos populacioanis) | 2015 | IBGE | 
 
 
 

@@ -23,12 +23,12 @@ def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.c
     ----------
     url : str, optional
         Metadata url, by default 'http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
-    
+
     Returns
     -------
     pd.DataFrame
         Table with all metadata of geopackages
-    
+
     Raises
     ------
     Exception
@@ -58,7 +58,7 @@ def select_year(metadata, year):
     """Apply year to metadata and checks its existence.
 
     If it do not exist, raises an informative error.
-    
+
     Parameters
     ----------
     metadata : pd.DataFrame
@@ -70,7 +70,7 @@ def select_year(metadata, year):
     -------
     pd.DataFrame
         Filtered dataframe by year.
-    
+
     Raises
     ------
     Exception
@@ -87,30 +87,30 @@ def select_year(metadata, year):
         raise Exception(
             "Error: Invalid Value to argument year. "
             "It must be one of the following: "
-            f'{_get_unique_values[metadata, "year"]}'
+            f'{_get_unique_values(metadata, "year")}'
         )
 
     return metadata.query(f"year == {year}")
 
 
 def select_simplified(metadata, simplified):
-    """Filter metadata by data type. It can be simplified or normal. 
+    """Filter metadata by data type. It can be simplified or normal.
     If 'simplified' is True, it returns a simplified version of the shapefiles.
     'normal' returns the complete version. Usually, the complete version
     if heavier than the simplified, demanding more resources.
-    
+
     Parameters
     ----------
     metadata : pd.DataFrame
         Filtered metadata table
     simplified : boolean
         Data type, either True for 'simplified' or False for 'normal'
-    
+
     Returns
     -------
     pd.DataFrame
         Filtered metadata table by type
-    
+
     """
 
     if simplified:
@@ -125,12 +125,12 @@ def load_gpkg(url):
     """Internal function to donwload and convert to geopandas one url.
 
     It caches url result for the active session.
-    
+
     Parameters
     ----------
     url : str
         Address with gpkg
-    
+
     Returns
     -------
     gpd.GeoDataFrame
@@ -167,12 +167,12 @@ def load_gpkg(url):
 def download_gpkg(metadata):
     """Generalizes gpkg dowload and conversion to geopandas
     for one or many urls
-    
+
     Parameters
     ----------
     metadata : pd.DataFrame
         Filtered metadata
-    
+
     Returns
     -------
     gpd.GeoDataFrame
@@ -188,7 +188,7 @@ def download_gpkg(metadata):
 
 def select_metadata(geo, simplified=None, year=False):
     """Downloads and filters metadata given `geo`, `simplified` and `year`.
-    
+
     Parameters
     ----------
     geo : str
@@ -197,12 +197,12 @@ def select_metadata(geo, simplified=None, year=False):
         `simplified` or `normal` shapefiles
     year : int
         Year of the data
-    
+
     Returns
     -------
     pd.DataFrame
         Filtered metadata
-    
+
     Raises
     ------
     Exception
@@ -216,7 +216,7 @@ def select_metadata(geo, simplified=None, year=False):
         raise Exception(
             f"The `geo` argument {geo} does not exist."
             "Please, use one of the following:"
-            f'{_get_unique_values[metadata, "geo"]}'
+            f'{_get_unique_values(metadata, "geo")}'
         )
 
     # Select geo

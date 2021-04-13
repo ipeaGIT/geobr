@@ -7,7 +7,7 @@ import re
 from fire import Fire
 
 
-def get_R_parameters(config, path=Path("../r-package/R/")):
+def get_R_parameters(config, path):
 
     r_code = open(path / f'{config["name"]}.R', "r").read()
 
@@ -32,7 +32,7 @@ def get_R_parameters(config, path=Path("../r-package/R/")):
     config["metadata_key"] = [
         re.search(r'"([A-Za-z0-9_\./\\-]*)"', s).group(0).strip('"')
         for s in r_code.split("\n")
-        if "download_metadata(geography=" in s
+        if "select_metadata(geography=" in s
     ][0]
 
     return config
@@ -55,13 +55,15 @@ def main(name, overwrite=False):
 
     config = {"name": name}
 
-    if Path(f'geobr/{config["name"]}.py').exists() and not overwrite:
+    geobr_path = Path(__file__).absolute().parent.parent.parent
+
+    if (geobr_path / f'{config["name"]}.py').exists() and not overwrite:
         raise Exception(
             f"Function already translated." "Pass --overwrite flag to overwrite file"
         )
 
     try:
-        config = get_R_parameters(config)
+        config = get_R_parameters(config, geobr_path / "r-package/R/")
 
     except FileNotFoundError:
         raise Exception(f"Function {name} was not implemented in R")

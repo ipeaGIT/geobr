@@ -7,7 +7,7 @@
 
 source("./prep_data/prep_functions.R")
 
-#source(file = "_Crosswalk_pré.R")
+#source(file = "_Crosswalk_pre.R")
 library(readxl)
 library(dplyr)
 library(tidyr)
@@ -20,9 +20,8 @@ library(ggplot2)
 
 # Exemplo sem função :
 
-#startyear <- 1950
-#endyear <- 2010
-
+# startyear <- 1950
+# endyear <- 2010
 # y0 <- startyear
 
 # support function
@@ -169,7 +168,7 @@ matching <- function(data_mun=NULL, y0){
 
 
 # Main Function -------------------------------------
-table_amc <- function(startyear=NULL,endyear=NULL){
+table_amc <- function(startyear=NULL, endyear=NULL){
 
 
 # FAZER !!!!!!!!!!!!!!!
@@ -651,7 +650,7 @@ y0 <- y1
 ## Final changes in the procedure
 # Use the last generated data set
 
-## Mudanças finais no procedimento
+## Mudancas finais no procedimento
 # Use o último conjunto de dados gerado
 
 data_mun <- get(paste0("_Crosswalk_",y_1))
@@ -730,19 +729,32 @@ if (startyear<=1940 | endyear>=1960){
 
 }
 
-## Fixing code_muni to 1970 code Mato Grosso do Sul and Tocantins
+## Fixing code_muni to 1970 code Mato Grosso do Sul
 if(endyear <= 1970){
-  
-  data_mun <- data_mun %>% 
+
+  data_mun <- data_mun %>%
     mutate(code_state =  as.numeric(substr(code2010,1,2)),
            code_state = ifelse(code_state == 50,51,code_state),
            code_state = ifelse(code_state == 17,52,code_state),
            code2010 = substr(code2010,3,6),
-           code2010 = as.numeric(paste0(code_state,code2010))) %>% 
+           code2010 = as.numeric(paste0(code_state,code2010))) %>%
     select(-c(code_state))
-  
-}	
+
+}
 	
+## Fixing code_muni to 1980 code Tocantins
+if(endyear == 1980){
+
+  data_mun <- data_mun %>%
+    mutate(code_state =  as.numeric(substr(code2010,1,2)),
+           #code_state = ifelse(code_state == 50,51,code_state),
+           code_state = ifelse(code_state == 17,52,code_state),
+           code2010 = substr(code2010,3,6),
+           code2010 = as.numeric(paste0(code_state,code2010))) %>%
+    select(-c(code_state))
+
+}
+
 #  ******************************************
 #  *** generate a new code for the final AMCs
 #  *** generate common UF_AMCs first
@@ -847,6 +859,16 @@ head(data_mun)
 data_mun <- subset(data_mun, !is.na(code_amc))
 data_mun$code_muni_2010 <- as.integer(data_mun$code_muni_2010)
 
+code_list <- setDT(data_mun)[, .(list_code_muni_2010 = paste(code_muni_2010, collapse = ','),
+                                 list_name_muni_2010 = paste(code_muni_2010, collapse = ',')
+                         ), by=code_amc]
+
+# code_list <- setDT(data_mun)[, .(list_code_muni_2010 = list(code_muni_2010),
+#                                  list_name_muni_2010 = list(code_muni_2010)
+#                                  ),
+#                              by=code_amc]
+
+head(code_list)
 
 ######## Create folders---------------------------------
 
@@ -862,7 +884,7 @@ dir.create(file.path(paste0("shapes_in_sf_all_years_cleaned/amc/",startyear,"/")
 dir <- paste0("./shapes_in_sf_all_years_cleaned/amc/",startyear,"/")
 
 # ## save final table
-# saveRDS(data_mun,paste0(dir,"AMC_",startyear,"_",endyear,".rds"))
+saveRDS(data_mun,paste0(dir,"AMC_",startyear,"_",endyear,".rds"))
 
 assign(paste0("_Crosswalk_final_",startyear,"_",endyear),data_mun)
 
@@ -872,10 +894,10 @@ assign(paste0("_Crosswalk_final_",startyear,"_",endyear),data_mun)
 map <- geobr::read_municipality(year= endyear, code_muni = 'all', simplified = FALSE)
 map$code_muni <- as.integer(map$code_muni)
 
-if(endyear <= 1970){
+if(endyear <= 1980){
 data_mun_sf <- left_join(map %>% mutate(code_muni = as.numeric(substr(code_muni,1,6))), data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
 } else{
-data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))  
+data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
 }
 
 data_mun_sf <- data_mun_sf %>% filter(!is.na(code_amc))
@@ -886,6 +908,10 @@ data_mun_sf <- data_mun_sf %>% filter(!is.na(code_amc))
 data_mun_sf <- dissolve_polygons(mysf = data_mun_sf, group_column="code_amc")
 
 
+### ADD code list
+data_mun_sf <- dplyr::left_join(data_mun_sf, code_list)
+head(data_mun_sf)
+class(data_mun_sf$list_code_muni_2010)
 
 
 
@@ -894,8 +920,8 @@ data_mun_sf_simplified <- simplify_temp_sf(data_mun_sf)
 
 
 ###### convert to MULTIPOLYGON -----------------
+data_mun_sf <- to_multipolygon(data_mun_sf)
 data_mun_sf_simplified <- to_multipolygon(data_mun_sf_simplified)
-data_mun_sf<- to_multipolygon(data_mun_sf)
 
 
 
@@ -911,6 +937,7 @@ file.name <- paste0(dir,"AMC_",startyear,"_",endyear,"_simplified.gpkg")
 
 sf::st_write(data_mun_sf_simplified, file.name , delete_layer = TRUE)
 
+message(paste0('Just saved ', file.name) )
 
 }
 
