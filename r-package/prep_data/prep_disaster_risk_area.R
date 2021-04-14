@@ -181,3 +181,7 @@ sf::st_write(temp_sf,     dsn=  paste0(destdir_clean,"/disaster_risk_area2010.gp
 sf::st_write(temp_sf7,    dsn=  paste0(destdir_clean,"/disaster_risk_area2010 _simplified", ".gpkg"))
 
 
+
+#teste push
+
+
