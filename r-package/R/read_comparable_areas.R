@@ -5,7 +5,7 @@
 #' municipalities, known in Portuguese as 'Areas minimas comparaveis (AMCs)'.
 #' The data is available for any combination of census years between 1872-2010.
 #' These data sets are generated based on the Stata code originally developed by
-#' \href{https://doi.org/10.1590/0101-416147182phe}{Philipp Ehrl}, and translated
+#' \doi{10.1590/0101-416147182phe}{Philipp Ehrl}, and translated
 #' into `R` by the `geobr` team.
 #'
 #' @param start_year Numeric. Start year to the period.

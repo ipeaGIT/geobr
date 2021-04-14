@@ -2,7 +2,13 @@
 
 
 -------------------------------------------------------
-# geobr v1.6 (dev)
+# geobr v1.6.1 (dev)
+
+
+
+
+-------------------------------------------------------
+# geobr v1.6.0
 
 ### New data sets/functions
 * From v1.6 onwards, `geobr` stores downloaded in temporary cache in `tempdir()`. Closes #225.

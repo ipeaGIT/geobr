@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -123,9 +123,15 @@
       <small>Source: <a href='https://github.com/ipeaGIT/geobr/tree/master/r-package/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="geobr-v16-dev" class="section level1">
-<h1 class="page-header" data-toc-text="1.6">
-<a href="#geobr-v16-dev" class="anchor"></a>geobr v1.6 (dev)<small> Unreleased </small>
+    <div id="geobr-v161-dev" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.1">
+<a href="#geobr-v161-dev" class="anchor"></a>geobr v1.6.1 (dev)<small> Unreleased </small>
+</h1>
+<hr>
+</div>
+    <div id="geobr-v160" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0">
+<a href="#geobr-v160" class="anchor"></a>geobr v1.6.0<small> Unreleased </small>
 </h1>
 <div id="new-data-setsfunctions" class="section level3">
 <h3 class="hasAnchor">
@@ -134,6 +140,9 @@
 <li>From v1.6 onwards, <code>geobr</code> stores downloaded in temporary cache in <code><a href="https://rdrr.io/r/base/tempfile.html">tempdir()</a></code>. Closes #225.</li>
 <li>New function <code>read_comparable_areas</code> to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17</li>
 <li>New data set of macro regions og health, which can be accessed using the new <code>macro</code> parameter added to <code><a href="../reference/read_health_region.html">read_health_region()</a></code> function. Closes issue #219.</li>
+<li>New internal support function <code>is_online()</code>to check internet connection with Ipea server. Closes #229</li>
+<li>New data/function <code>read_urban_concentrations</code>. Closes #232</li>
+<li>New data/function <code>read_pop_arrangements</code>. Closes #231</li>
 <li>updated data sets for 2020:
 <ul>
 <li>Country</li>
