@@ -5,6 +5,9 @@
 # geobr v1.6.1 (dev)
 
 
+### Minor changes
+* Improved `check_connection()` to fail gracefully. Return message, no error.
+
 
 
 -------------------------------------------------------

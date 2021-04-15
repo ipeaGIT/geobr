@@ -1,5 +1,7 @@
 context("download_metadata")
 
+testthat::skip_on_cran()
+
 test_that("download_metadata", {
 
   metadata <- download_metadata()
