@@ -1,8 +1,13 @@
 # log history of geobr package development
 
+-------------------------------------------------------
+# geobr v1.7.0 (dev)
+
+
+
 
 -------------------------------------------------------
-# geobr v1.6.1 (dev)
+# geobr v1.6.1
 
 
 ### Minor changes
