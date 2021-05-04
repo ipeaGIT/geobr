@@ -21,3 +21,4 @@ from .read_weighting_area import read_weighting_area
 from .read_neighborhood import read_neighborhood
 from .read_health_region import read_health_region
 from .read_pop_arrangements import read_pop_arrangements
+from .lookup_muni import lookup_muni
