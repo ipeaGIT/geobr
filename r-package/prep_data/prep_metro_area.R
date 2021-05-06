@@ -1,11 +1,11 @@
-#> DATASET: metropolitan areas 2000 - 2018
+#> DATASET: metropolitan areas 2000 - 2020
 #> Source: IBGE - "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/"
 #: scale ________
 #> Metadata:
 # Titulo: Regioes Metropolitanas
 # Frequencia de atualizacao: Anual
 #
-# Forma de apresenta√ß√£o: Shape
+# Forma de apresentaÁ„o: Shape
 # Linguagem: Pt-BR
 # Character set: Utf-8
 #
@@ -51,19 +51,11 @@ setwd(root_dir)
 
 
 dest_dir <- './shapes_in_sf_all_years_cleaned/'
-dir.create( paste(dest_dir,"",sep = "") )
+dir.create(dest_dir)
 
-# # 2001_2005
-# dir_2001_2005 <- "./2001_2005/"
-# dir.create(paste(dir_2001_2005,"",sep = ""))
-#
-# # 2010_2018
-# dir_2010_2018 <- "./2010_2018/"
-# dir.create(paste(dir_2010_2018,"/",sep = ""))
-
-
-
-
+# create folder original files 
+original_dir <- './shapes_in_sf_all_years_original/'
+dir.create( paste(original_dir,"",sep = "") )
 
 
 ##### 1. Download original data sets from IBGE ftp -----------------
@@ -79,38 +71,46 @@ filenames3 <- filenames[grepl("RM 18.11.02.xls", filenames)]
 filenames_01_05 <- c(filenames2,filenames3)
 
 
-ftp_10_18 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/Situacao_2010a2019/"
-filenames <- RCurl::getURL(ftp_10_18, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+ftp_10_19 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/Situacao_2010a2019/"
+filenames <- RCurl::getURL(ftp_10_19, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 filenames <- strsplit(filenames, "\r\n")
 filenames <- unlist(filenames)
-filenames <- filenames[!grepl('.xlsx', filenames)]
-filenames <- filenames[grepl(".xls", filenames)]
-filenames_10_18 <- filenames[grepl("_06_|_07_", filenames)]
-## n√£o tem dados para 2011 e 2012
+filenames <- filenames[!grepl("2016_06_30.xlsx|.ods", filenames)]
+filenames_10_19 <- filenames[grepl("_06_|_07_", filenames)]
+## n„o tem dados para 2011 e 2012
+
+ftp_20_29 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/municipios_por_regioes_metropolitanas/Situacao_2020a2029/"
+filenames <- RCurl::getURL(ftp_20_29, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+filenames <- strsplit(filenames, "\r\n")
+filenames <- unlist(filenames)
+filenames_20_29 <- filenames[grepl('.xlsx', filenames)]
+
 
 
 ### fazer o download dos arquivos
+setwd(original_dir)
 
 # 2001:2005
 for (files in filenames_01_05) {
   download.file( url = paste(ftp_01_05, files, sep = ""),
-                 destfile = paste('.', files, sep = ""),
+                 destfile = files,
                  mode = "wb")
   }
 
 
-# 2010:2018
-for (files_ in filenames_10_18) {
-  download.file( url = paste(ftp_10_18,files_, sep = ""),
-                 destfile = paste('.', files_, sep = ""),
+# 2010:2019
+for (files_ in filenames_10_19) {
+  download.file( url = paste(ftp_10_19,files_, sep = ""),
+                 destfile = files_,
                  mode = "wb")
 }
 
-
-
-
-
-
+# 2020:2029
+for (files_ in filenames_20_29) {
+  download.file( url = paste(ftp_20_29,files_, sep = ""),
+                 destfile = files_,
+                 mode = "wb")
+}
 
 
 
@@ -121,7 +121,7 @@ for (files_ in filenames_10_18) {
 
 # listar arquivos baixados
 dados_01_05 <- list.files(pattern = "*.xls", all.files = T)
-dados_01_05 <- dados_01_05[ dados_01_05  %like% '.RM ']
+dados_01_05 <- dados_01_05[ dados_01_05  %like% 'RM ']
 
 
 
@@ -133,7 +133,7 @@ for (i in 1:4){
   dado1 <- readxl::read_excel(path = dados_01_05[i])
 
   # identifica ano de referencia do arquibo
-  year_RM <- paste0(20,substr(dados_01_05[i],11,12))
+  year_RM <- paste0(20,substr(dados_01_05[i],10,11))
 
  # Corrige encoding dos dados
   if (year_RM %like% "2001|2005"){
@@ -159,7 +159,7 @@ for (i in 1:4){
   dado2$name_metro <- zoo::na.locf(dado2$name_metro)
 
 ## Coluna legislation e legislation_date
-  setnames(dado2, "LEGISLA√á√ÉO", "legislation")
+  setnames(dado2, "LEGISLA«√O", "legislation")
 
   # identifica coluna problema com data de criacao da lei de Regiao Metropolitana, e renomeia coluna
   colname_data <- grep("DATA",colnames(dado2), value= T)
@@ -176,10 +176,10 @@ for (i in 1:4){
   if (year_RM %like% "2001|2002|2003"){
 
     # Coluna code_metro
-    setnames(dado2, "C√ìDIGO", "code_metro")
+    setnames(dado2, "C”DIGO", "code_metro")
 
     # Coluna code_muni
-    colname_codigo <- grep("C√ìDIGO_DO_MUN", names(dado2), value = T)
+    colname_codigo <- grep("C”DIGO_DO_MUN", names(dado2), value = T)
     setnames(dado2, colname_codigo, "code_muni")
 
     # Coluna name_muni
@@ -190,12 +190,12 @@ for (i in 1:4){
   } else {
 
     # Identifica nome da coluna
-    colname_codigo_ <- grep("C√ìDIGO",colnames(dado2),value = T)[1]
+    colname_codigo_ <- grep("C”DIGO",colnames(dado2),value = T)[1]
     # rename col
     setnames(dado2, colname_codigo_,"code_muni")
 
     # Coluna name_muni
-    setnames(dado2, "MUNIC√çPIO", "name_muni")
+    setnames(dado2, "MUNICÕPIO", "name_muni")
     dado2$name_muni = NULL
 
   }
@@ -205,7 +205,7 @@ for (i in 1:4){
   dado2$code_muni <- as.numeric(as.character(dado2$code_muni))
 
 # if 2001, add "RM" to 'name_metro' to harmonize column with other years
-  if(year_RM==2001){ setDT(dado2)[ !(name_metro %like% 'Distrito Federal|Aglomera√ß√£o Urbana|RIDE|Colar Metropolitano|√Årea de Expans√£|N√∫cleo Metropolitano'), name_metro := paste0('RM ', name_metro)] }
+  if(year_RM==2001){ setDT(dado2)[ !(name_metro %like% 'Distrito Federal|AglomeraÁ„o Urbana|RIDE|Colar Metropolitano|¡rea de Expans„o|N˙cleo Metropolitano'), name_metro := paste0('RM ', name_metro)] }
 
 
 
@@ -221,7 +221,14 @@ for (i in 1:4){
   dado3 <- dplyr::left_join(dado2, municipios, by = "code_muni") %>% setDT()
 
 # reordena colunas
-  setcolorder(dado3, c('name_metro', 'code_muni', 'name_muni', 'legislation', 'legislation_date', 'code_state', 'abbrev_state', 'geometry'))
+  setcolorder(dado3, c('name_metro', 
+                       'code_muni', 
+                       'name_muni', 
+                       'legislation', 
+                       'legislation_date', 
+                       'code_state', 
+                       'abbrev_state', 
+                       'geom'))
 
 # set back to spatial sf
   temp_sf <- st_as_sf(dado3, crs=4674)
@@ -241,124 +248,147 @@ for (i in 1:4){
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
 # create dir to save data
-  dir.create(paste(dest_dir,year_RM,"/",sep = ""))
+  dir.create(paste0(root_dir, "/shapes_in_sf_all_years_cleaned/",year_RM))
 
 ### Save data
-  readr::write_rds(temp_sf, path=paste0(dest_dir,year_RM,"/",'metro_',year_RM,".rds"), compress = "gz")
-  sf::st_write(data1970_sf, dsn =paste0(dest_dir,year_RM,"/",'metro_',year_RM,".gpkg"))
-  sf::st_write(data1970_sf_simplified, dsn =paste0(dest_dir,year_RM,"/",'metro_',year_RM,"_simplified.gpkg"))
+  sf::st_write(temp_sf, dsn = paste0(root_dir,substr(dest_dir, 2, 33),year_RM,"/",'metro_',year_RM,".gpkg"))
+  sf::st_write(temp_sf_simplified, dsn = paste0(root_dir,substr(dest_dir, 2, 33),year_RM,"/",'metro_',year_RM,"_simplified.gpkg"))
 }
 
 # encoding 2002 e 2003: WINDOWS-1252
 #
 
 
-
-
-#### 2.2 Cleaning date 2010-2018 -----------------
+#### 2.2 Cleaning date 2010-2020 -----------------
 
 # listar arquivos baixados
-dados_10_18 <- list.files(pattern = "*.xls", all.files = T)
-dados_10_18 <- dados_10_18[ dados_10_18  %like% 'RMs']
+dados_10_20 <- list.files(pattern = "*.xls", all.files = T)
+dados_10_20 <- dados_10_20[ dados_10_20  %like% 'RMs']
 
 
 # create cleanning function
-fun_clean_2010_2018 <- function(i){
+fun_clean_2010_2020 <- function(i){
 
   # Read data
-  dados1 <- readxl::read_excel(path = i)
+  dado1 <- readxl::read_excel(path = i)
 
   # Fix Encoding
-  dados2 <- dados1 %>%
+  dado2 <- dado1 %>%
     mutate_if(is.factor, function(x){ x %>% as.character() %>%
         stringi::stri_encode("WINDOWS-1252") } )
 
   # identifica ano de referencia
-  year_RM2 <- substr( i, 36, 39)
+  year_RM2 <- substr( i, 35, 38)
 
   # Progress message
   message(paste('working on', year_RM2))
 
-  #apagar as 4 √∫ltimas linhas do arquivo
+  #apagar as 4 ˙ltimas linhas do arquivo
   if  (year_RM2 %like% "2015"){
-    L <- nrow(dados2)
+    L <- nrow(dado2)
     a <- (L-3):L
-    b <- dados2[-a,]
+    b <- dado2[-a,]
   }
 
   # Rename code_muni
   if (year_RM2 %like% "2010|2013|2014|2015"){
-    dados2 <- dplyr::rename(dados1, code_muni = `C√≥digo Munic√≠pio`)
+    dado2 <- dplyr::rename(dado1, code_muni = `CÛdigo MunicÌpio`)
   } else {
-    dados2 <- dplyr::rename(dados1, code_muni = `COD_MUN`)
+    dado2 <- dplyr::rename(dado1, code_muni = `COD_MUN`)
   }
 
   # Converte Code muni para numerico
-  dados2$code_muni <- as.numeric(as.character(dados2$code_muni))
+  dado2$code_muni <- as.numeric(as.character(dado2$code_muni))
 
+  # Padroniza data
+  if (year_RM2 %like% "2019|2020"){
+    dado2$DATA <- format(dado2$DATA, "%d.%m.%Y")
+  }
+  
   # Todos colnames para minusculo
-  dados3 <- dados2 %>% setnames(colnames(dados2),tolower(colnames(dados2)))
+  dado3 <- dado2 %>% setnames(colnames(dado2),tolower(colnames(dado2)))
 
   # leitura dos dados espaciais
   municipios <- geobr::read_municipality(code_muni  = 'all', year=year_RM2)
 
   # merge de dados para adicionar coluna espacial 'geometry'
-  dados4 <- dplyr::left_join(dados3, municipios)
+  dado4 <- dplyr::left_join(dado3, municipios) %>% setDT()
 
   # Renomeia colunas (padrao varia em cada ano)
   if(year_RM2 %like% "2010|2013|2014"){
-    dados5 <- dplyr::rename(dados4,
-                            name_metro = `regi√£o metropolitana, ride ou aglomera√ß√£o urbana`,
-                            subdivision = `subdivis√µes`,
-                            legislation = `legisla√ß√£o`,
+    dado5 <- dplyr::rename(dado4,
+                            name_metro = `regi„o metropolitana, ride ou aglomeraÁ„o urbana`,
+                            subdivision = `subdivisıes`,
+                            legislation = `legislaÁ„o`,
                             legislation_date = `data lei`,
                             type = tipo
     )
   } else if (year_RM2 %like% "2015") {
-    dados5 <- dplyr::rename(dados4,
-                            name_metro = `regi√£o metropolitana, ride ou aglomera√ß√£o urbana`,
-                            subdivision = `subdivis√µes`,
-                            legislation = `legisla√ß√£o`,
-                            legislation_date = `data de publica√ß√£o da lei`,
+    dado5 <- dplyr::rename(dado4,
+                            name_metro = `regi„o metropolitana, ride ou aglomeraÁ„o urbana`,
+                            subdivision = `subdivisıes`,
+                            legislation = `legislaÁ„o`,
+                            legislation_date = `data de publicaÁ„o da lei`,
                             signature_date = `data de assinatura da lei`,
                             type = tipo
     )
+  } else if (year_RM2 %like% "2019|2020") {
+    dado5 <- dplyr::rename(dado4,
+                           name_metro = `nome`,
+                           subdivision = `cat_assoc`,
+                           legislation = `leg`,
+                           legislation_date = `data`,
+                           type = tipo
+    )
   } else {
-    dados5 <- dplyr::rename(dados4,
+    dado5 <- dplyr::rename(dado4,
                             name_metro = `nome_rm`,
                             subdivision = `subdivisao`,
                             legislation = `leg`,
                             legislation_date = `data`,
                             type = tipo)
   }
-
+  
   if(year_RM2 %like% "2010|2013|2014"){
-    dados6 <- dplyr::select(dados5,
-                            'code_muni',
-                            'name_muni',
-                            'code_state',
-                            'abbrev_state',
-                            'name_metro',
-                            'type',
-                            'legislation_date',
-                            'geometry'
+    dado6 <- dplyr::select(dado5,
+                           'name_metro',
+                           'code_muni',
+                           'name_muni',
+                           'code_state',
+                           'abbrev_state',
+                           'type',
+                           'legislation_date',
+                           'geom'
+    )
+  } else if (year_RM2 %like% "2019|2020"){
+    dado6 <- dplyr::select(dado5,
+                           'name_metro',
+                           'code_muni',
+                           'name_muni',
+                           'legislation',
+                           'legislation_date',
+                           'code_state',
+                           'abbrev_state',
+                           'type',
+                           'subdivision',
+                           'geom'
     )
   } else {
-    dados6 <- dplyr::select(dados5,
-                            'code_muni',
-                            'name_muni',
-                            'code_state',
-                            'abbrev_state',
-                            'name_metro',
-                            'type',
-                            'subdivision',
-                            'legislation',
-                            'geometry'
+    dado6 <- dplyr::select(dado5,
+                           'name_metro',
+                           'code_muni',
+                           'name_muni',
+                           'legislation',
+                           'code_state',
+                           'abbrev_state',
+                           'type',
+                           'subdivision',
+                           'geom'
     )
   }
 
   # set back to spatial sf
-  temp_sf <- st_as_sf(dados6, crs=4674)
+  temp_sf <- st_as_sf(dado6, crs=4674)
 
   # remove missing values
   temp_sf <- subset(temp_sf, !is.na(name_metro))
@@ -382,25 +412,17 @@ fun_clean_2010_2018 <- function(i){
     sf::st_simplify(preserveTopology = T, dTolerance = 100) %>% st_transform(crs=4674)
 
   # create dir to save data
-  dir.create(paste(dest_dir,year_RM2,"/",sep = ""))
-
+  dir.create(paste0(root_dir, "/shapes_in_sf_all_years_cleaned/",year_RM2))
+  
   ### Save data
-  readr::write_rds(temp_sf, path=paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".rds"), compress = "gz")
-  sf::st_write(temp_sf, dsn =paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,".gpkg"))
-  sf::st_write(temp_sf_simplified, dsn =paste0(dest_dir, year_RM2, "/", 'metro_', year_RM2,"_simplified.gpkg"))
+  sf::st_write(temp_sf, dsn =paste0(root_dir,substr(dest_dir, 2, 33), year_RM2, "/", 'metro_', year_RM2,".gpkg"))
+  sf::st_write(temp_sf_simplified, dsn =paste0(root_dir,substr(dest_dir, 2, 33), year_RM2, "/", 'metro_', year_RM2,"_simplified.gpkg"))
 }
 
 
-# Apply function and create data
-lapply(X=dados_10_18, FUN=fun_clean_2010_2018)
-
-
-# Parallel processing using future.apply
-### ---------------- essa parte t√° pedindo os arquivos que foram apagados. Precisa mesmo deles ou √© algo que pode ser atualizado??????
-future::plan(future::multiprocess)
-future.apply::future_lapply(X = dados_10_18, FUN=fun_clean_2010_2018, future.packages=c('sf', 'dplyr', 'data.table'))
-
-
+# apply function in parallel to save original data sets
+future::plan(strategy = 'multisession')
+furrr::future_map(.x=dados_10_20, .f=fun_clean_2010_2020, .progress = T)
 
 
 
@@ -413,7 +435,7 @@ setwd(root_dir)
 dest_dir <- './shapes_in_sf_all_years_cleaned/'
 dir.create( paste0(dest_dir, 1970,"/") )
 
-
+##############
 # read.excel <- function(header=TRUE,...) { read.table("clipboard",sep="\t",header=header,...) }
 # df=read.excel()
 #
@@ -468,6 +490,7 @@ dir.create( paste0(dest_dir, 1970,"/") )
 #
 #
 # dput(aaaa)
+#########
 
 data1970 <- structure(list(name_metro = structure(c(1L, 1L, 4L, 4L, 4L, 4L,
               4L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 8L, 8L, 8L, 8L, 8L, 8L,
@@ -572,7 +595,7 @@ sf70 <- rbind(sf70, rio)
 
 # add geometry
 data1970_sf <- left_join(data1970,  sf70, by=c("code_muni","name_muni")) %>% st_sf()
-head(data1970_sf)
+# head(data1970_sf)
 
 
 data1970_sf$name_metro %>%  as.character() %>% unique()
@@ -590,6 +613,5 @@ data1970_sf_simplified <- st_transform(data1970_sf, crs=3857) %>%
 
 
 ### save data
-readr::write_rds(data1970_sf,    path=paste0(dest_dir, 1970, "/", 'metro_', 1970,".rds"), compress = "gz")
 sf::st_write(data1970_sf,        dsn = paste0(dest_dir, 1970, "/", 'metro_', 1970,".gpkg"))
-sf::st_write(data1970_sf_simplified, dsn = paste0(destdir_clean, "/intermediate_regions_2017_simplified.gpkg"))
+sf::st_write(data1970_sf_simplified, dsn = paste0(dest_dir, 1970, "/intermediate_regions_2017_simplified.gpkg"))
