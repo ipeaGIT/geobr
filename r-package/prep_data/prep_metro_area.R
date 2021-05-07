@@ -289,7 +289,14 @@ fun_clean_2010_2020 <- function(i){
     a <- (L-3):L
     b <- dado2[-a,]
   }
-
+  
+  #apagar as 2 últimas linhas do arquivo
+  if  (year_RM2 %like% "2013"){
+    L <- nrow(dado2)
+    a <- (L-1):L
+    b <- dado2[-a,]
+  }
+  
   # Rename code_muni
   if (year_RM2 %like% "2010|2013|2014|2015"){
     dado2 <- dplyr::rename(dado1, code_muni = `Código Município`)
