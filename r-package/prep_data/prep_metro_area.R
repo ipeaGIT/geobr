@@ -145,8 +145,13 @@ for (i in 1:4){
     setnames(dado1, names(dado1), names1)
     dado2 <- lapply(dado1, stringi::stri_encode, from = "WINDOWS-1252") %>% as.data.frame()
   }
-
-
+  
+  #apagar a última linha do arquivo
+  if  (year_RM %like% "2005"){
+    a <- nrow(dado2)
+    dado2 <- dado2[-a,]
+  }
+  
 ## Coluna name_metro
 
   # identifica coluna com nome da Regiao Metropolitana
@@ -291,7 +296,7 @@ fun_clean_2010_2020 <- function(i){
   }
   
   #apagar as 2 últimas linhas do arquivo
-  if  (year_RM2 %like% "2013"){
+  if  (year_RM2 %like% "2010|2013"){
     L <- nrow(dado2)
     a <- (L-1):L
     b <- dado2[-a,]
