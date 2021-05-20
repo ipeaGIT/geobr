@@ -83,7 +83,7 @@ ftp_20_29 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_terri
 filenames <- RCurl::getURL(ftp_20_29, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 filenames <- strsplit(filenames, "\r\n")
 filenames <- unlist(filenames)
-filenames_20_29 <- filenames[grepl('.xlsx', filenames)]
+filenames_20_29 <- filenames[grepl('12_31.xlsx', filenames)]
 
 
 
