@@ -165,6 +165,7 @@ As of today, there is another R package with similar functionalities: [simplefea
 - Brazil: [geobr](https://ipeagit.github.io/geobr/)
 - Canada: [cancensus](https://mountainmath.github.io/cancensus/index.html)
 - Chile: [chilemapas](https://pacha.dev/chilemapas/)
+- Czech Republic: [RCzechia](https://github.com/jlacko/RCzechia)
 - Finland: [geofi](https://ropengov.github.io/geofi/)
 - Uruguay: [geouy](https://github.com/RichDeto/geouy)
 - USA: [tigris](https://github.com/walkerke/tigris)
