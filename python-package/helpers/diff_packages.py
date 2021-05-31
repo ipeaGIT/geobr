@@ -6,6 +6,6 @@ print(
     [
         p
         for p in get_files("../r-package/R").difference(get_files("geobr/"))
-        if p not in ["geobr"]
+        if p not in ["geobr", "download_metadata"]
     ]
 )
