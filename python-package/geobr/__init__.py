@@ -22,3 +22,4 @@ from .read_neighborhood import read_neighborhood
 from .read_health_region import read_health_region
 from .read_pop_arrangements import read_pop_arrangements
 from .lookup_muni import lookup_muni
+from .read_intermediate_region import read_intermediate_region
