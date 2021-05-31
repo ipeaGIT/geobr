@@ -25,3 +25,4 @@ from .lookup_muni import lookup_muni
 from .read_intermediate_region import read_intermediate_region
 from .read_urban_concentrations import read_urban_concentrations
 from .read_schools import read_schools
+from .read_comparable_areas import read_comparable_areas
