@@ -10,7 +10,7 @@ import unicodedata
 
 def _get_unique_values(_df, column):
 
-    return ", ".join([str(i) for i in _df["{column}"].unique()])
+    return ", ".join([str(i) for i in _df[column].unique()])
 
 
 @lru_cache(maxsize=124)

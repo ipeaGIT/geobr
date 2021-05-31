@@ -1,17 +1,14 @@
-try:
-    import utils
-except ModuleNotFoundError:
-    import geobr.utils as utils
+from geobr import utils
 
 
 def lookup_muni(name_muni=None, code_muni=None, verbose=False):
-    """ Lookup municipality codes and names.
+    """Lookup municipality codes and names.
 
     By default, it looks for all municipalities. You can also use 'all' to in
-    `name_muni` or `code_muni` to get all municipalities. 
+    `name_muni` or `code_muni` to get all municipalities.
 
-    Input a municipality NAME or CODE and get the names and codes of 
-    the municipality's corresponding state, meso, micro, intermediate, and 
+    Input a municipality NAME or CODE and get the names and codes of
+    the municipality's corresponding state, meso, micro, intermediate, and
     immediate regions. You should not select both code_muni and name_muni
 
     Parameters
