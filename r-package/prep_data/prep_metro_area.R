@@ -276,6 +276,9 @@ fun_clean_2010_2020 <- function(i){
 
   # Read data
   dado1 <- readxl::read_excel(path = i)
+  
+  # Delete line 25. Contains outdated information
+  dado1 <- dado1[-25,]
 
   # Fix Encoding
   dado2 <- dado1 %>%
