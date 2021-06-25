@@ -274,7 +274,7 @@ check_connection <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/
   }
 
   # test server connection
-  if (! crul::ok(file_url, verbose=FALSE) ) {
+  if (!curl::ok(file_url, verbose=FALSE)) {
     message("Problem connecting to data server. Please try geobr again in a few minutes.")
     return(invisible(NULL))
   }
