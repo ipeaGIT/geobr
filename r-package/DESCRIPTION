@@ -31,7 +31,6 @@ Depends:
     R (>= 3.5.0)
 Suggests:
     covr,
-    crul,
     dplyr (>= 0.8-3),
     ggplot2 (>= 3.3.1),
     knitr,
@@ -40,6 +39,7 @@ Suggests:
     rmarkdown (>= 2.6),
     testthat
 Imports:
+      crul,
       curl,
       data.table,
       httr (>= 1.4.1),
