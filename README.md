@@ -11,7 +11,7 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 
 | ***R*** | ***Python*** | ***Repo***|
 |-----|-----|----|
-| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master)  <br /> [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) <br />  [![Downloads](https://pepy.tech/badge/geobr)](https://pepy.tech/project/geobr) <br />  [![Downloads](https://pepy.tech/badge/geobr/month)](https://pepy.tech/project/geobr/month)  <br /> [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) |<img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> <br /> [![R build status](https://github.com/ipeaGIT/geobr/workflows/R-CMD-check/badge.svg)](https://github.com/ipeaGIT/geobr/actions) <br /> [![Travis-CI Build Status](https://travis-ci.org/ipeaGIT/geobr.svg?branch=master)](https://travis-ci.org/ipeaGIT/geobr)  <br />  [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) |
+| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN Total downloads](http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](http://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg)](https://codecov.io/gh/ipeaGIT/geobr?branch=master)  <br /> [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) <br />  [![Downloads](https://pepy.tech/badge/geobr)](https://pepy.tech/project/geobr) <br />  [![Downloads](https://pepy.tech/badge/geobr/month)](https://pepy.tech/project/geobr/month)  <br /> [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) |<img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> <br /> [![R build status](https://github.com/ipeaGIT/geobr/workflows/R-CMD-check/badge.svg)](https://github.com/ipeaGIT/geobr/actions) <br />  [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) |
 
 
 
@@ -168,11 +168,11 @@ As of today, there is another R package with similar functionalities: [simplefea
 - Brazil: [geobr](https://ipeagit.github.io/geobr/)
 - Canada: [cancensus](https://mountainmath.github.io/cancensus/index.html)
 - Chile: [chilemapas](https://pacha.dev/chilemapas/)
+- Czech Republic: [RCzechia](https://github.com/jlacko/RCzechia)
 - Finland: [geofi](https://ropengov.github.io/geofi/)
 - Uruguay: [geouy](https://github.com/RichDeto/geouy)
 - USA: [tigris](https://github.com/walkerke/tigris)
--  Global (political administrative boundaries): [rgeoboundaries](https://dickoa.gitlab.io/rgeoboundaries/)
-
+- Global (political administrative boundaries): [rgeoboundaries](https://dickoa.gitlab.io/rgeoboundaries/)
 
 -----
 

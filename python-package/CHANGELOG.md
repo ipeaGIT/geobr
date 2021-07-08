@@ -1,6 +1,13 @@
 # log history of geobr package development in Python
 
 -------------------------------------------------------
+
+# 0.1.9
+* Adds read_schools
+* Adds read_comparable_areas
+* Adds read_urban_concentrations
+* Adds read_intermediate_region
+* updates read_health_region
 # v0.1.7
 
 * Adds read_health_region.py

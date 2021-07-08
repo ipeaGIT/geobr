@@ -6,7 +6,7 @@ from setuptools import setup
 
 MAJOR = 0
 MINOR = 1
-MICRO = 7
+MICRO = 9
 VERSION = "%d.%d.%d" % (MAJOR, MINOR, MICRO)
 ISRELEASED = True
 
