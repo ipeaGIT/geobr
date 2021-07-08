@@ -2,7 +2,7 @@
 % Please edit documentation in R/lookup_muni.R
 \name{lookup_muni}
 \alias{lookup_muni}
-\title{Lookup municipality codes and names}
+\title{Look up municipality codes and names}
 \usage{
 lookup_muni(name_muni = NULL, code_muni = NULL)
 }

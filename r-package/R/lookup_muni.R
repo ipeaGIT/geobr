@@ -1,4 +1,4 @@
-#' Lookup municipality codes and names
+#' Look up municipality codes and names
 #'
 #' @description
 #' Input a municipality \strong{name} \emph{or} \strong{code} and get the names
