@@ -176,7 +176,41 @@ setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_r
 
 
 
+### Test sfarrow  ----------------
 
+
+library(geobr)
+library(sf)
+library(sfarrow)
+# https://github.com/wcjochem/sfarrow
+
+a <- read_census_tract(code_tract = 'all')
+
+# size in disk:
+geopackage: 250.7 mb
+parquet: 145.3 mb
+
+# writing performance
+system.time(
+  st_write(a, 'a.gpkg')
+)
+34
+
+system.time(
+  st_write_parquet(obj=a, dsn="a.parquet")
+)
+14
+
+# reading performance
+system.time(
+  b <- st_read('a.gpkg')
+)
+10
+
+system.time(
+  c <-  st_read_parquet("a.parquet")
+)
+29
 
 
 
@@ -191,6 +225,21 @@ devtools::run_examples(pkg = ".", test = T, run = T)
 a <- geobr::download_metadata()
 s <- geobr::read_state()
 
+
+
+### Test inernet latency  ----------------
+
+library(pingr)
+
+lolz<-ping('www.ipea.gov.br/geobr/')
+lolz<-ping('www.ipea.gov.br')
+lolz
+
+lolz2 <-ping('www.urbandemographics.org')
+lolz2
+
+lolz2 <-ping('www.google.com')
+lolz2
 
 ### Test coverage  ----------------
 
