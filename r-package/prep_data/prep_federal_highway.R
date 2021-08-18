@@ -214,8 +214,8 @@ cleaning_data_fun <- function(f){ # f <- raw_shapes[2]
   
   federal_dir <- paste0(root_dir,"/federal_highway")
   setwd(federal_dir)
-  a<- subset(temp_sf6, abbrev_state=='MG' )
-  sf::st_write(a, paste0("./sf_all_years_cleaned/", file,"/",name, "mg.gpkg"), delete_layer = TRUE)
+  # a<- subset(temp_sf6, abbrev_state=='MG' )
+  # sf::st_write(a, paste0("./sf_all_years_cleaned/", file,"/",name, "mg.gpkg"), delete_layer = TRUE)
   
   ###### 8. Clean data set and save it in geopackage format-----------------
 
