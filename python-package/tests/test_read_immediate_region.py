@@ -8,10 +8,6 @@ def test_read_immediate_region():
     assert isinstance(read_immediate_region(), gpd.geodataframe.GeoDataFrame)
 
     assert isinstance(
-        read_immediate_region(code_immediate=11), gpd.geodataframe.GeoDataFrame
-    )
-
-    assert isinstance(
         read_immediate_region(code_immediate="AC"), gpd.geodataframe.GeoDataFrame
     )
 
