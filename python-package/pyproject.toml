@@ -1,3 +1,30 @@
+[tool.poetry]
+authors = ["João Carabetta", "Rafael H. M. Pereira", "Caio Nogueira Goncalves", "Bernardo Furtado"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+]
+description = "geobr: Download Official Spatial Data Sets of Brazil"
+homepage = "https://github.com/ipeaGIT/geobr"
+license = "MIT"
+name = "geobr"
+packages = [
+  {include = "geobr"},
+]
+readme = "README.md"
+repository = "https://github.com/ipeaGIT/geobr"
+version = "0.1.10-alpha.3"
+
+[tool.poetry.dependencies]
+geopandas = "^0.7.0"
+shapely = "^1.7.0"
+
 [tool.black]
 line-length = 88
 target-version = ['py37']
