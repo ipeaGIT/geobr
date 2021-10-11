@@ -94,21 +94,26 @@ def test_load_gpkg():
 
 def test_enforce_types():
 
+    code_muni_type = geobr.constants.DataTypes.code_muni.value
+
     df = pd.DataFrame({"code_muni": ["1", "2", "3"]})
 
     t = df["code_muni"].dtype
 
-    assert enforce_types(df)["code_muni"].dtype == "int64"
+    assert enforce_types(df)["code_muni"].dtype == code_muni_type
     assert enforce_types(df)["code_muni"].dtype != t
 
     df = pd.DataFrame({"code_muni": ["1", "2", 3.4]})
 
-    assert enforce_types(df)["code_muni"].dtype == "int64"
+    assert enforce_types(df)["code_muni"].dtype == code_muni_type
 
     df = pd.DataFrame({"random": ["1", "2", 3.4]})
 
     assert enforce_types(df)["random"].dtype == df["random"].dtype
 
+    # Deals with None
+    df = pd.DataFrame({"code_muni": [None, "2", "3"]})
+    assert enforce_types(df)["code_muni"].dtype == code_muni_type
 
 def test_download_gpkg():
 
