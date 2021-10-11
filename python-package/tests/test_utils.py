@@ -10,6 +10,7 @@ from geobr.utils import (
     download_gpkg,
     load_gpkg,
     select_metadata,
+    enforce_types,
 )
 
 
@@ -89,6 +90,24 @@ def test_load_gpkg():
         isinstance(load_gpkg("asd"), gpd.geodataframe.GeoDataFrame)
         isinstance(load_gpkg(1234), gpd.geodataframe.GeoDataFrame)
         isinstance(load_gpkg(valid_url + "asdf"), gpd.geodataframe.GeoDataFrame)
+
+
+def test_enforce_types():
+
+    df = pd.DataFrame({"code_muni": ["1", "2", "3"]})
+
+    t = df["code_muni"].dtype
+
+    assert enforce_types(df)["code_muni"].dtype == "int64"
+    assert enforce_types(df)["code_muni"].dtype != t
+
+    df = pd.DataFrame({"code_muni": ["1", "2", 3.4]})
+
+    assert enforce_types(df)["code_muni"].dtype == "int64"
+
+    df = pd.DataFrame({"random": ["1", "2", 3.4]})
+
+    assert enforce_types(df)["random"].dtype == df["random"].dtype
 
 
 def test_download_gpkg():
