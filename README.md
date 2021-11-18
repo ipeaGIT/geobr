@@ -170,9 +170,10 @@ As of today, there is another R package with similar functionalities: [simplefea
 - Chile: [chilemapas](https://pacha.dev/chilemapas/)
 - Czech Republic: [RCzechia](https://github.com/jlacko/RCzechia)
 - Finland: [geofi](https://ropengov.github.io/geofi/)
+- UK: [geographr](https://github.com/britishredcrosssociety/geographr)
 - Uruguay: [geouy](https://github.com/RichDeto/geouy)
 - USA: [tigris](https://github.com/walkerke/tigris)
-- Global (political administrative boundaries): [rgeoboundaries](https://dickoa.gitlab.io/rgeoboundaries/)
+- Global (political administrative boundaries): [rgeoboundaries](https://github.com/wmgeolab/rgeoboundaries)
 
 -----
 
