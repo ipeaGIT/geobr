@@ -163,7 +163,7 @@ As of today, there is another R package with similar functionalities: [simplefea
 - Option to download geometries with simplified borders for fast rendering
 - Stable version published on CRAN for R users, and on PyPI for Python users
 
-**Similar packages for other countries/continents**
+#### **Similar packages for other countries/continents**
 - Africa: [afrimapr](https://afrimapr.github.io/afrimapr.website/)
 - Brazil: [geobr](https://ipeagit.github.io/geobr/)
 - Canada: [cancensus](https://mountainmath.github.io/cancensus/index.html)
