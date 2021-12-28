@@ -1,9 +1,8 @@
 context("read_health_region")
 
 # skip tests because they take too much time
+skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
-# testthat::skip_on_travis()
-# skip_if(Sys.getenv("TEST_ONE") != "")
 
 # Reading the data -----------------------
 

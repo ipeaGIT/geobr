@@ -1,9 +1,8 @@
 context("read_municipal_seat")
 
 # skip tests because they take too much time
-# skip_if(Sys.getenv("TEST_ONE") != "")
+skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
-#testthat::skip_on_travis()
 
 # Reading the data -----------------------
 

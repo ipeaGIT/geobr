@@ -3,8 +3,6 @@ context("read_schools")
 # skip tests because they take too much time
 skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
-#testthat::skip_on_travis()
-# Sys.setenv(NOT_CRAN = "true")
 
 
 # Reading the data -----------------------

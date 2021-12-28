@@ -411,6 +411,10 @@ devtools::check_win_release(pkg = ".")
 beepr::beep()
 
 
+rhub::platforms()
+rhub::check(platform = 'solaris-x86-patched')
+
+
 ####################################################3
 a <- grid_state_correspondence_table
 names(a)[2] <- 'abbrev_state'

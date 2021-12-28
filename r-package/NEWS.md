@@ -1,6 +1,21 @@
 # log history of geobr package development
 
 
+-------------------------------------------------------
+# geobr v1.6.4
+
+
+### bug fix
+* Fixed bug crashing on Solaris.
+
+
+-------------------------------------------------------
+# geobr v1.6.3
+
+
+### bug fix
+* Fixed bug with `readr` v2.0 that was crashing on Solaris.
+
 
 -------------------------------------------------------
 # geobr v1.6.2

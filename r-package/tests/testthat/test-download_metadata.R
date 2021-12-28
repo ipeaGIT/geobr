@@ -1,6 +1,9 @@
 context("download_metadata")
 
+# skip tests because they take too much time
+skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
+
 
 test_that("download_metadata", {
 

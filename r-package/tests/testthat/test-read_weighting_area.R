@@ -3,8 +3,7 @@ context("read_weighting_area")
 
 # skip tests because they take too much time
 testthat::skip_on_cran()
-# testthat::skip_on_travis()
-# skip_if(Sys.getenv("TEST_ONE") != "")
+skip_if(Sys.getenv("TEST_ONE") != "")
 
 
 test_that("read_weighting_area", {
