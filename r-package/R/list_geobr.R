@@ -21,7 +21,9 @@ if (file.exists(tempf)) {
 
 } else {
   # download it and save to metadata
-  httr::GET(url="https://raw.githubusercontent.com/ipeaGIT/geobr/master/README.md", httr::write_disk(tempf, overwrite = T))
+  git_url = "https://raw.githubusercontent.com/ipeaGIT/geobr/master/README.md"
+  check_connection(file_url = git_url )
+  httr::GET(url= git_url, httr::write_disk(tempf, overwrite = T))
   readme <- readLines(tempf, encoding = "UTF-8")
 }
 
@@ -35,7 +37,11 @@ table_end <- grep("Other functions", readme) -1
 table_strig <- readme[table_start:table_end]
 
 # read table as a data.frame
-suppressWarnings({ df <- readr::read_delim(I(table_strig), delim = '|', trim_ws = T) })
+suppressWarnings({ df <- readr::read_delim(I(table_strig),
+                                           delim = '|',
+                                           trim_ws = TRUE,
+                                           show_col_types = FALSE,
+                                           col_names = FALSE) })
 
 # clean colunms
   df[[1]] <- NULL
