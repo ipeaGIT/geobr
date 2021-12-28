@@ -2,6 +2,11 @@
 
 -------------------------------------------------------
 
+# 0.1.10
+* Enforces correct data types to certain variables (issue #260)
+* Changes package manager to poetry
+* Fixes testing bugs
+
 # 0.1.9
 * Adds read_schools
 * Adds read_comparable_areas

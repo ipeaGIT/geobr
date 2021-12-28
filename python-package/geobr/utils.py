@@ -7,6 +7,8 @@ import pandas as pd
 import requests
 import unicodedata
 
+from geobr.constants import DataTypes
+
 
 def _get_unique_values(_df, column):
 
@@ -164,6 +166,29 @@ def load_gpkg(url):
     return gdf
 
 
+def enforce_types(df):
+    """Enforce correct datatypes according to DataTypes constant
+
+    Parameters
+    ----------
+    df : gpd.GeoDataFrame
+        Raw output data
+
+    Returns
+    -------
+    gpd.GeoDataFrame
+        Output data with correct types
+    """
+
+    for column in df.columns:
+
+        if column in DataTypes.__members__.keys():
+
+            df[column] = df[column].astype(DataTypes[column].value)
+
+    return df
+
+
 def download_gpkg(metadata):
     """Generalizes gpkg dowload and conversion to geopandas
     for one or many urls
@@ -183,7 +208,11 @@ def download_gpkg(metadata):
 
     gpkgs = [load_gpkg(url) for url in urls]
 
-    return gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
+    df = gpd.GeoDataFrame(pd.concat(gpkgs, ignore_index=True))
+
+    df = enforce_types(df)
+
+    return df
 
 
 def select_metadata(geo, simplified=None, year=False):
