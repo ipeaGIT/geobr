@@ -39,7 +39,6 @@ Suggests:
     rmarkdown (>= 2.6),
     testthat
 Imports:
-      crul,
       curl,
       data.table,
       httr (>= 1.4.1),

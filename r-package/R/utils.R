@@ -260,6 +260,7 @@ load_gpkg <- function(file_url, temps=NULL){
 }
 
 
+# nocov end
 
 
 
@@ -284,12 +285,19 @@ check_connection <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/
     return(invisible(NULL))
   }
 
-  # test server connection
-  if (! crul::ok(file_url, verbose=FALSE) ) {
+  # test connection to geobr server
+  try(x <- httr::GET(file_url, # timeout(5),
+                     config = httr::config(ssl_verifypeer = FALSE)) , silent = TRUE
+  )
+
+  if (exists("x") == FALSE) {
+    message("Problem connecting to data server. Please try geobr again in a few minutes.")
+    return(invisible(NULL))
+
+  } else if (httr::http_error(x) == TRUE) {
     message("Problem connecting to data server. Please try geobr again in a few minutes.")
     return(invisible(NULL))
   }
+
 }
 
-
-# nocov end
