@@ -115,7 +115,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       check_connection(file_url[1])
 
       # download data
-      httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T))
+      try( httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T)), silent = T)
       }
 
     # load gpkg to memory
@@ -135,7 +135,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       check_connection(file_url[1])
 
       # download data
-      httr::GET(url=file_url, httr::write_disk(temps, overwrite = T))
+      try( httr::GET(url=file_url, httr::write_disk(temps, overwrite = T)), silent = T)
       }
 
     # load gpkg to memory
@@ -165,8 +165,8 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       # check if file has not been downloaded already. If not, download it
       if (!file.exists(temps)) {
                                 i <- match(c(x),file_url)
-                                httr::GET(url=x, #httr::progress(),
-                                          httr::write_disk(temps, overwrite = T))
+                                try( httr::GET(url=x, #httr::progress(),
+                                          httr::write_disk(temps, overwrite = T)), silent = T)
                                 utils::setTxtProgressBar(pb, i)
                                 }
       })
