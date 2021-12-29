@@ -46,6 +46,6 @@ Imports:
       readr,
       sf (>= 0.9-3),
       utils
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

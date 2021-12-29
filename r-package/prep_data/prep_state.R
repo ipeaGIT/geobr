@@ -99,6 +99,8 @@ clean_states <- function( e ){  #  e <- sub_dirs[ sub_dirs %like% 2000 ]
 
     # Capitalize the first letter
     temp_sf$name_state <- stringr::str_to_title(temp_sf$name_state)
+    stringr::str_replace(a, " De ", " de ")
+    stringr::str_replace(a, " Do ", " do ")
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
     temp_sf <- harmonize_projection(temp_sf)
