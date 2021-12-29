@@ -115,7 +115,11 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       check_connection(file_url[1])
 
       # download data
-      try( httr::GET(url=file_url, httr::progress(), httr::write_disk(temps, overwrite = T)), silent = T)
+      try( httr::GET(url=file_url,
+                     httr::progress(),
+                     httr::write_disk(temps, overwrite = T),
+                     httr::config(ssl_verifypeer = 0L)
+                     ), silent = T)
       }
 
     # load gpkg to memory
@@ -135,7 +139,10 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       check_connection(file_url[1])
 
       # download data
-      try( httr::GET(url=file_url, httr::write_disk(temps, overwrite = T)), silent = T)
+      try( httr::GET(url=file_url,
+                     httr::write_disk(temps, overwrite = T),
+                     httr::config(ssl_verifypeer = 0L)
+                     ), silent = T)
       }
 
     # load gpkg to memory
@@ -166,7 +173,9 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       if (!file.exists(temps)) {
                                 i <- match(c(x),file_url)
                                 try( httr::GET(url=x, #httr::progress(),
-                                          httr::write_disk(temps, overwrite = T)), silent = T)
+                                          httr::write_disk(temps, overwrite = T),
+                                          httr::config(ssl_verifypeer = 0L)
+                                          ), silent = T)
                                 utils::setTxtProgressBar(pb, i)
                                 }
       })
@@ -196,7 +205,9 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       if (!file.exists(temps)) {
                                 i <- match(c(x),file_url)
                                 httr::GET(url=x, #httr::progress(),
-                                          httr::write_disk(temps, overwrite = T))
+                                          httr::write_disk(temps, overwrite = T),
+                                          httr::config(ssl_verifypeer = 0L)
+                                          )
                               }
       })
 
