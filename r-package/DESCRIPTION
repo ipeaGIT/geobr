@@ -42,7 +42,6 @@ Imports:
       curl,
       data.table,
       httr (>= 1.4.1),
-      readr,
       sf (>= 0.9-3),
       utils
 RoxygenNote: 7.1.2

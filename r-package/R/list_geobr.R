@@ -37,18 +37,28 @@ table_end <- grep("Other functions", readme) -1
 table_strig <- readme[table_start:table_end]
 
 # read table as a data.frame
-suppressWarnings({ df <- readr::read_delim(I(table_strig),
-                                           delim = '|',
-                                           trim_ws = TRUE,
-                                           show_col_types = FALSE,
-                                           col_names = FALSE) })
+# suppressWarnings({ df <- readr::read_delim(I(table_strig),
+#                                            delim = '|',
+#                                            trim_ws = TRUE,
+#                                            show_col_types = FALSE,
+#                                            col_names = FALSE) })
+suppressWarnings({ df <- utils::read.table(text = I(table_strig),
+                                           header = FALSE,
+                                           sep = '|',
+                                           strip.white = TRUE,
+                                           colClasses = 'character',
+                                           row.names = NULL,
+                                           quote="")
+                                        })
 
 # clean colunms
   df[[1]] <- NULL
   df[[5]] <- NULL
 
 # remove 1st row with "-----"
-df <- df[-1,]
+  df <- df[-1,]
+  df <- df[-1,]
+  rownames(df) <- 1:nrow(df)
 
 # rename columns
 colnames(df) <- c("function", "geography", "years", "source")
