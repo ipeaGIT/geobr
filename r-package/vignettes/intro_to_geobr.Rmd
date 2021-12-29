@@ -46,13 +46,13 @@ Now let's load the libraries we'll use in this vignette.
 
 ### Available data sets
 
-The geobr package covers 21 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the `list_geobr()` function.
+The geobr package covers 27 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the `list_geobr()` function.
 
 ```{r message=FALSE, warning=FALSE}
 # Available data sets
 datasets <- list_geobr()
 
-print(datasets, n=21)
+print(datasets, n=28)
 
 ```
 
