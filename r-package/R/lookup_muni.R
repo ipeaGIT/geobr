@@ -29,6 +29,16 @@
 #'}}
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
+  # create tempfile to save metadata
+  tempf <- file.path(tempdir(), "lookup_muni_2010.csv")
+
+  # IF metadata has already been downloaded
+  if (file.exists(tempf)) {
+
+    # skip
+
+  } else {
+
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="lookup_muni", year=2010, simplified=F)
@@ -36,9 +46,17 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
-  # read file
-    lookup_table_2010 <- readr::read_csv(file_url, col_types = readr::cols() )
-    # lookup_table_2010 <- utils::read.csv(file_url, stringsAsFactors = F, encoding = 'UTF-8')
+
+  # download lookup df to temp file
+  try( httr::GET(url= file_url,
+                 httr::write_disk(tempf, overwrite = T),
+                 config = httr::config(ssl_verifypeer = FALSE)
+  ), silent = T)
+
+  }
+
+  ### read/return lookup data
+  lookup_table_2010 <- utils::read.csv(tempf, stringsAsFactors = F, encoding = 'UTF-8')
 
 
   # code_muni has priority over other arguments
