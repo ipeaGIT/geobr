@@ -118,7 +118,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       try( httr::GET(url=file_url,
                      httr::progress(),
                      httr::write_disk(temps, overwrite = T),
-                     httr::config(ssl_verifypeer = 0L)
+                     config = httr::config(ssl_verifypeer = FALSE)
                      ), silent = T)
       }
 
@@ -141,7 +141,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       # download data
       try( httr::GET(url=file_url,
                      httr::write_disk(temps, overwrite = T),
-                     httr::config(ssl_verifypeer = 0L)
+                     config = httr::config(ssl_verifypeer = FALSE)
                      ), silent = T)
       }
 
@@ -174,7 +174,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
                                 i <- match(c(x),file_url)
                                 try( httr::GET(url=x, #httr::progress(),
                                           httr::write_disk(temps, overwrite = T),
-                                          httr::config(ssl_verifypeer = 0L)
+                                          config = httr::config(ssl_verifypeer = FALSE)
                                           ), silent = T)
                                 utils::setTxtProgressBar(pb, i)
                                 }
@@ -206,7 +206,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
                                 i <- match(c(x),file_url)
                                 httr::GET(url=x, #httr::progress(),
                                           httr::write_disk(temps, overwrite = T),
-                                          httr::config(ssl_verifypeer = 0L)
+                                          config = httr::config(ssl_verifypeer = FALSE)
                                           )
                               }
       })

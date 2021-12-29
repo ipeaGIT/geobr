@@ -24,7 +24,7 @@ download_metadata <- function(){ # nocov start
     # download metadata to temp file
     try( httr::GET(url= metadata_link,
                    httr::write_disk(tempf, overwrite = T),
-                   httr::config(ssl_verifypeer = 0L)
+                   config = httr::config(ssl_verifypeer = FALSE)
                    ), silent = T)
 
     }
