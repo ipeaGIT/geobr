@@ -8,6 +8,9 @@ library(geobr)
 library(ggplot2)
 library(mapview)
 
+library(reticulate)
+py_run_file("pythontest.py")
+
 
 ### Install package
 install.packages("geobr")
@@ -252,6 +255,8 @@ library(geobr)
 Sys.setenv(NOT_CRAN = "true")
 
 
+
+function_coverage(fun='check_connection', test_file("tests/testthat/test-check_connection.R"))
 function_coverage(fun='download_metadata', test_file("tests/testthat/test-download_metadata.R"))
 function_coverage(fun='list_geobr', test_file("tests/testthat/test-list_geobr.R"))
 function_coverage(fun='lookup_muni', test_file("tests/testthat/test-lookup_muni.R"))

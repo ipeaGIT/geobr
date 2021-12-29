@@ -26,7 +26,7 @@ used. The geocode source used is registered in the database in a specific
 column \code{data_source}. Periodically the coordinates are revised with the
 objective of improving the quality of the data." The date of the last data
 update is registered in the database in the columns \code{date_update} and
-\code{year_update}. More information available at \url{http://dados.gov.br/dataset/cnes}.
+\code{year_update}. More information available at \url{https://dados.gov.br/dataset?q=CNES}.
 These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{

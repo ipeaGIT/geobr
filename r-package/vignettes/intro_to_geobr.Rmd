@@ -52,7 +52,7 @@ The geobr package covers 27 spatial data sets, including a variety of political-
 # Available data sets
 datasets <- list_geobr()
 
-print(datasets, n=28)
+head(datasets, n=27)
 
 ```
 
