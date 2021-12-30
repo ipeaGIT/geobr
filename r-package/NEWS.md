@@ -2,12 +2,16 @@
 
 
 -------------------------------------------------------
-# geobr v1.6.4
+# geobr v1.6.5
 
 ### Minor changes
 * Remove packages `crul`and `readr` from geobr dependencies.
 * geobr now fails gracefully when server connection times out. Closed #259.
 * Fixed check_connection() that was failing on Linux. Closed #269.
+
+
+-------------------------------------------------------
+# geobr v1.6.4
 
 ### bug fixes
 * Fixed bug crashing on Solaris.
