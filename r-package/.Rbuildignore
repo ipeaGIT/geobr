@@ -20,3 +20,4 @@
 ^docs$
 ^pkgdown$
 ^vignettes/python-intro$
+^cran-comments\.md$

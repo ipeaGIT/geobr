@@ -7,6 +7,8 @@
 ### Minor changes
 * Remove packages `crul`and `readr` from geobr dependencies.
 * geobr now fails gracefully when server connection times out. Closed #259.
+
+### Bug fixes
 * Fixed check_connection() that was failing on Linux. Closed #269.
 
 

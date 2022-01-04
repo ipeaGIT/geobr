@@ -9,7 +9,7 @@ library(ggplot2)
 library(mapview)
 
 library(reticulate)
-py_run_file("pythontest.py")
+py_run_file("./prep_data/pythontest.py")
 
 
 ### Install package
@@ -216,33 +216,6 @@ system.time(
 29
 
 
-
-### Test examples  ----------------
-library(devtools)
-
-
-devtools::run_examples(pkg = ".", test = T, run = T)
-
-
-
-a <- geobr::download_metadata()
-s <- geobr::read_state()
-
-
-
-### Test inernet latency  ----------------
-
-library(pingr)
-
-lolz<-ping('www.ipea.gov.br/geobr/')
-lolz<-ping('www.ipea.gov.br')
-lolz
-
-lolz2 <-ping('www.urbandemographics.org')
-lolz2
-
-lolz2 <-ping('www.google.com')
-lolz2
 
 ### Test coverage  ----------------
 
@@ -458,6 +431,7 @@ Encoding(grid_state_correspondence_table$name_uf)
 Encoding(grid_state_correspondence_table$name_uf) <- "ASCII"
 grid_state_correspondence_table
 
+
 # build binary --------------------------------
 
  system("R CMD build . --resave-data") # build tar.gz
@@ -465,7 +439,7 @@ grid_state_correspondence_table
 
 
 
-
+devtools::release()
 devtools::submit_cran()
-
+usethis::use_cran_comments(open = rlang::is_interactive())
 

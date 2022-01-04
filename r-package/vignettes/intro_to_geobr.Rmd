@@ -142,7 +142,7 @@ library(ggplot2)
 
 ## Thematic maps
 
-The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (a project of our colleagues at Ipea))[https://atlasbrasil.org.br/] to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.
+The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (a project of our colleagues at Ipea))[http://atlasbrasil.org.br/] to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.
 
 #### Merge external data
 
