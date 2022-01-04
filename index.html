@@ -104,10 +104,10 @@ geobr is a computational package to download official spatial data sets of Brazi
 </tr></thead>
 <tbody><tr class="odd">
 <td>
-<a href="https://CRAN.R-project.org/package=geobr" class="external-link"><img src="https://www.r-pkg.org/badges/version/geobr" alt="CRAN/METACRAN Version"></a> <br><a href="https://CRAN.R-project.org/package=geobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue" alt="CRAN/METACRAN Total downloads"></a> <br><a href="https://CRAN.R-project.org/package=geobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/geobr?color=yellow" alt="CRAN/METACRAN downloads per month"></a> <br><a href="https://codecov.io/gh/ipeaGIT/geobr?branch=master" class="external-link"><img src="https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <br><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a>
+<a href="https://CRAN.R-project.org/package=geobr" class="external-link"><img src="https://www.r-pkg.org/badges/version/geobr" alt="CRAN/METACRAN Version"></a> <br><a href="https://CRAN.R-project.org/package=geobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue" alt="CRAN/METACRAN Total downloads"></a> <br><a href="https://CRAN.R-project.org/package=geobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/geobr?color=yellow" alt="CRAN/METACRAN downloads per month"></a> <br><a href="https://codecov.io/gh/ipeaGIT/geobr?branch=master" class="external-link"><img src="https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <br><a href="https://www.tidyverse.org/lifecycle/#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a>
 </td>
 <td>
-<a href="https://badge.fury.io/py/geobr" class="external-link"><img src="https://badge.fury.io/py/geobr.svg" alt="PyPI version"></a> <br><a href="https://pepy.tech/project/geobr" class="external-link"><img src="https://pepy.tech/badge/geobr" alt="Downloads"></a> <br><a href="https://pepy.tech/project/geobr/month" class="external-link"><img src="https://pepy.tech/badge/geobr/month" alt="Downloads"></a> <br><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a>
+<a href="https://badge.fury.io/py/geobr" class="external-link"><img src="https://badge.fury.io/py/geobr.svg" alt="PyPI version"></a> <br><a href="https://pepy.tech/project/geobr" class="external-link"><img src="https://pepy.tech/badge/geobr" alt="Downloads"></a> <br><a href="https://pepy.tech/project/geobr/month" class="external-link"><img src="https://pepy.tech/badge/geobr/month" alt="Downloads"></a> <br><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a>
 </td>
 <td>
 <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"><br><a href="https://github.com/ipeaGIT/geobr/actions" class="external-link"><img src="https://github.com/ipeaGIT/geobr/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <br><a href="https://www.repostatus.org/#active" class="external-link"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a>
@@ -243,7 +243,7 @@ geobr is a computational package to download official spatial data sets of Brazi
 <tr class="even">
 <td><code>read_municipality</code></td>
 <td>Municipality</td>
-<td>1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019</td>
+<td>1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</td>
 <td>IBGE</td>
 </tr>
 <tr class="odd">
@@ -449,7 +449,33 @@ geobr is a computational package to download official spatial data sets of Brazi
 <strong>Related projects</strong><a class="anchor" aria-label="anchor" href="#related-projects"></a>
 </h4>
 <p>As of today, there is another R package with similar functionalities: <a href="https://github.com/RobertMyles/simplefeaturesbr" class="external-link">simplefeaturesbr</a>. The <strong>geobr</strong> package has a few advantages when compared to <em>simplefeaturesbr</em>, including for example: - A same syntax structure across all functions, making the package very easy and intuitive to use - Access to a wider range of official spatial data sets, such as states and municipalities, but also macro-, meso- and micro-regions, weighting areas, census tracts, urbanized areas, etc - Access to shapefiles with updated geometries for various years - Harmonized attributes and geographic projections across geographies and years - Option to download geometries with simplified borders for fast rendering - Stable version published on CRAN for R users, and on PyPI for Python users</p>
-<p><strong>Similar packages for other countries/continents</strong> - Africa: <a href="https://afrimapr.github.io/afrimapr.website/" class="external-link">afrimapr</a> - Brazil: <a href="https://ipeagit.github.io/geobr/" class="external-link">geobr</a> - Canada: <a href="https://mountainmath.github.io/cancensus/index.html" class="external-link">cancensus</a> - Chile: <a href="https://pacha.dev/chilemapas/" class="external-link">chilemapas</a> - Czech Republic: <a href="https://github.com/jlacko/RCzechia" class="external-link">RCzechia</a> - Finland: <a href="https://ropengov.github.io/geofi/" class="external-link">geofi</a> - Uruguay: <a href="https://github.com/RichDeto/geouy" class="external-link">geouy</a> - USA: <a href="https://github.com/walkerke/tigris" class="external-link">tigris</a> - Global (political administrative boundaries): <a href="https://dickoa.gitlab.io/rgeoboundaries/" class="external-link">rgeoboundaries</a></p>
+</div>
+<div class="section level4">
+<h4 id="similar-packages-for-other-countriescontinents">
+<strong>Similar packages for other countries/continents</strong><a class="anchor" aria-label="anchor" href="#similar-packages-for-other-countriescontinents"></a>
+</h4>
+<ul>
+<li>Africa: <a href="https://afrimapr.github.io/afrimapr.website/" class="external-link">afrimapr</a>
+</li>
+<li>Brazil: <a href="https://ipeagit.github.io/geobr/" class="external-link">geobr</a>
+</li>
+<li>Canada: <a href="https://mountainmath.github.io/cancensus/index.html" class="external-link">cancensus</a>
+</li>
+<li>Chile: <a href="https://pacha.dev/chilemapas/" class="external-link">chilemapas</a>
+</li>
+<li>Czech Republic: <a href="https://github.com/jlacko/RCzechia" class="external-link">RCzechia</a>
+</li>
+<li>Finland: <a href="https://ropengov.github.io/geofi/" class="external-link">geofi</a>
+</li>
+<li>UK: <a href="https://github.com/britishredcrosssociety/geographr" class="external-link">geographr</a>
+</li>
+<li>Uruguay: <a href="https://github.com/RichDeto/geouy" class="external-link">geouy</a>
+</li>
+<li>USA: <a href="https://github.com/walkerke/tigris" class="external-link">tigris</a>
+</li>
+<li>Global (political administrative boundaries): <a href="https://github.com/wmgeolab/rgeoboundaries" class="external-link">rgeoboundaries</a>
+</li>
+</ul>
 <hr>
 </div>
 </div>
