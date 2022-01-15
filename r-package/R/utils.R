@@ -272,7 +272,7 @@ load_gpkg <- function(file_url, temps=NULL){
 #'
 #' @param file_url A string with the file_url address of an geobr dataset
 #'
-#' @return Logic `TRUE or `FALSE`.
+#' @return Message or `invisible(NULL)`.
 #'
 #' @export
 #' @family support functions

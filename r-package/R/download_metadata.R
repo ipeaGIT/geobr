@@ -10,8 +10,9 @@ download_metadata <- function(){ # nocov start
   # create tempfile to save metadata
   tempf <- file.path(tempdir(), "metadata_geobr.csv")
 
-  # IF metadata has already been downloaded
-  if (file.exists(tempf)) {
+
+  # IF metadata has already been successfully downloaded
+  if ( file.exists(tempf) & file.info(tempf)$size != 0 ) {
 
     # skip
 
