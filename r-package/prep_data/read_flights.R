@@ -1,5 +1,7 @@
 #' Download flights data from ANAC
 
+
+
 #' @examples \dontrun{ if (interactive()) {
 #' # Read flights data
 #' a201506 <- read_flights(year=2015, month=6)
@@ -39,5 +41,9 @@ read_flights <- function(year=2000, month=3, type='basica'){
 
 }
 
-
+#' TO DO LIST
+#' year and month, or date yyyymm
+#' check input of dates
+#' allow for users to set multiple periods
+#' documentation
 
