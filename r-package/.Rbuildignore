@@ -21,3 +21,4 @@
 ^pkgdown$
 ^vignettes/python-intro$
 ^cran-comments\.md$
+index.md
