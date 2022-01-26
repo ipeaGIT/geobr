@@ -35,10 +35,13 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="micro_region", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
   # Verify code_micro input
 
   # if code_micro=="all", read the entire country
-  if(code_micro=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  if(code_micro=="all"){
 
     # list paths of files to download
     file_url <- as.character(temp_meta$download_path)

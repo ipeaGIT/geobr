@@ -7,30 +7,30 @@
 #' }}
 download_metadata <- function(){ # nocov start
 
-  # create tempfile to save metadata
-  tempf <- file.path(tempdir(), "metadata_geobr.csv")
+    # create tempfile to save metadata
+    tempf <- file.path(tempdir(), "metadata_gpkg.csv")
 
+    # IF metadata has already been successfully downloaded
+    if (file.exists(tempf) & file.info(tempf)$size != 0) {
 
-  # IF metadata has already been successfully downloaded
-  if ( file.exists(tempf) & file.info(tempf)$size != 0 ) {
+    } else {
 
-    # skip
+      # test server connection
+      metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
+      check_con <- check_connection(metadata_link)
+      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
 
-  } else {
-
-    # test server connection
-    metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
-    check_connection(metadata_link)
-
-    # download metadata to temp file
-    try( httr::GET(url= metadata_link,
-                   httr::write_disk(tempf, overwrite = T),
-                   config = httr::config(ssl_verifypeer = FALSE)
-                   ), silent = T)
-
+      # download metadata to temp file
+      httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = TRUE))
     }
 
-  # read/return metadata
-  metadata <- utils::read.csv(tempf, stringsAsFactors=FALSE)
-  return(metadata)
-  } # nocov end
+    # read metadata
+    # metadata <- data.table::fread(tempf, stringsAsFactors=FALSE)
+    metadata <- utils::read.csv(tempf, stringsAsFactors=FALSE)
+
+    return(metadata)
+}
+
+
+
+ # nocov end

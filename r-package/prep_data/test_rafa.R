@@ -49,6 +49,85 @@ head(brazil_2010)
 
 
 
+### fail gracefully -------------------------
+https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv
+
+library(testthat)
+library(geobr)
+getOption('timeout')
+options(timeout=3)
+
+# ok com metadado, mas sem internet -----------------------------
+download_metadata()
+
+expect_message(download_metadata())
+
+expect_message(read_country())
+expect_message(read_region())
+expect_message(read_state(code_state = 'AC'))
+expect_message(read_state(code_state = 'all'))
+
+expect_message(read_meso_region(code_meso='AP'))
+expect_message(read_meso_region(code_meso='all'))
+
+expect_message(read_micro_region(code_micro='AP'))
+expect_message(read_micro_region(code_micro='all'))
+
+expect_message(read_immediate_region(code_immediate ='AP'))
+expect_message(read_immediate_region(code_immediate ='all'))
+
+expect_message(read_intermediate_region(code_intermediate = 'AP'))
+expect_message(read_intermediate_region(code_intermediate = 'all'))
+
+expect_message(read_municipality(code_muni='AP'))
+expect_message(read_municipality(code_muni='all'))
+expect_message(read_municipality(code_muni=33))
+expect_message(read_municipality(code_muni='all', year=1980))
+expect_message(read_municipality(code_muni='AP', year=1980))
+expect_message( read_municipality(code_muni = 1200179) )
+
+expect_message(read_municipal_seat())
+
+expect_message(read_weighting_area(code_weighting = 'AP'))
+expect_message(read_weighting_area(code_weighting = 'all'))
+
+expect_message(read_census_tract(code_tract = 'AP'))
+expect_message(read_census_tract(code_tract = 'all'))
+
+expect_message(read_statistical_grid(code_grid  = 'AP'))
+expect_message(read_statistical_grid(code_grid  = 'all'))
+expect_message(read_statistical_grid(code_grid  = 33))
+
+expect_message(read_metro_area())
+expect_message(read_urban_area())
+expect_message(read_amazon())
+
+expect_message(read_biomes())
+expect_message(read_conservation_units())
+expect_message(read_disaster_risk_area())
+expect_message(read_indigenous_land())
+expect_message(read_semiarid())
+expect_message(read_health_facilities())
+expect_message(read_health_region())
+expect_message(read_neighborhood())
+expect_message(read_schools())
+expect_message(read_comparable_areas())
+expect_message(read_urban_concentrations())
+expect_message(read_pop_arrangements())
+
+expect_message(list_geobr())
+expect_message( lookup_muni(name_muni = 'rio de janeiro') )
+expect_message( lookup_muni(code_muni = 1200179) )
+expect_message( lookup_muni(name_muni = 'all') )
+
+# ok no internet at all-----------------------------
+
+
+
+# not ok -----------------------------
+done here without wifi from start
+
+
 
 ### 1. read_region -------------------------
 
@@ -443,3 +522,6 @@ devtools::release()
 devtools::submit_cran()
 usethis::use_cran_comments(open = rlang::is_interactive())
 
+
+
+a <- read_state()

@@ -38,15 +38,21 @@ read_immediate_region <- function(code_immediate="all", year=2019, simplified=TR
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="immediate_regions", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
 
   # check code_immediate input
-  if(code_immediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  if(code_immediate=="all"){
 
     # abbrev_state
   } else if(code_immediate %in% temp_sf$abbrev_state){

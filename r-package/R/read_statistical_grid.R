@@ -28,6 +28,9 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="statistical_grid", year=year, simplified=F)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
   # load correspondence table
   # data("grid_state_correspondence_table", envir=environment())
   grid_state_correspondence_table <- geobr::grid_state_correspondence_table
@@ -45,6 +48,10 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
 
       # download files
       temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+      # check if download failed
+      if (is.null(temp_sf)) { return(invisible(NULL)) }
+
       return(temp_sf)
       }
 
@@ -75,6 +82,10 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
 
       # download gpkg
       temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+      # check if download failed
+      if (is.null(temp_sf)) { return(invisible(NULL)) }
+
       return(temp_sf)
       }
 
@@ -89,6 +100,10 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
     }
 

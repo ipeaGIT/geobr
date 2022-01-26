@@ -42,6 +42,8 @@ read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="census_tract", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # Check zone input urban and rural inputs if year <=2007
   if (year<=2007){
@@ -71,6 +73,10 @@ read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=
 
       # download files
       temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+      # check if download failed
+      if (is.null(temp_sf)) { return(invisible(NULL)) }
+
       return(temp_sf)
     }
 
@@ -102,6 +108,9 @@ read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=
         }
       # download files
       sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+      # check if download failed
+      if (is.null(sf)) { return(invisible(NULL)) }
 
       if(nchar(code_tract)==2){
         return(sf)

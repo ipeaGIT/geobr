@@ -33,15 +33,17 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   tempf <- file.path(tempdir(), "lookup_muni_2010.csv")
 
   # IF metadata has already been downloaded
-  if (file.exists(tempf)) {
+  if (file.exists(tempf) &  file.info(tempf)$size != 0) {
 
     # skip
 
   } else {
 
-
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="lookup_muni", year=2010, simplified=F)
+
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
@@ -54,6 +56,10 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   ), silent = T)
 
   }
+
+  # check if download failed
+  msg <- "Problem connecting to data server. Please try it again in a few minutes."
+  if (file.info(tempf)$size == 0) {message(msg); return(invisible(NULL)) }
 
   ### read/return lookup data
   lookup_table_2010 <- utils::read.csv(tempf, stringsAsFactors = F, encoding = 'UTF-8')

@@ -40,6 +40,9 @@ read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="weighting_area", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
   # Verify code_weighting input
         # if code_weighting=="all", read the entire country
         if(code_weighting=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
@@ -49,6 +52,10 @@ read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE
 
         # download files
         temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+        # check if download failed
+        if (is.null(temp_sf)) { return(invisible(NULL)) }
+
         return(temp_sf)
 
       }
@@ -64,6 +71,9 @@ read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
 
     # return whole state
     if(nchar(code_weighting)==2){

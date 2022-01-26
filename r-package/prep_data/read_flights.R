@@ -1,6 +1,20 @@
-#' Download flights data from ANAC
-
-
+#' Download flight data from Brazil
+#'
+#' @description
+#' Download flight  data from Brazil’s Civil Aviation Agency (ANAC).
+#'
+#' @param year Year of the data. Defaults to `2010`
+#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
+#' returns the data set with original' resolution or a data set with 'simplified'
+#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
+#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
+#' borders using `sf::st_simplify()` preserving topology with a `dTolerance` of 100.
+#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#'
+#' @return An `"sf" "data.frame"` object
+#'
+#' @export
+#' @family general area functions
 
 #' @examples \dontrun{ if (interactive()) {
 #' # Read flights data
@@ -40,10 +54,4 @@ read_flights <- function(year=2000, month=3, type='basica'){
   return(df)
 
 }
-
-#' TO DO LIST
-#' year and month, or date yyyymm
-#' check input of dates
-#' allow for users to set multiple periods
-#' documentation
 

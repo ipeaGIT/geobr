@@ -40,15 +40,20 @@ read_intermediate_region <- function(code_intermediate="all", year=2019, simplif
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="intermediate_regions", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
 
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
 
   # input "all"
-  if(code_intermediate=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  if(code_intermediate=="all"){
 
     # abbrev_state
   } else if(code_intermediate %in% temp_sf$abbrev_state){

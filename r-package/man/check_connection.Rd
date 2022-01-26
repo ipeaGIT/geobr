@@ -12,10 +12,10 @@ check_connection(
 \item{file_url}{A string with the file_url address of an geobr dataset}
 }
 \value{
-Logic \verb{TRUE or }FALSE`.
+Logical. \code{TRUE} if url is working, \code{FALSE} if not.
 }
 \description{
-Checks if there is internet connection to Ipea server to download geobr data.
+Check internet connection with Ipea server
 }
 \seealso{
 Other support functions: 

@@ -35,10 +35,13 @@ read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showPr
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="meso_region", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
 # Verify code_meso input
 
   # if code_meso=="all", read the entire country
-  if(code_meso=="all"){ message("Loading data for the whole country\n")
+  if(code_meso=="all"){
 
     # list paths of files to download
     file_url <- as.character(temp_meta$download_path)

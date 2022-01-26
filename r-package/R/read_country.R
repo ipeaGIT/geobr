@@ -24,6 +24,9 @@ read_country <- function(year=2010, simplified=TRUE, showProgress=TRUE){
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="country", year=year, simplified=simplified)
 
+  # # check if download failed
+  # if (is.null(temp_meta)) { return(invisible(NULL)) }
+
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 

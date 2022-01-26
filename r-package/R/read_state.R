@@ -32,6 +32,9 @@ read_state <- function(code_state="all", year=2010, simplified=TRUE, showProgres
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="state", year=year, simplified=simplified)
 
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
 
 # BLOCK 2.1 From 1872 to 1991  ----------------------------
   x <- year
@@ -46,7 +49,7 @@ if( x < 1992){
 
   if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL")}
 
-  if(code_state=="all"){ message("Loading data for the whole country\n")
+  if(code_state=="all"){
 
     # list paths of files to download
     file_url <- as.character(temp_meta$download_path)
@@ -75,7 +78,7 @@ if( x < 1992){
   # Verify code_state input
 
   # if code_state=="all", read the entire country
-    if(code_state=="all"){ message("Loading data for the whole country\n")
+    if(code_state=="all"){
 
       # list paths of files to download
       file_url <- as.character(temp_meta$download_path)
