@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.6</span>
       </span>
     </div>
 
@@ -121,119 +121,7 @@
 <code class="sourceCode R"><span class="co"># Available data sets</span>
 <span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_geobr.html">list_geobr</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">datasets</span>, n<span class="op">=</span><span class="fl">27</span><span class="op">)</span>
-<span class="co">#&gt;                       function</span>
-<span class="co">#&gt; 1               `read_country`</span>
-<span class="co">#&gt; 2                `read_region`</span>
-<span class="co">#&gt; 3                 `read_state`</span>
-<span class="co">#&gt; 4           `read_meso_region`</span>
-<span class="co">#&gt; 5          `read_micro_region`</span>
-<span class="co">#&gt; 6   `read_intermediate_region`</span>
-<span class="co">#&gt; 7      `read_immediate_region`</span>
-<span class="co">#&gt; 8          `read_municipality`</span>
-<span class="co">#&gt; 9        `read_municipal_seat`</span>
-<span class="co">#&gt; 10       `read_weighting_area`</span>
-<span class="co">#&gt; 11         `read_census_tract`</span>
-<span class="co">#&gt; 12     `read_statistical_grid`</span>
-<span class="co">#&gt; 13           `read_metro_area`</span>
-<span class="co">#&gt; 14           `read_urban_area`</span>
-<span class="co">#&gt; 15               `read_amazon`</span>
-<span class="co">#&gt; 16               `read_biomes`</span>
-<span class="co">#&gt; 17   `read_conservation_units`</span>
-<span class="co">#&gt; 18   `read_disaster_risk_area`</span>
-<span class="co">#&gt; 19      `read_indigenous_land`</span>
-<span class="co">#&gt; 20             `read_semiarid`</span>
-<span class="co">#&gt; 21    `read_health_facilities`</span>
-<span class="co">#&gt; 22        `read_health_region`</span>
-<span class="co">#&gt; 23         `read_neighborhood`</span>
-<span class="co">#&gt; 24              `read_schools`</span>
-<span class="co">#&gt; 25     `read_comparable_areas`</span>
-<span class="co">#&gt; 26 `read_urban_concentrations`</span>
-<span class="co">#&gt; 27     `read_pop_arrangements`</span>
-<span class="co">#&gt;                                                                       geography</span>
-<span class="co">#&gt; 1                                                                       Country</span>
-<span class="co">#&gt; 2                                                                        Region</span>
-<span class="co">#&gt; 3                                                                        States</span>
-<span class="co">#&gt; 4                                                                   Meso region</span>
-<span class="co">#&gt; 5                                                                  Micro region</span>
-<span class="co">#&gt; 6                                                           Intermediate region</span>
-<span class="co">#&gt; 7                                                              Immediate region</span>
-<span class="co">#&gt; 8                                                                  Municipality</span>
-<span class="co">#&gt; 9                                         Municipality seats (sedes municipais)</span>
-<span class="co">#&gt; 10                                   Census weighting area (área de ponderação)</span>
-<span class="co">#&gt; 11                                              Census tract (setor censitário)</span>
-<span class="co">#&gt; 12                                         Statistical Grid of 200 x 200 meters</span>
-<span class="co">#&gt; 13                                                           Metropolitan areas</span>
-<span class="co">#&gt; 14                                                             Urban footprints</span>
-<span class="co">#&gt; 15                                                        Brazil's Legal Amazon</span>
-<span class="co">#&gt; 16                                                                       Biomes</span>
-<span class="co">#&gt; 17                                             Environmental Conservation Units</span>
-<span class="co">#&gt; 18                                                          Disaster risk areas</span>
-<span class="co">#&gt; 19                                                             Indigenous lands</span>
-<span class="co">#&gt; 20                                                             Semi Arid region</span>
-<span class="co">#&gt; 21                                                            Health facilities</span>
-<span class="co">#&gt; 22                                             Health regions and macro regions</span>
-<span class="co">#&gt; 23                                                          Neighborhood limits</span>
-<span class="co">#&gt; 24                                                                      Schools</span>
-<span class="co">#&gt; 25 Historically comparable municipalities, aka Areas minimas comparaveis (AMCs)</span>
-<span class="co">#&gt; 26                            Urban concentration areas (concentrações urbanas)</span>
-<span class="co">#&gt; 27                             Population arrangements (arranjos populacioanis)</span>
-<span class="co">#&gt;                                                                                                                                             years</span>
-<span class="co">#&gt; 1              1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</span>
-<span class="co">#&gt; 2                                                                                2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</span>
-<span class="co">#&gt; 3              1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</span>
-<span class="co">#&gt; 4                                                                                2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</span>
-<span class="co">#&gt; 5                                                                                2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</span>
-<span class="co">#&gt; 6                                                                                                                                2017, 2019, 2020</span>
-<span class="co">#&gt; 7                                                                                                                                2017, 2019, 2020</span>
-<span class="co">#&gt; 8  1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2005, 2007, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020</span>
-<span class="co">#&gt; 9                                                                          1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2010</span>
-<span class="co">#&gt; 10                                                                                                                                           2010</span>
-<span class="co">#&gt; 11                                                                                                                   2000, 2010, 2017, 2019, 2020</span>
-<span class="co">#&gt; 12                                                                                                                                           2010</span>
-<span class="co">#&gt; 13                                                                         1970, 2001, 2002, 2003, 2005, 2010, 2013, 2014, 2015, 2016, 2017, 2018</span>
-<span class="co">#&gt; 14                                                                                                                                     2005, 2015</span>
-<span class="co">#&gt; 15                                                                                                                                           2012</span>
-<span class="co">#&gt; 16                                                                                                                                     2004, 2019</span>
-<span class="co">#&gt; 17                                                                                                                                         201909</span>
-<span class="co">#&gt; 18                                                                                                                                           2010</span>
-<span class="co">#&gt; 19                                                                                                                                 201907, 202103</span>
-<span class="co">#&gt; 20                                                                                                                                     2005, 2017</span>
-<span class="co">#&gt; 21                                                                                                                                           2015</span>
-<span class="co">#&gt; 22                                                                                                             1991, 1994, 1997, 2001, 2005, 2013</span>
-<span class="co">#&gt; 23                                                                                                                                           2010</span>
-<span class="co">#&gt; 24                                                                                                                                           2020</span>
-<span class="co">#&gt; 25                                                                               1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010</span>
-<span class="co">#&gt; 26                                                                                                                                           2015</span>
-<span class="co">#&gt; 27                                                                                                                                           2015</span>
-<span class="co">#&gt;              source</span>
-<span class="co">#&gt; 1              IBGE</span>
-<span class="co">#&gt; 2              IBGE</span>
-<span class="co">#&gt; 3              IBGE</span>
-<span class="co">#&gt; 4              IBGE</span>
-<span class="co">#&gt; 5              IBGE</span>
-<span class="co">#&gt; 6              IBGE</span>
-<span class="co">#&gt; 7              IBGE</span>
-<span class="co">#&gt; 8              IBGE</span>
-<span class="co">#&gt; 9              IBGE</span>
-<span class="co">#&gt; 10             IBGE</span>
-<span class="co">#&gt; 11             IBGE</span>
-<span class="co">#&gt; 12             IBGE</span>
-<span class="co">#&gt; 13             IBGE</span>
-<span class="co">#&gt; 14             IBGE</span>
-<span class="co">#&gt; 15              MMA</span>
-<span class="co">#&gt; 16             IBGE</span>
-<span class="co">#&gt; 17              MMA</span>
-<span class="co">#&gt; 18 CEMADEN and IBGE</span>
-<span class="co">#&gt; 19            FUNAI</span>
-<span class="co">#&gt; 20             IBGE</span>
-<span class="co">#&gt; 21    CNES, DataSUS</span>
-<span class="co">#&gt; 22          DataSUS</span>
-<span class="co">#&gt; 23             IBGE</span>
-<span class="co">#&gt; 24             INEP</span>
-<span class="co">#&gt; 25             IBGE</span>
-<span class="co">#&gt; 26             IBGE</span>
-<span class="co">#&gt; 27             IBGE</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">datasets</span>, n<span class="op">=</span><span class="fl">27</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -282,7 +170,6 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle<span class="op">=</span><span class="st">"States"</span>, size<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="va">no_axis</span></code></pre></div>
-<p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;"></p>
 <p>Plot all the municipalities of a particular state, such as Rio de Janeiro:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -298,7 +185,6 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle<span class="op">=</span><span class="st">"Municipalities of Rio de Janeiro, 2000"</span>, size<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="va">no_axis</span></code></pre></div>
-<p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="thematic-maps">Thematic maps<a class="anchor" aria-label="anchor" href="#thematic-maps"></a>
@@ -328,7 +214,6 @@
       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span>, name<span class="op">=</span><span class="st">"Life Expectancy"</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">65</span>,<span class="fl">80</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
       <span class="va">no_axis</span></code></pre></div>
-<p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-11-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
