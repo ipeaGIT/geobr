@@ -33,7 +33,7 @@ You can install geobr from CRAN or the development version to use the latest fea
 
 Now let's load the libraries we'll use in this vignette.
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
   library(geobr)
   library(ggplot2)
   library(sf)
@@ -48,7 +48,7 @@ Now let's load the libraries we'll use in this vignette.
 
 The geobr package covers 27 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the `list_geobr()` function.
 
-```{r message=FALSE, warning=FALSE}
+```{r eval=FALSE, message=FALSE, warning=FALSE}
 # Available data sets
 datasets <- list_geobr()
 
@@ -84,7 +84,7 @@ Download all geographic areas within a state at a given year
 
 If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 meso <- read_intermediate_region(year=2017)
 states <- read_state(year=2019)
 
@@ -104,7 +104,7 @@ All functions to download polygon data such as states, municipalities etc. have 
 Once you've downloaded the data, it is really simple to plot maps using `ggplot2`.
 
 
-```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
+```{r eval=FALSE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 # Remove plot axis
   no_axis <- theme(axis.title=element_blank(),
                    axis.text=element_blank(),
@@ -123,7 +123,7 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 
 Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
-```{r message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
 
 library(ggplot2)
 
@@ -148,7 +148,7 @@ The next step is to combine  data from ***geobr*** package with other data sets 
 
 First, we need a `data.frame` with estimates of Life Expectancy and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 # Read data.frame with life expectancy data
 df <- utils::read.csv(system.file("extdata/br_states_lifexpect2017.csv", package = "geobr"), encoding = "UTF-8")
 
@@ -162,7 +162,7 @@ states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
 
 #### Plot thematic map
 
-```{r message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
+```{r eval=FALSE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
   ggplot() +
     geom_sf(data=states, aes(fill=ESPVIDA2017), color= NA, size=.15) +
       labs(subtitle="Life Expectancy at birth, Brazilian States, 2014", size=8) +
