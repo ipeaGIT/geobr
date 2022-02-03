@@ -2,14 +2,33 @@
 
 
 -------------------------------------------------------
+# geobr v1.6.6
+* another attempt to make geobr fail gracefully when there is no connection to server.
+
+
+-------------------------------------------------------
 # geobr v1.6.5
 
 ### Minor changes
-* Remove packages `crul`and `readr` from geobr dependencies.
+* Remove packages cruland readr from geobr dependencies.
 * geobr now fails gracefully when server connection times out. Closed #259.
 
 ### Bug fixes
 * Fixed check_connection() that was failing on Linux. Closed #269.
+
+
+-------------------------------------------------------
+# geobr v1.6.6
+
+### bug fixes
+* Attempt to make package "fail gracefully".
+
+
+-------------------------------------------------------
+# geobr v1.6.5
+
+### bug fixes
+* Attempt to make package "fail gracefully".
 
 
 -------------------------------------------------------
