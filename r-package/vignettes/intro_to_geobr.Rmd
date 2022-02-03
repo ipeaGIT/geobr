@@ -48,7 +48,7 @@ Now let's load the libraries we'll use in this vignette.
 
 The geobr package covers 27 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the `list_geobr()` function.
 
-```{r eval=FALSE, message=FALSE, warning=FALSE}
+```{r eval=TRUE, message=FALSE, warning=FALSE}
 # Available data sets
 datasets <- list_geobr()
 
@@ -125,8 +125,6 @@ Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
 
-library(ggplot2)
-
 # Download all municipalities of Rio
   all_muni <- read_municipality( code_muni = "RJ", year= 2010)
 
@@ -139,6 +137,9 @@ library(ggplot2)
     no_axis
 ```
 
+```{r ttm head, echo=FALSE, message=FALSE, out.width='100%'}
+knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/munis_rj.png?raw=true")
+```
 
 ## Thematic maps
 
@@ -160,6 +161,10 @@ states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
 
 ```
 
+```{r ttm head, echo=FALSE, message=FALSE, out.width='100%'}
+knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/states_br.png?raw=true")
+```
+
 #### Plot thematic map
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
@@ -170,5 +175,9 @@ states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
       theme_minimal() +
       no_axis
 
+```
+
+```{r ttm head, echo=FALSE, message=FALSE, out.width='100%'}
+knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/life_expect_states.png?raw=true")
 ```
 
