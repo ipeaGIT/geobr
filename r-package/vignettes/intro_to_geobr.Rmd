@@ -137,7 +137,7 @@ Plot all the municipalities of a particular state, such as Rio de Janeiro:
     no_axis
 ```
 
-```{r ttm head, echo=FALSE, message=FALSE, out.width='100%'}
+```{r munis rio, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/munis_rj.png?raw=true")
 ```
 
@@ -161,7 +161,7 @@ states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
 
 ```
 
-```{r ttm head, echo=FALSE, message=FALSE, out.width='100%'}
+```{r states br, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/states_br.png?raw=true")
 ```
 
@@ -177,7 +177,7 @@ knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/
 
 ```
 
-```{r ttm head, echo=FALSE, message=FALSE, out.width='100%'}
+```{r life expectancy states, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/life_expect_states.png?raw=true")
 ```
 
