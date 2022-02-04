@@ -33,7 +33,7 @@ You can install geobr from CRAN or the development version to use the latest fea
 
 Now let's load the libraries we'll use in this vignette.
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
   library(geobr)
   library(ggplot2)
   library(sf)
