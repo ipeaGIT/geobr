@@ -300,7 +300,7 @@ check_connection <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/
            httr::GET(file_url, # timeout(5),
                      config = httr::config(ssl_verifypeer = FALSE)))
   # link offline
-  if (class(x)=="try-error") {
+  if (class(x)[1]=="try-error") {
     message( msg )
     return(FALSE)
   }
