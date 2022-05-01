@@ -35,8 +35,6 @@ Suggests:
     dplyr (>= 0.8-3),
     ggplot2 (>= 3.3.1),
     knitr,
-    magrittr,
-    mapview,
     rmarkdown (>= 2.6),
     testthat
 Imports:
