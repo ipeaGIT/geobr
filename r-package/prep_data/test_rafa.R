@@ -48,6 +48,34 @@ data("brazil_2010")
 head(brazil_2010)
 
 
+# compare geoarrow Vs sfarrow -----------------
+
+library(geobr)
+library(sf)
+library(geoarrow)
+library(sfarrow)
+
+
+
+ct <- geobr::read_census_tract(code_tract = 'all')
+head(ct)
+
+system.time( sf::st_write(ct, 'ct.gpkg') )
+system.time( ct2 <- sf::st_read(ct, 'ct.gpkg') )
+
+system.time( write_geoarrow_parquet(ct, "ct_geo.parquet") )
+system.time( ct3 <- read_geoarrow_parquet_sf("ct_geo.parquet") )
+head(ct3)
+class(ct3)
+
+system.time( saveRDS(ct, "ct_rds.rds") )
+system.time( ct4 <- readRDS("ct_rds.rds") )
+
+
+system.time( st_write_parquet(ct, "ct_sf.parquet") )
+system.time( ct4 <-  st_read_parquet("ct_sf.parquet") )
+
+
 
 ### fail gracefully -------------------------
 https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv
