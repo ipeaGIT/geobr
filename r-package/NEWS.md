@@ -6,6 +6,10 @@
 * another attempt to make geobr fail gracefully when there is no connection to server.
 
 
+### Minor changes
+* Improved documentation of `read_statistical_grid()` Closed #289.
+
+
 -------------------------------------------------------
 # geobr v1.6.5
 
