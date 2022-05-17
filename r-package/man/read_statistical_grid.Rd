@@ -7,11 +7,12 @@
 read_statistical_grid(code_grid, year = 2010, showProgress = TRUE)
 }
 \arguments{
-\item{code_grid}{If two-letter abbreviation of a state is passed, the function
-will load all grid quadrants that intersect with that state.
-If \code{code_grid="all"}, the grid of the whole country will be
-loaded. Users may also pass a 7-digit code of a grid quadrant
-to load an specific quadrant.}
+\item{code_grid}{If two-letter abbreviation or two-digit code of a state is
+passed, the function will load all grid quadrants that
+intersect with that state. If \code{code_grid="all"}, the grid of
+the whole country will be loaded. Users may also pass a
+grid quadrant id to load an specific quadrant. Quadrant ids
+can be consulted at \code{geobr::grid_state_correspondence_table}.}
 
 \item{year}{Year of the data. Defaults to 2010. The only year available thus
 far is 2010.}
