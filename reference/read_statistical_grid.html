@@ -66,7 +66,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_statistical_grid</span><span class="op">(</span><span class="va">code_grid</span>, year <span class="op">=</span> <span class="fl">2010</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_statistical_grid</span><span class="op">(</span><span class="va">code_grid</span>, year <span class="op">=</span> <span class="fl">2010</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,15 +78,22 @@ intersect with that state. If <code>code_grid="all"</code>, the grid of
 the whole country will be loaded. Users may also pass a
 grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at <code><a href="grid_state_correspondence_table.html">geobr::grid_state_correspondence_table</a></code>.</p></dd>
+
+
 <dt>year</dt>
 <dd><p>Year of the data. Defaults to 2010. The only year available thus
 far is 2010.</p></dd>
+
+
 <dt>showProgress</dt>
 <dd><p>Logical. Defaults to <code>TRUE</code> display progress bar</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An <code>"sf" "data.frame"</code> object</p>
+    
+
+<p>An <code>"sf" "data.frame"</code> object</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -112,14 +119,13 @@ far is 2010.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-<span class="co"># Read specific municipality at a given year</span>
-<span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu">read_statistical_grid</span><span class="op">(</span>code_grid <span class="op">=</span> <span class="fl">45</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span>
-
-<span class="co"># Read all municipalities of a state at a given year</span>
-<span class="va">state_grid</span> <span class="op">&lt;-</span> <span class="fu">read_statistical_grid</span><span class="op">(</span>code_grid <span class="op">=</span> <span class="st">"RJ"</span><span class="op">)</span>
-<span class="op">}</span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="co"># Read specific municipality at a given year</span></span>
+<span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu">read_statistical_grid</span><span class="op">(</span>code_grid <span class="op">=</span> <span class="fl">45</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read all municipalities of a state at a given year</span></span>
+<span><span class="va">state_grid</span> <span class="op">&lt;-</span> <span class="fu">read_statistical_grid</span><span class="op">(</span>code_grid <span class="op">=</span> <span class="st">"RJ"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -133,7 +139,7 @@ far is 2010.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

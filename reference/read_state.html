@@ -66,12 +66,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_state</span><span class="op">(</span>
-  code_state <span class="op">=</span> <span class="st">"all"</span>,
-  year <span class="op">=</span> <span class="fl">2010</span>,
-  simplified <span class="op">=</span> <span class="cn">TRUE</span>,
-  showProgress <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_state</span><span class="op">(</span></span>
+<span>  code_state <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,20 +79,29 @@
     <dl><dt>code_state</dt>
 <dd><p>The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If <code>code_state="all"</code>, all states will be loaded.</p></dd>
+
+
 <dt>year</dt>
 <dd><p>Year of the data. Defaults to 2010</p></dd>
+
+
 <dt>simplified</dt>
 <dd><p>Logic <code>FALSE</code> or <code>TRUE</code>, indicating whether the function
 returns the data set with 'original' resolution or a data set with 'simplified'
 borders. Defaults to <code>TRUE</code>. For spatial analysis and statistics users should
 set <code>simplified = FALSE</code>. Borders have been simplified by removing vertices of
 borders using <code>st_simplify{sf}</code> preserving topology with a <code>dTolerance</code> of 100.</p></dd>
+
+
 <dt>showProgress</dt>
 <dd><p>Logical. Defaults to <code>TRUE</code> display progress bar</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An <code>"sf" "data.frame"</code> object</p>
+    
+
+<p>An <code>"sf" "data.frame"</code> object</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -118,17 +127,16 @@ borders using <code>st_simplify{sf}</code> preserving topology with a <code>dTol
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-<span class="co"># Read specific state at a given year</span>
-  <span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">read_state</span><span class="op">(</span>code_state<span class="op">=</span><span class="fl">12</span>, year<span class="op">=</span><span class="fl">2017</span><span class="op">)</span>
-
-<span class="co"># Read specific state at a given year</span>
-  <span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">read_state</span><span class="op">(</span>code_state<span class="op">=</span><span class="st">"SC"</span>, year<span class="op">=</span><span class="fl">2000</span><span class="op">)</span>
-
-<span class="co"># Read all states at a given year</span>
-  <span class="va">ufs</span> <span class="op">&lt;-</span> <span class="fu">read_state</span><span class="op">(</span>code_state<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span>
-<span class="op">}</span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="co"># Read specific state at a given year</span></span>
+<span>  <span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">read_state</span><span class="op">(</span>code_state<span class="op">=</span><span class="fl">12</span>, year<span class="op">=</span><span class="fl">2017</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read specific state at a given year</span></span>
+<span>  <span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">read_state</span><span class="op">(</span>code_state<span class="op">=</span><span class="st">"SC"</span>, year<span class="op">=</span><span class="fl">2000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read all states at a given year</span></span>
+<span>  <span class="va">ufs</span> <span class="op">&lt;-</span> <span class="fu">read_state</span><span class="op">(</span>code_state<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -142,7 +150,7 @@ borders using <code>st_simplify{sf}</code> preserving topology with a <code>dTol
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -70,21 +70,30 @@ and immediate regions</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lookup_muni</span><span class="op">(</span>name_muni <span class="op">=</span> <span class="cn">NULL</span>, code_muni <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lookup_muni</span><span class="op">(</span>name_muni <span class="op">=</span> <span class="cn">NULL</span>, code_muni <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>name_muni</dt>
 <dd><p>The municipality name to be looked up</p></dd>
+
+
 <dt>code_muni</dt>
 <dd><p>The municipality code to be looked up</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>data.frame</code> with 13 columns identifying the geographies information
-of that municipality
-A <code>data.frame</code></p>
+    
+
+<p>A <code>data.frame</code> with 13 columns identifying the geographies information
+of that municipality</p>
+
+
+<p>A <code>data.frame</code></p>
+
+
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -93,20 +102,19 @@ A <code>data.frame</code></p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-<span class="co"># Get lookup table for municipality Rio de Janeiro</span>
-<span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>name_muni <span class="op">=</span> <span class="st">"Rio de Janeiro"</span><span class="op">)</span>
-
-<span class="co"># Or you can get a lookup table for the same municipality searching for its code</span>
-<span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>code_muni <span class="op">=</span> <span class="fl">3304557</span><span class="op">)</span>
-
-<span class="co"># Get lookup table for all municipalities</span>
-<span class="va">mun_all</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>name_muni <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
-
-<span class="co"># Or:</span>
-<span class="va">mun_all</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>code_muni <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
-<span class="op">}</span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="co"># Get lookup table for municipality Rio de Janeiro</span></span>
+<span><span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>name_muni <span class="op">=</span> <span class="st">"Rio de Janeiro"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or you can get a lookup table for the same municipality searching for its code</span></span>
+<span><span class="va">mun</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>code_muni <span class="op">=</span> <span class="fl">3304557</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get lookup table for all municipalities</span></span>
+<span><span class="va">mun_all</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>name_muni <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or:</span></span>
+<span><span class="va">mun_all</span> <span class="op">&lt;-</span> <span class="fu">lookup_muni</span><span class="op">(</span>code_muni <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -120,7 +128,7 @@ A <code>data.frame</code></p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
