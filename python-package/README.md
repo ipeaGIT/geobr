@@ -71,6 +71,7 @@ Finally, if **not** using conda, try:
 | read_amazon               | Yes         | Super |
 | read_biomes               | Yes         | Super |
 | read_census_tract         | Yes         | No    |
+| read_comparable_areas     | No          | Yes   |
 | read_conservation_units   | Yes         | Super |
 | read_country              | Yes         | Super |
 | read_disaster_risk_area   | Yes         | Super |
