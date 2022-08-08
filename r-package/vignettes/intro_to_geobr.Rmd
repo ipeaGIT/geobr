@@ -1,8 +1,8 @@
 ---
-title: "Introduction to geobr"
+title: "Introduction to geobr (R)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to geobr}
+  %\VignetteIndexEntry{Introduction to geobr (R)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = identical(tolower(Sys.getenv("NOT_CRAN")), "true"),
+  out.width = "100%"
 )
 ```
 
@@ -52,7 +54,7 @@ The geobr package covers 27 spatial data sets, including a variety of political-
 # Available data sets
 datasets <- list_geobr()
 
-head(datasets, n=27)
+head(datasets)
 
 ```
 
@@ -62,31 +64,44 @@ head(datasets, n=27)
 The syntax of all *geobr* functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.
 
 Download an specific geographic area at a given year
-```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # State of Sergige
-  state <- read_state(code_state="SE", year=2018)
+  state <- read_state(code_state="SE", 
+                      year=2018,
+                      showProgress = FALSE)
 
 # Municipality of Sao Paulo
-  muni <- read_municipality( code_muni = 3550308, year=2010 )
+  muni <- read_municipality(code_muni = 3550308, 
+                            year=2010, 
+                            showProgress = FALSE)
 
 ```
 
 
 Download all geographic areas within a state at a given year
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
-# All municipalities in the state of Alagoas
-  muni <- read_municipality(code_muni= "AL", year=2007)
+# All municipalities in the state of Minas Gerais
+  muni <- read_municipality(code_muni= "MG", 
+                            year=2007,
+                            showProgress = FALSE)
 
 # All census tracts in the state of Rio de Janeiro
-  cntr <- read_census_tract(code_tract = "RJ", year = 2010)
+  cntr <- read_census_tract(code_tract = "RJ", 
+                            year = 2010,
+                            showProgress = FALSE)
 
 ```
 
 If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
-meso <- read_intermediate_region(year=2017)
-states <- read_state(year=2019)
+```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
+# read all intermediate regions
+inter <- read_intermediate_region(year=2017,
+                                  showProgress = FALSE)
+
+# read all states
+states <- read_state(year=2019, 
+                     showProgress = FALSE)
 
 ```
 
@@ -100,11 +115,9 @@ All functions to download polygon data such as states, municipalities etc. have 
 
 ## Plot the data
 
-
 Once you've downloaded the data, it is really simple to plot maps using `ggplot2`.
 
-
-```{r eval=FALSE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
+```{r eval=TRUE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 # Remove plot axis
   no_axis <- theme(axis.title=element_blank(),
                    axis.text=element_blank(),
@@ -128,10 +141,12 @@ knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/
 
 Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
+```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
 
 # Download all municipalities of Rio
-  all_muni <- read_municipality( code_muni = "RJ", year= 2010)
+  all_muni <- read_municipality( code_muni = "RJ", 
+                                 year= 2010,
+                                 showProgress = FALSE)
 
 
 # plot
@@ -154,7 +169,7 @@ The next step is to combine  data from ***geobr*** package with other data sets 
 
 First, we need a `data.frame` with estimates of Life Expectancy and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Read data.frame with life expectancy data
 df <- utils::read.csv(system.file("extdata/br_states_lifexpect2017.csv", package = "geobr"), encoding = "UTF-8")
 
