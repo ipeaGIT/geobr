@@ -14,12 +14,4 @@ download_gpkg(file_url, progress_bar = showProgress)
 \description{
 Download geopackage to tempdir
 }
-\seealso{
-Other support functions: 
-\code{\link{check_connection}()},
-\code{\link{load_gpkg}()},
-\code{\link{select_data_type}()},
-\code{\link{select_metadata}()},
-\code{\link{select_year_input}()}
-}
-\concept{support functions}
+\keyword{internal}

@@ -17,8 +17,4 @@ Returns a data frame with all datasets available in the geobr package
 df <- list_geobr()
 }
 }
-\seealso{
-Other general support functions: 
-\code{\link{download_metadata}()}
-}
 \concept{general support functions}

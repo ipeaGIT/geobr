@@ -1,7 +1,6 @@
 #' Support function to download metadata internally used in geobr
 #'
-#' @export
-#' @family general support functions
+#' @keywords internal
 #' @examples \dontrun{ if (interactive()) {
 #' df <- download_metadata()
 #' }}

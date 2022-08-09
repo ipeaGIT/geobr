@@ -5,15 +5,15 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
 
 
-url_ok <- 'http://google.com/'
-url_timeout <- 'http://www.google.com:81/'
-url_error <- 'http://httpbin.org/status/300'
+url_ok <- 'https://google.com/'
+url_timeout <- 'https://www.google.com:81/'
+url_error <- 'https://httpbin.org/status/300'
 
 
 # expected success ------------------------------------
 test_that("check_connection", {
 
-  testthat::expect_true(check_connection(file_url = url_ok) )
+  testthat::expect_true( check_connection(file_url = url_ok) )
 })
 
 

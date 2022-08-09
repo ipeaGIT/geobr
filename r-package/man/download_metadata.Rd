@@ -14,8 +14,4 @@ Support function to download metadata internally used in geobr
 df <- download_metadata()
 }}
 }
-\seealso{
-Other general support functions: 
-\code{\link{list_geobr}()}
-}
-\concept{general support functions}
+\keyword{internal}

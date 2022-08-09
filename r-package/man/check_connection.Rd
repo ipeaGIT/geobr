@@ -17,12 +17,4 @@ Logical. \code{TRUE} if url is working, \code{FALSE} if not.
 \description{
 Check internet connection with Ipea server
 }
-\seealso{
-Other support functions: 
-\code{\link{download_gpkg}()},
-\code{\link{load_gpkg}()},
-\code{\link{select_data_type}()},
-\code{\link{select_metadata}()},
-\code{\link{select_year_input}()}
-}
-\concept{support functions}
+\keyword{internal}

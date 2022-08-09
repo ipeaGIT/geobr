@@ -43,6 +43,6 @@ Imports:
       httr (>= 1.4.1),
       sf (>= 0.9-3),
       utils
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

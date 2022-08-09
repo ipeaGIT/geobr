@@ -8,8 +8,7 @@
 #'
 #' @param temp_meta A dataframe with the file_url addresses of geobr datasets
 #' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
-#' @export
-#' @family support functions
+#' @keywords internal
 #'
 select_data_type <- function(temp_meta, simplified=NULL){
 
@@ -29,12 +28,9 @@ select_data_type <- function(temp_meta, simplified=NULL){
 
 #' Select year input
 #'
-#'
-#'
 #' @param temp_meta A dataframe with the file_url addresses of geobr datasets
 #' @param y Year of the dataset (passed by red_ function)
-#' @export
-#' @family support functions
+#' @keywords internal
 #'
 select_year_input <- function(temp_meta, y=year){
 
@@ -60,8 +56,7 @@ select_year_input <- function(temp_meta, y=year){
 #' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @param year Year of the dataset (passed by red_ function)
 #'
-#' @export
-#' @family support functions
+#' @keywords internal
 #' @examples \dontrun{ if (interactive()) {
 #'
 #' library(geobr)
@@ -97,8 +92,7 @@ select_metadata <- function(geography, year=NULL, simplified=NULL){
 #'
 #' @param file_url A string with the file_url address of a geobr dataset
 #' @param progress_bar Logical. Defaults to (TRUE) display progress bar
-#' @export
-#' @family support functions
+#' @keywords internal
 #'
 download_gpkg <- function(file_url, progress_bar = showProgress){
 
@@ -237,8 +231,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 #'
 #' @param file_url A string with the file_url address of a geobr dataset
 #' @param temps The address of a gpkg file stored in tempdir. Defaults to NULL
-#' @export
-#' @family support functions
+#' @keywords internal
 #'
 load_gpkg <- function(file_url, temps=NULL){
 
@@ -278,8 +271,7 @@ load_gpkg <- function(file_url, temps=NULL){
 #'
 #' @return Logical. `TRUE` if url is working, `FALSE` if not.
 #'
-#' @export
-#' @family support functions
+#' @keywords internal
 #'
 check_connection <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'){
 

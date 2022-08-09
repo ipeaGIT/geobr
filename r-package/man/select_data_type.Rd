@@ -14,12 +14,4 @@ select_data_type(temp_meta, simplified = NULL)
 \description{
 Select data type: 'original' or 'simplified' (default)
 }
-\seealso{
-Other support functions: 
-\code{\link{check_connection}()},
-\code{\link{download_gpkg}()},
-\code{\link{load_gpkg}()},
-\code{\link{select_metadata}()},
-\code{\link{select_year_input}()}
-}
-\concept{support functions}
+\keyword{internal}
