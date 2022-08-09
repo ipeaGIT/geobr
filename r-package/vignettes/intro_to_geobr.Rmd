@@ -135,7 +135,7 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 ```
 
 
-```{r states br, echo=FALSE, message=FALSE, out.width='100%'}
+```{r states br, eval=FALSE, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/states_br.png?raw=true")
 ```
 
@@ -157,7 +157,7 @@ Plot all the municipalities of a particular state, such as Rio de Janeiro:
     no_axis
 ```
 
-```{r munis rio, echo=FALSE, message=FALSE, out.width='100%'}
+```{r munis rio, eval=FALSE, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/munis_rj.png?raw=true")
 ```
 
@@ -184,7 +184,7 @@ states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
 
 #### Plot thematic map
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
+```{r eval=TRUE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center" }
   ggplot() +
     geom_sf(data=states, aes(fill=ESPVIDA2017), color= NA, size=.15) +
       labs(subtitle="Life Expectancy at birth, Brazilian States, 2014", size=8) +
@@ -194,7 +194,7 @@ states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
 
 ```
 
-```{r life expectancy states, eval=TRUE, echo=FALSE, message=FALSE, out.width='100%'}
+```{r life expectancy states, eval=FALSE, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/life_expect_states.png?raw=true")
 ```
 
