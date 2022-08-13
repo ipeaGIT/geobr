@@ -98,9 +98,14 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
   if( !(progress_bar %in% c(T, F)) ){ stop("Value to argument 'showProgress' has to be either TRUE or FALSE") }
 
+  # get backup links
+  filenames <- basename(file_url)
+  file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
+
+
 ## one single file
 
-  if (length(file_url)==1 & progress_bar == TRUE) {
+  if (length(file_url)==1) {
 
     # location of temp_file
     temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
@@ -108,48 +113,28 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     # check if file has not been downloaded already. If not, download it
     if (!file.exists(temps) | file.info(temps)$size == 0) {
 
-      # test server connection
+    # test connection with server1
+    check_con <- check_connection(file_url[1])
+
+    # if server1 fails, replace url and test connection with server2
+    if (is.null(check_con) | isFALSE(check_con)) {
+      file_url <- file_url2
       check_con <- check_connection(file_url[1])
       if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+    }
 
-      # download data
-      try( httr::GET(url=file_url,
-                     httr::progress(),
-                     httr::write_disk(temps, overwrite = T),
-                     config = httr::config(ssl_verifypeer = FALSE)
-                     ), silent = T)
+    # download data
+    try( httr::GET(url=file_url,
+                   if(isTRUE(progress_bar)){httr::progress()},
+                   httr::write_disk(temps, overwrite = T),
+                   config = httr::config(ssl_verifypeer = FALSE)
+                   ), silent = T)
       }
 
     # load gpkg to memory
     temp_sf <- load_gpkg(file_url, temps)
     return(temp_sf)
     }
-
-  else if (length(file_url)==1 & progress_bar == FALSE) {
-
-    # location of temp_file
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-
-    # check if file has not been downloaded already. If not, download it
-    if (!file.exists(temps) | file.info(temps)$size == 0) {
-
-      # test server connection
-      check_con <- check_connection(file_url[1])
-      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
-
-      # download data
-      try( httr::GET(url=file_url,
-                     httr::write_disk(temps, overwrite = T),
-                     config = httr::config(ssl_verifypeer = FALSE)
-                     ), silent = T)
-      }
-
-    # load gpkg to memory
-    temp_sf <- load_gpkg(file_url, temps)
-    return(temp_sf)
-  }
-
-
 
 ## multiple files
 
@@ -159,9 +144,15 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     total <- length(file_url)
     pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
 
-    # test server connection
+    # test connection with server1
     check_con <- check_connection(file_url[1])
-    if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+
+    # if server1 fails, replace url and test connection with server2
+    if (is.null(check_con) | isFALSE(check_con)) {
+      file_url <- file_url2
+      check_con <- check_connection(file_url[1])
+      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+    }
 
     # download files
     lapply(X=file_url, function(x){
@@ -192,9 +183,15 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
   else if(length(file_url) > 1 & progress_bar == FALSE) {
 
-    # test server connection
+    # test connection with server1
     check_con <- check_connection(file_url[1])
-    if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+
+    # if server1 fails, replace url and test connection with server2
+    if (is.null(check_con) | isFALSE(check_con)) {
+      file_url <- file_url2
+      check_con <- check_connection(file_url[1])
+      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+    }
 
     # download files
     lapply(X=file_url, function(x){
