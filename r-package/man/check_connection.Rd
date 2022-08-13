@@ -5,16 +5,19 @@
 \title{Check internet connection with Ipea server}
 \usage{
 check_connection(
-  file_url = "https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv"
+  url = "https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv",
+  silent = FALSE
 )
 }
 \arguments{
-\item{file_url}{A string with the file_url address of an geobr dataset}
+\item{url}{A string with the url address of an aop dataset}
+
+\item{silent}{Logical. Throw a message when silent is \code{FALSE} (default)}
 }
 \value{
 Logical. \code{TRUE} if url is working, \code{FALSE} if not.
 }
 \description{
-Check internet connection with Ipea server
+Checks if there is an internet connection with Ipea server to download aop data.
 }
 \keyword{internal}

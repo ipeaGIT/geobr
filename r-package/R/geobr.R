@@ -11,6 +11,7 @@
 #' @importFrom utils "tail"
 #' @importFrom data.table "%like%"
 #' @importFrom curl "has_internet"
+#' @importFrom methods is
 
 
 

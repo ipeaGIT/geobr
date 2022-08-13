@@ -263,55 +263,58 @@ load_gpkg <- function(file_url, temps=NULL){
 # nocov end
 
 
-
-
 #' Check internet connection with Ipea server
 #'
-#' @param file_url A string with the file_url address of an geobr dataset
+#' @description
+#' Checks if there is an internet connection with Ipea server to download aop data.
+#'
+#' @param url A string with the url address of an aop dataset
+#' @param silent Logical. Throw a message when silent is `FALSE` (default)
 #'
 #' @return Logical. `TRUE` if url is working, `FALSE` if not.
 #'
 #' @keywords internal
 #'
-check_connection <- function(file_url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'){
+check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv', silent = FALSE){ # nocov start
 
-  # file_url <- 'http://google.com/'               # ok
-  # file_url <- 'http://www.google.com:81/'   # timeout
-  # file_url <- 'http://httpbin.org/status/300' # error
+  # url <- 'https://google.com/'               # ok
+  # url <- 'https://www.google.com:81/'   # timeout
+  # url <- 'https://httpbin.org/status/300' # error
 
   # check if user has internet connection
-  if (!curl::has_internet()) { message("\nNo internet connection.")
+  if (!curl::has_internet()) {
+    if(isFALSE(silent)){ message("No internet connection.") }
+
     return(FALSE)
   }
 
   # message
-  msg <- "Problem connecting to data server. Please try geobr again in a few minutes."
+  msg <- "Problem connecting to data server. Please try again in a few minutes."
 
   # test server connection
   x <- try(silent = TRUE,
-           httr::GET(file_url, # timeout(5),
+           httr::GET(url, # timeout(5),
                      config = httr::config(ssl_verifypeer = FALSE)))
   # link offline
-  if (class(x)[1]=="try-error") {
-    message( msg )
+  if (methods::is(x)=="try-error") {
+    if(isFALSE(silent)){ message( msg ) }
     return(FALSE)
   }
 
   # link working fine
   else if ( identical(httr::status_code(x), 200L)) {
     return(TRUE)
-    }
+  }
 
   # link not working or timeout
   else if (! identical(httr::status_code(x), 200L)) {
-    message(msg )
+    if(isFALSE(silent)){ message( msg ) }
     return(FALSE)
 
   } else if (httr::http_error(x) == TRUE) {
-    message(msg)
+    if(isFALSE(silent)){ message( msg ) }
     return(FALSE)
   }
 
-}
-
+} # nocov end
 
