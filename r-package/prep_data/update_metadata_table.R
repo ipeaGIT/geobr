@@ -1,16 +1,32 @@
-# update metadata.rds
+# update metadata.csv
+
+library(qdapRegex)
+library(data.table)
+library(pbapply)
+library(dplyr)
+library(piggyback)
 
 
-######### Etapa 1 - bases padrao ( geo/ano/arquivo) ----------------------
 
 
+######### Step 1 - create github release where data will be uploaded to ----------------------
+
+usethis::edit_r_environ()
+Sys.setenv(GITHUB_PAT="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")
+
+# create new release
+pb_new_release("ipeaGIT/geobr",
+               "v1.7.0")
+
+
+######### Step 2 - create/update metadata table ( geo/ano/arquivo) ----------------------
 
 # create empty metadata
   metadata <- data.frame(matrix(ncol = 5, nrow = 0))
-  colnames(metadata) <- c("geo","year","code","download_path","code_abrev")
+  colnames(metadata) <- c("geo","year","code","download_path","code_abbrev")
 
 # list all data files available in the geobr package
-  geo=list.files("//storage1/geobr/data_gpkg")
+  geo = list.files("//storage1/geobr/data_gpkg")
 
   # populate the metadata table
   for (a in geo) {    # a="census_tract"
@@ -38,35 +54,82 @@
  # get code abbreviations
   library(data.table)
   setDT(metadata)
-  metadata[ grepl("11", substr(code, 1, 3)), code_abrev :=	"RO" ]
-  metadata[ grepl("12", substr(code, 1, 3)), code_abrev :=	"AC" ]
-  metadata[ grepl("13", substr(code, 1, 3)), code_abrev :=	"AM" ]
-  metadata[ grepl("14", substr(code, 1, 3)), code_abrev :=	"RR" ]
-  metadata[ grepl("15", substr(code, 1, 3)), code_abrev :=	"PA" ]
-  metadata[ grepl("16", substr(code, 1, 3)), code_abrev :=	"AP" ]
-  metadata[ grepl("17", substr(code, 1, 3)), code_abrev :=	"TO" ]
-  metadata[ grepl("21", substr(code, 1, 3)), code_abrev :=	"MA" ]
-  metadata[ grepl("22", substr(code, 1, 3)), code_abrev :=	"PI" ]
-  metadata[ grepl("23", substr(code, 1, 3)), code_abrev :=	"CE" ]
-  metadata[ grepl("24", substr(code, 1, 3)), code_abrev :=	"RN" ]
-  metadata[ grepl("25", substr(code, 1, 3)), code_abrev :=	"PB" ]
-  metadata[ grepl("26", substr(code, 1, 3)), code_abrev :=	"PE" ]
-  metadata[ grepl("27", substr(code, 1, 3)), code_abrev :=	"AL" ]
-  metadata[ grepl("28", substr(code, 1, 3)), code_abrev :=	"SE" ]
-  metadata[ grepl("29", substr(code, 1, 3)), code_abrev :=	"BA" ]
-  metadata[ grepl("31", substr(code, 1, 3)), code_abrev :=	"MG" ]
-  metadata[ grepl("32", substr(code, 1, 3)), code_abrev :=	"ES" ]
-  metadata[ grepl("33", substr(code, 1, 3)), code_abrev :=	"RJ" ]
-  metadata[ grepl("35", substr(code, 1, 3)), code_abrev :=	"SP" ]
-  metadata[ grepl("41", substr(code, 1, 3)), code_abrev :=	"PR" ]
-  metadata[ grepl("42", substr(code, 1, 3)), code_abrev :=	"SC" ]
-  metadata[ grepl("43", substr(code, 1, 3)), code_abrev :=	"RS" ]
-  metadata[ grepl("50", substr(code, 1, 3)), code_abrev :=	"MS" ]
-  metadata[ grepl("51", substr(code, 1, 3)), code_abrev :=	"MT" ]
-  metadata[ grepl("52", substr(code, 1, 3)), code_abrev :=	"GO" ]
-  metadata[ grepl("53", substr(code, 1, 3)), code_abrev :=	"DF" ]
+  metadata[ grepl("11", substr(code, 1, 3)), code_abbrev :=	"RO" ]
+  metadata[ grepl("12", substr(code, 1, 3)), code_abbrev :=	"AC" ]
+  metadata[ grepl("13", substr(code, 1, 3)), code_abbrev :=	"AM" ]
+  metadata[ grepl("14", substr(code, 1, 3)), code_abbrev :=	"RR" ]
+  metadata[ grepl("15", substr(code, 1, 3)), code_abbrev :=	"PA" ]
+  metadata[ grepl("16", substr(code, 1, 3)), code_abbrev :=	"AP" ]
+  metadata[ grepl("17", substr(code, 1, 3)), code_abbrev :=	"TO" ]
+  metadata[ grepl("21", substr(code, 1, 3)), code_abbrev :=	"MA" ]
+  metadata[ grepl("22", substr(code, 1, 3)), code_abbrev :=	"PI" ]
+  metadata[ grepl("23", substr(code, 1, 3)), code_abbrev :=	"CE" ]
+  metadata[ grepl("24", substr(code, 1, 3)), code_abbrev :=	"RN" ]
+  metadata[ grepl("25", substr(code, 1, 3)), code_abbrev :=	"PB" ]
+  metadata[ grepl("26", substr(code, 1, 3)), code_abbrev :=	"PE" ]
+  metadata[ grepl("27", substr(code, 1, 3)), code_abbrev :=	"AL" ]
+  metadata[ grepl("28", substr(code, 1, 3)), code_abbrev :=	"SE" ]
+  metadata[ grepl("29", substr(code, 1, 3)), code_abbrev :=	"BA" ]
+  metadata[ grepl("31", substr(code, 1, 3)), code_abbrev :=	"MG" ]
+  metadata[ grepl("32", substr(code, 1, 3)), code_abbrev :=	"ES" ]
+  metadata[ grepl("33", substr(code, 1, 3)), code_abbrev :=	"RJ" ]
+  metadata[ grepl("35", substr(code, 1, 3)), code_abbrev :=	"SP" ]
+  metadata[ grepl("41", substr(code, 1, 3)), code_abbrev :=	"PR" ]
+  metadata[ grepl("42", substr(code, 1, 3)), code_abbrev :=	"SC" ]
+  metadata[ grepl("43", substr(code, 1, 3)), code_abbrev :=	"RS" ]
+  metadata[ grepl("50", substr(code, 1, 3)), code_abbrev :=	"MS" ]
+  metadata[ grepl("51", substr(code, 1, 3)), code_abbrev :=	"MT" ]
+  metadata[ grepl("52", substr(code, 1, 3)), code_abbrev :=	"GO" ]
+  metadata[ grepl("53", substr(code, 1, 3)), code_abbrev :=	"DF" ]
 
-# to avoid conflict with data.table
+
+  # add file name
+  metadata[, file_name := basename(download_path)]
+
+  # order by file_name
+  metadata <- unique(metadata)
+  metadata <- metadata[order(file_name)]
+  head(metadata)
+
+
+######### Step 3 - List all files and upload data to github ----------------------
+all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
+
+# upload data
+piggyback::pb_upload(all_files,
+                     "ipeaGIT/geobr",
+                     "v1.7.0")
+
+
+######### Etapa 4 - add github url paths ----------------------
+
+# get url to all data files on github repo release
+github_liks <- pb_download_url(repo = "ipeaGIT/geobr",
+                               tag = "v1.7.0")
+
+# ignore urls to metadata and package binaries
+github_liks <- github_liks[ ! (github_liks %like% 'metadata.csv') ]
+github_liks <- github_liks[ ! (github_liks %like% '.tar.gz') ]
+
+
+# add url paths from github to metadata
+metadata[, download_path2 := github_liks ]
+
+
+### check if both url likns correspond to the same files
+metadata[, check := basename(download_path) == basename(download_path2)]
+
+sum(metadata$check) == nrow(metadata)
+metadata$check <- NULL
+metadata$file_name <- NULL
+
+
+# reorder columns
+setcolorder(metadata, c("geo", "year", "code", "download_path", "download_path2", "code_abbrev"))
+
+######### Step 5 - check and save metadata ----------------------
+
+  # to avoid conflict with data.table
   metadata <- as.data.frame(metadata)
   table(metadata$geo)
   table(metadata$year)
@@ -77,7 +140,6 @@
   subset(metadata, geo == 'micro_region')[1:4,]
   subset(metadata, geo == 'census_tract' & year==2020)
   subset(metadata, year==2020)
-
 
 # save updated metadata table
   # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_gpkg.csv")
