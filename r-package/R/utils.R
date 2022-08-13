@@ -138,11 +138,16 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
 ## multiple files
 
-  else if(length(file_url) > 1 & progress_bar == TRUE) {
+  else if(length(file_url) > 1) {
 
     # input for progress bar
     total <- length(file_url)
-    pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+
+    # progress bar
+    if(isTRUE(progress_bar)){
+      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+      }
+
 
     # test connection with server1
     check_con <- check_connection(file_url[1])
@@ -167,12 +172,13 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
                                           httr::write_disk(temps, overwrite = T),
                                           config = httr::config(ssl_verifypeer = FALSE)
                                           ), silent = T)
-                                utils::setTxtProgressBar(pb, i)
+
+                                if(isTRUE(progress_bar)){ utils::setTxtProgressBar(pb, i) }
                                 }
       })
 
     # closing progress bar
-    close(pb)
+    if(isTRUE(progress_bar)){close(pb)}
 
     # load gpkg
     temp_sf <- load_gpkg(file_url)
@@ -181,40 +187,6 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
     }
 
-  else if(length(file_url) > 1 & progress_bar == FALSE) {
-
-    # test connection with server1
-    check_con <- check_connection(file_url[1])
-
-    # if server1 fails, replace url and test connection with server2
-    if (is.null(check_con) | isFALSE(check_con)) {
-      file_url <- file_url2
-      check_con <- check_connection(file_url[1])
-      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
-    }
-
-    # download files
-    lapply(X=file_url, function(x){
-
-      # location of temp_file
-      temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L)))
-
-      # check if file has not been downloaded already. If not, download it
-      if (!file.exists(temps) | file.info(temps)$size == 0) {
-                                i <- match(c(x),file_url)
-                                httr::GET(url=x, #httr::progress(),
-                                          httr::write_disk(temps, overwrite = T),
-                                          config = httr::config(ssl_verifypeer = FALSE)
-                                          )
-                              }
-      })
-
-
-    # load gpkg
-    temp_sf <- load_gpkg(file_url)
-    return(temp_sf)
-
-    }
 }
 
 
