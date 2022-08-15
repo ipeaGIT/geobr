@@ -10,7 +10,8 @@
 #' available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
 #'
 #' @param year A year number in YYYY format. Defaults to `2020`
-#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#' @template showProgress
+#'
 #'
 #' @return An `"sf" "data.frame"` object
 #'

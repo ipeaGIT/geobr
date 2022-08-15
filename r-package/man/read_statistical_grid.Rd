@@ -17,7 +17,7 @@ can be consulted at \code{geobr::grid_state_correspondence_table}.}
 \item{year}{Year of the data. Defaults to 2010. The only year available thus
 far is 2010.}
 
-\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

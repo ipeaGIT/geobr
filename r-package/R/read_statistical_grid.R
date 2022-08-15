@@ -11,7 +11,8 @@
 #'                  the whole country will be loaded. Users may also pass a
 #'                  grid quadrant id to load an specific quadrant. Quadrant ids
 #'                  can be consulted at `geobr::grid_state_correspondence_table`.
-#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#' @template showProgress
+#'
 #'
 #' @return An `"sf" "data.frame"` object
 #'

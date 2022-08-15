@@ -149,6 +149,7 @@ piggyback::pb_upload(to_go,
 # reorder columns
 setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 
+
 ######### Step 5 - check and save metadata ----------------------
 
   # to avoid conflict with data.table
@@ -170,3 +171,7 @@ setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
   piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
                        "ipeaGIT/geobr",
                        "v1.7.0")
+
+
+
+

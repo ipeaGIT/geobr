@@ -7,7 +7,7 @@
 read_health_facilities(showProgress = TRUE)
 }
 \arguments{
-\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

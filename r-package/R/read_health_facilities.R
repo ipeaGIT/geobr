@@ -16,8 +16,7 @@
 #' update is registered in the database in the columns `date_update` and
 #' `year_update`. More information available at \url{https://dados.gov.br/dataset?q=CNES}.
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
-#'
-#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'

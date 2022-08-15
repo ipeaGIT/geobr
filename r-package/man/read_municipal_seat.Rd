@@ -9,7 +9,7 @@ read_municipal_seat(year = 2010, showProgress = TRUE)
 \arguments{
 \item{year}{A year number in YYYY format. Defaults to \code{2010}}
 
-\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

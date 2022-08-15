@@ -8,15 +8,10 @@
 #' shortages of specialized professionals. A macro region comprises one or more health regions.
 #'
 #' @param year Year of the data. Defaults to 2013, latest available.
-#' @param macro Logic. If `FALSE` (default), the function downloads health regions data.
-#'               If `TRUE`, the function downloads macro regions data.
-#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
-#'                   returns the data set with original' resolution or a data set with
-#'                   'simplified' borders. Defaults to `TRUE`. For spatial analysis and
-#'                    statistics users should set `simplified = FALSE`. Borders have been
-#'                    simplified by removing vertices of borders using `sf::st_simplify()`
-#'                    preserving topology with a `dTolerance` of 100.
-#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#' @param macro Logic. If `FALSE` (default), the function downloads health
+#'        regions data. If `TRUE`, the function downloads macro regions data.
+#' @template simplified
+#' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'

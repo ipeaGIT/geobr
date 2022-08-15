@@ -18,12 +18,13 @@ abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"}, all states will be l
 \item{year}{Year of the data. Defaults to 2010}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
-returns the data set with 'original' resolution or a data set with 'simplified'
-borders. Defaults to \code{TRUE}. For spatial analysis and statistics users should
-set \code{simplified = FALSE}. Borders have been simplified by removing vertices of
-borders using \verb{st_simplify\{sf\}} preserving topology with a \code{dTolerance} of 100.}
+should return the data set with 'original' spatial resolution or a data set
+with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
+statistics users should set \code{simplified = FALSE}. Borders have been
+simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
+topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

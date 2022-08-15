@@ -16,12 +16,14 @@ read_comparable_areas(
 
 \item{end_year}{Numeric. End year to the period. (defaults to 2010)}
 
-\item{simplified}{Logic FALSE or TRUE, indicating whether the function returns the
-data set with 'original' resolution or a data set with 'simplified' borders (Defaults to TRUE).
-For spatial analysis and statistics users should set simplified = FALSE. Borders have been
-simplified by removing vertices of borders using st_simplify{sf} preserving topology with a dTolerance of 100.}
+\item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
+should return the data set with 'original' spatial resolution or a data set
+with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
+statistics users should set \code{simplified = FALSE}. Borders have been
+simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
+topology with a \code{dTolerance} of 100.}
 
-\item{showProgress}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

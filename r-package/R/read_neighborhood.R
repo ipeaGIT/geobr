@@ -6,12 +6,8 @@
 #' census. Only 2010 data is currently available.
 #'
 #' @param year Year of the data. Defaults to `2010`
-#' @param simplified Logic `FALSE` or `TRUE`, indicating whether the function
-#' returns the data set with 'original' resolution or a data set with 'simplified'
-#' borders. Defaults to `TRUE`. For spatial analysis and statistics users should
-#' set `simplified = FALSE`. Borders have been simplified by removing vertices of
-#' borders using `st_simplify{sf}` preserving topology with a `dTolerance` of 100.
-#' @param showProgress Logical. Defaults to `TRUE`` display progress bar
+#' @template simplified
+#' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'

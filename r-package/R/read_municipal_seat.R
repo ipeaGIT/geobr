@@ -7,7 +7,7 @@
 #' Brazilian Institute of Geography and Statistics (IBGE).
 #'
 #' @param year A year number in YYYY format. Defaults to `2010`
-#' @param showProgress Logical. Defaults to `TRUE` display progress bar
+#' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'
