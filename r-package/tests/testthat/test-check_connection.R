@@ -13,7 +13,7 @@ url_error <- 'https://httpbin.org/status/300'
 # expected success ------------------------------------
 test_that("check_connection", {
 
-  testthat::expect_true( check_connection(file_url = url_ok) )
+  testthat::expect_true( check_connection(url = url_ok) )
 })
 
 
@@ -22,15 +22,15 @@ test_that("check_connection", {
 test_that("check_connection", {
 
   # broken link / non-existent
-  testthat::expect_message( check_connection(file_url = "banana") )
-  testthat::expect_false( check_connection(file_url = "banana") )
+  testthat::expect_message( check_connection(url = "banana") )
+  testthat::expect_false( check_connection(url = "banana") )
 
   # connection timeout
-  testthat::expect_message( check_connection(file_url = url_timeout) )
-  testthat::expect_false( check_connection(file_url = url_timeout) )
+  testthat::expect_message( check_connection(url = url_timeout) )
+  testthat::expect_false( check_connection(url = url_timeout) )
 
   # link not working
-  testthat::expect_message( check_connection(file_url = url_error) )
-  testthat::expect_false( check_connection(file_url = url_error) )
+  testthat::expect_message( check_connection(url = url_error) )
+  testthat::expect_false( check_connection(url = url_error) )
 
 })

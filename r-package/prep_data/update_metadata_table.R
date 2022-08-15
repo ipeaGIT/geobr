@@ -10,9 +10,10 @@ library(piggyback)
 
 
 ######### Step 1 - create github release where data will be uploaded to ----------------------
+# https://docs.ropensci.org/piggyback/articles/intro.html
+# https://github.com/settings/tokens
 
 usethis::edit_r_environ()
-Sys.setenv(GITHUB_PAT="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")
 
 # create new release
 pb_new_release("ipeaGIT/geobr",
@@ -83,49 +84,70 @@ pb_new_release("ipeaGIT/geobr",
   metadata[ grepl("53", substr(code, 1, 3)), code_abbrev :=	"DF" ]
 
 
-  # add file name
-  metadata[, file_name := basename(download_path)]
+  # # add file name
+  # metadata[, file_name := basename(download_path)]
 
   # order by file_name
   metadata <- unique(metadata)
-  metadata <- metadata[order(file_name)]
-  head(metadata)
+  # metadata <- metadata[order(file_name)]
+  # head(metadata)
 
 
-######### Step 3 - List all files and upload data to github ----------------------
+
+
+
+######### Step 3 -  upload data to github ----------------------
 all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
 
 # upload data
-piggyback::pb_upload(all_files,
+piggyback::pb_upload(all_files[3082:length(all_files)],
                      "ipeaGIT/geobr",
                      "v1.7.0")
 
 
-######### Etapa 4 - add github url paths ----------------------
+#' https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting
+
 
 # get url to all data files on github repo release
 github_liks <- pb_download_url(repo = "ipeaGIT/geobr",
                                tag = "v1.7.0")
+# names of uploaded files
+uploaded <- basename(github_liks)
 
-# ignore urls to metadata and package binaries
-github_liks <- github_liks[ ! (github_liks %like% 'metadata.csv') ]
-github_liks <- github_liks[ ! (github_liks %like% '.tar.gz') ]
+# check which files have not been uploaded yet
+not_yet <- setdiff(basename(all_files), uploaded)
+to_go <- all_files[basename(all_files) %in% not_yet]
+
+# upload data
+piggyback::pb_upload(to_go,
+                     "ipeaGIT/geobr",
+                     "v1.7.0")
 
 
-# add url paths from github to metadata
-metadata[, download_path2 := github_liks ]
-
-
-### check if both url likns correspond to the same files
-metadata[, check := basename(download_path) == basename(download_path2)]
-
-sum(metadata$check) == nrow(metadata)
-metadata$check <- NULL
-metadata$file_name <- NULL
+# ######### Etapa 4 - add github url paths ----------------------
+#
+# # ignore urls to metadata and package binaries
+# github_liks <- github_liks[ ! (github_liks %like% 'metadata.csv') ]
+# github_liks <- github_liks[ ! (github_liks %like% '.tar.gz') ]
+#
+# # sort
+# github_liks[order(github_liks)] <- github_liks[order(github_liks)]
+#
+# # add url paths from github to metadata
+# metadata[, download_path2 := github_liks ]
+#
+#
+# ### check if both url likns correspond to the same files
+# metadata[, file_name2 := basename(download_path2)]
+# metadata[, check := file_name == file_name2]
+#
+# sum(metadata$check) == nrow(metadata)
+# metadata$check <- NULL
+# metadata$file_name <- NULL
 
 
 # reorder columns
-setcolorder(metadata, c("geo", "year", "code", "download_path", "download_path2", "code_abbrev"))
+setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 
 ######### Step 5 - check and save metadata ----------------------
 
@@ -142,5 +164,9 @@ setcolorder(metadata, c("geo", "year", "code", "download_path", "download_path2"
   subset(metadata, year==2020)
 
 # save updated metadata table
-  # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_gpkg.csv")
+  # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv")
 
+  # upload updated metadata table github
+  piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
+                       "ipeaGIT/geobr",
+                       "v1.7.0")

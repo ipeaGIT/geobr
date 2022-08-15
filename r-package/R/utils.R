@@ -142,8 +142,6 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
     # input for progress bar
     total <- length(file_url)
-
-    # progress bar
     if(isTRUE(progress_bar)){
       pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
       }
