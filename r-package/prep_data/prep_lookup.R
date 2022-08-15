@@ -37,7 +37,7 @@ project_wd <- getwd()
 
 ###### 0. Create Root folder to save the data -----------------
 # Root directory
-root_dir <- "L:\\# DIRUR #\\ASMEQ\\geobr\\data-raw"
+root_dir <- "L://# DIRUR #//ASMEQ//geobr//data-raw"
 setwd(root_dir)
 
 # Directory to keep raw zipped files
@@ -46,10 +46,6 @@ destdir_raw <- paste0("./lookup_muni/",update)
 dir.create(destdir_raw)
 
 
-# # Create folders to save clean sf.rds files  -----------------
-# dir.create("./biomes/shapes_in_sf_cleaned", showWarnings = FALSE)
-# destdir_clean <- paste0("./biomes/shapes_in_sf_cleaned/",update)
-# dir.create(destdir_clean)
 
 
 
@@ -100,9 +96,9 @@ if ( update == 2010){
 
 
 # fix eventual topology errors
-    intermediates <- lwgeom::st_make_valid(intermediates)
-    immediates <- lwgeom::st_make_valid(immediates)
-    munis <- lwgeom::st_make_valid(munis)
+    intermediates <- sf::st_make_valid(intermediates)
+    immediates <- sf::st_make_valid(immediates)
+    munis <- sf::st_make_valid(munis)
 
 
   # Join munis to intermediates
@@ -119,10 +115,14 @@ if ( update == 2010){
     left_join(lookup2_nogeo, by = c("municipio" = "code_muni")) %>%
 
     # rename variables to match geobr convention
-    select(code_muni = municipio, name_muni = nome_municipio,
-           code_state = uf, name_state = nome_uf,
-           code_micro = microregiao, name_micro = nome_microregiao,
-           code_meso = mesoregiao, name_meso = nome_mesorregiao,
+    select(code_muni = municipio,
+           name_muni = nome_municipio,
+           code_state = uf,
+           name_state = nome_uf,
+           code_micro = microregiao,
+           name_micro = nome_microregiao,
+           code_meso = mesoregiao,
+           name_meso = nome_mesorregiao,
            code_immediate, name_immediate,
            code_intermediate, name_intermediate)
 
@@ -151,27 +151,27 @@ lookup_end_format <- lookup_end %>%
   mutate(name_muni_format = trimws(name_muni_format, "both"))
 
 
-#### 3. Bring UF abrev -----------------
+#### 3. Bring UF abbrev -----------------
 
 lookup_state <- data.frame(name_uf = c("Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo",
                                        "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais",
                                        "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro",
                                        "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima",
                                        "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"),
-                           abrev_state = c("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", 
+                           abbrev_state = c("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES",
                                            "GO", "MA", "MT", "MS", "MG",
-                                           "PA", "PB", "PR", "PE", "PI", "RJ", 
+                                           "PA", "PB", "PR", "PE", "PI", "RJ",
                                            "RN", "RS", "RO", "RR",
                                            "SC", "SP", "SE", "TO"))
 
-# bring abrev state
+# bring abbrev state
 lookup_end_format <- lookup_end_format %>%
   left_join(lookup_state, by = c("name_state" = "name_uf"))
 
 # organize columns
 lookup_end_format <- lookup_end_format %>%
   select(code_muni, name_muni,
-         code_state, name_state, abrev_state,
+         code_state, name_state, abbrev_state,
          code_micro, name_micro,
          code_meso, name_meso,
          code_immediate, name_immediate,
@@ -189,10 +189,17 @@ lookup_end_format <- lookup_end_format %>%
 
 
 
-
+lookup_end_format <- as.data.frame(lookup_end_format)
+head(lookup_end_format)
+class(lookup_end_format)
 #### 5. Save it in compact .rds format-----------------
 
 write_csv(lookup_end_format, "lookup_muni/2010/lookup_muni_2010.csv")
+
+
+piggyback::pb_upload("//storage1/geobr/data_gpkg/lookup_muni/2010/lookup_muni_2010.csv",
+                     "ipeaGIT/geobr",
+                     "v1.7.0")
 
 
 # setwd(project_wd)
