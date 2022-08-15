@@ -114,7 +114,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     if (!file.exists(temps) | file.info(temps)$size == 0) {
 
     # test connection with server1
-    check_con <- check_connection(file_url[1])
+    check_con <- check_connection(file_url[1], silent = TRUE)
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
