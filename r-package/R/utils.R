@@ -128,7 +128,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
                    if(isTRUE(progress_bar)){httr::progress()},
                    httr::write_disk(temps, overwrite = T),
                    config = httr::config(ssl_verifypeer = FALSE)
-                   ), silent = T)
+                   ), silent = TRUE)
       }
 
     # load gpkg to memory
@@ -169,7 +169,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
                                 try( httr::GET(url=x, #httr::progress(),
                                           httr::write_disk(temps, overwrite = T),
                                           config = httr::config(ssl_verifypeer = FALSE)
-                                          ), silent = T)
+                                          ), silent = TRUE)
 
                                 if(isTRUE(progress_bar)){ utils::setTxtProgressBar(pb, i) }
                                 }
