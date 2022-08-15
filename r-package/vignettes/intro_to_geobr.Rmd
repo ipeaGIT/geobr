@@ -80,6 +80,7 @@ muni <- read_municipality(
   showProgress = FALSE
   )
 
+plot(muni)
 ```
 
 
@@ -97,6 +98,7 @@ cntr <- read_census_tract(
   showProgress = FALSE
   )
 
+head(muni)
 ```
 
 If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
@@ -114,6 +116,7 @@ states <- read_state(
   showProgress = FALSE
   )
 
+head(states)
 ```
 
 
@@ -133,8 +136,6 @@ Once you've downloaded the data, it is really simple to plot maps using `ggplot2
 no_axis <- theme(axis.title=element_blank(),
                  axis.text=element_blank(),
                  axis.ticks=element_blank())
-
-
 
 # Plot all Brazilian states
 ggplot() +
@@ -161,13 +162,13 @@ all_muni <- read_municipality(
   showProgress = FALSE
   )
 
-
 # plot
 ggplot() +
   geom_sf(data=all_muni, fill="#2D3E50", color="#FEBF57", size=.15, show.legend = FALSE) +
   labs(subtitle="Municipalities of Rio de Janeiro, 2000", size=8) +
   theme_minimal() +
   no_axis
+
 ```
 
 ```{r munis rio, eval=FALSE, echo=FALSE, message=FALSE, out.width='100%'}
