@@ -1,6 +1,7 @@
 # geobr v1.7.0 (dev version)
 
 **Major changes**
+
 - All data sets are now simultaneously stored on github and on Ipea's server. The package first tries to download the data from Ipea's server. In case Ipea's link is off line for some reason, then the package tries to download the data from github. For users, the effect of this change is that the package is much more stable and less vulnerable to instabilities in data server connection.
 
 **Minor changes**
@@ -16,6 +17,7 @@
 # geobr v1.6.6
 
 **Minor changes**
+
 - another attempt to make geobr fail gracefully when there is no connection to server.
 - Improved documentation of `read_statistical_grid()` Closed #289.
 
@@ -24,10 +26,12 @@
 # geobr v1.6.5
 
 **Minor changes**
+
 - Remove packages cruland readr from geobr dependencies.
 - geobr now fails gracefully when server connection times out. Closed #259.
 
 **Bug fixes**
+
 - Fixed check_connection() that was failing on Linux. Closed #269.
 
 
@@ -36,6 +40,7 @@
 # geobr v1.6.6
 
 **bug fixes**
+
 - Attempt to make package "fail gracefully".
 
 
@@ -44,6 +49,7 @@
 # geobr v1.6.5
 
 **bug fixes**
+
 - Attempt to make package "fail gracefully".
 
 
@@ -51,6 +57,7 @@
 # geobr v1.6.4
 
 **bug fixes**
+
 - Fixed bug crashing on Solaris.
 
 
@@ -60,6 +67,7 @@
 # geobr v1.6.3
 
 **bug fix**
+
 - Fixed bug with `readr` v2.0 that was crashing on Solaris.
 
 
@@ -68,6 +76,7 @@
 # geobr v1.6.2
 
 **Minor changes**
+
 - Added package `crul` to geobr dependencies.
 
 
@@ -76,6 +85,7 @@
 # geobr v1.6.1
 
 **Minor changes**
+
 - Improved `check_connection()` to fail gracefully. Return message, no error.
 
 
@@ -83,6 +93,7 @@
 # geobr v1.6.0
 
 **New data sets/functions**
+
 - From v1.6 onwards, `geobr` stores downloaded in temporary cache in `tempdir()`. Closes #225.
 - New function `read_comparable_areas` to read historically comparable municipalities, aka Areas minimas comparaveis (AMCs). Closes issue #17
 - New data set of macro regions og health, which can be accessed using the new `macro` parameter added to `read_health_region()` function. Closes issue #219.
@@ -102,6 +113,7 @@
 - Updated data of indigenous land March 2021
   
 **Minor changes**
+
 - Improved package test coverage to 99.16%.
 - Improved documentation considering `Roxygen: list(markdown = TRUE)`
 - fix column names of `grid_state_correspondence_table`
@@ -121,12 +133,14 @@
 # geobr v1.5
 
 **New data sets/functions**
+
 - new function `read_schools` to read the schools data - closes issue #190 (added in 2020-10).
 - data of `census_tracts` 2017 from the agricultural census - closes issue #171 (added in 2020-11).
 - new function `cep_to_state` to determine the state of a given CEP postal code 
 (added in 2021-01).
 
 **Minor changes**
+
 - geobr now automatically detects if there is an internet connection problem and throws an error. Closes issue #178
 - imports `data.table` to use `rbindlist` and improve package speed when downloading data for the whole country. Closes issue #199.
 - new intro vignette for Python users
@@ -136,10 +150,12 @@
 # geobr v1.4
 
 **New data sets/functions**
+
 - data set `read_health_region` to read the health regions - closes issue #149 (added in 2020-07).
 - updated 2019 data sets of `intermediate`, `immediate` `micro` and `meso` regions, `states` and `municipalities`.
 
 **Minor changes**
+
 - improved documentation of argument `simplified`
 - included documentation of argument `zone` in the `read_census_tract` function
 - `read_municipality()` function now also takes additional inputs for data sets before 1992. Closes issue #163 (added in 2020-06)
@@ -153,9 +169,11 @@
 # geobr v1.3 (2020-03-30)
 
 **New data sets/functions**
+
 - data set `read_neighborhood` to read neighborhood limits of Brazilian municipalities - closes issue #104 (added in 2020-03).
 
 **Major changes**
+
 - New argument `showProgress` to display progress bar. Defaults to `TRUE`
 - Argument `tp` was deprecated and replaced by argument `simplified` that needs to be either `TRUE` or `FALSE`. This should only affect user who have previously used `tp=TRUE`, who now should write `simplified=FALSE`
 
@@ -171,6 +189,7 @@
 # geobr v1.2 (2020-02-20)
 
 **New data sets/functions**
+
 - data set `read_metro_area` to read official metropolitan areas - closes issue #2 (added in 2019-12).
 - data set `read_municipal_seat` to read the spatial coordinates of municipal seats- closes issue #86 (added in 2019-12).
 - function `lookup_muni` to look up municipality codes by their name, or the other way around. closes issue #58 (added in 2019-12)
@@ -208,7 +227,6 @@
 
 * Changes to `read_region` function to improve speed and remove `dplyr`dependency (added in 2019-10-22).
 * Shows a single download progress bar when `*_code="all"`. This fixes the output of vignette and closes issue #42 (2019-08-05)
-
 
 
 
