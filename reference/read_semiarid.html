@@ -81,14 +81,15 @@ and Statistics (IBGE) and can be found at <a href="https://www.ibge.gov.br/geoci
 
 <dt>simplified</dt>
 <dd><p>Logic <code>FALSE</code> or <code>TRUE</code>, indicating whether the function
-returns the data set with 'original' resolution or a data set with 'simplified'
-borders. Defaults to <code>TRUE)</code>. For spatial analysis and statistics users should
-set <code>simplified = FALSE</code>. Borders have been simplified by removing vertices of
-borders using <code>st_simplify{sf}</code> preserving topology with a dTolerance of 100.</p></dd>
+should return the data set with 'original' spatial resolution or a data set
+with 'simplified' geometry. Defaults to <code>TRUE</code>. For spatial analysis and
+statistics users should set <code>simplified = FALSE</code>. Borders have been
+simplified by removing vertices of borders using <code>st_simplify{sf}</code> preserving
+topology with a <code>dTolerance</code> of 100.</p></dd>
 
 
 <dt>showProgress</dt>
-<dd><p>Logical. Defaults to <code>TRUE</code> display progress bar</p></dd>
+<dd><p>Logical. Defaults to <code>TRUE</code> display progress bar.</p></dd>
 
 </dl></div>
     <div id="value">

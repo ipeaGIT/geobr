@@ -163,7 +163,10 @@
 <span>  code_muni <span class="op">=</span> <span class="fl">3550308</span>, </span>
 <span>  year<span class="op">=</span><span class="fl">2010</span>, </span>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">muni</span><span class="op">)</span></span></code></pre></div>
+<p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Download all geographic areas within a state at a given year</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># All municipalities in the state of Minas Gerais</span></span>
@@ -176,7 +179,9 @@
 <span>  code_tract <span class="op">=</span> <span class="st">"RJ"</span>, </span>
 <span>  year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">muni</span><span class="op">)</span></span></code></pre></div>
 <p>If the parameter <code>code_</code> is not passed to the function, geobr returns the data for the whole country by default.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># read all intermediate regions</span></span>
@@ -189,7 +194,9 @@
 <span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_state.html">read_state</a></span><span class="op">(</span></span>
 <span>  year<span class="op">=</span><span class="fl">2019</span>, </span>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="important-note-about-data-resolution">Important note about data resolution<a class="anchor" aria-label="anchor" href="#important-note-about-data-resolution"></a>
@@ -205,8 +212,6 @@
 <span><span class="va">no_axis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                 axis.text<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                 axis.ticks<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
 <span></span>
 <span><span class="co"># Plot all Brazilian states</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -224,7 +229,6 @@
 <span>  year<span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
-<span></span>
 <span></span>
 <span><span class="co"># plot</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>

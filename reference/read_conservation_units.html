@@ -80,15 +80,16 @@ was 09-2019. The original data comes from MMA and can be found at "http://mapas.
 
 
 <dt>simplified</dt>
-<dd><p>Logic FALSE or TRUE, indicating whether the function
-returns the data set with original' resolution or a data set with 'simplified'
-borders. Defaults to <code>TRUE</code>. For spatial analysis and statistics users should
-set <code>simplified = FALSE</code>. Borders have been simplified by removing vertices of
-borders using <code><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">sf::st_simplify()</a></code> preserving topology with a <code>dTolerance</code> of 100.</p></dd>
+<dd><p>Logic <code>FALSE</code> or <code>TRUE</code>, indicating whether the function
+should return the data set with 'original' spatial resolution or a data set
+with 'simplified' geometry. Defaults to <code>TRUE</code>. For spatial analysis and
+statistics users should set <code>simplified = FALSE</code>. Borders have been
+simplified by removing vertices of borders using <code>st_simplify{sf}</code> preserving
+topology with a <code>dTolerance</code> of 100.</p></dd>
 
 
 <dt>showProgress</dt>
-<dd><p>Logical. Defaults to <code>TRUE</code> display progress bar</p></dd>
+<dd><p>Logical. Defaults to <code>TRUE</code> display progress bar.</p></dd>
 
 </dl></div>
     <div id="value">
