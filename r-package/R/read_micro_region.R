@@ -51,7 +51,7 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
     return(temp_sf)
   }
 
-  if( !(substr(x = code_micro, 1, 2) %in% temp_meta$code) & !(substr(x = code_micro, 1, 2) %in% temp_meta$code_abrev)){
+  if( !(substr(x = code_micro, 1, 2) %in% temp_meta$code) & !(substr(x = code_micro, 1, 2) %in% temp_meta$code_abbrev)){
 
     stop("Error: Invalid Value to argument code_micro.")
 
@@ -59,7 +59,7 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
 
     # list paths of files to download
     if (is.numeric(code_micro)){ file_url <- as.character(subset(temp_meta, code==substr(code_micro, 1, 2))$download_path) }
-    if (is.character(code_micro)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_micro, 1, 2))$download_path) }
+    if (is.character(code_micro)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_micro, 1, 2))$download_path) }
 
 
     # download files

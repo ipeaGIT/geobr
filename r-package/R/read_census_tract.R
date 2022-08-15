@@ -80,9 +80,9 @@ read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=
       return(temp_sf)
     }
 
-    else if( (!(substr(x = code_tract, 1, 2) %in% temp_meta$code) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev)
-              )&(!(paste0("U",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev)
-                 )&(!(paste0("R",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abrev))
+    else if( (!(substr(x = code_tract, 1, 2) %in% temp_meta$code) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abbrev)
+              )&(!(paste0("U",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abbrev)
+                 )&(!(paste0("R",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abbrev))
             ){
 
       stop("Error: Invalid Value to argument code_tract.")
@@ -93,17 +93,17 @@ read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=
       if (year<=2007 & zone == "urban") {
 
         if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("U",substr(code_tract, 1, 2)))$download_path) }
-        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
+        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
       } else if (year<=2007 & zone == "rural") {
 
         if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("R",substr(code_tract, 1, 2)))$download_path) }
-        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
+        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
       } else {
 
       if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==substr(code_tract, 1, 2))$download_path) }
-      if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abrev==toupper(substr(code_tract, 1, 2)))$download_path) }
+      if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
         }
       # download files

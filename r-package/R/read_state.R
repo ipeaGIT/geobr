@@ -42,7 +42,7 @@ read_state <- function(code_state="all", year=2010, simplified=TRUE, showProgres
 if( x < 1992){
 
 #   if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) &
-#       !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev) &
+#       !(substr(x = code_state, 1, 2) %in% temp_meta$code_abbrev) &
 #       !(substr(x = code_state, 1, 3) %in% "all")) {
 #       stop("Error: Invalid Value to argument code_state.")
 #       }
@@ -89,14 +89,14 @@ if( x < 1992){
 
     }
 
-  if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abrev)){
+  if (!(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abbrev)) {
       stop("Error: Invalid Value to argument code_state.")
 
   } else{
 
     # list paths of files to download
     if (is.numeric(code_state)){ file_url <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
-    if (is.character(code_state)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_state, 1, 2))$download_path) }
+    if (is.character(code_state)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_state, 1, 2))$download_path) }
 
 
     # download gpkg

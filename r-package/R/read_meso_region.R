@@ -52,14 +52,14 @@ read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showPr
 
   }
 
-  if( !(substr(x = code_meso, 1, 2) %in% temp_meta$code) & !(substr(x = code_meso, 1, 2) %in% temp_meta$code_abrev)){
+  if( !(substr(x = code_meso, 1, 2) %in% temp_meta$code) & !(substr(x = code_meso, 1, 2) %in% temp_meta$code_abbrev)){
     stop("Error: Invalid Value to argument code_meso.")
 
   } else{
 
     # list paths of files to download
     if (is.numeric(code_meso)){ file_url <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path) }
-    if (is.character(code_meso)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_meso, 1, 2))$download_path) }
+    if (is.character(code_meso)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_meso, 1, 2))$download_path) }
 
 
 

@@ -119,7 +119,7 @@ read_municipality <-
       return(temp_sf)
     }
 
-  else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code) & !(substr(x = code_muni, 1, 2) %in% temp_meta$code_abrev)){
+  else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code) & !(substr(x = code_muni, 1, 2) %in% temp_meta$code_abbrev)){
 
       stop("Error: Invalid Value to argument code_muni.")
 
@@ -127,7 +127,7 @@ read_municipality <-
 
     # list paths of files to download
     if (is.numeric(code_muni)){ file_url <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
-    if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abrev==substr(code_muni, 1, 2))$download_path) }
+    if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_muni, 1, 2))$download_path) }
 
     # download files
     sf <- download_gpkg(file_url, progress_bar = showProgress)
