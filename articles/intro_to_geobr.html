@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.599909</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
       </span>
     </div>
 
@@ -165,7 +165,7 @@
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">muni</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">muni</span><span class="op">[</span><span class="st">'name_muni'</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Download all geographic areas within a state at a given year</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -196,7 +196,26 @@
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 6 features and 5 fields</span></span>
+<span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -73.99045 ymin: -13.6937 xmax: -46.06151 ymax: 5.271841</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  SIRGAS 2000</span></span>
+<span><span class="co">#&gt;   code_state abbrev_state name_state code_region name_region</span></span>
+<span><span class="co">#&gt; 1         11           RO   Rondônia           1       Norte</span></span>
+<span><span class="co">#&gt; 2         12           AC       Acre           1       Norte</span></span>
+<span><span class="co">#&gt; 3         13           AM   Amazônas           1       Norte</span></span>
+<span><span class="co">#&gt; 4         14           RR    Roraima           1       Norte</span></span>
+<span><span class="co">#&gt; 5         15           PA       Pará           1       Norte</span></span>
+<span><span class="co">#&gt; 6         16           AP      Amapá           1       Norte</span></span>
+<span><span class="co">#&gt;                             geom</span></span>
+<span><span class="co">#&gt; 1 MULTIPOLYGON (((-65.3815 -1...</span></span>
+<span><span class="co">#&gt; 2 MULTIPOLYGON (((-71.07772 -...</span></span>
+<span><span class="co">#&gt; 3 MULTIPOLYGON (((-69.83766 -...</span></span>
+<span><span class="co">#&gt; 4 MULTIPOLYGON (((-63.96008 2...</span></span>
+<span><span class="co">#&gt; 5 MULTIPOLYGON (((-51.43248 -...</span></span>
+<span><span class="co">#&gt; 6 MULTIPOLYGON (((-50.45011 2...</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="important-note-about-data-resolution">Important note about data resolution<a class="anchor" aria-label="anchor" href="#important-note-about-data-resolution"></a>
