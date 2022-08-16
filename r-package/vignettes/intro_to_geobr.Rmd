@@ -65,7 +65,7 @@ head(datasets)
 The syntax of all *geobr* functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.
 
 Download an specific geographic area at a given year
-```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=TRUE, message=FALSE, warning=FALSE}
 # State of Sergige
 state <- read_state(
   code_state="SE",
@@ -80,12 +80,12 @@ muni <- read_municipality(
   showProgress = FALSE
   )
 
-plot(muni)
+plot(muni['name_muni'])
 ```
 
 
 Download all geographic areas within a state at a given year
-```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # All municipalities in the state of Minas Gerais
 muni <- read_municipality(code_muni= "MG", 
                           year=2007,
@@ -103,7 +103,7 @@ head(muni)
 
 If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
 
-```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=TRUE, message=FALSE, warning=FALSE}
 # read all intermediate regions
 inter <- read_intermediate_region(
   year=2017,
@@ -153,7 +153,7 @@ knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/
 
 Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
-```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide', fig.height = 8, fig.width = 8, fig.align = "center"}
+```{r eval=TRUE, message=FALSE, warning=FALSE, fig.height = 8, fig.width = 8, fig.align = "center"}
 
 # Download all municipalities of Rio
 all_muni <- read_municipality(

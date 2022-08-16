@@ -498,45 +498,27 @@ beepr::beep()
 
 rhub::platforms()
 rhub::check(platform = 'solaris-x86-patched')
+rhub::check_for_cran(show_status = FALSE)
 
 
-####################################################3
-a <- grid_state_correspondence_table
-names(a)[2] <- 'abbrev_state'
+
+urlchecker::url_check()
+devtools::check(remote = TRUE, manual = FALSE)
+devtools::check_win_oldrelease()
+devtools::check_win_release()
+devtools::check_win_devel()
+rhub::check_for_cran(show_status = FALSE)
 
 
-stringi::stri_escape_unicode("Rondônia")
-stringi::stri_encode("Rondônia, goiás", from='latin1', to="ASCII")
-
-for (col in colnames(a)){
-  Encoding(a[[col]]) <- "ASCII"}
+# submit to CRAN -----------------
+usethis::use_cran_comments('teste 2222, , asdadsad')
 
 
-intToUtf8('São p')
-
-stringi::stri_encode(a$abbrev_state, from='latin1', to="ASCII")
-
-Encoding(a$name_uf)
-Encoding(a$code_state)
-a
-Encoding(a$name_uf) <- stringi::stri_encode("Rondônia, goiás", from='latin1', to="utf8")
-a
-
-stringi::stri_encode(a$, from='latin1', to="ASCII")
-Encoding(a$name_uf)
-
-save
-Encoding(a$name_uf) <- "ASCII"
-
-grid_state_correspondence_table <- a
-
-save(grid_state_correspondence_table, file='grid_state_correspondence_table.RData', ascii = T)
+Sys.setenv(NOT_CRAN = "true")
+devtools::submit_cran()
 
 
-load(file='grid_state_correspondence_table.RData')
-Encoding(grid_state_correspondence_table$name_uf)
-Encoding(grid_state_correspondence_table$name_uf) <- "ASCII"
-grid_state_correspondence_table
+
 
 
 # build binary --------------------------------
