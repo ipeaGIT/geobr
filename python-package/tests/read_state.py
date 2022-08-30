@@ -79,7 +79,7 @@ def read_state(code_state, year=None, mode="simplified"):
             return temp_sf
 
         if (str(code_state)[0:2] not in temp_meta.code.unique()) and (
-            str(code_state)[0:2] not in temp_meta.code_abrev.unique()
+            str(code_state)[0:2] not in temp_meta.code_abbrev.unique()
         ):
 
             sys.exit("Error: Invalid Value to argument code_state.")
@@ -96,7 +96,7 @@ def read_state(code_state, year=None, mode="simplified"):
             if isinstance(code_state, str):
 
                 filesD = temp_meta[
-                    temp_meta.code_abrev == str(code_state)[0:2]
+                    temp_meta.code_abbrev == str(code_state)[0:2]
                 ].download_path.iloc[0]
 
             # download files

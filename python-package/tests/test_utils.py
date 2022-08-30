@@ -27,7 +27,7 @@ def test_download_metadata(metadata_file):
 
     # Check if columns are the same
     assert (
-        ["geo", "year", "code", "download_path", "code_abrev"] == metadata_file.columns
+        ["geo", "year", "code", "download_path", "code_abbrev"] == metadata_file.columns
     ).all()
 
     # Check if it has content
@@ -114,6 +114,7 @@ def test_enforce_types():
     # Deals with None
     df = pd.DataFrame({"code_muni": [None, "2", "3"]})
     assert enforce_types(df)["code_muni"].dtype == code_muni_type
+
 
 def test_download_gpkg():
 
