@@ -6,8 +6,11 @@ import geopandas as gpd
 import pandas as pd
 import requests
 import unicodedata
+from io import StringIO
 
 from geobr.constants import DataTypes
+
+MIRRORS = ["https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/"]
 
 
 def _get_unique_values(_df, column):
@@ -15,8 +18,27 @@ def _get_unique_values(_df, column):
     return ", ".join([str(i) for i in _df[column].unique()])
 
 
+def url_solver(url):
+
+    file_id = url.split("/")[-1]
+    urls = [url] + [mirror + file_id for mirror in MIRRORS]
+
+    for url in urls:
+
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            return response
+
+    raise ConnectionError(
+        "No mirrors are active. Please report to https://github.com/ipeaGIT/geobr/issues"
+    )
+
+
 @lru_cache(maxsize=124)
-def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv"):
+def download_metadata(
+    url="http://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv",
+):
     """Support function to download metadata internally used in geobr.
 
     It caches the metadata file to avoid reloading it in the same session.
@@ -24,7 +46,7 @@ def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.c
     Parameters
     ----------
     url : str, optional
-        Metadata url, by default 'http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
+        Metadata url, by default 'http://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv'
 
     Returns
     -------
@@ -45,7 +67,7 @@ def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.c
     """
 
     try:
-        return pd.read_csv(url)
+        return pd.read_csv(StringIO(url_solver(url).text))
 
     except HTTPError:
         raise Exception(
@@ -140,7 +162,7 @@ def load_gpkg(url):
     """
 
     try:
-        content = requests.get(url).content
+        content = url_solver(url).content
 
     except Exception as e:
 
