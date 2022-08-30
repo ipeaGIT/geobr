@@ -7,25 +7,25 @@ def read_state(code_state="all", year=2010, simplified=True, verbose=False):
     """Download shapefiles of Brazilian states as geopandas objects.
 
      Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
-    
+
     Parameters
     ----------
     code_state : str, optional
-        The two-digit code of a state or a two-letter uppercase abbreviation 
+        The two-digit code of a state or a two-letter uppercase abbreviation
         (e.g. 33 or "RJ"). If code_state="all", all states will be loaded (Default).
     year : int, optional
         Year of the data, by default 2010
     simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset 
+        Data 'type', indicating whether the function returns the 'original' dataset
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
         by default False
-    
+
     Returns
     -------
     gpd.GeoDataFrame
         Metadata and geopackage of selected states
-    
+
     Raises
     ------
     Exception
@@ -63,7 +63,7 @@ def read_state(code_state="all", year=2010, simplified=True, verbose=False):
 
         if (
             str(code_state)[0:2] not in metadata["code"].unique()
-            and str(code_state)[0:2] not in metadata["code_abrev"].unique()
+            and str(code_state)[0:2] not in metadata["code_abbrev"].unique()
         ):
 
             raise Exception("Error: Invalid Value to argument code_state.")
@@ -74,7 +74,7 @@ def read_state(code_state="all", year=2010, simplified=True, verbose=False):
                 metadata = metadata.query(f'code == "{str(code_state)[0:2]}"')
 
             if isinstance(code_state, str):
-                metadata = metadata.query(f'code_abrev == "{code_state[0:2]}"')
+                metadata = metadata.query(f'code_abbrev == "{code_state[0:2]}"')
 
             gdf = download_gpkg(metadata)
 

@@ -40,7 +40,7 @@ def download_metadata(url="http://www.ipea.gov.br/geobr/metadata/metadata_gpkg.c
     --------
     >>> metadata = download_metadata()
     >>> metadata.head(1)
-                  geo  year code                                      download_path      code_abrev
+                  geo  year code                                      download_path      code_abbrev
     0  amazonia_legal  2012   am  http://www.ipea.gov.br/geobr/data_gpkg/amazoni...  amazonia_legal
     """
 

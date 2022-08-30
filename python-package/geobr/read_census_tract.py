@@ -4,8 +4,8 @@ from geobr.utils import select_metadata, download_gpkg, test_options
 def read_census_tract(
     code_tract, year=2010, zone="urban", simplified=True, verbose=False
 ):
-    """ Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
-    
+    """Download shape files of census tracts of the Brazilian Population Census (Only years 2000 and 2010 are currently available).
+
     Parameters
     ----------
     code_tract: int
@@ -17,16 +17,16 @@ def read_census_tract(
     zone: string, optional
         "urban" or "rural" census tracts come in separate files in the year 2000, by default urban
     simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset 
+        Data 'type', indicating whether the function returns the 'original' dataset
         with high resolution or a dataset with 'simplified' borders (Default)
     verbose : bool, optional
         by default False
-    
+
     Returns
     -------
     gpd.GeoDataFrame
         Metadata and geopackage of selected states
-    
+
     Raises
     ------
     Exception
@@ -43,7 +43,7 @@ def read_census_tract(
     # Read all census tracts of a state at a given year
     >>> df = read_census_tract(code_tract=53, year=2010) # or
     >>> df = read_census_tract(code_tract="DF", year=2010)
-       
+
     # Read all census tracts of a municipality at a given year
     >>> df = read_census_tract(code_tract=5201108, year=2010)
 
@@ -77,10 +77,10 @@ def read_census_tract(
     else:
 
         metadata = metadata[
-            metadata[["code", "code_abrev"]].apply(
+            metadata[["code", "code_abbrev"]].apply(
                 lambda x: str(code_tract)[:2] in str(x["code"])
                 or str(code_tract)[:2]  # if number e.g. 12
-                in str(x["code_abrev"]),  # if UF e.g. RO
+                in str(x["code_abbrev"]),  # if UF e.g. RO
                 1,
             )
         ]
