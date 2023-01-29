@@ -1,4 +1,12 @@
-# geobr v1.7.0 (dev version)
+
+# geobr v1.7.0999 (dev version)
+
+**New function**
+- `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. closes [#243](https://github.com/ipeaGIT/geobr/issues/243)
+
+
+
+# geobr v1.7.0
 
 **Major changes**
 

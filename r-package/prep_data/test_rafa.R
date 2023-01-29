@@ -357,6 +357,7 @@ function_coverage(fun= 'read_conservation_units', test_file("tests/testthat/test
 
 function_coverage(fun='read_health_facilities', test_file("tests/testthat/test-read_health_facilities.R"))
 function_coverage(fun='read_municipal_seat', test_file("tests/testthat/test-read_municipal_seat.R"))
+function_coverage(fun='read_capitals', test_file("tests/testthat/test-read_capitals.R"))
 
 function_coverage(fun='read_comparable_areas', test_file("tests/testthat/test-read_comparable_areas.R"))
 
