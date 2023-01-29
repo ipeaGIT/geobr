@@ -69,7 +69,7 @@ add_state_info <- function(temp_sf, column){
 
   if(!is.null(temp_sf$code_muni) & !is.null(temp_sf$name_state)){
   # Add code_state
-  temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território De Rondonia"  | name_state== "Territorio de Rondonia",11,
+  temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território de Rondonia"  | name_state== "Territorio de Rondonia",11,
                                         ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
                                         ifelse(name_state== "Amazonas",13,
                                         ifelse(name_state== "Roraima" | name_state=="Território de Roraima",14,

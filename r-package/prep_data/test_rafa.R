@@ -75,6 +75,31 @@ system.time( ct4 <- readRDS("ct_rds.rds") )
 system.time( st_write_parquet(ct, "ct_sf.parquet") )
 system.time( ct4 <-  st_read_parquet("ct_sf.parquet") )
 
+### convert to ASCII characters  -------------------------
+
+
+gtools::ASCIIfy('Belém')
+gtools::ASCIIfy('São Paulo')
+
+
+# Amap\\u00e1
+df
+
+df$name_muni
+stringi::stri_encode('S\u00e1o Paulo', to="UTF-8")
+stringi::stri_trans_general(str = 'S<e3>o Paulo', "latin-ascii")
+
+stringi::stri_encode(from='latin1', to="utf8", str= "S<e3>o Paulo")
+
+stringi::stri_trans_general('S\u00e1o Paulo', "UTF-8")
+
+acute = "\u00e1\u00e9\u00ed\u00f3\u00fa\u00c1\u00c9\u00cd\u00d3\u00da\u00fd\u00dd", # "áéíóúÁÉÍÓÚýÝ",
+grave = "\u00e0\u00e8\u00ec\u00f2\u00f9\u00c0\u00c8\u00cc\u00d2\u00d9", # "àèìòùÀÈÌÒÙ",
+circunflex = "\u00e2\u00ea\u00ee\u00f4\u00fb\u00c2\u00ca\u00ce\u00d4\u00db", # "âêîôûÂÊÎÔÛ",
+tilde = "\u00e3\u00f5\u00c3\u00d5\u00f1\u00d1", # "ãõÃÕñÑ",
+umlaut = "\u00e4\u00eb\u00ef\u00f6\u00fc\u00c4\u00cb\u00cf\u00d6\u00dc\u00ff", # "äëïöüÄËÏÖÜÿ",
+cedil = "\u00e7\u00c7" # "çÇ"
+
 
 
 ### fail gracefully -------------------------
