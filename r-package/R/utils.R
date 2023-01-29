@@ -96,7 +96,7 @@ select_metadata <- function(geography, year=NULL, simplified=NULL){
 #'
 download_gpkg <- function(file_url, progress_bar = showProgress){
 
-  if( !(progress_bar %in% c(T, F)) ){ stop("Value to argument 'showProgress' has to be either TRUE or FALSE") }
+  if (!is.logical(progress_bar)) { stop("'showProgress' must be of type 'logical'") }
 
   # get backup links
   filenames <- basename(file_url)

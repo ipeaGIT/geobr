@@ -24,8 +24,8 @@
 read_capitals <- function(as_sf = TRUE, showProgress = TRUE){
 
   # check input
-  checkmate::assert_logical(as_sf)
-  checkmate::assert_logical(showProgress)
+  if (!is.logical(as_sf)) { stop("'as_sf' must be of type 'logical'") }
+  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
 
   # base data.frame of capitals
   df <- data.frame(name_muni = c("São Paulo", "Rio de Janeiro", "Belo Horizonte",
