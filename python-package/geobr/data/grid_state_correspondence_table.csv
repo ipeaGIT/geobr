@@ -1,4 +1,4 @@
-name_uf,code_state,code_grid
+name_state,abbrev_state,code_grid
 Acre,AC,ID_50
 Acre,AC,ID_51
 Acre,AC,ID_60
@@ -58,11 +58,11 @@ Rio Grande do Norte,RN,ID_67
 Rio Grande do Norte,RN,ID_68
 Paraíba,PB,ID_67
 Paraíba,PB,ID_68
-Pernanbuco,PE,ID_57
-Pernanbuco,PE,ID_58
-Pernanbuco,PE,ID_67
-Pernanbuco,PE,ID_68
-Pernanbuco,PE,ID_69
+Pernambuco,PE,ID_57
+Pernambuco,PE,ID_58
+Pernambuco,PE,ID_67
+Pernambuco,PE,ID_68
+Pernambuco,PE,ID_69
 Alagoas,AL,ID_57
 Alagoas,AL,ID_58
 Sergipe,SE,ID_57
