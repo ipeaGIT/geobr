@@ -4,15 +4,15 @@
 #' Zips codes in Brazil are known as CEP, the abbreviation for postal code
 #' address. CEPs in Brazil are 8 digits long, with the format `'xxxxx-xxx'`.
 #'
-#' @param cep A numeric string with 8 digits in the format `xxxxxxxx`, or a
-#'            character with the format `'xxxxx-xxx'`.
-#' @return A character string with a state abbreviation
+#' @param cep A character string with 8 digits in the format `"xxxxxxxx"`, or
+#'            with the format `'xxxxx-xxx'`.
+#' @return A character string with a state abbreviation.
 #' @export
 #' @examples \donttest{
 #' uf <- cep_to_state(cep = '69900-000')
 #'
 #' # Or:
-#' uf <- cep_to_state(cep = 69900000)
+#' uf <- cep_to_state(cep = '69900000')
 #'}
 #'
 cep_to_state <- function(cep){
@@ -22,14 +22,16 @@ cep_to_state <- function(cep){
   # https://mundoeducacao.bol.uol.com.br/curiosidades/o-que-significam-os-numeros-cep.htm
 
   # not null
-  if (!is.null(cep)) {stop("Error: 'cep' cannot be NULL.") }
+  if (is.null(cep)) {stop("Error: 'cep' cannot be NULL.") }
+  if (!is.character(cep)) {stop("Error: 'cep' must have class 'character'.") }
 
   # checks
-  cep <- as.numeric(gsub("-", "", cep))
-  if (!length(cep)==8) {stop("'cep' must have numeric 8 digits." }
+  cep <- gsub("-", "", cep)
+  if (!nchar(cep)==8) {stop("'cep' must have 8 digits.") }
 
   suppressWarnings({ cep <- as.numeric(cep) })
   if (is.na(cep)) {stop("'cep' input must have numerical digits.")}
+
 
   ceps <- list(
     list(state = "AC", range = c(69900000L, 69999999L)),
