@@ -78,15 +78,16 @@
     <h2>Arguments</h2>
     <dl><dt>code_muni</dt>
 <dd><p>The 7-digit identification code of a municipality. If
-<code>code_muni = "all"</code> (default), all municipalities of the country will be
-downloaded. Alternatively, if the two-digit identification code or a
-two-letter uppercase abbreviation of a state is passed, e.g. <code>33</code> or <code>"RJ"</code>,
-all municipalities of that state will be downloaded. Municipality identification
-codes are defined in <a href="https://www.ibge.gov.br/explica/codigos-dos-municipios.php" class="external-link">https://www.ibge.gov.br/explica/codigos-dos-municipios.php</a>.</p></dd>
+<code>code_muni = "all"</code> (Default), the function downloads all
+municipalities of the country. Alternatively, if a two-digit
+identification code or a two-letter uppercase abbreviation of a state
+is passed (e.g. <code>33</code> or <code>"RJ"</code>), all municipalities of that state will
+be downloaded. Municipality identification codes can be consulted with
+the <code><a href="lookup_muni.html">geobr::lookup_muni()</a></code> function.</p></dd>
 
 
 <dt>year</dt>
-<dd><p>Year of the data. Defaults to <code>2010</code>.</p></dd>
+<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2010</code>.</p></dd>
 
 
 <dt>simplified</dt>

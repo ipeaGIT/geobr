@@ -79,17 +79,19 @@
     <h2>Arguments</h2>
     <dl><dt>code_tract</dt>
 <dd><p>The 7-digit code of a Municipality. If the two-digit code
-or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
-the function will load all census tracts of that state. If <code>code_tract="all"</code>,
-all census tracts of the country are loaded.</p></dd>
+or a two-letter uppercase abbreviation of a state is passed, (e.g. 33
+or "RJ") the function will load all census tracts of that state. If
+<code>code_tract="all"</code>, the function downloads all census tracts of the
+country.</p></dd>
 
 
 <dt>year</dt>
-<dd><p>Year of the data. Defaults to 2010</p></dd>
+<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2010</code>.</p></dd>
 
 
 <dt>zone</dt>
-<dd><p>For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.</p></dd>
+<dd><p>For census tracts before 2010, 'urban' and 'rural' census tracts
+are separate data sets.</p></dd>
 
 
 <dt>simplified</dt>
