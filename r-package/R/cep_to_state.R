@@ -21,6 +21,16 @@ cep_to_state <- function(cep){
   # https://help.commerceplus.com.br/hc/pt-br/articles/115008224967-Faixas-de-CEP-por-Estado
   # https://mundoeducacao.bol.uol.com.br/curiosidades/o-que-significam-os-numeros-cep.htm
 
+  # not null
+  if (!is.null(cep)) {stop("Error: 'cep' cannot be NULL.") }
+
+  # checks
+  cep <- as.numeric(gsub("-", "", cep))
+  if (!length(cep)==8) {stop("'cep' must have numeric 8 digits." }
+
+  suppressWarnings({ cep <- as.numeric(cep) })
+  if (is.na(cep)) {stop("'cep' input must have numerical digits.")}
+
   ceps <- list(
     list(state = "AC", range = c(69900000L, 69999999L)),
     list(state = "AL", range = c(57000000L, 57999999L)),
@@ -53,8 +63,6 @@ cep_to_state <- function(cep){
     list(state = "SP", range = c(01000000L, 19999999L)),
     list(state = "TO", range = c(77000000L, 77999999L))
   )
-
-  cep <- as.numeric(gsub("-", "", cep))
 
   for (value in ceps) {
     if (cep >= value$range[1] && cep <= value$range[2]) {
