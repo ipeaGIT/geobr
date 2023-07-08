@@ -8,8 +8,10 @@
 #' \doi{10.1590/0101-416147182phe}{Philipp Ehrl}, and translated
 #' into `R` by the `geobr` team.
 #'
-#' @param start_year Numeric. Start year to the period.
-#' @param end_year Numeric. End year to the period. (defaults to 2010)
+#' @param start_year Numeric. Start year to the period in the YYYY format.
+#'        Defaults TO `1970`.
+#' @param end_year Numeric. End year to the period in the YYYY format. Defaults
+#'        to `2010`.
 #' @template simplified
 #' @template showProgress
 #'

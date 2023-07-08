@@ -12,9 +12,11 @@ read_comparable_areas(
 )
 }
 \arguments{
-\item{start_year}{Numeric. Start year to the period.}
+\item{start_year}{Numeric. Start year to the period in the YYYY format.
+Defaults TO \code{1970}.}
 
-\item{end_year}{Numeric. End year to the period. (defaults to 2010)}
+\item{end_year}{Numeric. End year to the period in the YYYY format. Defaults
+to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

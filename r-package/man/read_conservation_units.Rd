@@ -7,7 +7,7 @@
 read_conservation_units(date = 201909, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{date}{A date number in YYYYMM format. Defaults to \code{201909}}
+\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{201909}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

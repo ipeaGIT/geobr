@@ -14,13 +14,15 @@ read_census_tract(
 }
 \arguments{
 \item{code_tract}{The 7-digit code of a Municipality. If the two-digit code
-or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
-the function will load all census tracts of that state. If \code{code_tract="all"},
-all census tracts of the country are loaded.}
+or a two-letter uppercase abbreviation of a state is passed, (e.g. 33
+or "RJ") the function will load all census tracts of that state. If
+\code{code_tract="all"}, the function downloads all census tracts of the
+country.}
 
-\item{year}{Year of the data. Defaults to 2010}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
-\item{zone}{For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.}
+\item{zone}{For census tracts before 2010, 'urban' and 'rural' census tracts
+are separate data sets.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

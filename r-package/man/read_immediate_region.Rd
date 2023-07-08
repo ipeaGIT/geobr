@@ -13,12 +13,12 @@ read_immediate_region(
 }
 \arguments{
 \item{code_immediate}{6-digit code of an immediate region. If the two-digit
-code or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
-"RJ") the function will load all immediate regions of that state. If
-\code{code_immediate="all"} (Default), all immediate regions of the country are
-loaded.}
+code or a two-letter uppercase abbreviation of a state is passed, (e.g.
+33 or "RJ") the function will load all immediate regions of that state.
+If \code{code_immediate="all"} (Default), the function downloads all
+immediate regions of the country.}
 
-\item{year}{A date number in YYYY format (defaults to 2019)}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2019}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

@@ -3,13 +3,14 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param year Year of the data. Defaults to `2010`.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param code_muni The 7-digit identification code of a municipality. If
-#' `code_muni = "all"` (default), all municipalities of the country will be
-#' downloaded. Alternatively, if the two-digit identification code or a
-#' two-letter uppercase abbreviation of a state is passed, e.g. `33` or `"RJ"`,
-#' all municipalities of that state will be downloaded. Municipality identification
-#' codes are defined in \url{https://www.ibge.gov.br/explica/codigos-dos-municipios.php}.
+#'        `code_muni = "all"` (Default), the function downloads all
+#'        municipalities of the country. Alternatively, if a two-digit
+#'        identification code or a two-letter uppercase abbreviation of a state
+#'        is passed (e.g. `33` or `"RJ"`), all municipalities of that state will
+#'        be downloaded. Municipality identification codes can be consulted with
+#'        the `geobr::lookup_muni()` function.
 #' @template simplified
 #' @template showProgress
 

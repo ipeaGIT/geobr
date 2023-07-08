@@ -12,7 +12,8 @@ read_health_region(
 )
 }
 \arguments{
-\item{year}{Year of the data. Defaults to 2013, latest available.}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2013}, the
+latest available.}
 
 \item{macro}{Logic. If \code{FALSE} (default), the function downloads health
 regions data. If \code{TRUE}, the function downloads macro regions data.}

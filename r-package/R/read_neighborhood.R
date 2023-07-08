@@ -5,7 +5,7 @@
 #' It is based on aggregations of the census tracts from the Brazilian
 #' census. Only 2010 data is currently available.
 #'
-#' @param year Year of the data. Defaults to `2010`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @template simplified
 #' @template showProgress
 #'

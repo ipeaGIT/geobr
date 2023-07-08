@@ -7,7 +7,7 @@
 read_pop_arrangements(year = 2015, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{year}{A year number in YYYY format. Defaults to \code{2015}}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2015}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

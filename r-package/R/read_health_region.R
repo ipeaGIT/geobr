@@ -7,7 +7,8 @@
 #' few municipalities because they are generally more technology intensive, costly and face
 #' shortages of specialized professionals. A macro region comprises one or more health regions.
 #'
-#' @param year Year of the data. Defaults to 2013, latest available.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2013`, the
+#'        latest available.
 #' @param macro Logic. If `FALSE` (default), the function downloads health
 #'        regions data. If `TRUE`, the function downloads macro regions data.
 #' @template simplified

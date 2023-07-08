@@ -3,7 +3,7 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data (defaults to 2010)
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @template simplified
 #' @template showProgress
 #'

@@ -5,7 +5,7 @@
 #' conservation units present in Brazilian territory. The last update of the data
 #' was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 #'
-#' @param date A date number in YYYYMM format. Defaults to `201909`
+#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `201909`.
 #' @template simplified
 #' @template showProgress
 #'

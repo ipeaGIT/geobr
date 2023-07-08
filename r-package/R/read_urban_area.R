@@ -6,7 +6,7 @@
 #' and Statistics (IBGE)  For more information about the methodology, see details at
 #' \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf}
 #'
-#' @param year A year number in YYYY format. Defaults to `2015`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2015`.
 #' @template simplified
 #' @template showProgress
 #'

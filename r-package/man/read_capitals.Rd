@@ -19,7 +19,7 @@ An \verb{"sf" "data.frame"} object or a \code{"data.frame"}
 \description{
 This function downloads either a spatial \code{sf} object with the location of the
 municipal seats (sede dos municipios) of state capitals, or a \code{data.frame}
-with the names of codes of state capitals. Data downloaded for the latest
+with the names and codes of state capitals. Data downloaded for the latest
 available year.
 }
 \examples{

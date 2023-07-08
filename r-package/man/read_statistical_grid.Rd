@@ -14,8 +14,8 @@ the whole country will be loaded. Users may also pass a
 grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at \code{geobr::grid_state_correspondence_table}.}
 
-\item{year}{Year of the data. Defaults to 2010. The only year available thus
-far is 2010.}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}. The
+only year available thus far is 2010.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }

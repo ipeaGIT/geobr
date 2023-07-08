@@ -14,8 +14,8 @@ character with the format \code{'xxxxx-xxx'}.}
 A character string with a state abbreviation
 }
 \description{
-Zips codes in Brazil are known as CEP, the abbreviation for postal code address.
-CEPs in Brazil are 8 digits long, with the format \code{'xxxxx-xxx'}.
+Zips codes in Brazil are known as CEP, the abbreviation for postal code
+address. CEPs in Brazil are 8 digits long, with the format \code{'xxxxx-xxx'}.
 }
 \examples{
 \donttest{

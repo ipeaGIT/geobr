@@ -3,11 +3,12 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year A year number in YYYY format. Defaults to `2010`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param code_meso The 4-digit code of a meso region. If the two-digit code or
-#' a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
-#' the function will load all meso regions of that state. If `code_meso="all"`,
-#' all meso regions of the country are loaded.
+#'        a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
+#'        "RJ") the function will load all meso regions of that state. If
+#'        `code_meso="all"` (Default), the function downloads all meso
+#'        regions of the country.
 #' @template simplified
 #' @template showProgress
 #'

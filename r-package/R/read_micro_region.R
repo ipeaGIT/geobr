@@ -3,11 +3,12 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data. Defaults to `2010`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a
-#' two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ") the
-#' function will load all micro regions of that state. If `code_micro="all"`, all
-#' micro regions of the country are loaded.
+#'        two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
+#'        "RJ") the function will load all micro regions of that state. If
+#'        `code_micro="all"` (Default), the function downloads all micro regions of the
+#'        country.
 #' @template simplified
 #' @template showProgress
 #'

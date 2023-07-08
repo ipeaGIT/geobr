@@ -7,13 +7,13 @@
 lookup_muni(name_muni = NULL, code_muni = NULL)
 }
 \arguments{
-\item{name_muni}{The municipality name to be looked up}
+\item{name_muni}{The municipality name to be looked up.}
 
-\item{code_muni}{The municipality code to be looked up}
+\item{code_muni}{The municipality code to be looked up.}
 }
 \value{
 A \code{data.frame} with 13 columns identifying the geographies information
-of that municipality
+of that municipality.
 
 A \code{data.frame}
 }

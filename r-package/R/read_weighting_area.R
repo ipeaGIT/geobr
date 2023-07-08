@@ -7,7 +7,7 @@
 #' or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
 #' the function will load all weighting areas of that state. If `code_weighting="all"`,
 #' all weighting areas of the country are loaded.
-#' @param year Year of the data. Defaults to `2010`
+#' @param year Numeric. Year of the data. Defaults to `2010`.
 #' @template simplified
 #' @template showProgress
 #'

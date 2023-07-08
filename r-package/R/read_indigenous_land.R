@@ -8,7 +8,7 @@
 #' updated monthly, the geobr package will only keep the data for a few months
 #' per year.
 #'
-#' @param date A date number in YYYYMM format. Defaults to `201907`
+#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `201907`.
 #' @template simplified
 #' @template showProgress
 #'

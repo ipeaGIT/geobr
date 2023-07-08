@@ -6,7 +6,7 @@
 #' Institute of Geography and Statistics (IBGE)  For more information about the
 #' methodology, see details at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
 #'
-#' @param year A year number in YYYY format. Defaults to `2015`
+#' @param year Numeric. A year number in YYYY format. Defaults to `2015`.
 #' @template simplified
 #' @template showProgress
 #'

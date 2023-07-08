@@ -5,7 +5,7 @@
 #' in  23/11/2017). The original data comes from the Brazilian Institute of Geography
 #' and Statistics (IBGE) and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
 #'
-#' @param year A date number in YYYY format (defaults to 2017)
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2017`.
 #' @template simplified
 #' @template showProgress
 #'

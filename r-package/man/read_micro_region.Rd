@@ -13,11 +13,12 @@ read_micro_region(
 }
 \arguments{
 \item{code_micro}{5-digit code of a micro region. If the two-digit code or a
-two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ") the
-function will load all micro regions of that state. If \code{code_micro="all"}, all
-micro regions of the country are loaded.}
+two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
+"RJ") the function will load all micro regions of that state. If
+\code{code_micro="all"} (Default), the function downloads all micro regions of the
+country.}
 
-\item{year}{Year of the data. Defaults to \code{2010}}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

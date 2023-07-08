@@ -3,8 +3,8 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data. Defaults to 2010. The only year available thus
-#'             far is 2010.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`. The
+#'        only year available thus far is 2010.
 #' @param code_grid If two-letter abbreviation or two-digit code of a state is
 #'                  passed, the function will load all grid quadrants that
 #'                  intersect with that state. If `code_grid="all"`, the grid of

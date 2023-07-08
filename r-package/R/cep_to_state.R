@@ -1,8 +1,8 @@
 #' Determine the state of a given CEP postal code
 #'
 #' @description
-#' Zips codes in Brazil are known as CEP, the abbreviation for postal code address.
-#' CEPs in Brazil are 8 digits long, with the format `'xxxxx-xxx'`.
+#' Zips codes in Brazil are known as CEP, the abbreviation for postal code
+#' address. CEPs in Brazil are 8 digits long, with the format `'xxxxx-xxx'`.
 #'
 #' @param cep A numeric string with 8 digits in the format `xxxxxxxx`, or a
 #'            character with the format `'xxxxx-xxx'`.

@@ -13,9 +13,10 @@ read_state(
 }
 \arguments{
 \item{code_state}{The two-digit code of a state or a two-letter uppercase
-abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"}, all states will be loaded.}
+abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
+default), the function downloads all states.}
 
-\item{year}{Year of the data. Defaults to 2010}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

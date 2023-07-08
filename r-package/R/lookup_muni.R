@@ -5,10 +5,10 @@
 #' and codes of the municipality's corresponding state, meso, micro, intermediate,
 #' and immediate regions
 #'
-#' @param name_muni The municipality name to be looked up
-#' @param code_muni The municipality code to be looked up
+#' @param name_muni The municipality name to be looked up.
+#' @param code_muni The municipality code to be looked up.
 #' @return A `data.frame` with 13 columns identifying the geographies information
-#' of that municipality
+#'         of that municipality.
 #'
 #' @return A `data.frame`
 #'

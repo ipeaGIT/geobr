@@ -12,12 +12,15 @@
 #'
 select_data_type <- function(temp_meta, simplified=NULL){
 
+  if (!is.logical(simplified)) { stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE")) }
+
   if(isTRUE(simplified)){
     temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
   }
-  else if(isFALSE(simplified)){
+
+  if(isFALSE(simplified)){
     temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-  } else {  stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE")) }
+  }
 
   return(temp_meta)
 }
@@ -40,7 +43,7 @@ select_year_input <- function(temp_meta, y=year){
 
   # invalid input
   else if (y %in% temp_meta$year){ message(paste0("Using year ", y))
-                                  temp_meta <- temp_meta[temp_meta[,2] == y,]
+                                  temp_meta <- subset(temp_meta, year == y)
                                   return(temp_meta) }
 
   # invalid input
@@ -52,9 +55,11 @@ select_year_input <- function(temp_meta, y=year){
 
 #' Select metadata
 #'
-#' @param geography Which geography will be downloaded
-#' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
-#' @param year Year of the dataset (passed by red_ function)
+#' @param geography Which geography will be downloaded.
+#' @param simplified Logical TRUE or FALSE indicating  whether the function
+#'        returns the 'original' dataset with high resolution or a dataset with
+#'        'simplified' borders (Defaults to TRUE).
+#' @param year Year of the dataset (passed by read_ function).
 #'
 #' @keywords internal
 #' @examples \dontrun{ if (interactive()) {
@@ -183,9 +188,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     temp_sf <- load_gpkg(file_url)
     return(temp_sf)
 
-
     }
-
 }
 
 
@@ -195,7 +198,6 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
 
 #' Load geopackage from tempdir to global environment
-#'
 #'
 #' @param file_url A string with the file_url address of a geobr dataset
 #' @param temps The address of a gpkg file stored in tempdir. Defaults to NULL

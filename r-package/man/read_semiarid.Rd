@@ -7,7 +7,7 @@
 read_semiarid(year = 2017, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{year}{A date number in YYYY format (defaults to 2017)}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2017}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
