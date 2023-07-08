@@ -5,7 +5,8 @@
 - `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. closes [#243](https://github.com/ipeaGIT/geobr/issues/243)
 
 **Bug fixes**
-- fixed bug from conflicts between `sf` and `data.table` that were messing with plot extent. [Closes #284](https://github.com/ipeaGIT/geobr/issues/284).
+- fixed bug from conflicts between `sf` and `data.table` that was messing with plot extent. [Closes #284](https://github.com/ipeaGIT/geobr/issues/284).
+- fixed bug from conflicts between `plotly` and `data.table`. [Closes #279](https://github.com/ipeaGIT/geobr/issues/279).
 - fixed bug in `cep_to_state()` function. Closes. [#317](https://github.com/ipeaGIT/geobr/issues/317).
 
 # geobr v1.7.0

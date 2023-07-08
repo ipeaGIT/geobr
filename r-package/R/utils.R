@@ -226,6 +226,9 @@ load_gpkg <- function(file_url, temps=NULL){
     col1 <- names(temp_sf)[1]
     temp_sf <- subset(temp_sf, get(col1) != 'data_table_sf_bug')
 
+    # remove data.table from object class. Closes #279.
+    class(map_cities) <- c("sf", "data.frame")
+
     return(temp_sf)
   }
 
