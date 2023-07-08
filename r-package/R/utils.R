@@ -207,7 +207,7 @@ load_gpkg <- function(file_url, temps=NULL){
 
   ### one single file
 
-  if(length(file_url)==1){
+  if (length(file_url)==1) {
 
     # read sf
     temp_sf <- sf::st_read(temps, quiet=T)
@@ -221,6 +221,11 @@ load_gpkg <- function(file_url, temps=NULL){
     files <- paste0(tempdir(),"/",files)
     files <- lapply(X=files, FUN= sf::st_read, quiet=T)
     temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
+
+    # closes issue 284
+    col1 <- names(temp_sf)[1]
+    temp_sf <- subset(temp_sf, get(col1) != 'data_table_sf_bug')
+
     return(temp_sf)
   }
 
