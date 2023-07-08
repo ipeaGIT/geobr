@@ -74,15 +74,15 @@ address. CEPs in Brazil are 8 digits long, with the format <code>'xxxxx-xxx'</co
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>cep</dt>
-<dd><p>A numeric string with 8 digits in the format <code>xxxxxxxx</code>, or a
-character with the format <code>'xxxxx-xxx'</code>.</p></dd>
+<dd><p>A character string with 8 digits in the format <code>"xxxxxxxx"</code>, or
+with the format <code>'xxxxx-xxx'</code>.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>A character string with a state abbreviation</p>
+<p>A character string with a state abbreviation.</p>
     </div>
 
     <div id="ref-examples">
@@ -91,7 +91,7 @@ character with the format <code>'xxxxx-xxx'</code>.</p></dd>
 <span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">cep_to_state</span><span class="op">(</span>cep <span class="op">=</span> <span class="st">'69900-000'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Or:</span></span>
-<span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">cep_to_state</span><span class="op">(</span>cep <span class="op">=</span> <span class="fl">69900000</span><span class="op">)</span></span>
+<span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">cep_to_state</span><span class="op">(</span>cep <span class="op">=</span> <span class="st">'69900000'</span><span class="op">)</span></span>
 <span><span class="co"># }</span></span>
 <span></span></code></pre></div>
     </div>
