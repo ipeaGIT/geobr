@@ -120,7 +120,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     if (is.null(check_con) | isFALSE(check_con)) {
       message('using github')
       file_url <- file_url2
-      check_con <- check_connection(file_url[1])
+      check_con <- check_connection(file_url[1], silent = FALSE)
       if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
     }
 
@@ -149,12 +149,12 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
 
     # test connection with server1
-    check_con <- check_connection(file_url[1])
+    check_con <- check_connection(file_url[1], silent = TRUE)
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
       file_url <- file_url2
-      check_con <- check_connection(file_url[1])
+      check_con <- check_connection(file_url[1], silent = FALSE)
       if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
     }
 
