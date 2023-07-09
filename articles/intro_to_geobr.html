@@ -78,7 +78,7 @@
 
       
 
-      </header><script src="intro_to_geobr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to geobr (R)</h1>
@@ -91,11 +91,18 @@
 
     
     
-<p>The <a href="https://github.com/ipeaGIT/geobr" class="external-link"><strong>geobr</strong></a> package provides quick and easy access to official spatial data sets of Brazil. The syntax of all <strong>geobr</strong> functions operate on a simple logic that allows users to easily download a wide variety of data sets with updated geometries and harmonized attributes and geographic projections across geographies and years. This vignette presents a quick intro to <strong>geobr</strong>.</p>
+<p>The <a href="https://github.com/ipeaGIT/geobr" class="external-link"><strong>geobr</strong></a>
+package provides quick and easy access to official spatial data sets of
+Brazil. The syntax of all <strong>geobr</strong> functions operate on a
+simple logic that allows users to easily download a wide variety of data
+sets with updated geometries and harmonized attributes and geographic
+projections across geographies and years. This vignette presents a quick
+intro to <strong>geobr</strong>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install geobr from CRAN or the development version to use the latest features.</p>
+<p>You can install geobr from CRAN or the development version to use the
+latest features.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># From CRAN</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"geobr"</span><span class="op">)</span></span>
@@ -116,7 +123,10 @@
 <div class="section level3">
 <h3 id="available-data-sets">Available data sets<a class="anchor" aria-label="anchor" href="#available-data-sets"></a>
 </h3>
-<p>The geobr package covers 27 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the <code><a href="../reference/list_geobr.html">list_geobr()</a></code> function.</p>
+<p>The geobr package covers 27 spatial data sets, including a variety of
+political-administrative and statistical areas used in Brazil. You can
+view what data sets are available using the <code><a href="../reference/list_geobr.html">list_geobr()</a></code>
+function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Available data sets</span></span>
 <span><span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_geobr.html">list_geobr</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -148,7 +158,9 @@
 <div class="section level2">
 <h2 id="download-spatial-data-as-sf-objects">Download spatial data as <code>sf</code> objects<a class="anchor" aria-label="anchor" href="#download-spatial-data-as-sf-objects"></a>
 </h2>
-<p>The syntax of all <em>geobr</em> functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.</p>
+<p>The syntax of all <em>geobr</em> functions operate one the same
+logic, so the code to download the data becomes intuitive for the user.
+Here are a few examples.</p>
 <p>Download an specific geographic area at a given year</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># State of Sergige</span></span>
@@ -182,7 +194,8 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">muni</span><span class="op">)</span></span></code></pre></div>
-<p>If the parameter <code>code_</code> is not passed to the function, geobr returns the data for the whole country by default.</p>
+<p>If the parameter <code>code_</code> is not passed to the function,
+geobr returns the data for the whole country by default.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># read all intermediate regions</span></span>
 <span><span class="va">inter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_intermediate_region.html">read_intermediate_region</a></span><span class="op">(</span></span>
@@ -220,12 +233,19 @@
 <div class="section level2">
 <h2 id="important-note-about-data-resolution">Important note about data resolution<a class="anchor" aria-label="anchor" href="#important-note-about-data-resolution"></a>
 </h2>
-<p>All functions to download polygon data such as states, municipalities etc. have a <code>simplified</code> argument. When <code>simplified = FALSE</code>, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, <code>simplified = TRUE</code> and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.</p>
+<p>All functions to download polygon data such as states, municipalities
+etc. have a <code>simplified</code> argument. When
+<code>simplified = FALSE</code>, geobr will return the original data set
+with high resolution at detailed geographic scale (see documentation).
+By default, however, <code>simplified = TRUE</code> and geobr returns
+data set geometries with simplified borders to improve speed of
+downloading and plotting the data.</p>
 </div>
 <div class="section level2">
 <h2 id="plot-the-data">Plot the data<a class="anchor" aria-label="anchor" href="#plot-the-data"></a>
 </h2>
-<p>Once you’ve downloaded the data, it is really simple to plot maps using <code>ggplot2</code>.</p>
+<p>Once you’ve downloaded the data, it is really simple to plot maps
+using <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Remove plot axis</span></span>
 <span><span class="va">no_axis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -239,7 +259,8 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="va">no_axis</span></span></code></pre></div>
 <p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-8-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p>Plot all the municipalities of a particular state, such as Rio de Janeiro:</p>
+<p>Plot all the municipalities of a particular state, such as Rio de
+Janeiro:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Download all municipalities of Rio</span></span>
@@ -260,11 +281,18 @@
 <div class="section level2">
 <h2 id="thematic-maps">Thematic maps<a class="anchor" aria-label="anchor" href="#thematic-maps"></a>
 </h2>
-<p>The next step is to combine data from <strong><em>geobr</em></strong> package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (by Ipea/FJP and UNPD) to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.</p>
+<p>The next step is to combine data from <strong><em>geobr</em></strong>
+package with other data sets to create thematic maps. In this example,
+we will be using data from the (Atlas of Human Development (by Ipea/FJP
+and UNPD) to create a choropleth map showing the spatial variation of
+Life Expectancy at birth across Brazilian states.</p>
 <div class="section level4">
 <h4 id="merge-external-data">Merge external data<a class="anchor" aria-label="anchor" href="#merge-external-data"></a>
 </h4>
-<p>First, we need a <code>data.frame</code> with estimates of Life Expectancy and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.</p>
+<p>First, we need a <code>data.frame</code> with estimates of Life
+Expectancy and merge it to our spatial database. The two-digit
+abbreviation of state name is our key column to join these two
+databases.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Read data.frame with life expectancy data</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/br_states_lifexpect2017.csv"</span>, package <span class="op">=</span> <span class="st">"geobr"</span><span class="op">)</span>, encoding <span class="op">=</span> <span class="st">"UTF-8"</span><span class="op">)</span></span>

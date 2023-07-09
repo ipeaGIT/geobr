@@ -68,7 +68,8 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.7.0" id="geobr-v170">geobr v1.7.0<small>2022-08-16</small><a class="anchor" aria-label="anchor" href="#geobr-v170"></a></h2>
 <p><strong>Major changes</strong></p>
-<ul><li>All data sets are now simultaneously stored on github and on Ipea’s server. The package first tries to download the data from Ipea’s server. In case Ipea’s link is off line for some reason, then the package tries to download the data from github. For users, the effect of this change is that the package is much more stable and less vulnerable to instabilities in data server connection.</li></ul><p><strong>Minor changes</strong></p>
+<ul><li>All data sets are now simultaneously stored on github and on Ipea’s server. The package first tries to download the data from Ipea’s server. In case Ipea’s link is off line for some reason, then the package tries to download the data from github. For users, the effect of this change is that the package is much more stable and less vulnerable to instabilities in data server connection.</li>
+</ul><p><strong>Minor changes</strong></p>
 <ul><li>Started using package documentation templates with Roxygen</li>
 <li>Reduced a lot of code redundancy</li>
 <li>Important update tothe <code><a href="../reference/check_connection.html">check_connection()</a></code> function</li>
@@ -85,31 +86,38 @@
 <ul><li>Remove packages cruland readr from geobr dependencies.</li>
 <li>geobr now fails gracefully when server connection times out. Closed <a href="https://github.com/ipeaGIT/geobr/issues/259" class="external-link">#259</a>.</li>
 </ul><p><strong>Bug fixes</strong></p>
-<ul><li>Fixed check_connection() that was failing on Linux. Closed <a href="https://github.com/ipeaGIT/geobr/issues/269" class="external-link">#269</a>.</li></ul></div>
+<ul><li>Fixed check_connection() that was failing on Linux. Closed <a href="https://github.com/ipeaGIT/geobr/issues/269" class="external-link">#269</a>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.6" id="geobr-v166-1">geobr v1.6.6<a class="anchor" aria-label="anchor" href="#geobr-v166-1"></a></h2>
 <p><strong>bug fixes</strong></p>
-<ul><li>Attempt to make package “fail gracefully”.</li></ul></div>
+<ul><li>Attempt to make package “fail gracefully”.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.5" id="geobr-v165-1">geobr v1.6.5<small>2022-01-03</small><a class="anchor" aria-label="anchor" href="#geobr-v165-1"></a></h2>
 <p><strong>bug fixes</strong></p>
-<ul><li>Attempt to make package “fail gracefully”.</li></ul></div>
+<ul><li>Attempt to make package “fail gracefully”.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.4" id="geobr-v164">geobr v1.6.4<small>2021-07-22</small><a class="anchor" aria-label="anchor" href="#geobr-v164"></a></h2>
 <p><strong>bug fixes</strong></p>
-<ul><li>Fixed bug crashing on Solaris.</li></ul></div>
+<ul><li>Fixed bug crashing on Solaris.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.3" id="geobr-v163">geobr v1.6.3<small>2021-07-21</small><a class="anchor" aria-label="anchor" href="#geobr-v163"></a></h2>
 <p><strong>bug fix</strong></p>
-<ul><li>Fixed bug with <code>readr</code> v2.0 that was crashing on Solaris.</li></ul></div>
+<ul><li>Fixed bug with <code>readr</code> v2.0 that was crashing on Solaris.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.2" id="geobr-v162">geobr v1.6.2<small>2021-07-08</small><a class="anchor" aria-label="anchor" href="#geobr-v162"></a></h2>
 <p><strong>Minor changes</strong></p>
-<ul><li>Added package <code>crul</code> to geobr dependencies.</li></ul></div>
+<ul><li>Added package <code>crul</code> to geobr dependencies.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.1" id="geobr-v161">geobr v1.6.1<small>2021-04-16</small><a class="anchor" aria-label="anchor" href="#geobr-v161"></a></h2>
 <p><strong>Minor changes</strong></p>
-<ul><li>Improved <code><a href="../reference/check_connection.html">check_connection()</a></code> to fail gracefully. Return message, no error.</li></ul></div>
+<ul><li>Improved <code><a href="../reference/check_connection.html">check_connection()</a></code> to fail gracefully. Return message, no error.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.0" id="geobr-v160">geobr v1.6.0<a class="anchor" aria-label="anchor" href="#geobr-v160"></a></h2>
 <p><strong>New data sets/functions</strong></p>
@@ -119,7 +127,8 @@
 <li>New internal support function <code>is_online()</code>to check internet connection with Ipea server. Closes <a href="https://github.com/ipeaGIT/geobr/issues/229" class="external-link">#229</a></li>
 <li>New data/function <code>read_urban_concentrations</code>. Closes <a href="https://github.com/ipeaGIT/geobr/issues/232" class="external-link">#232</a></li>
 <li>New data/function <code>read_pop_arrangements</code>. Closes <a href="https://github.com/ipeaGIT/geobr/issues/231" class="external-link">#231</a></li>
-<li>updated data sets for 2020:<ul><li>Country</li>
+<li>updated data sets for 2020:
+<ul><li>Country</li>
 <li>Regions</li>
 <li>States</li>
 <li>Micro regions</li>
@@ -142,7 +151,8 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.5-1" id="geobr-v15-1">geobr v1.5-1<small>2021-02-06</small><a class="anchor" aria-label="anchor" href="#geobr-v15-1"></a></h2>
 <p><strong>Minor changes</strong></p>
-<ul><li>Fixed unnecessary warning about internet connection. Closes <a href="https://github.com/ipeaGIT/geobr/issues/200" class="external-link">#200</a>.</li></ul></div>
+<ul><li>Fixed unnecessary warning about internet connection. Closes <a href="https://github.com/ipeaGIT/geobr/issues/200" class="external-link">#200</a>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.5" id="geobr-v15">geobr v1.5<small>2021-02-03</small><a class="anchor" aria-label="anchor" href="#geobr-v15"></a></h2>
 <p><strong>New data sets/functions</strong></p>
@@ -173,7 +183,8 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3" id="geobr-v13-2020-03-30">geobr v1.3 (2020-03-30)<small>2020-03-29</small><a class="anchor" aria-label="anchor" href="#geobr-v13-2020-03-30"></a></h2>
 <p><strong>New data sets/functions</strong></p>
-<ul><li>data set <code>read_neighborhood</code> to read neighborhood limits of Brazilian municipalities - closes issue <a href="https://github.com/ipeaGIT/geobr/issues/104" class="external-link">#104</a> (added in 2020-03).</li></ul><p><strong>Major changes</strong></p>
+<ul><li>data set <code>read_neighborhood</code> to read neighborhood limits of Brazilian municipalities - closes issue <a href="https://github.com/ipeaGIT/geobr/issues/104" class="external-link">#104</a> (added in 2020-03).</li>
+</ul><p><strong>Major changes</strong></p>
 <ul><li>New argument <code>showProgress</code> to display progress bar. Defaults to <code>TRUE</code>
 </li>
 <li>Argument <code>tp</code> was deprecated and replaced by argument <code>simplified</code> that needs to be either <code>TRUE</code> or <code>FALSE</code>. This should only affect user who have previously used <code>tp=TRUE</code>, who now should write <code>simplified=FALSE</code>
@@ -197,7 +208,8 @@
 <li>All functions now have an additional argument <code>tp</code> as in data ‘type’. This argument defaults to read data sets with ‘simplified’ borders, what makes the package much more efficient for downloading and plotting the data. Closes issue <a href="https://github.com/ipeaGIT/geobr/issues/76" class="external-link">#76</a> (2020-02)</li>
 <li>Pretty much all functions now download the data for the entire country as a default. Closes issue <a href="https://github.com/ipeaGIT/geobr/issues/77" class="external-link">#77</a>. The only exceptions are <code>read_statistical_grid</code> and <code>read_census_tract</code>. These two functions do take a really long time to load the data for the whole country and it might crash R due to memory limits, so the user must be more ‘aware’ about her choice (2020-02)</li>
 </ul><p><strong>Minor changes</strong></p>
-<ul><li>New utils.R script containing support functions to reduce code redundancy (2020-02)</li></ul></div>
+<ul><li>New utils.R script containing support functions to reduce code redundancy (2020-02)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1" id="geobr-v11">geobr v1.1<small>2019-12-03</small><a class="anchor" aria-label="anchor" href="#geobr-v11"></a></h2>
 <p><strong>New data sets/functions</strong></p>
@@ -217,7 +229,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0" id="geobr-v10">geobr v1.0<small>2019-08-05</small><a class="anchor" aria-label="anchor" href="#geobr-v10"></a></h2>
-<ul><li>Launch of <strong>geobr</strong> v1.0 on <a href="https://CRAN.R-project.org/package=geobr" class="external-link">CRAN</a> with the following data sets:<ul><li>Country</li>
+<ul><li>Launch of <strong>geobr</strong> v1.0 on <a href="https://CRAN.R-project.org/package=geobr" class="external-link">CRAN</a> with the following data sets:
+<ul><li>Country</li>
 <li>States</li>
 <li>Regions</li>
 <li>Meso regions</li>
@@ -226,7 +239,8 @@
 <li>Census weighting areas</li>
 <li>Census tracts</li>
 <li>Statistical Grid</li>
-</ul></li></ul></div>
+</ul></li>
+</ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
