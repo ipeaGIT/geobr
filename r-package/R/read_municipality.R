@@ -30,8 +30,10 @@
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
 #'}}
-read_municipality <-
-  function(code_muni = "all", year = 2010, simplified = TRUE, showProgress = TRUE) {
+read_municipality <- function(code_muni = "all",
+                              year = 2010,
+                              simplified = TRUE,
+                              showProgress = TRUE) {
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="municipality", year=year, simplified=simplified)

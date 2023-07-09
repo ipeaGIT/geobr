@@ -178,7 +178,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       }
 
     # load gpkg to memory
-    temp_sf <- load_gpkg(file_url, temps)
+    temp_sf <- load_gpkg(temps)
     return(temp_sf)
     }
 
@@ -186,46 +186,54 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
   else if(length(file_url) > 1) {
 
-    # input for progress bar
-    total <- length(file_url)
-    if(isTRUE(progress_bar)){
-      pb <- utils::txtProgressBar(min = 0, max = total, style = 3)
+    # location of all temp_files
+    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
+
+    # count number of files that have NOT been downloaded already
+    number_of_files <- sum( (!file.exists(temps) | file.info(temps)$size == 0) )
+
+    # IF there is any file to download, then download them
+    if ( number_of_files > 0 ){
+
+      # test connection with server1
+      check_con <- check_connection(file_url[1], silent = TRUE)
+
+      # if server1 fails, replace url and test connection with server2
+      if (is.null(check_con) | isFALSE(check_con)) {
+        file_url <- file_url2
+        check_con <- check_connection(file_url[1], silent = FALSE)
+        if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
       }
 
+      # input for progress bar
+      if(isTRUE(progress_bar)){
+        pb <- utils::txtProgressBar(min = 0, max = number_of_files, style = 3)
+        }
 
-    # test connection with server1
-    check_con <- check_connection(file_url[1], silent = TRUE)
+      # download files
+      lapply(X=file_url, function(x){
 
-    # if server1 fails, replace url and test connection with server2
-    if (is.null(check_con) | isFALSE(check_con)) {
-      file_url <- file_url2
-      check_con <- check_connection(file_url[1], silent = FALSE)
-      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
-    }
+        # get location of temp_file
+        temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L)))
 
-    # download files
-    lapply(X=file_url, function(x){
+        # check if file has not been downloaded already. If not, download it
+        if (!file.exists(temps) | file.info(temps)$size == 0) {
+          i <- match(c(x),file_url)
+          try( httr::GET(url=x, #httr::progress(),
+                         httr::write_disk(temps, overwrite = T),
+                         config = httr::config(ssl_verifypeer = FALSE)
+          ), silent = TRUE)
 
-      # location of temp_file
-      temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L)))
-
-      # check if file has not been downloaded already. If not, download it
-      if (!file.exists(temps) | file.info(temps)$size == 0) {
-                                i <- match(c(x),file_url)
-                                try( httr::GET(url=x, #httr::progress(),
-                                          httr::write_disk(temps, overwrite = T),
-                                          config = httr::config(ssl_verifypeer = FALSE)
-                                          ), silent = TRUE)
-
-                                if(isTRUE(progress_bar)){ utils::setTxtProgressBar(pb, i) }
-                                }
+          if(isTRUE(progress_bar)){ utils::setTxtProgressBar(pb, i) }
+        }
       })
 
-    # closing progress bar
-    if(isTRUE(progress_bar)){close(pb)}
+      # closing progress bar
+      if(isTRUE(progress_bar)){close(pb)}
+    }
 
     # load gpkg
-    temp_sf <- load_gpkg(file_url)
+    temp_sf <- load_gpkg(temps) # 666 this should be only temps
     return(temp_sf)
 
     }
@@ -239,27 +247,24 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
 #' Load geopackage from tempdir to global environment
 #'
-#' @param file_url A string with the file_url address of a geobr dataset
 #' @param temps The address of a gpkg file stored in tempdir. Defaults to NULL
 #' @keywords internal
 #'
-load_gpkg <- function(file_url, temps=NULL){
+load_gpkg <- function(temps=NULL){
 
   ### one single file
 
-  if (length(file_url)==1) {
+  if (length(temps)==1) {
 
     # read sf
     temp_sf <- sf::st_read(temps, quiet=T)
     return(temp_sf)
   }
 
-  else if(length(file_url) > 1){
+  else if(length(temps) > 1){
 
     # read files and pile them up
-    files <- unlist(lapply(strsplit(file_url,"/"), tail, n = 1L))
-    files <- paste0(tempdir(),"/",files)
-    files <- lapply(X=files, FUN= sf::st_read, quiet=T)
+    files <- lapply(X=temps, FUN= sf::st_read, quiet=T)
     temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
 
     # closes issue 284
@@ -273,7 +278,7 @@ load_gpkg <- function(file_url, temps=NULL){
   }
 
   # load gpkg to memory
-  temp_sf <- load_gpkg(file_url, temps)
+  temp_sf <- load_gpkg(temps)
   return(temp_sf)
 }
 

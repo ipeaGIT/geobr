@@ -4,11 +4,9 @@
 \alias{load_gpkg}
 \title{Load geopackage from tempdir to global environment}
 \usage{
-load_gpkg(file_url, temps = NULL)
+load_gpkg(temps = NULL)
 }
 \arguments{
-\item{file_url}{A string with the file_url address of a geobr dataset}
-
 \item{temps}{The address of a gpkg file stored in tempdir. Defaults to NULL}
 }
 \description{
