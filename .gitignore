@@ -8,6 +8,8 @@
 *.out
 *.toc
 *.ind
+*.gpkg
+*.rds
 *.Rhistory
 /R/.Rhistory
 /r-package/.Rhistory
@@ -16,6 +18,9 @@
 /r-package/.Rhistory
 /prep_data/.Rhistory
 /data-raw/
+data_prep/data
+data_prep/data-raw
+
 
 inst/doc
 Meta
