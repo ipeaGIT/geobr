@@ -304,7 +304,8 @@ to_multipolygon <- function(temp_sf){
 fix_topoly <- function(temp_sf){
 
   temp_sf <- sf::st_make_valid(temp_sf)
-  temp_sf <- temp_sf |> sf::st_buffer(0)
+  temp_sf <- sf::st_buffer(temp_sf, dist = 0)
+
   return(temp_sf)
 }
 
@@ -352,35 +353,13 @@ dissolve_polygons <- function(mysf, group_column){
     temp_region <- subset(mysf, get(group_column, mysf)== grp )
 
 
-    # c.2) create attribute with the number of points each polygon has
-    points_in_each_polygon = sapply(1:dim(temp_region)[1], function(i)
-      length(sf::st_coordinates(temp_region$geom[i])))
+    temp_region <- summarise(temp_region, .by = group_column)
+    # plot(temp_region)
 
-    temp_region$points_in_each_polygon <- points_in_each_polygon
-    mypols <- subset(temp_region, points_in_each_polygon > 0)
+    temp_region <- sfheaders::sf_remove_holes(temp_region)
+    temp_region <- fix_topoly(temp_region)
 
-    # d) convert to sp
-    sf_regiona <- mypols |> as("Spatial")
-    sf_regiona <- rgeos::gBuffer(sf_regiona, byid=TRUE, width=0) # correct eventual topology issues
-
-    # c) dissolve borders to create country file
-    result <- maptools::unionSpatialPolygons(sf_regiona, rep(TRUE, nrow(sf_regiona@data))) # dissolve
-
-
-    # d) get rid of holes
-    outerRings = Filter(function(f){f@ringDir==1},result@polygons[[1]]@Polygons)
-    outerBounds = sp::SpatialPolygons(list(sp::Polygons(outerRings,ID=1)))
-
-    # e) convert back to sf data
-    outerBounds <- st_as_sf(outerBounds)
-    outerBounds <- st_set_crs(outerBounds, st_crs(mysf))
-    st_crs(outerBounds) <- st_crs(mysf)
-
-    # retrieve code_region info and reorder columns
-    outerBounds <- dplyr::mutate(outerBounds, group_column = grp)
-    outerBounds <- dplyr::select(outerBounds, group_column, geometry)
-    names(outerBounds)[1] <- group_column
-    return(outerBounds)
+    return(temp_region)
   }
 
 
@@ -394,7 +373,7 @@ dissolve_polygons <- function(mysf, group_column){
 
 
 # # test
-# states <- geobr::read_state()
+# states <- geobr::read_state(year=2000)
 # a <- dissolve_polygons(states, group_column='code_region')
 # plot(a)
 
@@ -409,6 +388,7 @@ remove_state_repetition <- function(temp_sf){
     vars <- names(temp_sf)[-length(names(temp_sf))]
     temp_sf <- temp_sf |> group_by_at(vars) |> summarise()
     temp_sf <- temp_sf |> filter(!code_state=="0")
+    temp_sf <- unique(temp_sf)
     return(temp_sf)
 
   } else { return(temp_sf) }

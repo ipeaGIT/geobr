@@ -1,39 +1,12 @@
 library(sf)
-library(data.table)
-library(dplyr)
-library(mapview)
-library(lwgeom)
-states1920 <- geobr::read_state(year = 1920)
-states1920 <- sf::st_read('C:/Users/user/Downloads/04_limite_estadual_1920/04-limite estadual 1920.shp')
-
-states1920 <- st_transform(states1920, crs = 4674)
-states1920 <- df
-
-save(states1920, file = 'states1920.rda')
-saveRDS(states1920, file = 'states1920.rds')
-
-library(tlocoh) # http://tlocoh.r-forge.r-project.org/
-states1920_s <- tlocoh::clean_slivers(states1920_s)
-states1920_s <- as(states1920, 'Spatial')
-
-sp.report <- clgeo_CollectionReport(states1920_s)
-sp.summary <- clgeo_SummaryReport(sp.report)
-sp.fixed <- clgeo_Clean(states1920_s, verbose = TRUE)
-
-
-
-
-library(sf)
 library(dplyr)
 library(lwgeom)
-library(geobr)
 
 # using planar geometry
 sf::sf_use_s2(FALSE)
 
-
 # load data
-states1920 <- geobr::read_state(year = 1920)
+states1920 <- geobr::read_state(year = 1920, simplified = F)
 plot(states1920)
 
 # test summarise with original data
@@ -45,8 +18,8 @@ states1920 |>
   plot(col='gray90')
 
 
-# trying to fix with make_valid and buffer
-df1 |>
+# using make_valid and buffer
+states1920 |>
   sf::st_make_valid() |>
   sf::st_buffer(dist = 0) |>
   group_by(br) |>
@@ -54,14 +27,64 @@ df1 |>
   plot(col='gray90')
 
 
-# trying to fix with st_snap_to_grid
-states1920 %>%
-  lwgeom::st_snap_to_grid(size = 0.0000001) %>%
+# using st_snap_to_grid
+states1920 |>
+  sf::st_make_valid() |>
+  st_transform(crs = 32722) |>
+
+  lwgeom::st_snap_to_grid(size = 0.01) |>
+  group_by(br) |>
+  summarise() |>
+  plot(col='gray90')
+
+
+t <- dissolve_polygons(mysf=states1920, group_column='name_state')
+plot(t,col='gray90')
+
+
+# using sfheaders
+states1920 |>
   sf::st_make_valid() |>
   group_by(br) |>
   summarise() |>
-  ungroup() |>
+  sfheaders::sf_remove_holes() |>
   plot(col='gray90')
+
+# using nngeo
+states1920 |>
+  sf::st_make_valid() |>
+  group_by(br) |>
+  summarise() |>
+  nngeo::st_remove_holes() |>
+  plot(col='gray90')
+
+# using smoothr. This is the slowest solution
+area_thresh <- units::set_units(800, km^2)
+
+states1920 |>
+  sf::st_make_valid() |>
+  group_by(br) |>
+  summarise() |>
+  smoothr::fill_holes(threshold = area_thresh) |>
+  plot(col = "gray90")
+
+
+
+
+# using rmapshaper. It works by simplifying geometries, which I would consider
+# and unwanted side effect in this case
+
+states1920 |>
+  sf::st_make_valid() |>
+  group_by(br) |>
+  summarise() |>
+  rmapshaper::ms_simplify() |>
+  plot(col='gray90')
+
+
+
+
+
 
 # mother ship
 dissolve_polygons <- function(temp_sf, f){
@@ -71,7 +94,7 @@ dissolve_polygons <- function(temp_sf, f){
   dissolvefun <- function(grp){
 
     # c.1) subset region
-    temp_region <- subset(temp_sf, nome== grp )
+    temp_region <- subset(temp_sf, name_state== grp )
     #temp_region <- fgeos(temp_region)
     temp_region <- f(temp_region)
     return(temp_region)
@@ -79,12 +102,19 @@ dissolve_polygons <- function(temp_sf, f){
 
 
   # Apply sub-function
-  groups_sf <- pbapply::pblapply(X = unique(temp_sf$nome), FUN = dissolvefun )
+  groups_sf <- pbapply::pblapply(X = unique(temp_sf$name_state), FUN = dissolvefun )
 
   # rbind results
   groups_sf <- do.call('rbind', groups_sf)
   return(groups_sf)
 }
+
+##### sfheaders
+
+
+sfh2 <- dissolve_polygons(temp_sf = df, f = sfheaders::sf_remove_holes)
+sfh2$br <- 1
+sfh2 |> group_by(br) |> summarise() |> plot()
 
 
 ##### rgeos
@@ -289,7 +319,16 @@ sss <- function(temp_region){ # temp_region = df[4,]
   return(poly)
 }
 
-sss2 <- dissolve_polygons(temp_sf = df, f = sss)
+sss2 <- dissolve_polygons(temp_sf = sta, f = sss)
 sss2$br <- 1
 #sss2 <- fix_topoly(sss2)
 sss2 |> group_by(br) |> summarise() |> plot()
+
+
+
+
+t <- dissolve_polygons(mysf = states1920, group_column = 'br')
+plot(t, col='gray90')
+head(t)
+
+
