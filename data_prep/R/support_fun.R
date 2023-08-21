@@ -93,7 +93,7 @@ add_state_info <- function(temp_sf, column){
     # add name_state
     stringi::stri_encode(from='latin1', to="utf8", str= "Rondônia, goiás")
 
-    temp_sf <- temp_sf |> mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
+    temp_sf <- temp_sf |> dplyr::mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
                                                       ifelse(code_state== 12, stringi::stri_encode(from='latin1', to="utf8", str="Acre"),
                                                              ifelse(code_state== 13, stringi::stri_encode(from='latin1', to="utf8", str="Amazonas"),
                                                                     ifelse(code_state== 14, stringi::stri_encode(from='latin1', to="utf8", str="Roraima"),
@@ -152,7 +152,7 @@ add_state_info <- function(temp_sf, column){
   # }
 
   # add abbrev state
-  temp_sf <- temp_sf |> mutate(abbrev_state = ifelse(code_state== 11, "RO",
+  temp_sf <- temp_sf |> dplyr::mutate(abbrev_state = ifelse(code_state== 11, "RO",
                                                      ifelse(code_state== 12, "AC",
                                                             ifelse(code_state== 13, "AM",
                                                                    ifelse(code_state== 14, "RR",
@@ -192,7 +192,7 @@ add_region_info <- function(temp_sf, column){
   temp_sf$code_region <- substr( temp_sf[[ column ]] , 1,1) |> as.numeric()
 
   # add name_region
-  temp_sf <- temp_sf |> mutate(name_region = ifelse(code_region==1, 'Norte',
+  temp_sf <- temp_sf |> dplyr::mutate(name_region = ifelse(code_region==1, 'Norte',
                                              ifelse(code_region==2, 'Nordeste',
                                              ifelse(code_region==3, 'Sudeste',
                                              ifelse(code_region==4, 'Sul',
@@ -237,7 +237,7 @@ list_folders <- function(ftp){
 
 harmonize_projection <- function(temp_sf){
 
-  temp_sf <- if( is.na(st_crs(temp_sf)) ){ sf::st_set_crs(temp_sf, 4674)
+  temp_sf <- if( is.na(sf::st_crs(temp_sf)) ){ sf::st_set_crs(temp_sf, 4674)
   } else {
     sf::st_transform(temp_sf, 4674) }
   sf::st_crs(temp_sf) <- 4674
@@ -254,15 +254,15 @@ use_encoding_utf8 <- function(temp_sf){
 
 
   temp_sf <- temp_sf |>
-  mutate_if(is.factor, function(x){
+    dplyr::mutate_if(is.factor, function(x){
     x |> as.character() |> stringi::stri_encode(to="UTF-8") } )
 
   temp_sf <- temp_sf |>
-    mutate_if(is.character, function(x){
+    dplyr::mutate_if(is.character, function(x){
       x  |> stringi::stri_encode(to="UTF-8") } )
 
   # code columns remain numeric
-  temp_sf <- temp_sf |> mutate_at(vars(starts_with("code_")), .funs = function(x){ as.numeric(x) })
+  temp_sf <- temp_sf |> dplyr::mutate_at(dplyr::vars(starts_with("code_")), .funs = function(x){ as.numeric(x) })
 
   return(temp_sf)
   }
@@ -282,13 +282,13 @@ use_encoding_utf8 <- function(temp_sf){
 to_multipolygon <- function(temp_sf){
 
   # get geometry types
-  geom_types <- st_geometry_type(temp_sf) |> unique() |> as.character()
+  geom_types <- sf::st_geometry_type(temp_sf) |> unique() |> as.character()
 
   # checks
   if (length(geom_types) > 1 | any(  !( data.table::like(geom_types,"MULTIPOLYGON")))) {
 
       # remove linstring
-      temp_sf <- subset(temp_sf, st_geometry_type(temp_sf) |> as.character() != "LINESTRING")
+      temp_sf <- subset(temp_sf, sf::st_geometry_type(temp_sf) |> as.character() != "LINESTRING")
 
       # get polyons
       temp_sf <- sf::st_collection_extract(temp_sf, "POLYGON")

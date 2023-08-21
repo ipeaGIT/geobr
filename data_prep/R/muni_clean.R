@@ -1,12 +1,26 @@
+# municipio to tolwer nake case
+# sao paulo stata name
+
+a <- sf::st_read(dsn = "./data/municipios/2013/35municipality_2013_simplified.gpkg")
+head(a)
+
+
+# municipio to tolwer nake case
+# sao paulo stata name
 
 # 1. Read raw data in .rds and saves geopackage output ----------------------
 #' input: path to all files
 #' read raw data and clean it
 #' output: save clean data as geopackage
-clean_muni <- function( files ){
+clean_muni <- function( muni_raw_paths ){
+
+  ## 6666
+  #  muni_raw_paths <- muni_raw_paths[1]
+  ## 6666
+
 
   # detect corresponding year of files
-  year <- detect_year_from_string(files[1])
+  year <- detect_year_from_string(muni_raw_paths[1])
   message(paste('\nCleaning', year, '\n'))
 
   # function to clean an individuals file
@@ -27,32 +41,37 @@ clean_muni <- function( files ){
 
     # read raw file
     temp_sf <- readRDS(f)
-    names(temp_sf) <- names(temp_sf) %>% tolower()
+    names(temp_sf) <- tolower(names(temp_sf))
 
     # select columns
     if (year %like% "2000|2001|2005") {
       # dplyr::rename and subset columns
-      temp_sf <- dplyr::select(temp_sf, c('code_muni'=geocodigo, 'name_muni'=nome))
+      temp_sf <- dplyr::select(temp_sf, c('code_muni'=geocodigo,
+                                          'name_muni'=nome))
     }
 
     if (year %like% "2007") {
       # dplyr::rename and subset columns
-      temp_sf <- dplyr::select(temp_sf, c('code_muni'=geocodig_m, 'name_muni'=nome_munic))
+      temp_sf <- dplyr::select(temp_sf, c('code_muni'=geocodig_m,
+                                          'name_muni'=nome_munic))
     }
 
     if (year %like% "2010"){
       # dplyr::rename and subset columns
-      temp_sf <- dplyr::select(temp_sf, c('code_muni'=cd_geocodm, 'name_muni'=nm_municip))
+      temp_sf <- dplyr::select(temp_sf, c('code_muni'=cd_geocodm,
+                                          'name_muni'=nm_municip))
     }
 
     if (year %like% "2013|2014|2015|2016|2017|2018"){
       # dplyr::rename and subset columns
-      temp_sf <- dplyr::select(temp_sf, c('code_muni'=cd_geocmu, 'name_muni'=nm_municip))
+      temp_sf <- dplyr::select(temp_sf, c('code_muni'=cd_geocmu,
+                                          'name_muni'=nm_municip))
     }
 
     if (year >= 2019) {
       # dplyr::rename and subset columns
-      temp_sf <- dplyr::select(temp_sf, c('code_muni'=cd_mun, 'name_muni'=nm_mun))
+      temp_sf <- dplyr::select(temp_sf, c('code_muni'=cd_mun,
+                                          'name_muni'=nm_mun))
     }
 
     # add state info
@@ -63,7 +82,9 @@ clean_muni <- function( files ){
     temp_sf <- add_region_info(temp_sf, 'code_state')
 
     # reorder columns
-    temp_sf <- dplyr::select(temp_sf,'code_muni', 'name_muni', 'code_state', 'abbrev_state', 'name_state', 'code_region', 'name_region')
+    temp_sf <- dplyr::select(temp_sf,'code_muni', 'name_muni',
+                             'code_state', 'abbrev_state', 'name_state',
+                             'code_region', 'name_region')
 
     # Use UTF-8 encoding
     temp_sf <- use_encoding_utf8(temp_sf)
@@ -109,10 +130,11 @@ clean_muni <- function( files ){
     temp_sf_simplified <- fix_topoly(temp_sf_simplified)
 
 
-    # Save cleaned data --------------------------------
+    # Save cleaned data --------------------------------------------------------
 
     # save each state separately
-    for (c in unique(temp_sf$code_state)) { # c <- 28
+     for (c in unique(temp_sf$code_state)) { # c <- 27
+    # for (c in unique(temp_sf$code_state)[1]) { # 6666
 
       temp2 <- subset(temp_sf, code_state ==c)
       temp2_simplified <- subset(temp_sf_simplified, code_state ==c)
@@ -132,10 +154,17 @@ clean_muni <- function( files ){
                    overwrite = TRUE, append = FALSE,
                    delete_dsn = T, delete_layer = T, quiet = T)
     }
-
   }
 
   # clean all files
-  pbapply::pblapply(X = files, FUN = clean_file)
+  # pbapply::pblapply(X = muni_raw_paths, FUN = clean_file)
 
+  requiredPackages <- c('data.table', 'sf','dplyr', 'sfheaders', 'units',
+                        'lwgeom', 'rgeos', 'sp', 'maptools', 'stringr', 'stringi')
+  furrr::future_walk(.x = muni_raw_paths, .f = clean_file,
+                     .options = furrr::furrr_options(
+                       seed = FALSE,
+                       packages = requiredPackages)
+                     )
   }
+

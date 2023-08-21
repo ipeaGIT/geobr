@@ -42,7 +42,6 @@ download_muni <- function(year){
     ## save raw data in .rds
     #message('\nsaving raw\n')
     muni_saveraw(tempf, temp_dir, dest_dir)
-
     }
 
   if (year %in% c(2005, 2007)) {
@@ -86,7 +85,7 @@ download_muni <- function(year){
       ## save raw data in .rds
       #message('\nsaving raw\n')
       muni_saveraw(tempf, temp_dir, dest_dir)
-    }
+      }
     }
 
   if (year < 2015 & year!=2005 & year!=2007) {
@@ -100,12 +99,13 @@ download_muni <- function(year){
     for (n2 in folders){ # n2 <- folders[2]
 
       ## debugging 66666
+      # n2 in folders
       # n2 in folders[1:2]
 
       # list files
       subdir2 <- paste0(subdir, n2)
       files <- list_folders(subdir2)
-      files <- files[ data.table::like(files, 'Municipio|municipio') ]
+      files <- files[ data.table::like(files, 'Municipio|municipio|mu2500g') ]
       filenameext <- files[ data.table::like(files, '.zip') ]
       filename <- gsub('.zip', '', filenameext)
 
@@ -124,21 +124,20 @@ download_muni <- function(year){
       ## save raw data in .rds
       #message('\nsaving raw\n')
       muni_saveraw(tempf, temp_dir, dest_dir)
-
       }
 
 
     }
 
   # list files
-  muni_raw_path <- list.files(path = dest_dir,
+  muni_raw_paths <- list.files(path = dest_dir,
                               pattern = '.rds',
                             #  recursive = TRUE,
                               full.names = TRUE
                               )
- # return(muni_raw_path)
+ return(muni_raw_paths)
 
-  clean_muni(muni_raw_path)
+  #clean_muni(muni_raw_path)
   }
 
 # 1. read raw zipped file in temporary dir  ---------------------------------
@@ -159,6 +158,8 @@ muni_saveraw <- function(tempf, temp_dir, dest_dir) {
   # detect year from file name
   year <- detect_year_from_string(tempf)
   year <- year[year != '2500']
+  year <- year[year != '0807']
+  year <- year[1]
 
   # Encoding for different years
   if (year %like% "2000") {
@@ -169,7 +170,7 @@ muni_saveraw <- function(tempf, temp_dir, dest_dir) {
     temp_sf <- sf::st_read(shape_file, quiet = T, stringsAsFactors=F, options = "ENCODING=WINDOWS-1252")
   }
 
-  if (year > 2013 ){
+  if (year >= 2013) {
     temp_sf <- sf::st_read(shape_file, quiet = T, stringsAsFactors=F, options = "ENCODING=UTF8")
   }
 
@@ -182,6 +183,9 @@ muni_saveraw <- function(tempf, temp_dir, dest_dir) {
   # save in .rds
   saveRDS(temp_sf, file = paste0(dest_dir,"/", file_name), compress = TRUE)
 
+  # # return path to raw file
+  # muni_raw_path <- paste0(dest_dir,"/", file_name)
+  # return(muni_raw_path)
 }
 
 
