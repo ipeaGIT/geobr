@@ -1,0 +1,81 @@
+on: [push]
+
+name: Python-CMD-check
+
+jobs:
+  Python-CMD-check:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} (${{ matrix.python-version }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest , windows-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11"] 
+        # Python 3.8 support ends in 2024-10
+        # Python 3.12 support starts in 2023-10
+        # Check Python maintenance status at: https://www.python.org/downloads/
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out geobr
+        uses: actions/checkout@v3
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install dependencies (Ubuntu)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Add the Ubuntu GIS PPA
+          sudo add-apt-repository ppa:ubuntugis/ppa
+          sudo apt update
+          # Install geos library (shapely requirement)
+          sudo apt-get install libgeos++-dev libgeos3.10.2 libgeos-c1v5 libgeos-dev libgeos-doc
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: python-package
+
+      - name: Install dependencies (Windows)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        if: matrix.os == 'windows-latest'
+        working-directory: python-package
+      
+      - name: Install dependencies (MacOS)
+        run: |
+          python -m pip install --upgrade pip
+          brew install geos
+          pip install shapely --no-binary shapely
+          pip install -r requirements.txt
+        if: matrix.os == 'macOS-latest'
+        working-directory: python-package
+ 
+      - name: Save dependencies
+        run: pip freeze > requirements.txt
+
+      - name: Install testing dependencies
+        run: |
+          pip install pytest
+          pip install coverage
+
+      - name: Run tests
+        run: |
+          coverage run -m pytest -x ./tests
+          coverage report --omit="tests/*" -m >> test-results.txt
+        working-directory: python-package
+
+      - name: Upload check results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: python-package/test-results.txt
+          if-no-files-found: warn

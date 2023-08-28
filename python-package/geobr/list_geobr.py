@@ -1,3 +1,4 @@
+from requests import get
 import pandas as pd
 from urllib.error import HTTPError
 
@@ -16,7 +17,7 @@ def list_geobr():
     """
 
     try:
-        df = pd.read_html("https://github.com/ipeaGIT/geobr/blob/master/README.md")[1]
+        df = pd.read_html(get("https://github.com/ipeaGIT/geobr/blob/master/README.md").text)[1]
 
     except HTTPError:
         print(
