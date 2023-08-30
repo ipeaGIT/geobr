@@ -67,17 +67,15 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
   # download data
   try( httr::GET(url=file_url,
-                 if(isTRUE(progress_bar)){httr::progress()},
                  httr::write_disk(tempf, overwrite = T),
                  config = httr::config(ssl_verifypeer = FALSE)
-  ), silent = TRUE)
-
+                 ), silent = TRUE)
 
   }
 
   # check if download failed
   msg <- "Problem connecting to data server. Please try it again in a few minutes."
-  if (file.info(tempf)$size == 0) {message(msg); return(invisible(NULL)) }
+  if (!file.exists(tempf) | file.info(tempf)$size == 0) {message(msg); return(invisible(NULL)) }
 
   ### read/return lookup data
   lookup_table_2010 <- utils::read.csv(tempf, stringsAsFactors = F, encoding = 'UTF-8')
