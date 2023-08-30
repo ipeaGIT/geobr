@@ -23,162 +23,114 @@ detect_year_from_string <- function(string){
 add_state_info <- function(temp_sf, column){
   options(encoding = "UTF-8")
 
-  if(!is.null(temp_sf$code_muni) & !is.null(temp_sf$name_state)){
-    # Add code_state
+  # IF only the "name_state" column is present
+  # Add code_state
+  if (!is.null(temp_sf$code_muni) & "name_state" %in% names(temp_sf) ) {
     temp_sf <- dplyr::mutate(code_state = ifelse(name_state== "Rondonia" | name_state== "Território de Rondonia"  | name_state== "Territorio de Rondonia",11,
-                                                 ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
-                                                        ifelse(name_state== "Amazonas",13,
-                                                               ifelse(name_state== "Roraima" | name_state=="Território de Roraima",14,
-                                                                      ifelse(name_state== "Pará",15,
-                                                                             ifelse(name_state== "Amapá" | name_state=="Territorio do Amapa",16,
-                                                                                    ifelse(name_state== "Tocantins",17,
-                                                                                           ifelse(name_state== "Maranhão",21,
-                                                                                                  ifelse(name_state== "Piaui" | name_state== "Piauhy",22,
-                                                                                                         ifelse(name_state== "Ceará",23,
-                                                                                                                ifelse(name_state== "Rio Grande do Norte",24,
-                                                                                                                       ifelse(name_state== "Paraiba" | name_state== "Parahyba",25,
-                                                                                                                              ifelse(name_state== "Pernambuco",26,
-                                                                                                                                     ifelse(name_state== "Alagoas" | name_state=="Alagôas",27,
-                                                                                                                                            ifelse(name_state== "Sergipe",28,
-                                                                                                                                                   ifelse(name_state== "Bahia",29,
-                                                                                                                                                          ifelse(name_state== "Minas Gerais" | name_state== "Minas Geraes",31,
-                                                                                                                                                                 ifelse(name_state== "Espirito Santo" | name_state== "Espirito Santo",32,
-                                                                                                                                                                        ifelse(name_state== "Rio de Janeiro",33,
-                                                                                                                                                                               ifelse(name_state== "São Paulo",35,
-                                                                                                                                                                                      ifelse(name_state== "Paraná",41,
-                                                                                                                                                                                             ifelse(name_state== "Santa Catarina" | name_state== "Santa Catharina",42,
-                                                                                                                                                                                                    ifelse(name_state== "Rio Grande do Sul",43,
-                                                                                                                                                                                                           ifelse(name_state== "Mato Grosso do Sul",50,
-                                                                                                                                                                                                                  ifelse(name_state== "Mato Grosso" | name_state== "Matto Grosso",51,
-                                                                                                                                                                                                                         ifelse(name_state== "Goiás" | name_state== "Goyaz",52,
-                                                                                                                                                                                                                                ifelse((name_state== "Distrito Federal" | name_state=="Brasilia") & (year>1950),53,NA
-                                                                                                                                                                                                                                ))))))))))))))))))))))))))))
+                                          ifelse(name_state== "Acre" | name_state== "Território do Acre",12,
+                                          ifelse(name_state== "Amazonas",13,
+                                          ifelse(name_state== "Roraima" | name_state=="Território de Roraima",14,
+                                          ifelse(name_state== "Pará",15,
+                                          ifelse(name_state== "Amapá" | name_state=="Territorio do Amapa",16,
+                                          ifelse(name_state== "Tocantins",17,
+                                          ifelse(name_state== "Maranhão",21,
+                                          ifelse(name_state== "Piaui" | name_state== "Piauhy",22,
+                                          ifelse(name_state== "Ceará",23,
+                                          ifelse(name_state== "Rio Grande do Norte",24,
+                                          ifelse(name_state== "Paraiba" | name_state== "Parahyba",25,
+                                          ifelse(name_state== "Pernambuco",26,
+                                          ifelse(name_state== "Alagoas" | name_state=="Alagôas",27,
+                                          ifelse(name_state== "Sergipe",28,
+                                          ifelse(name_state== "Bahia",29,
+                                          ifelse(name_state== "Minas Gerais" | name_state== "Minas Geraes",31,
+                                          ifelse(name_state== "Espirito Santo" | name_state== "Espirito Santo",32,
+                                          ifelse(name_state== "Rio de Janeiro",33,
+                                          ifelse(name_state== "São Paulo",35,
+                                          ifelse(name_state== "Paraná",41,
+                                          ifelse(name_state== "Santa Catarina" | name_state== "Santa Catharina",42,
+                                          ifelse(name_state== "Rio Grande do Sul",43,
+                                          ifelse(name_state== "Mato Grosso do Sul",50,
+                                          ifelse(name_state== "Mato Grosso" | name_state== "Matto Grosso",51,
+                                          ifelse(name_state== "Goiás" | name_state== "Goyaz",52,
+                                          ifelse((name_state== "Distrito Federal" | name_state=="Brasilia") & (year>1950),53,NA
+                               ))))))))))))))))))))))))))))
   }
-  if( column != 'name_state'){
+
+  # IF there is no "name_state" column
+  if (column != 'name_state'){
 
     # add code_state
     temp_sf$code_state <- substr( temp_sf[[ column ]] , 1,2) |> as.numeric()
 
-
-    #   # add name_state
-    # temp_sf <- temp_sf |> mutate(name_state =  ifelse(code_state== 11, stringi::stri_escape_unicode("Rondônia"),
-    #                                             ifelse(code_state== 12, stringi::stri_escape_unicode("Acre"),
-    #                                             ifelse(code_state== 13, stringi::stri_escape_unicode("Amazonas"),
-    #                                             ifelse(code_state== 14, stringi::stri_escape_unicode("Roraima"),
-    #                                             ifelse(code_state== 15, stringi::stri_escape_unicode("Pará"),
-    #                                             ifelse(code_state== 16, stringi::stri_escape_unicode("Amapá"),
-    #                                             ifelse(code_state== 17, stringi::stri_escape_unicode("Tocantins"),
-    #                                             ifelse(code_state== 21, stringi::stri_escape_unicode("Maranhão"),
-    #                                             ifelse(code_state== 22, stringi::stri_escape_unicode("Piauí"),
-    #                                             ifelse(code_state== 23, stringi::stri_escape_unicode("Ceará"),
-    #                                             ifelse(code_state== 24, stringi::stri_escape_unicode("Rio Grande do Norte"),
-    #                                             ifelse(code_state== 25, stringi::stri_escape_unicode("Paraíba"),
-    #                                             ifelse(code_state== 26, stringi::stri_escape_unicode("Pernambuco"),
-    #                                             ifelse(code_state== 27, stringi::stri_escape_unicode("Alagoas"),
-    #                                             ifelse(code_state== 28, stringi::stri_escape_unicode("Sergipe"),
-    #                                             ifelse(code_state== 29, stringi::stri_escape_unicode("Bahia"),
-    #                                             ifelse(code_state== 31, stringi::stri_escape_unicode("Minas Gerais"),
-    #                                             ifelse(code_state== 32, stringi::stri_escape_unicode("Espírito Santo"),
-    #                                             ifelse(code_state== 33, stringi::stri_escape_unicode("Rio de Janeiro"),
-    #                                             ifelse(code_state== 35, stringi::stri_escape_unicode("São Paulo"),
-    #                                             ifelse(code_state== 41, stringi::stri_escape_unicode("Paraná"),
-    #                                             ifelse(code_state== 42, stringi::stri_escape_unicode("Santa Catarina"),
-    #                                             ifelse(code_state== 43, stringi::stri_escape_unicode("Rio Grande do Sul"),
-    #                                             ifelse(code_state== 50, stringi::stri_escape_unicode("Mato Grosso do Sul"),
-    #                                             ifelse(code_state== 51, stringi::stri_escape_unicode("Mato Grosso"),
-    #                                             ifelse(code_state== 52, stringi::stri_escape_unicode("Goiás"),
-    #                                             ifelse(code_state== 53, stringi::stri_escape_unicode("Distrito Federal"), "!error!"))))))))))))))))))))))))))))
-    #                                             }
-
-    # add name_state
-    stringi::stri_encode(from='latin1', to="utf8", str= "Rondônia, goiás")
-
-    temp_sf <- temp_sf |> dplyr::mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
-                                                      ifelse(code_state== 12, stringi::stri_encode(from='latin1', to="utf8", str="Acre"),
-                                                             ifelse(code_state== 13, stringi::stri_encode(from='latin1', to="utf8", str="Amazonas"),
-                                                                    ifelse(code_state== 14, stringi::stri_encode(from='latin1', to="utf8", str="Roraima"),
-                                                                           ifelse(code_state== 15, stringi::stri_encode(from='latin1', to="utf8", str="Pará"),
-                                                                                  ifelse(code_state== 16, stringi::stri_encode(from='latin1', to="utf8", str="Amapá"),
-                                                                                         ifelse(code_state== 17, stringi::stri_encode(from='latin1', to="utf8", str="Tocantins"),
-                                                                                                ifelse(code_state== 21, stringi::stri_encode(from='latin1', to="utf8", str="Maranhão"),
-                                                                                                       ifelse(code_state== 22, stringi::stri_encode(from='latin1', to="utf8", str="Piauí"),
-                                                                                                              ifelse(code_state== 23, stringi::stri_encode(from='latin1', to="utf8", str="Ceará"),
-                                                                                                                     ifelse(code_state== 24, stringi::stri_encode(from='latin1', to="utf8", str="Rio Grande do Norte"),
-                                                                                                                            ifelse(code_state== 25, stringi::stri_encode(from='latin1', to="utf8", str="Paraíba"),
-                                                                                                                                   ifelse(code_state== 26, stringi::stri_encode(from='latin1', to="utf8", str="Pernambuco"),
-                                                                                                                                          ifelse(code_state== 27, stringi::stri_encode(from='latin1', to="utf8", str="Alagoas"),
-                                                                                                                                                 ifelse(code_state== 28, stringi::stri_encode(from='latin1', to="utf8", str="Sergipe"),
-                                                                                                                                                        ifelse(code_state== 29, stringi::stri_encode(from='latin1', to="utf8", str="Bahia"),
-                                                                                                                                                               ifelse(code_state== 31, stringi::stri_encode(from='latin1', to="utf8", str="Minas Gerais"),
-                                                                                                                                                                      ifelse(code_state== 32, stringi::stri_encode(from='latin1', to="utf8", str="Espírito Santo"),
-                                                                                                                                                                             ifelse(code_state== 33, stringi::stri_encode(from='latin1', to="utf8", str="Rio de Janeiro"),
-                                                                                                                                                                                    ifelse(code_state== 35, stringi::stri_encode(from='latin1', to="utf8", str="São Paulo"),
-                                                                                                                                                                                           ifelse(code_state== 41, stringi::stri_encode(from='latin1', to="utf8", str="Paraná"),
-                                                                                                                                                                                                  ifelse(code_state== 42, stringi::stri_encode(from='latin1', to="utf8", str="Santa Catarina"),
-                                                                                                                                                                                                         ifelse(code_state== 43, stringi::stri_encode(from='latin1', to="utf8", str="Rio Grande do Sul"),
-                                                                                                                                                                                                                ifelse(code_state== 50, stringi::stri_encode(from='latin1', to="utf8", str="Mato Grosso do Sul"),
-                                                                                                                                                                                                                       ifelse(code_state== 51, stringi::stri_encode(from='latin1', to="utf8", str="Mato Grosso"),
-                                                                                                                                                                                                                              ifelse(code_state== 52, stringi::stri_encode(from='latin1', to="utf8", str="Goiás"),
-                                                                                                                                                                                                                                     ifelse(code_state== 53, stringi::stri_encode(from='latin1', to="utf8", str="Distrito Federal"), "!error!"))))))))))))))))))))))))))))
+    # # add name_state ENCODING ISSUES
+    # stringi::stri_encode(from='latin1', to="utf8", str= "São Paulo")
+    # stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
+    # gtools::ASCIIfy('São Paulo')
+    temp_sf <- temp_sf |> dplyr::mutate(name_state =
+                                          data.table::fcase(code_state== 11, utf8::as_utf8("Rondônia"),
+                                                            code_state== 12, "Acre",
+                                                            code_state== 13, "Amazonas",
+                                                            code_state== 14, "Roraima",
+                                                            code_state== 15, utf8::as_utf8("Pará"),
+                                                            code_state== 16, utf8::as_utf8("Amapá"),
+                                                            code_state== 17, "Tocantins",
+                                                            code_state== 21, utf8::as_utf8("Maranhão"),
+                                                            code_state== 22, utf8::as_utf8("Piauí"),
+                                                            code_state== 23, utf8::as_utf8("Ceará"),
+                                                            code_state== 24, "Rio Grande do Norte",
+                                                            code_state== 25, utf8::as_utf8("Paraíba"),
+                                                            code_state== 26, "Pernambuco",
+                                                            code_state== 27, "Alagoas",
+                                                            code_state== 28, "Sergipe",
+                                                            code_state== 29, "Bahia",
+                                                            code_state== 31, "Minas Gerais",
+                                                            code_state== 32, "Espirito Santo",
+                                                            code_state== 33, "Rio de Janeiro",
+                                                           # code_state== 35, stringi::stri_encode(from='latin1', to="utf8", str="São Paulo"),
+                                                           # code_state== 35, stringi::stri_escape_unicode("São Paulo"),
+                                                           # OK code_state== 35, stringi::stri_encode('S\u00e3o Paulo', to="UTF-8"),
+                                                            code_state== 35, utf8::as_utf8("São Paulo"),
+                                                            code_state== 41, utf8::as_utf8("Paraná"),
+                                                            code_state== 42, "Santa Catarina",
+                                                            code_state== 43, "Rio Grande do Sul",
+                                                            code_state== 50, "Mato Grosso do Sul",
+                                                            code_state== 51, "Mato Grosso",
+                                                            code_state== 52, utf8::as_utf8("Goiás"),
+                                                            code_state== 53, "Distrito Federal",
+                                                            default = NA))
   }
 
-  # temp_sf <- temp_sf |> mutate(name_state =  ifelse(code_state== 11, utf8::as_utf8("Rondônia"),
-  #                                             ifelse(code_state== 12, utf8::as_utf8("Acre"),
-  #                                             ifelse(code_state== 13, utf8::as_utf8("Amazonas"),
-  #                                             ifelse(code_state== 14, utf8::as_utf8("Roraima"),
-  #                                             ifelse(code_state== 15, utf8::as_utf8("Pará"),
-  #                                             ifelse(code_state== 16, utf8::as_utf8("Amapá"),
-  #                                             ifelse(code_state== 17, utf8::as_utf8("Tocantins"),
-  #                                             ifelse(code_state== 21, utf8::as_utf8("Maranhão"),
-  #                                             ifelse(code_state== 22, utf8::as_utf8("Piauí"),
-  #                                             ifelse(code_state== 23, utf8::as_utf8("Ceará"),
-  #                                             ifelse(code_state== 24, utf8::as_utf8("Rio Grande do Norte"),
-  #                                             ifelse(code_state== 25, utf8::as_utf8("Paraíba"),
-  #                                             ifelse(code_state== 26, utf8::as_utf8("Pernambuco"),
-  #                                             ifelse(code_state== 27, utf8::as_utf8("Alagoas"),
-  #                                             ifelse(code_state== 28, utf8::as_utf8("Sergipe"),
-  #                                             ifelse(code_state== 29, utf8::as_utf8("Bahia"),
-  #                                             ifelse(code_state== 31, utf8::as_utf8("Minas Gerais"),
-  #                                             ifelse(code_state== 32, utf8::as_utf8("Espírito Santo"),
-  #                                             ifelse(code_state== 33, utf8::as_utf8("Rio de Janeiro"),
-  #                                             ifelse(code_state== 35, utf8::as_utf8("São Paulo"),
-  #                                             ifelse(code_state== 41, utf8::as_utf8("Paraná"),
-  #                                             ifelse(code_state== 42, utf8::as_utf8("Santa Catarina"),
-  #                                             ifelse(code_state== 43, utf8::as_utf8("Rio Grande do Sul"),
-  #                                             ifelse(code_state== 50, utf8::as_utf8("Mato Grosso do Sul"),
-  #                                             ifelse(code_state== 51, utf8::as_utf8("Mato Grosso"),
-  #                                             ifelse(code_state== 52, utf8::as_utf8("Goiás"),
-  #                                             ifelse(code_state== 53, utf8::as_utf8("Distrito Federal"), "!error!"))))))))))))))))))))))))))))
-  # }
-
   # add abbrev state
-  temp_sf <- temp_sf |> dplyr::mutate(abbrev_state = ifelse(code_state== 11, "RO",
-                                                     ifelse(code_state== 12, "AC",
-                                                            ifelse(code_state== 13, "AM",
-                                                                   ifelse(code_state== 14, "RR",
-                                                                          ifelse(code_state== 15, "PA",
-                                                                                 ifelse(code_state== 16, "AP",
-                                                                                        ifelse(code_state== 17, "TO",
-                                                                                               ifelse(code_state== 21, "MA",
-                                                                                                      ifelse(code_state== 22, "PI",
-                                                                                                             ifelse(code_state== 23, "CE",
-                                                                                                                    ifelse(code_state== 24, "RN",
-                                                                                                                           ifelse(code_state== 25, "PB",
-                                                                                                                                  ifelse(code_state== 26, "PE",
-                                                                                                                                         ifelse(code_state== 27, "AL",
-                                                                                                                                                ifelse(code_state== 28, "SE",
-                                                                                                                                                       ifelse(code_state== 29, "BA",
-                                                                                                                                                              ifelse(code_state== 31, "MG",
-                                                                                                                                                                     ifelse(code_state== 32, "ES",
-                                                                                                                                                                            ifelse(code_state== 33, "RJ",
-                                                                                                                                                                                   ifelse(code_state== 35, "SP",
-                                                                                                                                                                                          ifelse(code_state== 41, "PR",
-                                                                                                                                                                                                 ifelse(code_state== 42, "SC",
-                                                                                                                                                                                                        ifelse(code_state== 43, "RS",
-                                                                                                                                                                                                               ifelse(code_state== 50, "MS",
-                                                                                                                                                                                                                      ifelse(code_state== 51, "MT",
-                                                                                                                                                                                                                             ifelse(code_state== 52, "GO",
-                                                                                                                                                                                                                                    ifelse(code_state== 53, "DF",NA))))))))))))))))))))))))))))
+  temp_sf <- temp_sf |> dplyr::mutate(
+                            abbrev_state = data.table::fcase(
+                                                code_state== 11, "RO",
+                                                code_state== 12, "AC",
+                                                code_state== 13, "AM",
+                                                code_state== 14, "RR",
+                                                code_state== 15, "PA",
+                                                code_state== 16, "AP",
+                                                code_state== 17, "TO",
+                                                code_state== 21, "MA",
+                                                code_state== 22, "PI",
+                                                code_state== 23, "CE",
+                                                code_state== 24, "RN",
+                                                code_state== 25, "PB",
+                                                code_state== 26, "PE",
+                                                code_state== 27, "AL",
+                                                code_state== 28, "SE",
+                                                code_state== 29, "BA",
+                                                code_state== 31, "MG",
+                                                code_state== 32, "ES",
+                                                code_state== 33, "RJ",
+                                                code_state== 35, "SP",
+                                                code_state== 41, "PR",
+                                                code_state== 42, "SC",
+                                                code_state== 43, "RS",
+                                                code_state== 50, "MS",
+                                                code_state== 51, "MT",
+                                                code_state== 52, "GO",
+                                                code_state== 53, "DF",
+                                                default = NA))
 
   return(temp_sf)
 }
@@ -192,11 +144,13 @@ add_region_info <- function(temp_sf, column){
   temp_sf$code_region <- substr( temp_sf[[ column ]] , 1,1) |> as.numeric()
 
   # add name_region
-  temp_sf <- temp_sf |> dplyr::mutate(name_region = ifelse(code_region==1, 'Norte',
-                                             ifelse(code_region==2, 'Nordeste',
-                                             ifelse(code_region==3, 'Sudeste',
-                                             ifelse(code_region==4, 'Sul',
-                                             ifelse(code_region==5, 'Centro Oeste', NA))))))
+  temp_sf <- temp_sf |> dplyr::mutate(name_region =
+                                        data.table::fcase(code_region==1, 'Norte',
+                                             code_region==2, 'Nordeste',
+                                             code_region==3, 'Sudeste',
+                                             code_region==4, 'Sul',
+                                             code_region==5, 'Centro Oeste',
+                                             default = NA))
   return(temp_sf)
 }
 
@@ -228,6 +182,24 @@ list_folders <- function(ftp){
 #   t<- nchar(t)
 #   unzip(f, exdir = file.path(head_dir, substr(f, 3, nchar(f)-t) ))
 # }
+
+
+###### snake case names ---------------------------------------------------
+
+snake_case_names <- function(temp_sf, colname){
+
+  # Capitalize the first letter
+  temp_sf[[ colname ]] <- stringr::str_to_title( temp_sf[[ colname ]] )
+
+  # prepositions to lower
+  temp_sf[[ colname ]] <- gsub(' Do ', ' do ',   temp_sf[[ colname ]] )
+  temp_sf[[ colname ]] <- gsub(' Dos ', ' dos ', temp_sf[[ colname ]] )
+  temp_sf[[ colname ]] <- gsub(' Da ', ' da ',   temp_sf[[ colname ]] )
+  temp_sf[[ colname ]] <- gsub(' Das ', ' das ', temp_sf[[ colname ]] )
+  temp_sf[[ colname ]] <- gsub(' De ', ' de ',   temp_sf[[ colname ]] )
+
+  return(temp_sf)
+}
 
 
 

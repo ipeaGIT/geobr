@@ -1,18 +1,17 @@
 # municipio to tolwer nake case
 # sao paulo stata name
 
-a <- sf::st_read(dsn = "./data/municipios/2013/35municipality_2013_simplified.gpkg")
-head(a)
-
-
-# municipio to tolwer nake case
-# sao paulo stata name
-
 # 1. Read raw data in .rds and saves geopackage output ----------------------
 #' input: path to all files
 #' read raw data and clean it
 #' output: save clean data as geopackage
 clean_muni <- function( muni_raw_paths ){
+
+  # year = 2000
+  # all_muni_raw_paths <- list.files(path = paste0('./data-raw/municipios/', year),
+  #                              pattern = '.rds',
+  #                              full.names = TRUE)
+  # f <- all_muni_raw_paths[15]
 
   ## 6666
   #  muni_raw_paths <- muni_raw_paths[1]
@@ -25,8 +24,8 @@ clean_muni <- function( muni_raw_paths ){
 
   # function to clean an individuals file
   clean_file <- function(f){
-  #  f <- local_files_muni[local_files_muni %like% 2007 ][16]
-  #  f <- local_files_muni[16]
+  #  f <- muni_raw_paths[muni_raw_paths %like% 2007 ][16]
+  #  f <- all_muni_raw_paths[18]
 
   options(encoding = "UTF-8")
 
@@ -89,34 +88,31 @@ clean_muni <- function( muni_raw_paths ){
     # Use UTF-8 encoding
     temp_sf <- use_encoding_utf8(temp_sf)
 
-    # # Capitalize the first letter
-    # temp_sf$name_muni <- stringr::str_to_title(temp_sf$name_muni)
+    # Capitalize the first letter / snake case
+    temp_sf <- snake_case_names(temp_sf, colname = 'name_muni')
 
     # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
     temp_sf <- harmonize_projection(temp_sf)
 
-
-    # strange error in Espirito Santo in 2000
-    unique_codes <- unique(temp_sf$code_state)
-    if (length(unique_codes)==2 & any(unique_codes %in% 32)) {
-      temp_sf <- subset(temp_sf, code_state ==32)
-    }
-
-
-    # strange error in RJ in 2000
+    # strange errors in the year 2000
     temp_sf <- subset(temp_sf, code_state > 0)
-    if (length(unique_codes)==3 & any(unique_codes %in% 33)) {
-      temp_sf <- subset(temp_sf, code_state ==33)
-    }
+
+      if (year==2000) {
+
+            unique_codes <- unique(temp_sf$code_state)
+          # strange error in SP Cananeia municipality #issue 275
+            if (any(unique_codes %in% 35)) {
+              temp_sf <- subset(temp_sf, !(code_muni=='3509908' & name_muni == 'Cananeia')) }
+
+          }
 
     # Make any invalid geom valid
       # st_is_valid( temp_sf)
       temp_sf <- fix_topoly(temp_sf)
 
-    # strange error in SC 2000
-    # remove geometries with area == 0
-    temp_sf <- temp_sf[ as.numeric(sf::st_area(temp_sf)) != 0, ]
-
+    # strange error in SC 2000 but it could happen elsewhere
+      # remove geometries with area == 0
+      temp_sf <- temp_sf[ as.numeric(sf::st_area(temp_sf)) != 0, ]
 
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf)
@@ -136,11 +132,11 @@ clean_muni <- function( muni_raw_paths ){
      for (c in unique(temp_sf$code_state)) { # c <- 27
     # for (c in unique(temp_sf$code_state)[1]) { # 6666
 
-      temp2 <- subset(temp_sf, code_state ==c)
-      temp2_simplified <- subset(temp_sf_simplified, code_state ==c)
+      temp2 <- subset(temp_sf, code_state == c)
+      temp2_simplified <- subset(temp_sf_simplified, code_state == c)
 
       file_name <- paste0(unique(substr(temp2$code_state,1,2)),"municipality_", year, ".gpkg")
-      message(paste('saving', file_name))
+      message(paste('Saving', file_name))
 
       # original
       i <- paste0(dest_dir, '/', file_name)
@@ -157,14 +153,14 @@ clean_muni <- function( muni_raw_paths ){
   }
 
   # clean all files
-  # pbapply::pblapply(X = muni_raw_paths, FUN = clean_file)
+   pbapply::pblapply(X = muni_raw_paths, FUN = clean_file)
 
-  requiredPackages <- c('data.table', 'sf','dplyr', 'sfheaders', 'units',
-                        'lwgeom', 'rgeos', 'sp', 'maptools', 'stringr', 'stringi')
-  furrr::future_walk(.x = muni_raw_paths, .f = clean_file,
-                     .options = furrr::furrr_options(
-                       seed = FALSE,
-                       packages = requiredPackages)
-                     )
+  # requiredPackages <- c('data.table', 'sf','dplyr', 'sfheaders', 'units',
+  #                       'lwgeom', 'rgeos', 'sp', 'maptools', 'stringr', 'stringi')
+  # furrr::future_walk(.x = muni_raw_paths, .f = clean_file,
+  #                    .options = furrr::furrr_options(
+  #                      seed = FALSE,
+  #                      packages = requiredPackages)
+  #                    )
   }
 

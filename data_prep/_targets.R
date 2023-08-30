@@ -125,3 +125,20 @@ list(
 # targets::tar_progress_branches()
 
 # targets::tar_meta(fields = error, complete_only = TRUE)
+
+
+#
+# saving 26municipality_2000.gpkg
+# saving 27municipality_2000.gpkg
+# saving 28municipality_2000.gpkg
+# ✖ error branch clean_municipios_35345f30
+# ▶ end pipeline [3.968 minutes]
+# There were 31 warnings (use warnings() to see them)
+# Error:
+#   ! Error running targets::tar_make()
+# Error messages: targets::tar_meta(fields = error, complete_only = TRUE)
+# Debugging guide: https://books.ropensci.org/targets/debugging.html
+# How to ask for help: https://books.ropensci.org/targets/help.html
+# Last error: ℹ In index: 2.
+# Caused by error in `wk_handle.wk_wkb()`:
+#   ! Loop 0 is not valid: Edge 2 has duplicate vertex with edge 4
