@@ -24,7 +24,9 @@ if (file.exists(tempf) & file.info(tempf)$size != 0) {
   git_url = "https://raw.githubusercontent.com/ipeaGIT/geobr/master/README.md"
 
   # test server connection
-  check_con <- check_connection(git_url)
+  try(silent = TRUE,
+      check_con <- check_connection(git_url)
+      )
   if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
 
   httr::GET(url= git_url, httr::write_disk(tempf, overwrite = T))
