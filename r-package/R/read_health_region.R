@@ -17,14 +17,15 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all health regions for a given year
 #' hr <- read_health_region( year=2013 )
 #'
 #' # Read all macro health regions
 #' mhr <- read_health_region( year=2013, macro =TRUE)
-#'}}
+#'
 read_health_region <- function(year=2013, macro=FALSE, simplified=TRUE, showProgress=TRUE){
 
   if(!is.logical(macro)){stop(paste0("Parameter 'macro' must be either TRUE or FALSE"))}

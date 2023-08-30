@@ -12,10 +12,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read municipal seats in an specific year
 #' m <- read_municipal_seat(year = 1991)
-#' }}
+#'
 read_municipal_seat <- function(year=2010, showProgress=TRUE){
 
   # Get metadata with data url addresses

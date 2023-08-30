@@ -80,6 +80,7 @@ system.time( ct4 <-  st_read_parquet("ct_sf.parquet") )
 
 gtools::ASCIIfy('Belém')
 gtools::ASCIIfy('São Paulo')
+gtools::ASCIIfy('Rondônia')
 
 stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
 
@@ -111,7 +112,16 @@ library(testthat)
 library(geobr)
 getOption('timeout')
 options(timeout=3)
-https://httpstat.us/504?sleep=60000
+
+x='http://example.com:81'
+
+a <- try(silent = TRUE,
+
+    httr::GET(url=x, #httr::progress(),
+               httr::write_disk('temps.csv', overwrite = T),
+               config = httr::config(ssl_verifypeer = FALSE))
+
+)
 
 # ok com metadado, mas sem internet -----------------------------
 download_metadata()

@@ -12,11 +12,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read neighborhoods of Brazilian municipalities
 #' n <- read_neighborhood(year=2010)
-#'}}
+#'
 read_neighborhood <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -12,11 +12,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read Brazilian Legal Amazon
 #' a <- read_amazon(year = 2012)
-#'}}
+#'
 read_amazon <- function(year=2012, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

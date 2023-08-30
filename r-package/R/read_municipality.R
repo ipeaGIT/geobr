@@ -18,8 +18,9 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific municipality at a given year
 #' mun <- read_municipality(code_muni = 1200179, year = 2017)
 #'
@@ -29,7 +30,7 @@
 #'
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
-#'}}
+#'
 read_municipality <- function(code_muni = "all",
                               year = 2010,
                               simplified = TRUE,

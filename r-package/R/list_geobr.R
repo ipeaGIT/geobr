@@ -6,10 +6,11 @@
 #' @return A `data.frame`
 #'
 #' @export
-#' @family general support functions
-#' @examples \donttest{
+#' @family support functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' df <- list_geobr()
-#'}
+#'
 list_geobr <- function(){
 
 # Get readme.md file

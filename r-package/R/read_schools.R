@@ -16,10 +16,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all schools in the country
 #' s <- read_schools( year = 2020)
-#' }}
+#'
 read_schools <- function(year=2020, showProgress=TRUE ){
 
   # Get metadata with data url addresses

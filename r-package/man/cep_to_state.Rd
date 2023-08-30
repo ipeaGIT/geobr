@@ -18,11 +18,11 @@ Zips codes in Brazil are known as CEP, the abbreviation for postal code
 address. CEPs in Brazil are 8 digits long, with the format \code{'xxxxx-xxx'}.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 uf <- cep_to_state(cep = '69900-000')
 
 # Or:
 uf <- cep_to_state(cep = '69900000')
+\dontshow{\}) # examplesIf}
 }
-
-}
+\concept{cep functions}

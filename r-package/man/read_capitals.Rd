@@ -23,11 +23,40 @@ with the names and codes of state capitals. Data downloaded for the latest
 available year.
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read spatial data with the  municipal seats of state capitals
 capitals_sf <- read_capitals(as_sf = TRUE)
 
 # Read simple data.frame of state capitals
 capitals_df <- read_capitals(as_sf = FALSE)
-}}
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Other area functions: 
+\code{\link{read_amazon}()},
+\code{\link{read_biomes}()},
+\code{\link{read_comparable_areas}()},
+\code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
+\code{\link{read_health_region}()},
+\code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
+\code{\link{read_intermediate_region}()},
+\code{\link{read_meso_region}()},
+\code{\link{read_metro_area}()},
+\code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
+\code{\link{read_municipality}()},
+\code{\link{read_neighborhood}()},
+\code{\link{read_pop_arrangements}()},
+\code{\link{read_region}()},
+\code{\link{read_schools}()},
+\code{\link{read_semiarid}()},
+\code{\link{read_state}()},
+\code{\link{read_statistical_grid}()},
+\code{\link{read_urban_area}()},
+\code{\link{read_urban_concentrations}()},
+\code{\link{read_weighting_area}()}
+}
+\concept{area functions}

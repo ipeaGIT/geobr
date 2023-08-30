@@ -7,13 +7,15 @@
 #' @param cep A character string with 8 digits in the format `"xxxxxxxx"`, or
 #'            with the format `'xxxxx-xxx'`.
 #' @return A character string with a state abbreviation.
+#'
 #' @export
-#' @examples \donttest{
+#' @family cep functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' uf <- cep_to_state(cep = '69900-000')
 #'
 #' # Or:
 #' uf <- cep_to_state(cep = '69900000')
-#'}
 #'
 cep_to_state <- function(cep){
 

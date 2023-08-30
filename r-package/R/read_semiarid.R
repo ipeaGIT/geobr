@@ -13,11 +13,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read Brazilian semiarid
 #' a <- read_semiarid(year=2017)
-#'}}
+#'
 read_semiarid <- function(year=2017, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

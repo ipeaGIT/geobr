@@ -14,10 +14,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read urban footprint of Brazilian cities in an specific year
 #' uc <- read_urban_concentrations(year=2015)
-#' } }
+#'
 read_urban_concentrations <- function(year=2015, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

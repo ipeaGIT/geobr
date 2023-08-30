@@ -13,8 +13,11 @@
 #' @return A `data.frame`
 #'
 #' @export
+#' @family support functions
+#'
 #' @details Only available from 2010 Census data so far
-#' @examples \dontrun{ if (interactive()) {
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Get lookup table for municipality Rio de Janeiro
 #' mun <- lookup_muni(name_muni = "Rio de Janeiro")
 #'
@@ -26,7 +29,7 @@
 #'
 #' # Or:
 #' mun_all <- lookup_muni(code_muni = "all")
-#'}}
+#'
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
   # create tempfile to save metadata

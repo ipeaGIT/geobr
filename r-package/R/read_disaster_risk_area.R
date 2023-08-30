@@ -18,10 +18,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all disaster risk areas in an specific year
 #' d <- read_disaster_risk_area(year=2010)
-#' }}
+#'
 read_disaster_risk_area <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

@@ -26,7 +26,7 @@ and immediate regions
 Only available from 2010 Census data so far
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Get lookup table for municipality Rio de Janeiro
 mun <- lookup_muni(name_muni = "Rio de Janeiro")
 
@@ -38,5 +38,10 @@ mun_all <- lookup_muni(name_muni = "all")
 
 # Or:
 mun_all <- lookup_muni(code_muni = "all")
-}}
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Other support functions: 
+\code{\link{list_geobr}()}
+}
+\concept{support functions}

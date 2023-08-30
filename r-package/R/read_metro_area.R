@@ -15,12 +15,14 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all official metropolitan areas for a given year
 #'   m <- read_metro_area(2005)
 #'
 #'   m <- read_metro_area(2018)
-#' }}
+#'
 read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

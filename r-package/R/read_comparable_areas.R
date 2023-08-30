@@ -25,11 +25,11 @@
 #'   47(1), 215-229. https://doi.org/10.1590/0101-416147182phe
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
 #'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #'   amc <- read_comparable_areas(start_year=1970, end_year=2010)
-#'}}
+#'
 read_comparable_areas <- function(start_year=1970, end_year=2010, simplified=TRUE, showProgress=TRUE){
 
   # tests

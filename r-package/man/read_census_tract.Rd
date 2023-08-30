@@ -40,7 +40,7 @@ An \verb{"sf" "data.frame"} object
 Download spatial data of census tracts of the Brazilian Population Census
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read rural census tracts for years before 2007
   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 
@@ -55,27 +55,10 @@ Download spatial data of census tracts of the Brazilian Population Census
 
 # Read all census tracts of the country at a given year
   c <- read_census_tract(code_tract="all", year=2010)
-
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other general area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_conservation_units}()},
-\code{\link{read_country}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_region}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_weighting_area}()}
+\code{\link{read_conservation_units}()}
 }
 \concept{general area functions}

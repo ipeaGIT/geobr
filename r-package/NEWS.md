@@ -10,6 +10,7 @@
 - fixed bug in `cep_to_state()` function. [Closes #317](https://github.com/ipeaGIT/geobr/issues/317).
 - fixed bug in progress bar. [Closes #154](https://github.com/ipeaGIT/geobr/issues/154).
 
+
 # geobr v1.7.0
 
 **Major changes**

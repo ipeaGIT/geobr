@@ -21,10 +21,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all health facilities of the whole country
 #' h <- read_health_facilities()
-#' }}
+#'
 read_health_facilities <- function( showProgress=TRUE ){
 
   # Get metadata with data url addresses

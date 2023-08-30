@@ -18,8 +18,9 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific intermediate region
 #'   im <- read_intermediate_region(code_intermediate=1202)
 #'
@@ -30,7 +31,7 @@
 #'# Read all intermediate regions of the country
 #'   im <- read_intermediate_region()
 #'   im <- read_intermediate_region(code_intermediate="all")
-#' }}
+#'
 read_intermediate_region <- function(code_intermediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
