@@ -81,12 +81,14 @@ system.time( ct4 <-  st_read_parquet("ct_sf.parquet") )
 gtools::ASCIIfy('Belém')
 gtools::ASCIIfy('São Paulo')
 
+stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
+
 
 # Amap\\u00e1
 df
 
 df$name_muni
-stringi::stri_encode('S\u00e1o Paulo', to="UTF-8")
+stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
 stringi::stri_trans_general(str = 'S<e3>o Paulo', "latin-ascii")
 
 stringi::stri_encode(from='latin1', to="utf8", str= "S<e3>o Paulo")
@@ -109,6 +111,7 @@ library(testthat)
 library(geobr)
 getOption('timeout')
 options(timeout=3)
+https://httpstat.us/504?sleep=60000
 
 # ok com metadado, mas sem internet -----------------------------
 download_metadata()

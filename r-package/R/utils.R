@@ -107,22 +107,24 @@ download_metadata <- function(){ # nocov start
 
   } else {
 
-    # test server connection with github
-    metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv'
+    # TRY 1: download metadata to temp file
+    metadata_link <- 'https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/metadata_1.7.0_gpkg.csv'
+    try( silent = TRUE,
+         httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = TRUE))
+         )
 
-    check_con <- check_connection(metadata_link, silent = TRUE)
-
-    # if connection with github fails, try connection with ipea
-    if(is.null(check_con) | isFALSE(check_con)){
-      metadata_link <- 'https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/metadata_1.7.0_gpkg.csv'
-      check_con <- check_connection(metadata_link, silent = FALSE)
-
-      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+    # TRY 2: if download failed, try again using backup link
+    if (!file.exists(tempf) | file.info(tempf)$size == 0) {
+      metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv'
+      try( silent = TRUE,
+           httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = TRUE))
+           )
     }
 
-    # download metadata to temp file
-    httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = TRUE))
-  }
+    # if everything fails, return NULL
+    if (!file.exists(tempf) | file.info(tempf)$size == 0) { return(invisible(NULL)) }
+
+    }
 
   # read metadata
   # metadata <- data.table::fread(tempf, stringsAsFactors=FALSE)
