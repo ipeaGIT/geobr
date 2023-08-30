@@ -116,29 +116,12 @@ topology with a <code>dTolerance</code> of 100.</p></dd>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other general area functions: 
-<code><a href="read_amazon.html">read_amazon</a>()</code>,
-<code><a href="read_biomes.html">read_biomes</a>()</code>,
-<code><a href="read_comparable_areas.html">read_comparable_areas</a>()</code>,
-<code><a href="read_conservation_units.html">read_conservation_units</a>()</code>,
-<code><a href="read_country.html">read_country</a>()</code>,
-<code><a href="read_health_region.html">read_health_region</a>()</code>,
-<code><a href="read_immediate_region.html">read_immediate_region</a>()</code>,
-<code><a href="read_intermediate_region.html">read_intermediate_region</a>()</code>,
-<code><a href="read_meso_region.html">read_meso_region</a>()</code>,
-<code><a href="read_micro_region.html">read_micro_region</a>()</code>,
-<code><a href="read_municipality.html">read_municipality</a>()</code>,
-<code><a href="read_neighborhood.html">read_neighborhood</a>()</code>,
-<code><a href="read_region.html">read_region</a>()</code>,
-<code><a href="read_semiarid.html">read_semiarid</a>()</code>,
-<code><a href="read_state.html">read_state</a>()</code>,
-<code><a href="read_statistical_grid.html">read_statistical_grid</a>()</code>,
-<code><a href="read_weighting_area.html">read_weighting_area</a>()</code></p></div>
+<code><a href="read_conservation_units.html">read_conservation_units</a>()</code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span><span class="co"># Read rural census tracts for years before 2007</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># Read rural census tracts for years before 2007</span></span>
 <span>  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">read_census_tract</span><span class="op">(</span>code_tract<span class="op">=</span><span class="fl">5201108</span>, year<span class="op">=</span><span class="fl">2000</span>, zone<span class="op">=</span><span class="st">"rural"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Read all census tracts of a state at a given year</span></span>
@@ -151,9 +134,7 @@ topology with a <code>dTolerance</code> of 100.</p></dd>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Read all census tracts of the country at a given year</span></span>
-<span>  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">read_census_tract</span><span class="op">(</span>code_tract<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span></span>
-<span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<span>  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">read_census_tract</span><span class="op">(</span>code_tract<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
