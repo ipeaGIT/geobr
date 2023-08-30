@@ -48,12 +48,30 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
+  # get backup links
+  filenames <- basename(file_url)
+  file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
 
-  # download lookup df to temp file
-  try( httr::GET(url= file_url,
+  # test connection with server1
+  try(silent = TRUE,
+      check_con <- check_connection(file_url[1], silent = TRUE)
+  )
+
+  # if server1 fails, replace url and test connection with server2
+  if (is.null(check_con) | isFALSE(check_con)) {
+    message('Using Github')
+    file_url <- file_url2
+    check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
+    if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
+  }
+
+  # download data
+  try( httr::GET(url=file_url,
+                 if(isTRUE(progress_bar)){httr::progress()},
                  httr::write_disk(tempf, overwrite = T),
                  config = httr::config(ssl_verifypeer = FALSE)
-  ), silent = T)
+  ), silent = TRUE)
+
 
   }
 
