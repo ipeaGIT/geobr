@@ -29,7 +29,9 @@ if (file.exists(tempf) & file.info(tempf)$size != 0) {
       )
   if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
 
-  httr::GET(url= git_url, httr::write_disk(tempf, overwrite = T))
+  try(silent = TRUE,
+      httr::GET(url= git_url, httr::write_disk(tempf, overwrite = T))
+      )
   readme <- readLines(tempf, encoding = "UTF-8")
 }
 
