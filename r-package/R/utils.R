@@ -161,13 +161,15 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     if (!file.exists(temps) | file.info(temps)$size == 0) {
 
     # test connection with server1
-    check_con <- check_connection(file_url[1], silent = TRUE)
+    try(silent = TRUE,
+        check_con <- check_connection(file_url[1], silent = TRUE)
+        )
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
-      message('using github')
+      message('Using Github')
       file_url <- file_url2
-      check_con <- check_connection(file_url[1], silent = FALSE)
+      check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
       if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
     }
 
@@ -198,12 +200,14 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
     if ( number_of_files > 0 ){
 
       # test connection with server1
-      check_con <- check_connection(file_url[1], silent = TRUE)
+      try(silent = TRUE,
+          check_con <- check_connection(file_url[1], silent = TRUE)
+          )
 
       # if server1 fails, replace url and test connection with server2
       if (is.null(check_con) | isFALSE(check_con)) {
         file_url <- file_url2
-        check_con <- check_connection(file_url[1], silent = FALSE)
+        check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
         if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
       }
 
@@ -300,7 +304,8 @@ load_gpkg <- function(temps=NULL){
 #'
 #' @keywords internal
 #'
-check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv', silent = FALSE){ # nocov start
+check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv',
+                             silent = FALSE){ # nocov start
 
   # url <- 'https://google.com/'               # ok
   # url <- 'https://www.google.com:81/'   # timeout
