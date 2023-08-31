@@ -177,13 +177,15 @@ Here are a few examples.</p>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">muni</span><span class="op">[</span><span class="st">'name_muni'</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">muni</span>, color<span class="op">=</span><span class="cn">NA</span>, fill <span class="op">=</span> <span class="st">'#1ba185'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="intro_to_geobr_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Download all geographic areas within a state at a given year</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># All municipalities in the state of Minas Gerais</span></span>
-<span><span class="va">muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni<span class="op">=</span> <span class="st">"MG"</span>, </span>
-<span>                          year<span class="op">=</span><span class="fl">2007</span>,</span>
+<span><span class="va">muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>code_muni <span class="op">=</span> <span class="st">"MG"</span>, </span>
+<span>                          year <span class="op">=</span> <span class="fl">2007</span>,</span>
 <span>                          showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># All census tracts in the state of Rio de Janeiro</span></span>
@@ -199,13 +201,13 @@ geobr returns the data for the whole country by default.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># read all intermediate regions</span></span>
 <span><span class="va">inter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_intermediate_region.html">read_intermediate_region</a></span><span class="op">(</span></span>
-<span>  year<span class="op">=</span><span class="fl">2017</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2017</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># read all states</span></span>
 <span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_state.html">read_state</a></span><span class="op">(</span></span>
-<span>  year<span class="op">=</span><span class="fl">2019</span>, </span>
+<span>  year <span class="op">=</span> <span class="fl">2019</span>, </span>
 <span>  showProgress <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
