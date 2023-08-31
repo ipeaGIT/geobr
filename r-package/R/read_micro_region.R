@@ -46,6 +46,10 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
   }
 
@@ -62,6 +66,9 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
 
     # download files
     sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(sf)) { return(invisible(NULL)) }
 
     if(nchar(code_micro)==2){
       return(sf)

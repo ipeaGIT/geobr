@@ -42,6 +42,10 @@ read_health_region <- function(year=2013, macro=FALSE, simplified=TRUE, showProg
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 
 }

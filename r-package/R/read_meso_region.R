@@ -28,10 +28,15 @@
 #' # Read all meso regions of the country at a given year
 #'   meso <- read_meso_region(code_meso="all", year=2010)
 #'
-read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showProgress=TRUE){
+read_meso_region <- function(code_meso = "all",
+                             year = 2010,
+                             simplified = TRUE,
+                             showProgress = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="meso_region", year=year, simplified=simplified)
+  temp_meta <- select_metadata(geography="meso_region",
+                               year=year,
+                               simplified=simplified)
 
   # check if download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
@@ -46,6 +51,10 @@ read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showPr
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
 
   }
@@ -63,6 +72,9 @@ read_meso_region <- function(code_meso="all", year=2010, simplified=TRUE, showPr
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
 
 
     if(nchar(code_meso)==2){

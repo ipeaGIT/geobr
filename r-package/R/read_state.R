@@ -55,6 +55,10 @@ if( x < 1992){
 
     # download gpkg
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
 
   } else if(nchar(code_state)==2){
@@ -64,6 +68,9 @@ if( x < 1992){
 
     # download gpkg
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
 
     temp_sf <- subset(temp_sf,code_state==substr(code_state, 1, 2))
     return(temp_sf)
@@ -84,8 +91,11 @@ if( x < 1992){
 
       # download gpkg
       temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-      return(temp_sf)
 
+      # check if download failed
+      if (is.null(temp_sf)) { return(invisible(NULL)) }
+
+      return(temp_sf)
     }
 
   if (!(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abbrev)) {
@@ -100,6 +110,9 @@ if( x < 1992){
 
     # download gpkg
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
 
     if(nchar(code_state)==2){
       return(temp_sf)

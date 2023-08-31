@@ -28,5 +28,9 @@ read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=T
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 }

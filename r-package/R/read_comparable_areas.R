@@ -56,6 +56,10 @@ read_comparable_areas <- function(start_year=1970, end_year=2010, simplified=TRU
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 
 }

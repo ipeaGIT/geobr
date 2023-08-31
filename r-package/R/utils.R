@@ -130,6 +130,12 @@ download_metadata <- function(){ # nocov start
   # metadata <- data.table::fread(tempf, stringsAsFactors=FALSE)
   metadata <- utils::read.csv(tempf, stringsAsFactors=FALSE)
 
+  # check if data was read Ok
+  if (nrow(metadata)==0) {
+    message("A file must have been corrupted during download. Please restart your R session and download the data again.")
+    return(invisible(NULL))
+  }
+
   return(metadata)
 } # nocov end
 
@@ -167,7 +173,7 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
-      message('Using Github')
+#      message('Using Github') # debug
       file_url <- file_url2
       check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
       if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
@@ -180,6 +186,9 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
                    config = httr::config(ssl_verifypeer = FALSE)
                    ), silent = TRUE)
       }
+
+    # if anything fails, return NULL
+    if (any(!file.exists(temps) | file.info(temps)$size == 0)) { return(invisible(NULL)) }
 
     # load gpkg to memory
     temp_sf <- load_gpkg(temps)
@@ -238,8 +247,12 @@ download_gpkg <- function(file_url, progress_bar = showProgress){
       if(isTRUE(progress_bar)){close(pb)}
     }
 
+    # if anything fails, return NULL
+    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
+    if (any(!file.exists(temps) | file.info(temps)$size == 0)) { return(invisible(NULL)) }
+
     # load gpkg
-    temp_sf <- load_gpkg(temps) # 666 this should be only temps
+    temp_sf <- load_gpkg(temps) #
     return(temp_sf)
 
     }
@@ -263,14 +276,13 @@ load_gpkg <- function(temps=NULL){
   if (length(temps)==1) {
 
     # read sf
-    temp_sf <- sf::st_read(temps, quiet=T)
-    return(temp_sf)
+    temp_sf <- sf::st_read(temps, quiet=TRUE)
   }
 
   else if(length(temps) > 1){
 
     # read files and pile them up
-    files <- lapply(X=temps, FUN= sf::st_read, quiet=T)
+    files <- lapply(X=temps, FUN= sf::st_read, quiet=TRUE)
     temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
 
     # closes issue 284
@@ -280,8 +292,14 @@ load_gpkg <- function(temps=NULL){
     # remove data.table from object class. Closes #279.
     class(temp_sf) <- c("sf", "data.frame")
 
-    return(temp_sf)
   }
+
+  # check if data was read Ok
+  if (nrow(temp_sf)==0) {
+    message("A file must have been corrupted during download. Please restart your R session and download the data again.")
+    return(invisible(NULL))
+  }
+  return(temp_sf)
 
   # load gpkg to memory
   temp_sf <- load_gpkg(temps)

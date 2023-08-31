@@ -37,6 +37,10 @@ read_health_facilities <- function( showProgress=TRUE ){
 
   # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-    return(temp_sf)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
+  return(temp_sf)
 
     }

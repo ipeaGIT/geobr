@@ -33,5 +33,9 @@ read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE){
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 }
