@@ -14,7 +14,7 @@
 #' column `data_source`. Periodically the coordinates are revised with the
 #' objective of improving the quality of the data." The date of the last data
 #' update is registered in the database in the columns `date_update` and
-#' `year_update`. More information available at \url{https://dados.gov.br/dataset?q=CNES}.
+#' `year_update`. More information in the CNES data set available at \url{https://dados.gov.br/}.
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 #' @template showProgress
 #'
