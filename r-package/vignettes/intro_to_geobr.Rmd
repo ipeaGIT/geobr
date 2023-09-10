@@ -179,7 +179,7 @@ knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/
 
 ## Thematic maps
 
-The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this example, we will be using data from the (Atlas of Human Development (by Ipea/FJP and UNPD) to create a choropleth map showing the spatial variation of Life Expectancy at birth across Brazilian states.
+The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this first example, we will be using data from the (Atlas of Human Development (by Ipea/FJP and UNPD) to create a choropleth map showing the spatial variation of **Life Expectancy at birth** across Brazilian states.
 
 #### Merge external data
 
@@ -210,7 +210,51 @@ ggplot() +
 
 ```
 
-```{r life expectancy states, eval=FALSE, echo=FALSE, message=FALSE, out.width='100%'}
-knitr::include_graphics("https://github.com/ipeaGIT/geobr/blob/master/r-package/inst/img/life_expect_states.png?raw=true")
+### Using **geobr** together with **censobr**
+
+Following the same steps as above, we can use together **geobr** with our sister package [**censobr**](https://ipeagit.github.io/censobr/index.html) to map the proportion of households connected to a sewage network in Brazilian municipalities 
+
+First, we need to download households data from the Brazilian census using the `read_households()` function.
+
+```{r, eval = TRUE}
+library(censobr)
+
+hs <- read_households(year = 2010, 
+                      showProgress = FALSE)
+
 ```
 
+Now we're going to (a) group observations by municipality, (b) get the number of households connected to a sewage network, (c) calculate the proportion of households connected, and (d) collect the results.
+
+```{r, eval = TRUE, warning = FALSE}
+esg <- hs |> 
+        collect() |>
+        group_by(code_muni) |>                                             # (a)
+        summarize(rede = sum(V0010[which(V0207=='1')]),                    # (b)
+                  total = sum(V0010)) |>                                   # (b)
+        mutate(cobertura = rede / total) |>                                # (c)
+        collect()                                                          # (d)
+
+head(esg)
+```
+Now we only need to download the geometries of Brazilian municipalities from **geobr**, merge the spatial data with our estimates and map the results.
+
+```{r, eval = TRUE, warning = FALSE}
+# download municipality geometries
+muni_sf <- geobr::read_municipality(year = 2010,
+                                    showProgress = FALSE)
+
+# merge data
+muni_sf$code_muni <- as.character(muni_sf$code_muni)
+esg_sf <- left_join(muni_sf, esg, by = 'code_muni')
+
+# plot map
+ggplot() +
+  geom_sf(data = esg_sf, aes(fill = cobertura), color=NA) +
+  labs(title = "Share of households connected to a sewage network") +
+  scale_fill_distiller(palette = "Greens", direction = 1, 
+                       name='Share of\nhouseholds', 
+                       labels = scales::percent) +
+  theme_void()
+
+```
