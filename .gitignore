@@ -20,7 +20,7 @@
 /data-raw/
 data_prep/data
 data_prep/data-raw
-
+data_prep/_targets
 
 inst/doc
 Meta
