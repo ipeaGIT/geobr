@@ -93,17 +93,20 @@ pb_new_release("ipeaGIT/geobr",
   # head(metadata)
 
 
-
+  metadata[geo=='municipality' & year==2022]
 
 
 ######### Step 3 -  upload data to github ----------------------
 all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
 
-# upload data
-piggyback::pb_upload(all_files[3082:length(all_files)],
-                     "ipeaGIT/geobr",
-                     "v1.7.0")
+  all_files <- all_files[all_files %like% 'municipality']
+  all_files <- all_files[all_files %like% '2021|2022']
 
+# upload data
+piggyback::pb_upload(all_files,
+                     "ipeaGIT/geobr",
+                     "v1.7.0",
+                     .token = ttt)
 
 #' https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting
 
@@ -170,7 +173,8 @@ setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
   # upload updated metadata table github
   piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
                        "ipeaGIT/geobr",
-                       "v1.7.0")
+                       "v1.7.0",
+                       .token = ttt)
 
 
 
