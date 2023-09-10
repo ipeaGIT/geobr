@@ -20,10 +20,10 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read specific municipality at a given year
+#' # Read a particular grid at a given year
 #' grid <- read_statistical_grid(code_grid = 45, year=2010)
 #'
-#' # Read all municipalities of a state at a given year
+#' # Read the grid covering a given state at a given year
 #' state_grid <- read_statistical_grid(code_grid = "RJ")
 #'
 read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # nocov start
