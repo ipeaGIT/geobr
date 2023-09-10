@@ -273,7 +273,7 @@ to_multipolygon <- function(temp_sf){
 fix_topoly <- function(temp_sf){
 
   temp_sf <- sf::st_make_valid(temp_sf)
-  temp_sf <- sf::st_buffer(temp_sf, dist = 0)
+  # temp_sf <- sf::st_buffer(temp_sf, dist = 0)
 
   return(temp_sf)
 }
