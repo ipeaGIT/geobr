@@ -2,7 +2,7 @@
 # 0. Download Raw zipped files for all years ---------------------------------
 #' input: year
 #' download raw data from source website to temp zip file
-#' save raw data in .rds format in the data-raw dir
+#' save raw data in .rds format in the data_raw dir
 #' output: returns path to all raw files of that year
 download_muni <- function(year){
 
@@ -13,7 +13,7 @@ download_muni <- function(year){
   ftp <- "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/"
 
   # create dir if it has not been created already
-  dest_dir <- paste0('./data-raw/municipios/', year)
+  dest_dir <- paste0('./data_raw/municipios/', year)
   if (isFALSE(dir.exists(dest_dir))) { dir.create(dest_dir,
                                                   recursive = T,
                                                   showWarnings = FALSE) }
@@ -143,7 +143,7 @@ download_muni <- function(year){
 # 1. read raw zipped file in temporary dir  ---------------------------------
 #' input: tempfile of raw data, temp dir of raw data, dest dir to save raw data
 #' unzip and read raw data
-#' output: save raw data in .rds format in the data-raw dir
+#' output: save raw data in .rds format in the data_raw dir
 muni_saveraw <- function(tempf, temp_dir, dest_dir) {
 
   ## 1.1 Unzip original data
@@ -159,6 +159,7 @@ muni_saveraw <- function(tempf, temp_dir, dest_dir) {
   year <- detect_year_from_string(tempf)
   year <- year[year != '2500']
   year <- year[year != '0807']
+  year <- year[year != '1701']
   year <- year[1]
 
   # Encoding for different years
