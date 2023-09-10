@@ -18,9 +18,10 @@
 /r-package/.Rhistory
 /prep_data/.Rhistory
 /data-raw/
-data_prep/data
-data_prep/data-raw
-data_prep/_targets
+/data_prep/data
+/data_prep/data-raw
+/data_prep/_targets
+/data_prep/_targets/meta
 
 inst/doc
 Meta
