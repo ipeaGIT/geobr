@@ -1,4 +1,18 @@
-on: [push]
+on:
+  push:
+    paths:
+      - python-package/**
+    branches:
+      - main
+      - master
+      - dev
+  pull_request:
+    paths:
+      - python-package/**
+    branches:
+      - main
+      - master
+      - dev
 
 name: Python-CMD-check
 
