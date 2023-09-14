@@ -25,10 +25,12 @@ def url_solver(url):
 
     for url in urls:
 
-        response = requests.get(url)
-
-        if response.status_code == 200:
-            return response
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return response
+        except:
+            continue
 
     raise ConnectionError(
         "No mirrors are active. Please report to https://github.com/ipeaGIT/geobr/issues"
