@@ -554,12 +554,7 @@ rhub::check_for_cran(show_status = FALSE)
 # submit to CRAN -----------------
 usethis::use_cran_comments('teste 2222, , asdadsad')
 
-
-Sys.setenv(NOT_CRAN = "true")
-devtools::submit_cran()
-
-
-
+1
 
 
 # build binary --------------------------------
