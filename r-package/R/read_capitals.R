@@ -49,7 +49,7 @@ read_capitals <- function(as_sf = TRUE, showProgress = TRUE){
                                   "Alagoas", "Rio Grande do Sul", "Paran\u00e1",
                                   "Santa Catarina", "Par\u00e1", "Amazonas", "Tocantins",
                                   "Mato Grosso do Sul", "Amap\u00e1", "Acre", "Roraima",
-                                  "Distrito Federal", "Rond\\u00f4nia"),
+                                  "Distrito Federal", "Rond\u00f4nia"),
                    code_state = c(35L, 33L, 31L, 29L, 23L, 32L, 52L, 51L, 21L, 22L,
                                   26L, 28L, 25L, 24L, 27L, 43L, 41L, 42L, 15L, 13L,
                                   17L, 50L, 16L, 12L, 14L, 53L, 11L)
