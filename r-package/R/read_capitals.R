@@ -38,7 +38,7 @@ read_capitals <- function(as_sf = TRUE, showProgress = TRUE){
                            "Rio Branco", "Boa Vista", "Bras\u00edlia", "Porto Velho"),
                    code_muni = c(3550308L, 3304557L, 3106200L, 2927408L, 2304400L,
                                  3205309L, 5208707L, 5103403L, 2111300L, 2211001L,
-                                 2611606L, 2803203L, 2507507L, 2408102L, 2704302L,
+                                 2611606L, 2800308L, 2507507L, 2408102L, 2704302L,
                                  4314902L, 4106902L, 4205407L, 1501402L, 1302603L,
                                  1721000L, 5002704L, 1600303L, 1200401L, 1400100L,
                                  5300108L, 1100205L),
@@ -49,7 +49,7 @@ read_capitals <- function(as_sf = TRUE, showProgress = TRUE){
                                   "Alagoas", "Rio Grande do Sul", "Paran\u00e1",
                                   "Santa Catarina", "Par\u00e1", "Amazonas", "Tocantins",
                                   "Mato Grosso do Sul", "Amap\u00e1", "Acre", "Roraima",
-                                  "Distrito Federal", "Rond\\u00f4nia"),
+                                  "Distrito Federal", "Rond\u00f4nia"),
                    code_state = c(35L, 33L, 31L, 29L, 23L, 32L, 52L, 51L, 21L, 22L,
                                   26L, 28L, 25L, 24L, 27L, 43L, 41L, 42L, 15L, 13L,
                                   17L, 50L, 16L, 12L, 14L, 53L, 11L)
