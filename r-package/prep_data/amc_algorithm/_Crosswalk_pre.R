@@ -12,7 +12,7 @@
 
 ##### 0) Read packages and database --------------
 
-rm(list = ls())
+#rm(list = ls())
 library(readxl)
 library(dplyr)
 library(tidyr)
@@ -185,9 +185,40 @@ data_mun <- data_mun %>%
 #	  ** adjust, or otherwise matching procedure cannot identify
 #	  ** the right destination/origin in muname.
 
+
+
+b <- data_mun %>% filter(code2010 %in% df$code_muni_2010) %>% distinct() %>%
+  filter(!grepl("desmembrado",data)) %>%
+  filter(final_name != muname)
+
+
+
 data_mun <- data_mun %>%
 	 mutate(
 	 muname = gsub("Itapeva de Faxina","Itapeva da Faxina",muname),
+	 muname = gsub("Cantagallo","Cantagalo",muname),
+	 muname = gsub("Rio Pardo de Minas","Rio Pardo",muname),
+	 muname = gsub("Sao Benedicto","Sao Benedito",muname),
+	 muname = gsub("Panellas","Panelas",muname),
+	 muname = gsub("Pingo-d'Agua","Pingo D'Agua",muname),
+	 muname = gsub("Tutoya","Tutoia",muname),
+	 muname = gsub("Cataguazes","Cataguases",muname),
+	 muname = gsub("Sao Joao do Araguaya","Sao Joao do Araguaia",muname),
+	 muname = gsub("Teffe","Tefe",muname),
+	 muname = gsub('Curytibanos','Curitibanos',muname),
+	 muname = gsub("Tyangua","Tiangua",muname),
+	 muname = gsub('Aymores','Aimores',muname),
+	 muname = gsub('Arassuai','Aracuai',muname),
+	 muname = gsub('Arassuahy','Aracuai',muname),
+	 muname = gsub('Jequery','Jequeri',muname),
+	 muname = gsub('Manhuassu','Manhuacu',muname),
+	 muname = gsub("Perola d'Oeste","Perola D'Oeste",muname),
+	 muname = gsub("Herval d'Oeste","Herval D'Oeste",muname),
+	 muname = gsub('Curitybanos','Curitibanos',muname),
+	 muname = gsub('Presidente Castello Branco','Presidente Castelo Branco',muname),
+	 muname = gsub("Christina","Cristina",muname),
+	 muname = gsub("Itaquy","Itaqui",muname),
+	 muname = gsub("Theophilo Ottoni","Teofilo Otoni",muname),
 	 muname = gsub("mirirm","mirim",muname),
 	 muname = gsub("Sao Bento de Perizes","Sao Bento dos Perizes",muname),
 	 muname = gsub("Benjamim Constant","Benjamin Constant",muname),
@@ -200,23 +231,24 @@ data_mun <- data_mun %>%
 	 muname = gsub("desmembrado de Sao Jose do Triumpho","desmembrado de Sao Joao do Triumpho",muname),
 	 muname = gsub("desmembrado de Curytibanos","desmembrado de Curitybanos",muname),
 	 muname = gsub("desmembrado de Sao Joao d'el Rei","desmembrado de Sao Joao d'El Rey",muname),
-	 muname = ifelse(year==1900,gsub("desmembrado de Arassuai","desmembrado de Arassuahy",muname),muname),
+	 muname = ifelse(ano==1900,gsub("desmembrado de Arassuai","desmembrado de Arassuahy",muname),muname),
 	 muname = gsub("Bernardo do Paranahyba","Bernardo do Parnahyba",muname),
-	 muname = ifelse(year==1920,gsub("desmembrado de Parajui","desmembrado de Pirajui",muname),muname),
-	 muname = ifelse(year==1920,gsub("desmembrado de Taquaritinga","desmembrado de Taquaretinga",muname),muname),
-	 muname = ifelse(year==1920,gsub("desmembrado de Piratiniga","desmembrado de Piratininga",muname),muname),
-	 muname = ifelse(year==1920,gsub("desmembrado de Boa Vista do Tremendal","desmembrado de Boa Vista do Tremedal",muname),muname),
-	 muname = ifelse(year==1920,gsub("desmembrado de Guraru","desmembrado de Gararu",muname),muname),
-	 muname = ifelse(year==1933,gsub("Jaguraibe-mirim","Jaguaribe-mirim",muname),muname),
-	 muname = ifelse(year==1933,gsub("anexado a Sao Pedro de Itabapoana","anexado a Joao Pessoa",muname),muname),
-	 muname = ifelse(year==1933,gsub("anexado a Santa Quiteira","anexado a Santa Quiteria",muname),muname),
-	 muname = ifelse(year==1933,gsub("desmembrado de Guraru","desmembrado de Gararu",muname),muname),
+	 muname = ifelse(ano==1920,gsub("desmembrado de Parajui","desmembrado de Pirajui",muname),muname),
+	 muname = ifelse(ano==1920,gsub("desmembrado de Taquaritinga","desmembrado de Taquaretinga",muname),muname),
+	 muname = ifelse(ano==1920,gsub("desmembrado de Piratiniga","desmembrado de Piratininga",muname),muname),
+	 muname = ifelse(ano==1920,gsub("desmembrado de Boa Vista do Tremendal","desmembrado de Boa Vista do Tremedal",muname),muname),
+	 muname = ifelse(ano==1920,gsub("desmembrado de Guraru","desmembrado de Gararu",muname),muname),
+	 muname = ifelse(ano==1933,gsub("Jaguraibe-mirim","Jaguaribe-mirim",muname),muname),
+	 muname = ifelse(ano==1933,gsub("anexado a Sao Pedro de Itabapoana","anexado a Joao Pessoa",muname),muname),
+	 muname = ifelse(ano==1933,gsub("anexado a Santa Quiteira","anexado a Santa Quiteria",muname),muname),
+	 muname = ifelse(ano==1933,gsub("desmembrado de Guraru","desmembrado de Gararu",muname),muname),
 # the two latter cases refer to an old name in the prior period
 	 muname = gsub("desmembrado de Oliveria","desmembrado de Oliveira",muname),
-	 muname = ifelse(year==1933,gsub("Jaguarahyva","Jaguariahyva",muname),muname),
+	 muname = ifelse(ano==1933,gsub("Jaguarahyva","Jaguariahyva",muname),muname),
 	 muname = gsub("Jequtinhonha","Jequitinhonha",muname),
 	 muname = gsub("desmembrado e Mandaguari","desmembrado de Mandaguari",muname),
 	 muname = gsub("Poxoreu","Poxoreo",muname),
+   muname = gsub("Boa Vista do Tremedal","Tremedal",muname),
 	 muname = gsub("Lupinopolis","Lupionopolis",muname),
 	 muname = ifelse(code2010==3105905,gsub("Dores de Campo","Dores de Campos",muname),muname),
 	 muname = gsub("Dom joaquim","Dom Joaquim",muname),
@@ -264,11 +296,11 @@ data_mun <- data_mun %>%
 	 mutate(
 	 muname = gsub("desmembrado de Sao Jose do Cristianismo","desmembrado de Castro",muname),
 #	 // also misspecified to a mun that not even existed
-	 muname = ifelse(year==1872,gsub("desmembrado de Pacoti","desmembrado de Baturite",muname),muname),
+	 muname = ifelse(ano==1872,gsub("desmembrado de Pacoti","desmembrado de Baturite",muname),muname),
 
-	 muname = ifelse(year==1872,gsub("desmembrado de Pacoti","desmembrado de Baturite",muname),muname),
+	 muname = ifelse(ano==1872,gsub("desmembrado de Pacoti","desmembrado de Baturite",muname),muname),
 #	  *** next problems is that desmembr. refers to future name of the mun
-	 muname = ifelse(year==1872,gsub("Cachoeiro de Santa Leopoldina","Santa Leopoldina",muname),muname),
+	 muname = ifelse(ano==1872,gsub("Cachoeiro de Santa Leopoldina","Santa Leopoldina",muname),muname),
 #	  *** problem: desmembr. refers to mun that does not even exist
 #	  // in this case all of the related mun go back to "Cruz Alta"
 	 muname = gsub("desmembrado de Santo Augusto","desmembrado de Cruz Alta",muname),
@@ -286,13 +318,13 @@ data_mun <- data_mun %>%
 	 muname = ifelse(code2010==3541059,gsub("desmembrado de Sao Miguel Arcanjo","desmembrado de Sao Manuel",muname),muname),
 	 muname = ifelse(code2010==2210201,gsub("desmembrado de Sao Joao do Piaui","desmembrado de Picos",muname),muname),
 	 muname = gsub("desmembrado de Sao Felix do Piaui e Baixa Grande do Ribeiro", "desmembrado de Sao Felix do Piaui",muname),
-	 muname = ifelse(year==1933,gsub("desmembrado de Nova Rezende","desmembrado de Carmo do Rio Claro",muname),muname),
+	 muname = ifelse(ano==1933,gsub("desmembrado de Nova Rezende","desmembrado de Carmo do Rio Claro",muname),muname),
 #	 ** 2. reason:
 #	 // data says: Lins (3527108) was 'desmembrado de' Pirajú (in 1911, mun: 3538808 Piraju)
 #	 // however, before that, Lins was part of Baurú, and soon afterward transfered its government to Piraj?
 #	 // nevertheless the territory of Lins in 1872 was in the former territory of Baurú.
 
-	 muname = ifelse(year==1911,gsub("desmembrado de Piraju","desmembrado de Bauru",muname),muname),
+	 muname = ifelse(ano==1911,gsub("desmembrado de Piraju","desmembrado de Bauru",muname),muname),
 
 #	  *** problem: territory is "contestado"
 #	  // Amapá was under dispute between Brazil and France until 1901.
@@ -320,32 +352,32 @@ data_mun <- data_mun %>%
 	 arrange(code2010,year)
 
 data_mun <- data_mun %>%
-	 mutate(muname = ifelse((code2010==2205706 & year==1872),
+	 mutate(muname = ifelse((code2010==2205706 & ano==1872),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4204202 & year==1911),
+	 muname = ifelse((code2010==4204202 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4209003 & year==1911),
+	 muname = ifelse((code2010==4209003 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4213609 & year==1911),
+	 muname = ifelse((code2010==4213609 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4208104 & year==1911),
+	 muname = ifelse((code2010==4208104 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4210100 & year==1911),
+	 muname = ifelse((code2010==4210100 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==1100205 & year==1911),
+	 muname = ifelse((code2010==1100205 & ano==1911),
 	 lead(muname),muname),
 #	  *** problem: Fernando de Noronha comes out of nowhere in the data.
 #	  ** IBGE Cidades says, it was desmembr from Recife
-	 muname = ifelse(code2010==2605459 & year==1940,"desmembrado de Recife",muname),
+	 muname = ifelse(code2010==2605459 & ano==1940,"desmembrado de Recife",muname),
 #	  *** problem: dispute between UFs MG/ES over some areas.
 #	  // data says "litigio MG/ES"
 #	  ** 1. the area originally emerges from "Teofilo Otoni".
 #	  // This is not visible in the IBGE data.
-	 muname = ifelse(final_name=="Ataleia" & year==1933,"desmembrado de Teofilo Otoni",muname),
+	 muname = ifelse(final_name=="Ataleia" & ano==1933,"desmembrado de Teofilo Otoni",muname),
 #	  ** 2. repeat "litigio MG/ES" in the following years,
 #	  ** so that the two other mun in MG can be matched
 #	  ** "litigio MG/ES" may then be taken as the "name" of a disputed mun
-	 muname = ifelse(final_name=="Ataleia" & (year==1940 | year==1950 | year==1960),"litigio MG/ES",muname),
+	 muname = ifelse(final_name=="Ataleia" & (ano==1940 | ano==1950 | ano==1960),"litigio MG/ES",muname),
 #	  // for the following mun that were created out of that region, (only in 1960)
 #	  // the addition "desmembr" needs to be inserted
 	 muname = ifelse((code2010==3139607 | code2010==3141504),gsub("litigio MG/ES","desmembrado de litigio MG/ES",muname),muname),
@@ -394,7 +426,37 @@ data_mun <- data_mun %>%
 	        muname = gsub(", CE","",muname),
 	        muname = gsub(", PR","",muname))
 
+data_mun$muname <- ifelse(data_mun$code2010 == 4117602 & data_mun$year == 'muname1900','Palmas',data_mun$muname)
+
 head(data_mun)
+
+
+
+
+
+
+# a <- filter(data_mun, code2010 %in% c(4105508,4101705))
+# a <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708), year ==  'muname1991')
+
+# Adjusting some very close names (example Tefe and Teffe)
+# for(i in 1:length(unique(data_mun$final_name))){
+#
+#   mun_names <- unique(data_mun$final_name)[i]
+#
+#   data_mun <- data_mun %>%
+#     mutate(data         = ifelse(stringdist::stringdist(data , mun_names, method = "jaccard") < 0.05,mun_names,data),
+#            outro_estado = ifelse(stringdist::stringdist(outro_estado , mun_names, method = "jaccard") < 0.05,mun_names,outro_estado),
+#            muname       = ifelse(stringdist::stringdist(muname, mun_names, method = "jaccard") < 0.05,mun_names,muname),
+#            muname       = ifelse(stringdist::stringdist(gsub("desmembrado de ","",muname),
+#                                                         mun_names, method = "jaccard") < 0.05 &
+#                                  grepl("desmembrado de ",muname),paste0('desmembrado de ',mun_names),muname))
+#
+#
+# }
+# b <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708), year ==  'muname1991')
+# b <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708))
+# b <- filter(data_mun, code2010 %in% c(1300060,1303908,1304203), year == 'muname1872')
+
 
 
 
@@ -444,9 +506,14 @@ data_mun <-data_mun %>%
 
 head(data_mun)
 
-
-
-
+# temp <- filter(data_mun, grepl(' e ',data)) %>%
+#   group_by(code2010) %>%
+#   mutate(destiny = final_name, outro_estado = final_name, dest = max(dest)+1, num = num + 1) %>%
+#   distinct()
+#
+# data_mun <- bind_rows(data_mun,temp) %>%
+#   group_by(code2010) %>%
+#   mutate(num = max(num))
 
 ## Replace destino using loop to count number of destinations
 
@@ -475,6 +542,9 @@ data_mun <- data_mun %>%
   select(-c("ano","dest"))
 
 
+
+a <- filter(data_mun, code2010 %in% c(#4318101,
+                                      4319802))
 ## Transform all these columns to wide
 
 data_mun <- data_mun %>%
@@ -544,13 +614,16 @@ data_mun4 <- as.data.frame(data_mun3) %>%
              ifelse(uf_amc %in% c(43),17,
              ifelse(uf_amc %in% c(12),21,NA)))))))))))))))))))))) %>%
   arrange(code2010,uf_amc) %>%
-  select(-c(18:26))
+  select(-c(17:25))
 
 
 
 ## Replace some problems for all columns (aggregate gen some rows like "22222" Instead of "2")
 
-data_mun <- data.frame(data_mun4[,1:3],apply(data_mun4[,4:ncol(data_mun4)], 2,
+data_mun <- data_mun4 %>%
+  mutate(across(c(starts_with("n_dest"),starts_with("exist_d")), ~ substr(.,1,1)))
+
+data_mun <- data.frame(data_mun[,1:3],apply(data_mun4[,4:ncol(data_mun4)], 2,
                                            function(x) {
                                              gsub("10", "1", x)}))
 
@@ -561,6 +634,15 @@ data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
 data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
                                             function(x) {
                                               gsub("12345", "1", x)}))
+
+
+data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
+                                            function(x) {
+                                              gsub("11110", "1", x)}))
+
+data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
+                                            function(x) {
+                                              gsub("11111", "1", x)}))
 
 data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
                                             function(x) {
@@ -622,7 +704,6 @@ data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
                                               gsub("Rio de JaneiroGuanabara", "Rio de Janeiro, Guanabara", x)}))
 
 
-head(data_mun)
 
 ##### 7) Save database --------------
 
