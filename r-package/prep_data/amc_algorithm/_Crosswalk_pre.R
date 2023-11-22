@@ -432,35 +432,6 @@ head(data_mun)
 
 
 
-
-
-
-# a <- filter(data_mun, code2010 %in% c(4105508,4101705))
-# a <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708), year ==  'muname1991')
-
-# Adjusting some very close names (example Tefe and Teffe)
-# for(i in 1:length(unique(data_mun$final_name))){
-#
-#   mun_names <- unique(data_mun$final_name)[i]
-#
-#   data_mun <- data_mun %>%
-#     mutate(data         = ifelse(stringdist::stringdist(data , mun_names, method = "jaccard") < 0.05,mun_names,data),
-#            outro_estado = ifelse(stringdist::stringdist(outro_estado , mun_names, method = "jaccard") < 0.05,mun_names,outro_estado),
-#            muname       = ifelse(stringdist::stringdist(muname, mun_names, method = "jaccard") < 0.05,mun_names,muname),
-#            muname       = ifelse(stringdist::stringdist(gsub("desmembrado de ","",muname),
-#                                                         mun_names, method = "jaccard") < 0.05 &
-#                                  grepl("desmembrado de ",muname),paste0('desmembrado de ',mun_names),muname))
-#
-#
-# }
-# b <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708), year ==  'muname1991')
-# b <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708))
-# b <- filter(data_mun, code2010 %in% c(1300060,1303908,1304203), year == 'muname1872')
-
-
-
-
-
 ##### 4) Separate rows and gen new variables --------------
 
 #### Separating rows by "," and "e"
