@@ -1,0 +1,12 @@
+destination: ./docs
+
+development:
+  mode: auto
+
+
+repo:
+  url:
+    home: https://github.com/ipeaGIT/geobr/
+    source: https://github.com/ipeaGIT/geobr/tree/master/
+
+
