@@ -6,3 +6,5 @@ articles:
   python-intro/py-intro-to-geobr: py-intro-to-geobr.html
 last_built: 2021-04-17T00:41Z
 
+development:
+  mode: auto
