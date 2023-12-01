@@ -10,3 +10,50 @@ repo:
     source: https://github.com/ipeaGIT/geobr/tree/master/
 
 
+reference:
+  - title: "Political administrative"
+  - contents:
+    - read_capitals
+    - read_municipal_seat
+    - read_municipality
+    - read_immediate_region
+    - read_intermediate_region
+    - read_micro_region
+    - read_meso_region
+    - read_state
+    - read_region
+    - read_country
+  - title: "Statistical areas"
+  - contents:
+    - read_statistical_grid
+    - read_census_tract
+    - read_weighting_area
+  - title: "Education and Health"
+  - contents:
+    - read_schools
+    - read_health_facilities
+    - read_health_region
+  - title: "Environment"
+  - contents:
+    - read_amazon
+    - read_biomes
+    - read_conservation_units
+    - read_disaster_risk_area
+    - read_semiarid
+  - title: "Urban"
+  - contents:
+    - read_neighborhood
+    - read_urban_area
+    - read_metro_area
+    - read_urban_concentrations
+    - read_pop_arrangements
+  - title: "Miscellaneous"
+  - contents:
+    - read_indigenous_land
+    - read_comparable_areas
+    - cep_to_state
+  - title: "Support functions"
+  - contents:
+    - lookup_muni
+    - list_geobr
+    - grid_state_correspondence_table
