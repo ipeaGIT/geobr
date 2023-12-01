@@ -211,6 +211,7 @@ data_mun <- get(paste0("_Crosswalk_",y_1))
   # Define o ano seguinte do Census que sera rodado na proxima rodada
   # Define the following Census year
 
+
 if (y0==1872) {
   y1 <- 1900
 } else if (y0==1900) {
@@ -382,6 +383,10 @@ for(i in 2:nrow(data_mun)){ if (data_mun[,c(ano_dest1)][i] == data_mun[,c(ano_de
 data_mun <- data_mun %>%
   mutate(ch_match = ifelse( !is.na(clu_new), ch_match-1, ch_match) )
 
+# a <- filter(data_mun, code2010 %in% c(3103405,3135803))
+# a <- filter(data_mun, code2010 %in% c(3200169,3200904))
+# a <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708))
+
 # Pedro ficou de chechar porque
   #> table(data_mun$ch_match)
   #
@@ -396,7 +401,7 @@ data_mun <- data_mun %>%
 data_mun <- matching(data_mun=data_mun, y0=y0)
 
 
-for (p in 2:5) {
+for (p in 2:6) {
 
   # Do this only for the cases that have more than 2 destinies
   # Faça isso apenas para os casos que têm mais de 2 destinos
@@ -675,42 +680,77 @@ data_mun <- data_mun %>%
 
 # ???????????????? caio: ver problema aqui 489-540
 # codigo da amc problema amc_1 = 11017
+data_mun <- data_mun %>%
+  mutate(!!paste0("clu",y_1,"_final2") := get(paste0("clu",y_1,"_final")))
 
 if (startyear<=1872){
+
   n0 <- data_mun %>%
     filter(final_name=="Granja") %>%
     select(paste0("clu",y_1,"_final"))
 
+  n1 <- data_mun %>%
+    filter(code2010==2205706) %>%
+    select(paste0("clu",y_1,"_final"))
+
   data_mun <- data_mun %>%
-    mutate(!!paste0("clu",y_1,"_final2") := ifelse(code2010==2205706,n0,get(paste0("clu",y_1,"_final"))))
+    mutate(!!paste0("clu",y_1,"_final2") := ifelse(get(paste0("clu",y_1,"_final")) %in% n1,n0,
+                                                   get(paste0("clu",y_1,"_final2"))))
 
 }
 
 if (startyear<=1911 & endyear>=1911){
+
   n0 <- data_mun %>%
     filter(final_name=="Palmas" & uf_amc == 15) %>%
     select(paste0("clu",y_1,"_final"))
 
+  n1 <- data_mun %>%
+    filter(code2010==4204202) %>%
+    select(paste0("clu",y_1,"_final"))
+
+  n2 <- data_mun %>%
+    filter(code2010==4209003) %>%
+    select(paste0("clu",y_1,"_final"))
+
+  n3 <- data_mun %>%
+    filter(code2010==4213609) %>%
+    select(paste0("clu",y_1,"_final"))
+
   data_mun <- data_mun %>%
-    mutate(!!paste0("clu",y_1,"_final2") := ifelse(code2010==4204202,n0,
-                                            ifelse(code2010==4209003,n0,
-                                            ifelse(code2010==4213609,n0,get(paste0("clu",y_1,"_final"))))))
+    mutate(!!paste0("clu",y_1,"_final2") := ifelse(get(paste0("clu",y_1,"_final")) %in% n1,n0,
+                                            ifelse(get(paste0("clu",y_1,"_final")) %in% n2,n0,
+                                            ifelse(get(paste0("clu",y_1,"_final")) %in% n3,n0,
+                                                   get(paste0("clu",y_1,"_final2"))))))
 
   n0 <- data_mun %>%
     filter(final_name=="Rio Negro" & uf_amc==15) %>%
     select(paste0("clu",y_1,"_final"))
 
+  n1 <- data_mun %>%
+    filter(code2010==4208104) %>%
+    select(paste0("clu",y_1,"_final"))
+
+  n2 <- data_mun %>%
+    filter(code2010==4210100) %>%
+    select(paste0("clu",y_1,"_final"))
+
   data_mun <- data_mun %>%
-    mutate(!!paste0("clu",y_1,"_final2") := ifelse(code2010==4208104,n0,
-                                            ifelse(code2010==4210100,n0,
-                                                   get(paste0("clu",y_1,"_final")))))
+    mutate(!!paste0("clu",y_1,"_final2") := ifelse(get(paste0("clu",y_1,"_final")) %in% n1,n0,
+                                            ifelse(get(paste0("clu",y_1,"_final")) %in% n2,n0,
+                                                   get(paste0("clu",y_1,"_final2")))))
 
   n0 <- data_mun %>%
     filter(final_name=="Humaita" & uf_amc==1) %>%
     select(paste0("clu",y_1,"_final"))
 
+  n1 <- data_mun %>%
+    filter(code2010==1100205) %>%
+    select(paste0("clu",y_1,"_final"))
+
   data_mun <- data_mun %>%
-    mutate(!!paste0("clu",y_1,"_final2") := ifelse(code2010==1100205,n0,get(paste0("clu",y_1,"_final"))))
+    mutate(!!paste0("clu",y_1,"_final2") := ifelse(get(paste0("clu",y_1,"_final")) %in% n1,n0,
+                                                   get(paste0("clu",y_1,"_final2"))))
 
 
 }
@@ -721,11 +761,35 @@ if (startyear<=1940 | endyear>=1960){
     filter(code2010==3104700) %>%
     select(paste0("clu",y_1,"_final"))
 
-  data_mun <- data_mun %>%
-    mutate(!!paste0("clu",y_1,"_final2") := ifelse(code2010==3203304,n0,
-                                            ifelse(code2010==3200904,n0,get(paste0("clu",y_1,"_final")))))
+  n1 <- data_mun %>%
+    filter(code2010==3203304) %>%
+    select(paste0("clu",y_1,"_final"))
 
-  rm(n0)
+  n2 <- data_mun %>%
+    filter(code2010==3200904) %>%
+    select(paste0("clu",y_1,"_final"))
+
+  data_mun <- data_mun %>%
+    mutate(!!paste0("clu",y_1,"_final2") := ifelse(get(paste0("clu",y_1,"_final")) %in% n1,n0,
+                                            ifelse(get(paste0("clu",y_1,"_final")) %in% n2,n0,
+                                                   get(paste0("clu",y_1,"_final2")))))
+
+  rm(n0,n1,n2)
+
+  n0 <- data_mun %>%
+    filter(code2010==4101705) %>%
+    select(paste0("clu",y_1,"_final"))
+
+  n1 <- data_mun %>%
+    filter(code2010==4105508) %>%
+    select(paste0("clu",y_1,"_final"))
+
+
+  data_mun <- data_mun %>%
+    mutate(!!paste0("clu",y_1,"_final2") := ifelse(get(paste0("clu",y_1,"_final")) %in% n1,n0,
+                                                   get(paste0("clu",y_1,"_final2"))))
+
+  rm(n0,n1)
 
 }
 
@@ -741,7 +805,7 @@ if(endyear <= 1970){
     select(-c(code_state))
 
 }
-	
+
 ## Fixing code_muni to 1980 code Tocantins
 if(endyear == 1980){
 
@@ -762,6 +826,7 @@ if(endyear == 1980){
 # *******************************************
 # *** gerar um novo código para os AMCs finais
 # *** gere UF_AMCs comuns primeiro
+
 
 data_mun <- data_mun %>%
   arrange(uf_amc) %>%
@@ -848,8 +913,14 @@ data_mun <- data_mun %>%
 data_mun <- data_mun %>%
   arrange(uf_amc, clu_final, final_name)
 
+
+a <- filter(data_mun, code2010 %in% c(3200169,3200904))
+a <- filter(data_mun, amc == 11052)
+
 # subset columns
 data_mun <- setDT(data_mun)[, .(final_name, code2010, amc)]
+
+
 
 # rename columns
 setnames(data_mun, c('name_muni', 'code_muni_2010', 'code_amc'))
@@ -944,4 +1015,5 @@ message(paste0('Just saved ', file.name) )
 
 
 
-
+# install.packages("maptools", repos="http://R-Forge.R-project.org")
+table_amc(startyear=1872, endyear=2010)
