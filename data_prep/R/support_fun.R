@@ -166,6 +166,24 @@ list_folders <- function(ftp){
 
 
 
+###### Download file to tempdir -----------------
+
+download_file <- function(file_url,
+                          showProgress = TRUE){
+
+  file_ext <- tools::file_ext(file_url)
+  dest_file <- tempfile(fileext = paste0('.', file_ext))
+
+  # download data
+    httr::GET(url=file_url,
+              if(showProgress==T){ httr::progress()},
+              httr::write_disk(dest_file, overwrite = T),
+              config = httr::config(ssl_verifypeer = FALSE)
+    )
+
+    return(dest_file)
+}
+
 # ###### Unzip data -----------------
 #
 # # function to Unzip files in their original sub-dir

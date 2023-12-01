@@ -58,27 +58,19 @@ tar_option_set(
 source('./R/support_fun.R')
 
 
-
-# 1. Municipios ----------------------------------------------------------
+# 1. Municipios
 source("./R/muni_download.R", encoding = "UTF-8")
 source("./R/muni_clean.R", encoding = "UTF-8")
 
-list(
-  # year input
-  # tar_target(years_muni, c(2000, 2001, 2005, 2007, 2010,
-  #                         # 2013, 2014,  2015, 2016, 2017,
-  #                          2018, 2019, 2020, 2021, 2022)),
 
-  tar_target(years_muni, c(#2000, 2001,
-                           #2005, 2007,
-                           #2010 ,
-                           #2013,
-                           #2014,  2015, 2016, 2017,
-                           #2018, 2019, 2020,
-                          2021,
-                          2022
-                           )
-                            ),
+list(
+
+# 1. Municipios ----------------------------------------------------------
+
+  # year input
+  tar_target(years_muni, c(2000, 2001, 2005, 2007, 2010,
+                           2013, 2014,  2015, 2016, 2017,
+                           2018, 2019, 2020, 2021, 2022)),
   # download
   tar_target(name = download_municipios,
              command = download_muni(years_muni),
@@ -89,15 +81,22 @@ list(
              command = clean_muni(download_municipios)
              , pattern = map(download_municipios)
              )
-)
 
-# # clean
-# list(
-#   tar_target(files_muni, local_files_muni),
-#   tar_target(name = clean_municipios,
-#              command = clean_muni(files_muni),
-#              pattern = map(files_muni))
-# )
+# 2. States ----------------------------------------------------------
+
+# # year input
+#   tar_target(years_states, c(2000, 2001, 2010, 2013, 2014,  2015,
+#                            2016, 2017, 2018, 2019, 2020, 2021, 2022)),
+#   # download
+#   tar_target(name = download_states,
+#              command = download_states(years_states),
+#              pattern = map(years_states)),
+
+
+
+  )
+
+
 
 
 # Estados ----------------------------------------------------------
