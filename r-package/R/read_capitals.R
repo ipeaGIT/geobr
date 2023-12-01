@@ -29,6 +29,7 @@ read_capitals <- function(as_sf = TRUE, showProgress = TRUE){
   if (!is.logical(as_sf)) { stop("'as_sf' must be of type 'logical'") }
   if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
 
+
   # base data.frame of capitals
   df <- data.frame(name_muni = c("S\u00e3o Paulo", "Rio de Janeiro", "Belo Horizonte",
                            "Salvador", "Fortaleza", "Vit\u00f3ria", "Goi\u00e2nia", "Cuiab\u00e1",
