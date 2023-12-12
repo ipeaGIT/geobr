@@ -20,8 +20,8 @@ library(ggplot2)
 
 # Exemplo sem função :
 
-# startyear <- 1950
-# endyear <- 2010
+# startyear <- 1872
+# endyear <- 1960
 # y0 <- startyear
 
 # support function
@@ -383,15 +383,7 @@ for(i in 2:nrow(data_mun)){ if (data_mun[,c(ano_dest1)][i] == data_mun[,c(ano_de
 data_mun <- data_mun %>%
   mutate(ch_match = ifelse( !is.na(clu_new), ch_match-1, ch_match) )
 
-# a <- filter(data_mun, code2010 %in% c(3103405,3135803))
-# a <- filter(data_mun, code2010 %in% c(3200169,3200904))
-# a <- filter(data_mun, code2010 %in% c(1200252,1200104,1200708))
 
-# Pedro ficou de chechar porque
-  #> table(data_mun$ch_match)
-  #
-  #   0     1     2     3     4 11111 (????)
-  #2770  1173     9     1     1     2
 
 
 
@@ -401,7 +393,7 @@ data_mun <- data_mun %>%
 data_mun <- matching(data_mun=data_mun, y0=y0)
 
 
-for (p in 2:6) {
+for (p in 2:5) {
 
   # Do this only for the cases that have more than 2 destinies
   # Faça isso apenas para os casos que têm mais de 2 destinos
@@ -776,6 +768,11 @@ if (startyear<=1940 | endyear>=1960){
 
   rm(n0,n1,n2)
 
+
+}
+
+if (startyear<=1950){
+
   n0 <- data_mun %>%
     filter(code2010==4101705) %>%
     select(paste0("clu",y_1,"_final"))
@@ -800,7 +797,7 @@ if(endyear <= 1970){
     mutate(code_state =  as.numeric(substr(code2010,1,2)),
            code_state = ifelse(code_state == 50,51,code_state),
            code_state = ifelse(code_state == 17,52,code_state),
-           code2010 = substr(code2010,3,6),
+           code2010 = substr(code2010,3,7),
            code2010 = as.numeric(paste0(code_state,code2010))) %>%
     select(-c(code_state))
 
@@ -813,7 +810,7 @@ if(endyear == 1980){
     mutate(code_state =  as.numeric(substr(code2010,1,2)),
            #code_state = ifelse(code_state == 50,51,code_state),
            code_state = ifelse(code_state == 17,52,code_state),
-           code2010 = substr(code2010,3,6),
+           code2010 = substr(code2010,3,7),
            code2010 = as.numeric(paste0(code_state,code2010))) %>%
     select(-c(code_state))
 
@@ -914,32 +911,21 @@ data_mun <- data_mun %>%
   arrange(uf_amc, clu_final, final_name)
 
 
-a <- filter(data_mun, code2010 %in% c(3200169,3200904))
-a <- filter(data_mun, amc == 11052)
-
 # subset columns
 data_mun <- setDT(data_mun)[, .(final_name, code2010, amc)]
 
 
 
 # rename columns
-setnames(data_mun, c('name_muni', 'code_muni_2010', 'code_amc'))
+setnames(data_mun, c('name_muni', 'code_muni', 'code_amc'))
 head(data_mun)
 
 # remove municpios que nao existiam
-data_mun <- subset(data_mun, !is.na(code_amc))
-data_mun$code_muni_2010 <- as.integer(data_mun$code_muni_2010)
+#data_mun <- subset(data_mun, !is.na(code_amc))
+data_mun$code_muni <- as.integer(data_mun$code_muni)
 
-code_list <- setDT(data_mun)[, .(list_code_muni_2010 = paste(code_muni_2010, collapse = ','),
-                                 list_name_muni_2010 = paste(code_muni_2010, collapse = ',')
-                         ), by=code_amc]
 
-# code_list <- setDT(data_mun)[, .(list_code_muni_2010 = list(code_muni_2010),
-#                                  list_name_muni_2010 = list(code_muni_2010)
-#                                  ),
-#                              by=code_amc]
 
-head(code_list)
 
 ######## Create folders---------------------------------
 
@@ -966,9 +952,9 @@ map <- geobr::read_municipality(year= endyear, code_muni = 'all', simplified = F
 map$code_muni <- as.integer(map$code_muni)
 
 if(endyear <= 1980){
-data_mun_sf <- left_join(map %>% mutate(code_muni = as.numeric(substr(code_muni,1,6))), data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
+data_mun_sf <- left_join(map,data_mun %>% select(-c(name_muni)))
 } else{
-data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)), by=c('code_muni'='code_muni_2010' ))
+data_mun_sf <- left_join(map, data_mun %>% select(-c(name_muni)))
 }
 
 data_mun_sf <- data_mun_sf %>% filter(!is.na(code_amc))
@@ -978,11 +964,15 @@ data_mun_sf <- data_mun_sf %>% filter(!is.na(code_amc))
 ###### dissolve borders by code_amc -----------------
 data_mun_sf <- dissolve_polygons(mysf = data_mun_sf, group_column="code_amc")
 
+# Create vector with municipality and code names
+code_list <- data_mun %>%
+  group_by(code_amc) %>%
+  dplyr::summarise(!!paste0('list_code_muni_',endyear) := paste(code_muni, collapse = ','),
+                   !!paste0('list_name_muni_',endyear) := paste(name_muni, collapse = ','))
 
 ### ADD code list
 data_mun_sf <- dplyr::left_join(data_mun_sf, code_list)
 head(data_mun_sf)
-class(data_mun_sf$list_code_muni_2010)
 
 
 
@@ -1012,8 +1002,3 @@ message(paste0('Just saved ', file.name) )
 
 }
 
-
-
-
-# install.packages("maptools", repos="http://R-Forge.R-project.org")
-table_amc(startyear=1872, endyear=2010)

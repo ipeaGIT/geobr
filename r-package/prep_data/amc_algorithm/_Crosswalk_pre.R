@@ -187,9 +187,6 @@ data_mun <- data_mun %>%
 
 
 
-b <- data_mun %>% filter(code2010 %in% df$code_muni_2010) %>% distinct() %>%
-  filter(!grepl("desmembrado",data)) %>%
-  filter(final_name != muname)
 
 
 
@@ -432,6 +429,7 @@ head(data_mun)
 
 
 
+
 ##### 4) Separate rows and gen new variables --------------
 
 #### Separating rows by "," and "e"
@@ -514,8 +512,7 @@ data_mun <- data_mun %>%
 
 
 
-a <- filter(data_mun, code2010 %in% c(#4318101,
-                                      4319802))
+
 ## Transform all these columns to wide
 
 data_mun <- data_mun %>%
@@ -594,7 +591,7 @@ data_mun4 <- as.data.frame(data_mun3) %>%
 data_mun <- data_mun4 %>%
   mutate(across(c(starts_with("n_dest"),starts_with("exist_d")), ~ substr(.,1,1)))
 
-data_mun <- data.frame(data_mun[,1:3],apply(data_mun4[,4:ncol(data_mun4)], 2,
+data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun4)], 2,
                                            function(x) {
                                              gsub("10", "1", x)}))
 
