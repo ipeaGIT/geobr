@@ -7,7 +7,7 @@ source("./prep_data/amc_algorithm/_Crosswalk_main.R")
 
 
 ##### list o all years available  ------------------------------
-years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010)
+years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010,2020)
 
 # get combinations
 all_combinations <- expand.grid(years_available, years_available) %>% as.data.frame()
