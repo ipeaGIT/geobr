@@ -21,7 +21,7 @@ library(readr)
 
 # Read IBGE raw database
 
-data_mun <- readr::read_rds("./prep_data/amc_algorithm/IBGE_1872_2010_original.rds") %>% as.data.frame()
+data_mun <- readr::read_rds("./prep_data/amc_algorithm/IBGE_1872_2020_new.rds") %>% as.data.frame()
 head(data_mun)
 ##### 1) Accent and Uppercase formatting --------------
 
@@ -36,10 +36,10 @@ data_mun <- data_mun %>%
 
 ##### 2) Reshape  --------------
 
-# Reshape the data. code2010 x year (Transformando Base em Painel)
+# Reshape the data. code2020 x year (Transformando Base em Painel)
 
 data_mun <- data_mun %>%
-  gather(key = "year", value = "muname",-code2010,-final_name)
+  gather(key = "year", value = "muname",-code2020,-final_name)
 
 head(data_mun)
 
@@ -48,7 +48,7 @@ head(data_mun)
 
 data_mun <- data_mun %>%
               mutate(data = muname ,
-                     uf_amc = substr(code2010,1,2))
+                     uf_amc = substr(code2020,1,2))
 
 
 # assign number to state groups (historical groups)
@@ -156,11 +156,11 @@ data_mun <-data_mun %>%
 #	 ** solution: delete the blank entries
 
 data_mun <- data_mun %>%
-	 arrange(code2010 ,final_name, year, muname) %>%
+	 arrange(code2020 ,final_name, year, muname) %>%
   mutate(ano = substr(year,7,11))
 
 data_mun <- data_mun %>%
-  mutate(flag = ifelse(code2010==lead(code2010) &
+  mutate(flag = ifelse(code2020==lead(code2020) &
                           final_name==lead(final_name) &
                           year==lead(year) &
                           is.na(muname) | ano >= 1950 & duplicated(year) & is.na(muname),
@@ -179,7 +179,7 @@ data_mun <- data_mun %>%
 #	  ****************************************************
 
 data_mun <- data_mun %>%
-	 arrange(code2010, year)
+	 arrange(code2020, year)
 
 #	  *** problem: inconsistent names in the same period, i.e. typos
 #	  ** adjust, or otherwise matching procedure cannot identify
@@ -187,9 +187,6 @@ data_mun <- data_mun %>%
 
 
 
-b <- data_mun %>% filter(code2010 %in% df$code_muni_2010) %>% distinct() %>%
-  filter(!grepl("desmembrado",data)) %>%
-  filter(final_name != muname)
 
 
 
@@ -250,14 +247,14 @@ data_mun <- data_mun %>%
 	 muname = gsub("Poxoreu","Poxoreo",muname),
    muname = gsub("Boa Vista do Tremedal","Tremedal",muname),
 	 muname = gsub("Lupinopolis","Lupionopolis",muname),
-	 muname = ifelse(code2010==3105905,gsub("Dores de Campo","Dores de Campos",muname),muname),
+	 muname = ifelse(code2020==3105905,gsub("Dores de Campo","Dores de Campos",muname),muname),
 	 muname = gsub("Dom joaquim","Dom Joaquim",muname),
 	 muname = gsub("Cristianapolis","Cristinapolis",muname),
 	 muname = gsub("Congoninhas","Congonhinhas",muname),
 	 muname = gsub("Carauaru","Caruaru",muname),
 	 muname = gsub("Avanhadava","Avanhandava",muname),
-	 muname = ifelse(code2010==2915700,gsub("Guandu","Gandu",muname),muname),
-	 muname = ifelse(code2010==2908804,gsub("desmembrado de Itaucu","desmembrado de Ituacu",muname),muname),
+	 muname = ifelse(code2020==2915700,gsub("Guandu","Gandu",muname),muname),
+	 muname = ifelse(code2020==2908804,gsub("desmembrado de Itaucu","desmembrado de Ituacu",muname),muname),
 	 muname = gsub("Sao Jose de Alegre","Sao Jose do Alegre",muname),
 	 muname = gsub("Arguacema","Araguacema",muname),
 	 muname = gsub("Tupacireta","Tupancireta",muname), # in 1980
@@ -276,8 +273,8 @@ data_mun <- data_mun %>%
 	 muname = gsub("Santa Quiteira do Maranhao","Santa Quiteria do Maranhao",muname),
 # somethimes the name is just badly specified.
 # There are several Sao ... but only one in the first period
-	 muname = ifelse((code2010==4321204 | code2010==4322509),gsub("desmembrado de Santo Antonio","desmembrado de Santo Antonio da Patrulha",muname),muname),
-	 muname = ifelse(code2010==3159605,gsub("Sao Goncalo","Sao Goncalo do Sapucahy",muname),muname)
+	 muname = ifelse((code2020==4321204 | code2020==4322509),gsub("desmembrado de Santo Antonio","desmembrado de Santo Antonio da Patrulha",muname),muname),
+	 muname = ifelse(code2020==3159605,gsub("Sao Goncalo","Sao Goncalo do Sapucahy",muname),muname)
 	 )
 
 
@@ -315,8 +312,8 @@ data_mun <- data_mun %>%
 	 mutate(
 	 muname = gsub("desmembrado de Sao Jose do Cristianismo","desmembrado de Castro",muname),
 #	 // also misspecified to a mun that did not even existed
-	 muname = ifelse(code2010==3541059,gsub("desmembrado de Sao Miguel Arcanjo","desmembrado de Sao Manuel",muname),muname),
-	 muname = ifelse(code2010==2210201,gsub("desmembrado de Sao Joao do Piaui","desmembrado de Picos",muname),muname),
+	 muname = ifelse(code2020==3541059,gsub("desmembrado de Sao Miguel Arcanjo","desmembrado de Sao Manuel",muname),muname),
+	 muname = ifelse(code2020==2210201,gsub("desmembrado de Sao Joao do Piaui","desmembrado de Picos",muname),muname),
 	 muname = gsub("desmembrado de Sao Felix do Piaui e Baixa Grande do Ribeiro", "desmembrado de Sao Felix do Piaui",muname),
 	 muname = ifelse(ano==1933,gsub("desmembrado de Nova Rezende","desmembrado de Carmo do Rio Claro",muname),muname),
 #	 ** 2. reason:
@@ -349,26 +346,26 @@ data_mun <- data_mun %>%
 #	  // so far: replace name with the mun name in the next period
 
 data_mun <- data_mun %>%
-	 arrange(code2010,year)
+	 arrange(code2020,year)
 
 data_mun <- data_mun %>%
-	 mutate(muname = ifelse((code2010==2205706 & ano==1872),
+	 mutate(muname = ifelse((code2020==2205706 & ano==1872),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4204202 & ano==1911),
+	 muname = ifelse((code2020==4204202 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4209003 & ano==1911),
+	 muname = ifelse((code2020==4209003 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4213609 & ano==1911),
+	 muname = ifelse((code2020==4213609 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4208104 & ano==1911),
+	 muname = ifelse((code2020==4208104 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==4210100 & ano==1911),
+	 muname = ifelse((code2020==4210100 & ano==1911),
 	 lead(muname),muname),
-	 muname = ifelse((code2010==1100205 & ano==1911),
+	 muname = ifelse((code2020==1100205 & ano==1911),
 	 lead(muname),muname),
 #	  *** problem: Fernando de Noronha comes out of nowhere in the data.
 #	  ** IBGE Cidades says, it was desmembr from Recife
-	 muname = ifelse(code2010==2605459 & ano==1940,"desmembrado de Recife",muname),
+	 muname = ifelse(code2020==2605459 & ano==1940,"desmembrado de Recife",muname),
 #	  *** problem: dispute between UFs MG/ES over some areas.
 #	  // data says "litigio MG/ES"
 #	  ** 1. the area originally emerges from "Teofilo Otoni".
@@ -380,12 +377,12 @@ data_mun <- data_mun %>%
 	 muname = ifelse(final_name=="Ataleia" & (ano==1940 | ano==1950 | ano==1960),"litigio MG/ES",muname),
 #	  // for the following mun that were created out of that region, (only in 1960)
 #	  // the addition "desmembr" needs to be inserted
-	 muname = ifelse((code2010==3139607 | code2010==3141504),gsub("litigio MG/ES","desmembrado de litigio MG/ES",muname),muname),
+	 muname = ifelse((code2020==3139607 | code2020==3141504),gsub("litigio MG/ES","desmembrado de litigio MG/ES",muname),muname),
 #	  // the other two mun, are in another uf_amc (ES)
 #	  // join the group in the end (as above)
 #	  // for now, they emerge from nowhere
 #	  // treat the latter two as existing, in contrast to the prior two in MG (see below)
-	 muname = ifelse(code2010>=3200000,gsub("litigio MG/ES","",muname),muname),
+	 muname = ifelse(code2020>=3200000,gsub("litigio MG/ES","",muname),muname),
 
 
 #	  ******************************************
@@ -426,9 +423,10 @@ data_mun <- data_mun %>%
 	        muname = gsub(", CE","",muname),
 	        muname = gsub(", PR","",muname))
 
-data_mun$muname <- ifelse(data_mun$code2010 == 4117602 & data_mun$year == 'muname1900','Palmas',data_mun$muname)
+data_mun$muname <- ifelse(data_mun$code2020 == 4117602 & data_mun$year == 'muname1900','Palmas',data_mun$muname)
 
 head(data_mun)
+
 
 
 
@@ -478,12 +476,12 @@ data_mun <-data_mun %>%
 head(data_mun)
 
 # temp <- filter(data_mun, grepl(' e ',data)) %>%
-#   group_by(code2010) %>%
+#   group_by(code2020) %>%
 #   mutate(destiny = final_name, outro_estado = final_name, dest = max(dest)+1, num = num + 1) %>%
 #   distinct()
 #
 # data_mun <- bind_rows(data_mun,temp) %>%
-#   group_by(code2010) %>%
+#   group_by(code2020) %>%
 #   mutate(num = max(num))
 
 ## Replace destino using loop to count number of destinations
@@ -503,7 +501,7 @@ head(data_mun)
 ## Gen columns to transform all to wide
 
 data_mun <- data_mun %>%
-  arrange(code2010,final_name) %>%
+  arrange(code2020,final_name) %>%
   mutate(dest = ifelse(destino!=0,destino,dest),
          x = paste0("dest",dest,ano),
          n_dest = paste0("n_dest",ano), # Column to n destinies in x year
@@ -514,8 +512,7 @@ data_mun <- data_mun %>%
 
 
 
-a <- filter(data_mun, code2010 %in% c(#4318101,
-                                      4319802))
+
 ## Transform all these columns to wide
 
 data_mun <- data_mun %>%
@@ -547,7 +544,7 @@ data_mun[is.na(data_mun)] <- ""
 ## Aggregate all lines to avoid cross lines
 
 data_mun2 <- data_mun %>%
-  aggregate(by = list(data_mun$final_name,data_mun$code2010), paste, collapse = ", ")
+  aggregate(by = list(data_mun$final_name,data_mun$code2020), paste, collapse = ", ")
 
 
 names(data_mun2)
@@ -559,10 +556,10 @@ data_mun3 <- data.frame(data_mun2[,1:8],apply(data_mun2[,9:ncol(data_mun2)], 2, 
 ## Remove repeated columns and gen uf_amc variable
 
 data_mun4 <- as.data.frame(data_mun3) %>%
-  select(-c("code2010","final_name","data","outro_estado","grouped_id")) %>%
-  rename(code2010 = "Group.2", final_name = "Group.1") %>%
+  select(-c("code2020","final_name","data","outro_estado","grouped_id")) %>%
+  rename(code2020 = "Group.2", final_name = "Group.1") %>%
   mutate(
-    uf_amc = substr(code2010,1,2),
+    uf_amc = substr(code2020,1,2),
     uf_amc = ifelse(uf_amc %in% c(11,50,51),20,
              ifelse(uf_amc %in% c(13, 14),1,
              ifelse(uf_amc %in% c(15, 16),2,
@@ -584,8 +581,8 @@ data_mun4 <- as.data.frame(data_mun3) %>%
              ifelse(uf_amc %in% c(42),16,
              ifelse(uf_amc %in% c(43),17,
              ifelse(uf_amc %in% c(12),21,NA)))))))))))))))))))))) %>%
-  arrange(code2010,uf_amc) %>%
-  select(-c(17:25))
+  arrange(code2020,uf_amc) %>%
+  select(-c(starts_with('dest19'),starts_with('dest18'),starts_with('dest20')))
 
 
 
@@ -594,7 +591,7 @@ data_mun4 <- as.data.frame(data_mun3) %>%
 data_mun <- data_mun4 %>%
   mutate(across(c(starts_with("n_dest"),starts_with("exist_d")), ~ substr(.,1,1)))
 
-data_mun <- data.frame(data_mun[,1:3],apply(data_mun4[,4:ncol(data_mun4)], 2,
+data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun4)], 2,
                                            function(x) {
                                              gsub("10", "1", x)}))
 
@@ -679,4 +676,4 @@ data_mun <- data.frame(data_mun[,1:3],apply(data_mun[,4:ncol(data_mun)], 2,
 ##### 7) Save database --------------
 
 ## save data
-readr::write_rds(data_mun, "_Crosswalk_pre.rds", compress = 'gz')
+readr::write_rds(data_mun, "./prep_data/amc_algorithm/_Crosswalk_pre.rds", compress = 'gz')
