@@ -62,6 +62,8 @@ source('./R/support_fun.R')
 source("./R/muni_download.R", encoding = "UTF-8")
 source("./R/muni_clean.R", encoding = "UTF-8")
 
+# 2. Estados
+source("./R/state_download.R", encoding = "UTF-8")
 
 list(
 
@@ -80,17 +82,17 @@ list(
   tar_target(name = clean_municipios,
              command = clean_muni(download_municipios)
              , pattern = map(download_municipios)
-             )
+             ),
 
-# 2. States ----------------------------------------------------------
+# 2. Estados ----------------------------------------------------------
 
-# # year input
-#   tar_target(years_states, c(2000, 2001, 2010, 2013, 2014,  2015,
-#                            2016, 2017, 2018, 2019, 2020, 2021, 2022)),
-#   # download
-#   tar_target(name = download_states,
-#              command = download_states(years_states),
-#              pattern = map(years_states)),
+# year input
+  tar_target(years_states, c(2000, 2001, 2010, 2013, 2014,  2015,
+                           2016, 2017, 2018, 2019, 2020, 2021, 2022)),
+  # download
+  tar_target(name = download_states,
+             command = download_states(years_states),
+             pattern = map(years_states)),
 
 
 
@@ -98,10 +100,6 @@ list(
 
 
 
-
-# Estados ----------------------------------------------------------
-
-# ....
 
 # Metadata ----------------------------------------------------------
 

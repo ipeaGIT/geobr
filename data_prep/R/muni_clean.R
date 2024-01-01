@@ -7,11 +7,11 @@
 #' output: save clean data as geopackage
 clean_muni <- function( muni_raw_paths ){
 
-  # year = 2021
+  # year = 2000
   # all_muni_raw_paths <- list.files(path = paste0('./data_raw/municipios/', year),
   #                              pattern = '.rds',
   #                              full.names = TRUE)
-  # f <- all_muni_raw_paths[1]
+  # f <- all_muni_raw_paths[16]
   #
   # # 6666
   #  muni_raw_paths <- all_muni_raw_paths[1]
@@ -41,7 +41,7 @@ clean_muni <- function( muni_raw_paths ){
     # read raw file
     temp_sf <- readRDS(f)
     names(temp_sf) <- tolower(names(temp_sf))
-      # mapview(temp_sf)
+      # mapview::mapview(temp_sf)
 
     # select columns
     if (year %like% "2000|2001|2005") {
@@ -109,8 +109,8 @@ clean_muni <- function( muni_raw_paths ){
 
     # Make any invalid geom valid
       # st_is_valid( temp_sf)
-      temp_sf2 <- fix_topoly(temp_sf)
-      #  mapview(temp_sf2)
+    temp_sf <- fix_topoly(temp_sf)
+      #  mapview::mapview(temp_sf)
 
     # strange error in SC 2000 but it could happen elsewhere
       # remove geometries with area == 0
