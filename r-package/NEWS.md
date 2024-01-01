@@ -1,3 +1,13 @@
+# geobr v1.8.999 dev 
+
+**CRAN request**
+- Fixed issue to nake sure geobr uses suggested packages conditionally
+
+**Minor changes**
+- Fixed non-ASCII characters in data `geobr::grid_state_correspondence_table()`
+
+
+
 # geobr v1.8.1
 
 **CRAN request**

@@ -84,7 +84,7 @@ add_state_info <- function(temp_sf, column){
                                                             code_state== 28, "Sergipe",
                                                             code_state== 29, "Bahia",
                                                             code_state== 31, "Minas Gerais",
-                                                            code_state== 32, "Espirito Santo",
+                                                            code_state== 32, "Esp\u00edrito Santo",
                                                             code_state== 33, "Rio de Janeiro",
                                                             code_state== 35, "S\u00e3o Paulo",
                                                             code_state== 41, "Paran\u00e1",

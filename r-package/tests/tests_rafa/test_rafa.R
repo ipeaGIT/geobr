@@ -78,7 +78,7 @@ system.time( ct4 <-  st_read_parquet("ct_sf.parquet") )
 ### convert to ASCII characters  -------------------------
 
 
-gtools::ASCIIfy('Belém')
+gtools::ASCIIfy('Espírito Santo')
 gtools::ASCIIfy('São Paulo')
 gtools::ASCIIfy('Rondônia')
 
