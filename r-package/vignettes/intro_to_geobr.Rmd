@@ -95,7 +95,7 @@ ggplot() +
 
 
 Download all geographic areas within a state at a given year
-```{r eval=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r eval=use_suggested_pkgs, message=FALSE, warning=FALSE, results='hide'}
 # All municipalities in the state of Minas Gerais
 muni <- read_municipality(code_muni = "MG", 
                           year = 2007,
@@ -113,7 +113,7 @@ head(muni)
 
 If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
 
-```{r eval=TRUE, message=FALSE, warning=FALSE}
+```{r eval=use_suggested_pkgs, message=FALSE, warning=FALSE}
 # read all intermediate regions
 inter <- read_intermediate_region(
   year = 2017,
