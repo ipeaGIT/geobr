@@ -149,30 +149,30 @@ shp_to_sf_rds <- function(x){
 grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "Acre", "Acre", "Amazonas",
                                   "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Amazonas",
                                   "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Amazonas", "Roraima",
-                                  "Roraima", "Roraima", "Roraima", "Roraima", "Roraima", "Amapá",
-                                  "Amapá", "Amapá", "Amapá", "Pará", "Pará", "Pará", "Pará", "Pará",
-                                  "Pará", "Pará", "Pará", "Pará", "Pará", "Pará", "Pará", "Pará",
-                                  "Maranhão", "Maranhão", "Maranhão", "Maranhão", "Maranhão", "Maranhão",
-                                  "Maranhão", "Piauí", "Piauí", "Piauí", "Piauí", "Piauí", "Piauí",
-                                  "Ceará", "Ceará", "Ceará", "Rio Grande do Norte", "Rio Grande do Norte",
-                                  "Paraíba", "Paraíba", "Pernambuco", "Pernambuco", "Pernambuco",
+                                  "Roraima", "Roraima", "Roraima", "Roraima", "Roraima", "Amap\u00e1",
+                                  "Amap\u00e1", "Amap\u00e1", "Amap\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1",
+                                  "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1", "Par\u00e1",
+                                  "Maranh\u00e3o", "Maranh\u00e3o", "Maranh\u00e3o", "Maranh\u00e3o", "Maranh\u00e3o", "Maranh\u00e3o",
+                                  "Maranh\u00e3o", "Piau\u00ed", "Piau\u00ed", "Piau\u00ed", "Piau\u00ed", "Piau\u00ed", "Piau\u00ed",
+                                  "Cear\u00e1", "Cear\u00e1", "Cear\u00e1", "Rio Grande do Norte", "Rio Grande do Norte",
+                                  "Para\u00edba", "Para\u00edba", "Pernambuco", "Pernambuco", "Pernambuco",
                                   "Pernambuco", "Pernambuco", "Alagoas", "Alagoas", "Sergipe",
-                                  "Sergipe", "Bahia", "Bahia", "Bahia", "Bahia", "Bahia", "Espírito Santo",
-                                  "Espírito Santo", "Espírito Santo", "Rio de Janeiro", "Rio de Janeiro",
-                                  "Rio de Janeiro", "Rio de Janeiro", "São Paulo", "São Paulo",
-                                  "São Paulo", "São Paulo", "São Paulo", "Paraná", "Paraná", "Santa Catarina",
+                                  "Sergipe", "Bahia", "Bahia", "Bahia", "Bahia", "Bahia", "Esp\u00edrito Santo",
+                                  "Esp\u00edrito Santo", "Esp\u00edrito Santo", "Rio de Janeiro", "Rio de Janeiro",
+                                  "Rio de Janeiro", "Rio de Janeiro", "S\u00e3o Paulo", "S\u00e3o Paulo",
+                                  "S\u00e3o Paulo", "S\u00e3o Paulo", "S\u00e3o Paulo", "Paran\u00e1", "Paran\u00e1", "Santa Catarina",
                                   "Santa Catarina", "Santa Catarina", "Santa Catarina", "Rio Grande do Sul",
                                   "Rio Grande do Sul", "Rio Grande do Sul", "Rio Grande do Sul",
                                   "Mato Grosso do Sul", "Mato Grosso do Sul", "Mato Grosso do Sul",
                                   "Mato Grosso do Sul", "Mato Grosso do Sul", "Mato Grosso do Sul",
                                   "Mato Grosso do Sul", "Minas Gerais", "Minas Gerais", "Minas Gerais",
                                   "Minas Gerais", "Minas Gerais", "Minas Gerais", "Minas Gerais",
-                                  "Minas Gerais", "Goiás", "Goiás", "Goiás", "Goiás", "Goiás",
-                                  "Goiás", "Goiás", "Distrito Federal", "Tocantins", "Tocantins",
+                                  "Minas Gerais", "Goi\u00e1s", "Goi\u00e1s", "Goi\u00e1s", "Goi\u00e1s", "Goi\u00e1s",
+                                  "Goi\u00e1s", "Goi\u00e1s", "Distrito Federal", "Tocantins", "Tocantins",
                                   "Tocantins", "Tocantins", "Tocantins", "Mato Grosso", "Mato Grosso",
                                   "Mato Grosso", "Mato Grosso", "Mato Grosso", "Mato Grosso", "Mato Grosso",
-                                  "Mato Grosso", "Mato Grosso", "Mato Grosso", "Rondônia", "Rondônia",
-                                  "Rondônia", "Rondônia", "Rondônia", "Rondônia"), code_state = c("AC",
+                                  "Mato Grosso", "Mato Grosso", "Mato Grosso", "Rond\u00f4nia", "Rond\u00f4nia",
+                                  "Rond\u00f4nia", "Rond\u00f4nia", "Rond\u00f4nia", "Rond\u00f4nia"), code_state = c("AC",
 "AC", "AC", "AC", "AM", "AM", "AM", "AM", "AM", "AM", "AM", "AM",
 "AM", "AM", "AM", "AM", "RR", "RR", "RR", "RR", "RR", "RR", "AP",
 "AP", "AP", "AP", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
@@ -208,12 +208,12 @@ grid_state_correspondence_table <- structure(list(name_uf = c("Acre", "Acre", "A
 "ID_51", "ID_52", "ID_53", "ID_62")), .Names = c("name_state", "abbrev_state",
 "code_grid"), row.names = c(NA, -139L), class = "data.frame")
 
-# Use UTF-8 encoding in all character columns
-  options(encoding = "UTF-8")
-
-  grid_state_correspondence_table <- grid_state_correspondence_table %>%
-    mutate_if(is.character, function(x){
-      x  %>% stringi::stri_encode(to="UTF-8") } )
+# # Use UTF-8 encoding in all character columns
+#   options(encoding = "UTF-8")
+#
+#   grid_state_correspondence_table <- grid_state_correspondence_table %>%
+#     mutate_if(is.character, function(x){
+#       x  %>% stringi::stri_encode(to="UTF-8") } )
 
 
 # sort data alphabetically
