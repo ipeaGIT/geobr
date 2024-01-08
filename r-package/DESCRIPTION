@@ -19,7 +19,7 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
 	          person(given="Marcus", family="Saraiva", role="ctb"),
             person(given="Beatriz", family="Milz", , role = "ctb", comment = c(ORCID = "0000-0002-3064-4486")),
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
-URL: https://github.com/ipeaGIT/geobr
+URL: https://ipeagit.github.io/geobr/, https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
 Description: Easy access to official spatial data sets of Brazil as 'sf' objects 
              in R. The package includes a wide range of geospatial data available
