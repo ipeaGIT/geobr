@@ -554,7 +554,9 @@ rhub::check_for_cran(show_status = FALSE)
 # submit to CRAN -----------------
 usethis::use_cran_comments('teste 2222, , asdadsad')
 
-1
+devtools::submit_cran()
+
+
 
 
 # build binary --------------------------------

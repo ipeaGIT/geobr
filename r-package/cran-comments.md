@@ -1,11 +1,13 @@
-── R CMD check results ─────────────────────────────────────────────────────────────────────────────── geobr 1.8.1 ────
-Duration: 7m 49.9s
+── R CMD check results ────────────────────────────────────────────────── geobr 1.8.2 ────
+Duration: 6m 47.4s
 
-❯ checking data for non-ASCII characters ... NOTE
-    Note: found 58 marked UTF-8 strings
-
-0 errors ✔ | 0 warnings ✔ | 1 note ✖
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 
-* geobr now uses suggested packages conditionally
+
+**CRAN request**
+- Fixed issue to make sure geobr uses suggested packages conditionally on CRAN
+
+**Minor changes**
+- Fixed non-ASCII characters in data `geobr::grid_state_correspondence_table()`
 

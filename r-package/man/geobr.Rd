@@ -23,6 +23,7 @@ Please check the vignettes for more on the package usage:
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://ipeagit.github.io/geobr/}
   \item \url{https://github.com/ipeaGIT/geobr}
   \item Report bugs at \url{https://github.com/ipeaGIT/geobr/issues}
 }
