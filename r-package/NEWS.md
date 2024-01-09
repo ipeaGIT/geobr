@@ -1,9 +1,11 @@
 # geobr v1.8.2 
 
 **CRAN request**
+
 - Fixed issue to make sure geobr uses suggested packages conditionally
 
 **Minor changes**
+
 - Fixed non-ASCII characters in data `geobr::grid_state_correspondence_table()`
 
 
@@ -11,6 +13,7 @@
 # geobr v1.8.1
 
 **CRAN request**
+
 - geobr now uses suggested packages conditionally
 
 
@@ -18,9 +21,11 @@
 # geobr v1.8.0
 
 **New function**
+
 - `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. [Closes #243](https://github.com/ipeaGIT/geobr/issues/243)
 
 **Minor changes**
+
 - Update intro vignette to show how to use geobr together with the new [**censobr**](https://ipeagit.github.io/censobr/index.html) sister package.
 
 **Bug fixes**
