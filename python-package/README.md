@@ -11,7 +11,7 @@
 To start the development environment run
 
 ```sh
-poetry install --no-root
+poetry install
 ```
 
 Test with
@@ -21,7 +21,10 @@ Test with
 You can use a helper to translate a function from R.
 If you want to add `read_biomes`, just run
 
-`python helpers/translate_from_R.py read_biomes`
+```sh
+poetry shell
+python helpers/translate_from_R.py read_biomes
+```
 
 It will scrape the original R function to get documentation and metadata.
 It adds:
@@ -31,11 +34,9 @@ It adds:
 - larger documentation
 - very basic tests
 
-! Be aware that if the function that you are adding is more complicated than the template. So, double always double check !
+! Be aware that if the function that you are adding is more complicated than the template. So, always double check !
 
-Before pushing, run
 
-`make prepare-push`
 
 
 ## Translation Status
