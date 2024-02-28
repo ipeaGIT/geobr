@@ -1,9 +1,0 @@
-geopandas==0.11.0
-jinja2>=2.11.3
-requests==2.20.0
-Shapely==1.8.1
-numpy>=1.22.4
-beautifulsoup4
-lxml
-html5lib
-
