@@ -25,8 +25,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest , windows-latest]
-        python-version: ["3.8", "3.9", "3.10", "3.11"] 
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        python-version: ["3.9", "3.10", "3.11"]
         # Python 3.8 support ends in 2024-10
         # Python 3.12 support starts in 2023-10
         # Check Python maintenance status at: https://www.python.org/downloads/
@@ -42,48 +42,20 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: "pip"
 
-      - name: Install dependencies (Ubuntu)
+      - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          # Add the Ubuntu GIS PPA
-          sudo add-apt-repository ppa:ubuntugis/ppa
-          sudo apt update
-          # Install geos library (shapely requirement)
-          sudo apt-get install libgeos++-dev libgeos3.10.2 libgeos-c1v5 libgeos-dev libgeos-doc
-        if: matrix.os == 'ubuntu-latest'
+          pip install poetry
+
+      - name: Install dependencies with Poetry
+        run: poetry install
         working-directory: python-package
 
-      - name: Install dependencies (Windows)
+      - name: Run tests with Poetry
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        if: matrix.os == 'windows-latest'
-        working-directory: python-package
-      
-      - name: Install dependencies (MacOS)
-        run: |
-          python -m pip install --upgrade pip
-          brew install geos
-          pip install shapely --no-binary shapely
-          pip install -r requirements.txt
-        if: matrix.os == 'macOS-latest'
-        working-directory: python-package
- 
-      - name: Save dependencies
-        run: pip freeze > requirements.txt
-
-      - name: Install testing dependencies
-        run: |
-          pip install pytest
-          pip install coverage
-
-      - name: Run tests
-        run: |
-          coverage run -m pytest -x ./tests
-          coverage report --omit="tests/*" -m >> test-results.txt
+          poetry run pytest ./tests
         working-directory: python-package
 
       - name: Upload check results

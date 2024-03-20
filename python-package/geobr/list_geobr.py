@@ -1,23 +1,26 @@
 from requests import get
 import pandas as pd
+from io import StringIO
 from urllib.error import HTTPError
 
 
 def list_geobr():
-    """ Prints available functions, according to latest README.md file
+    """Prints available functions, according to latest README.md file
 
-        Example output
-        ------------------------------
-        Function: read_immediate_region
-        Geographies available: Immediate region
-        Years available: 2017
-        Source: IBGE
-        ------------------------------
+    Example output
+    ------------------------------
+    Function: read_immediate_region
+    Geographies available: Immediate region
+    Years available: 2017
+    Source: IBGE
+    ------------------------------
 
     """
 
     try:
-        df = pd.read_html(get("https://github.com/ipeaGIT/geobr/blob/master/README.md").text)[1]
+        html_data = get("https://github.com/ipeaGIT/geobr/blob/master/README.md").text
+
+        df = pd.read_html(StringIO(html_data))[1]
 
     except HTTPError:
         print(
