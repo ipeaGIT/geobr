@@ -1,5 +1,7 @@
 #> DATASET: schools 2020
-#> Source: INEP - http://portal.inep.gov.br/web/guest/dados/catalogo-de-escolas
+#> Source: INEP -
+#> https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas
+#>
 #: scale
 #> Metadata:
 # Titulo: schools

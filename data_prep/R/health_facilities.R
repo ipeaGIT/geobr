@@ -9,9 +9,9 @@
 
 update_health_facilities <- function(){
 
-  #' source:
-  #' https://dados.gov.br/dados/conjuntos-dados/cnes-cadastro-nacional-de-estabelecimentos-de-saude
-  file_url = 'https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/CNES/cnes_estabelecimentos.zip'
+  #' #' source:
+  #' #' https://dados.gov.br/dados/conjuntos-dados/cnes-cadastro-nacional-de-estabelecimentos-de-saude
+  #' file_url = 'https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/CNES/cnes_estabelecimentos.zip'
 
   # determine date of last update
   caminho_api <- "https://dados.gov.br/api/publico/conjuntos-dados/cnes-cadastro-nacional-de-estabelecimentos-de-saude"
@@ -26,8 +26,13 @@ update_health_facilities <- function(){
   date_update <- gsub("-", "", date_update)
   year_update <- substring(date_update, 1, 4)
 
+
+  # date shown to geobr user
+  geobr_date <- substr(date_update, 1, 6)
+
+
   # wodnload file to tempdir
-  temp_local_file <- download_file(file_url = file_url)
+  temp_local_file <- download_file(file_url = meta$url)
 
   # unzip file to tempdir
   temp_local_dir <- tempdir()
@@ -55,10 +60,11 @@ update_health_facilities <- function(){
 
   # fix code_muni to 7 digits
   muni <- geobr::read_municipality(code_muni = 'all', year = as.numeric(year_update) - 1)
-  code7 <- data.table(code_muni = muni$code_muni)
-  code7[, code_muni6 := as.numeric(substring(code_muni, 1, 6))]
+  data.table::setDT(muni)
+  muni[, code_muni6 := as.numeric(substring(code_muni, 1, 6))]
+  muni <- muni[, .(code_muni6, code_muni)]
 
-  dt[code7,  on = 'code_muni6', code_muni := i.code_muni]
+  dt[muni,  on = 'code_muni6', code_muni := i.code_muni]
   dt[, code_muni6 := NULL]
 
   # add state and region
@@ -83,12 +89,15 @@ update_health_facilities <- function(){
   #   dt[is.na(lat) | is.na(lon),]
   #   dt[lat==0,]
 
-  # replace NAs with 0
-  data.table::setnafill(dt,
-                        type = "const",
-                        fill = 0,
-                        cols=c("lat","lon")
-                        )
+  # dt[code_cnes=='0000930', lat]
+  # dt[code_cnes=='0000930', lon]
+  #
+  # # replace NAs with 0
+  # data.table::setnafill(dt,
+  #                       type = "const",
+  #                       fill = 0,
+  #                       cols=c("lat","lon")
+  #                       )
 
 
 
@@ -103,12 +112,12 @@ update_health_facilities <- function(){
 
 
   # create folder to save the data
-  dest_dir <- paste0('./data/health_facilities/')
+  dest_dir <- paste0('./data/health_facilities/', geobr_date)
   dir.create(path = dest_dir, recursive = TRUE, showWarnings = FALSE)
 
 
   # Save raw file in sf format
-  sf::st_write(cnes_sf,
+  sf::st_write(temp_sf,
                dsn= paste0(dest_dir, 'cnes_', date_update,".gpkg"),
                overwrite = TRUE,
                append = FALSE,
