@@ -146,7 +146,7 @@ add_region_info <- function(temp_sf, column){
                                              code_region==2, 'Nordeste',
                                              code_region==3, 'Sudeste',
                                              code_region==4, 'Sul',
-                                             code_region==5, 'Centro Oeste',
+                                             code_region==5, 'Centro-Oeste',
                                              default = NA))
   return(temp_sf)
 }
