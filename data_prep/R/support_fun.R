@@ -1,7 +1,7 @@
 #### Support functions to use in the preprocessing of the data
 
-# library(dplyr)
-# library(data.table)
+library(dplyr)
+library(data.table)
 # library(mapview)
 # mapviewOptions(platform = 'deckgl')
 
