@@ -17,7 +17,8 @@
 #' `year_update`. More information in the CNES data set available at \url{https://dados.gov.br/}.
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `202303`.
+#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `202303`,
+#'        which was the latest data available by the time of this update.
 #' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object

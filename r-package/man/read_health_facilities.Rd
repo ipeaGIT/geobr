@@ -4,12 +4,13 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities}
 \usage{
-read_health_facilities(showProgress = TRUE)
+read_health_facilities(date = 202303, showProgress = TRUE)
 }
 \arguments{
-\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{202303},
+which was the latest data available by the time of this update.}
 
-\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{202303}.}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
 An \verb{"sf" "data.frame"} object
