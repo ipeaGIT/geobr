@@ -8,6 +8,8 @@ read_health_facilities(showProgress = TRUE)
 }
 \arguments{
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{202303}.}
 }
 \value{
 An \verb{"sf" "data.frame"} object
@@ -32,7 +34,7 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read all health facilities of the whole country
-h <- read_health_facilities()
+h <- read_health_facilities( date = 202303)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
