@@ -109,10 +109,10 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 |`read_disaster_risk_area` | Disaster risk areas | 2010 | CEMADEN and IBGE | 
 |`read_indigenous_land` | Indigenous lands | 201907, 202103 | FUNAI | 
 |`read_semiarid` | Semi Arid region | 2005, 2017 | IBGE | 
-|`read_health_facilities` | Health facilities | 2015 | CNES, DataSUS | 
+|`read_health_facilities` | Health facilities | 201505, 202303 | CNES, DataSUS | 
 |`read_health_region` | Health regions and macro regions | 1991, 1994, 1997, 2001, 2005, 2013 | DataSUS |
 |`read_neighborhood` | Neighborhood limits |  2010 | IBGE |
-|`read_schools` | Schools |  2020 | INEP |
+|`read_schools` | Schools |  2020, 2023 | INEP |
 |`read_comparable_areas` | Historically comparable municipalities, aka Areas minimas comparaveis (AMCs) |  1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010 | IBGE |
 |`read_urban_concentrations` | Urban concentration areas (concentrações urbanas) | 2015 | IBGE | 
 |`read_pop_arrangements` | Population arrangements (arranjos populacioanis) | 2015 | IBGE | 
