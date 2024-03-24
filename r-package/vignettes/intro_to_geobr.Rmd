@@ -218,7 +218,8 @@ First, we need to download households data from the Brazilian census using the `
 library(censobr)
 
 hs <- read_households(year = 2010, 
-                      showProgress = FALSE)
+                      showProgress = FALSE,
+                      cache = FALSE)
 
 ```
 
