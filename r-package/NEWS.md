@@ -1,3 +1,15 @@
+# geobr v1.9.0 
+
+**Major changes**
+
+- Function `read_health_facilities()` now has a new parameter `date`, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. 
+
+
+**New data**
+- schools for 2023
+- health facilities for 202303
+
+
 # geobr v1.8.2 
 
 **CRAN request**

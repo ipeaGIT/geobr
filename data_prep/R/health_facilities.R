@@ -84,20 +84,23 @@ update_health_facilities <- function(){
                             'date_update', 'year_update'))
 
 
-
+  # deal with points with missing coordinates
   head(dt)
-  #   dt[is.na(lat) | is.na(lon),]
-  #   dt[lat==0,]
+  dt[is.na(lat) | is.na(lon),]
+  dt[lat==0,]
 
-  # dt[code_cnes=='0000930', lat]
-  # dt[code_cnes=='0000930', lon]
-  #
-  # # replace NAs with 0
-  # data.table::setnafill(dt,
-  #                       type = "const",
-  #                       fill = 0,
-  #                       cols=c("lat","lon")
-  #                       )
+  # identify which points should have empty geo
+  dt[is.na(lat) | is.na(lon), empty_geo := T]
+
+  dt[code_cnes=='0000930', lat]
+  dt[code_cnes=='0000930', lon]
+
+  # replace NAs with 0
+  data.table::setnafill(dt,
+                        type = "const",
+                        fill = 0,
+                        cols=c("lat","lon")
+                        )
 
 
 
@@ -107,18 +110,25 @@ update_health_facilities <- function(){
                           crs = "+proj=longlat +datum=WGS84")
 
 
+  # convert to point empty
+  # solution from: https://gis.stackexchange.com/questions/459239/how-to-set-a-geometry-to-na-empty-for-some-features-of-an-sf-dataframe-in-r
+  temp_sf$geometry[temp_sf$empty_geo == T] = sf::st_point()
+
+  subset(temp_sf, code_cnes=='0000930')
+
+
   # Change CRS to SIRGAS  Geodetic reference system "SIRGAS2000" , CRS(4674).
   temp_sf <- harmonize_projection(temp_sf)
 
 
   # create folder to save the data
-  dest_dir <- paste0('./data/health_facilities/', geobr_date)
+  dest_dir <- paste0('./data/health_facilities/', geobr_date,'/')
   dir.create(path = dest_dir, recursive = TRUE, showWarnings = FALSE)
 
 
   # Save raw file in sf format
   sf::st_write(temp_sf,
-               dsn= paste0(dest_dir, 'cnes_', date_update,".gpkg"),
+               dsn= paste0(dest_dir, 'cnes_', geobr_date,".gpkg"),
                overwrite = TRUE,
                append = FALSE,
                delete_dsn = T,

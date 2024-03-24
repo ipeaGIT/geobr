@@ -16,6 +16,9 @@
 #' update is registered in the database in the columns `date_update` and
 #' `year_update`. More information in the CNES data set available at \url{https://dados.gov.br/}.
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
+#'
+#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `202303`,
+#'        which was the latest data available by the time of this update.
 #' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
@@ -25,12 +28,12 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all health facilities of the whole country
-#' h <- read_health_facilities()
+#' h <- read_health_facilities( date = 202303)
 #'
-read_health_facilities <- function( showProgress=TRUE ){
+read_health_facilities <- function(date = 202303, showProgress = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="health_facilities", year=2015, simplified=F)
+  temp_meta <- select_metadata(geography="health_facilities", year=date, simplified=F)
 
   # list paths of files to download
     file_url <- as.character(temp_meta$download_path)

@@ -4,9 +4,12 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities}
 \usage{
-read_health_facilities(showProgress = TRUE)
+read_health_facilities(date = 202303, showProgress = TRUE)
 }
 \arguments{
+\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{202303},
+which was the latest data available by the time of this update.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
 \value{
@@ -32,7 +35,7 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read all health facilities of the whole country
-h <- read_health_facilities()
+h <- read_health_facilities( date = 202303)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

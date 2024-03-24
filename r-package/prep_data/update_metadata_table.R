@@ -95,6 +95,8 @@ pb_new_release("ipeaGIT/geobr",
 
   metadata[geo=='municipality' & year==2022]
 
+a <- metadata[geo=='health_facilities']
+
 
 ######### Step 3 -  upload data to github ----------------------
 all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
@@ -149,11 +151,12 @@ piggyback::pb_upload(to_go,
 # metadata$file_name <- NULL
 
 
-# reorder columns
-setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 
 
 ######### Step 5 - check and save metadata ----------------------
+
+  # reorder columns
+  setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 
   # to avoid conflict with data.table
   metadata <- as.data.frame(metadata)

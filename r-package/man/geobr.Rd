@@ -3,7 +3,6 @@
 \docType{package}
 \name{geobr}
 \alias{geobr}
-\alias{_PACKAGE}
 \alias{geobr-package}
 \title{geobr: Download Official Spatial Data Sets of Brazil}
 \description{
