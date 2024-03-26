@@ -54,24 +54,24 @@ temp_sf <- harmonize_projection(temp_sf)
 
 save_state <- function(code_uf){ # code_uf <- 11
 
-  temp_sf2 <- subset(temp_sf, code_state == code_uf)
+    temp_sf2 <- subset(temp_sf, code_state == code_uf)
 
- # temp_sf2 <- subset(temp_sf2, code_muni == '3304557')
-
-
+   # temp_sf2 <- subset(temp_sf2, code_muni == '3304557')
 
 
-  # convert to MULTIPOLYGON
-  temp_sf2 <- to_multipolygon(temp_sf2)
 
-  # simplify
-  temp_sf_simplified <- simplify_temp_sf(temp_sf2)
 
-  # Save cleaned sf in the cleaned directory
-  sf::st_write(temp_sf2, paste0(dest_dir, code_uf,".gpkg") )
-  sf::st_write(temp_sf_simplified, paste0(dest_dir, code_uf,"_simplified.gpkg"),)
+    # convert to MULTIPOLYGON
+    temp_sf2 <- to_multipolygon(temp_sf2)
 
-}
+    # simplify
+    temp_sf_simplified <- simplify_temp_sf(temp_sf2, tolerance = 10)
+
+    # Save cleaned sf in the cleaned directory
+  #  sf::st_write(temp_sf2, paste0(dest_dir, code_uf,".gpkg") )
+    sf::st_write(temp_sf_simplified, paste0(dest_dir, code_uf,"_simplified.gpkg"))
+
+  }
 
 
 all_states <- unique(temp_sf$code_state)

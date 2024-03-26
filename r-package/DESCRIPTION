@@ -38,7 +38,7 @@ Imports:
       sf (>= 0.9-3),
       utils
 Suggests:
-    censobr,
+    censobr (>= 0.3.2),
     covr,
     dplyr (>= 0.8-3),
     ggplot2 (>= 3.3.1),
