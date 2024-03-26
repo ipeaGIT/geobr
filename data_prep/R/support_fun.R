@@ -278,6 +278,7 @@ to_multipolygon <- function(temp_sf){
       temp_sf <- subset(temp_sf, sf::st_geometry_type(temp_sf) |> as.character() != "LINESTRING")
 
       # get polyons
+      temp_sf <- sf::st_cast(temp_sf, "POLYGON")
       temp_sf <- sf::st_collection_extract(temp_sf, "POLYGON")
       temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
       return(temp_sf)
