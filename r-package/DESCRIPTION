@@ -38,6 +38,7 @@ Imports:
       sf (>= 0.9-3),
       utils
 Suggests:
+    arrow (>= 15.0.1),
     censobr (>= 0.3.2),
     covr,
     dplyr (>= 0.8-3),
