@@ -9,6 +9,9 @@
 #' reference system "SIRGAS2000" and CRS(4674).
 #'
 #' @param year Numeric. Year of the data in YYYY format. Defaults to `2018`.
+#' @param code_state The two-digit code of a state or a two-letter uppercase
+#'                   abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
+#'                   default), the function downloads all states.
 #' @template simplified
 #' @template showProgress
 #'
@@ -22,8 +25,10 @@
 #'   m <- read_metro_area(2005)
 #'
 #'   m <- read_metro_area(2018)
-#'
-read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE){
+read_metro_area <- function(year = 2018,
+                            code_state = "all",
+                            simplified = TRUE,
+                            showProgress = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="metropolitan_area", year=year, simplified=simplified)
@@ -37,5 +42,8 @@ read_metro_area <- function(year=2018, simplified=TRUE, showProgress=TRUE){
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
+  # filter state
+  temp_sf <- filter_state(temp_sf, code = code_state)
+
   return(temp_sf)
-}
+  }
