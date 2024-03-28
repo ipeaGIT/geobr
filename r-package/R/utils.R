@@ -366,3 +366,60 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
 
 } # nocov end
 
+
+
+#' Check if vector only has numeric characters
+#'
+#' @description
+#' Checks if vector only has numeric characters
+#'
+#' @param x A vector.
+#'
+#' @return Logical. `TRUE` if vector only has numeric characters.
+#'
+#' @keywords internal
+numbers_only <- function(x){ !grepl("\\D", x) } # nocov
+
+
+
+#' Filter data set to return specific states
+#'
+#' @param temp_sf An internal simple feature or data.frame
+#' @param code The two-digit code of a state or a two-letter uppercase
+#'             abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
+#'             default), the function downloads all states.
+#'
+#' @return A simple feature `sf` or `data.frame`.
+#'
+#' @keywords internal
+filter_state <- function(temp_sf = parent.frame()$temp_sf,
+                         code = parent.frame()$code_state
+                         ){ # nocov start
+
+  error_message1 <- "This 'code_state' does not exist or it is not present in this data set."
+  error_message2 <- "The 'code_state' comprise only numbers OR letters. It does not accept mixing numbers and letters."
+
+  # all states
+  if (any(code == 'all')) {return(temp_sf)}
+
+  # only numbers with code states
+  if (all(numbers_only(code))) {
+
+    if (!all(code %in% unique(temp_sf$code_state))) {stop(error_message1)}
+
+    temp <- subset(temp_sf, code_state %in% code)
+    return(temp)
+  }
+
+  # only letters with state abbreviation
+  if (all(!numbers_only(code))) {
+
+    if (!all(code %in% unique(temp_sf$abbrev_state))) {stop(error_message1)}
+
+    temp <- subset(temp_sf, abbrev_state %in% code)
+    return(temp)
+  }
+
+  stop(error_message2)
+
+} # nocov end
