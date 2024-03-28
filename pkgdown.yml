@@ -1,8 +1,8 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   intro_to_geobr: intro_to_geobr.html
   py-intro-to-geobr: python-intro/py-intro-to-geobr.html
-last_built: 2024-01-09T14:17Z
+last_built: 2024-03-28T23:45Z
 

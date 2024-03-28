@@ -31,7 +31,7 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).'><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.2900</span>
       </span>
     </div>
 
@@ -94,12 +94,17 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_health_facilities</span><span class="op">(</span>showProgress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_health_facilities</span><span class="op">(</span>date <span class="op">=</span> <span class="fl">202303</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>showProgress</dt>
+    <dl><dt>date</dt>
+<dd><p>Numeric. Date of the data in YYYYMM format. Defaults to <code>202303</code>,
+which was the latest data available by the time of this update.</p></dd>
+
+
+<dt>showProgress</dt>
 <dd><p>Logical. Defaults to <code>TRUE</code> display progress bar.</p></dd>
 
 </dl></div>
@@ -142,7 +147,7 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># Read all health facilities of the whole country</span></span>
-<span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">read_health_facilities</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">read_health_facilities</span><span class="op">(</span> date <span class="op">=</span> <span class="fl">202303</span><span class="op">)</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

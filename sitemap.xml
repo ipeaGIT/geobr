@@ -37,6 +37,9 @@
     <loc>/reference/download_metadata.html</loc>
   </url>
   <url>
+    <loc>/reference/filter_state.html</loc>
+  </url>
+  <url>
     <loc>/reference/geobr.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>/reference/lookup_muni.html</loc>
+  </url>
+  <url>
+    <loc>/reference/numbers_only.html</loc>
   </url>
   <url>
     <loc>/reference/read_amazon.html</loc>

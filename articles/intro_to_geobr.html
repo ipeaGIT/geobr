@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.2900</span>
       </span>
     </div>
 
@@ -330,6 +330,12 @@ Brazilian municipalities</p>
 using the <code><a href="https://ipeagit.github.io/censobr/reference/read_households.html" class="external-link">read_households()</a></code> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/apache/arrow/" class="external-link">arrow</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'arrow'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:utils':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     timestamp</span></span>
 <span></span>
 <span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ipeagit.github.io/censobr/reference/read_households.html" class="external-link">read_households</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
 <span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -363,7 +369,7 @@ our estimates and map the results.</p>
 <code class="sourceCode R"><span><span class="co"># download municipality geometries</span></span>
 <span><span class="va">muni_sf</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="../reference/read_municipality.html">read_municipality</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>                                    showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using year 2010</span></span>
+<span><span class="co">#&gt; Using year/date 2010</span></span>
 <span></span>
 <span><span class="co"># merge data</span></span>
 <span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span><span class="op">)</span></span>
