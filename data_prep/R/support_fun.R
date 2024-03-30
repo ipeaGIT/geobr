@@ -383,6 +383,10 @@ remove_state_repetition <- function(temp_sf){
 }
 
 
+# remove Z dimension of spatial data
+remove_z_dimension <- function(temp_df){st_zm(temp_df, drop = T, what = "ZM")}
+
+
 #####fixing municipality repetition---------
 
 # https://github.com/ipeaGIT/geobr/blob/49534a6b19dc765e43e4c2f4404342f4fd0fdb4e/r-package/prep_data/prep_state_muni_regions.R#L987
