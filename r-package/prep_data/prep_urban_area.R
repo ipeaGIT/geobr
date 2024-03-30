@@ -76,11 +76,11 @@ unzip( zip_file, exdir = dir_raw)
 ##### 4.1 read shape files -------------------
 
 if(year==2005){
-    ACP_urban_05 <- st_read( paste0(dir_2005,"/AreasUrbanizadas_MunicipiosACP_porMunicipio.shp"),
+    ACP_urban_05 <- st_read( paste0(dir_raw,"/AreasUrbanizadas_MunicipiosACP_porMunicipio.shp"),
                              options = "ENCODING=WINDOWS-1252")
-    cemk_urban_05 <- st_read( paste0(dir_2005,"/AreasUrbanizadas_MunicipiosAcima100k_porMunicipio.shp"),
+    cemk_urban_05 <- st_read( paste0(dir_raw,"/AreasUrbanizadas_MunicipiosAcima100k_porMunicipio.shp"),
                               options = "ENCODING=WINDOWS-1252")
-    cost_urban_05 <- st_read( paste0(dir_2005,"/AreasUrbanizadas_MunicipiosCosteiros_porMunicipio.shp"),
+    cost_urban_05 <- st_read( paste0(dir_raw,"/AreasUrbanizadas_MunicipiosCosteiros_porMunicipio.shp"),
                               options = "ENCODING=WINDOWS-1252")
     }
 
@@ -105,29 +105,33 @@ if(year==2015){
 # Make sure all data sets have the same columns (in the same order)
 
 if(year==2005){
-        ACP_urban_05$POP_2005 <- NA
-        ACP_urban_05$dataset <- "population concentration area"
+        ACP_urban_05 <- mutate(ACP_urban_05,
+                               POP_2005 = NA,
+                               dataset = "population concentration area")
 
-        cost_urban_05$POP_2005 <- NA
-        cost_urban_05$ACP <- NA
-        cost_urban_05$COD_ACP <- NA
-        cost_urban_05$dataset <- "coastal area"
+        cost_urban_05 <- mutate(cost_urban_05,
+                                POP_2005 = NA,
+                                ACP = NA,
+                                COD_ACP = NA,
+                                dataset = "coastal area")
 
-        cemk_urban_05$ACP <- NA
-        cemk_urban_05$COD_ACP <- NA
-        cemk_urban_05$dataset <- "population above 100k"
+        cemk_urban_05 <- mutate(cemk_urban_05,
+                                ACP = NA,
+                                COD_ACP = NA,
+                                dataset = "population above 100k")
 
-        # columns in the same order
-        setDT(ACP_urban_05)
-        setDT(cost_urban_05)
-        setDT(cemk_urban_05)
+        # if  they come with the same projection, reorder and rbind
+        if (st_crs(ACP_urban_05) == st_crs(cost_urban_05) &
+            st_crs(cost_urban_05) == st_crs(cemk_urban_05)) {
 
-        setcolorder(cost_urban_05, neworder= c(names(ACP_urban_05)) )
-        setcolorder(cemk_urban_05, neworder=  c(names(ACP_urban_05)) )
+          col_order <- names(ACP_urban_05)
+          cost_urban_05 <- dplyr::select(cost_urban_05, all_of(col_order))
+          cemk_urban_05 <- dplyr::select(cemk_urban_05, all_of(col_order))
 
-        # pile them up
-        urb_2005 <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
-        }
+          temp_sf <- rbind(ACP_urban_05, cemk_urban_05, cost_urban_05)
+        } else{stop('cannot rbind 2005 data sets')}
+}
+
 
 
 if(year==2015){
@@ -160,13 +164,14 @@ if(year==2015){
 if(year==2005){
   temp_sf <- dplyr::select(temp_sf,
                           code_urb = GEOC_URB,
-                          pop_2005 = POP_2005,
-                          density = Tipo,
                           code_muni = GEOCODIGO,
-                          name_muni = NOME_MUNIC,
                           code_acp = COD_ACP,
                           name_acp = ACP,
+                          name_muni = NOME_MUNIC,
                           abbrev_state = UF,
+                          pop_2005 = POP_2005,
+                          density = Tipo,
+                          area_km2 = Area_Km2,
                           dataset = dataset,
                           geometry = geometry
                           )
@@ -213,15 +218,17 @@ temp_sf <- to_multipolygon(temp_sf)
 temp_sf <- fix_topoly(temp_sf)
 
 # reoder columns
+  if(year == 2005){
+    col_order <- c("code_urb", "code_acp", "name_acp", "code_muni", "name_muni",
+                   "code_state",  "name_state", "abbrev_state", "code_region",
+                   "name_region", "pop_2005", "density", "dataset", "area_km2",
+                   "geometry")
+    }
   if(year == 2015){
     col_order <- c("fid_1", "code_muni", 'name_muni', "code_state",  "name_state",
                    "abbrev_state", "code_region", "name_region", "type", "density",
                    "area_km2", "geometry")
   }
-  if(year == 2005){
-    col_order <- c("code_urb", "pop_2005", "density", "code_muni", "name_muni", "code_acp", "name_acp",
-                   "code_state", "abbrev_state", "name_state", "dataset", "geometry")
-    }
 
   temp_sf <- dplyr::select(temp_sf, all_of(col_order))
 
