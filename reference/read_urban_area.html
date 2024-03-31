@@ -72,13 +72,24 @@ and Statistics (IBGE)  For more information about the methodology, see details a
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_urban_area</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2015</span>, simplified <span class="op">=</span> <span class="cn">TRUE</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_urban_area</span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2015</span>,</span>
+<span>  code_state <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>year</dt>
 <dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2015</code>.</p></dd>
+
+
+<dt>code_state</dt>
+<dd><p>The two-digit code of a state or a two-letter uppercase
+abbreviation (e.g. 33 or "RJ"). If <code>code_state="all"</code> (the
+default), the function downloads all states.</p></dd>
 
 
 <dt>simplified</dt>
