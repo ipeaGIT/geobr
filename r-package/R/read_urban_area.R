@@ -7,6 +7,9 @@
 #' \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf}
 #'
 #' @param year Numeric. Year of the data in YYYY format. Defaults to `2015`.
+#' @param code_state The two-digit code of a state or a two-letter uppercase
+#'                   abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
+#'                   default), the function downloads all states.
 #' @template simplified
 #' @template showProgress
 #'
@@ -20,7 +23,10 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' d <- read_urban_area(year=2005)
 #'
-read_urban_area <- function(year=2015, simplified=TRUE, showProgress=TRUE){
+read_urban_area <- function(year = 2015,
+                            code_state = "all",
+                            simplified = TRUE,
+                            showProgress = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="urban_area", year=year, simplified=simplified)
@@ -33,6 +39,9 @@ read_urban_area <- function(year=2015, simplified=TRUE, showProgress=TRUE){
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
+
+  # filter state
+  temp_sf <- filter_state(temp_sf, code = code_state)
 
   return(temp_sf)
 }
