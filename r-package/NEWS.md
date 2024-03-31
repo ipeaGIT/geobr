@@ -2,8 +2,9 @@
 
 **Major changes**
 
-- Function `read_health_facilities()` now has a new parameter `date`, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. 
-
+- Function `read_health_facilities()` now has a new parameter `date`, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. Closes #334.
+- Function `read_urban_area()` now has a new parameter `code_state`, which will allow users to filter selected states. Closes #338
+- Function `read_metro_area()` now has a new parameter `code_state`, which will allow users to filter selected states.  Closes #338
 
 **New data**
 - schools for 2023
