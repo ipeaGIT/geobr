@@ -169,10 +169,16 @@ list_folders <- function(ftp){
 ###### Download file to tempdir -----------------
 
 download_file <- function(file_url,
+                          dest_dir = NULL,
                           showProgress = TRUE){
 
-  file_ext <- tools::file_ext(file_url)
-  dest_file <- tempfile(fileext = paste0('.', file_ext))
+  if(is.null(dest_dir)) { dest_dir <- tempdir()}
+
+  if (!(dir.exists(dest_dir))) {stop("'dest_dir' does not exist")}
+
+  # file_ext <- tools::file_ext(file_url)
+  # dest_file <- tempfile(fileext = paste0('.', file_ext))
+  dest_file <- paste0(dest_dir,'/', basename(file_url))
 
   # download data
     httr::GET(url=file_url,
