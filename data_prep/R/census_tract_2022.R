@@ -92,13 +92,7 @@ gc()
 save_state <- function(code_uf){ # code_uf <- 33
 
     temp_sf2 <- subset(temp_sf, code_state == code_uf)
-<<<<<<< HEAD
     # temp_sf2 <- subset(temp_sf2, code_muni == '3304557')
-=======
-
-   # temp_sf2 <- subset(temp_sf2, code_muni == '3304557')
-
->>>>>>> e8fd7687ce69803eb31daab82f51a60a25f91525
 
     # convert to MULTIPOLYGON
     temp_sf2 <- to_multipolygon(temp_sf2)

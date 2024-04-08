@@ -287,11 +287,20 @@ to_multipolygon <- function(temp_sf){
       temp_sf <- sf::st_cast(temp_sf, "POLYGON")
       temp_sf <- sf::st_collection_extract(temp_sf, "POLYGON")
       temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
-      return(temp_sf)
+    }
 
-    } else {
-       return(temp_sf) }
-  }
+      # merge polygons into single multiploygon
+      col_names <- names(temp_sf)
+      col_names <- col_names[ !col_names %like% 'geometry|geom']
+
+      temp_sf <- temp_sf |>
+        group_by(across(all_of(col_names))) |>
+        summarise()
+
+
+       return(temp_sf)
+      }
+
 
 ###### Make valid topology -----------------
 

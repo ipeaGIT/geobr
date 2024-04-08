@@ -11,7 +11,7 @@ clean_muni <- function( muni_raw_paths ){
   # all_muni_raw_paths <- list.files(path = paste0('./data_raw/municipios/', year),
   #                              pattern = '.rds',
   #                              full.names = TRUE)
-  # f <- all_muni_raw_paths[16]
+  # f <- all_muni_raw_paths[20]
   #
   # # 6666
   #  muni_raw_paths <- all_muni_raw_paths[1]
@@ -116,12 +116,12 @@ clean_muni <- function( muni_raw_paths ){
       # remove geometries with area == 0
       temp_sf <- temp_sf[ as.numeric(sf::st_area(temp_sf)) != 0, ]
 
+    # convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf)
 
-    # convert to MULTIPOLYGON
-    temp_sf <- to_multipolygon(temp_sf)
-    temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
 
     # Make any invalid geom valid # st_is_valid( sf)
     temp_sf <- fix_topoly(temp_sf)
@@ -151,11 +151,12 @@ clean_muni <- function( muni_raw_paths ){
       sf::st_write(temp2_simplified, i,
                    overwrite = TRUE, append = FALSE,
                    delete_dsn = T, delete_layer = T, quiet = T)
-    }
+     }
+
   }
 
   # clean all files
-   pbapply::pblapply(X = muni_raw_paths, FUN = clean_file)
+   pbapply::pblapply(X = all_muni_raw_paths, FUN = clean_file)
 
   # requiredPackages <- c('data.table', 'sf','dplyr', 'sfheaders', 'units',
   #                       'lwgeom', 'rgeos', 'sp', 'maptools', 'stringr', 'stringi')
