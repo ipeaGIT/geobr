@@ -23,142 +23,178 @@ library(future)
 source("./prep_data/prep_functions.R")
 
 
-# Set a root directory
-root_dir <- "L:////# DIRUR #//ASMEQ//geobr//data-raw//setores_censitarios"
-setwd(root_dir)
 
 
 
-# If the data set is updated regularly, you should create a function that will have
-# a `date` argument download the data
+####  url to setores  -----------------
+
+if(year == 2010){
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/setores_censitarios_shp/"
+  year_dir <- 2010
+}
+
+if(year == '2000_rural'){
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_rural/projecao_geografica/censo_2000/e500_arcview_shp/uf/"
+  year_dir <- '2000_rural'
+}
+
+if(year == '2000_urbano'){
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_urbano/"
+  year_dir <- '2000_urbano'
+}
+
+if(year == 2019){
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2019/Malha_de_setores_(shp)_por_UFs/"
+  year_dir <- 2019
+}
+
+if(year == 2020){
+  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2020/Malha_de_setores_(shp)_por_UFs/"
+  year_dir <- 2020
+}
+
+
+if(year == 2022){
+  ftp <- "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2022_preliminar/setores/gpkg/BR/BR_Malha_Preliminar_2022.zip"
+  year_dir <- 2022
+  }
+
+
+
+# create dest dir
+raw_dir <- paste0('./data_raw/census_tracts/',year)
+dest_dir <- paste0('./data/census_tracts/',year)
+dir.create(raw_dir, recursive = T)
+dir.create(dest_dir, recursive = T)
+
 
 
 
 
 #### 0. Download original data sets from IBGE ftp -----------------
 
-# setores 2010
-  ftp <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/setores_censitarios_shp/"
+if(year == 2022){
 
-# setores 2000 rural
-  ftp2 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_rural/projecao_geografica/censo_2000/e500_arcview_shp/uf/"
+  dest_file <-  download_file(file_url = ftp)
 
-# setores 2000 urbano
-  ftp3 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2000/setor_urbano/"
+temp_dir <- tempdir()
 
-# setores 2019
-ftp4 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2019/Malha_de_setores_(shp)_por_UFs/"
+unzip(dest_file, exdir = temp_dir)
 
-# setores 2020
-ftp5 <- "ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/2020/Malha_de_setores_(shp)_por_UFs/"
-
-
-# lista de ftp de 2010,2019 e 2020
-ftplist <- c(ftp, ftp4, ftp5)
-ftplist <- c(ftp4, ftp5)
-
-for (ftp1 in ftplist){ # ftp1 <- FTPLIST[3]
-
- # year directory
-  if(ftp1 == ftp) { year_dir <- 2010}
-  if(ftp1 %in% c(ftp2, ftp3)) { year_dir <- 2010}
-  if(ftp1 ==ftp4) { year_dir <- 2019}
-  if(ftp1 ==ftp5) { year_dir <- 2020}
-
-  dir.create( paste0('./', year_dir),showWarnings = F )
-
-  ### setor censitario censo
-  filenames = getURL(ftp1, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filenames <- strsplit(filenames, "\r\n")
-  filenames = unlist(filenames)
-  filenames <- filenames[!grepl('leia_me', filenames)]
-
-  # filesurl<-paste(ftp, filenames[9],"/", sep = "")
-  # filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  # filesurl<-strsplit(filesurl, "\r\n")
-  # filesurl<-unlist(filesurl)
-
-  #fazendo download dos dados zipados
-  for (filename in filenames) {
-    filesurl<-paste(ftp1, filename,"/", sep = "")
-    filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-    filesurl<-strsplit(filesurl, "\r\n")
-    filesurl<-unlist(filesurl)
-
-    fileyear <- regmatches(filesurl, gregexpr("[0-9]+",filesurl))
-    fileyear <- unlist(fileyear)
-    dir.fonte <- paste0("./",fileyear,"/",filename)
-
-    for (fonte in dir.fonte){ # fonte <- dir.fonte[1]
-      dir.create(fonte, recursive = T)
-
-      for (files in filesurl){ # files <- filesurl[1]
-        download.file(paste(ftp1, filename,"/", files, sep = ""),paste(fonte,"/",files, sep = ""))
-      }
-    }
-  }
+local_file <- unzip_fun(dest_file)
 }
 
 
-### setor censitario rural censo 2000
-filenames = getURL(ftp2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filenames <- strsplit(filenames, "\r\n")
-filenames = unlist(filenames)
-filenames <- filenames[!grepl('leia_me', filenames)]
 
 
-#fazendo download dos dados zipados
-for (filename in filenames) {
-  filesurl<-paste(ftp2, filename,"/", sep = "")
-  filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filesurl<-strsplit(filesurl, "\r\n")
-  filesurl<-unlist(filesurl)
-
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/",filename)
-  dir.create(dir.fonte,recursive = T)
-
-  for (files in filesurl) {
-    download.file(paste(ftp2, filename,"/",files, sep = ""),paste(dir.fonte,"/",files,sep = ""))
-  }
-}
-
-### setor censitario urbano censo 2000
-
-filenames = getURL(ftp3, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-filenames <- strsplit(filenames, "\r\n")
-filenames = unlist(filenames)
-filenames <- filenames[!grepl('leia_me', filenames)]
 
 
-dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/")
-filespasta<-list.files(dir.fonte)
-filespasta<-unlist(filespasta)
-difflies<-setdiff(filenames,filespasta)
 
-#fazendo download dos dados zipados
-
-for (filename in difflies) {
-  filesurl<-paste(ftp3, filename,"/", sep = "")
-  filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filesurl<-strsplit(filesurl, "\r\n")
-  filesurl<-unlist(filesurl)
-
-  dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/",filename)
-  dir.create(dir.fonte,recursive = T)
-
-
-  for (files in filesurl) {
-
-    if ( grepl("3300704",files)) { download.file(paste(ftp3, filename,"/",files,"/",files,"_2000.zip", sep = ""),paste(dir.fonte,"/",files,".zip",sep = ""),quiet = T)
-    }
-    else if (grepl(".zip",files)){
-      download.file(paste(ftp3, filename,"/",files, sep = ""),paste(dir.fonte,"/",files,sep = ""),quiet = T)
-    } else {
-      download.file(paste(ftp3, filename,"/",files,"/",files,".zip", sep = ""),paste(dir.fonte,"/",files,".zip",sep = ""),quiet = T)
-    }
-  }
-}
-
+# #6666666666666666666666666666
+# for (ftp1 in ftplist){ # ftp1 <- FTPLIST[3]
+#
+#
+#   # create dir
+#   dir.create( paste0('./data/census_tract/', year_dir), recursive = T, showWarnings = T )
+#
+#   ### setor censitario censo
+#
+#   filenames <- list_folders(ftp)
+#
+#   filenames <- strsplit(filenames, "\r\n")
+#   filenames = unlist(filenames)
+#   filenames <- filenames[!grepl('leia_me', filenames)]
+#   filenames <- filenames[!grepl('?C=', filenames)]
+#   filenames <- filenames[!grepl('http', filenames)]
+#   filenames <- filenames[!grepl('Censos/Censo_Demografico_2022', filenames)]
+#
+#
+#   #fazendo download dos dados zipados
+#   for (f in filenames) {
+#     filesurl<-paste(ftp, "/",f,"/", sep = "")
+#
+#     filesurl <- list_folders(filesurl)
+#     filesurl <- filesurl[grepl('gpkg', filenames)]
+#
+#
+#     filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#     filesurl<-strsplit(filesurl, "\r\n")
+#     filesurl<-unlist(filesurl)
+#
+#     fileyear <- regmatches(filesurl, gregexpr("[0-9]+",filesurl))
+#     fileyear <- unlist(fileyear)
+#     dir.fonte <- paste0("./",fileyear,"/",f)
+#
+#     for (fonte in dir.fonte){ # fonte <- dir.fonte[1]
+#       dir.create(fonte, recursive = T)
+#
+#       for (files in filesurl){ # files <- filesurl[1]
+#         download.file(paste(ftp1, f,"/", files, sep = ""),paste(fonte,"/",files, sep = ""))
+#       }
+#     }
+#   }
+# }
+#
+#
+# ### setor censitario rural censo 2000
+# filenames = getURL(ftp2, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+# filenames <- strsplit(filenames, "\r\n")
+# filenames = unlist(filenames)
+# filenames <- filenames[!grepl('leia_me', filenames)]
+#
+#
+# #fazendo download dos dados zipados
+# for (filename in filenames) {
+#   filesurl<-paste(ftp2, filename,"/", sep = "")
+#   filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#   filesurl<-strsplit(filesurl, "\r\n")
+#   filesurl<-unlist(filesurl)
+#
+#   dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/",filename)
+#   dir.create(dir.fonte,recursive = T)
+#
+#   for (files in filesurl) {
+#     download.file(paste(ftp2, filename,"/",files, sep = ""),paste(dir.fonte,"/",files,sep = ""))
+#   }
+# }
+#
+# ### setor censitario urbano censo 2000
+#
+# filenames = getURL(ftp3, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+# filenames <- strsplit(filenames, "\r\n")
+# filenames = unlist(filenames)
+# filenames <- filenames[!grepl('leia_me', filenames)]
+#
+#
+# dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/")
+# filespasta<-list.files(dir.fonte)
+# filespasta<-unlist(filespasta)
+# difflies<-setdiff(filenames,filespasta)
+#
+# #fazendo download dos dados zipados
+#
+# for (filename in difflies) {
+#   filesurl<-paste(ftp3, filename,"/", sep = "")
+#   filesurl<-getURL(filesurl, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+#   filesurl<-strsplit(filesurl, "\r\n")
+#   filesurl<-unlist(filesurl)
+#
+#   dir.fonte <- paste0("//Storage6/usuarios/# DIRUR #/ASMEQ/geobr//data-raw//setores_censitarios/censo_2000/Urbano/",filename)
+#   dir.create(dir.fonte,recursive = T)
+#
+#
+#   for (files in filesurl) {
+#
+#     if ( grepl("3300704",files)) { download.file(paste(ftp3, filename,"/",files,"/",files,"_2000.zip", sep = ""),paste(dir.fonte,"/",files,".zip",sep = ""),quiet = T)
+#     }
+#     else if (grepl(".zip",files)){
+#       download.file(paste(ftp3, filename,"/",files, sep = ""),paste(dir.fonte,"/",files,sep = ""),quiet = T)
+#     } else {
+#       download.file(paste(ftp3, filename,"/",files,"/",files,".zip", sep = ""),paste(dir.fonte,"/",files,".zip",sep = ""),quiet = T)
+#     }
+#   }
+# }
+#
 
 
 ########  1. Unzip original data sets downloaded from IBGE -----------------
@@ -259,6 +295,24 @@ gc(reset = T)
 
 
 #### 3. Save original data sets downloaded from IBGE in compact .rds format-----------------
+
+if(year==2022){
+
+  # list file
+  all_shapes <- list.files(raw_dir, full.names = T, recursive = T, pattern = ".gpkg")
+
+  # read to memory
+  df <- sf::st_read(all_shapes)
+  gc()
+
+  # file name
+  file_name <- basename(all_shapes)
+  file_name <- gsub("\\..*","", file_name)
+
+  # save in .rds
+  saveRDS(df, file = paste0(raw_dir,"/", file_name,'.rds'), compress = TRUE)
+
+}
 
 # List shapes for all years
 all_shapes <- list.files(full.names = T, recursive = T, pattern = ".shp|.SHP")

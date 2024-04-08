@@ -101,14 +101,15 @@ a <- metadata[geo=='health_facilities']
 ######### Step 3 -  upload data to github ----------------------
 all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
 
-  all_files <- all_files[all_files %like% 'municipality']
-  all_files <- all_files[all_files %like% '2021|2022']
+  all_files <- all_files[all_files %like% 'census_tract']
+  all_files <- all_files[all_files %like% '2022']
 
 # upload data
 piggyback::pb_upload(all_files,
                      "ipeaGIT/geobr",
-                     "v1.7.0",
-                     .token = ttt)
+                     "v1.7.0"
+                     #,.token = ttt
+                     )
 
 #' https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting
 
@@ -173,12 +174,13 @@ piggyback::pb_upload(to_go,
 # save updated metadata table
   # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv")
 
-  # upload updated metadata table github
-  piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
-                       "ipeaGIT/geobr",
-                       "v1.7.0",
-                       .token = ttt)
-
+  # # upload updated metadata table github
+  # piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
+  #                      "ipeaGIT/geobr",
+  #                      "v1.7.0"
+  #                      #, .token = ttt
+  #                      )
+  #
 
 
 
