@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.2900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
       </span>
     </div>
 
@@ -61,11 +61,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.9.0" id="geobr-v190-dev">geobr v1.9.0 dev<a class="anchor" aria-label="anchor" href="#geobr-v190-dev"></a></h2>
+<h2 class="page-header" data-toc-text="1.9.0" id="geobr-v190">geobr v1.9.0<small>2024-04-18</small><a class="anchor" aria-label="anchor" href="#geobr-v190"></a></h2>
 <p><strong>Major changes</strong></p>
 <ul><li>Function <code><a href="../reference/read_health_facilities.html">read_health_facilities()</a></code> now has a new parameter <code>date</code>, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. Closes #334.</li>
-<li>Function <code><a href="../reference/read_urban_area.html">read_urban_area()</a></code> now has a new parameter <code>code_state</code>, which will allow users to filter selected states. Closes #338</li>
-<li>Function <code><a href="../reference/read_metro_area.html">read_metro_area()</a></code> now has a new parameter <code>code_state</code>, which will allow users to filter selected states. Closes #338</li>
+<li>Functions <code><a href="../reference/read_urban_area.html">read_urban_area()</a></code> and <code><a href="../reference/read_metro_area.html">read_metro_area()</a></code> now have a new parameter <code>code_state</code>, which will allow users to filter selected states. Closes #338</li>
 </ul><p><strong>Bug fix</strong> - Using <code><a href="https://rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist()</a></code> to rind data was throwing errors when some observations were of class <code>POLYGONS</code> and others were <code>MULTIPOLYGONS</code>. This has now been replaced with <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> at a very small performance penalty. Closes #346.</p>
 <p><strong>New data</strong> - schools for 2023 - health facilities for 202303 - census tracts for 2020 and 2022</p>
 </div>
@@ -287,7 +286,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer></div>
