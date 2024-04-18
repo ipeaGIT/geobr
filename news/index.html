@@ -65,9 +65,13 @@
 <p><strong>Major changes</strong></p>
 <ul><li>Function <code><a href="../reference/read_health_facilities.html">read_health_facilities()</a></code> now has a new parameter <code>date</code>, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. Closes #334.</li>
 <li>Functions <code><a href="../reference/read_urban_area.html">read_urban_area()</a></code> and <code><a href="../reference/read_metro_area.html">read_metro_area()</a></code> now have a new parameter <code>code_state</code>, which will allow users to filter selected states. Closes #338</li>
-</ul><p><strong>Bug fix</strong> - Using <code><a href="https://rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist()</a></code> to rind data was throwing errors when some observations were of class <code>POLYGONS</code> and others were <code>MULTIPOLYGONS</code>. This has now been replaced with <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> at a very small performance penalty. Closes #346.</p>
-<p><strong>New data</strong> - schools for 2023 - health facilities for 202303 - census tracts for 2020 and 2022</p>
-</div>
+</ul><p><strong>Bug fix</strong></p>
+<ul><li>Using <code><a href="https://rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist()</a></code> to rind data was throwing errors when some observations were of class <code>POLYGONS</code> and others were <code>MULTIPOLYGONS</code>. This has now been replaced with <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> at a very small performance penalty. Closes #346.</li>
+</ul><p><strong>New data</strong></p>
+<ul><li>schools for 2023</li>
+<li>health facilities for 202303</li>
+<li>census tracts for 2020 and 2022</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.8.2" id="geobr-v182">geobr v1.8.2<small>2024-01-09</small><a class="anchor" aria-label="anchor" href="#geobr-v182"></a></h2>
 <p><strong>CRAN request</strong></p>
