@@ -6,9 +6,11 @@
 - Functions `read_urban_area()` and `read_metro_area()` now have a new parameter `code_state`, which will allow users to filter selected states. Closes #338
 
 **Bug fix**
+
 - Using `data.table::rbindlist()` to rind data was throwing errors when some observations were of class `POLYGONS` and others were `MULTIPOLYGONS`. This has now been replaced with `dplyr::bind_rows()` at a very small performance penalty. Closes #346.
 
 **New data**
+
 - schools for 2023
 - health facilities for 202303
 - census tracts for 2020 and 2022
