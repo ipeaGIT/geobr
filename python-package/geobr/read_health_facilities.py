@@ -1,7 +1,7 @@
 from geobr.utils import select_metadata, download_gpkg
 
 
-def read_health_facilities(verbose=False):
+def read_health_facilities(date=202303, verbose=False):
     """ Download geolocated data of health facilities as an sf object.
     
      Data comes from the National Registry of Healthcare facilities (Cadastro Nacional de Estabelecimentos de Saude - CNES),
@@ -19,6 +19,8 @@ def read_health_facilities(verbose=False):
 
     Parameters
     ----------
+    date : Numeric.  Date of the data in YYYYMM format. Defaults to `202303`,
+        which was the latest data available by the time of this update.
     verbose : bool, optional
         by default False
     
@@ -40,7 +42,7 @@ def read_health_facilities(verbose=False):
     >>> df = read_health_facilities()
     """
 
-    metadata = select_metadata("health_facilities", year=2015, simplified=False)
+    metadata = select_metadata("health_facilities", year=date, simplified=False)
 
     gdf = download_gpkg(metadata)
 
