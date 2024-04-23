@@ -2,7 +2,7 @@ from requests import get
 import pandas as pd
 from io import StringIO
 from urllib.error import HTTPError
-
+import re
 
 def list_geobr():
     """Prints available functions, according to latest README.md file
@@ -19,8 +19,12 @@ def list_geobr():
 
     try:
         html_data = get("https://github.com/ipeaGIT/geobr/blob/master/README.md").text
-
-        df = pd.read_html(StringIO(html_data))[1]
+        find_emoji = html_data.index("👉")
+        html_data =  html_data[find_emoji:]
+        escaped_data = html_data.replace("\\u003c", "<").replace("\\u003e", ">")
+        tables = re.findall("<table>(.+?)</table>", escaped_data)
+        available_datasets = "<table>" + tables[0].replace("\\n", "") + "</table>"
+        df = pd.DataFrame(pd.read_html(StringIO(available_datasets))[0])
 
     except HTTPError:
         print(
