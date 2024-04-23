@@ -25,6 +25,7 @@ shapely = "^1.7.0"
 python = "^3.9"
 requests = "^2.25.1"
 lxml = "^5.1.0"
+html5lib = "1.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
