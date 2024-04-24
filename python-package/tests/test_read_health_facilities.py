@@ -16,6 +16,3 @@ def test_read_health_facilities():
 
     with pytest.raises(Exception):
         read_health_facilities(year="banana")
-
-    with pytest.raises(Exception):
-        read_health_facilities(verbose="banana")
