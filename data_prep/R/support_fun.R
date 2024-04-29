@@ -295,7 +295,8 @@ to_multipolygon <- function(temp_sf){
 
       temp_sf <- temp_sf |>
         group_by(across(all_of(col_names))) |>
-        summarise()
+        summarise() |>
+        dplyr::ungroup()
 
 
        return(temp_sf)
@@ -341,7 +342,6 @@ simplify_temp_sf <- function(temp_sf, tolerance=100){
 ## Function to clean and dissolve the borders of polygons by groups
 dissolve_polygons <- function(mysf, group_column){
 
-
   # a) make sure we have valid geometries
   mysf <- fix_topoly(mysf)
 
@@ -354,7 +354,6 @@ dissolve_polygons <- function(mysf, group_column){
 
     # c.1) subset region
     temp_region <- subset(mysf, get(group_column, mysf)== grp )
-
 
     temp_region <- summarise(temp_region, .by = group_column)
     # plot(temp_region)
