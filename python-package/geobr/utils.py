@@ -111,7 +111,7 @@ def select_year(metadata, year):
         years = ", ".join([str(i) for i in metadata["year"].unique()])
 
         raise Exception(
-            "Error: Invalid Value to argument year. "
+            "Error: Invalid Value to argument 'year/date'. "
             "It must be one of the following: "
             f'{_get_unique_values(metadata, "year")}'
         )
