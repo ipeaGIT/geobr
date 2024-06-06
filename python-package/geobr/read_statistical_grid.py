@@ -1,4 +1,5 @@
 import sys
+from geobr import __path__ as geobr_directory
 from geobr.utils import select_metadata, download_gpkg
 from numpy import unique
 from pandas import read_csv
@@ -51,10 +52,14 @@ def read_statistical_grid(code_grid="all", year=2010, simplified=False, verbose=
 
     if temp_meta is None:
         return None
+    
+    if(len(geobr_directory) == 0):
+        sys.exit("Geobr installation directory not found.")
 
     grid_state_correspondence_table = None
+    grid_file_path = geobr_directory[0] + "/data/grid_state_correspondence_table.csv"
 
-    with open("./geobr/data/grid_state_correspondence_table.csv", "rb") as file:
+    with open(grid_file_path, "rb") as file:
         dtypes = {"name_state": str, "abbrev_state": str, "code_grid": str}
         grid_state_correspondence_table = read_csv(
             file, encoding="latin-1", dtype=dtypes
