@@ -3,8 +3,8 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data. Defaults to 2010. The only year available thus
-#'             far is 2010.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`. The
+#'        only year available thus far is 2010.
 #' @param code_grid If two-letter abbreviation or two-digit code of a state is
 #'                  passed, the function will load all grid quadrants that
 #'                  intersect with that state. If `code_grid="all"`, the grid of
@@ -17,14 +17,15 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
-#' # Read specific municipality at a given year
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#' # Read a particular grid at a given year
 #' grid <- read_statistical_grid(code_grid = 45, year=2010)
 #'
-#' # Read all municipalities of a state at a given year
+#' # Read the grid covering a given state at a given year
 #' state_grid <- read_statistical_grid(code_grid = "RJ")
-#'}}
+#'
 read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # nocov start
 
   # Get metadata with data url addresses

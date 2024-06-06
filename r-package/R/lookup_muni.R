@@ -5,16 +5,19 @@
 #' and codes of the municipality's corresponding state, meso, micro, intermediate,
 #' and immediate regions
 #'
-#' @param name_muni The municipality name to be looked up
-#' @param code_muni The municipality code to be looked up
+#' @param name_muni The municipality name to be looked up.
+#' @param code_muni The municipality code to be looked up.
 #' @return A `data.frame` with 13 columns identifying the geographies information
-#' of that municipality
+#'         of that municipality.
 #'
 #' @return A `data.frame`
 #'
 #' @export
+#' @family support functions
+#'
 #' @details Only available from 2010 Census data so far
-#' @examples \dontrun{ if (interactive()) {
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Get lookup table for municipality Rio de Janeiro
 #' mun <- lookup_muni(name_muni = "Rio de Janeiro")
 #'
@@ -26,7 +29,7 @@
 #'
 #' # Or:
 #' mun_all <- lookup_muni(code_muni = "all")
-#'}}
+#'
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
   # create tempfile to save metadata
@@ -48,18 +51,34 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
 
+  # get backup links
+  filenames <- basename(file_url)
+  file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
 
-  # download lookup df to temp file
-  try( httr::GET(url= file_url,
+  # test connection with server1
+  try(silent = TRUE,
+      check_con <- check_connection(file_url[1], silent = TRUE)
+  )
+
+  # if server1 fails, replace url and test connection with server2
+  if (is.null(check_con) | isFALSE(check_con)) {
+    message('Using Github')
+    file_url <- file_url2
+    check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
+    if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
+  }
+
+  # download data
+  try( httr::GET(url=file_url,
                  httr::write_disk(tempf, overwrite = T),
                  config = httr::config(ssl_verifypeer = FALSE)
-  ), silent = T)
+                 ), silent = TRUE)
 
   }
 
   # check if download failed
   msg <- "Problem connecting to data server. Please try it again in a few minutes."
-  if (file.info(tempf)$size == 0) {message(msg); return(invisible(NULL)) }
+  if (!file.exists(tempf) | file.info(tempf)$size == 0) {message(msg); return(invisible(NULL)) }
 
   ### read/return lookup data
   lookup_table_2010 <- utils::read.csv(tempf, stringsAsFactors = F, encoding = 'UTF-8')

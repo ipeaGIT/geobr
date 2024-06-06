@@ -7,13 +7,13 @@
 lookup_muni(name_muni = NULL, code_muni = NULL)
 }
 \arguments{
-\item{name_muni}{The municipality name to be looked up}
+\item{name_muni}{The municipality name to be looked up.}
 
-\item{code_muni}{The municipality code to be looked up}
+\item{code_muni}{The municipality code to be looked up.}
 }
 \value{
 A \code{data.frame} with 13 columns identifying the geographies information
-of that municipality
+of that municipality.
 
 A \code{data.frame}
 }
@@ -26,7 +26,7 @@ and immediate regions
 Only available from 2010 Census data so far
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Get lookup table for municipality Rio de Janeiro
 mun <- lookup_muni(name_muni = "Rio de Janeiro")
 
@@ -38,5 +38,10 @@ mun_all <- lookup_muni(name_muni = "all")
 
 # Or:
 mun_all <- lookup_muni(code_muni = "all")
-}}
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Other support functions: 
+\code{\link{list_geobr}()}
+}
+\concept{support functions}

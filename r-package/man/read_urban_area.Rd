@@ -4,10 +4,19 @@
 \alias{read_urban_area}
 \title{Download spatial data of urbanized areas in Brazil}
 \usage{
-read_urban_area(year = 2015, simplified = TRUE, showProgress = TRUE)
+read_urban_area(
+  year = 2015,
+  code_state = "all",
+  simplified = TRUE,
+  showProgress = TRUE
+)
 }
 \arguments{
-\item{year}{A year number in YYYY format. Defaults to \code{2015}}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2015}.}
+
+\item{code_state}{The two-digit code of a state or a two-letter uppercase
+abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
+default), the function downloads all states.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -28,8 +37,37 @@ and Statistics (IBGE)  For more information about the methodology, see details a
 \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf}
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read urban footprint of Brazilian cities in an specific year
 d <- read_urban_area(year=2005)
-} }
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Other area functions: 
+\code{\link{read_amazon}()},
+\code{\link{read_biomes}()},
+\code{\link{read_capitals}()},
+\code{\link{read_comparable_areas}()},
+\code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
+\code{\link{read_health_region}()},
+\code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
+\code{\link{read_intermediate_region}()},
+\code{\link{read_meso_region}()},
+\code{\link{read_metro_area}()},
+\code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
+\code{\link{read_municipality}()},
+\code{\link{read_neighborhood}()},
+\code{\link{read_pop_arrangements}()},
+\code{\link{read_region}()},
+\code{\link{read_schools}()},
+\code{\link{read_semiarid}()},
+\code{\link{read_state}()},
+\code{\link{read_statistical_grid}()},
+\code{\link{read_urban_concentrations}()},
+\code{\link{read_weighting_area}()}
+}
+\concept{area functions}

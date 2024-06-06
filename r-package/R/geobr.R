@@ -1,23 +1,26 @@
-#' \code{geobr} package
+#' geobr: Download Official Spatial Data Sets of Brazil
 #'
-#' Easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil
+#' Easy access to official spatial data sets of Brazil as 'sf' objects in R. The
+#' package includes a wide range of geospatial data available at various
+#' geographic scales and for various years with harmonized attributes,
+#' projection and fixed topology.
 #'
-#' See the README on
-#\href{https://cran.r-project.org/package=geobr/README.html}{CRAN}
-#' \href{https://github.com/ipeaGIT/geobr#readme}{GitHub}
+#' @section Usage:
+#' Please check the vignettes for more on the package usage:
+#' - Introduction to geobr (R) on the [website](
+#' https://ipeagit.github.io/geobr/articles/intro_to_geobr.html).
 #'
 #' @docType package
 #' @name geobr
+#' @aliases geobr-package
+#'
 #' @importFrom utils "tail"
 #' @importFrom data.table "%like%"
 #' @importFrom curl "has_internet"
 #' @importFrom methods is
-
-
-
-
-# nocov start
-NULL
+#'
+#' @keywords internal
+"_PACKAGE"
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
 if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',

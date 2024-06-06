@@ -13,8 +13,12 @@ A \code{data.frame}
 Returns a data frame with all datasets available in the geobr package
 }
 \examples{
-\donttest{
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 df <- list_geobr()
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Other support functions: 
+\code{\link{lookup_muni}()}
 }
-\concept{general support functions}
+\concept{support functions}

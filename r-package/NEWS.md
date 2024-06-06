@@ -1,9 +1,58 @@
+# geobr v1.9.0
 
-# geobr v1.7.0999 (dev version)
+**Major changes**
+
+- Function `read_health_facilities()` now has a new parameter `date`, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. Closes #334.
+- Functions `read_urban_area()` and `read_metro_area()` now have a new parameter `code_state`, which will allow users to filter selected states. Closes #338
+
+**Bug fix**
+
+- Using `data.table::rbindlist()` to rind data was throwing errors when some observations were of class `POLYGONS` and others were `MULTIPOLYGONS`. This has now been replaced with `dplyr::bind_rows()` at a very small performance penalty. Closes #346.
+
+**New data**
+
+- schools for 2023
+- health facilities for 202303
+- census tracts for 2020 and 2022
+
+
+# geobr v1.8.2 
+
+**CRAN request**
+
+- Fixed issue to make sure geobr uses suggested packages conditionally
+
+**Minor changes**
+
+- Fixed non-ASCII characters in data `geobr::grid_state_correspondence_table()`
+
+
+
+# geobr v1.8.1
+
+**CRAN request**
+
+- geobr now uses suggested packages conditionally
+
+
+
+# geobr v1.8.0
 
 **New function**
-- `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. closes [#243](https://github.com/ipeaGIT/geobr/issues/243)
 
+- `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. [Closes #243](https://github.com/ipeaGIT/geobr/issues/243)
+
+**Minor changes**
+
+- Update intro vignette to show how to use geobr together with the new [**censobr**](https://ipeagit.github.io/censobr/index.html) sister package.
+
+**Bug fixes**
+
+- fixed bug from conflict between `sf` and `data.table` that was messing with plot extent. [Closes #284](https://github.com/ipeaGIT/geobr/issues/284).
+- fixed bug from conflicts between `plotly` and `data.table`. [Closes #279](https://github.com/ipeaGIT/geobr/issues/279).
+- fixed bug in `cep_to_state()` function. [Closes #317](https://github.com/ipeaGIT/geobr/issues/317).
+- fixed bug in progress bar. [Closes #154](https://github.com/ipeaGIT/geobr/issues/154).
+- The `lookup_muni()` and `download_metadata()` functions are now more robust to internet connection failures.
 
 
 # geobr v1.7.0

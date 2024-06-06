@@ -5,7 +5,7 @@
 #' conservation units present in Brazilian territory. The last update of the data
 #' was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 #'
-#' @param date A date number in YYYYMM format. Defaults to `201909`
+#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `201909`.
 #' @template simplified
 #' @template showProgress
 #'
@@ -13,10 +13,11 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read conservation_units
 #' b <- read_conservation_units(date = 201909)
-#'}}
+#'
 read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
@@ -27,5 +28,9 @@ read_conservation_units <- function(date=201909, simplified=TRUE, showProgress=T
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 }

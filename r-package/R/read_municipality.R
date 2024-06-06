@@ -3,13 +3,14 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param year Year of the data. Defaults to `2010`.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param code_muni The 7-digit identification code of a municipality. If
-#' `code_muni = "all"` (default), all municipalities of the country will be
-#' downloaded. Alternatively, if the two-digit identification code or a
-#' two-letter uppercase abbreviation of a state is passed, e.g. `33` or `"RJ"`,
-#' all municipalities of that state will be downloaded. Municipality identification
-#' codes are defined in \url{https://www.ibge.gov.br/explica/codigos-dos-municipios.php}.
+#'        `code_muni = "all"` (Default), the function downloads all
+#'        municipalities of the country. Alternatively, if a two-digit
+#'        identification code or a two-letter uppercase abbreviation of a state
+#'        is passed (e.g. `33` or `"RJ"`), all municipalities of that state will
+#'        be downloaded. Municipality identification codes can be consulted with
+#'        the `geobr::lookup_muni()` function.
 #' @template simplified
 #' @template showProgress
 
@@ -17,8 +18,9 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific municipality at a given year
 #' mun <- read_municipality(code_muni = 1200179, year = 2017)
 #'
@@ -28,9 +30,11 @@
 #'
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
-#'}}
-read_municipality <-
-  function(code_muni = "all", year = 2010, simplified = TRUE, showProgress = TRUE) {
+#'
+read_municipality <- function(code_muni = "all",
+                              year = 2010,
+                              simplified = TRUE,
+                              showProgress = TRUE) {
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="municipality", year=year, simplified=simplified)

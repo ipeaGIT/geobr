@@ -6,20 +6,21 @@
 #' "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
 #' system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year A year number in YYYY format. Defaults to `2019`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2019`.
 #' @param code_intermediate 4-digit code of an intermediate region. If the
-#' two-digit code or a two-letter uppercase abbreviation of a state is passed,
-#' (e.g. 33 or "RJ") the function will load all intermediate regions of that
-#' state. If `code_intermediate="all"` (Default), all intermediate regions of
-#' the country are loaded.
+#'        two-digit code or a two-letter uppercase abbreviation of a state is
+#'        passed, (e.g. 33 or "RJ") the function will load all intermediate
+#'        regions of that state. If `code_intermediate="all"` (Default), the
+#'        function downloads all intermediate regions of the country.
 #' @template simplified
 #' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific intermediate region
 #'   im <- read_intermediate_region(code_intermediate=1202)
 #'
@@ -30,7 +31,7 @@
 #'# Read all intermediate regions of the country
 #'   im <- read_intermediate_region()
 #'   im <- read_intermediate_region(code_intermediate="all")
-#' }}
+#'
 read_intermediate_region <- function(code_intermediate="all", year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

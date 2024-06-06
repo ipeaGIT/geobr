@@ -7,7 +7,8 @@
 #' few municipalities because they are generally more technology intensive, costly and face
 #' shortages of specialized professionals. A macro region comprises one or more health regions.
 #'
-#' @param year Year of the data. Defaults to 2013, latest available.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2013`, the
+#'        latest available.
 #' @param macro Logic. If `FALSE` (default), the function downloads health
 #'        regions data. If `TRUE`, the function downloads macro regions data.
 #' @template simplified
@@ -16,14 +17,15 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all health regions for a given year
 #' hr <- read_health_region( year=2013 )
 #'
 #' # Read all macro health regions
 #' mhr <- read_health_region( year=2013, macro =TRUE)
-#'}}
+#'
 read_health_region <- function(year=2013, macro=FALSE, simplified=TRUE, showProgress=TRUE){
 
   if(!is.logical(macro)){stop(paste0("Parameter 'macro' must be either TRUE or FALSE"))}
@@ -40,6 +42,10 @@ read_health_region <- function(year=2013, macro=FALSE, simplified=TRUE, showProg
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 
 }

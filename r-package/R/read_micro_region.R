@@ -3,19 +3,21 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data. Defaults to `2010`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a
-#' two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ") the
-#' function will load all micro regions of that state. If `code_micro="all"`, all
-#' micro regions of the country are loaded.
+#'        two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
+#'        "RJ") the function will load all micro regions of that state. If
+#'        `code_micro="all"` (Default), the function downloads all micro regions of the
+#'        country.
 #' @template simplified
 #' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific micro region a given year
 #'   micro <- read_micro_region(code_micro=11008, year=2018)
 #'
@@ -25,7 +27,7 @@
 #'
 #' # Read all micro regions at a given year
 #'   micro <- read_micro_region(code_micro="all", year=2010)
-#' }}
+#'
 read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
@@ -44,6 +46,10 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
 
     # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
   }
 
@@ -60,6 +66,9 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
 
     # download files
     sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(sf)) { return(invisible(NULL)) }
 
     if(nchar(code_micro)==2){
       return(sf)

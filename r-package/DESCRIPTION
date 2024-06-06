@@ -1,7 +1,7 @@
 Type: Package
 Package: geobr
 Title: Download Official Spatial Data Sets of Brazil
-Version: 1.7.0999
+Version: 1.9.0
 Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.br@gmail.com", role=c("aut", "cre"), comment = c(ORCID = "0000-0003-2125-7465")),
             person(given="Caio Nogueira", family="Goncalves", role=c("aut")),
             person(given="Paulo Henrique Fernandes de", family="Araujo", role=c("ctb")),
@@ -17,8 +17,9 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
 	          person(given="Alessandro", family="Samuel-Rosa", role="ctb"),
 	          person(given="Daniel", family="Ferreira", role="ctb"),
 	          person(given="Marcus", family="Saraiva", role="ctb"),
-	          person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
-URL: https://github.com/ipeaGIT/geobr
+            person(given="Beatriz", family="Milz", , role = "ctb", comment = c(ORCID = "0000-0002-3064-4486")),
+            person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd")))
+URL: https://ipeagit.github.io/geobr/, https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
 Description: Easy access to official spatial data sets of Brazil as 'sf' objects 
              in R. The package includes a wide range of geospatial data available
@@ -29,20 +30,23 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.5.0)
-Suggests:
-    covr,
-    dplyr (>= 0.8-3),
-    ggplot2 (>= 3.3.1),
-    knitr,
-    rmarkdown (>= 2.6),
-    testthat
 Imports:
       curl,
+      dplyr (>= 0.8-3),
       data.table,
       httr (>= 1.4.1),
       methods,
       sf (>= 0.9-3),
       utils
-RoxygenNote: 7.2.3
+Suggests:
+    arrow (>= 15.0.1),
+    censobr (>= 0.3.2),
+    covr,
+    ggplot2 (>= 3.3.1),
+    knitr,
+    rmarkdown,
+    scales,
+    testthat
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

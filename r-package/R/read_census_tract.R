@@ -4,11 +4,13 @@
 #' Download spatial data of census tracts of the Brazilian Population Census
 #'
 #' @param code_tract The 7-digit code of a Municipality. If the two-digit code
-#' or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
-#' the function will load all census tracts of that state. If `code_tract="all"`,
-#' all census tracts of the country are loaded.
-#' @param year Year of the data. Defaults to 2010
-#' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts are separate data sets.
+#'         or a two-letter uppercase abbreviation of a state is passed, (e.g. 33
+#'         or "RJ") the function will load all census tracts of that state. If
+#'         `code_tract="all"`, the function downloads all census tracts of the
+#'         country.
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
+#' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts
+#'             are separate data sets.
 #' @template simplified
 #' @template showProgress
 #'
@@ -16,7 +18,8 @@
 #'
 #' @export
 #' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read rural census tracts for years before 2007
 #'   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 #'
@@ -32,7 +35,6 @@
 #' # Read all census tracts of the country at a given year
 #'   c <- read_census_tract(code_tract="all", year=2010)
 #'
-#' }}
 read_census_tract <- function(code_tract, year=2010, zone = "urban", simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses

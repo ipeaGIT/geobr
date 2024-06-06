@@ -2,6 +2,8 @@
 
 source("./prep_data/prep_functions.R")
 source('./prep_data/download_malhas_municipais_function.R')
+source('./prep_data/support_fun.R')
+
 
 setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw')
 
@@ -15,7 +17,7 @@ setwd('L:/# DIRUR #/ASMEQ/geobr/data-raw/malhas_municipais')
 
 mun_dir <- "./shapes_in_sf_all_years_original/municipio"
 
-sub_dirs <- list.dirs(path =mun_dir, recursive = F)
+sub_dirs <- list.dirs(path = mun_dir, recursive = F)
 
 sub_dirs <- sub_dirs[sub_dirs %like% paste0(2000:2020,collapse = "|")]
 

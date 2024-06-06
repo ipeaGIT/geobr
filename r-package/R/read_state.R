@@ -3,9 +3,10 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Year of the data. Defaults to 2010
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param code_state The two-digit code of a state or a two-letter uppercase
-#' abbreviation (e.g. 33 or "RJ"). If `code_state="all"`, all states will be loaded.
+#'                   abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
+#'                   default), the function downloads all states.
 #' @template simplified
 #' @template showProgress
 #'
@@ -13,8 +14,9 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \donttest{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific state at a given year
 #'   uf <- read_state(code_state=12, year=2017)
 #'
@@ -23,7 +25,7 @@
 #'
 #' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
-#'}}
+#'
 read_state <- function(code_state="all", year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
@@ -53,6 +55,10 @@ if( x < 1992){
 
     # download gpkg
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
 
   } else if(nchar(code_state)==2){
@@ -62,6 +68,9 @@ if( x < 1992){
 
     # download gpkg
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
 
     temp_sf <- subset(temp_sf,code_state==substr(code_state, 1, 2))
     return(temp_sf)
@@ -82,8 +91,11 @@ if( x < 1992){
 
       # download gpkg
       temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
-      return(temp_sf)
 
+      # check if download failed
+      if (is.null(temp_sf)) { return(invisible(NULL)) }
+
+      return(temp_sf)
     }
 
   if (!(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abbrev)) {
@@ -98,6 +110,9 @@ if( x < 1992){
 
     # download gpkg
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
 
     if(nchar(code_state)==2){
       return(temp_sf)

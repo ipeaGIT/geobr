@@ -6,18 +6,19 @@
 #' scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
 #' data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 #'
-#' @param year A date number in YYYY format. Defaults to `2019`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2019`.
 #' @template simplified
 #' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read biomes
 #' b <- read_biomes(year = 2019)
-#'}}
+#'
 read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
@@ -28,5 +29,9 @@ read_biomes <- function(year=2019, simplified=TRUE, showProgress=TRUE){
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 }

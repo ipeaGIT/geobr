@@ -13,12 +13,12 @@ read_intermediate_region(
 }
 \arguments{
 \item{code_intermediate}{4-digit code of an intermediate region. If the
-two-digit code or a two-letter uppercase abbreviation of a state is passed,
-(e.g. 33 or "RJ") the function will load all intermediate regions of that
-state. If \code{code_intermediate="all"} (Default), all intermediate regions of
-the country are loaded.}
+two-digit code or a two-letter uppercase abbreviation of a state is
+passed, (e.g. 33 or "RJ") the function will load all intermediate
+regions of that state. If \code{code_intermediate="all"} (Default), the
+function downloads all intermediate regions of the country.}
 
-\item{year}{A year number in YYYY format. Defaults to \code{2019}}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2019}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -39,7 +39,7 @@ Brazil created in 2017 by IBGE. These regions were created to replace the
 system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read an specific intermediate region
   im <- read_intermediate_region(code_intermediate=1202)
 
@@ -50,26 +50,34 @@ system "SIRGAS2000" and CRS(4674)
 # Read all intermediate regions of the country
   im <- read_intermediate_region()
   im <- read_intermediate_region(code_intermediate="all")
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-Other general area functions: 
+Other area functions: 
 \code{\link{read_amazon}()},
 \code{\link{read_biomes}()},
-\code{\link{read_census_tract}()},
+\code{\link{read_capitals}()},
 \code{\link{read_comparable_areas}()},
-\code{\link{read_conservation_units}()},
 \code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
 \code{\link{read_meso_region}()},
+\code{\link{read_metro_area}()},
 \code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
 \code{\link{read_neighborhood}()},
+\code{\link{read_pop_arrangements}()},
 \code{\link{read_region}()},
+\code{\link{read_schools}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
 \code{\link{read_statistical_grid}()},
+\code{\link{read_urban_area}()},
+\code{\link{read_urban_concentrations}()},
 \code{\link{read_weighting_area}()}
 }
-\concept{general area functions}
+\concept{area functions}

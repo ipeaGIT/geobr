@@ -9,17 +9,19 @@
 #' with the objective of improving the quality of the data. More information
 #' available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
 #'
-#' @param year A year number in YYYY format. Defaults to `2020`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2020`.
 #' @template showProgress
 #'
 #'
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all schools in the country
 #' s <- read_schools( year = 2020)
-#' }}
+#'
 read_schools <- function(year=2020, showProgress=TRUE ){
 
   # Get metadata with data url addresses
@@ -30,6 +32,10 @@ read_schools <- function(year=2020, showProgress=TRUE ){
 
   # download files
     temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+    # check if download failed
+    if (is.null(temp_sf)) { return(invisible(NULL)) }
+
     return(temp_sf)
 
     }

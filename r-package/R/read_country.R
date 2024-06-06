@@ -3,18 +3,19 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param year Year of the data. Defaults to `2010`
+#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @template simplified
 #' @template showProgress
 #'
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @family general area functions
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific year
 #' br <- read_country(year = 2018)
-#'}}
+#'
 read_country <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
@@ -28,6 +29,10 @@ read_country <- function(year=2010, simplified=TRUE, showProgress=TRUE){
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 
 }

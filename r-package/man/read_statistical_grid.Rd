@@ -14,8 +14,8 @@ the whole country will be loaded. Users may also pass a
 grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at \code{geobr::grid_state_correspondence_table}.}
 
-\item{year}{Year of the data. Defaults to 2010. The only year available thus
-far is 2010.}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}. The
+only year available thus far is 2010.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 }
@@ -26,32 +26,40 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{ if (interactive()) {
-# Read specific municipality at a given year
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Read a particular grid at a given year
 grid <- read_statistical_grid(code_grid = 45, year=2010)
 
-# Read all municipalities of a state at a given year
+# Read the grid covering a given state at a given year
 state_grid <- read_statistical_grid(code_grid = "RJ")
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-Other general area functions: 
+Other area functions: 
 \code{\link{read_amazon}()},
 \code{\link{read_biomes}()},
-\code{\link{read_census_tract}()},
+\code{\link{read_capitals}()},
 \code{\link{read_comparable_areas}()},
-\code{\link{read_conservation_units}()},
 \code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
 \code{\link{read_intermediate_region}()},
 \code{\link{read_meso_region}()},
+\code{\link{read_metro_area}()},
 \code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
 \code{\link{read_neighborhood}()},
+\code{\link{read_pop_arrangements}()},
 \code{\link{read_region}()},
+\code{\link{read_schools}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
+\code{\link{read_urban_area}()},
+\code{\link{read_urban_concentrations}()},
 \code{\link{read_weighting_area}()}
 }
-\concept{general area functions}
+\concept{area functions}

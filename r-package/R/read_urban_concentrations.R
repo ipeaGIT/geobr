@@ -6,7 +6,7 @@
 #' Institute of Geography and Statistics (IBGE)  For more information about the
 #' methodology, see details at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
 #'
-#' @param year A year number in YYYY format. Defaults to `2015`
+#' @param year Numeric. A year number in YYYY format. Defaults to `2015`.
 #' @template simplified
 #' @template showProgress
 #'
@@ -14,10 +14,12 @@
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
-#' @examples \dontrun{ if (interactive()) {
+#' @family area functions
+#'
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read urban footprint of Brazilian cities in an specific year
 #' uc <- read_urban_concentrations(year=2015)
-#' } }
+#'
 read_urban_concentrations <- function(year=2015, simplified=TRUE, showProgress=TRUE){
 
   # Get metadata with data url addresses
@@ -28,6 +30,10 @@ read_urban_concentrations <- function(year=2015, simplified=TRUE, showProgress=T
 
   # download files
   temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
   return(temp_sf)
 
 }

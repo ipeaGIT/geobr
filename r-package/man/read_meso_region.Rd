@@ -13,11 +13,12 @@ read_meso_region(
 }
 \arguments{
 \item{code_meso}{The 4-digit code of a meso region. If the two-digit code or
-a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
-the function will load all meso regions of that state. If \code{code_meso="all"},
-all meso regions of the country are loaded.}
+a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
+"RJ") the function will load all meso regions of that state. If
+\code{code_meso="all"} (Default), the function downloads all meso
+regions of the country.}
 
-\item{year}{A year number in YYYY format. Defaults to \code{2010}}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -35,7 +36,7 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read specific meso region at a given year
   meso <- read_meso_region(code_meso=3301, year=2018)
 
@@ -45,26 +46,34 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 
 # Read all meso regions of the country at a given year
   meso <- read_meso_region(code_meso="all", year=2010)
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-Other general area functions: 
+Other area functions: 
 \code{\link{read_amazon}()},
 \code{\link{read_biomes}()},
-\code{\link{read_census_tract}()},
+\code{\link{read_capitals}()},
 \code{\link{read_comparable_areas}()},
-\code{\link{read_conservation_units}()},
 \code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
 \code{\link{read_intermediate_region}()},
+\code{\link{read_metro_area}()},
 \code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
 \code{\link{read_neighborhood}()},
+\code{\link{read_pop_arrangements}()},
 \code{\link{read_region}()},
+\code{\link{read_schools}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
 \code{\link{read_statistical_grid}()},
+\code{\link{read_urban_area}()},
+\code{\link{read_urban_concentrations}()},
 \code{\link{read_weighting_area}()}
 }
-\concept{general area functions}
+\concept{area functions}

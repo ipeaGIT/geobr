@@ -7,22 +7,22 @@
 cep_to_state(cep)
 }
 \arguments{
-\item{cep}{A numeric string with 8 digits in the format \code{xxxxxxxx}, or a
-character with the format \code{'xxxxx-xxx'}.}
+\item{cep}{A character string with 8 digits in the format \code{"xxxxxxxx"}, or
+with the format \code{'xxxxx-xxx'}.}
 }
 \value{
-A character string with a state abbreviation
+A character string with a state abbreviation.
 }
 \description{
-Zips codes in Brazil are known as CEP, the abbreviation for postal code address.
-CEPs in Brazil are 8 digits long, with the format \code{'xxxxx-xxx'}.
+Zips codes in Brazil are known as CEP, the abbreviation for postal code
+address. CEPs in Brazil are 8 digits long, with the format \code{'xxxxx-xxx'}.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 uf <- cep_to_state(cep = '69900-000')
 
 # Or:
-uf <- cep_to_state(cep = 69900000)
+uf <- cep_to_state(cep = '69900000')
+\dontshow{\}) # examplesIf}
 }
-
-}
+\concept{cep functions}

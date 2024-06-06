@@ -7,7 +7,7 @@
 read_neighborhood(year = 2010, simplified = TRUE, showProgress = TRUE)
 }
 \arguments{
-\item{year}{Year of the data. Defaults to \code{2010}}
+\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -27,29 +27,37 @@ It is based on aggregations of the census tracts from the Brazilian
 census. Only 2010 data is currently available.
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Read neighborhoods of Brazilian municipalities
 n <- read_neighborhood(year=2010)
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-Other general area functions: 
+Other area functions: 
 \code{\link{read_amazon}()},
 \code{\link{read_biomes}()},
-\code{\link{read_census_tract}()},
+\code{\link{read_capitals}()},
 \code{\link{read_comparable_areas}()},
-\code{\link{read_conservation_units}()},
 \code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
 \code{\link{read_intermediate_region}()},
 \code{\link{read_meso_region}()},
+\code{\link{read_metro_area}()},
 \code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
+\code{\link{read_pop_arrangements}()},
 \code{\link{read_region}()},
+\code{\link{read_schools}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
 \code{\link{read_statistical_grid}()},
+\code{\link{read_urban_area}()},
+\code{\link{read_urban_concentrations}()},
 \code{\link{read_weighting_area}()}
 }
-\concept{general area functions}
+\concept{area functions}

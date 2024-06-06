@@ -93,17 +93,23 @@ pb_new_release("ipeaGIT/geobr",
   # head(metadata)
 
 
+  metadata[geo=='municipality' & year==2022]
 
+a <- metadata[geo=='health_facilities']
 
 
 ######### Step 3 -  upload data to github ----------------------
 all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
 
-# upload data
-piggyback::pb_upload(all_files[3082:length(all_files)],
-                     "ipeaGIT/geobr",
-                     "v1.7.0")
+  all_files <- all_files[all_files %like% 'census_tract']
+  all_files <- all_files[all_files %like% '2022']
 
+# upload data
+piggyback::pb_upload(all_files,
+                     "ipeaGIT/geobr",
+                     "v1.7.0"
+                     #,.token = ttt
+                     )
 
 #' https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting
 
@@ -146,11 +152,12 @@ piggyback::pb_upload(to_go,
 # metadata$file_name <- NULL
 
 
-# reorder columns
-setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 
 
 ######### Step 5 - check and save metadata ----------------------
+
+  # reorder columns
+  setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 
   # to avoid conflict with data.table
   metadata <- as.data.frame(metadata)
@@ -167,11 +174,13 @@ setcolorder(metadata, c("geo", "year", "code", "download_path", "code_abbrev"))
 # save updated metadata table
   # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv")
 
-  # upload updated metadata table github
-  piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
-                       "ipeaGIT/geobr",
-                       "v1.7.0")
-
+  # # upload updated metadata table github
+  # piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
+  #                      "ipeaGIT/geobr",
+  #                      "v1.7.0"
+  #                      #, .token = ttt
+  #                      )
+  #
 
 
 

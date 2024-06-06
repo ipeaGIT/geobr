@@ -12,9 +12,11 @@ read_comparable_areas(
 )
 }
 \arguments{
-\item{start_year}{Numeric. Start year to the period.}
+\item{start_year}{Numeric. Start year to the period in the YYYY format.
+Defaults TO \code{1970}.}
 
-\item{end_year}{Numeric. End year to the period. (defaults to 2010)}
+\item{end_year}{Numeric. End year to the period in the YYYY format. Defaults
+to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -33,8 +35,8 @@ This function downloads the shape file of minimum comparable area of
 municipalities, known in Portuguese as 'Areas minimas comparaveis (AMCs)'.
 The data is available for any combination of census years between 1872-2010.
 These data sets are generated based on the Stata code originally developed by
-\doi{10.1590/0101-416147182phe}{Philipp Ehrl}, and translated
-into \code{R} by the \code{geobr} team.
+Ehrl (2017) \doi{10.1590/0101-416147182phe}, and translated into \code{R} by the
+\code{geobr} team.
 }
 \details{
 These data sets are generated based on the original Stata code developed by
@@ -46,29 +48,36 @@ aggregation of Brazilian municipalities. Estudos Econômicos (São Paulo),
 }
 }
 \examples{
-\dontrun{ if (interactive()) {
-
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   amc <- read_comparable_areas(start_year=1970, end_year=2010)
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-Other general area functions: 
+Other area functions: 
 \code{\link{read_amazon}()},
 \code{\link{read_biomes}()},
-\code{\link{read_census_tract}()},
-\code{\link{read_conservation_units}()},
+\code{\link{read_capitals}()},
 \code{\link{read_country}()},
+\code{\link{read_disaster_risk_area}()},
+\code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},
+\code{\link{read_indigenous_land}()},
 \code{\link{read_intermediate_region}()},
 \code{\link{read_meso_region}()},
+\code{\link{read_metro_area}()},
 \code{\link{read_micro_region}()},
+\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
 \code{\link{read_neighborhood}()},
+\code{\link{read_pop_arrangements}()},
 \code{\link{read_region}()},
+\code{\link{read_schools}()},
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
 \code{\link{read_statistical_grid}()},
+\code{\link{read_urban_area}()},
+\code{\link{read_urban_concentrations}()},
 \code{\link{read_weighting_area}()}
 }
-\concept{general area functions}
+\concept{area functions}

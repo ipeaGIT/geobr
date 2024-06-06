@@ -3,11 +3,57 @@
 \docType{package}
 \name{geobr}
 \alias{geobr}
-\title{\code{geobr} package}
+\alias{geobr-package}
+\title{geobr: Download Official Spatial Data Sets of Brazil}
 \description{
-Easy access to shapefiles of the Brazilian Institute of Geography and Statistics (IBGE) and other official spatial data sets of Brazil
+Easy access to official spatial data sets of Brazil as 'sf' objects in R. The
+package includes a wide range of geospatial data available at various
+geographic scales and for various years with harmonized attributes,
+projection and fixed topology.
 }
-\details{
-See the README on
-\href{https://github.com/ipeaGIT/geobr#readme}{GitHub}
+\section{Usage}{
+
+Please check the vignettes for more on the package usage:
+\itemize{
+\item Introduction to geobr (R) on the \href{https://ipeagit.github.io/geobr/articles/intro_to_geobr.html}{website}.
 }
+}
+
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://ipeagit.github.io/geobr/}
+  \item \url{https://github.com/ipeaGIT/geobr}
+  \item Report bugs at \url{https://github.com/ipeaGIT/geobr/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Rafael H. M. Pereira \email{rafa.pereira.br@gmail.com} (\href{https://orcid.org/0000-0003-2125-7465}{ORCID})
+
+Authors:
+\itemize{
+  \item Caio Nogueira Goncalves
+}
+
+Other contributors:
+\itemize{
+  \item Paulo Henrique Fernandes de Araujo [contributor]
+  \item Guilherme Duarte Carvalho [contributor]
+  \item Rodrigo Almeida de Arruda [contributor]
+  \item Igor Nascimento [contributor]
+  \item Barbara Santiago Pedreira da  Costa [contributor]
+  \item Welligtton Silva  Cavedo [contributor]
+  \item Pedro R. Andrade [contributor]
+  \item Alan da Silva [contributor]
+  \item Carlos Kauê Vieira Braga [contributor]
+  \item Carl Schmertmann [contributor]
+  \item Alessandro Samuel-Rosa [contributor]
+  \item Daniel Ferreira [contributor]
+  \item Marcus Saraiva [contributor]
+  \item Beatriz Milz (\href{https://orcid.org/0000-0002-3064-4486}{ORCID}) [contributor]
+  \item Ipea - Institue for Applied Economic Research [copyright holder, funder]
+}
+
+}
+\keyword{internal}

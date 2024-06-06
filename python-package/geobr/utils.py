@@ -25,10 +25,12 @@ def url_solver(url):
 
     for url in urls:
 
-        response = requests.get(url)
-
-        if response.status_code == 200:
-            return response
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return response
+        except:
+            continue
 
     raise ConnectionError(
         "No mirrors are active. Please report to https://github.com/ipeaGIT/geobr/issues"
@@ -109,7 +111,7 @@ def select_year(metadata, year):
         years = ", ".join([str(i) for i in metadata["year"].unique()])
 
         raise Exception(
-            "Error: Invalid Value to argument year. "
+            "Error: Invalid Value to argument 'year/date'. "
             "It must be one of the following: "
             f'{_get_unique_values(metadata, "year")}'
         )

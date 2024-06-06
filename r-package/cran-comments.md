@@ -1,19 +1,20 @@
-## -- R CMD check results -------------------------------------- geobr 1.6.599909 ----
-Duration: 3m 49.4s
+── R CMD check results ─────────────────────────────────────────────────────── geobr 1.9.0 ────
+Duration: 11m 22.3s
 
-> checking data for non-ASCII characters ... NOTE
-    Note: found 58 marked UTF-8 strings
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-0 errors v | 0 warnings v | 1 note x
+# geobr v1.9.0
 
-* This is a submission to get the geobr package back on CRAN.
+**Major changes**
 
-The geobr package was suspended on CRAN on January 2022 because it continuously failed CRAN's policy to "fail gracefully" when there are any internet connection problems.
+- Function `read_health_facilities()` now has a new parameter `date`, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. Closes #334.
+- Functions `read_urban_area()` and `read_metro_area()` now have a new parameter `code_state`, which will allow users to filter selected states. Closes #338
 
-We have scrutinized the package, which has now gone through structural changes to address this issue. Here are the main changes:
-1. New internal function `check_connection()` and tests that cover cases when users have no internet connection, whem url links are offline, time out or work normally.
-2. All functions that require internet connection now use `check_connection()` and return informative messages when url links are offline or timeout.
-3. The data used in the package is now simultaneously stored in two independent servers, where one of them is used as a backup link. In other words, the geobr will download the data from server 1. If, for some reason, the download fails because of internet connection problems, then geobr tries to download the data from server 2. If this second attempt fails, then the package returns `invisible(NULL)` with an informative message.
+**Bug fix**
+- Using `data.table::rbindlist()` to rind data was throwing errors when some observations were of class `POLYGONS` and others were `MULTIPOLYGONS`. This has now been replaced with `dplyr::bind_rows()` at a very small performance penalty. Closes #346.
 
-We believe these changes and the redundancy in data storage have made the geobr package substantially more robust and in line with CRAN's policies.
+**New data**
+- schools for 2023
+- health facilities for 202303
+- census tracts for 2020 and 2022
 
