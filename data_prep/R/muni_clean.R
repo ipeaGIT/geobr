@@ -8,10 +8,10 @@
 clean_muni <- function( muni_raw_paths ){
 
   # year = 2000
-  # all_muni_raw_paths <- list.files(path = paste0('./data_raw/municipios/', year),
-  #                              pattern = '.rds',
-  #                              full.names = TRUE)
-  # f <- all_muni_raw_paths[20]
+  all_muni_raw_paths <- list.files(path = paste0('./data_raw/municipios/', year),
+                               pattern = '.rds',
+                               full.names = TRUE)
+  # f <- all_muni_raw_paths[1]
   #
   # # 6666
   #  muni_raw_paths <- all_muni_raw_paths[1]
@@ -116,17 +116,22 @@ clean_muni <- function( muni_raw_paths ){
       # remove geometries with area == 0
       temp_sf <- temp_sf[ as.numeric(sf::st_area(temp_sf)) != 0, ]
 
-    # convert to MULTIPOLYGON
-    temp_sf <- to_multipolygon(temp_sf)
-
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf)
 
+# 66666666666666666
+# rodar de novo, agora faznedo multiplogy APOS simplify
+# 66666666666666666
+  # convert to MULTIPOLYGON
+    temp_sf <- to_multipolygon(temp_sf)
+    temp_sf_simplified <- to_multipolygon(temp_sf_simplified)
 
     # Make any invalid geom valid # st_is_valid( sf)
     temp_sf <- fix_topoly(temp_sf)
     temp_sf_simplified <- fix_topoly(temp_sf_simplified)
 
+
+  #  aa <- subset(temp_sf, code_muni == 1508308)
 
     # Save cleaned data --------------------------------------------------------
 
