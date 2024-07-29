@@ -133,6 +133,21 @@ temp_sf <- st_make_valid(temp_sf)
 # st_is_valid(temp_sf, reason = TRUE)
 
 
+temp_sf <- st_read(shape[1], quiet = F, stringsAsFactors=F)
+
+temp_sf2 <- temp_sf |>
+  fgroup_by(Bioma, CD_Bioma) |>
+  fsummarise(geometry = st_union(geometry))
+
+temp_sf3 <- temp_sf |>
+  fmutate(geometry = s2::as_s2_geography(geometry)) |>
+  fgroup_by(Bioma, CD_Bioma) |>
+  fsummarise(geometry = s2::s2_union_agg(geometry)) |>
+  fmutate(geometry = st_as_sfc(geometry))
+
+
+
+
 
 ##### 4. Rename columns -------------------------
 

@@ -283,7 +283,8 @@ load_gpkg <- function(temps=NULL){
 
     # read files and pile them up
     files <- lapply(X=temps, FUN= sf::st_read, quiet=TRUE)
-    temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
+    # temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
+    temp_sf <- dplyr::bind_rows(files)
 
     # closes issue 284
     col1 <- names(temp_sf)[1]
