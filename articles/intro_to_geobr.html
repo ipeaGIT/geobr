@@ -12,14 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to geobr (R)">
-<meta property="og:description" content="geobr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -45,7 +44,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -65,7 +64,7 @@
 <li>
   <a href="https://github.com/ipeaGIT/geobr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -76,7 +75,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -84,7 +83,7 @@
       <h1 data-toc-skip>Introduction to geobr (R)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/geobr/tree/master/../vignettes/intro_to_geobr.Rmd" class="external-link"><code>../vignettes/intro_to_geobr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/geobr/tree/master/vignettes/intro_to_geobr.Rmd" class="external-link"><code>vignettes/intro_to_geobr.Rmd</code></a></small>
       <div class="hidden name"><code>intro_to_geobr.Rmd</code></div>
 
     </div>
@@ -355,13 +354,13 @@ the proportion of households connected, and (d) collect the results.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">esg</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   code_muni     rede  total cobertura</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1100015       0     <span style="text-decoration: underline;">7</span>443.   0      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1100023     182.   <span style="text-decoration: underline;">27</span>654.   0.006<span style="text-decoration: underline;">60</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1100031       0     <span style="text-decoration: underline;">1</span>979.   0      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1100049   <span style="text-decoration: underline;">10</span>019.   <span style="text-decoration: underline;">24</span>413.   0.410  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1100056       5.81  <span style="text-decoration: underline;">5</span>399    0.001<span style="text-decoration: underline;">08</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1100064      28.9   <span style="text-decoration: underline;">6</span>013.   0.004<span style="text-decoration: underline;">80</span></span></span></code></pre></div>
+<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   1<span style="text-decoration: underline;">100</span>015     0     <span style="text-decoration: underline;">7</span>443.   0      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   1<span style="text-decoration: underline;">100</span>023   182.   <span style="text-decoration: underline;">27</span>654.   0.006<span style="text-decoration: underline;">60</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   1<span style="text-decoration: underline;">100</span>031     0     <span style="text-decoration: underline;">1</span>979.   0      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   1<span style="text-decoration: underline;">100</span>049 <span style="text-decoration: underline;">10</span>019.   <span style="text-decoration: underline;">24</span>413.   0.410  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   1<span style="text-decoration: underline;">100</span>056     5.81  <span style="text-decoration: underline;">5</span>399    0.001<span style="text-decoration: underline;">08</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   1<span style="text-decoration: underline;">100</span>064    28.9   <span style="text-decoration: underline;">6</span>013.   0.004<span style="text-decoration: underline;">80</span></span></span></code></pre></div>
 <p>Now we only need to download the geometries of Brazilian
 municipalities from <strong>geobr</strong>, merge the spatial data with
 our estimates and map the results.</p>
@@ -372,7 +371,6 @@ our estimates and map the results.</p>
 <span><span class="co">#&gt; Using year/date 2010</span></span>
 <span></span>
 <span><span class="co"># merge data</span></span>
-<span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span><span class="op">)</span></span>
 <span><span class="va">esg_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">muni_sf</span>, <span class="va">esg</span>, by <span class="op">=</span> <span class="st">'code_muni'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plot map</span></span>
@@ -390,9 +388,7 @@ our estimates and map the results.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -405,16 +401,16 @@ our estimates and map the results.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
