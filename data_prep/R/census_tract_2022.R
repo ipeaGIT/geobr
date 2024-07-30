@@ -18,6 +18,7 @@ dir.create(dest_dir, recursive = T)
 
 if(year == 2022){
 
+  ftp <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_preliminares/malha_com_atributos/setores/gpkg/BR/BR_Malha_Preliminar_2022.zip'
   dest_file <-  download_file(file_url = ftp, dest_dir = raw_dir)
 
 }
@@ -28,21 +29,22 @@ if(year == 2022){
   temp_dir <- tempdir()
 
   unzip(dest_file, exdir = temp_dir)
-
-  local_file <- unzip_fun(dest_file)
-
+  local_file <- list.files(temp_dir, full.names = T, pattern = 'gpkg')
 
 
-df <- sf::st_read('./data_raw/census_tracts/2022/BR_Malha_Preliminar_2022.gpkg')
-saveRDS(df, './data_raw/census_tracts/2022/BR_Malha_Preliminar_2022.rds')
+
+# read and save original raw data
+df <- sf::st_read(local_file)
+saveRDS(df, paste0(raw_dir,'/BR_Malha_Preliminar_2022.rds'))
+
+
 
 
 
 #### 1. clean and save data -----------------
+df <- readRDS(paste0(raw_dir,'/BR_Malha_Preliminar_2022.rds'))
 
-df$AREA_KM2 <- NULL
-
-temp_sf <- dplyr::rename(df,
+temp_sf <- dplyr::select(df,
                      code_tract = CD_SETOR,
                      code_muni = CD_MUN,
                      name_muni = NM_MUN,
@@ -73,10 +75,14 @@ temp_sf <- mutate(temp_sf, code_tract = gsub("P","", code_tract))
 head(temp_sf)
 
 
-# make all columns as character
-char_cols <- names(temp_sf)
-char_cols <- char_cols[char_cols %like% 'code_|name_']
+# make all name columns as character
+all_cols <- names(temp_sf)
+char_cols <- all_cols[all_cols %like% 'name_']
 temp_sf <- mutate(temp_sf, across(all_of(char_cols), as.character))
+
+# make all columns as character
+num_cols <- all_cols[all_cols %like% 'code_']
+temp_sf <- mutate(temp_sf, across(all_of(char_cols), as.numeric))
 
 
 # Use UTF-8 encoding
@@ -87,18 +93,32 @@ temp_sf <- harmonize_projection(temp_sf)
 gc()
 
 
+
+# remove lagoa dos patos e mirim
+temp_sf <- subset(temp_sf, code_muni != 430000100000000)
+temp_sf <- subset(temp_sf, code_muni != 430000200000000)
+
+
+
+
 # harmonize and save
 
 save_state <- function(code_uf){ # code_uf <- 33
 
+    message(code_uf)
+
     temp_sf2 <- subset(temp_sf, code_state == code_uf)
-    # temp_sf2 <- subset(temp_sf2, code_muni == '3304557')
+    # temp_sf2 <- subset(temp_sf, code_muni == '3304557')
+
+    temp_sf2 <- fix_topoly(temp_sf2)
 
     # convert to MULTIPOLYGON
     temp_sf2 <- to_multipolygon(temp_sf2)
 
+
     # simplify
     temp_sf_simplified <- simplify_temp_sf(temp_sf2, tolerance = 10)
+    temp_sf_simplified <- fix_topoly(temp_sf_simplified)
 
     # Save cleaned sf in the cleaned directory
     sf::st_write(temp_sf2, paste0(dest_dir,'/', code_uf,'census_tract_', year, '.gpkg'))
@@ -112,10 +132,10 @@ all_states <- unique(temp_sf$code_state)
 # Apply function to save the data
 gc(reset = T)
 
-# tictoc::tic()
-# future::plan(strategy = 'multisession')
-# furrr::future_map(.x=all_states, .f=save_state, .progress = T)
-# tictoc::toc()
+tictoc::tic()
+future::plan(strategy = 'multisession')
+furrr::future_map(.x=all_states, .f=save_state, .progress = T)
+tictoc::toc()
 
 
 tictoc::tic()

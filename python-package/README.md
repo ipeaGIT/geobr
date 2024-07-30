@@ -63,9 +63,9 @@ It adds:
 | read_region               | Yes         | Super |
 | read_semiarid             | Yes         | Super |
 | read_state                | Yes         | Super |
-| read_statistical_grid     | No          | No    |
+| read_statistical_grid     | Yes         | No    |
 | read_urban_area           | Yes         | Super |
-| read_urban_concentrations | No          | Super |
+| read_urban_concentrations | Yes         | Super |
 | read_weighting_area       | Yes         | No    |
 | list_geobr                | Yes         | Yes   |
 | lookup_muni               | Yes         | No    |

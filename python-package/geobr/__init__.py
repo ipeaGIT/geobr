@@ -27,3 +27,4 @@ from .read_urban_concentrations import read_urban_concentrations
 from .read_schools import read_schools
 from .read_comparable_areas import read_comparable_areas
 from .read_biomes import read_biomes
+from .read_statistical_grid import read_statistical_grid
