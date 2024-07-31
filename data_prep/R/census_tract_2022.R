@@ -1,7 +1,7 @@
 library(sf)
 library(data.table)
 library(dplyr)
-
+library(furrr)
 
 year <- 2022
 
@@ -82,7 +82,11 @@ temp_sf <- mutate(temp_sf, across(all_of(char_cols), as.character))
 
 # make all columns as character
 num_cols <- all_cols[all_cols %like% 'code_']
-temp_sf <- mutate(temp_sf, across(all_of(char_cols), as.numeric))
+temp_sf <- mutate(temp_sf, across(all_of(num_cols), as.numeric))
+
+# remove lagoa dos patos e mirim
+temp_sf <- subset(temp_sf, code_muni != 430000100000000)
+temp_sf <- subset(temp_sf, code_muni != 430000200000000)
 
 
 # Use UTF-8 encoding
@@ -91,12 +95,6 @@ temp_sf <- use_encoding_utf8(temp_sf)
 # Harmonize spatial projection CRS, using SIRGAS 2000 epsg (SRID): 4674
 temp_sf <- harmonize_projection(temp_sf)
 gc()
-
-
-
-# remove lagoa dos patos e mirim
-temp_sf <- subset(temp_sf, code_muni != 430000100000000)
-temp_sf <- subset(temp_sf, code_muni != 430000200000000)
 
 
 
@@ -132,10 +130,13 @@ all_states <- unique(temp_sf$code_state)
 # Apply function to save the data
 gc(reset = T)
 
-tictoc::tic()
-future::plan(strategy = 'multisession')
-furrr::future_map(.x=all_states, .f=save_state, .progress = T)
-tictoc::toc()
+# tictoc::tic()
+# future::plan(strategy = 'multisession')
+# furrr::future_map(.x=all_states,
+#                   .f=save_state,
+#                   .progress = T,
+#                   .options = furrr_options(seed=TRUE))
+# tictoc::toc()
 
 
 tictoc::tic()

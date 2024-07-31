@@ -183,4 +183,10 @@ piggyback::pb_upload(to_go,
   #
 
 
+f <- list.files('//storage1/geobr/data_gpkg/census_tract/2022', full.names = T)
+piggyback::pb_upload(f,
+                     "ipeaGIT/geobr",
+                     "v1.7.0"
+                     #, .token = ttt
+                     )
 
