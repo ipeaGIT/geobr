@@ -12,8 +12,11 @@ library(piggyback)
 ######### Step 1 - create github release where data will be uploaded to ----------------------
 # https://docs.ropensci.org/piggyback/articles/intro.html
 # https://github.com/settings/tokens
+# https://usethis.r-lib.org/articles/git-credentials.html
 
-usethis::edit_r_environ()
+usethis::edit_r_environ() # ttt
+gitcreds::gitcreds_set()
+
 
 # create new release
 pb_new_release("ipeaGIT/geobr",
@@ -93,7 +96,7 @@ pb_new_release("ipeaGIT/geobr",
   # head(metadata)
 
 
-  metadata[geo=='municipality' & year==2022]
+  metadata[geo=='semiarid']
 
 a <- metadata[geo=='health_facilities']
 
@@ -101,8 +104,8 @@ a <- metadata[geo=='health_facilities']
 ######### Step 3 -  upload data to github ----------------------
 all_files <- list.files("//storage1/geobr/data_gpkg",  full.names = T, recursive = T)
 
-  all_files <- all_files[all_files %like% 'census_tract']
-  all_files <- all_files[all_files %like% '2022']
+  all_files <- all_files[all_files %like% 'semiarid']
+  # all_files <- all_files[all_files %like% '2022']
 
 # upload data
 piggyback::pb_upload(all_files,
@@ -164,7 +167,7 @@ piggyback::pb_upload(to_go,
   table(metadata$geo)
   table(metadata$year)
 
-  subset(metadata, geo == 'pop_arrengements')
+  subset(metadata, geo == 'semiarid')
   subset(metadata, geo == 'urban_concentrations')
   subset(metadata, geo == 'meso_region')[1:4,]
   subset(metadata, geo == 'micro_region')[1:4,]
@@ -174,19 +177,14 @@ piggyback::pb_upload(to_go,
 # save updated metadata table
   # readr::write_csv(metadata,"//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv")
 
-  # # upload updated metadata table github
-  # piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
-  #                      "ipeaGIT/geobr",
-  #                      "v1.7.0"
-  #                      #, .token = ttt
-  #                      )
-  #
+  # upload updated metadata table github
+  piggyback::pb_upload("//storage1/geobr/metadata/metadata_1.7.0_gpkg.csv",
+                       "ipeaGIT/geobr",
+                       "v1.7.0"
+                     #  , .token = gh::gh_token()
+                       )
 
 
-f <- list.files('//storage1/geobr/data_gpkg/census_tract/2022', full.names = T)
-piggyback::pb_upload(f,
-                     "ipeaGIT/geobr",
-                     "v1.7.0"
-                     #, .token = ttt
-                     )
+
+
 
