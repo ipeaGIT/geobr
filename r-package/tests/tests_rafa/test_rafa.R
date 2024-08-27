@@ -38,6 +38,18 @@ b <-read_state(code_state = c('all'))
 )
 
 
+### AMC -------------------------
+
+how to unnest AMC results table
+
+amc <- read_comparable_areas(  start_year = 1970, end_year = 2010) %>% setDT
+str(amc)
+amc_unnested <- amc[, .(code_amc, list_code_muni_2010 = strsplit(list_code_muni_2010, ",")), by = 1:nrow(amc)]
+amc_unnested <- amc_unnested[, .(code_amc, codmun = as.numeric(unlist(list_code_muni_2010)))][,.(codmun,code_amc)]
+amc_unnested[,codmun:=as.integer(codmun)]
+
+
+
 ### 0. Data tests  -------------------------
 
 data("grid_state_correspondence_table")
