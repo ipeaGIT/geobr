@@ -26,7 +26,10 @@
 #' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
 #'
-read_state <- function(code_state="all", year=2010, simplified=TRUE, showProgress=TRUE){
+read_state <- function(code_state = "all",
+                       year = 2010,
+                       simplified  = TRUE,
+                       showProgress = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="state", year=year, simplified=simplified)

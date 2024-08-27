@@ -17,7 +17,9 @@
 #' # Read specific year
 #' reg <- read_region(year=2018)
 #'
-read_region <- function(year=2010, simplified=TRUE, showProgress=TRUE){
+read_region <- function(year = 2010,
+                        simplified = TRUE,
+                        showProgress = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="regions", year=year, simplified=simplified)
