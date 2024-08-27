@@ -280,24 +280,29 @@ to_multipolygon <- function(temp_sf){
   # checks
   if (length(geom_types) > 1 | any(  !( data.table::like(geom_types,"MULTIPOLYGON")))) {
 
-      # remove linstring
+      # remove linestring
       temp_sf <- subset(temp_sf, sf::st_geometry_type(temp_sf) |> as.character() != "LINESTRING")
 
       # get polyons
       temp_sf <- sf::st_cast(temp_sf, "POLYGON")
       temp_sf <- sf::st_collection_extract(temp_sf, "POLYGON")
       temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+
     }
 
-      # merge polygons into single multiploygon
+  # convert everything to MULTIPOLYGON
+        temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
+
+      # merge polygons into single MULTIPOLYGON
       col_names <- names(temp_sf)
       col_names <- col_names[ !col_names %like% 'geometry|geom']
 
       temp_sf <- temp_sf |>
-        group_by(across(all_of(col_names))) |>
-        summarise() |>
-        dplyr::ungroup()
+        dplyr::group_by(across(all_of(col_names))) |>
+        dplyr::summarise()
 
+
+      temp_sf <- sf::st_cast(temp_sf, "MULTIPOLYGON")
 
        return(temp_sf)
       }
@@ -342,6 +347,7 @@ simplify_temp_sf <- function(temp_sf, tolerance=100){
 ## Function to clean and dissolve the borders of polygons by groups
 dissolve_polygons <- function(mysf, group_column){
 
+
   # a) make sure we have valid geometries
   mysf <- fix_topoly(mysf)
 
@@ -354,6 +360,7 @@ dissolve_polygons <- function(mysf, group_column){
 
     # c.1) subset region
     temp_region <- subset(mysf, get(group_column, mysf)== grp )
+
 
     temp_region <- summarise(temp_region, .by = group_column)
     # plot(temp_region)
