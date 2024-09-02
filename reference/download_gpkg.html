@@ -66,7 +66,11 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">download_gpkg</span><span class="op">(</span><span class="va">file_url</span>, progress_bar <span class="op">=</span> <span class="va">showProgress</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">download_gpkg</span><span class="op">(</span></span>
+<span>  file_url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">file_url</span>,</span>
+<span>  showProgress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">showProgress</span>,</span>
+<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">cache</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -77,8 +81,16 @@
 <dd><p>A string with the file_url address of a geobr dataset</p></dd>
 
 
-<dt id="arg-progress-bar">progress_bar<a class="anchor" aria-label="anchor" href="#arg-progress-bar"></a></dt>
-<dd><p>Logical. Defaults to (TRUE) display progress bar</p></dd>
+<dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>
+<dd><p>Logical. Defaults to <code>TRUE</code> display progress bar.</p></dd>
+
+
+<dt id="arg-cache">cache<a class="anchor" aria-label="anchor" href="#arg-cache"></a></dt>
+<dd><p>Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to <code>cache = TRUE</code>. By default,
+<code>geobr</code> stores data files in a temporary directory that exists only
+within each R session. If <code>cache = FALSE</code>, the function will download
+the data again and overwrite the local file.</p></dd>
 
 </dl></div>
 

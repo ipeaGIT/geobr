@@ -70,7 +70,7 @@ Ministry of Environment (MMA) and can be found at "http://mapas.mma.gov.br/i3geo
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_amazon</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2012</span>, simplified <span class="op">=</span> <span class="cn">TRUE</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_amazon</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2012</span>, simplified <span class="op">=</span> <span class="cn">TRUE</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,6 +92,14 @@ topology with a <code>dTolerance</code> of 100.</p></dd>
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>
 <dd><p>Logical. Defaults to <code>TRUE</code> display progress bar.</p></dd>
+
+
+<dt id="arg-cache">cache<a class="anchor" aria-label="anchor" href="#arg-cache"></a></dt>
+<dd><p>Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to <code>cache = TRUE</code>. By default,
+<code>geobr</code> stores data files in a temporary directory that exists only
+within each R session. If <code>cache = FALSE</code>, the function will download
+the data again and overwrite the local file.</p></dd>
 
 </dl></div>
     <div id="value">
