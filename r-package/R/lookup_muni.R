@@ -33,7 +33,7 @@
 lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
 
   # create tempfile to save metadata
-  tempf <- file.path(tempdir(), "lookup_muni_2010.csv")
+  tempf <- fs::path(fs::path_temp(), "lookup_muni_2010.csv")
 
   # IF metadata has already been downloaded
   if (file.exists(tempf) &  file.info(tempf)$size != 0) {
@@ -43,7 +43,7 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   } else {
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="lookup_muni", year=2010, simplified=F)
+  temp_meta <- select_metadata(geography="lookup_muni", year=2010, simplified=FALSE)
 
   # check if download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
@@ -69,16 +69,24 @@ lookup_muni <- function(name_muni = NULL, code_muni = NULL) {
   }
 
   # download data
-  try( httr::GET(url=file_url,
-                 httr::write_disk(tempf, overwrite = T),
-                 config = httr::config(ssl_verifypeer = FALSE)
-                 ), silent = TRUE)
+  try( silent = TRUE,
+       downloaded_files <- curl::multi_download(
+         urls = file_url,
+         destfiles = tempf,
+         resume = TRUE,
+         progress = FALSE
+       )
+  )
+
+  # if anything fails, return NULL
+  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
+    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
+    message(msg)
+    return(invisible(NULL))
+  }
 
   }
 
-  # check if download failed
-  msg <- "Problem connecting to data server. Please try it again in a few minutes."
-  if (!file.exists(tempf) | file.info(tempf)$size == 0) {message(msg); return(invisible(NULL)) }
 
   ### read/return lookup data
   lookup_table_2010 <- utils::read.csv(tempf, stringsAsFactors = F, encoding = 'UTF-8')

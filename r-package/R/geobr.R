@@ -42,7 +42,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010',
                                                         'temp_meta',
                                                         'group_by',
                                                         'showProgress',
-                                                        'year'
+                                                        'year',
+                                                        'url2'
                                                         ))
 
 .onLoad <- function(lib, pkg) {

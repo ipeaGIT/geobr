@@ -57,7 +57,7 @@ if( x < 1992){
     file_url <- as.character(temp_meta$download_path)
 
     # download gpkg
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -70,7 +70,7 @@ if( x < 1992){
     file_url <- as.character(temp_meta$download_path)
 
     # download gpkg
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -93,7 +93,7 @@ if( x < 1992){
       file_url <- as.character(temp_meta$download_path)
 
       # download gpkg
-      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
       # check if download failed
       if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -112,12 +112,12 @@ if( x < 1992){
 
 
     # download gpkg
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }
 
-    if(nchar(code_state)==2){
+    if (nchar(code_state)==2) {
       return(temp_sf)
 
     # } else if(code_state %in% shape$code_state){

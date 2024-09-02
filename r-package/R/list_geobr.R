@@ -14,7 +14,7 @@
 list_geobr <- function(){
 
 # Get readme.md file
-tempf <- file.path(tempdir(), "readme.md")
+tempf <- fs::path(fs::path_temp(), "readme.md")
 
 # check if metadata has already been downloaded
 if (file.exists(tempf) & file.info(tempf)$size != 0) {
@@ -30,9 +30,15 @@ if (file.exists(tempf) & file.info(tempf)$size != 0) {
       )
   if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
 
-  try(silent = TRUE,
-      httr::GET(url= git_url, httr::write_disk(tempf, overwrite = T))
-      )
+  try( silent = TRUE,
+       downloaded_files <- curl::multi_download(
+         urls = git_url,
+         destfiles = tempf,
+         resume = TRUE,
+         progress = FALSE
+       )
+  )
+
   readme <- readLines(tempf, encoding = "UTF-8")
 }
 

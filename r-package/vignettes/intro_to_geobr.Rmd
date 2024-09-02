@@ -40,9 +40,9 @@ Now let's load the libraries we'll use in this vignette.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 library(geobr)
-library(ggplot2)
 library(sf)
 library(dplyr)
+library(ggplot2)
 ```
 
 

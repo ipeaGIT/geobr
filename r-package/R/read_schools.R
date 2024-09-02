@@ -31,7 +31,7 @@ read_schools <- function(year=2020, showProgress=TRUE ){
     file_url <- as.character(temp_meta$download_path)
 
   # download files
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }

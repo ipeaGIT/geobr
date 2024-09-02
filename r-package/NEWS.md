@@ -1,3 +1,15 @@
+# geobr v1.9.19999 dev
+
+
+**Minor changes**
+
+- Now using `curl::multi_download()` to download files in parallel
+- {geobr} now imports {fs} to use robust cross-platform file system operations
+- Removed dependency on the {httr} package
+- Simplified internal functions
+
+
+
 # geobr v1.9.0
 
 **Major changes**

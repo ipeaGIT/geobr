@@ -4,12 +4,22 @@
 \alias{download_gpkg}
 \title{Download geopackage to tempdir}
 \usage{
-download_gpkg(file_url, progress_bar = showProgress)
+download_gpkg(
+  file_url = parent.frame()$file_url,
+  showProgress = parent.frame()$showProgress,
+  cache = parent.frame()$cache
+)
 }
 \arguments{
 \item{file_url}{A string with the file_url address of a geobr dataset}
 
-\item{progress_bar}{Logical. Defaults to (TRUE) display progress bar}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to \code{cache = TRUE}. By default,
+\code{geobr} stores data files in a temporary directory that exists only
+within each R session. If \code{cache = FALSE}, the function will download
+the data again and overwrite the local file.}
 }
 \description{
 Download geopackage to tempdir

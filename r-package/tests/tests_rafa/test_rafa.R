@@ -127,13 +127,7 @@ options(timeout=3)
 
 x='http://example.com:81'
 
-a <- try(silent = TRUE,
 
-    httr::GET(url=x, #httr::progress(),
-               httr::write_disk('temps.csv', overwrite = T),
-               config = httr::config(ssl_verifypeer = FALSE))
-
-)
 
 # ok com metadado, mas sem internet -----------------------------
 download_metadata()

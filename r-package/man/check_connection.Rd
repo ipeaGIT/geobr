@@ -18,6 +18,6 @@ check_connection(
 Logical. \code{TRUE} if url is working, \code{FALSE} if not.
 }
 \description{
-Checks if there is an internet connection with Ipea server to download aop data.
+Checks if there is an internet connection with Ipea server.
 }
 \keyword{internal}

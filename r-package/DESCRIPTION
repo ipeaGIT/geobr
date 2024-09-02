@@ -31,10 +31,10 @@ LazyData: TRUE
 Depends:
     R (>= 3.5.0)
 Imports:
-      curl,
+      curl (>= 5.0.0),
       dplyr (>= 0.8-3),
       data.table,
-      httr (>= 1.4.1),
+      fs,
       methods,
       sf (>= 0.9-3),
       utils

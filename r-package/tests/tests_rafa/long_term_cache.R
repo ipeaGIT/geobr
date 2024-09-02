@@ -1,3 +1,24 @@
+# pacotes pontos para chace ce arquivos
+https://github.com/dfsp-spirit/pkgfilecache
+https://gitlab.com/cnrgh/databases/r-fscache
+
+
+#' Cache options
+#' 1) criar gestao de etag in the house
+#'
+#' 2) {httr2} e remove arquivos .BODY
+#'    - pode remover o body OU arquivo.
+#'    - Soh nao pode apagar body & arquivo & manter rds
+#'    - baixa de novo se arquivo atualiza: sim
+#'
+#' 3) usar {curl} multi_download (aguardando resposta sobre etag)
+#'    - baixa de novo se arquivo atualiza: sim, SOH se tamanho de arquivo for diferente
+falta soh
+- adicionar parametro template de cache em todas funcoes (municipality ja foi)
+- substituir bar_progress por showProgress em todas funcoes (municipality ja foi)
+
+
+
 ok # get etag of url
 # create name of local_etag
 # check if etag exsists locally / is identical
@@ -5,8 +26,8 @@ ok # get etag of url
   # if now, save local tag and download file
 
 
-
-
+# md5/hash of local file
+tools::md5sum(files = '22municipality_2015.gpkg')
 
 
 # long-term cache
@@ -22,10 +43,62 @@ as <- 'https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/amazonia_legal_
 url_d <- dput(file_url)
 
 
-url <- c("https://www.ipea.gov.br/geobr/data_gpkg/state/2010/11state_2010_simplified.gpkg",
-         "https://www.ipea.gov.br/geobr/data_gpkg/state/2010/12state_2010_simplified.gpkg",
-         "https://www.ipea.gov.br/geobr/data_gpkg/state/2010/13state_2010_simplified.gpkg"
-         )
+url <- c(
+         "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/33municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/35municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/31municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/11municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/27municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/26municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/25municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/24municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/23municipality_2015.gpkg",
+         # "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/22municipality_2015.gpkg",
+         "https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/21municipality_2015.gpkg"
+
+)
+
+
+#benchmark
+library(tictoc)
+
+tic()
+downloaded_files <- curl::multi_download(
+  urls = url,
+  destfiles = basename(url),
+  progress = TRUE,
+  resume = T
+)
+toc()
+
+# 5.38, 2.27
+
+tic()
+reqs <- lapply(X=url, FUN=httr2::request)
+resp <- httr2::req_perform_parallel(req = reqs,
+                                    progress = T,
+                                    path = basename(url))
+
+toc()
+# 6.2, 4.69
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # otimo exemplo
@@ -45,28 +118,21 @@ download_files <- function(url){
   #input url
   #output path to local file
 
-  # function for single url
-  download_single_file <- function(url){
-
-    dest_file <- basename(url)
+  dest_files <- basename(url)
 
     # Create a request object for the URL
-    req <- httr2::request(url)
+    reqs <- lapply(X=url, FUN=httr2::request)
 
-    # Add SSL configuration to the request (disabling SSL verification)
-    req <- httr2::req_options(req, ssl_verifypeer = FALSE)
 
-    # Perform the request and save the content to a file
-    resp <- httr2::req_perform(req = req_progress(req, type = "down"),
-                               path = dest_file)
-    return(dest_file)
-  }
+    # # Add SSL configuration to the request (disabling SSL verification)
+    reqs <- lapply(X=reqs, FUN=httr2::req_options, ssl_verifypeer = FALSE)
 
-  # results for input list
-  out_file <- lapply(X = url, FUN = download_single_file)
-  out_file <- unlist(out_file)
-  return(out_file)
+    # download multiple files in parallel
+    resp <- httr2::req_perform_parallel(req = reqs,
+                                        progress = T,
+                                        path = dest_files)
 
+    return(dest_files)
   }
 
 
@@ -168,9 +234,7 @@ fff <- HEAD(url = f)
 
 
 
-# pacotes:
-https://enpiar.com/r/httpcache/articles/httpcache.html
-https://github.com/dfsp-spirit/pkgfilecache
+
 
 library(tools)
 
@@ -188,3 +252,103 @@ urls_ibge = c(
 
 arqs_ibge = paste0(dest_dir,"/",basename(urls_ibge))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#benchmark
+library(tictoc)
+
+url = 'https://github.com/ipeaGIT/censobr/releases/download/v0.3.1/test_2000_families.parquet'
+
+tic()
+downloaded_files <- curl::multi_download(
+  urls = url,
+  destfiles = basename(url),
+  progress = TRUE,
+  resume = T
+)
+toc()
+
+# 10.2    1.7
+
+tools::md5sum('test_2000_families.parquet') |> unname()
+
+tools::md5sum(url) |> unname()
+
+
+
+# cache with curl::multi_download ----------------------------------
+library(tictoc)
+url = 'https://github.com/ipeaGIT/censobr/releases/download/v0.3.1/test2_2000_families.parquet'
+
+tictoc::tic()
+downloaded_files <- curl::multi_download(
+  urls = url,
+  destfiles = basename(url),
+  progress = TRUE,
+  resume = T
+)
+tictoc::toc()
+# first 3.7 sec elapsed
+
+# second 1.01 sec elapsed 0.89 sec elapsed
+
+# changed file
+
+
+# cache with httr2 ----------------------------------
+
+library(httr2)
+
+url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.3.1/test2_2000_families.parquet'
+
+reqs <- lapply(X=url, FUN=httr2::request)
+
+reqs <- lapply(X=reqs, FUN=httr2::req_options,
+               ssl_verifypeer = FALSE
+               #  , nobody = TRUE
+)
+
+reqs2 <- lapply(X= reqs, FUN = httr2::req_cache, path = '.')
+
+tictoc::tic()
+resp <- httr2::req_perform_parallel(req = reqs2,
+                                    progress = T,
+                                    path = basename(url))
+tictoc::toc()
+
+# first 3.21 sec elapsed 0.99 sec elapsed
+
+
+# second
+
+# deleted body
+
+# changed file
+
+'9eb198b525e490ad929d1e4857eb4ec2.rds'
+
+tools::md5sum(files = 'test2_2000_families.parquet')
+
+
+
+system.time(
+
+geobr::read_municipality(code_muni = 'all', year = 2010,cache = T)
+)

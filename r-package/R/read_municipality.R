@@ -13,7 +13,7 @@
 #'        the `geobr::lookup_muni()` function.
 #' @template simplified
 #' @template showProgress
-
+#' @template cache
 #'
 #' @return An `"sf" "data.frame"` object
 #'
@@ -34,7 +34,8 @@
 read_municipality <- function(code_muni = "all",
                               year = 2010,
                               simplified = TRUE,
-                              showProgress = TRUE) {
+                              showProgress = TRUE,
+                              cache = TRUE) {
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="municipality", year=year, simplified=simplified)
@@ -51,7 +52,9 @@ read_municipality <- function(code_muni = "all",
       file_url <- as.character(temp_meta$download_path)
 
       # download gpkg
-      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      temp_sf <- download_gpkg(file_url = file_url,
+                               showProgress = showProgress,
+                               cache = cache)
 
       # check if download failed
       if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -112,7 +115,9 @@ read_municipality <- function(code_muni = "all",
       file_url <- as.character(temp_meta$download_path)
 
       # download files
-      temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+      temp_sf <- download_gpkg(file_url = file_url,
+                               showProgress = showProgress,
+                               cache = cache)
 
       # check if download failed
       if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -131,7 +136,7 @@ read_municipality <- function(code_muni = "all",
     if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_muni, 1, 2))$download_path) }
 
     # download files
-    sf <- download_gpkg(file_url, progress_bar = showProgress)
+    sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(sf)) { return(invisible(NULL)) }

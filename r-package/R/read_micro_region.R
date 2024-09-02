@@ -28,7 +28,10 @@
 #' # Read all micro regions at a given year
 #'   micro <- read_micro_region(code_micro="all", year=2010)
 #'
-read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, showProgress=TRUE){
+read_micro_region <- function(code_micro="all",
+                              year=2010,
+                              simplified=TRUE,
+                              showProgress=TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="micro_region", year=year, simplified=simplified)
@@ -45,7 +48,7 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
     file_url <- as.character(temp_meta$download_path)
 
     # download files
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -65,7 +68,7 @@ read_micro_region <- function(code_micro="all", year=2010, simplified=TRUE, show
 
 
     # download files
-    sf <- download_gpkg(file_url, progress_bar = showProgress)
+    sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(sf)) { return(invisible(NULL)) }

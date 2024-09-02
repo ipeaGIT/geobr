@@ -48,7 +48,7 @@ read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE
         file_url <- as.character(temp_meta$download_path)
 
         # download files
-        temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+        temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
         # check if download failed
         if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -67,7 +67,7 @@ read_weighting_area <- function(code_weighting="all", year=2010, simplified=TRUE
       if (is.character(code_weighting)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_weighting, 1, 2))$download_path) }
 
     # download files
-    temp_sf <- download_gpkg(file_url, progress_bar = showProgress)
+    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }

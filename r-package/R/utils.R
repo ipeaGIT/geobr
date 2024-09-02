@@ -100,31 +100,47 @@ select_metadata <- function(geography, year=NULL, simplified=NULL){
 download_metadata <- function(){ # nocov start
 
   # create tempfile to save metadata
-  tempf <- file.path(tempdir(), "metadata_gpkg.csv")
+  tempf <- fs::path(fs::path_temp(), "metadata_geobr_gpkg.csv")
 
   # IF metadata has already been successfully downloaded
   if (file.exists(tempf) & file.info(tempf)$size != 0) {
 
   } else {
 
-    # TRY 1: download metadata to temp file
-    metadata_link <- 'https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/metadata_1.7.0_gpkg.csv'
+  # test server connection with github
+  metadata_link <- 'https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/metadata_1.7.0_gpkg.csv'
+  try( silent = TRUE,
+       check_con <- check_connection(metadata_link, silent = TRUE)
+  )
+
+  # if connection with github fails, try connection with ipea
+  if (is.null(check_con) | isFALSE(check_con)) {
+    metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv'
     try( silent = TRUE,
-         httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = TRUE))
-         )
+         check_con <- check_connection(metadata_link, silent = FALSE)
+    )
 
-    # TRY 2: if download failed, try again using backup link
-    if (!file.exists(tempf) | file.info(tempf)$size == 0) {
-      metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv'
-      try( silent = TRUE,
-           httr::GET(url= metadata_link, httr::write_disk(tempf, overwrite = TRUE))
-           )
-    }
+    if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
+  }
 
-    # if everything fails, return NULL
-    if (!file.exists(tempf) | file.info(tempf)$size == 0) { return(invisible(NULL)) }
 
-    }
+  # download metadata to temp file
+  try( silent = TRUE,
+       downloaded_files <- curl::multi_download(
+         urls = metadata_link,
+         destfiles = tempf,
+         resume = TRUE,
+         progress = FALSE
+       )
+  )
+
+  # if anything fails, return NULL
+  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
+    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
+    message(msg)
+    return(invisible(NULL))
+  }
+  }
 
   # read metadata
   # metadata <- data.table::fread(tempf, stringsAsFactors=FALSE)
@@ -144,118 +160,59 @@ download_metadata <- function(){ # nocov start
 #' Download geopackage to tempdir
 #'
 #' @param file_url A string with the file_url address of a geobr dataset
-#' @param progress_bar Logical. Defaults to (TRUE) display progress bar
+#' @template showProgress
+#' @template cache
 #' @keywords internal
 #'
-download_gpkg <- function(file_url, progress_bar = showProgress){
+download_gpkg <- function(file_url = parent.frame()$file_url,
+                          showProgress = parent.frame()$showProgress,
+                          cache = parent.frame()$cache){
 
-  if (!is.logical(progress_bar)) { stop("'showProgress' must be of type 'logical'") }
+  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
 
   # get backup links
   filenames <- basename(file_url)
   file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
 
+  # dest files
+  # temps <- paste0(fs::path_temp(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
+  temps <- fs::path(fs::path_temp(), basename(file_url))
 
-## one single file
-
-  if (length(file_url)==1) {
-
-    # location of temp_file
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-
-    # check if file has not been downloaded already. If not, download it
-    if (!file.exists(temps) | file.info(temps)$size == 0) {
-
-    # test connection with server1
-    try(silent = TRUE,
-        check_con <- check_connection(file_url[1], silent = TRUE)
-        )
+  # test connection with server1
+    try( silent = TRUE, check_con <- check_connection(file_url[1], silent = TRUE))
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
-#      message('Using Github') # debug
-      file_url <- file_url2
-      check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
-      if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
+      url <- url2
+      try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
+      if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
     }
 
-    # download data
-    try( httr::GET(url=file_url,
-                   if(isTRUE(progress_bar)){httr::progress()},
-                   httr::write_disk(temps, overwrite = T),
-                   config = httr::config(ssl_verifypeer = FALSE)
-                   ), silent = TRUE)
-      }
+  # # this is necessary to silence download message when reading local file
+  # if(file.exists(temps) & isTRUE(cache)){
+  #   showProgress <- FALSE
+  # }
 
-    # if anything fails, return NULL
-    if (any(!file.exists(temps) | file.info(temps)$size == 0)) { return(invisible(NULL)) }
+  # download files
+  try(silent = TRUE,
+      downloaded_files <- curl::multi_download(
+        urls = file_url,
+        destfiles = temps,
+        progress = showProgress,
+        resume = cache
+        )
+      )
 
-    # load gpkg to memory
-    temp_sf <- load_gpkg(temps)
-    return(temp_sf)
-    }
+  # if anything fails, return NULL
+  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
+    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
+    message(msg)
+    return(invisible(NULL))
+  }
 
-## multiple files
-
-  else if(length(file_url) > 1) {
-
-    # location of all temp_files
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-
-    # count number of files that have NOT been downloaded already
-    number_of_files <- sum( (!file.exists(temps) | file.info(temps)$size == 0) )
-
-    # IF there is any file to download, then download them
-    if ( number_of_files > 0 ){
-
-      # test connection with server1
-      try(silent = TRUE,
-          check_con <- check_connection(file_url[1], silent = TRUE)
-          )
-
-      # if server1 fails, replace url and test connection with server2
-      if (is.null(check_con) | isFALSE(check_con)) {
-        file_url <- file_url2
-        check_con <- try(silent = TRUE, check_connection(file_url[1], silent = FALSE))
-        if(is.null(check_con) | isFALSE(check_con)){ return(invisible(NULL)) }
-      }
-
-      # input for progress bar
-      if(isTRUE(progress_bar)){
-        pb <- utils::txtProgressBar(min = 0, max = number_of_files, style = 3)
-        }
-
-      # download files
-      lapply(X=file_url, function(x){
-
-        # get location of temp_file
-        temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(x,"/"),tail,n=1L)))
-
-        # check if file has not been downloaded already. If not, download it
-        if (!file.exists(temps) | file.info(temps)$size == 0) {
-          i <- match(c(x),file_url)
-          try( httr::GET(url=x, #httr::progress(),
-                         httr::write_disk(temps, overwrite = T),
-                         config = httr::config(ssl_verifypeer = FALSE)
-          ), silent = TRUE)
-
-          if(isTRUE(progress_bar)){ utils::setTxtProgressBar(pb, i) }
-        }
-      })
-
-      # closing progress bar
-      if(isTRUE(progress_bar)){close(pb)}
-    }
-
-    # if anything fails, return NULL
-    temps <- paste0(tempdir(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-    if (any(!file.exists(temps) | file.info(temps)$size == 0)) { return(invisible(NULL)) }
-
-    # load gpkg
-    temp_sf <- load_gpkg(temps) #
-    return(temp_sf)
-
-    }
+  # load gpkg
+  temp_sf <- load_gpkg(temps) #
+  return(temp_sf)
 }
 
 
@@ -311,10 +268,11 @@ load_gpkg <- function(temps=NULL){
 # nocov end
 
 
+
 #' Check internet connection with Ipea server
 #'
 #' @description
-#' Checks if there is an internet connection with Ipea server to download aop data.
+#' Checks if there is an internet connection with Ipea server.
 #'
 #' @param url A string with the url address of an aop dataset
 #' @param silent Logical. Throw a message when silent is `FALSE` (default)
@@ -325,46 +283,48 @@ load_gpkg <- function(temps=NULL){
 #'
 check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv',
                              silent = FALSE){ # nocov start
-
   # url <- 'https://google.com/'               # ok
   # url <- 'https://www.google.com:81/'   # timeout
   # url <- 'https://httpbin.org/status/300' # error
 
-  # check if user has internet connection
+  # Check if user has internet connection
   if (!curl::has_internet()) {
-    if(isFALSE(silent)){ message("No internet connection.") }
-
+    if (isFALSE(silent)) {
+      message("No internet connection.")
+    }
     return(FALSE)
   }
 
-  # message
+  # Message for connection issues
   msg <- "Problem connecting to data server. Please try again in a few minutes."
 
-  # test server connection
-  x <- try(silent = TRUE,
-           httr::GET(url, # timeout(5),
-                     config = httr::config(ssl_verifypeer = FALSE)))
-  # link offline
-  if (methods::is(x)=="try-error") {
-    if(isFALSE(silent)){ message( msg ) }
+  # Test server connection using curl
+  handle <- curl::new_handle(ssl_verifypeer = FALSE)
+  response <- try(curl::curl_fetch_memory(url, handle = handle), silent = TRUE)
+
+  # Check if there was an error during the fetch attempt
+  if (inherits(response, "try-error")) {
+    if (isFALSE(silent)) {
+      message(msg)
+    }
     return(FALSE)
   }
 
-  # link working fine
-  else if ( identical(httr::status_code(x), 200L)) {
+  # Check the status code
+  status_code <- response$status_code
+
+  # Link working fine
+  if (status_code == 200L) {
     return(TRUE)
   }
 
-  # link not working or timeout
-  else if (! identical(httr::status_code(x), 200L)) {
-    if(isFALSE(silent)){ message( msg ) }
-    return(FALSE)
-
-  } else if (httr::http_error(x) == TRUE) {
-    if(isFALSE(silent)){ message( msg ) }
+  # Link not working or timeout
+  if (status_code != 200L) {
+    if (isFALSE(silent)) {
+      message(msg)
+    }
     return(FALSE)
   }
-
 } # nocov end
 
 
