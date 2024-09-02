@@ -4,7 +4,12 @@
 \alias{read_conservation_units}
 \title{Download spatial data of Brazilian environmental conservation units}
 \usage{
-read_conservation_units(date = 201909, simplified = TRUE, showProgress = TRUE)
+read_conservation_units(
+  date = 201909,
+  simplified = TRUE,
+  showProgress = TRUE,
+  cache = TRUE
+)
 }
 \arguments{
 \item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{201909}.}
@@ -17,6 +22,12 @@ simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preser
 topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to \code{cache = TRUE}. By default,
+\code{geobr} stores data files in a temporary directory that exists only
+within each R session. If \code{cache = FALSE}, the function will download
+the data again and overwrite the local file.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

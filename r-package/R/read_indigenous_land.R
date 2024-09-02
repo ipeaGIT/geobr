@@ -11,6 +11,7 @@
 #' @param date Numeric. Date of the data in YYYYMM format. Defaults to `201907`.
 #' @template simplified
 #' @template showProgress
+#' @template cache
 #'
 #' @return An `"sf" "data.frame"` object
 #'
@@ -21,7 +22,10 @@
 #' # Read all indigenous land in an specific date
 #' i <- read_indigenous_land(date=201907)
 #'
-read_indigenous_land <- function(date=201907, simplified=TRUE, showProgress=TRUE){
+read_indigenous_land <- function(date = 201907,
+                                 simplified = TRUE,
+                                 showProgress = TRUE,
+                                 cache = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="indigenous_land", year=date, simplified=simplified)
@@ -30,7 +34,9 @@ read_indigenous_land <- function(date=201907, simplified=TRUE, showProgress=TRUE
   file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+  temp_sf <- download_gpkg(file_url = file_url,
+                           showProgress = showProgress,
+                           cache = cache)
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }

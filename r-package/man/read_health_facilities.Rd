@@ -4,13 +4,19 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities}
 \usage{
-read_health_facilities(date = 202303, showProgress = TRUE)
+read_health_facilities(date = 202303, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
 \item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{202303},
 which was the latest data available by the time of this update.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to \code{cache = TRUE}. By default,
+\code{geobr} stores data files in a temporary directory that exists only
+within each R session. If \code{cache = FALSE}, the function will download
+the data again and overwrite the local file.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

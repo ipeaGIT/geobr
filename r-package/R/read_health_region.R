@@ -13,6 +13,7 @@
 #'        regions data. If `TRUE`, the function downloads macro regions data.
 #' @template simplified
 #' @template showProgress
+#' @template cache
 #'
 #' @return An `"sf" "data.frame"` object
 #'
@@ -26,7 +27,11 @@
 #' # Read all macro health regions
 #' mhr <- read_health_region( year=2013, macro =TRUE)
 #'
-read_health_region <- function(year=2013, macro=FALSE, simplified=TRUE, showProgress=TRUE){
+read_health_region <- function(year = 2013,
+                               macro = FALSE,
+                               simplified = TRUE,
+                               showProgress = TRUE,
+                               cache = TRUE){
 
   if(!is.logical(macro)){stop(paste0("Parameter 'macro' must be either TRUE or FALSE"))}
 
@@ -41,7 +46,9 @@ read_health_region <- function(year=2013, macro=FALSE, simplified=TRUE, showProg
   file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+  temp_sf <- download_gpkg(file_url = file_url,
+                           showProgress = showProgress,
+                           cache = cache)
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }

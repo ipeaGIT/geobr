@@ -12,6 +12,7 @@
 #'                  grid quadrant id to load an specific quadrant. Quadrant ids
 #'                  can be consulted at `geobr::grid_state_correspondence_table`.
 #' @template showProgress
+#' @template cache
 #'
 #'
 #' @return An `"sf" "data.frame"` object
@@ -26,7 +27,10 @@
 #' # Read the grid covering a given state at a given year
 #' state_grid <- read_statistical_grid(code_grid = "RJ")
 #'
-read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # nocov start
+read_statistical_grid <- function(code_grid,
+                                  year = 2010,
+                                  showProgress = TRUE,
+                                  cache = TRUE){ # nocov start
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="statistical_grid", year=year, simplified=F)
@@ -50,7 +54,9 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
       file_url <- as.character(temp_meta$download_path)
 
       # download files
-      temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+      temp_sf <- download_gpkg(file_url = file_url,
+                               showProgress = showProgress,
+                               cache = cache)
 
       # check if download failed
       if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -84,7 +90,9 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
       file_url <- as.character(subset(temp_meta, code %in% grid_ids)$download_path)
 
       # download gpkg
-      temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+      temp_sf <- download_gpkg(file_url = file_url,
+                               showProgress = showProgress,
+                               cache = cache)
 
       # check if download failed
       if (is.null(temp_sf)) { return(invisible(NULL)) }
@@ -102,7 +110,9 @@ read_statistical_grid <- function(code_grid, year=2010, showProgress=TRUE){ # no
     file_url <- as.character(subset(temp_meta, code== code_grid)$download_path)
 
     # download files
-    temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+    temp_sf <- download_gpkg(file_url = file_url,
+                             showProgress = showProgress,
+                             cache = cache)
 
     # check if download failed
     if (is.null(temp_sf)) { return(invisible(NULL)) }

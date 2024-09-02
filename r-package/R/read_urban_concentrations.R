@@ -9,6 +9,7 @@
 #' @param year Numeric. A year number in YYYY format. Defaults to `2015`.
 #' @template simplified
 #' @template showProgress
+#' @template cache
 #'
 #'
 #' @return An `"sf" "data.frame"` object
@@ -20,7 +21,10 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' uc <- read_urban_concentrations(year=2015)
 #'
-read_urban_concentrations <- function(year=2015, simplified=TRUE, showProgress=TRUE){
+read_urban_concentrations <- function(year = 2015,
+                                      simplified = TRUE,
+                                      showProgress = TRUE,
+                                      cache = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="urban_concentrations", year=year, simplified=simplified)
@@ -29,7 +33,9 @@ read_urban_concentrations <- function(year=2015, simplified=TRUE, showProgress=T
   file_url <- as.character(temp_meta$download_path)
 
   # download files
-  temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+  temp_sf <- download_gpkg(file_url = file_url,
+                           showProgress = showProgress,
+                           cache = cache)
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }

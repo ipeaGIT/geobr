@@ -4,7 +4,12 @@
 \alias{read_neighborhood}
 \title{Download spatial data of neighborhood limits of Brazilian municipalities}
 \usage{
-read_neighborhood(year = 2010, simplified = TRUE, showProgress = TRUE)
+read_neighborhood(
+  year = 2010,
+  simplified = TRUE,
+  showProgress = TRUE,
+  cache = TRUE
+)
 }
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
@@ -17,6 +22,12 @@ simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preser
 topology with a \code{dTolerance} of 100.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to \code{cache = TRUE}. By default,
+\code{geobr} stores data files in a temporary directory that exists only
+within each R session. If \code{cache = FALSE}, the function will download
+the data again and overwrite the local file.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

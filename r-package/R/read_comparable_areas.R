@@ -14,6 +14,7 @@
 #'        to `2010`.
 #' @template simplified
 #' @template showProgress
+#' @template cache
 #'
 #' @return An `"sf" "data.frame"` object
 #'
@@ -30,7 +31,11 @@
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #'   amc <- read_comparable_areas(start_year=1970, end_year=2010)
 #'
-read_comparable_areas <- function(start_year=1970, end_year=2010, simplified=TRUE, showProgress=TRUE){
+read_comparable_areas <- function(start_year = 1970,
+                                  end_year = 2010,
+                                  simplified = TRUE,
+                                  showProgress = TRUE,
+                                  cache = TRUE){
 
   # tests
   years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010)
@@ -55,7 +60,9 @@ read_comparable_areas <- function(start_year=1970, end_year=2010, simplified=TRU
   file_url <- file_url[ file_url %like% target_year]
 
   # download files
-  temp_sf <- download_gpkg(file_url, showProgress = showProgress)
+  temp_sf <- download_gpkg(file_url = file_url,
+                           showProgress = showProgress,
+                           cache = cache)
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }

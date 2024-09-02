@@ -136,7 +136,9 @@ read_municipality <- function(code_muni = "all",
     if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_muni, 1, 2))$download_path) }
 
     # download files
-    sf <- download_gpkg(file_url, showProgress = showProgress)
+    sf <- download_gpkg(file_url = file_url,
+                             showProgress = showProgress,
+                             cache = cache)
 
     # check if download failed
     if (is.null(sf)) { return(invisible(NULL)) }

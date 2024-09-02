@@ -4,7 +4,12 @@
 \alias{read_statistical_grid}
 \title{Download spatial data of IBGE's statistical grid}
 \usage{
-read_statistical_grid(code_grid, year = 2010, showProgress = TRUE)
+read_statistical_grid(
+  code_grid,
+  year = 2010,
+  showProgress = TRUE,
+  cache = TRUE
+)
 }
 \arguments{
 \item{code_grid}{If two-letter abbreviation or two-digit code of a state is
@@ -18,6 +23,12 @@ can be consulted at \code{geobr::grid_state_correspondence_table}.}
 only year available thus far is 2010.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to \code{cache = TRUE}. By default,
+\code{geobr} stores data files in a temporary directory that exists only
+within each R session. If \code{cache = FALSE}, the function will download
+the data again and overwrite the local file.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

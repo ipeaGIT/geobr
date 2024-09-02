@@ -3,6 +3,7 @@
 
 **Minor changes**
 
+- Functions now include a `cache` parameter that allows users to decide whehter to keep files in cache or to force downloading them again. At the moment, files are only cached during the R session, but this is a step toward future version of geobr that will be based on permanent caching.
 - Now using `curl::multi_download()` to download files in parallel
 - {geobr} now imports {fs} to use robust cross-platform file system operations
 - Removed dependency on the {httr} package

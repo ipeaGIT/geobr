@@ -23,7 +23,8 @@
 #' # Read simple data.frame of state capitals
 #' capitals_df <- read_capitals(as_sf = FALSE)
 #'
-read_capitals <- function(as_sf = TRUE, showProgress = TRUE){
+read_capitals <- function(as_sf = TRUE,
+                          showProgress = TRUE){
 
   # check input
   if (!is.logical(as_sf)) { stop("'as_sf' must be of type 'logical'") }
