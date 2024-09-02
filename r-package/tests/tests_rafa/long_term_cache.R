@@ -13,9 +13,7 @@ https://gitlab.com/cnrgh/databases/r-fscache
 #'
 #' 3) usar {curl} multi_download (aguardando resposta sobre etag)
 #'    - baixa de novo se arquivo atualiza: sim, SOH se tamanho de arquivo for diferente
-falta soh
-- adicionar parametro template de cache em todas funcoes (municipality ja foi)
-- substituir bar_progress por showProgress em todas funcoes (municipality ja foi)
+
 
 
 

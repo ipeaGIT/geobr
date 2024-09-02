@@ -19,7 +19,6 @@ test_that("read_state", {
   expect_true(is(  read_state(code_state='AC', year=2010) , "sf"))
 
 
-
   # check sf object
   test_code <- read_state(code_state=11, year=2010)
   testthat::expect_true(is(test_code, "sf"))
@@ -48,6 +47,5 @@ test_that("read_state", {
   # Wrong year
    testthat::expect_error(read_state( year=9999999))
    testthat::expect_error(read_state(showProgress = 'aaaa'))
-
 
 })

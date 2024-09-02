@@ -36,107 +36,51 @@ read_state <- function(code_state = "all",
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="state", year=year, simplified=simplified)
 
-  # check if download failed
+  # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
+  # check code_state exists in metadata
+  if (!any(code_state == 'all' |
+           code_state %in% temp_meta$code |
+           code_state %in% temp_meta$code_abbrev |
+           (year < 1992 & temp_meta$code == "st")
+           )) {
+    stop("Error: Invalid Value to argument code_state.")
+    }
 
-# BLOCK 2.1 From 1872 to 1991  ----------------------------
-  x <- year
 
-if( x < 1992){
-
-#   if( !(substr(x = code_state, 1, 2) %in% temp_meta$code) &
-#       !(substr(x = code_state, 1, 2) %in% temp_meta$code_abbrev) &
-#       !(substr(x = code_state, 1, 3) %in% "all")) {
-#       stop("Error: Invalid Value to argument code_state.")
-#       }
-
-  if(is.null(code_state)){ stop("Value to argument 'code_state' cannot be NULL")}
-
-  if(code_state=="all"){
-
-    # list paths of files to download
+  # get file url
+  if (code_state=="all" | year < 1992) {
     file_url <- as.character(temp_meta$download_path)
 
-    # download gpkg
-    temp_sf <- download_gpkg(file_url = file_url,
-                             showProgress = showProgress,
-                             cache = cache)
+      } else if (is.numeric(code_state)) { # if using numeric code_state
+        file_url <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path)
 
-    # check if download failed
-    if (is.null(temp_sf)) { return(invisible(NULL)) }
+        } else if (is.character(code_state)) { # if using chacracter code_abbrev
+          file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_state, 1, 2))$download_path)
+        }
 
-    return(temp_sf)
+  # download gpkg
+  temp_sf <- download_gpkg(file_url = file_url,
+                           showProgress = showProgress,
+                           cache = cache)
 
-  } else if(nchar(code_state)==2){
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
 
-    # list paths of files to download
-    file_url <- as.character(temp_meta$download_path)
-
-    # download gpkg
-    temp_sf <- download_gpkg(file_url = file_url,
-                             showProgress = showProgress,
-                             cache = cache)
-
-    # check if download failed
-    if (is.null(temp_sf)) { return(invisible(NULL)) }
-
-    temp_sf <- subset(temp_sf,code_state==substr(code_state, 1, 2))
+  # data files before 1992 do not have state code nor state abbrev
+  if (year < 1992){
     return(temp_sf)
   }
 
-}  else {
+  # if particular state
+  x <- code_state
+  if (code_state!='all' & is.numeric(x)) {
+      temp_sf <- subset(temp_sf, code_state == x)
+      }
+  if (code_state!='all' & is.character(code_state)) {
+      temp_sf <- subset(temp_sf, abbrev_state == x)
+      }
 
-
-# BLOCK 2.2 From 2000 onwards  ----------------------------
-
-  # Verify code_state input
-
-  # if code_state=="all", read the entire country
-    if(code_state=="all"){
-
-      # list paths of files to download
-      file_url <- as.character(temp_meta$download_path)
-
-      # download gpkg
-      temp_sf <- download_gpkg(file_url = file_url,
-                               showProgress = showProgress,
-                               cache = cache)
-
-      # check if download failed
-      if (is.null(temp_sf)) { return(invisible(NULL)) }
-
-      return(temp_sf)
-    }
-
-  if (!(substr(x = code_state, 1, 2) %in% temp_meta$code) & !(substr(x = code_state, 1, 2) %in% temp_meta$code_abbrev)) {
-      stop("Error: Invalid Value to argument code_state.")
-
-  } else{
-
-    # list paths of files to download
-    if (is.numeric(code_state)){ file_url <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path) }
-    if (is.character(code_state)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_state, 1, 2))$download_path) }
-
-
-    # download gpkg
-    temp_sf <- download_gpkg(file_url = file_url,
-                             showProgress = showProgress,
-                             cache = cache)
-
-    # check if download failed
-    if (is.null(temp_sf)) { return(invisible(NULL)) }
-
-    if (nchar(code_state)==2) {
-      return(temp_sf)
-
-    # } else if(code_state %in% shape$code_state){
-    #   x <- code_state
-    #   shape <- subset(shape, code_state==x)
-    #   return(shape)
-
-    } else{
-      stop("Error: Invalid Value to argument code_state.")
-    }
-  }
-}}
+  return(temp_sf)
+}

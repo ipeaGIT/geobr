@@ -93,6 +93,7 @@ select_metadata <- function(geography, year=NULL, simplified=NULL){
 
 #' Support function to download metadata internally used in geobr
 #'
+#'
 #' @keywords internal
 #' @examples \dontrun{ if (interactive()) {
 #' df <- download_metadata()
@@ -122,7 +123,6 @@ download_metadata <- function(){ # nocov start
 
     if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
   }
-
 
   # download metadata to temp file
   try( silent = TRUE,
@@ -183,7 +183,7 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
-      url <- url2
+      url <- file_url2
       try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
       if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
     }

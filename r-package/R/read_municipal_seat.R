@@ -24,7 +24,7 @@ read_municipal_seat <- function(year = 2010,
                                 cache = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="municipal_seat", year=year, simplified=F)
+  temp_meta <- select_metadata(geography="municipal_seat", year=year, simplified=FALSE)
 
   # list paths of files to download
   file_url <- as.character(temp_meta$download_path)
