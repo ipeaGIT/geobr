@@ -69,18 +69,25 @@ read_state <- function(code_state = "all",
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
   # data files before 1992 do not have state code nor state abbrev
-  if (year < 1992){
+  if (year < 1992 | code_state =='all' ){
     return(temp_sf)
   }
 
-  # if particular state
+  # FILTER particular state
   x <- code_state
-  if (code_state!='all' & is.numeric(x)) {
-      temp_sf <- subset(temp_sf, code_state == x)
-      }
-  if (code_state!='all' & is.character(code_state)) {
-      temp_sf <- subset(temp_sf, abbrev_state == x)
-      }
+
+  if (!any(x %in% temp_sf$code_state | x %in% temp_sf$abbrev_state)) {
+    stop("Error: Invalid Value to argument code_state.")
+  }
+
+  if (is.numeric(code_state)) {
+    temp_sf <- subset(temp_sf, code_state == x)
+  }
+
+  if (is.character(code_state)) {
+    temp_sf <- subset(temp_sf, abbrev_state == x)
+  }
+
 
   return(temp_sf)
 }

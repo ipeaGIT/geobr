@@ -43,120 +43,67 @@ read_municipality <- function(code_muni = "all",
   # check if download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-# BLOCK 2.1 From 1872 to 1991  ----------------------------
-
-  if( year < 1992){
-
-    # First download the data
-      # list paths of files to download
-      file_url <- as.character(temp_meta$download_path)
-
-      # download gpkg
-      temp_sf <- download_gpkg(file_url = file_url,
-                               showProgress = showProgress,
-                               cache = cache)
-
-      # check if download failed
-      if (is.null(temp_sf)) { return(invisible(NULL)) }
-
-    # if code_muni=="all", simply return the full data set
-      if( is.null(code_muni) | code_muni=="all"){
-        return(temp_sf)
-        }
-
-    # if input is a state code
-      else if(nchar(code_muni)==2){
-
-      # invalid state code
-      if( !(code_muni %in% substr(temp_sf$code_muni,1,2)) & !(code_muni %in% temp_sf$abbrev_state)){
-        stop("Error: Invalid value to argument code_muni")}
-
-        else if (is.numeric(code_muni)){
-          x <- code_muni
-          temp_sf <- subset(temp_sf, substr(code_muni,1,2)==x)
-          return(temp_sf)}
-
-        else if (is.character(code_muni)){
-          x <- code_muni
-          temp_sf <- subset(temp_sf, substr(abbrev_state,1,2)==x)
-          return(temp_sf)}
-        }
-
-
-  # if input is a muni_code
-      else if(nchar(code_muni)==7) {
-
-    # invalid muni_code
-
-      if( !( code_muni %in% temp_sf$code_muni)){
-        stop("Error: Invalid value to argument code_muni")}
-
-    # valid muni_code
-        else {
-            x <- code_muni
-            temp_sf <- subset(temp_sf, code_muni==x)
-            return(temp_sf)}
-      }
-
-      else if(nchar(code_muni)!=7 | nchar(code_muni)!=2) {
-        stop("Error: Invalid value to argument code_muni")}
-
-        } else {
-
-
-# BLOCK 2.2 From 2000 onwards  ----------------------------
-
-# 2.2 Verify code_muni Input
-
-  # if code_muni=="all", read the entire country
-    if(code_muni=="all"){
-
-      # list paths of files to download
-      file_url <- as.character(temp_meta$download_path)
-
-      # download files
-      temp_sf <- download_gpkg(file_url = file_url,
-                               showProgress = showProgress,
-                               cache = cache)
-
-      # check if download failed
-      if (is.null(temp_sf)) { return(invisible(NULL)) }
-
-      return(temp_sf)
-    }
-
-  else if( !(substr(x = code_muni, 1, 2) %in% temp_meta$code) & !(substr(x = code_muni, 1, 2) %in% temp_meta$code_abbrev)){
-
-      stop("Error: Invalid Value to argument code_muni.")
-
-  } else{
-
-    # list paths of files to download
-    if (is.numeric(code_muni)){ file_url <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path) }
-    if (is.character(code_muni)){ file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_muni, 1, 2))$download_path) }
-
-    # download files
-    sf <- download_gpkg(file_url = file_url,
-                             showProgress = showProgress,
-                             cache = cache)
-
-    # check if download failed
-    if (is.null(sf)) { return(invisible(NULL)) }
-
-    # input is a state code
-    if(nchar(code_muni)==2){
-      sf <- subset(sf, code_state==substr(code_muni, 1, 2))
-        return(sf) }
-
-    # input is a municipality code
-    else if(code_muni %in% sf$code_muni){
-          x <- code_muni
-          sf <- subset(sf, code_muni==x)
-          return(sf)
-      } else{
-          stop("Error: Invalid Value to argument code_muni.")
-      }
-    }
-    }
+  # check code_muni exists in metadata
+  if (!any(code_muni == 'all' |
+           code_muni %in% temp_meta$code |
+           substring(code_muni, 1, 2) %in% temp_meta$code |
+           code_muni %in% temp_meta$code_abbrev |
+           (year < 1992 & temp_meta$code %in% "mu")
+  )) {
+    stop("Error: Invalid Value to argument code_muni.")
   }
 
+  # get file url
+  if (code_muni=="all" | year < 1992) {
+    file_url <- as.character(temp_meta$download_path)
+
+  } else if (is.numeric(code_muni)) { # if using numeric code_muni
+    file_url <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path)
+
+  } else if (is.character(code_muni)) { # if using chacracter code_abbrev
+    file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_muni, 1, 2))$download_path)
+  }
+
+  # download gpkg
+  temp_sf <- download_gpkg(file_url = file_url,
+                           showProgress = showProgress,
+                           cache = cache)
+
+  # check if download failed
+  if (is.null(temp_sf)) { return(invisible(NULL)) }
+
+  # data files before 1992 do not have state code nor state abbrev
+  if (code_muni =='all' ){
+    return(temp_sf)
+  }
+
+  # FILTER particular state or muni
+  x <- code_muni
+
+  if (!any(code_muni %in% temp_sf$code_muni |
+           code_muni %in% temp_sf$code_state |
+           code_muni %in% temp_sf$abbrev_state)) {
+    stop("Error: Invalid Value to argument code_muni.")
+  }
+
+
+  # particular state
+  if(nchar(code_muni)==2){
+
+    if (is.numeric(code_muni)) {
+        temp_sf <- subset(temp_sf, code_state == x)
+        }
+
+    if (is.character(code_muni)) {
+        temp_sf <- subset(temp_sf, abbrev_state == x)
+        }
+  }
+
+  # particular muni
+  if(nchar(code_muni)>2){
+    if (is.numeric(code_muni)) {
+      temp_sf <- subset(temp_sf, code_state == x)
+    }
+  }
+  return(temp_sf)
+}
