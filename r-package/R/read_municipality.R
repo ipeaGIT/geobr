@@ -72,7 +72,7 @@ read_municipality <- function(code_muni = "all",
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
-  # data files before 1992 do not have state code nor state abbrev
+  # return all municipalities
   if (code_muni =='all' ){
     return(temp_sf)
   }
