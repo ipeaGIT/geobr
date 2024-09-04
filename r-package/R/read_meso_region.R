@@ -75,18 +75,18 @@ read_meso_region <- function(code_meso = "all",
   y <- code_meso
 
   # input "all"
-  if(code_meso=="all"){
+  if (code_meso=="all" | nchar(code_meso)==2) {
 
-    # abbrev_state
-  } else if(code_meso %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
-
-    # code_state
-  } else if(code_meso %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
+  #   # abbrev_state
+  # } else if (code_meso %in% temp_sf$abbrev_state){
+  #   temp_sf <- subset(temp_sf, abbrev_state == y)
+  #
+  #   # code_state
+  # } else if (code_meso %in% substring(temp_sf$code_meso,1,2)) {
+  #   temp_sf <- subset(temp_sf, substring(code_meso,1,2) == y)
 
     # code_meso
-  } else if(code_meso %in% temp_sf$code_meso){
+  } else if (code_meso %in% temp_sf$code_meso) {
     temp_sf <- subset(temp_sf, code_meso == y)
 
   } else {stop(paste0("Error: Invalid Value to argument 'code_meso'",collapse = " "))}
