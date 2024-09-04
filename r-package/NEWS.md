@@ -3,11 +3,13 @@
 
 **Minor changes**
 
-- Functions now include a `cache` parameter that allows users to decide whehter to keep files in cache or to force downloading them again. At the moment, files are only cached during the R session, but this is a step toward future version of geobr that will be based on permanent caching.
+- The `read_municipality()` has a new parameter `keep_areas_operacionais`, which allows users to control wether the data should keep the polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande do Sul (considered as areas estaduais operacionais). The default `FALSE` drops these two polygons. Closes #176.
+- Functions now include a `cache` parameter that allows users to decide whehter to keep files in cache or to force downloading them again. At the moment, files are only cached during the R session, but this is a step towards a future version of {geobr} when files  will be based on permanent caching.
 - Now using `curl::multi_download()` to download files in parallel
-- {geobr} now imports {fs} to use robust cross-platform file system operations
 - Removed dependency on the {httr} package
-- Simplified internal functions
+- {geobr} now imports {fs} to use robust cross-platform file system operations
+- Simplified and streamlined internal functions
+
 
 
 

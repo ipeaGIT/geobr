@@ -36,6 +36,15 @@ test_that("read_municipality", {
   test_filter <-  read_municipality(code_muni=1200179, year=2010)
   expect_equal( nrow(test_filter), 1)
 
+  # check keep_areas_operacionais
+  n22f <- read_municipality(code_muni = 'all', year = 2022) |> nrow()
+  n22t <- read_municipality(code_muni = 'all', year = 2022, keep_areas_operacionais = TRUE) |> nrow()
+  testthat::expect_true(n22t > n22f)
+
+  # test cache
+  cache_true <- system.time(read_municipality(cache = TRUE))
+  cache_false <- system.time(read_municipality(cache = FALSE))
+  cache_false[[3]] > cache_true[[3]]
 })
 
 
@@ -63,5 +72,9 @@ test_that("read_municipality", {
   testthat::expect_error(read_municipality( showProgress = NULL))
   testthat::expect_error(read_municipality( simplified = 'aaaaa'))
   testthat::expect_error(read_municipality( simplified = NULL))
+  testthat::expect_error(read_municipality( cache = 'aaaaa'))
+  testthat::expect_error(read_municipality( cache = NULL))
+  testthat::expect_error(read_municipality( keep_areas_operacionais = 'aaaaa'))
+  testthat::expect_error(read_municipality( keep_areas_operacionais = NULL))
 
 })

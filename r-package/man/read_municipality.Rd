@@ -9,7 +9,8 @@ read_municipality(
   year = 2010,
   simplified = TRUE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  keep_areas_operacionais = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,10 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{keep_areas_operacionais}{Logic. Whether the function should keep the
+polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
+do Sul (considered as areas estaduais operacionais). Defaults to \code{FALSE}.}
 }
 \value{
 An \verb{"sf" "data.frame"} object

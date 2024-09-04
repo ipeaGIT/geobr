@@ -14,7 +14,10 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
-#'
+#' @param keep_areas_operacionais Logic. Whether the function should keep the
+#'        polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
+#'        do Sul (considered as areas estaduais operacionais). Defaults to `FALSE`.
+
 #' @return An `"sf" "data.frame"` object
 #'
 #' @export
@@ -35,7 +38,12 @@ read_municipality <- function(code_muni = "all",
                               year = 2010,
                               simplified = TRUE,
                               showProgress = TRUE,
-                              cache = TRUE) {
+                              cache = TRUE,
+                              keep_areas_operacionais = FALSE) {
+
+  # check input
+  if (!is.logical(keep_areas_operacionais)) { stop("'keep_areas_operacionais' must be of type 'logical'") }
+
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="municipality", year=year, simplified=simplified)
@@ -91,6 +99,12 @@ read_municipality <- function(code_muni = "all",
     temp_sf <- subset(temp_sf, code_muni == y)
 
   } else {stop(paste0("Error: Invalid Value to argument 'code_muni'",collapse = " "))}
+
+  # keep_areas_operacionais
+  if(isFALSE(keep_areas_operacionais)){
+    temp_sf <- subset(temp_sf, code_muni != 4300001)
+    temp_sf <- subset(temp_sf, code_muni != 4300002)
+    }
 
   return(temp_sf)
   }

@@ -169,6 +169,7 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
                           cache = parent.frame()$cache){
 
   if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
+  if (!is.logical(cache)) { stop("'cache' must be of type 'logical'") }
 
   # get backup links
   filenames <- basename(file_url)
