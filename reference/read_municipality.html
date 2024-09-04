@@ -71,7 +71,8 @@
 <span>  year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  keep_areas_operacionais <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -112,6 +113,12 @@ locally, which is faster. Defaults to <code>cache = TRUE</code>. By default,
 <code>geobr</code> stores data files in a temporary directory that exists only
 within each R session. If <code>cache = FALSE</code>, the function will download
 the data again and overwrite the local file.</p></dd>
+
+
+<dt id="arg-keep-areas-operacionais">keep_areas_operacionais<a class="anchor" aria-label="anchor" href="#arg-keep-areas-operacionais"></a></dt>
+<dd><p>Logic. Whether the function should keep the
+polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
+do Sul (considered as areas estaduais operacionais). Defaults to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div id="value">
