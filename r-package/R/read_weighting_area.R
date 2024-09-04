@@ -95,6 +95,10 @@ read_weighting_area <- function(code_weighting = "all",
   } else if(code_weighting %in% temp_sf$code_muni){
     temp_sf <- subset(temp_sf, code_muni == y)
 
+    # code_weighting
+  } else if (code_weighting %in% temp_sf$code_weighting) {
+    temp_sf <- subset(temp_sf, code_weighting == y)
+
   } else {stop(paste0("Error: Invalid Value to argument 'code_weighting'",collapse = " "))}
 
   return(temp_sf)
