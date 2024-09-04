@@ -100,10 +100,8 @@ read_municipality <- function(code_muni = "all",
   }
 
   # particular muni
-  if(nchar(code_muni)>2){
-    if (is.numeric(code_muni)) {
-      temp_sf <- subset(temp_sf, code_state == x)
+  if(nchar(code_muni)>2 & is.numeric(code_muni)){
+      temp_sf <- subset(temp_sf, code_muni == x)
     }
-  }
   return(temp_sf)
 }

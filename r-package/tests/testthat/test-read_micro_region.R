@@ -13,10 +13,9 @@ test_that("read_micro_region", {
   # expect_true(is(  read_micro_region(code_micro=11, year=2010) , "sf"))
   expect_true(is(  read_micro_region(code_micro="all", year=2010)  , "sf"))
 
-  test_micro_code <-  read_micro_region(code_micro=11008, year=2010)
-
-  # check number of micro
-  expect_equal( nrow(test_micro_code), 1)
+  # check filter
+  test_filter <-  read_micro_region(code_micro=11008, year=2010)
+  expect_equal( nrow(test_filter), 1)
 
 })
 
@@ -24,7 +23,6 @@ test_that("read_micro_region", {
 
 # ERRORS
 test_that("read_micro_region", {
-
 
   expect_error(read_micro_region(code_micro=9999999, year=9999999))
 

@@ -32,6 +32,10 @@ test_that("read_municipality", {
   testthat::expect_true(is(  read_municipality(code_muni='AC', year=2010)  , "sf"))
   testthat::expect_true(is(  read_municipality(code_muni=1200179, year=2010) , "sf"))
 
+  # check filter
+  test_filter <-  read_municipality(code_muni=1200179, year=2010)
+  expect_equal( nrow(test_filter), 1)
+
 })
 
 
