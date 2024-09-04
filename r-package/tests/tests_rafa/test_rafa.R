@@ -99,6 +99,8 @@ gtools::ASCIIfy('Rondônia')
 
 stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
 
+gtools::ASCIIfy('Espírito Santo')
+
 
 # Amap\\u00e1
 df

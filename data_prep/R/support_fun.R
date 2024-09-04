@@ -43,7 +43,7 @@ add_state_info <- function(temp_sf, column){
                                           ifelse(name_state== "Sergipe",28,
                                           ifelse(name_state== "Bahia",29,
                                           ifelse(name_state== "Minas Gerais" | name_state== "Minas Geraes",31,
-                                          ifelse(name_state== "Espirito Santo" | name_state== "Espirito Santo",32,
+                                          ifelse(name_state== "Espirito Santo" | name_state== "Esp\\u00edrito Santo",32,
                                           ifelse(name_state== "Rio de Janeiro",33,
                                           ifelse(name_state== "S\u00e3o Paulo",35,
                                           ifelse(name_state== "Paran\u00e1",41,
