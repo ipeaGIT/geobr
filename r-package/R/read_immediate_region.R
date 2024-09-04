@@ -54,23 +54,22 @@ read_immediate_region <- function(code_immediate = "all",
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
+  ## FILTERS
+  y <- code_immediate
 
   # check code_immediate input
   if(code_immediate=="all"){
 
     # abbrev_state
   } else if(code_immediate %in% temp_sf$abbrev_state){
-    y <- code_immediate
     temp_sf <- subset(temp_sf, abbrev_state == y)
 
     # code_state
   } else if(code_immediate %in% temp_sf$code_state){
-    y <- code_immediate
     temp_sf <- subset(temp_sf, code_state == y)
 
     # code_immediate
   } else if(code_immediate %in% temp_sf$code_immediate){
-    y <- code_immediate
     temp_sf <- subset(temp_sf, code_immediate == y)
 
   } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))}

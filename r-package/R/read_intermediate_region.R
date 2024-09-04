@@ -56,22 +56,22 @@ read_intermediate_region <- function(code_intermediate = "all",
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
+  ## FILTERS
+  y <- code_intermediate
+
   # input "all"
   if(code_intermediate=="all"){
 
     # abbrev_state
   } else if(code_intermediate %in% temp_sf$abbrev_state){
-    y <- code_intermediate
     temp_sf <- subset(temp_sf, abbrev_state == y)
 
     # code_state
   } else if(code_intermediate %in% temp_sf$code_state){
-    y <- code_intermediate
     temp_sf <- subset(temp_sf, code_state == y)
 
     # code_intermediate
   } else if(code_intermediate %in% temp_sf$code_intermediate){
-    y <- code_intermediate
     temp_sf <- subset(temp_sf, code_intermediate == y)
 
   } else {stop(paste0("Error: Invalid Value to argument 'code_intermediate'",collapse = " "))}

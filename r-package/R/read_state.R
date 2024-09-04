@@ -68,26 +68,21 @@ read_state <- function(code_state = "all",
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
-  # data files before 1992 do not have state code nor state abbrev
-  if (year < 1992 | code_state =='all' ){
-    return(temp_sf)
-  }
+  ## FILTERS
+  y <- code_state
 
-  # FILTER particular state
-  x <- code_state
+  # input "all" & data files before 1992 do not have state code nor state abbrev
+  if (year < 1992 | code_state=="all") {
 
-  if (!any(x %in% temp_sf$code_state | x %in% temp_sf$abbrev_state)) {
-    stop("Error: Invalid Value to argument code_state.")
-  }
+    # abbrev_state
+  } else if(code_state %in% temp_sf$abbrev_state){
+    temp_sf <- subset(temp_sf, abbrev_state == y)
 
-  if (is.numeric(code_state)) {
-    temp_sf <- subset(temp_sf, code_state == x)
-  }
+    # code_state
+  } else if(code_state %in% temp_sf$code_state){
+    temp_sf <- subset(temp_sf, code_state == y)
 
-  if (is.character(code_state)) {
-    temp_sf <- subset(temp_sf, abbrev_state == x)
-  }
-
+  } else {stop(paste0("Error: Invalid Value to argument 'read_state'",collapse = " "))}
 
   return(temp_sf)
-}
+  }

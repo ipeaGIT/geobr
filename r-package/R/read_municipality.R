@@ -72,36 +72,25 @@ read_municipality <- function(code_muni = "all",
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }
 
-  # return all municipalities
-  if (code_muni =='all' ){
-    return(temp_sf)
-  }
+  ## FILTERS
+  y <- code_muni
 
-  # FILTER particular state or muni
-  x <- code_muni
+  # input "all"
+  if(code_muni=="all"){
 
-  if (!any(code_muni %in% temp_sf$code_muni |
-           code_muni %in% temp_sf$code_state |
-           code_muni %in% temp_sf$abbrev_state)) {
-    stop("Error: Invalid Value to argument code_muni.")
-  }
+    # abbrev_state
+  } else if(code_muni %in% temp_sf$abbrev_state){
+    temp_sf <- subset(temp_sf, abbrev_state == y)
 
+    # code_state
+  } else if(code_muni %in% temp_sf$code_state){
+    temp_sf <- subset(temp_sf, code_state == y)
 
-  # particular state
-  if(nchar(code_muni)==2){
+    # code_muni
+  } else if(code_muni %in% temp_sf$code_muni){
+    temp_sf <- subset(temp_sf, code_muni == y)
 
-    if (is.numeric(code_muni)) {
-        temp_sf <- subset(temp_sf, code_state == x)
-        }
+  } else {stop(paste0("Error: Invalid Value to argument 'code_muni'",collapse = " "))}
 
-    if (is.character(code_muni)) {
-        temp_sf <- subset(temp_sf, abbrev_state == x)
-        }
-  }
-
-  # particular muni
-  if(nchar(code_muni)>2 & is.numeric(code_muni)){
-      temp_sf <- subset(temp_sf, code_muni == x)
-    }
   return(temp_sf)
-}
+  }
