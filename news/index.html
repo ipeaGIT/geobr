@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -61,7 +61,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.9.19999" id="geobr-v1919999-dev">geobr v1.9.19999 dev<a class="anchor" aria-label="anchor" href="#geobr-v1919999-dev"></a></h2>
+<h2 class="page-header" data-toc-text="1.9.1" id="geobr-v191">geobr v1.9.1<small>2024-09-06</small><a class="anchor" aria-label="anchor" href="#geobr-v191"></a></h2>
 <p><strong>Minor changes</strong></p>
 <ul><li>The <code><a href="../reference/read_municipality.html">read_municipality()</a></code> has a new parameter <code>keep_areas_operacionais</code>, which allows users to control wether the data should keep the polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande do Sul (considered as areas estaduais operacionais). The default <code>FALSE</code> drops these two polygons. Closes #176.</li>
 <li>Functions now include a <code>cache</code> parameter that allows users to decide whehter to keep files in cache or to force downloading them again. At the moment, files are only cached during the R session, but this is a step towards a future version of {geobr} when files will be based on permanent caching.</li>
