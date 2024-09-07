@@ -4,7 +4,7 @@
 #' The data set covers the whole of Brazil and it includes indigenous lands from
 #' all ethnicities and in different stages of demarcation. The original data
 #' comes from the National Indian Foundation (FUNAI) and can be found at
-#' \url{http://www.funai.gov.br/index.php/shape}. Although original data is
+#' \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}. Although original data is
 #' updated monthly, the geobr package will only keep the data for a few months
 #' per year.
 #'

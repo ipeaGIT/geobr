@@ -25,7 +25,7 @@ library(geobr)
 
 # or use the development version with latest features
 utils::remove.packages('geobr')
-devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
+remotes::install_github("ipeaGIT/geobr", subdir = "r-package")
 library(geobr)
 ```
 obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).

@@ -1,6 +1,6 @@
-# geobr v1.9.9999999999
+# geobr v1.9.1
 
-── R CMD check results ──────────────────────────────────────────────── geobr 1.9.0 ────
+── R CMD check results ──────────────────────────────────────────────── geobr 1.9.1 ────
 Duration: 8m 51s
 
 ❯ checking data for non-ASCII characters ... NOTE
@@ -9,6 +9,7 @@ Duration: 8m 51s
 0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
 
+These two urls work on the browser but for some reason do not pass CRAN test:
 
-
-
+- \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}
+- \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}

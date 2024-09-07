@@ -122,87 +122,6 @@ cedil = "\u00e7\u00c7" # "çÇ"
 
 
 
-### fail gracefully -------------------------
-https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv
-
-library(testthat)
-library(geobr)
-getOption('timeout')
-options(timeout=3)
-
-x='http://example.com:81'
-
-
-
-# ok com metadado, mas sem internet -----------------------------
-download_metadata()
-
-expect_message(download_metadata())
-
-expect_message(read_country())
-expect_message(read_region())
-expect_message(read_state(code_state = 'AC'))
-expect_message(read_state(code_state = 'all'))
-
-expect_message(read_meso_region(code_meso='AP'))
-expect_message(read_meso_region(code_meso='all'))
-
-expect_message(read_micro_region(code_micro='AP'))
-expect_message(read_micro_region(code_micro='all'))
-
-expect_message(read_immediate_region(code_immediate ='AP'))
-expect_message(read_immediate_region(code_immediate ='all'))
-
-expect_message(read_intermediate_region(code_intermediate = 'AP'))
-expect_message(read_intermediate_region(code_intermediate = 'all'))
-
-expect_message(read_municipality(code_muni='AP'))
-expect_message(read_municipality(code_muni='all'))
-expect_message(read_municipality(code_muni=33))
-expect_message(read_municipality(code_muni='all', year=1980))
-expect_message(read_municipality(code_muni='AP', year=1980))
-expect_message( read_municipality(code_muni = 1200179) )
-
-expect_message(read_municipal_seat())
-
-expect_message(read_weighting_area(code_weighting = 'AP'))
-expect_message(read_weighting_area(code_weighting = 'all'))
-
-expect_message(read_census_tract(code_tract = 'AP'))
-expect_message(read_census_tract(code_tract = 'all'))
-
-expect_message(read_statistical_grid(code_grid  = 'AP'))
-expect_message(read_statistical_grid(code_grid  = 'all'))
-expect_message(read_statistical_grid(code_grid  = 33))
-
-expect_message(read_metro_area())
-expect_message(read_urban_area())
-expect_message(read_amazon())
-
-expect_message(read_biomes())
-expect_message(read_conservation_units())
-expect_message(read_disaster_risk_area())
-expect_message(read_indigenous_land())
-expect_message(read_semiarid())
-expect_message(read_health_facilities())
-expect_message(read_health_region())
-expect_message(read_neighborhood())
-expect_message(read_schools())
-expect_message(read_comparable_areas())
-expect_message(read_urban_concentrations())
-expect_message(read_pop_arrangements())
-
-expect_message(list_geobr())
-expect_message( lookup_muni(name_muni = 'rio de janeiro') )
-expect_message( lookup_muni(code_muni = 1200179) )
-expect_message( lookup_muni(name_muni = 'all') )
-
-# ok no internet at all-----------------------------
-
-
-
-# not ok -----------------------------
-done here without wifi from start
 
 
 
@@ -281,57 +200,6 @@ library(sf)
 
 
 
-
-
-###### recode column codes -------------------------
-gc(reset = T)
-
-
-
-system.time( d <- read_municipality(code_muni="all" ))
-head(d)
-
-setDT(d)
-d[, code_state := as.numeric(substr(code_muni, 1, 2))]
-d[, code_region := as.numeric(substr(code_muni, 1, 1))]
-d[, name_region := ifelse(code_region==1, 'Norte',
-                   ifelse(code_region==2, 'Nordeste',
-                   ifelse(code_region==3, 'Sudeste',
-                   ifelse(code_region==4, 'Sul',
-                   ifelse(code_region==5, 'Centro Oeste', NA)))))]
-
-
-d[, abbrev_state := ifelse(code_state== 11, "RO",
-                    ifelse(code_state== 12, "AC",
-                    ifelse(code_state== 13, "AM",
-                    ifelse(code_state== 14, "RR",
-                    ifelse(code_state== 15, "PA",
-                    ifelse(code_state== 16, "AP",
-                    ifelse(code_state== 17, "TO",
-                    ifelse(code_state== 21, "MA",
-                    ifelse(code_state== 22, "PI",
-                    ifelse(code_state== 23, "CE",
-                    ifelse(code_state== 24, "RN",
-                    ifelse(code_state== 25, "PB",
-                    ifelse(code_state== 26, "PE",
-                    ifelse(code_state== 27, "AL",
-                    ifelse(code_state== 28, "SE",
-                    ifelse(code_state== 29, "BA",
-                    ifelse(code_state== 31, "MG",
-                    ifelse(code_state== 32, "ES",
-                    ifelse(code_state== 33, "RJ",
-                    ifelse(code_state== 35, "SP",
-                    ifelse(code_state== 41, "PR",
-                    ifelse(code_state== 42, "SC",
-                    ifelse(code_state== 43, "RS",
-                    ifelse(code_state== 50, "MS",
-                    ifelse(code_state== 51, "MT",
-                    ifelse(code_state== 52, "GO",
-                    ifelse(code_state== 53, "DF",NA)))))))))))))))))))))))))))]
-
-
-
-setcolorder(d, c('code_muni', 'name_muni', 'code_state', 'abbrev_state', 'code_region', 'name_region', 'geometry'))
 
 
 
@@ -563,7 +431,7 @@ rhub::check_for_cran(show_status = FALSE)
 
 
 # submit to CRAN -----------------
-usethis::use_cran_comments('teste 2222, , asdadsad')
+# usethis::use_cran_comments('teste 2222, , asdadsad')
 
 devtools::submit_cran()
 
