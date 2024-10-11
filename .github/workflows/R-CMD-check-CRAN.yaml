@@ -5,13 +5,13 @@ on:
     paths:
       - r-package/**
     branches:
-      - main
+      - master
       - dev
   pull_request:
     paths:
       - r-package/**
     branches:
-      - main
+      - master
       - dev
 
 name: R-CMD-check-as-CRAN
