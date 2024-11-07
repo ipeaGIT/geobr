@@ -55,7 +55,7 @@ jobs:
 
       - name: Run tests with uv
         run: |
-          uv run pytest ./tests
+          uv run pytest -n auto ./tests
         working-directory: python-package
 
       - name: Upload check results
