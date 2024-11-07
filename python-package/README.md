@@ -22,8 +22,7 @@ You can use a helper to translate a function from R.
 If you want to add `read_biomes`, just run
 
 ```sh
-poetry shell
-python helpers/translate_from_R.py read_biomes
+uv run python helpers/translate_from_R.py read_biomes
 ```
 
 It will scrape the original R function to get documentation and metadata.
