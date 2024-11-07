@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         # Python 3.8 support ends in 2024-10
         # Python 3.12 support starts in 2023-10
         # Check Python maintenance status at: https://www.python.org/downloads/
