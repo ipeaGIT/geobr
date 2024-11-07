@@ -11,12 +11,12 @@
 To start the development environment run
 
 ```sh
-poetry install
+uv sync
 ```
 
 Test with
 
-`poetry run pytest`
+`uv run pytest -n auto`
 
 You can use a helper to translate a function from R.
 If you want to add `read_biomes`, just run
