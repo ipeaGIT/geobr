@@ -18,60 +18,46 @@ dir.create(dest_dir, recursive = T)
 
 if(year == 2022){
 
-  ftp <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_preliminares/malha_com_atributos/setores/gpkg/BR/BR_Malha_Preliminar_2022.zip'
+  # ftp <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_preliminares/malha_com_atributos/setores/gpkg/BR/BR_Malha_Preliminar_2022.zip'
+  ftp <- 'https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2022/setores/gpkg/BR/BR_setores_CD2022.gpkg'
   dest_file <-  download_file(file_url = ftp, dest_dir = raw_dir)
 
 }
-
-
-#### 1. unzip -----------------
-
-  temp_dir <- tempdir()
-
-  unzip(dest_file, exdir = temp_dir)
-  local_file <- list.files(temp_dir, full.names = T, pattern = 'gpkg')
-
-
-
-# read and save original raw data
-df <- sf::st_read(local_file)
-saveRDS(df, paste0(raw_dir,'/BR_Malha_Preliminar_2022.rds'))
 
 
 
 
 
 #### 1. clean and save data -----------------
-df <- readRDS(paste0(raw_dir,'/BR_Malha_Preliminar_2022.rds'))
+df <- sf::st_read(paste0(raw_dir,'/BR_setores_CD2022.gpkg'))
 
-temp_sf <- dplyr::select(df,
-                     code_tract = CD_SETOR,
-                     code_muni = CD_MUN,
-                     name_muni = NM_MUN,
-                     code_subdistrict = CD_SUBDIST,
-                     name_subdistrict = NM_SUBDIST,
-                     code_district = CD_DIST,
-                     name_district = NM_DIST,
-                     code_urban_concentration = CD_CONCURB,
-                     name_urban_concentration = NM_CONCURB,
-                     code_state = CD_UF,
-                     name_state = NM_UF,
-                     code_micro = CD_MICRO,
-                     name_micro = NM_MICRO,
-                     code_meso = CD_MESO,
-                     name_meso = NM_MESO,
-                     code_immediate = CD_RGI,
-                     name_immediate = NM_RGI,
-                     code_intermediate = CD_RGINT,
-                     name_intermediate = NM_RGINT,
-                     code_region = CD_REGIAO,
-                     name_region = NM_REGIAO
-                     )
-head(temp_sf)
+temp_sf <- dplyr::select(
+  df,
+  code_tract = CD_SETOR,
+  code_muni = CD_MUN,
+  name_muni = NM_MUN,
+  name_neighborhood = NM_BAIRRO,
+  code_neighborhood = CD_BAIRRO,
+  code_subdistrict = CD_SUBDIST,
+  name_subdistrict = NM_SUBDIST,
+  code_district = CD_DIST,
+  name_district = NM_DIST,
+  code_urban_concentration = CD_CONCURB,
+  name_urban_concentration = NM_CONCURB,
+  code_state = CD_UF,
+  name_state = NM_UF,
+  code_immediate = CD_RGI,
+  name_immediate = NM_RGI,
+  code_intermediate = CD_RGINT,
+  name_intermediate = NM_RGINT,
+  code_region = CD_REGIAO,
+  name_region = NM_REGIAO,
+  situacao = SITUACAO,
+  code_situacao = CD_SIT,
+  code_type = CD_TIPO,
+  area_km2 = AREA_KM2
+  )
 
-
-# remove P from code tract
-temp_sf <- mutate(temp_sf, code_tract = gsub("P","", code_tract))
 head(temp_sf)
 
 
