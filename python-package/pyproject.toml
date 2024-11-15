@@ -1,5 +1,23 @@
-[tool.poetry]
-authors = ["João Carabetta", "Rafael H. M. Pereira", "Caio Nogueira Goncalves", "Bernardo Furtado"]
+[project]
+name = "geobr"
+version = "0.2.2"
+description = "geobr: Download Official Spatial Data Sets of Brazil"
+readme = "README.md"
+requires-python = "<4.0,>=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "João Carabetta"},
+    {name = "Rafael H. M. Pereira"},
+    {name = "Caio Nogueira Goncalves"},
+    {name = "Bernardo Furtado"},
+]
+dependencies = [
+    "geopandas>=1.0.0,<=1.1",
+    "shapely>=1.7.0,<=2.1.0",
+    "requests<3.0.0,>=2.25.1",
+    "lxml<6.0.0,>=5.1.0",
+    "html5lib==1.1",
+]
 classifiers = [
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
@@ -8,29 +26,19 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Visualization",
     "Programming Language :: Python",
 ]
-description = "geobr: Download Official Spatial Data Sets of Brazil"
+
+[project.urls]
 homepage = "https://github.com/ipeaGIT/geobr"
-license = "MIT"
-name = "geobr"
-packages = [
-  {include = "geobr"},
-]
-readme = "README.md"
 repository = "https://github.com/ipeaGIT/geobr"
-version = "0.2.1"
 
-[tool.poetry.dependencies]
-geopandas = "^0.14.0"
-shapely = "^1.7.0"
-python = "^3.9"
-requests = "^2.25.1"
-lxml = "^5.1.0"
-html5lib = "1.1"
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
-[tool.poetry.dev-dependencies]
-pytest = "^6.0"
-jinja2 = "^3.1.4"
-fire = "^0.5.0"
+[tool.pdm.build]
+includes = [
+    "geobr",
+]
 
 [tool.black]
 line-length = 88
@@ -54,3 +62,11 @@ exclude = '''
   | helpers/template
 )
 '''
+
+[tool.uv]
+dev-dependencies = [
+    "pytest<7.0,>=6.0",
+    "pytest-xdist>=3.5.0",
+    "jinja2<4.0.0,>=3.1.4",
+    "fire<1.0.0,>=0.5.0",
+]

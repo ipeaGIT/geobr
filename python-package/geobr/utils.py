@@ -1,6 +1,7 @@
 import os
 from functools import lru_cache
 from urllib.error import HTTPError
+import tempfile
 
 import geopandas as gpd
 import pandas as pd
@@ -171,21 +172,21 @@ def load_gpkg(url):
         raise Exception(
             "Some internal url is broken."
             "Please report to https://github.com/ipeaGIT/geobr/issues"
-        )
+        ) from e
 
     # This below does not work in Windows -- see the Docs
     # Whether the name can be used to open the file a second time, while the named temporary file is still open,
     # varies across platforms (it can be so used on Unix; it cannot on Windows NT or later).
     # https://docs.python.org/2/library/tempfile.html
 
-    # with tempfile.NamedTemporaryFile(suffix='.gpkg') as fp:
-    with open("temp.gpkg", "wb") as fp:
-
+    # Create a temporary file with .gpkg extension that is automatically deleted when closed
+    with tempfile.NamedTemporaryFile(suffix=".gpkg", delete=False) as fp:
         fp.write(content)
-
+        # Need to close file before reading on Windows
+        fp.close()
         gdf = gpd.read_file(fp.name)
-
-    os.remove("temp.gpkg")
+        # Clean up temp file
+        os.unlink(fp.name)
 
     return gdf
 
