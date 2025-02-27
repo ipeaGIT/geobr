@@ -184,7 +184,7 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
-      url <- file_url2
+      file_url <- file_url2
       try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
       if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
     }
