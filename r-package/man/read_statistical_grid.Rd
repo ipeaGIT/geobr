@@ -5,22 +5,22 @@
 \title{Download spatial data of IBGE's statistical grid}
 \usage{
 read_statistical_grid(
-  code_grid,
   year = 2010,
+  code_grid,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{code_grid}{If two-letter abbreviation or two-digit code of a state is
 passed, the function will load all grid quadrants that
 intersect with that state. If \code{code_grid="all"}, the grid of
 the whole country will be loaded. Users may also pass a
 grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at \code{geobr::grid_state_correspondence_table}.}
-
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}. The
-only year available thus far is 2010.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

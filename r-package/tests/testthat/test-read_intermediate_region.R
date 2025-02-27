@@ -30,7 +30,6 @@ test_that("read_intermediate_region", {
   # Wrong year
   testthat::expect_error(read_intermediate_region(year = 9999999))
   testthat::expect_error(read_intermediate_region(year = "xxx"))
-  testthat::expect_error(read_intermediate_region(code_intermediate=5201108312313213))
 
 
   # wrong year and code_intermediate

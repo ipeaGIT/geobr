@@ -1,7 +1,7 @@
 # geobr v1.9.1999999999 dev
 
-- fix url redundancy 
-
+- Now all functions download data from the latest year available, by default.
+- Fix url redundancy to avoid internet connection problems.
 
 # geobr v1.9.1
 

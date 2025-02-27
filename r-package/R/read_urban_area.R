@@ -6,7 +6,7 @@
 #' and Statistics (IBGE)  For more information about the methodology, see details at
 #' \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf}
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2015`.
+#' @template year
 #' @param code_state The two-digit code of a state or a two-letter uppercase
 #'                   abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
 #'                   default), the function downloads all states.
@@ -24,7 +24,7 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' d <- read_urban_area(year=2005)
 #'
-read_urban_area <- function(year = 2015,
+read_urban_area <- function(year = NULL,
                             code_state = "all",
                             simplified = TRUE,
                             showProgress = TRUE,

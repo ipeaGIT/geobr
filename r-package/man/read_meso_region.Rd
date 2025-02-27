@@ -5,21 +5,22 @@
 \title{Download spatial data of meso regions}
 \usage{
 read_meso_region(
+  year = NULL,
   code_meso = "all",
-  year = 2010,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{code_meso}{The 4-digit code of a meso region. If the two-digit code or
 a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
 "RJ") the function will load all meso regions of that state. If
 \code{code_meso="all"} (Default), the function downloads all meso
 regions of the country.}
-
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

@@ -17,8 +17,7 @@
 #' `year_update`. More information in the CNES data set available at \url{https://dados.gov.br/}.
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `202303`,
-#'        which was the latest data available by the time of this update.
+#' @template date
 #' @template showProgress
 #' @template cache
 #'
@@ -31,7 +30,7 @@
 #' # Read all health facilities of the whole country
 #' h <- read_health_facilities( date = 202303)
 #'
-read_health_facilities <- function(date = 202303,
+read_health_facilities <- function(date = NULL,
                                    showProgress = TRUE,
                                    cache = TRUE){
 

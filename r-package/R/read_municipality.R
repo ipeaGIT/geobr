@@ -3,7 +3,7 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
+#' @template year
 #' @param code_muni The 7-digit identification code of a municipality. If
 #'        `code_muni = "all"` (Default), the function downloads all
 #'        municipalities of the country. Alternatively, if a two-digit
@@ -34,8 +34,8 @@
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
 #'
-read_municipality <- function(code_muni = "all",
-                              year = 2010,
+read_municipality <- function(year = NULL,
+                              code_muni = "all",
                               simplified = TRUE,
                               showProgress = TRUE,
                               cache = TRUE,
@@ -56,13 +56,13 @@ read_municipality <- function(code_muni = "all",
            code_muni %in% temp_meta$code |
            substring(code_muni, 1, 2) %in% temp_meta$code |
            code_muni %in% temp_meta$code_abbrev |
-           (year < 1992 & temp_meta$code %in% "mu")
+           (temp_meta$year[1] < 1992 & temp_meta$code %in% "mu")
   )) {
     stop("Error: Invalid Value to argument code_muni.")
   }
 
   # get file url
-  if (code_muni=="all" | year < 1992) {
+  if (code_muni=="all" | temp_meta$year[1] < 1992) {
     file_url <- as.character(temp_meta$download_path)
 
   } else if (is.numeric(code_muni)) { # if using numeric code_muni

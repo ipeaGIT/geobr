@@ -5,14 +5,15 @@
 \title{Download spatial data of indigenous lands in Brazil}
 \usage{
 read_indigenous_land(
-  date = 201907,
+  date = NULL,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{201907}.}
+\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
+and reads the data from the latest date available.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

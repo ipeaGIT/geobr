@@ -12,8 +12,11 @@ test_that("read_urban_concentrations", {
 
   # read data and check sf object
   test_sf <- read_urban_concentrations()
-
   expect_true(is(test_sf, "sf"))
+
+  test_sf <- read_urban_concentrations(year = 2015)
+  expect_true(is(test_sf, "sf"))
+
 
 })
 

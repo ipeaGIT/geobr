@@ -5,8 +5,8 @@
 \title{Download spatial data of Brazilian municipalities}
 \usage{
 read_municipality(
+  year = NULL,
   code_muni = "all",
-  year = 2010,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE,
@@ -14,6 +14,9 @@ read_municipality(
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{code_muni}{The 7-digit identification code of a municipality. If
 \code{code_muni = "all"} (Default), the function downloads all
 municipalities of the country. Alternatively, if a two-digit
@@ -21,8 +24,6 @@ identification code or a two-letter uppercase abbreviation of a state
 is passed (e.g. \code{33} or \code{"RJ"}), all municipalities of that state will
 be downloaded. Municipality identification codes can be consulted with
 the \code{geobr::lookup_muni()} function.}
-
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

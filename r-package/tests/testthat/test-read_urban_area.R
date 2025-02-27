@@ -14,6 +14,9 @@ test_that("read_urban_area", {
   test_sf <- read_urban_area()
   expect_true(is(test_sf, "sf"))
 
+  test_sf <- read_urban_area(year = 2015)
+  expect_true(is(test_sf, "sf"))
+
   # filter state code
   test_sf <- read_urban_area(code_state = 33)
   expect_true(is(test_sf, "sf"))

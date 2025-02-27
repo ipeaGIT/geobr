@@ -4,10 +4,11 @@
 \alias{read_amazon}
 \title{Download spatial data of Brazil's Legal Amazon}
 \usage{
-read_amazon(year = 2012, simplified = TRUE, showProgress = TRUE, cache = TRUE)
+read_amazon(year = NULL, simplified = TRUE, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2012}.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

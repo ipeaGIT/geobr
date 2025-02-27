@@ -5,19 +5,20 @@
 \title{Download spatial data of Brazilian states}
 \usage{
 read_state(
-  code_state = "all",
   year = 2010,
+  code_state = "all",
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{code_state}{The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
 default), the function downloads all states.}
-
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

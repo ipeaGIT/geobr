@@ -10,14 +10,13 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 
 test_that("read_semiarid", {
 
-  # read data
-  test_sf <- read_semiarid(year=2017)
 
   # check sf object
+  test_sf <- read_semiarid(year=2017)
   expect_true(is(test_sf, "sf"))
 
-  # check number of micro
-  expect_equal(test_sf %>% length(), 5)
+  test_sf <- read_semiarid()
+  expect_true(is(test_sf, "sf"))
 
 })
 

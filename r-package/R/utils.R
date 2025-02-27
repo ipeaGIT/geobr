@@ -37,14 +37,17 @@ select_data_type <- function(temp_meta, simplified=NULL){
 #'
 select_year_input <- function(temp_meta, y=year){
 
-  # NULL
-  if (is.null(y)){  stop(paste0("Error: Invalid Value to argument 'year/date'. It must be one of the following: ",
-                                   paste(unique(temp_meta$year),collapse = " "))) }
+  # NULL = use latest year available
+  if (is.null(y)){
+    y <- max(temp_meta$year)
+  }
 
   # invalid input
-  else if (y %in% temp_meta$year){ message(paste0("Using year/date ", y))
-                                  temp_meta <- subset(temp_meta, year == y)
-                                  return(temp_meta) }
+  if (y %in% temp_meta$year) {
+    message(paste0("Using year/date ", y))
+    temp_meta <- subset(temp_meta, year == y)
+    return(temp_meta)
+    }
 
   # invalid input
   else { stop(paste0("Error: Invalid Value to argument 'year/date'. It must be one of the following: ",

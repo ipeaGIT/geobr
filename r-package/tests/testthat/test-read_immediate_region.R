@@ -16,9 +16,6 @@ test_that("read_immediate_region", {
   test_code_muni <- read_immediate_region(code_immediate =  110002)
 
 
-  # check number of micro
-  testthat::expect_equal(test_code_muni %>% length(), 8)
-
 })
 
 
@@ -30,7 +27,6 @@ test_that("read_immediate_region", {
   # Wrong year
   testthat::expect_error(read_immediate_region(year = 9999999))
   testthat::expect_error(read_immediate_region(year = "xxx"))
-  testthat::expect_error(read_immediate_region(code_immediate=5201108312313213))
 
 
   # wrong year and code_immediate

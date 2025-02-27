@@ -5,7 +5,7 @@
 #' federal law n. 12.651/2012). The original data comes from the Brazilian
 #' Ministry of Environment (MMA) and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2012`.
+#' @template year
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -19,7 +19,7 @@
 #' # Read Brazilian Legal Amazon
 #' a <- read_amazon(year = 2012)
 #'
-read_amazon <- function(year = 2012,
+read_amazon <- function(year = NULL,
                         simplified = TRUE,
                         showProgress = TRUE,
                         cache = TRUE){

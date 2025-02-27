@@ -3,11 +3,11 @@
 #' @description
 #' Only 2010 data is currently available.
 #'
+#' @template year
 #' @param code_weighting The 7-digit code of a Municipality. If the two-digit code
 #' or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
 #' the function will load all weighting areas of that state. If `code_weighting="all"`,
 #' all weighting areas of the country are loaded.
-#' @param year Numeric. Year of the data. Defaults to `2010`.
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -33,8 +33,8 @@
 #' # Read all weighting areas of the country at a given year
 #' w <- read_weighting_area(code_weighting="all", year=2010)
 #'
-read_weighting_area <- function(code_weighting = "all",
-                                year = 2010,
+read_weighting_area <- function(year = NULL,
+                                code_weighting = "all",
                                 simplified = TRUE,
                                 showProgress = TRUE,
                                 cache = TRUE){
@@ -52,14 +52,13 @@ read_weighting_area <- function(code_weighting = "all",
   if (!any(code_weighting == 'all' |
            code_weighting %in% temp_meta$code |
            substring(code_weighting, 1, 2) %in% temp_meta$code |
-           code_weighting %in% temp_meta$code_abbrev |
-           (year < 1992 & temp_meta$code %in% "mu")
-  )) {
+           code_weighting %in% temp_meta$code_abbrev)
+      ) {
     stop("Error: Invalid Value to argument code_weighting.")
   }
 
   # get file url
-  if (code_weighting=="all" | year < 1992) {
+  if (code_weighting=="all" | temp_meta$year[1] < 1992) {
     file_url <- as.character(temp_meta$download_path)
 
   } else if (is.numeric(code_weighting)) { # if using numeric code_weighting

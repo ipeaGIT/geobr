@@ -3,12 +3,12 @@
 #' @description
 #' Download spatial data of census tracts of the Brazilian Population Census
 #'
+#' @template year
 #' @param code_tract The 7-digit code of a Municipality. If the two-digit code
 #'         or a two-letter uppercase abbreviation of a state is passed, (e.g. 33
 #'         or "RJ") the function will load all census tracts of that state. If
 #'         `code_tract="all"`, the function downloads all census tracts of the
 #'         country.
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
 #' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts
 #'             are separate data sets.
 #' @template simplified
@@ -36,8 +36,8 @@
 #' # Read all census tracts of the country at a given year
 #'   c <- read_census_tract(code_tract="all", year=2010)
 #'
-read_census_tract <- function(code_tract,
-                              year = 2010,
+read_census_tract <- function(year = NULL,
+                              code_tract,
                               zone = "urban",
                               simplified = TRUE,
                               showProgress = TRUE,
@@ -50,7 +50,7 @@ read_census_tract <- function(code_tract,
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # Check zone input urban and rural inputs if year <=2007
-  if (year<=2007){
+  if ( temp_meta$year[1] <= 2007){
 
     if (zone == "urban") {message("Using data of Urban census tracts\n")
                           temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "U", ] }
@@ -96,12 +96,12 @@ read_census_tract <- function(code_tract,
     } else{
 
       # list paths of files to download
-      if (year<=2007 & zone == "urban") {
+      if (temp_meta$year[1] <= 2007 & zone == "urban") {
 
         if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("U",substr(code_tract, 1, 2)))$download_path) }
         if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
 
-      } else if (year<=2007 & zone == "rural") {
+      } else if (temp_meta$year[1] <= 2007 & zone == "rural") {
 
         if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("R",substr(code_tract, 1, 2)))$download_path) }
         if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }

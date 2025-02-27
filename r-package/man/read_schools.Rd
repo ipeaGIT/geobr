@@ -4,10 +4,11 @@
 \alias{read_schools}
 \title{Download geolocated data of schools}
 \usage{
-read_schools(year = 2020, showProgress = TRUE, cache = TRUE)
+read_schools(year = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2020}.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

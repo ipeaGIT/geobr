@@ -8,6 +8,7 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 test_that("read_state", {
 
   # read data
+  expect_true(is( read_state(code_state=11) , "sf"))
   expect_true(is( read_state(code_state=11, year=1970) , "sf"))
   expect_true(is( read_state(code_state='all', year=1970) , "sf"))
   expect_true(is( read_state(code_state='AC', year=1970) , "sf"))

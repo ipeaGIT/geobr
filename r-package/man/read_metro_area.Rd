@@ -5,7 +5,7 @@
 \title{Download spatial data of official metropolitan areas in Brazil}
 \usage{
 read_metro_area(
-  year = 2018,
+  year = NULL,
   code_state = "all",
   simplified = TRUE,
   showProgress = TRUE,
@@ -13,7 +13,8 @@ read_metro_area(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2018}.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{code_state}{The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
