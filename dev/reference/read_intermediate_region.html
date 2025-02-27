@@ -60,8 +60,8 @@ system "SIRGAS2000" and CRS(4674)</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_intermediate_region</span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  code_intermediate <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  year <span class="op">=</span> <span class="fl">2019</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -72,16 +72,17 @@ system "SIRGAS2000" and CRS(4674)</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-code-intermediate">code_intermediate<a class="anchor" aria-label="anchor" href="#arg-code-intermediate"></a></dt>
+<dl><dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
+<dd><p>Numeric. Year of the data in YYYY format. It defaults to <code>NULL</code>
+and reads the data from the latest year available.</p></dd>
+
+
+<dt id="arg-code-intermediate">code_intermediate<a class="anchor" aria-label="anchor" href="#arg-code-intermediate"></a></dt>
 <dd><p>4-digit code of an intermediate region. If the
 two-digit code or a two-letter uppercase abbreviation of a state is
 passed, (e.g. 33 or "RJ") the function will load all intermediate
 regions of that state. If <code>code_intermediate="all"</code> (Default), the
 function downloads all intermediate regions of the country.</p></dd>
-
-
-<dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
-<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2019</code>.</p></dd>
 
 
 <dt id="arg-simplified">simplified<a class="anchor" aria-label="anchor" href="#arg-simplified"></a></dt>
@@ -143,19 +144,19 @@ the data again and overwrite the local file.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Read an specific intermediate region</span></span></span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_intermediate_region</span><span class="op">(</span>code_intermediate<span class="op">=</span><span class="fl">1202</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read intermediate regions of a state</span></span></span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_intermediate_region</span><span class="op">(</span>code_intermediate<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_intermediate_region</span><span class="op">(</span>code_intermediate<span class="op">=</span><span class="st">"AM"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read all intermediate regions of the country</span></span></span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_intermediate_region</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_intermediate_region</span><span class="op">(</span>code_intermediate<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

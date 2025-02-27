@@ -92,7 +92,7 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_health_facilities</span><span class="op">(</span>date <span class="op">=</span> <span class="fl">202303</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_health_facilities</span><span class="op">(</span>date <span class="op">=</span> <span class="cn">NULL</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -100,8 +100,8 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).</p>
 
 
 <dl><dt id="arg-date">date<a class="anchor" aria-label="anchor" href="#arg-date"></a></dt>
-<dd><p>Numeric. Date of the data in YYYYMM format. Defaults to <code>202303</code>,
-which was the latest data available by the time of this update.</p></dd>
+<dd><p>Numeric. Date of the data in YYYYMM format. It defaults to <code>NULL</code>
+and reads the data from the latest date available.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>

@@ -51,8 +51,8 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_statistical_grid</span><span class="op">(</span></span>
-<span>  <span class="va">code_grid</span>,</span>
 <span>  year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>  <span class="va">code_grid</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -62,18 +62,18 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-code-grid">code_grid<a class="anchor" aria-label="anchor" href="#arg-code-grid"></a></dt>
+<dl><dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
+<dd><p>Numeric. Year of the data in YYYY format. It defaults to <code>NULL</code>
+and reads the data from the latest year available.</p></dd>
+
+
+<dt id="arg-code-grid">code_grid<a class="anchor" aria-label="anchor" href="#arg-code-grid"></a></dt>
 <dd><p>If two-letter abbreviation or two-digit code of a state is
 passed, the function will load all grid quadrants that
 intersect with that state. If <code>code_grid="all"</code>, the grid of
 the whole country will be loaded. Users may also pass a
 grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at <code><a href="grid_state_correspondence_table.html">geobr::grid_state_correspondence_table</a></code>.</p></dd>
-
-
-<dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
-<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2010</code>. The
-only year available thus far is 2010.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>

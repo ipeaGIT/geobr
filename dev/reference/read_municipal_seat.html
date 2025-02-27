@@ -59,7 +59,7 @@ Brazilian Institute of Geography and Statistics (IBGE).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_municipal_seat</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_municipal_seat</span><span class="op">(</span>year <span class="op">=</span> <span class="cn">NULL</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,7 +67,8 @@ Brazilian Institute of Geography and Statistics (IBGE).</p>
 
 
 <dl><dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
-<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2010</code>.</p></dd>
+<dd><p>Numeric. Year of the data in YYYY format. It defaults to <code>NULL</code>
+and reads the data from the latest year available.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>

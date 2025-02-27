@@ -63,7 +63,7 @@ shortages of specialized professionals. A macro region comprises one or more hea
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_health_region</span><span class="op">(</span></span>
-<span>  year <span class="op">=</span> <span class="fl">2013</span>,</span>
+<span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  macro <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -76,8 +76,8 @@ shortages of specialized professionals. A macro region comprises one or more hea
 
 
 <dl><dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
-<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2013</code>, the
-latest available.</p></dd>
+<dd><p>Numeric. Year of the data in YYYY format. It defaults to <code>NULL</code>
+and reads the data from the latest year available.</p></dd>
 
 
 <dt id="arg-macro">macro<a class="anchor" aria-label="anchor" href="#arg-macro"></a></dt>

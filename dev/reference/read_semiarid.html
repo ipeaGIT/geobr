@@ -57,7 +57,7 @@ and Statistics (IBGE) and can be found at <a href="https://www.ibge.gov.br/geoci
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_semiarid</span><span class="op">(</span></span>
-<span>  year <span class="op">=</span> <span class="fl">2017</span>,</span>
+<span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -69,7 +69,8 @@ and Statistics (IBGE) and can be found at <a href="https://www.ibge.gov.br/geoci
 
 
 <dl><dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
-<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2017</code>.</p></dd>
+<dd><p>Numeric. Year of the data in YYYY format. It defaults to <code>NULL</code>
+and reads the data from the latest year available.</p></dd>
 
 
 <dt id="arg-simplified">simplified<a class="anchor" aria-label="anchor" href="#arg-simplified"></a></dt>

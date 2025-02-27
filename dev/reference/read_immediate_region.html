@@ -54,8 +54,8 @@ were created to replace the "Micro Regions" division. Data at scale 1:250,000, u
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_immediate_region</span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  code_immediate <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  year <span class="op">=</span> <span class="fl">2019</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -66,16 +66,17 @@ were created to replace the "Micro Regions" division. Data at scale 1:250,000, u
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-code-immediate">code_immediate<a class="anchor" aria-label="anchor" href="#arg-code-immediate"></a></dt>
+<dl><dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
+<dd><p>Numeric. Year of the data in YYYY format. It defaults to <code>NULL</code>
+and reads the data from the latest year available.</p></dd>
+
+
+<dt id="arg-code-immediate">code_immediate<a class="anchor" aria-label="anchor" href="#arg-code-immediate"></a></dt>
 <dd><p>6-digit code of an immediate region. If the two-digit
 code or a two-letter uppercase abbreviation of a state is passed, (e.g.
 33 or "RJ") the function will load all immediate regions of that state.
 If <code>code_immediate="all"</code> (Default), the function downloads all
 immediate regions of the country.</p></dd>
-
-
-<dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
-<dd><p>Numeric. Year of the data in YYYY format. Defaults to <code>2019</code>.</p></dd>
 
 
 <dt id="arg-simplified">simplified<a class="anchor" aria-label="anchor" href="#arg-simplified"></a></dt>
@@ -137,19 +138,19 @@ the data again and overwrite the local file.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Read an specific immediate region</span></span></span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="fl">110006</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read immediate regions of a state</span></span></span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="st">"AM"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read all immediate regions of the country</span></span></span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 <span class="r-in"><span>  <span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2019</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 2020</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
