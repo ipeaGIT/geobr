@@ -9,7 +9,7 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
             person(given="Rodrigo Almeida de", family="Arruda", role=c("ctb")),
             person(given="Igor", family="Nascimento", role="ctb"), 
             person(given="Barbara Santiago Pedreira da ", family="Costa", role="ctb"), 
-            person(given="Welligtton Silva ", family="Cavedo", role="ctb"),
+            person(given="Welligtton Silva", family="Cavedo", role="ctb"),
             person(given="Pedro R.", family="Andrade", role="ctb"),
             person(given="Alan da", family="Silva", role="ctb"),
 	          person(given="Carlos Kauê Vieira", family="Braga", role="ctb"),   
