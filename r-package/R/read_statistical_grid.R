@@ -3,8 +3,7 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`. The
-#'        only year available thus far is 2010.
+#' @template year
 #' @param code_grid If two-letter abbreviation or two-digit code of a state is
 #'                  passed, the function will load all grid quadrants that
 #'                  intersect with that state. If `code_grid="all"`, the grid of
@@ -27,8 +26,8 @@
 #' # Read the grid covering a given state at a given year
 #' state_grid <- read_statistical_grid(code_grid = "RJ")
 #'
-read_statistical_grid <- function(code_grid,
-                                  year = 2010,
+read_statistical_grid <- function(year = 2010,
+                                  code_grid,
                                   showProgress = TRUE,
                                   cache = TRUE){ # nocov start
 

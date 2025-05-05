@@ -5,7 +5,7 @@
 \title{Download spatial data of Brazilian health regions and health macro regions}
 \usage{
 read_health_region(
-  year = 2013,
+  year = NULL,
   macro = FALSE,
   simplified = TRUE,
   showProgress = TRUE,
@@ -13,8 +13,8 @@ read_health_region(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2013}, the
-latest available.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{macro}{Logic. If \code{FALSE} (default), the function downloads health
 regions data. If \code{TRUE}, the function downloads macro regions data.}

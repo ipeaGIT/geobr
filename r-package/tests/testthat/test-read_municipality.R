@@ -10,10 +10,14 @@ test_that("read_municipality", {
   # read data
   test_1970 <- read_municipality(code_muni=1100205, year=1970)
   test_2010 <- read_municipality(code_muni=1100205, year=2010)
+  test_latest <- read_municipality(code_muni=1100205, year=NULL)
+  test_latest11 <- read_municipality(code_muni=11, year=NULL)
 
   # check sf object
   testthat::expect_true(is(test_1970, "sf"))
   testthat::expect_true(is(test_2010, "sf"))
+  testthat::expect_true(is(test_latest, "sf"))
+  testthat::expect_true(is(test_latest11, "sf"))
 
   testthat::expect_true(is(  read_municipality( year=1970)  , "sf"))
   testthat::expect_true(is(  read_municipality(code_muni=11, year=1970)  , "sf"))
@@ -67,7 +71,6 @@ test_that("read_municipality", {
   # Wrong year
   testthat::expect_error(read_municipality( year=9999999))
   testthat::expect_error(read_municipality( year='SASa'))
-  testthat::expect_error(read_municipality( year=NULL))
   testthat::expect_error(read_municipality( showProgress = 'aaaaa'))
   testthat::expect_error(read_municipality( showProgress = NULL))
   testthat::expect_error(read_municipality( simplified = 'aaaaa'))

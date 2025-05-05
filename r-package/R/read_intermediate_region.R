@@ -6,7 +6,7 @@
 #' "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
 #' system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2019`.
+#' @template year
 #' @param code_intermediate 4-digit code of an intermediate region. If the
 #'        two-digit code or a two-letter uppercase abbreviation of a state is
 #'        passed, (e.g. 33 or "RJ") the function will load all intermediate
@@ -33,8 +33,8 @@
 #'   im <- read_intermediate_region()
 #'   im <- read_intermediate_region(code_intermediate="all")
 #'
-read_intermediate_region <- function(code_intermediate = "all",
-                                     year = 2019,
+read_intermediate_region <- function(year = NULL,
+                                     code_intermediate = "all",
                                      simplified = TRUE,
                                      showProgress = TRUE,
                                      cache = TRUE){

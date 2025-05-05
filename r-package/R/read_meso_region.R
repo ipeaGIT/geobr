@@ -3,7 +3,7 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
+#' @template year
 #' @param code_meso The 4-digit code of a meso region. If the two-digit code or
 #'        a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
 #'        "RJ") the function will load all meso regions of that state. If
@@ -29,8 +29,8 @@
 #' # Read all meso regions of the country at a given year
 #'   meso <- read_meso_region(code_meso="all", year=2010)
 #'
-read_meso_region <- function(code_meso = "all",
-                             year = 2010,
+read_meso_region <- function(year = NULL,
+                             code_meso = "all",
                              simplified = TRUE,
                              showProgress = TRUE,
                              cache = TRUE){

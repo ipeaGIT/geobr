@@ -41,7 +41,6 @@ test_that("read_metro_area", {
   # Wrong year
   expect_error(read_metro_area(year=9999999))
   expect_error(read_metro_area(year="xxx"))
-  expect_error(read_metro_area(year=NULL))
 
   # filter state
   expect_error(read_metro_area(code_state = c('RJ', 33)))

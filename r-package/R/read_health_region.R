@@ -7,8 +7,7 @@
 #' few municipalities because they are generally more technology intensive, costly and face
 #' shortages of specialized professionals. A macro region comprises one or more health regions.
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2013`, the
-#'        latest available.
+#' @template year
 #' @param macro Logic. If `FALSE` (default), the function downloads health
 #'        regions data. If `TRUE`, the function downloads macro regions data.
 #' @template simplified
@@ -27,7 +26,7 @@
 #' # Read all macro health regions
 #' mhr <- read_health_region( year=2013, macro =TRUE)
 #'
-read_health_region <- function(year = 2013,
+read_health_region <- function(year = NULL,
                                macro = FALSE,
                                simplified = TRUE,
                                showProgress = TRUE,

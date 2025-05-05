@@ -4,10 +4,11 @@
 \alias{read_municipal_seat}
 \title{Download spatial data of municipal seats (sede dos municipios) in Brazil}
 \usage{
-read_municipal_seat(year = 2010, showProgress = TRUE, cache = TRUE)
+read_municipal_seat(year = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

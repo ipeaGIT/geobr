@@ -30,6 +30,5 @@ test_that("read_health_region", {
   testthat::expect_error(read_health_region(year=2005, macro='aaa'))
   testthat::expect_error(read_health_region(year=9999999))
   testthat::expect_error(read_health_region(year="xxx"))
-  testthat::expect_error(read_health_region(year=NULL))
 
 })

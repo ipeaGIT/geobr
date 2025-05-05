@@ -4,7 +4,7 @@
 #' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
 #' were created to replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2019`.
+#' @template year
 #' @param code_immediate 6-digit code of an immediate region. If the two-digit
 #'        code or a two-letter uppercase abbreviation of a state is passed, (e.g.
 #'        33 or "RJ") the function will load all immediate regions of that state.
@@ -31,8 +31,8 @@
 #'   im <- read_immediate_region()
 #'   im <- read_immediate_region(code_immediate="all")
 #'
-read_immediate_region <- function(code_immediate = "all",
-                                  year = 2019,
+read_immediate_region <- function(year = NULL,
+                                  code_immediate = "all",
                                   simplified = TRUE,
                                   showProgress = TRUE,
                                   cache = TRUE){

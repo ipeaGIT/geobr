@@ -10,13 +10,11 @@ testthat::skip_on_cran()
 test_that("read_schools", {
 
   # read data
-  test_sf0 <- geobr::read_schools()
+  test_sf <- geobr::read_schools(year = 2023)
+  testthat::expect_true(is(test_sf, "sf"))
 
-  # check sf object
-  testthat::expect_true(is(test_sf0, "sf"))
-
-  # check number of micro
-  testthat::expect_equal( nrow(test_sf0), 222936)
+  test_sf_latest <- geobr::read_schools()
+  testthat::expect_true(is(test_sf_latest, "sf"))
 
 })
 

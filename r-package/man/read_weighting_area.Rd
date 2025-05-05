@@ -5,20 +5,21 @@
 \title{Download spatial data of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census}
 \usage{
 read_weighting_area(
+  year = NULL,
   code_weighting = "all",
-  year = 2010,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code
 or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
 the function will load all weighting areas of that state. If \code{code_weighting="all"},
 all weighting areas of the country are loaded.}
-
-\item{year}{Numeric. Year of the data. Defaults to \code{2010}.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

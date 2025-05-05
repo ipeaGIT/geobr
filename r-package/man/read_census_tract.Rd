@@ -5,8 +5,8 @@
 \title{Download spatial data of census tracts of the Brazilian Population Census}
 \usage{
 read_census_tract(
+  year = NULL,
   code_tract,
-  year = 2010,
   zone = "urban",
   simplified = TRUE,
   showProgress = TRUE,
@@ -14,13 +14,14 @@ read_census_tract(
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{code_tract}{The 7-digit code of a Municipality. If the two-digit code
 or a two-letter uppercase abbreviation of a state is passed, (e.g. 33
 or "RJ") the function will load all census tracts of that state. If
 \code{code_tract="all"}, the function downloads all census tracts of the
 country.}
-
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2010}.}
 
 \item{zone}{For census tracts before 2010, 'urban' and 'rural' census tracts
 are separate data sets.}

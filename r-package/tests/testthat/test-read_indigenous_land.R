@@ -8,15 +8,11 @@ testthat::skip_on_cran()
 
 test_that("read_indigenous_land", {
 
-  # read data
-
+  # check sf object
   test_sf <- read_indigenous_land()
 
-  # check sf object
   testthat::expect_true(is(test_sf, "sf"))
 
-  # check number of micro
-  testthat::expect_equal(test_sf$code_terrai %>% length(), 615)
 
 })
 
@@ -28,6 +24,5 @@ test_that("read_indigenous_land", {
   # Wrong date
   testthat::expect_error(read_indigenous_land(date=9999999))
   testthat::expect_error(read_indigenous_land(date="xxx"))
-  testthat::expect_error(read_indigenous_land(date=NULL))
 
 })

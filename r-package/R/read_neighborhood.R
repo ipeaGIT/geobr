@@ -5,7 +5,7 @@
 #' It is based on aggregations of the census tracts from the Brazilian
 #' census. Only 2010 data is currently available.
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
+#' @template year
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -19,7 +19,7 @@
 #' # Read neighborhoods of Brazilian municipalities
 #' n <- read_neighborhood(year=2010)
 #'
-read_neighborhood <- function(year = 2010,
+read_neighborhood <- function(year = NULL,
                               simplified = TRUE,
                               showProgress = TRUE,
                               cache = TRUE){

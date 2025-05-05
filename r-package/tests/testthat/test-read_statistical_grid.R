@@ -7,6 +7,7 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 
 test_that("read_statistical_grid", {
 
+  expect_true(is( read_statistical_grid(code_grid=39) , "sf"))
   expect_true(is( read_statistical_grid(code_grid=39, year=2010) , "sf"))
   expect_true(is( read_statistical_grid(code_grid="DF", year=2010) , "sf"))
 

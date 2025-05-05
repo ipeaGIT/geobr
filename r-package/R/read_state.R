@@ -3,7 +3,7 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
+#' @template year
 #' @param code_state The two-digit code of a state or a two-letter uppercase
 #'                   abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
 #'                   default), the function downloads all states.
@@ -27,8 +27,8 @@
 #' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2010)
 #'
-read_state <- function(code_state = "all",
-                       year = 2010,
+read_state <- function(year = 2010,
+                       code_state = "all",
                        simplified  = TRUE,
                        showProgress = TRUE,
                        cache = TRUE){

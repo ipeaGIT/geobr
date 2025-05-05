@@ -4,11 +4,11 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities}
 \usage{
-read_health_facilities(date = 202303, showProgress = TRUE, cache = TRUE)
+read_health_facilities(date = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{202303},
-which was the latest data available by the time of this update.}
+\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
+and reads the data from the latest date available.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

@@ -11,10 +11,11 @@ testthat::skip_on_cran()
 test_that("read_disaster_risk_area", {
 
 
-  # read data
-  test_sf <- read_disaster_risk_area(year=2010)
-
   # check sf object
+  test_sf <- read_disaster_risk_area(year=2010)
+  testthat::expect_true(is(test_sf, "sf"))
+
+  test_sf <- read_disaster_risk_area()
   testthat::expect_true(is(test_sf, "sf"))
 
   # check number of micro
@@ -31,6 +32,5 @@ test_that("read_disaster_risk_area", {
   # Wrong year
   testthat::expect_error(read_disaster_risk_area(year=9999999))
   testthat::expect_error(read_disaster_risk_area(year="xxx"))
-  testthat::expect_error(read_disaster_risk_area(year=NULL))
 
 })

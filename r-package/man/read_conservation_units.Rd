@@ -5,14 +5,15 @@
 \title{Download spatial data of Brazilian environmental conservation units}
 \usage{
 read_conservation_units(
-  date = 201909,
+  date = NULL,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. Defaults to \code{201909}.}
+\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
+and reads the data from the latest date available.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

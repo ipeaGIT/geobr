@@ -8,7 +8,7 @@
 #' updated monthly, the geobr package will only keep the data for a few months
 #' per year.
 #'
-#' @param date Numeric. Date of the data in YYYYMM format. Defaults to `201907`.
+#' @template date
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -22,7 +22,7 @@
 #' # Read all indigenous land in an specific date
 #' i <- read_indigenous_land(date=201907)
 #'
-read_indigenous_land <- function(date = 201907,
+read_indigenous_land <- function(date = NULL,
                                  simplified = TRUE,
                                  showProgress = TRUE,
                                  cache = TRUE){

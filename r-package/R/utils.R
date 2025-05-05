@@ -37,14 +37,17 @@ select_data_type <- function(temp_meta, simplified=NULL){
 #'
 select_year_input <- function(temp_meta, y=year){
 
-  # NULL
-  if (is.null(y)){  stop(paste0("Error: Invalid Value to argument 'year/date'. It must be one of the following: ",
-                                   paste(unique(temp_meta$year),collapse = " "))) }
+  # NULL = use latest year available
+  if (is.null(y)){
+    y <- max(temp_meta$year)
+  }
 
   # invalid input
-  else if (y %in% temp_meta$year){ message(paste0("Using year/date ", y))
-                                  temp_meta <- subset(temp_meta, year == y)
-                                  return(temp_meta) }
+  if (y %in% temp_meta$year) {
+    message(paste0("Using year/date ", y))
+    temp_meta <- subset(temp_meta, year == y)
+    return(temp_meta)
+    }
 
   # invalid input
   else { stop(paste0("Error: Invalid Value to argument 'year/date'. It must be one of the following: ",
@@ -184,7 +187,7 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
 
     # if server1 fails, replace url and test connection with server2
     if (is.null(check_con) | isFALSE(check_con)) {
-      url <- file_url2
+      file_url <- file_url2
       try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
       if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
     }

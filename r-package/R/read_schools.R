@@ -9,7 +9,7 @@
 #' with the objective of improving the quality of the data. More information
 #' available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2020`.
+#' @template year
 #' @template showProgress
 #' @template cache
 #'
@@ -23,7 +23,7 @@
 #' # Read all schools in the country
 #' s <- read_schools( year = 2020)
 #'
-read_schools <- function(year = 2020,
+read_schools <- function(year = NULL,
                          showProgress = TRUE,
                          cache = TRUE){
 

@@ -5,7 +5,7 @@
 \title{Download spatial data of urbanized areas in Brazil}
 \usage{
 read_urban_area(
-  year = 2015,
+  year = NULL,
   code_state = "all",
   simplified = TRUE,
   showProgress = TRUE,
@@ -13,7 +13,8 @@ read_urban_area(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2015}.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{code_state}{The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the

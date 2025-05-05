@@ -172,8 +172,8 @@ As of today, there is another R package with similar functionalities: [simplefea
 - Chile: [chilemapas](https://pacha.dev/chilemapas/)
 - Czech Republic: [RCzechia](https://github.com/jlacko/RCzechia)
 - Finland: [geofi](https://ropengov.github.io/geofi/)
-- Kazakhstan: (geokz)[https://github.com/arodionoff/geokz]
-- Peru: [mapsPERU](https://github.com/musajajorge/mapsPERU)
+- Kazakhstan: [geokz](https://github.com/arodionoff/geokz)
+- Peru: [mapsPERU](https://github.com/musajajorge/mapsPERU) and [geoidep](https://geografo.pe/geoidep/index.html)
 - Spain: [mapSpain](https://github.com/rOpenSpain/mapSpain/)
 - UK: [geographr](https://github.com/britishredcrosssociety/geographr)
 - Uruguay: [geouy](https://github.com/RichDeto/geouy)

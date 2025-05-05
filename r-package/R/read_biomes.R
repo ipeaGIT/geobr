@@ -6,7 +6,7 @@
 #' scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
 #' data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2019`.
+#' @template year
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -20,7 +20,7 @@
 #' # Read biomes
 #' b <- read_biomes(year = 2019)
 #'
-read_biomes <- function(year = 2019,
+read_biomes <- function(year = NULL,
                         simplified = TRUE,
                         showProgress = TRUE,
                         cache = TRUE){

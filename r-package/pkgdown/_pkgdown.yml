@@ -1,14 +1,11 @@
-destination: ./docs
+url: https://ipeagit.github.io/geobr/
+
+template:
+  bootstrap: 5
+  light-switch: true
 
 development:
   mode: auto
-
-
-repo:
-  url:
-    home: https://github.com/ipeaGIT/geobr/
-    source: https://github.com/ipeaGIT/geobr/tree/master/
-
 
 reference:
   - title: "Political administrative"

@@ -5,14 +5,15 @@
 \title{Download spatial data of the Brazilian Semiarid region}
 \usage{
 read_semiarid(
-  year = 2017,
+  year = NULL,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. Defaults to \code{2017}.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

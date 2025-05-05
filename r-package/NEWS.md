@@ -1,5 +1,8 @@
 # geobr dev
+# geobr v1.9.1999999999 dev
 
+- Now all functions download data from the latest year available, by default.
+- Fix url redundancy to avoid internet connection problems.
 **New data**
 
 

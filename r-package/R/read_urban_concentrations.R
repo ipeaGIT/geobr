@@ -6,7 +6,7 @@
 #' Institute of Geography and Statistics (IBGE)  For more information about the
 #' methodology, see details at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
 #'
-#' @param year Numeric. A year number in YYYY format. Defaults to `2015`.
+#' @template year
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -21,7 +21,7 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' uc <- read_urban_concentrations(year=2015)
 #'
-read_urban_concentrations <- function(year = 2015,
+read_urban_concentrations <- function(year = NULL,
                                       simplified = TRUE,
                                       showProgress = TRUE,
                                       cache = TRUE){

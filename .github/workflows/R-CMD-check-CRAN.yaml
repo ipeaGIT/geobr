@@ -1,20 +1,20 @@
-# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
-# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
   push:
     paths:
       - r-package/**
+      - .github/workflows/R-CMD-check-CRAN.yaml
     branches:
       - master
       - dev
   pull_request:
     paths:
       - r-package/**
+      - .github/workflows/R-CMD-check-CRAN.yaml
     branches:
       - master
       - dev
 
-name: R-CMD-check-as-CRAN
+name: R-CMD-check-CRAN
 
 jobs:
   R-CMD-check:
@@ -26,10 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+        - {os: ubuntu-22.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
@@ -42,47 +41,15 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "../.github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), "../.github/R-version")
-        shell: Rscript {0}
-        working-directory: r-package
-
-      - name: Cache R packages
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          extra-packages: any::rcmdcheck
+          needs: check
+          working-directory: r-package
 
-      - name: Install system dependencies
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-        working-directory: r-package
-
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
-        shell: Rscript {0}
-        working-directory: r-package
-
-      - name: Check
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          working-directory: r-package
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
           NOT_CRAN: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-        working-directory: r-package
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check

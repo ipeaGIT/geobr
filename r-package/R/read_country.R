@@ -3,7 +3,7 @@
 #' @description
 #' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
-#' @param year Numeric. Year of the data in YYYY format. Defaults to `2010`.
+#' @template year
 #' @template simplified
 #' @template showProgress
 #' @template cache
@@ -17,7 +17,7 @@
 #' # Read specific year
 #' br <- read_country(year = 2018)
 #'
-read_country <- function(year = 2010,
+read_country <- function(year = NULL,
                          simplified = TRUE,
                          showProgress = TRUE,
                          cache = TRUE){
