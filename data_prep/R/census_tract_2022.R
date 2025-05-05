@@ -2,6 +2,8 @@ library(sf)
 library(data.table)
 library(dplyr)
 library(furrr)
+library(future.apply)
+library(progressr)
 
 year <- 2022
 
@@ -118,13 +120,30 @@ gc(reset = T)
 
 # tictoc::tic()
 # future::plan(strategy = 'multisession')
+#
+# options(future.globals.maxSize = 12 * 1024^3)  # 12 GB
+#
 # furrr::future_map(.x=all_states,
 #                   .f=save_state,
 #                   .progress = T,
-#                   .options = furrr_options(seed=TRUE))
+#                   .options = furrr_options(
+#                     seed=TRUE,
+#                     globals = TRUE
+#                     )
+#                   )
+# tictoc::toc()
+
+tictoc::tic()
+progressr::with_progress({
+  results <- future.apply::future_lapply(X = all_states, FUN = save_state)
+})
+tictoc::toc()
+
+
+# tictoc::tic()
+# pbapply::pblapply(X=all_states, FUN=save_state)
 # tictoc::toc()
 
 
-tictoc::tic()
-pbapply::pblapply(X=all_states, FUN=save_state)
-tictoc::toc()
+
+
