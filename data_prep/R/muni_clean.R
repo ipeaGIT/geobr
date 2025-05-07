@@ -19,7 +19,7 @@ clean_muni <- function( muni_raw_paths ){
 
 
   # detect corresponding year of files
-  year <- detect_year_from_string(muni_raw_paths[1])
+  year <- detect_year_from_string(all_muni_raw_paths[1])
   message(paste('\nCleaning', year, '\n'))
 
   # function to clean an individuals file

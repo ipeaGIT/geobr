@@ -98,14 +98,14 @@ pb_new_release("ipeaGIT/geobr",
 
   metadata[geo=='semiarid']
 
-  a <- metadata[geo=='neighborhood']
-  a <- a[year==2022]
-
+  a <- metadata[geo=='municipality']
+  a <- a[year==2024]
+  a
 
 ######### Step 3 -  upload data to github ----------------------
-all_files <- list.files("//storage1/geobr/data_gpkg/census_tract/2022/",  full.names = T, recursive = T)
+all_files <- list.files("//storage1/geobr/data_gpkg/municipality/2024/",  full.names = T, recursive = T)
 
-  all_files <- all_files[all_files %like% 'semiarid']
+  all_files <- all_files[all_files %like% 'municipality']
   # all_files <- all_files[all_files %like% '2022']
 
 # upload data
@@ -172,7 +172,7 @@ piggyback::pb_upload(to_go,
   subset(metadata, geo == 'urban_concentrations')
   subset(metadata, geo == 'meso_region')[1:4,]
   subset(metadata, geo == 'micro_region')[1:4,]
-  subset(metadata, geo == 'census_tract' & year==2022)
+  subset(metadata, geo == 'municipality' & year==2024)
   subset(metadata, year==2020)
 
 # save updated metadata table

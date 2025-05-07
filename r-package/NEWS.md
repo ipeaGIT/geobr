@@ -3,7 +3,7 @@
 
 **Major changes**
 
-- Now all functions download data from the latest year available, by default.
+- Now all functions download data from the latest year available by default. Closes #378.
 
 **Minor changes**
 

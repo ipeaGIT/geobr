@@ -43,7 +43,7 @@ Other contributors:
   \item Rodrigo Almeida de Arruda [contributor]
   \item Igor Nascimento [contributor]
   \item Barbara Santiago Pedreira da  Costa [contributor]
-  \item Welligtton Silva  Cavedo [contributor]
+  \item Welligtton Silva Cavedo [contributor]
   \item Pedro R. Andrade [contributor]
   \item Alan da Silva [contributor]
   \item Carlos Kauê Vieira Braga [contributor]
