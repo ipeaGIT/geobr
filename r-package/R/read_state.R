@@ -8,6 +8,7 @@
 #'                   abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
 #'                   default), the function downloads all states.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #'
@@ -30,59 +31,69 @@
 read_state <- function(year = 2010,
                        code_state = "all",
                        simplified  = TRUE,
+                       as_sf = TRUE,
                        showProgress = TRUE,
                        cache = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="state", year=year, simplified=simplified)
+  temp_meta <- select_metadata(geography="states", year=year, simplified=simplified)
 
   # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # check code_state exists in metadata
-  if (!any(code_state == 'all' |
-           code_state %in% temp_meta$code |
-           code_state %in% temp_meta$code_abbrev |
-           (year < 1992 & temp_meta$code == "st")
-           )) {
-    stop("Error: Invalid Value to argument code_state.")
-    }
-
-
-  # get file url
-  if (code_state=="all" | year < 1992) {
-    file_url <- as.character(temp_meta$download_path)
-
-      } else if (is.numeric(code_state)) { # if using numeric code_state
-        file_url <- as.character(subset(temp_meta, code==substr(code_state, 1, 2))$download_path)
-
-        } else if (is.character(code_state)) { # if using chacracter code_abbrev
-          file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_state, 1, 2))$download_path)
-        }
-
-  # download gpkg
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # download files
+  file_path <- download_piggyback(temp_meta$file_name, showProgress, cache)
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(file_path)) { return(invisible(NULL)) }
 
-  ## FILTERS
-  y <- code_state
+  # open arrow dataset
+  temp_arrw <- arrow::open_dataset(file_path)
 
-  # input "all" & data files before 1992 do not have state code nor state abbrev
-  if (year < 1992 | code_state=="all") {
+  # return the whole dataset
+  if (code_state == 'all') {
 
-    # abbrev_state
-  } else if(code_state %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
+    # convert to sf
+    if(isTRUE(as_sf)){
+      temp_sf <- sf::st_as_sf(temp_arrw)
+    }
 
-    # code_state
-  } else if(code_state %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
+    return(temp_sf)
 
-  } else {stop(paste0("Error: Invalid Value to argument 'read_state'",collapse = " "))}
+  }
 
-  return(temp_sf)
+  # check which column to filter on
+  all_code_values <- temp_arrw |> dplyr::pull(cd_uf, as_vector = TRUE) |> unique()
+  all_abbrev_values <- temp_arrw |> dplyr::pull(sigla_uf, as_vector = TRUE) |> unique()
+
+  # filter by abbrev
+  filter_col <- NULL
+  if (code_state %in% all_abbrev_values){
+    filter_col <- "sigla_uf"
+  }
+
+  # filter by code
+  if (code_state %in% all_code_values){
+    filter_col <- "cd_uf"
+  }
+
+  if (is.null(filter_col)) {
+    stop("Error: Invalid Value to argument code_state.")
+  }
+
+  # filter
+  temp_arrw <- temp_arrw |>
+    dplyr::filter( !!sym(filter_col) == code_state )
+
+  # temp_arrw <- temp_arrw %>%
+  #   filter( .data[[filter_col]] == code_state )
+
+
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
+
+  return(temp_arrw)
+
   }

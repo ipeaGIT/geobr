@@ -8,6 +8,7 @@ read_state(
   year = 2010,
   code_state = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
@@ -27,6 +28,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE}, the output of the function is an \verb{sf data.frame}.
+If \code{FALSe}, the function returns an arrow Dataset. Defaults to \code{TRUE}.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -42,7 +46,7 @@ An \verb{"sf" "data.frame"} object
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read specific state at a given year
   uf <- read_state(code_state=12, year=2017)
 
