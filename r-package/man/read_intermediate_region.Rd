@@ -47,7 +47,7 @@ Brazil created in 2017 by IBGE. These regions were created to replace the
 system "SIRGAS2000" and CRS(4674)
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read an specific intermediate region
   im <- read_intermediate_region(code_intermediate=1202)
 

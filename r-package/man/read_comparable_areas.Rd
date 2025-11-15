@@ -55,7 +55,7 @@ aggregation of Brazilian municipalities. Estudos Econômicos (São Paulo),
 }
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
   amc <- read_comparable_areas(start_year=1970, end_year=2010)
 \dontshow{\}) # examplesIf}
 }

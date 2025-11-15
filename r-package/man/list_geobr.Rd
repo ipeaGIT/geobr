@@ -13,7 +13,7 @@ A \code{data.frame}
 Returns a data frame with all datasets available in the geobr package
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 df <- list_geobr()
 \dontshow{\}) # examplesIf}
 }

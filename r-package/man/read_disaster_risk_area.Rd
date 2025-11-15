@@ -45,7 +45,7 @@ faces (column "acuracia") and number of ris areas within each risk area (column
 about the methodology, see deails at \url{https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html}
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all disaster risk areas in an specific year
 d <- read_disaster_risk_area(year=2010)
 \dontshow{\}) # examplesIf}

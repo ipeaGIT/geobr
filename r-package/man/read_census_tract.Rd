@@ -48,7 +48,7 @@ An \verb{"sf" "data.frame"} object
 Download spatial data of census tracts of the Brazilian Population Census
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read rural census tracts for years before 2007
   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 

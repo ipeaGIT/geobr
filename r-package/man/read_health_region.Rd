@@ -45,7 +45,7 @@ few municipalities because they are generally more technology intensive, costly 
 shortages of specialized professionals. A macro region comprises one or more health regions.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all health regions for a given year
 hr <- read_health_region( year=2013 )
 

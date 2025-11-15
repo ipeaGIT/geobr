@@ -23,7 +23,7 @@ with the names and codes of state capitals. Data downloaded for the latest
 available year.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read spatial data with the  municipal seats of state capitals
 capitals_sf <- read_capitals(as_sf = TRUE)
 

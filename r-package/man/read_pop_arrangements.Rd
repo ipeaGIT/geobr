@@ -40,7 +40,7 @@ Geography and Statistics (IBGE)  For more information about the methodology,
 see details at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read urban footprint of Brazilian cities in an specific year
 uc <- read_pop_arrangements(year=2015)
 \dontshow{\}) # examplesIf}

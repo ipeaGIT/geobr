@@ -39,7 +39,7 @@ update is registered in the database in the columns \code{date_update} and
 These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all health facilities of the whole country
 h <- read_health_facilities( date = 202303)
 \dontshow{\}) # examplesIf}

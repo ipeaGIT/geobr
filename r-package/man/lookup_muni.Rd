@@ -26,7 +26,7 @@ and immediate regions
 Only available from 2010 Census data so far
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Get lookup table for municipality Rio de Janeiro
 mun <- lookup_muni(name_muni = "Rio de Janeiro")
 

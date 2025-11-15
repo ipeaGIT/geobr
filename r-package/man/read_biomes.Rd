@@ -35,7 +35,7 @@ scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
 data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read biomes
 b <- read_biomes(year = 2019)
 \dontshow{\}) # examplesIf}

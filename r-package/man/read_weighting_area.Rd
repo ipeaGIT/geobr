@@ -43,7 +43,7 @@ An \verb{"sf" "data.frame"} object
 Only 2010 data is currently available.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read specific weighting area at a given year
 w <- read_weighting_area(code_weighting=5201108005004, year=2010)
 

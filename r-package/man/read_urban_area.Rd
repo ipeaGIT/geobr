@@ -45,7 +45,7 @@ and Statistics (IBGE)  For more information about the methodology, see details a
 \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv100639.pdf}
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read urban footprint of Brazilian cities in an specific year
 d <- read_urban_area(year=2005)
 \dontshow{\}) # examplesIf}

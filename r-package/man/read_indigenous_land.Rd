@@ -42,7 +42,7 @@ updated monthly, the geobr package will only keep the data for a few months
 per year.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all indigenous land in an specific date
 i <- read_indigenous_land(date=201907)
 \dontshow{\}) # examplesIf}

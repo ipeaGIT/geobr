@@ -39,7 +39,7 @@ It is based on aggregations of the census tracts from the Brazilian
 census. Only 2010 data is currently available.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read neighborhoods of Brazilian municipalities
 n <- read_neighborhood(year=2010)
 \dontshow{\}) # examplesIf}
