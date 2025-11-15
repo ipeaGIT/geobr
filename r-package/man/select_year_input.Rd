@@ -4,7 +4,7 @@
 \alias{select_year_input}
 \title{Select year input}
 \usage{
-select_year_input(temp_meta, y = year)
+select_year_input(temp_meta, y = parent.frame()$year)
 }
 \arguments{
 \item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}

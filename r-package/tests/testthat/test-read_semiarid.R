@@ -12,11 +12,15 @@ test_that("read_semiarid", {
 
 
   # check sf object
-  test_sf <- read_semiarid(year=2017)
+  test_sf <- read_semiarid(year=2022)
   expect_true(is(test_sf, "sf"))
 
   test_sf <- read_semiarid()
   expect_true(is(test_sf, "sf"))
+
+  test_arrw <- read_semiarid(as_sf = FALSE)
+  expect_true(is(test_arrw, "ArrowObject"))
+
 
 })
 

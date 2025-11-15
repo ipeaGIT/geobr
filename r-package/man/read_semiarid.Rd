@@ -7,6 +7,7 @@
 read_semiarid(
   year = NULL,
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
@@ -22,6 +23,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE}, the output of the function is an \verb{sf data.frame}.
+If \code{FALSe}, the function returns an arrow Dataset. Defaults to \code{TRUE}.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -31,7 +35,7 @@ within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 This data set covers the whole of Brazilian Semiarid as defined in the resolution
@@ -39,9 +43,9 @@ in  23/11/2017). The original data comes from the Brazilian Institute of Geograp
 and Statistics (IBGE) and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Read Brazilian semiarid
-a <- read_semiarid(year=2017)
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
+# read Brazilian semiarid
+sa <- read_semiarid(year = 2022)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

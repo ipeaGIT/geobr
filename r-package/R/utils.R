@@ -10,17 +10,13 @@
 #' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
 #' @keywords internal
 #'
-select_data_type <- function(temp_meta, simplified=NULL){
+select_data_type <- function(temp_meta,
+                             simplified_geometry = parent.frame()$simplified){
 
-  if (!is.logical(simplified)) { stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE")) }
+  if (!is.logical(simplified_geometry)) { stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE")) }
 
-  if(isTRUE(simplified)){
-    temp_meta <- temp_meta[  grepl(pattern="simplified", temp_meta$download_path), ]
-  }
+    temp_meta <- subset(temp_meta, simplified == simplified_geometry)
 
-  if(isFALSE(simplified)){
-    temp_meta <- temp_meta[  !(grepl(pattern="simplified", temp_meta$download_path)), ]
-  }
 
   return(temp_meta)
 }
@@ -35,10 +31,10 @@ select_data_type <- function(temp_meta, simplified=NULL){
 #' @param y Year of the dataset (passed by red_ function)
 #' @keywords internal
 #'
-select_year_input <- function(temp_meta, y=year){
+select_year_input <- function(temp_meta, y= parent.frame()$year){
 
   # NULL = use latest year available
-  if (is.null(y)){
+  if (is.null(y)) {
     y <- max(temp_meta$year)
   }
 
@@ -73,10 +69,13 @@ select_year_input <- function(temp_meta, y=year){
 #'
 #' }}
 #'
-select_metadata <- function(geography, year=NULL, simplified=NULL){
+select_metadata <- function(geography,
+                            year = parent.frame()$year,
+                            simplified = parent.frame()$simplified){
 
-# download metadata
-  metadata <- download_metadata()
+  # download metadata
+  # metadata <- download_metadata()
+  metadata <- download_metadata2(tag = "v2.0.0")
 
   # check if download failed
   if (is.null(metadata)) { return(invisible(NULL)) }
@@ -220,6 +219,65 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
 }
 
 
+
+#' Download geopackage to tempdir
+#'
+#' @param file_url A string with the file_url address of a geobr dataset
+#' @template showProgress
+#' @template cache
+#' @keywords internal
+#'
+download_parquet <- function(file_url = parent.frame()$file_url,
+                          showProgress = parent.frame()$showProgress,
+                          cache = parent.frame()$cache){
+
+  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
+  if (!is.logical(cache)) { stop("'cache' must be of type 'logical'") }
+
+  # get backup links
+  filenames <- basename(file_url)
+  file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
+
+  # dest files
+  # temps <- paste0(fs::path_temp(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
+  temps <- fs::path(fs::path_temp(), basename(file_url))
+
+  # test connection with server1
+  try( silent = TRUE, check_con <- check_connection(file_url[1], silent = TRUE))
+
+  # if server1 fails, replace url and test connection with server2
+  if (is.null(check_con) | isFALSE(check_con)) {
+    file_url <- file_url2
+    try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
+    if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
+  }
+
+  # # this is necessary to silence download message when reading local file
+  # if(file.exists(temps) & isTRUE(cache)){
+  #   showProgress <- FALSE
+  # }
+
+  # download files
+  try(silent = TRUE,
+      downloaded_files <- curl::multi_download(
+        urls = file_url,
+        destfiles = temps,
+        progress = showProgress,
+        resume = cache
+      )
+  )
+
+  # if anything fails, return NULL
+  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
+    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
+    message(msg)
+    return(invisible(NULL))
+  }
+
+  # load gpkg
+  temp_sf <- load_gpkg(temps) #
+  return(temp_sf)
+}
 
 
 
@@ -388,3 +446,71 @@ filter_state <- function(temp_sf = parent.frame()$temp_sf,
   stop(error_message2)
 
 } # nocov end
+
+
+
+
+
+download_metadata2 <- function(tag = "v2.0.0"){
+
+  temp_meta <- piggyback::pb_list(
+    repo = "ipeaGIT/geobr",
+    tag = tag
+  )
+
+  temp_meta <- temp_meta |>
+    dplyr::mutate(
+      geo = stringr::str_extract(file_name, "^[^_]+"),
+      year  = stringr::str_extract(file_name, "\\d+"),
+      simplified = ifelse(stringr::str_detect(file_name, "simplified"), TRUE, FALSE)
+    )
+  return(temp_meta)
+}
+
+
+
+
+download_piggyback <- function(filename_to_download,
+                               showProgress = parent.frame()$showProgress,
+                               cache = parent.frame()$cache) {
+
+  # Defining our temporary directory
+  temp_dest_dir <- tempdir(check = TRUE)
+
+  # Creating the temporary folder effectively
+  fs::dir_create(path = temp_dest_dir, recurse = TRUE)
+
+  # Creating path + filename and saving to "temporary_filename"
+  temp_full_file_path <- paste0(temp_dest_dir, "/", filename_to_download)
+
+  # Print the temp_full_file_path to the console
+  message("Downloading file to: ", temp_full_file_path)
+
+  # downloading the file from a release of the odbr repo - release specified in
+  # the parameter
+  tryCatch(
+    {
+      piggyback::pb_download(
+        file = filename_to_download,
+        repo = "ipeaGIT/geobr",
+        tag = "v2.0.0",
+        dest = temp_dest_dir,
+        show_progress = showProgress,
+        overwrite = !cache
+      )
+    },
+    error = function(e) {
+      message("Error during download: ", e$message)
+      invisible(NULL)
+    }
+  )
+
+  # Halt function if download failed
+  if (!file.exists(temp_full_file_path)) {
+    message("Download failed or internet connection not working properly.")
+    invisible(NULL)
+  } else {
+    # return string with the path to the file saved in a tempdir
+    temp_full_file_path
+  }
+}

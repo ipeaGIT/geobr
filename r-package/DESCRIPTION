@@ -35,8 +35,11 @@ Imports:
       dplyr (>= 0.8-3),
       data.table,
       fs,
+      geoarrow,
       methods,
+      rlang,
       sf (>= 0.9-3),
+      stringr,
       utils
 Suggests:
     arrow (>= 15.0.1),
@@ -47,6 +50,6 @@ Suggests:
     rmarkdown,
     scales,
     testthat
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
