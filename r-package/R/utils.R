@@ -1,6 +1,9 @@
 ############# Support functions for geobr
 # nocov start
 
+# globals
+geobr_data_release <- 'v2.0.0'
+
 
 
 #' Select data type: 'original' or 'simplified' (default)
@@ -75,7 +78,7 @@ select_metadata <- function(geography,
 
   # download metadata
   # metadata <- download_metadata()
-  metadata <- download_metadata2(tag = "v2.0.0")
+  metadata <- download_metadata2()
 
   # check if download failed
   if (is.null(metadata)) { return(invisible(NULL)) }
@@ -451,11 +454,12 @@ filter_state <- function(temp_sf = parent.frame()$temp_sf,
 
 
 
-download_metadata2 <- function(tag = "v2.0.0"){
+download_metadata2 <- function(){
+
 
   temp_meta <- piggyback::pb_list(
     repo = "ipeaGIT/geobr",
-    tag = tag
+    tag = geobr_env$data_release
   )
 
   temp_meta <- temp_meta |>
@@ -483,17 +487,17 @@ download_piggyback <- function(filename_to_download,
   # Creating path + filename and saving to "temporary_filename"
   temp_full_file_path <- paste0(temp_dest_dir, "/", filename_to_download)
 
-  # Print the temp_full_file_path to the console
-  message("Downloading file to: ", temp_full_file_path)
+  # # Print the temp_full_file_path to the console
+  # message("Downloading file to: ", temp_full_file_path)
 
   # downloading the file from a release of the odbr repo - release specified in
   # the parameter
-  tryCatch(
+  tryCatch(silent=T,
     {
       piggyback::pb_download(
         file = filename_to_download,
         repo = "ipeaGIT/geobr",
-        tag = "v2.0.0",
+        tag = geobr_env$data_release,
         dest = temp_dest_dir,
         show_progress = showProgress,
         overwrite = !cache

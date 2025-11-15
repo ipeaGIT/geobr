@@ -35,7 +35,11 @@ read_semiarid <- function(year = NULL,
     )
 
   # download files
-  file_path <- download_piggyback(temp_meta$file_name, showProgress, cache)
+  file_path <- download_piggyback(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+    )
 
   # check if download failed
   if (is.null(file_path)) { return(invisible(NULL)) }
