@@ -26,7 +26,7 @@
 #'   uf <- read_state(code_state="SC", year=2000)
 #'
 #' # Read all states at a given year
-#'   ufs <- read_state(code_state="all", year=2010)
+#'   ufs <- read_state(code_state="all", year=2024)
 #'
 read_state <- function(year = 2010,
                        code_state = "all",
@@ -42,7 +42,11 @@ read_state <- function(year = 2010,
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # download files
-  file_path <- download_piggyback(temp_meta$file_name, showProgress, cache)
+  file_path <- download_piggyback(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
+    )
 
   # check if download failed
   if (is.null(file_path)) { return(invisible(NULL)) }
@@ -59,21 +63,16 @@ read_state <- function(year = 2010,
     }
 
     return(temp_sf)
-
   }
-
-  # check which column to filter on
-  all_code_values <- temp_arrw |> dplyr::pull(cd_uf, as_vector = TRUE) |> unique()
-  all_abbrev_values <- temp_arrw |> dplyr::pull(sigla_uf, as_vector = TRUE) |> unique()
 
   # filter by abbrev
   filter_col <- NULL
-  if (code_state %in% all_abbrev_values){
+  if (code_state %in% geobr_env$all_abbrev_state){
     filter_col <- "sigla_uf"
   }
 
   # filter by code
-  if (code_state %in% all_code_values){
+  if (code_state %in% geobr_env$all_code_state){
     filter_col <- "cd_uf"
   }
 
@@ -83,11 +82,12 @@ read_state <- function(year = 2010,
 
   # filter
   temp_arrw <- temp_arrw |>
-    dplyr::filter( !!sym(filter_col) == code_state )
+    dplyr::filter( !!rlang::sym(filter_col) == code_state ) |>
+    dplyr::compute()
 
-  # temp_arrw <- temp_arrw %>%
-  #   filter( .data[[filter_col]] == code_state )
-
+  if  (nrow(temp_arrw) == 0){
+    stop("Error: Invalid Value to argument code_state.")
+    }
 
   # convert to sf
   if(isTRUE(as_sf)){

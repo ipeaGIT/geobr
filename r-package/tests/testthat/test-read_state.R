@@ -24,6 +24,9 @@ test_that("read_state", {
   test_code <- read_state(code_state=11, year=2010)
   testthat::expect_true(is(test_code, "sf"))
 
+  test_arrw <- read_state(code_state=11, year=2024, as_sf = FALSE)
+  expect_true(is(test_arrw, "ArrowObject"))
+
   # check number of rows in ouput
   testthat::expect_equal(nrow(test_code), 1)
 
