@@ -17,9 +17,11 @@ test_that("read_region", {
   # check sf object
   expect_true(is(test_sf, "sf"))
 
-
   # check number of rows
   expect_equal(nrow(test_sf), 5)
+
+  test_arrw <- read_region(as_sf = FALSE)
+  expect_true(is(test_arrw, "ArrowObject"))
 
   })
 

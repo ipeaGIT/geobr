@@ -18,6 +18,9 @@ test_that("read_country", {
   testthat::expect_true(is(test_sf0, "sf"))
   testthat::expect_true(is(test_sf, "sf"))
 
+  test_arrw <- read_country(as_sf = FALSE)
+  expect_true(is(test_arrw, "ArrowObject"))
+
 })
 
 

@@ -4,7 +4,13 @@
 \alias{read_country}
 \title{Download spatial data of Brazil's national borders}
 \usage{
-read_country(year = NULL, simplified = TRUE, showProgress = TRUE, cache = TRUE)
+read_country(
+  year = NULL,
+  simplified = TRUE,
+  as_sf = TRUE,
+  showProgress = TRUE,
+  cache = TRUE
+)
 }
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
@@ -17,6 +23,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -26,7 +35,7 @@ within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
