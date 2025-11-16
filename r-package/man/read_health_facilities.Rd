@@ -4,11 +4,19 @@
 \alias{read_health_facilities}
 \title{Download geolocated data of health facilities}
 \usage{
-read_health_facilities(date = NULL, showProgress = TRUE, cache = TRUE)
+read_health_facilities(
+  date = NULL,
+  as_sf = TRUE,
+  showProgress = TRUE,
+  cache = TRUE
+)
 }
 \arguments{
 \item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
 and reads the data from the latest date available.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -19,7 +27,7 @@ within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 Data comes from the National Registry of Healthcare facilities (Cadastro

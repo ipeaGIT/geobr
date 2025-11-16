@@ -13,7 +13,7 @@
 #' @template cache
 #'
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -36,7 +36,11 @@ read_state <- function(year = 2010,
                        cache = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="states", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="states",
+    year=year,
+    simplified=simplified
+    )
 
   # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
@@ -59,12 +63,13 @@ read_state <- function(year = 2010,
 
     # convert to sf
     if(isTRUE(as_sf)){
-      temp_sf <- sf::st_as_sf(temp_arrw)
+      temp_arrw <- sf::st_as_sf(temp_arrw)
     }
 
-    return(temp_sf)
+    return(temp_arrw)
   }
 
+  # DETECT WHICH COLUMN TO FILTER ON
   # filter by abbrev
   filter_col <- NULL
   if (code_state %in% geobr_env$all_abbrev_state){

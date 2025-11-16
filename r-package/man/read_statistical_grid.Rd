@@ -5,8 +5,9 @@
 \title{Download spatial data of IBGE's statistical grid}
 \usage{
 read_statistical_grid(
-  year = 2010,
+  year = NULL,
   code_grid,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
@@ -22,6 +23,9 @@ the whole country will be loaded. Users may also pass a
 grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at \code{geobr::grid_state_correspondence_table}.}
 
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -31,7 +35,7 @@ within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)

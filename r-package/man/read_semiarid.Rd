@@ -23,8 +23,8 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
-\item{as_sf}{Logic. If \code{TRUE}, the output of the function is an \verb{sf data.frame}.
-If \code{FALSe}, the function returns an arrow Dataset. Defaults to \code{TRUE}.}
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

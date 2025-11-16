@@ -10,11 +10,12 @@
 #'                  the whole country will be loaded. Users may also pass a
 #'                  grid quadrant id to load an specific quadrant. Quadrant ids
 #'                  can be consulted at `geobr::grid_state_correspondence_table`.
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #'
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -26,20 +27,80 @@
 #' # Read the grid covering a given state at a given year
 #' state_grid <- read_statistical_grid(code_grid = "RJ")
 #'
-read_statistical_grid <- function(year = 2010,
+read_statistical_grid <- function(year = NULL,
                                   code_grid,
+                                  as_sf = TRUE,
                                   showProgress = TRUE,
                                   cache = TRUE){ # nocov start
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="statistical_grid", year=year, simplified=F)
+  temp_meta <- select_metadata(
+    geography="statsgrid",
+    year = year,
+    simplified = FALSE
+  )
+
 
   # check if download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
+  # download files
+  file_path <- download_piggyback(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
+
+  # check if download failed
+  if (is.null(file_path)) { return(invisible(NULL)) }
+
+  # open arrow dataset
+  temp_arrw <- arrow::open_dataset(file_path)
+
+
+  # return the whole dataset
+  if (code_grid == 'all') {
+
+    # convert to sf
+    if(isTRUE(as_sf)){
+      temp_arrw <- sf::st_as_sf(temp_arrw)
+    }
+
+    return(temp_arrw)
+  }
+
+
   # load correspondence table
   # data("grid_state_correspondence_table", envir=environment())
   grid_state_correspondence_table <- geobr::grid_state_correspondence_table
+
+  # DETECT WHICH COLUMN TO FILTER ON
+  # filter by abbrev
+  filter_col <- NULL
+  if (code_grid %in% grid_state_correspondence_table$code_grid){
+    filter_col <- "code_grid"
+  }
+
+  if (code_grid %in% geobr_env$all_abbrev_state){
+    filter_col <- "abbrev_state"
+  }
+
+  # # filter by code_muni
+  # if (code_grid %in% geobr_env$all_code_state){
+  #   filter_col <- "cd_uf"
+  # }
+
+  if (is.null(filter_col)) {
+    stop("Error: Invalid Value to argument code_state.")
+  }
+
+  # allow filter by municipality
+  # allow filter by code state
+  # allow filter by code abbrev
+  # allow filter by grid
+
+  # allow filter by code state
+
 
 # Verify code_grid input ----------------------------------
 

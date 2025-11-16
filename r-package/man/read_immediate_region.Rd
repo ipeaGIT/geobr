@@ -8,6 +8,7 @@ read_immediate_region(
   year = NULL,
   code_immediate = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE
 )
@@ -29,6 +30,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -38,7 +42,7 @@ within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
@@ -47,15 +51,15 @@ were created to replace the "Micro Regions" division. Data at scale 1:250,000, u
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read an specific immediate region
-  im <- read_immediate_region(code_immediate=110006)
+im <- read_immediate_region(code_immediate=110006)
 
 # Read immediate regions of a state
-  im <- read_immediate_region(code_immediate=12)
-  im <- read_immediate_region(code_immediate="AM")
+im <- read_immediate_region(code_immediate=12)
+im <- read_immediate_region(code_immediate="AM")
 
 # Read all immediate regions of the country
-  im <- read_immediate_region()
-  im <- read_immediate_region(code_immediate="all")
+im <- read_immediate_region()
+im <- read_immediate_region(code_immediate="all")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

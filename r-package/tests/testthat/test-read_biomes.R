@@ -18,6 +18,10 @@ test_that("read_biomes", {
   # check number of micro
   testthat::expect_equal( nrow(test_sf0), 7)
 
+  test_arrw <- read_biomes(as_sf = FALSE)
+  expect_true(is(test_arrw, "ArrowObject"))
+
+
 })
 
 

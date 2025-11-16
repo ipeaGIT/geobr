@@ -1,2 +1,2 @@
-#' @param as_sf Logic. If `TRUE`, the output of the function is an `sf data.frame`.
-#' If `FALSe`, the function returns an arrow Dataset. Defaults to `TRUE`.
+#' @param as_sf Logic. If `TRUE` (the default), the function returns an
+#'       `sf data.frame`.If `FALSE`, the function returns an arrow dataset.

@@ -11,48 +11,59 @@
 #'        If `code_immediate="all"` (Default), the function downloads all
 #'        immediate regions of the country.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific immediate region
-#'   im <- read_immediate_region(code_immediate=110006)
+#' im <- read_immediate_region(code_immediate=110006)
 #'
 #' # Read immediate regions of a state
-#'   im <- read_immediate_region(code_immediate=12)
-#'   im <- read_immediate_region(code_immediate="AM")
+#' im <- read_immediate_region(code_immediate=12)
+#' im <- read_immediate_region(code_immediate="AM")
 #'
-#'# Read all immediate regions of the country
-#'   im <- read_immediate_region()
-#'   im <- read_immediate_region(code_immediate="all")
+#' # Read all immediate regions of the country
+#' im <- read_immediate_region()
+#' im <- read_immediate_region(code_immediate="all")
 #'
 read_immediate_region <- function(year = NULL,
                                   code_immediate = "all",
                                   simplified = TRUE,
+                                  as_sf = TRUE,
                                   showProgress = TRUE,
                                   cache = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="immediate_regions", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="immediateregions",
+    year=year,
+    simplified=simplified
+  )
 
-  # check if download failed
+  # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
   # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  file_path <- download_piggyback(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(file_path)) { return(invisible(NULL)) }
+
+  # open arrow dataset
+  temp_arrw <- arrow::open_dataset(file_path)
+
+  # codes of all regions
+  all_code <- temp_arrw |> dplyr::pull(cd_rgi, as_vector = TRUE)
 
   ## FILTERS
   y <- code_immediate
@@ -61,18 +72,26 @@ read_immediate_region <- function(year = NULL,
   if(code_immediate=="all"){
 
     # abbrev_state
-  } else if(code_immediate %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
+  } else if(code_immediate %in% geobr_env$all_abbrev_state){
+    temp_arrw <- dplyr::filter(temp_arrw, abbrev_state == y) |>
+      dplyr::compute()
 
     # code_state
-  } else if(code_immediate %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
+  } else if(code_immediate %in% geobr_env$all_code_state){
+    temp_arrw <- dplyr::filter(temp_arrw, code_state == y) |>
+      dplyr::compute()
 
     # code_immediate
-  } else if(code_immediate %in% temp_sf$code_immediate){
-    temp_sf <- subset(temp_sf, code_immediate == y)
+  } else if(code_immediate %in% all_code){
+    temp_arrw <- dplyr::filter(temp_arrw, code_immediate == y) |>
+      dplyr::compute()
 
   } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))}
 
-  return(temp_sf)
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
+
+  return(temp_arrw)
 }

@@ -8,10 +8,11 @@
 #'
 #' @template year
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -22,22 +23,34 @@
 #'
 read_biomes <- function(year = NULL,
                         simplified = TRUE,
+                        as_sf = TRUE,
                         showProgress = TRUE,
                         cache = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="biomes", year=year, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
+  temp_meta <- select_metadata(
+    geography="biomes",
+    year = year,
+    simplified = simplified
+  )
 
   # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  file_path <- download_piggyback(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(file_path)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # open arrow dataset
+  temp_arrw <- arrow::open_dataset(file_path)
+
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
+
+  return(temp_arrw)
 }
