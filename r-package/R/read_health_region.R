@@ -13,8 +13,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -30,7 +31,8 @@ read_health_region <- function(year = NULL,
                                macro = FALSE,
                                simplified = TRUE,
                                showProgress = TRUE,
-                               cache = TRUE){
+                               cache = TRUE,
+                               verbose = TRUE){
 
   if(!is.logical(macro)){stop(paste0("Parameter 'macro' must be either TRUE or FALSE"))}
 

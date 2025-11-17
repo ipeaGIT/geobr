@@ -14,11 +14,12 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #' @param keep_areas_operacionais Logic. Whether the function should keep the
 #'        polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
 #'        do Sul (considered as areas estaduais operacionais). Defaults to `FALSE`.
-
-#' @return An `"sf" "data.frame"` object
+#'
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -39,6 +40,7 @@ read_municipality <- function(year = NULL,
                               simplified = TRUE,
                               showProgress = TRUE,
                               cache = TRUE,
+                              verbose = TRUE,
                               keep_areas_operacionais = FALSE) {
 
   # check input

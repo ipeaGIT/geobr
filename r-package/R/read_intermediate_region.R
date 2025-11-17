@@ -13,10 +13,12 @@
 #'        regions of that state. If `code_intermediate="all"` (Default), the
 #'        function downloads all intermediate regions of the country.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -36,11 +38,17 @@
 read_intermediate_region <- function(year = NULL,
                                      code_intermediate = "all",
                                      simplified = TRUE,
+                                     as_sf = TRUE,
                                      showProgress = TRUE,
-                                     cache = TRUE){
+                                     cache = TRUE,
+                                     verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="intermediate_regions", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="intermediateregions",
+    year = year,
+    simplified = simplified
+  )
 
   # check if download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }

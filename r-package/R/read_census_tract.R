@@ -14,8 +14,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family general area functions
@@ -41,7 +42,8 @@ read_census_tract <- function(year = NULL,
                               zone = "urban",
                               simplified = TRUE,
                               showProgress = TRUE,
-                              cache = TRUE){
+                              cache = TRUE,
+                              verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="census_tract", year=year, simplified=simplified)

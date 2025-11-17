@@ -12,8 +12,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -33,7 +34,8 @@ read_micro_region <- function(year = NULL,
                               code_micro = "all",
                               simplified = TRUE,
                               showProgress = TRUE,
-                              cache = TRUE){
+                              cache = TRUE,
+                              verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="micro_region", year=year, simplified=simplified)

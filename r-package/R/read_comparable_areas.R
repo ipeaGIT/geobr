@@ -15,8 +15,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @details
 #' These data sets are generated based on the original Stata code developed by
@@ -35,7 +36,8 @@ read_comparable_areas <- function(start_year = 1970,
                                   end_year = 2010,
                                   simplified = TRUE,
                                   showProgress = TRUE,
-                                  cache = TRUE){
+                                  cache = TRUE,
+                                  verbose = TRUE){
 
   # tests
   years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010)

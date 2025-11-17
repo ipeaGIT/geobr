@@ -12,8 +12,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -25,7 +26,8 @@
 read_indigenous_land <- function(date = NULL,
                                  simplified = TRUE,
                                  showProgress = TRUE,
-                                 cache = TRUE){
+                                 cache = TRUE,
+                                 verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="indigenous_land", year=date, simplified=simplified)

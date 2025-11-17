@@ -14,6 +14,7 @@
 #' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
@@ -37,7 +38,8 @@ read_immediate_region <- function(year = NULL,
                                   simplified = TRUE,
                                   as_sf = TRUE,
                                   showProgress = TRUE,
-                                  cache = TRUE){
+                                  cache = TRUE,
+                                  verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
@@ -86,7 +88,8 @@ read_immediate_region <- function(year = NULL,
     temp_arrw <- dplyr::filter(temp_arrw, code_immediate == y) |>
       dplyr::compute()
 
-  } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))}
+  } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))
+    }
 
   # convert to sf
   if(isTRUE(as_sf)){

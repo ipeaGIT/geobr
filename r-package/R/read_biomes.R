@@ -11,6 +11,7 @@
 #' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
@@ -19,33 +20,35 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read biomes
-#' b <- read_biomes(year = 2019)
+#' b <- read_biomes(year = 2004)
 #'
 read_biomes <- function(year = NULL,
                         simplified = TRUE,
                         as_sf = TRUE,
                         showProgress = TRUE,
-                        cache = TRUE){
+                        cache = TRUE,
+                        verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
     geography="biomes",
     year = year,
-    simplified = simplified
-  )
-
-  # download files
-  file_path <- download_piggyback(
-    filename_to_download = temp_meta$file_name,
-    showProgress = showProgress,
-    cache = cache
+    simplified = simplified,
+    verbose = verbose
   )
 
   # check if download failed
-  if (is.null(file_path)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # open arrow dataset
-  temp_arrw <- arrow::open_dataset(file_path)
+  # download file and open arrow dataset
+    temp_arrw <- download_parquet(
+      filename_to_download = temp_meta$file_name,
+      showProgress = showProgress,
+      cache = cache
+    )
+
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # convert to sf
   if(isTRUE(as_sf)){

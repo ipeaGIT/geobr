@@ -13,9 +13,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -28,7 +28,8 @@ read_urban_area <- function(year = NULL,
                             code_state = "all",
                             simplified = TRUE,
                             showProgress = TRUE,
-                            cache = TRUE){
+                            cache = TRUE,
+                            verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="urban_area", year=year, simplified=simplified)

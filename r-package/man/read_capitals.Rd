@@ -4,7 +4,7 @@
 \alias{read_capitals}
 \title{Download data of state capitals}
 \usage{
-read_capitals(as_sf = TRUE, showProgress = TRUE)
+read_capitals(as_sf = TRUE, showProgress = TRUE, cache = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{as_sf}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function should
@@ -12,9 +12,18 @@ return a spatial data in \code{sf} format (Defaults to \code{TRUE}) or in a
 \code{data.frame} format without spatial information (\code{FALSE}).}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is faster. Defaults to \code{cache = TRUE}. By default,
+\code{geobr} stores data files in a temporary directory that exists only
+within each R session. If \code{cache = FALSE}, the function will download
+the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
-An \verb{"sf" "data.frame"} object or a \code{"data.frame"}
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 This function downloads either a spatial \code{sf} object with the location of the

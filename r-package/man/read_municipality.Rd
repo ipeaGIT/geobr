@@ -10,6 +10,7 @@ read_municipality(
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE,
+  verbose = TRUE,
   keep_areas_operacionais = FALSE
 )
 }
@@ -40,12 +41,15 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
+
 \item{keep_areas_operacionais}{Logic. Whether the function should keep the
 polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
 do Sul (considered as areas estaduais operacionais). Defaults to \code{FALSE}.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).

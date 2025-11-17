@@ -13,7 +13,7 @@
 #' @template as_sf
 #' @template showProgress
 #' @template cache
-#'
+#' @template verbose
 #'
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
@@ -31,7 +31,8 @@ read_statistical_grid <- function(year = NULL,
                                   code_grid,
                                   as_sf = TRUE,
                                   showProgress = TRUE,
-                                  cache = TRUE){ # nocov start
+                                  cache = TRUE,
+                                  verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
@@ -180,6 +181,6 @@ read_statistical_grid <- function(year = NULL,
     return(temp_sf)
     }
 
-} # nocov end
+}
 
 

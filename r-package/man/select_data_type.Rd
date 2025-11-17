@@ -7,9 +7,11 @@
 select_data_type(temp_meta, simplified_geometry = parent.frame()$simplified)
 }
 \arguments{
-\item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}
+\item{temp_meta}{A data.frame with the metadata of geobr datasets}
 
-\item{simplified}{Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)}
+\item{simplified_geometry}{Logical \code{TRUE} or \code{FALSE} indicating  whether the
+function should return a dataset with the 'original' geometry or a
+dataset with 'simplified' geometry (Defaults to \code{TRUE})}
 }
 \description{
 Select data type: 'original' or 'simplified' (default)

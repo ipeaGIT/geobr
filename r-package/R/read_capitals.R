@@ -10,8 +10,10 @@
 #'        return a spatial data in `sf` format (Defaults to `TRUE`) or in a
 #'        `data.frame` format without spatial information (`FALSE`).
 #' @template showProgress
+#' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object or a `"data.frame"`
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -24,7 +26,10 @@
 #' capitals_df <- read_capitals(as_sf = FALSE)
 #'
 read_capitals <- function(as_sf = TRUE,
-                          showProgress = TRUE){
+                          showProgress = TRUE,
+                          cache = TRUE,
+                          verbose = TRUE){
+
 
   # check input
   if (!is.logical(as_sf)) { stop("'as_sf' must be of type 'logical'") }

@@ -9,8 +9,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -22,10 +23,11 @@
 read_amazon <- function(year = NULL,
                         simplified = TRUE,
                         showProgress = TRUE,
-                        cache = TRUE){
+                        cache = TRUE,
+                        verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="amazonia_legal", year=year, simplified=simplified)
+  temp_meta <- download_metadata2(geography="amazonia_legal", year=year, simplified=simplified)
 
   # # check if download failed
   # if (is.null(temp_meta)) { return(invisible(NULL)) }

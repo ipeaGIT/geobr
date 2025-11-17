@@ -4,7 +4,13 @@
 \alias{read_amazon}
 \title{Download spatial data of Brazil's Legal Amazon}
 \usage{
-read_amazon(year = NULL, simplified = TRUE, showProgress = TRUE, cache = TRUE)
+read_amazon(
+  year = NULL,
+  simplified = TRUE,
+  showProgress = TRUE,
+  cache = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
@@ -24,9 +30,12 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 This data set covers the whole of Brazil's Legal Amazon as defined in the

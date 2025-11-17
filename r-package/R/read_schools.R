@@ -12,9 +12,9 @@
 #' @template year
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
 #' @family area functions
@@ -25,7 +25,8 @@
 #'
 read_schools <- function(year = NULL,
                          showProgress = TRUE,
-                         cache = TRUE){
+                         cache = TRUE,
+                         verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="schools", year=year, simplified=F)

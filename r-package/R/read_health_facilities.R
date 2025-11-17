@@ -21,6 +21,7 @@
 #' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
@@ -34,7 +35,8 @@
 read_health_facilities <- function(date = NULL,
                                    as_sf = TRUE,
                                    showProgress = TRUE,
-                                   cache = TRUE){
+                                   cache = TRUE,
+                                   verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(geography="health_facilities", year=date, simplified=F)

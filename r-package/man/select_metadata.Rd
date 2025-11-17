@@ -7,7 +7,8 @@
 select_metadata(
   geography,
   year = parent.frame()$year,
-  simplified = parent.frame()$simplified
+  simplified = parent.frame()$simplified,
+  verbose = parent.frame()$verbose
 )
 }
 \arguments{
