@@ -28,7 +28,6 @@ read_semiarid <- function(year = NULL,
                           cache = TRUE,
                           verbose = TRUE){
 
-
   # Get metadata
   temp_meta <- select_metadata(
     geography="semiarid",

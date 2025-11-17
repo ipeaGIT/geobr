@@ -15,14 +15,12 @@ message_failed <- "A file must have been corrupted during download. Please resta
 #'        function should return a dataset with the 'original' geometry or a
 #'        dataset with 'simplified' geometry (Defaults to `TRUE`)
 #' @keywords internal
-select_data_type <- function(temp_meta,
-                             simplified_geometry = parent.frame()$simplified){
+select_geometry_type <- function(temp_meta,
+                                 simplified_geometry = parent.frame()$simplified){
 
-  if (!is.logical(simplified_geometry)) {
-    stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE"))
-    }
+  checkmate::assert_logical(simplified)
 
-    temp_meta <- subset(temp_meta, simplified == simplified_geometry)
+  temp_meta <- subset(temp_meta, simplified == simplified_geometry)
 
   return(temp_meta)
 }
@@ -41,6 +39,8 @@ select_data_type <- function(temp_meta,
 select_year_input <- function(temp_meta,
                               y= parent.frame()$year,
                               verbose = parent.frame()$verbose){
+
+  checkmate::assert_logical(verbose)
 
   # NULL = use latest year available
   if (is.null(y)) {
@@ -98,10 +98,10 @@ select_metadata <- function(geography,
   temp_meta <- subset(metadata, geo == geography)
 
   # Select year input
-  temp_meta <- select_year_input(temp_meta, y=year)
+  temp_meta <- select_year_input(temp_meta, y=year, verbose)
 
   # Select data type
-  temp_meta <- select_data_type(temp_meta, simplified=simplified)
+  temp_meta <- select_geometry_type(temp_meta, simplified_geometry=simplified)
 
   return(temp_meta)
 }

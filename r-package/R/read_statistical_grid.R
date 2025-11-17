@@ -38,7 +38,8 @@ read_statistical_grid <- function(year = NULL,
   temp_meta <- select_metadata(
     geography="statsgrid",
     year = year,
-    simplified = FALSE
+    simplified = FALSE,
+    verbose = verbose
   )
 
 
