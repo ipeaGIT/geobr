@@ -38,60 +38,34 @@ read_meso_region <- function(year = NULL,
                              verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="meso_region",
-                               year=year,
-                               simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="mesoregions",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
-  # check if download failed
+  # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # Verify code_meso input
-  if (!any(code_meso == 'all' |
-           code_meso %in% temp_meta$code |
-           substring(code_meso, 1, 2) %in% temp_meta$code |
-           code_meso %in% temp_meta$code_abbrev
-  )) {
-    stop("Error: Invalid Value to argument code_meso.")
-  }
-
-  # get file url
-  if (code_meso=="all") {
-    file_url <- as.character(temp_meta$download_path)
-
-  } else if (is.numeric(code_meso)) { # if using numeric code_meso
-    file_url <- as.character(subset(temp_meta, code==substr(code_meso, 1, 2))$download_path)
-
-  } else if (is.character(code_meso)) { # if using chacracter code_abbrev
-    file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_meso, 1, 2))$download_path)
-  }
-
-  # download gpkg
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # download files
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  ## FILTERS
-  y <- code_meso
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_meso)
 
-  # input "all"
-  if (code_meso=="all" | nchar(code_meso)==2) {
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
 
-  #   # abbrev_state
-  # } else if (code_meso %in% temp_sf$abbrev_state){
-  #   temp_sf <- subset(temp_sf, abbrev_state == y)
-  #
-  #   # code_state
-  # } else if (code_meso %in% substring(temp_sf$code_meso,1,2)) {
-  #   temp_sf <- subset(temp_sf, substring(code_meso,1,2) == y)
+  return(temp_arrw)
 
-    # code_meso
-  } else if (code_meso %in% temp_sf$code_meso) {
-    temp_sf <- subset(temp_sf, code_meso == y)
-
-  } else {stop(paste0("Error: Invalid Value to argument 'code_meso'",collapse = " "))}
-
-  return(temp_sf)
 }

@@ -34,22 +34,31 @@ read_metro_area <- function(year = NULL,
                             cache = TRUE,
                             verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="metropolitan_area", year=year, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # Get metadata
+  temp_meta <- select_metadata(
+    geography="metropolitan_area",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # filter state
-  temp_sf <- filter_state(temp_sf, code = code_state)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
 
-  return(temp_sf)
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
   }
+
+  return(temp_arrw)
+}

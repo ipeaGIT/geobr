@@ -42,13 +42,15 @@ select_year_input <- function(temp_meta,
 
   checkmate::assert_logical(verbose)
 
+  years_available <- unique(temp_meta$year)
+
   # NULL = use latest year available
   if (is.null(y)) {
-    y <- max(temp_meta$year)
+    y <- max(years_available)
   }
 
   # invalid input
-  if (y %in% temp_meta$year) {
+  if (y %in% years_available) {
 
     if (isTRUE(verbose)) {
       cli::cli_alert_info(paste0("Using year/date ", y))
@@ -60,7 +62,7 @@ select_year_input <- function(temp_meta,
 
   # invalid input
   else { stop(paste0("Error: Invalid Value to argument 'year/date'. It must be one of the following: ",
-                         paste(unique(temp_meta$year), collapse = " ")))
+                         paste(years_available, collapse = " ")))
     }
 }
 
@@ -427,35 +429,47 @@ numbers_only <- function(x){ !grepl("\\D", x) } # nocov
 #' @return A simple feature `sf` or `data.frame`.
 #'
 #' @keywords internal
-filter_state <- function(temp_sf = parent.frame()$temp_sf,
-                         code = parent.frame()$code_state
-                         ){ # nocov start
-
-  error_message1 <- "This 'code_state' does not exist or it is not present in this data set."
-  error_message2 <- "The 'code_state' comprise only numbers OR letters. It does not accept mixing numbers and letters."
+filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
+                        code){ # nocov start
 
   # all states
-  if (any(code == 'all')) {return(temp_sf)}
+  if (any(code == 'all')) {return(temp_arrw)}
 
-  # only numbers with code states
-  if (all(numbers_only(code))) {
+  # DETECT WHICH COLUMN TO FILTER ON
+  filter_col <- NULL
 
-    if (!all(code %in% unique(temp_sf$code_state))) {stop(error_message1)}
-
-    temp <- subset(temp_sf, code_state %in% code)
-    return(temp)
+  # filter by abbrev
+  if (all(code %in% geobr_env$all_abbrev_state)){
+    filter_col <- "sigla_uf" # "abbrev_state"
   }
 
-  # only letters with state abbreviation
-  if (all(!numbers_only(code))) {
-
-    if (!all(code %in% unique(temp_sf$abbrev_state))) {stop(error_message1)}
-
-    temp <- subset(temp_sf, abbrev_state %in% code)
-    return(temp)
+  # filter by code_state
+  if (all(code %in% geobr_env$all_code_state)){
+    filter_col <- "cd_uf"# "code_state"
   }
 
-  stop(error_message2)
+  # filter by the first column whose name starts with "code_".
+  if (all(numbers_only(code)) && all(nchar(code)>3)) {
+    filter_col <- grep("^cd_", names(temp_arrw), value = TRUE)[1] # code_
+    }
+
+
+  # check
+  if (is.null(filter_col)) {
+    cli::cli_abort("Invalid value to argument `code_`.")
+    }
+
+  # filter
+  temp_arrw <- temp_arrw |>
+    dplyr::filter( !!rlang::sym(filter_col) %in% code ) |>
+    dplyr::compute()
+
+  # check
+  if  (nrow(temp_arrw) == 0){
+    cli::cli_abort("Invalid value to argument `code_`.")
+  }
+
+  return(temp_arrw)
 
 } # nocov end
 

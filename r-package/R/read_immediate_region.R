@@ -44,52 +44,26 @@ read_immediate_region <- function(year = NULL,
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
     geography="immediateregions",
-    year=year,
-    simplified=simplified
+    year = year,
+    simplified = simplified,
+    verbose = verbose
   )
 
   # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # download files
-  file_path <- download_piggyback(
+  temp_arrw <- download_parquet(
     filename_to_download = temp_meta$file_name,
     showProgress,
     cache
   )
 
   # check if download failed
-  if (is.null(file_path)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  # open arrow dataset
-  temp_arrw <- arrow::open_dataset(file_path)
-
-  # codes of all regions
-  all_code <- temp_arrw |> dplyr::pull(cd_rgi, as_vector = TRUE)
-
-  ## FILTERS
-  y <- code_immediate
-
-  # check code_immediate input
-  if(code_immediate=="all"){
-
-    # abbrev_state
-  } else if(code_immediate %in% geobr_env$all_abbrev_state){
-    temp_arrw <- dplyr::filter(temp_arrw, abbrev_state == y) |>
-      dplyr::compute()
-
-    # code_state
-  } else if(code_immediate %in% geobr_env$all_code_state){
-    temp_arrw <- dplyr::filter(temp_arrw, code_state == y) |>
-      dplyr::compute()
-
-    # code_immediate
-  } else if(code_immediate %in% all_code){
-    temp_arrw <- dplyr::filter(temp_arrw, code_immediate == y) |>
-      dplyr::compute()
-
-  } else {stop(paste0("Error: Invalid Value to argument 'code_immediate'",collapse = " "))
-    }
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_immediate)
 
   # convert to sf
   if(isTRUE(as_sf)){
@@ -97,4 +71,5 @@ read_immediate_region <- function(year = NULL,
   }
 
   return(temp_arrw)
+
 }

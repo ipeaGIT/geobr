@@ -45,44 +45,33 @@ read_intermediate_region <- function(year = NULL,
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
-    geography="intermediateregions",
+    geography="immediateregions",
     year = year,
-    simplified = simplified
+    simplified = simplified,
+    verbose = verbose
+  )
+
+  # check if metadata download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
+  # download files
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
   )
 
   # check if download failed
-  if (is.null(temp_meta)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_intermediate)
 
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
 
-  # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  return(temp_arrw)
 
-  ## FILTERS
-  y <- code_intermediate
-
-  # input "all"
-  if(code_intermediate=="all"){
-
-    # abbrev_state
-  } else if(code_intermediate %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
-
-    # code_state
-  } else if(code_intermediate %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
-
-    # code_intermediate
-  } else if(code_intermediate %in% temp_sf$code_intermediate){
-    temp_sf <- subset(temp_sf, code_intermediate == y)
-
-  } else {stop(paste0("Error: Invalid Value to argument 'code_intermediate'",collapse = " "))}
-
-  return(temp_sf)
 }

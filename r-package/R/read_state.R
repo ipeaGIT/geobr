@@ -28,7 +28,7 @@
 #' # Read all states at a given year
 #'   ufs <- read_state(code_state="all", year=2024)
 #'
-read_state <- function(year = 2010,
+read_state <- function(year = NULL,
                        code_state = "all",
                        simplified  = TRUE,
                        as_sf = TRUE,
@@ -57,41 +57,8 @@ read_state <- function(year = 2010,
   # check if download failed
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  # return the whole dataset
-  if (code_state == 'all') {
-
-    # convert to sf
-    if(isTRUE(as_sf)){
-      temp_arrw <- sf::st_as_sf(temp_arrw)
-    }
-
-    return(temp_arrw)
-  }
-
-  # DETECT WHICH COLUMN TO FILTER ON
-  # filter by abbrev
-  filter_col <- NULL
-  if (code_state %in% geobr_env$all_abbrev_state){
-    filter_col <- "sigla_uf"
-  }
-
-  # filter by code
-  if (code_state %in% geobr_env$all_code_state){
-    filter_col <- "cd_uf"
-  }
-
-  if (is.null(filter_col)) {
-    stop("Error: Invalid Value to argument code_state.")
-  }
-
-  # filter
-  temp_arrw <- temp_arrw |>
-    dplyr::filter( !!rlang::sym(filter_col) == code_state ) |>
-    dplyr::compute()
-
-  if  (nrow(temp_arrw) == 0){
-    stop("Error: Invalid Value to argument code_state.")
-    }
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # convert to sf
   if(isTRUE(as_sf)){

@@ -28,19 +28,28 @@ read_pop_arrangements <- function(year = NULL,
                                   verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="pop_arrengements", year=year, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
+  temp_meta <- select_metadata(
+    geography="pop_arrengements",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
+
+  return(temp_arrw)
 
 }

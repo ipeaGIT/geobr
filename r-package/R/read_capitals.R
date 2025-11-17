@@ -6,9 +6,7 @@
 #' with the names and codes of state capitals. Data downloaded for the latest
 #' available year.
 #'
-#' @param as_sf Logic `FALSE` or `TRUE`, indicating whether the function should
-#'        return a spatial data in `sf` format (Defaults to `TRUE`) or in a
-#'        `data.frame` format without spatial information (`FALSE`).
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose

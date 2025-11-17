@@ -38,28 +38,26 @@ read_health_facilities <- function(date = NULL,
                                    cache = TRUE,
                                    verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="health_facilities", year=date, simplified=F)
-
-  # Get metadata with data url addresses
+  # Get metadata
   temp_meta <- select_metadata(
     geography="healthfacilities",
-    year = year,
-    simplified = FALSE
+    year = date,
+    simplified = simplified,
+    verbose = verbose
   )
 
-  # download files
-  file_path <- download_piggyback(
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
+
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
     filename_to_download = temp_meta$file_name,
     showProgress = showProgress,
     cache = cache
   )
 
   # check if download failed
-  if (is.null(file_path)) { return(invisible(NULL)) }
-
-  # open arrow dataset
-  temp_arrw <- arrow::open_dataset(file_path)
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # convert to sf
   if(isTRUE(as_sf)){
@@ -67,5 +65,4 @@ read_health_facilities <- function(date = NULL,
   }
 
   return(temp_arrw)
-
-    }
+}
