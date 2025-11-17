@@ -4,22 +4,25 @@
 # globals
 geobr_data_release <- 'v2.0.0'
 
+message_failed <- "A file must have been corrupted during download. Please restart your R session and try again."
 
 
 #' Select data type: 'original' or 'simplified' (default)
 #'
 #'
-#' @param temp_meta A dataframe with the file_url addresses of geobr datasets
-#' @param simplified Logical TRUE or FALSE indicating  whether the function returns the 'original' dataset with high resolution or a dataset with 'simplified' borders (Defaults to TRUE)
+#' @param temp_meta A data.frame with the metadata of geobr datasets
+#' @param simplified_geometry Logical `TRUE` or `FALSE` indicating  whether the
+#'        function should return a dataset with the 'original' geometry or a
+#'        dataset with 'simplified' geometry (Defaults to `TRUE`)
 #' @keywords internal
-#'
 select_data_type <- function(temp_meta,
                              simplified_geometry = parent.frame()$simplified){
 
-  if (!is.logical(simplified_geometry)) { stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE")) }
+  if (!is.logical(simplified_geometry)) {
+    stop(paste0("Argument 'simplified' needs to be either TRUE or FALSE"))
+    }
 
     temp_meta <- subset(temp_meta, simplified == simplified_geometry)
-
 
   return(temp_meta)
 }
@@ -32,9 +35,12 @@ select_data_type <- function(temp_meta,
 #'
 #' @param temp_meta A dataframe with the file_url addresses of geobr datasets
 #' @param y Year of the dataset (passed by red_ function)
+#' @template verbose
 #' @keywords internal
 #'
-select_year_input <- function(temp_meta, y= parent.frame()$year){
+select_year_input <- function(temp_meta,
+                              y= parent.frame()$year,
+                              verbose = parent.frame()$verbose){
 
   # NULL = use latest year available
   if (is.null(y)) {
@@ -43,7 +49,11 @@ select_year_input <- function(temp_meta, y= parent.frame()$year){
 
   # invalid input
   if (y %in% temp_meta$year) {
-    message(paste0("Using year/date ", y))
+
+    if (isTRUE(verbose)) {
+      cli::cli_alert_info(paste0("Using year/date ", y))
+      }
+
     temp_meta <- subset(temp_meta, year == y)
     return(temp_meta)
     }
@@ -74,7 +84,8 @@ select_year_input <- function(temp_meta, y= parent.frame()$year){
 #'
 select_metadata <- function(geography,
                             year = parent.frame()$year,
-                            simplified = parent.frame()$simplified){
+                            simplified = parent.frame()$simplified,
+                            verbose = parent.frame()$verbose){
 
   # download metadata
   # metadata <- download_metadata()
@@ -141,10 +152,9 @@ download_metadata <- function(){ # nocov start
 
   # if anything fails, return NULL
   if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
-    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
-    message(msg)
+    cli::cli_alert_danger(message_failed)
     return(invisible(NULL))
-  }
+    }
   }
 
   # read metadata
@@ -153,7 +163,7 @@ download_metadata <- function(){ # nocov start
 
   # check if data was read Ok
   if (nrow(metadata)==0) {
-    message("A file must have been corrupted during download. Please restart your R session and download the data again.")
+    cli::cli_alert_danger(message_failed)
     return(invisible(NULL))
   }
 
@@ -211,8 +221,7 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
 
   # if anything fails, return NULL
   if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
-    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
-    message(msg)
+    cli::cli_alert_danger(message_failed)
     return(invisible(NULL))
   }
 
@@ -230,12 +239,13 @@ download_gpkg <- function(file_url = parent.frame()$file_url,
 #' @template cache
 #' @keywords internal
 #'
-download_parquet <- function(file_url = parent.frame()$file_url,
-                          showProgress = parent.frame()$showProgress,
-                          cache = parent.frame()$cache){
+download_geopackage <- function(file_url = parent.frame()$file_url,
+                             showProgress = parent.frame()$showProgress,
+                             cache = parent.frame()$cache){
 
-  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
-  if (!is.logical(cache)) { stop("'cache' must be of type 'logical'") }
+  # check input
+  checkmate::assert_logical(showProgress)
+  checkmate::assert_logical(cache)
 
   # get backup links
   filenames <- basename(file_url)
@@ -272,8 +282,7 @@ download_parquet <- function(file_url = parent.frame()$file_url,
 
   # if anything fails, return NULL
   if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
-    msg <- paste("File cached locally seems to be corrupted. Please download it again.")
-    message(msg)
+    cli::cli_alert_danger(message_failed)
     return(invisible(NULL))
   }
 
@@ -319,7 +328,7 @@ load_gpkg <- function(temps=NULL){
 
   # check if data was read Ok
   if (nrow(temp_sf)==0) {
-    message("A file must have been corrupted during download. Please restart your R session and download the data again.")
+    cli::cli_alert_danger(message_failed)
     return(invisible(NULL))
   }
   return(temp_sf)
@@ -355,7 +364,7 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
   # Check if user has internet connection
   if (!curl::has_internet()) {
     if (isFALSE(silent)) {
-      message("No internet connection.")
+      cli::cli_alert_danger("No internet connection.")
     }
     return(FALSE)
   }
@@ -370,7 +379,7 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
   # Check if there was an error during the fetch attempt
   if (inherits(response, "try-error")) {
     if (isFALSE(silent)) {
-      message(msg)
+      cli::cli_alert_danger(msg)
     }
     return(FALSE)
   }
@@ -386,7 +395,7 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
   # Link not working or timeout
   if (status_code != 200L) {
     if (isFALSE(silent)) {
-      message(msg)
+      cli::cli_alert_danger(msg)
     }
     return(FALSE)
   }
@@ -456,30 +465,86 @@ filter_state <- function(temp_sf = parent.frame()$temp_sf,
 
 download_metadata2 <- function(){
 
+  # path to tempfile of metadata
+  tempf <- fs::path(fs::path_temp(), "metadata_geobr_gpkg.parquet")
 
-  temp_meta <- piggyback::pb_list(
-    repo = "ipeaGIT/geobr",
-    tag = geobr_env$data_release
+  # IF metadata has already been successfully downloaded
+  if (file.exists(tempf) & file.info(tempf)$size != 0) {
+
+    # read temp metadata
+    temp_meta <- arrow_read_dataset(tempf)
+
+    # check if data was read Ok
+    if (nrow(temp_meta)==0) {
+      cli::cli_alert_danger(message_failed)
+      return(invisible(NULL))
+    }
+
+    return(temp_meta)
+  }
+
+
+  # test server connection with github
+  metadata_link <- paste0("https://github.com/ipeaGIT/geobr/")
+  try( silent = TRUE,
+       check_con <- check_connection(metadata_link, silent = FALSE)
+       )
+
+  # if server fails, fail gracefully
+  if (is.null(check_con) | isFALSE(check_con)) {
+    return(invisible(NULL))
+  }
+
+  # download metadata to temp file
+  temp_meta <- NULL
+
+  try(silent = TRUE,
+    temp_meta <- piggyback::pb_list(
+      repo = "ipeaGIT/geobr",
+      tag = geobr_env$data_release
+    ),
   )
 
+  # check if download failed
+  if (is.null(temp_meta)) {
+    cli::cli_alert_danger(message_failed)
+    return(invisible(NULL))
+  }
+
+  # parse metadata
   temp_meta <- temp_meta |>
+    dplyr::select(file_name) |>
     dplyr::mutate(
       geo = stringr::str_extract(file_name, "^[^_]+"),
       year  = stringr::str_extract(file_name, "\\d+"),
       simplified = ifelse(stringr::str_detect(file_name, "simplified"), TRUE, FALSE)
     )
+
+  # save temp metadata
+  arrow::write_parquet(temp_meta, tempf)
+
   return(temp_meta)
 }
 
 
 
+#' Download parquet to tempdir
+#'
+#' @param filename_to_download A string with the file name
+#' @template showProgress
+#' @template cache
+#' @keywords internal
+#'
+download_parquet <- function(filename_to_download,
+                             showProgress = parent.frame()$showProgress,
+                             cache = parent.frame()$cache) {
 
-download_piggyback <- function(filename_to_download,
-                               showProgress = parent.frame()$showProgress,
-                               cache = parent.frame()$cache) {
+  # check input
+  checkmate::assert_logical(showProgress)
+  checkmate::assert_logical(cache)
 
   # Defining our temporary directory
-  temp_dest_dir <- tempdir(check = TRUE)
+  temp_dest_dir <- fs::path_temp("geobr")
 
   # Creating the temporary folder effectively
   fs::dir_create(path = temp_dest_dir, recurse = TRUE)
@@ -487,34 +552,78 @@ download_piggyback <- function(filename_to_download,
   # Creating path + filename and saving to "temporary_filename"
   temp_full_file_path <- paste0(temp_dest_dir, "/", filename_to_download)
 
-  # # Print the temp_full_file_path to the console
-  # message("Downloading file to: ", temp_full_file_path)
-
-  # downloading the file from a release of the odbr repo - release specified in
-  # the parameter
-  tryCatch(silent=T,
-    {
-      piggyback::pb_download(
-        file = filename_to_download,
-        repo = "ipeaGIT/geobr",
-        tag = geobr_env$data_release,
-        dest = temp_dest_dir,
-        show_progress = showProgress,
-        overwrite = !cache
+  # downloading the file
+  try(silent=T,
+      suppressMessages(
+        piggyback::pb_download(
+          file = filename_to_download,
+          repo = "ipeaGIT/geobr",
+          tag = geobr_env$data_release,
+          dest = temp_dest_dir,
+          show_progress = showProgress,
+          overwrite = !cache
+          )
       )
-    },
-    error = function(e) {
-      message("Error during download: ", e$message)
-      invisible(NULL)
-    }
   )
 
   # Halt function if download failed
   if (!file.exists(temp_full_file_path)) {
-    message("Download failed or internet connection not working properly.")
+    cli::cli_alert_danger(message_failed)
     invisible(NULL)
-  } else {
-    # return string with the path to the file saved in a tempdir
-    temp_full_file_path
   }
+
+  # load parquet
+  temp_arrw <- arrow_open_dataset(temp_full_file_path) #
+  return(temp_arrw)
 }
+
+
+
+#' Safely use arrow to open a Parquet file
+#'
+#' This function handles some failure modes, including if the Parquet file is
+#' corrupted.
+#'
+#' @param filename A local Parquet file
+#' @return An `arrow::Dataset`
+#'
+#' @keywords internal
+arrow_open_dataset <- function(filename){ # nocov start
+
+  temp_arrw <- NULL
+  try(silent = TRUE,
+    temp_arrw <- arrow::open_dataset(filename)
+  )
+
+  if(is.null(temp_arrw)){
+    cli::cli_alert_danger(message_failed)
+  }
+
+  return(temp_arrw)
+} # nocov end
+
+
+
+#' Safely use arrow to read a Parquet file
+#'
+#' This function handles some failure modes, including if the Parquet file is
+#' corrupted.
+#'
+#' @param filename A local Parquet file
+#' @return An `arrow::Dataset`
+#'
+#' @keywords internal
+arrow_read_dataset <- function(filename){ # nocov start
+
+  temp_arrw <- NULL
+  try(silent = TRUE,
+      temp_arrw <- arrow::read_parquet(filename)
+  )
+
+  if(is.null(temp_arrw)){
+    cli::cli_alert_danger(message_failed)
+  }
+
+  return(temp_arrw)
+
+} # nocov end
