@@ -10,15 +10,13 @@ testthat::skip_on_cran()
 test_that("read_country", {
 
   # read data
-  test_sf0 <- read_country()
-  test_sf <- read_country(year=1991)
-
+  test_sf <- read_country(year=2020, simplified = FALSE)
+  test_sf <- read_country(year=2020)
 
   # check sf object
-  testthat::expect_true(is(test_sf0, "sf"))
   testthat::expect_true(is(test_sf, "sf"))
 
-  test_arrw <- read_country(as_sf = FALSE)
+  test_arrw <- read_country(year=2020, as_sf = FALSE)
   expect_true(is(test_arrw, "ArrowObject"))
 
 })
@@ -28,6 +26,7 @@ test_that("read_country", {
 test_that("read_country", {
 
   # Wrong date
+  testthat::expect_error(read_country())
   testthat::expect_error(read_country(year=9999999))
   testthat::expect_error(read_country(year="xxx"))
   testthat::expect_error(read_country(tp="xxx"))

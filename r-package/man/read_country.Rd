@@ -5,7 +5,7 @@
 \title{Download spatial data of Brazil's national borders}
 \usage{
 read_country(
-  year = NULL,
+  year,
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,

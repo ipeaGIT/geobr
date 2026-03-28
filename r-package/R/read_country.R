@@ -19,7 +19,7 @@
 #' # Read specific year
 #' br <- read_country(year = 2018)
 #'
-read_country <- function(year = NULL,
+read_country <- function(year,
                          simplified = TRUE,
                          as_sf = TRUE,
                          showProgress = TRUE,

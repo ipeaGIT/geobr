@@ -10,6 +10,7 @@ testthat::skip_on_cran()
 test_that("read_biomes", {
 
   # read data
+  test_sf0 <- read_biomes(year = 2004, simplified = FALSE)
   test_sf0 <- read_biomes(year = 2004)
 
   # check sf object
