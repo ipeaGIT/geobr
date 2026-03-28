@@ -25,7 +25,7 @@ grid quadrant id to load an specific quadrant. Quadrant ids
 can be consulted at \code{geobr::grid_state_correspondence_table}.}
 
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
-\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

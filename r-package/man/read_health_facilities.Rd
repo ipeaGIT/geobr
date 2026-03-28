@@ -17,7 +17,7 @@ read_health_facilities(
 and reads the data from the latest date available.}
 
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
-\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

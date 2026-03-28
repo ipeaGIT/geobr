@@ -8,7 +8,7 @@ read_capitals(as_sf = TRUE, showProgress = TRUE, cache = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
-\verb{sf data.frame}.If \code{FALSE}, the function returns an arrow dataset.}
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

@@ -10,15 +10,15 @@ testthat::skip_on_cran()
 test_that("read_biomes", {
 
   # read data
-  test_sf0 <- read_biomes()
+  test_sf0 <- read_biomes(year = 2004)
 
   # check sf object
   testthat::expect_true(is(test_sf0, "sf"))
 
   # check number of micro
-  testthat::expect_equal( nrow(test_sf0), 7)
+  testthat::expect_equal( nrow(test_sf0), 10)
 
-  test_arrw <- read_biomes(as_sf = FALSE)
+  test_arrw <- read_biomes(year = 2004, as_sf = FALSE)
   expect_true(is(test_arrw, "ArrowObject"))
 
 
@@ -31,6 +31,7 @@ test_that("read_biomes", {
 test_that("read_biomes", {
 
   # Wrong year
+  testthat::expect_error(read_biomes())
   testthat::expect_error(read_biomes(year=9999999))
   testthat::expect_error(read_biomes(year="xxx"))
   testthat::expect_error(read_biomes(tp="xxx"))

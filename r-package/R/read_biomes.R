@@ -22,7 +22,7 @@
 #' # Read biomes
 #' b <- read_biomes(year = 2004)
 #'
-read_biomes <- function(year = NULL,
+read_biomes <- function(year,
                         simplified = TRUE,
                         as_sf = TRUE,
                         showProgress = TRUE,

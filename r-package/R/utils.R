@@ -44,10 +44,10 @@ select_year_input <- function(temp_meta,
 
   years_available <- unique(temp_meta$year)
 
-  # NULL = use latest year available
-  if (is.null(y)) {
-    y <- max(years_available)
-  }
+  # # NULL = use latest year available
+  # if (is.null(y)) {
+  #   y <- max(years_available)
+  # }
 
   # invalid input
   if (y %in% years_available) {
