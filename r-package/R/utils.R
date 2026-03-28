@@ -444,18 +444,18 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
   filter_col <- NULL
 
   # filter by abbrev
-  if (all(code %in% geobr_env$all_abbrev_state)){
-    filter_col <- "sigla_uf" # "abbrev_state"
+  if (all(code %in% geobr_env$all_abbrev_state)) {
+    filter_col <- "abbrev_state"
   }
 
   # filter by code_state
   if (all(code %in% geobr_env$all_code_state)){
-    filter_col <- "cd_uf"# "code_state"
+    filter_col <- "code_state"
   }
 
   # filter by the first column whose name starts with "code_".
   if (all(numbers_only(code)) && all(nchar(code)>3)) {
-    filter_col <- grep("^cd_", names(temp_arrw), value = TRUE)[1] # code_
+    filter_col <- grep("^code_", names(temp_arrw), value = TRUE)[1] # code_
     }
 
 

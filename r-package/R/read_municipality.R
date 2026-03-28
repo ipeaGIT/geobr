@@ -35,7 +35,7 @@
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
 #'
-read_municipality <- function(year = NULL,
+read_municipality <- function(year,
                               code_muni = "all",
                               simplified = TRUE,
                               showProgress = TRUE,
