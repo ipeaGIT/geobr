@@ -19,7 +19,7 @@
 #' # Read specific year
 #' reg <- read_region(year=2023)
 #'
-read_region <- function(year = NULL,
+read_region <- function(year,
                         simplified = TRUE,
                         as_sf = TRUE,
                         showProgress = TRUE,
