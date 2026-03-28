@@ -61,8 +61,13 @@ select_year_input <- function(temp_meta,
     }
 
   # invalid input
-  else { stop(paste0("Error: Invalid Value to argument 'year/date'. It must be one of the following: ",
-                         paste(years_available, collapse = " ")))
+  else {
+    years_available <- paste(years_available, collapse = " ")
+    cli::cli_abort(
+      "Data currently available only for the following year/date: {years_available}.",
+      call = rlang::caller_env()
+      )
+
     }
 }
 
