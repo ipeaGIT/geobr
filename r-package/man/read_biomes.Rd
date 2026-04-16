@@ -50,7 +50,7 @@ data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biom
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read biomes
-b <- read_biomes(year = 2004)
+b <- read_biomes(year = 2025)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

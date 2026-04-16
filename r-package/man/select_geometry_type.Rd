@@ -4,10 +4,7 @@
 \alias{select_geometry_type}
 \title{Select data type: 'original' or 'simplified' (default)}
 \usage{
-select_geometry_type(
-  temp_meta,
-  simplified_geometry = parent.frame()$simplified
-)
+select_geometry_type(temp_meta, simplified_geometry)
 }
 \arguments{
 \item{temp_meta}{A data.frame with the metadata of geobr datasets}

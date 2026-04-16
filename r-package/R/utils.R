@@ -16,9 +16,9 @@ message_failed <- "A file must have been corrupted during download. Please resta
 #'        dataset with 'simplified' geometry (Defaults to `TRUE`)
 #' @keywords internal
 select_geometry_type <- function(temp_meta,
-                                 simplified_geometry = parent.frame()$simplified){
+                                 simplified_geometry){
 
-  checkmate::assert_logical(simplified)
+  checkmate::assert_logical(simplified_geometry)
 
   temp_meta <- subset(temp_meta, simplified == simplified_geometry)
 

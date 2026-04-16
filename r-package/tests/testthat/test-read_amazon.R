@@ -10,13 +10,13 @@ testthat::skip_on_cran()
 test_that("read_amazon", {
 
   # read data
-  test_sf <- read_amazon(showProgress = F)
+  test_sf <- read_amazon(year = 2024, showProgress = F)
 
   # check sf object
   testthat::expect_true(is(test_sf, "sf"))
 
   # check number of columns
-  testthat::expect_equal(ncol(test_sf), 1)
+  testthat::expect_equal(ncol(test_sf), 2)
 
   # # check projection
   # testthat::expect_equal(sf::st_crs(test_sf)$epsg, 4674)

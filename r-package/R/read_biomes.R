@@ -20,7 +20,7 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read biomes
-#' b <- read_biomes(year = 2004)
+#' b <- read_biomes(year = 2025)
 #'
 read_biomes <- function(year,
                         simplified = TRUE,

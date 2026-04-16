@@ -7,6 +7,7 @@
 #'
 #' @template year
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -18,17 +19,18 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read Brazilian Legal Amazon
-#' a <- read_amazon(year = 2012)
+#' a <- read_amazon(year = 2024)
 #'
 read_amazon <- function(year = NULL,
                         simplified = TRUE,
+                        as_sf = TRUE,
                         showProgress = TRUE,
                         cache = TRUE,
                         verbose = TRUE){
 
   # Get metadata
   temp_meta <- select_metadata(
-    geography="amazonia_legal",
+    geography="amazonialegal",
     year = year,
     simplified = simplified,
     verbose = verbose
