@@ -12,6 +12,7 @@
 #'        be downloaded. Municipality identification codes can be consulted with
 #'        the `geobr::lookup_muni()` function.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -38,6 +39,7 @@
 read_municipality <- function(year,
                               code_muni = "all",
                               simplified = TRUE,
+                              as_sf = TRUE,
                               showProgress = TRUE,
                               cache = TRUE,
                               verbose = TRUE,
@@ -49,7 +51,7 @@ read_municipality <- function(year,
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
-    geography="municipality",
+    geography="municipalities",
     year = year,
     simplified = simplified,
     verbose = verbose
@@ -73,7 +75,7 @@ read_municipality <- function(year,
 
   # keep_areas_operacionais
   if (isFALSE(keep_areas_operacionais)) {
-    temp_sf <- temp_arrw |>
+    temp_arrw <- temp_arrw |>
       dplyr::filter(code_muni != 4300001) |>
       dplyr::filter(code_muni != 4300002) |>
       dplyr::compute()
