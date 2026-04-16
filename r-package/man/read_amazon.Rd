@@ -49,7 +49,7 @@ Ministry of Environment (MMA) and can be found at "http://mapas.mma.gov.br/i3geo
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read Brazilian Legal Amazon
-a <- read_amazon(year = 2012)
+a <- read_amazon(year = 2024)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

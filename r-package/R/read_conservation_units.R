@@ -28,7 +28,7 @@ read_conservation_units <- function(date = NULL,
 
   # Get metadata
   temp_meta <- select_metadata(
-    geography="conservation_units",
+    geography="conservationunits",
     year = year,
     simplified = simplified,
     verbose = verbose

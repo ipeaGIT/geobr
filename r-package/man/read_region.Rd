@@ -5,7 +5,7 @@
 \title{Download spatial data of Brazil Regions}
 \usage{
 read_region(
-  year = NULL,
+  year,
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,
