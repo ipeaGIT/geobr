@@ -90,6 +90,7 @@ Other area functions:
 \code{\link{read_municipal_seat}()},
 \code{\link{read_neighborhood}()},
 \code{\link{read_pop_arrangements}()},
+\code{\link{read_quilombo}()},
 \code{\link{read_region}()},
 \code{\link{read_schools}()},
 \code{\link{read_semiarid}()},
