@@ -53,7 +53,7 @@ These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all health facilities of the whole country
-h <- read_health_facilities( date = 202303)
+h <- read_health_facilities(date = 202604)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
@@ -72,7 +72,6 @@ Other area functions:
 \code{\link{read_meso_region}()},
 \code{\link{read_metro_area}()},
 \code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
 \code{\link{read_neighborhood}()},
 \code{\link{read_pop_arrangements}()},

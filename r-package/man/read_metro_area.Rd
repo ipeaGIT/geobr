@@ -74,7 +74,6 @@ Other area functions:
 \code{\link{read_intermediate_region}()},
 \code{\link{read_meso_region}()},
 \code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
 \code{\link{read_municipality}()},
 \code{\link{read_neighborhood}()},
 \code{\link{read_pop_arrangements}()},

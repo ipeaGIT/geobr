@@ -30,7 +30,7 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all health facilities of the whole country
-#' h <- read_health_facilities( date = 202303)
+#' h <- read_health_facilities(date = 202604)
 #'
 read_health_facilities <- function(date = NULL,
                                    as_sf = TRUE,
