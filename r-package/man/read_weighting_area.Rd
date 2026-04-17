@@ -90,7 +90,6 @@ Other area functions:
 \code{\link{read_semiarid}()},
 \code{\link{read_state}()},
 \code{\link{read_statistical_grid}()},
-\code{\link{read_urban_area}()},
 \code{\link{read_urban_concentrations}()}
 }
 \concept{area functions}
