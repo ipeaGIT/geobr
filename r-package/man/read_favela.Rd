@@ -5,7 +5,7 @@
 \title{Download spatial data of favelas and urban communities}
 \usage{
 read_favela(
-  year = NULL,
+  year,
   code_muni = "all",
   simplified = TRUE,
   as_sf = TRUE,

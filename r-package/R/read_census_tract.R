@@ -48,7 +48,7 @@ read_census_tract <- function(year,
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
-    geography = "censustracts",
+    geography = c("censustracts", "censustractsrural", "censustractsurbano"),
     year = year,
     simplified = simplified
     )

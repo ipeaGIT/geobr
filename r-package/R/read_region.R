@@ -17,7 +17,7 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific year
-#' reg <- read_region(year=2023)
+#' reg <- read_region(year = 2023)
 #'
 read_region <- function(year,
                         simplified = TRUE,

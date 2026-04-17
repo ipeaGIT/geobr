@@ -102,7 +102,7 @@ select_metadata <- function(geography,
   if (is.null(metadata)) { return(invisible(NULL)) }
 
   # Select geo
-  temp_meta <- subset(metadata, geo %like% geography)
+  temp_meta <- subset(metadata, geo %in% geography)
 
   # Select year input
   temp_meta <- select_year_input(temp_meta, y=year, verbose)

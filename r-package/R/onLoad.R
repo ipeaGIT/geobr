@@ -16,8 +16,8 @@ geobr_env <- new.env(parent = emptyenv()) # nocov start
                                   "MT", "GO", "DF")
 
   # # load geoarrow
-  requireNamespace("sf")
-  requireNamespace("geoarrow")
+  loadNamespace("sf")
+  loadNamespace("geoarrow")
   # loadNamespace("geoarrow")
 
 

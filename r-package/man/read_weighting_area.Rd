@@ -5,8 +5,8 @@
 \title{Download spatial data of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census}
 \usage{
 read_weighting_area(
-  year = NULL,
-  code_weighting = "all",
+  year,
+  code_weighting,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE,
