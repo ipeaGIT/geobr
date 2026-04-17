@@ -58,8 +58,14 @@ see details at \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv102134
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
-# Read favelas of Brazil
+# Read all favelas of Brazil
 n <- read_favela(year = 2022)
+
+# Read all favelas of a given municipality
+n <- read_favela(year = 2022, code_muni = 2927408)
+
+# Read all favelas of a given state
+n <- read_favela(year = 2022, code_muni = "RJ")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

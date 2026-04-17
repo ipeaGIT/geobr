@@ -16,9 +16,14 @@ test_that("read_favela", {
   testthat::expect_true(is(test_sf, "sf"))
 
 
+  # Read all favelas of a given municipality
+  n <- read_favela(year = 2022, code_muni = 2927408, as_sf = FALSE)
+  testthat::expect_true( nrow(n) == 262)
 
-  # # check projection
-  # testthat::expect_equal(sf::st_crs(test_sf)$epsg, 4674)
+  # Read all favelas of a given state
+  n <- read_favela(year = 2022, code_muni = "RJ", as_sf = FALSE)
+  testthat::expect_true( nrow(n) == 1724)
+
 
 })
 

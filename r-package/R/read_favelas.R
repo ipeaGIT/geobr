@@ -26,8 +26,14 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read favelas of Brazil
+#' # Read all favelas of Brazil
 #' n <- read_favela(year = 2022)
+#'
+#' # Read all favelas of a given municipality
+#' n <- read_favela(year = 2022, code_muni = 2927408)
+#'
+#' # Read all favelas of a given state
+#' n <- read_favela(year = 2022, code_muni = "RJ")
 #'
 read_favela <- function(year = NULL,
                         code_muni = "all",
