@@ -51,11 +51,13 @@ library(ggplot2)
 
 ### Available data sets
 
-The geobr package covers 27 spatial data sets, including a variety of political-administrative and statistical areas used in Brazil. You can view what data sets are available using the `list_geobr()` function.
+The geobr package covers more than 25 spatial data sets, including a variety of 
+political-administrative and statistical areas used in Brazil. You can view what 
+data sets are available using the `list_geobr()` function.
 
 ```{r message=FALSE, warning=FALSE}
 # Available data sets
-datasets <- list_geobr()
+datasets <- list_geobr(wide = TRUE)
 
 head(datasets)
 
@@ -66,7 +68,8 @@ head(datasets)
 
 The syntax of all *geobr* functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.
 
-Download an specific geographic area at a given year
+Download an specific geographic area at a given year:
+
 ```{r message=FALSE, warning=FALSE}
 # State of Sergige
 state <- read_state(
@@ -78,7 +81,7 @@ state <- read_state(
 # Municipality of Sao Paulo
 muni <- read_municipality(
   code_muni = 3550308, 
-  year=2010, 
+  year = 2022, 
   showProgress = FALSE
   )
 
@@ -88,19 +91,22 @@ ggplot() +
 ```
 
 
-Download all geographic areas within a state at a given year
+Download all geographic areas within a state at a given year:
+
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # All municipalities in the state of Minas Gerais
-muni <- read_municipality(code_muni = "MG", 
-                          year = 2007,
-                          showProgress = FALSE)
-
-# All census tracts in the state of Rio de Janeiro
-cntr <- read_census_tract(
-  code_tract = "RJ", 
-  year = 2010,
+muni <- read_municipality(
+  code_muni = "MG", 
+  year = 2022,
   showProgress = FALSE
   )
+
+# # All census tracts in the state of Rio de Janeiro
+# cntr <- read_census_tract(
+#   code_tract = "RJ", 
+#   year = 2022,
+#   showProgress = FALSE
+#   )
 
 head(muni)
 ```
@@ -110,13 +116,13 @@ If the parameter `code_` is not passed to the function, geobr returns the data f
 ```{r message=FALSE, warning=FALSE}
 # read all intermediate regions
 inter <- read_intermediate_region(
-  year = 2017,
+  year = 2025,
   showProgress = FALSE
   )
 
 # read all states
 states <- read_state(
-  year = 2019, 
+  year = 2025, 
   showProgress = FALSE
   )
 
@@ -126,7 +132,12 @@ head(states)
 
 ## Important note about data resolution
 
-All functions to download polygon data such as states, municipalities etc. have a `simplified` argument. When `simplified = FALSE`, geobr will return the original data set with high resolution at detailed geographic scale (see documentation). By default, however, `simplified = TRUE` and geobr returns data set geometries with simplified borders to improve speed of downloading and plotting the data.
+All functions to download polygon data such as states, municipalities etc. have 
+a `simplified` argument. When `simplified = FALSE`, geobr will return the 
+original data set with high resolution at detailed geographic scale (see 
+documentation). By default, however, `simplified = TRUE` and geobr returns data 
+set geometries with simplified borders to improve speed of downloading and 
+plotting the data.
 
 
 
@@ -159,7 +170,7 @@ Plot all the municipalities of a particular state, such as Rio de Janeiro:
 # Download all municipalities of Rio
 all_muni <- read_municipality(
   code_muni = "RJ", 
-  year= 2010,
+  year= 2022,
   showProgress = FALSE
   )
 
@@ -175,18 +186,22 @@ ggplot() +
 
 ## Thematic maps
 
-The next step is to combine  data from ***geobr*** package with other data sets to create thematic maps. In this first example, we will be using data from the (Atlas of Human Development (by Ipea/FJP and UNPD) to create a choropleth map showing the spatial variation of **Life Expectancy at birth** across Brazilian states.
+The next step is to combine  data from ***geobr*** package with other data sets 
+to create thematic maps. In this first example, we will be using data from the 
+(Atlas of Human Development (by Ipea/FJP and UNPD) to create a choropleth map 
+showing the spatial variation of **Life Expectancy at birth** across Brazilian 
+states.
 
 #### Merge external data
 
-First, we need a `data.frame` with estimates of Life Expectancy and merge it to our spatial database. The two-digit abbreviation of state name is our key column to join these two databases.
+First, we need a `data.frame` with estimates of Life Expectancy and merge it to 
+our spatial database. The two-digit abbreviation of state name is our key column 
+to join these two databases.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # Read data.frame with life expectancy data
-df <- utils::read.csv(system.file("extdata/br_states_lifexpect2017.csv", package = "geobr"), encoding = "UTF-8")
-
-states$name_state <- tolower(states$name_state)
-df$uf <- tolower(df$uf)
+df <- utils::read.csv2(system.file("extdata/br_states_lifexpect2017.csv", 
+                                   package = "geobr"), encoding = "UTF-8")
 
 # join the databases
 states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
@@ -218,8 +233,10 @@ First, we need to download households data from the Brazilian census using the `
 library(censobr)
 library(arrow)
 
-hs <- read_households(year = 2010, 
-                      showProgress = FALSE)
+hs <- read_households(
+  year = 2010, 
+  showProgress = FALSE
+  )
 
 ```
 
