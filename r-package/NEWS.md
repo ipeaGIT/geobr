@@ -3,6 +3,11 @@
 - Now all functions download data from the latest year available, by default.
 - Fix url redundancy to avoid internet connection problems.
 
+
+**Major changes**
+- The function `list_geobr()` now has a boolean argument `wide`, so users can choose whether 
+the output should be presented in wide or long format.
+
 # geobr v1.9.1
 
 
