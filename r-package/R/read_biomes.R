@@ -50,10 +50,8 @@ read_biomes <- function(year,
   # check if download failed
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  # convert to sf
-  if(isTRUE(as_sf)){
-    temp_arrw <- sf::st_as_sf(temp_arrw)
-  }
+    # convert to sf
+    output <- convert_arrow2sf(temp_arrw, as_sf)
 
-  return(temp_arrw)
+    return(output)
 }

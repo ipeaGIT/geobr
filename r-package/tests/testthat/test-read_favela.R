@@ -38,5 +38,8 @@ test_that("read_favela", {
   testthat::expect_error(read_favela(year="xxx"))
   testthat::expect_error(read_favela(tp="xxx"))
 
+  testthat::expect_error(
+    read_favela(year = 2022, code_muni = "RJ", as_sf = "banana")
+  )
 
 })

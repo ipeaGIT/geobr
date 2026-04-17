@@ -86,10 +86,9 @@ read_census_tract <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = code_tract)
 
   # convert to sf
-  if(isTRUE(as_sf)){
-    temp_arrw <- sf::st_as_sf(temp_arrw)
-  }
+  output <- convert_arrow2sf(temp_arrw, as_sf)
 
-  return(temp_arrw)
+  return(output)
+
 
   }

@@ -161,9 +161,6 @@ list_geobr <- function(wide = TRUE){
  class = "data.frame"
  )
 
-
-
-
   df <- dplyr::left_join(datasets, tempdf, by  = 'alias') |>
     dplyr::arrange(alias) |>
     dplyr::select(-alias)

@@ -653,6 +653,17 @@ arrow_read_dataset <- function(filename){ # nocov start
 
 } # nocov end
 
+convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
+
+  checkmate::assert_logical(as_sf)
+
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
+
+  return(temp_arrw)
+} # nocov end
+
 
 # place holder to use geoarrow becaue:
 #   Namespace in Imports field not imported from: 'geoarrow'

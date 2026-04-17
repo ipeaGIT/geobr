@@ -67,10 +67,9 @@ read_intermediate_region <- function(year = NULL,
   temp_arrw <- filter_arrw(temp_arrw, code = code_intermediate)
 
   # convert to sf
-  if(isTRUE(as_sf)){
-    temp_arrw <- sf::st_as_sf(temp_arrw)
-  }
+  output <- convert_arrow2sf(temp_arrw, as_sf)
 
-  return(temp_arrw)
+  return(output)
+
 
 }

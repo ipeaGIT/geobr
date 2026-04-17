@@ -49,9 +49,8 @@ read_conservation_units <- function(year,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # convert to sf
-  if(isTRUE(as_sf)){
-    temp_arrw <- sf::st_as_sf(temp_arrw)
-  }
+  output <- convert_arrow2sf(temp_arrw, as_sf)
 
-  return(temp_arrw)
+  return(output)
+
 }
