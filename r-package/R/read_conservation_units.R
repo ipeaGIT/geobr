@@ -18,9 +18,10 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read conservation_units
-#' b <- read_conservation_units(date = 201909)
+#' b <- read_conservation_units(year = 2025)
 #'
-read_conservation_units <- function(year = NULL,
+read_conservation_units <- function(year,
+                                    code_state = "all",
                                     simplified = TRUE,
                                     showProgress = TRUE,
                                     cache = TRUE,

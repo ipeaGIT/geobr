@@ -6,6 +6,7 @@
 \usage{
 read_disaster_risk_area(
   year = NULL,
+  code_muni = "all",
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,
@@ -16,6 +17,14 @@ read_disaster_risk_area(
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
+
+\item{code_muni}{The 7-digit identification code of a municipality. If
+\code{code_muni = "all"} (Default), the function downloads all the
+disaster risk areas in the country. Alternatively, if a
+two-digit identification code or a two-letter uppercase abbreviation
+of a state is passed (e.g. \code{33} or \code{"RJ"}), all disaster risk areas of
+that state are downloaded. Municipality identification codes can be
+consulted with the \code{geobr::lookup_muni()} function.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -56,6 +65,12 @@ about the methodology, see deails at \url{https://www.ibge.gov.br/geociencias/or
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all disaster risk areas in an specific year
 d <- read_disaster_risk_area(year = 2010)
+
+# Read disaster risk areas in a given municipality
+d <- read_disaster_risk_area(year = 2010, code_muni = 2927408)
+
+# Read disaster risk areas in a given state
+d <- read_disaster_risk_area(year = 2010, code_muni = "AC")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

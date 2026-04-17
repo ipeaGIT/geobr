@@ -15,9 +15,6 @@ test_that("read_disaster_risk_area", {
   test_sf <- read_disaster_risk_area(year=2010)
   testthat::expect_true(is(test_sf, "sf"))
 
-  test_sf <- read_disaster_risk_area()
-  testthat::expect_true(is(test_sf, "sf"))
-
   # check number of micro
   testthat::expect_equal(test_sf$geo_bater %>% length(), 8309)
 
@@ -30,7 +27,11 @@ test_that("read_disaster_risk_area", {
 test_that("read_disaster_risk_area", {
 
   # Wrong year
+  testthat::expect_error(read_disaster_risk_area())
   testthat::expect_error(read_disaster_risk_area(year=9999999))
   testthat::expect_error(read_disaster_risk_area(year="xxx"))
+
+  # Wrong code_muni
+  testthat::expect_error(read_disaster_risk_area(year=2010, code_muni = "123"))
 
 })

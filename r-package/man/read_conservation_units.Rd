@@ -5,7 +5,8 @@
 \title{Download spatial data of Brazilian environmental conservation units}
 \usage{
 read_conservation_units(
-  year = NULL,
+  year,
+  code_state = "all",
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE,
@@ -45,7 +46,7 @@ was 09-2019. The original data comes from MMA and can be found at "http://mapas.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read conservation_units
-b <- read_conservation_units(date = 201909)
+b <- read_conservation_units(year = 2025)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

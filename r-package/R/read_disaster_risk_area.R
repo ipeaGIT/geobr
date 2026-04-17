@@ -12,6 +12,13 @@
 #' about the methodology, see deails at \url{https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html}
 #'
 #' @template year
+#' @param code_muni The 7-digit identification code of a municipality. If
+#'        `code_muni = "all"` (Default), the function downloads all the
+#'        disaster risk areas in the country. Alternatively, if a
+#'        two-digit identification code or a two-letter uppercase abbreviation
+#'        of a state is passed (e.g. `33` or `"RJ"`), all disaster risk areas of
+#'        that state are downloaded. Municipality identification codes can be
+#'        consulted with the `geobr::lookup_muni()` function.
 #' @template simplified
 #' @template as_sf
 #' @template showProgress
@@ -27,7 +34,14 @@
 #' # Read all disaster risk areas in an specific year
 #' d <- read_disaster_risk_area(year = 2010)
 #'
+#' # Read disaster risk areas in a given municipality
+#' d <- read_disaster_risk_area(year = 2010, code_muni = 2927408)
+#'
+#' # Read disaster risk areas in a given state
+#' d <- read_disaster_risk_area(year = 2010, code_muni = "AC")
+
 read_disaster_risk_area <- function(year = NULL,
+                                    code_muni = "all",
                                     simplified = TRUE,
                                     as_sf = TRUE,
                                     showProgress = TRUE,
@@ -54,6 +68,9 @@ read_disaster_risk_area <- function(year = NULL,
 
   # check if download failed
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
 
   # convert to sf
   if(isTRUE(as_sf)){
