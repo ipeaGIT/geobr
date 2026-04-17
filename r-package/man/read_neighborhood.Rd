@@ -6,7 +6,9 @@
 \usage{
 read_neighborhood(
   year = NULL,
+  code_muni = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -16,12 +18,23 @@ read_neighborhood(
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
 
+\item{code_muni}{The 7-digit identification code of a municipality. If
+\code{code_muni = "all"} (Default), the function downloads all the
+neighborhoods data available in the country. Alternatively, if a two-digit
+identification code or a two-letter uppercase abbreviation of a state
+is passed (e.g. \code{33} or \code{"RJ"}), all neighborhoods data of that state
+will be downloaded. Municipality identification codes can be consulted with
+the \code{geobr::lookup_muni()} function.}
+
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
 with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -38,14 +51,15 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-This data set includes the neighborhood limits of 720 Brazilian municipalities.
-It is based on aggregations of the census tracts from the Brazilian
-census. Only 2010 data is currently available.
+This data set includes the neighborhood limits of Brazilian municipalities.
+The data is only available for those municipalities where neighborhood
+information was collected in the population census. The data set is based on
+aggregations of the census tracts from the Brazilian census.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read neighborhoods of Brazilian municipalities
-n <- read_neighborhood(year=2010)
+n <- read_neighborhood(year = 2022)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

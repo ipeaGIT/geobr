@@ -10,7 +10,7 @@ testthat::skip_on_cran()
 test_that("read_neighborhood", {
 
   # read data
-  test_sf <- read_neighborhood(showProgress = F)
+  test_sf <- read_neighborhood(year = 2010, showProgress = F)
 
   # check sf object
   testthat::expect_true(is(test_sf, "sf"))
@@ -28,6 +28,7 @@ test_that("read_neighborhood", {
 test_that("read_neighborhood", {
 
   # Wrong year
+  testthat::expect_error(read_neighborhood())
   testthat::expect_error(read_neighborhood(year=9999999))
   testthat::expect_error(read_neighborhood(year="xxx"))
   testthat::expect_error(read_neighborhood(tp="xxx"))
