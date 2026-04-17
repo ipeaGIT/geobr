@@ -69,72 +69,27 @@ read_census_tract <- function(year,
   }
 
 
-  # Verify code_tract input
+  # check if download failed
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # Test if code_tract input is null
-  if(is.null(code_tract)){ stop("Value to argument 'code_tract' cannot be NULL") }
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
 
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-    # if code_tract=="all", read the entire country
-    if(code_tract=="all"){ message("Loading data for the whole country. This might take a few minutes.\n")
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_tract)
 
-      # list paths of files to download
-      file_url <- as.character(temp_meta$download_path)
+  # convert to sf
+  if(isTRUE(as_sf)){
+    temp_arrw <- sf::st_as_sf(temp_arrw)
+  }
 
-      # download files
-      temp_sf <- download_gpkg(file_url = file_url,
-                               showProgress = showProgress,
-                               cache = cache)
+  return(temp_arrw)
 
-      # check if download failed
-      if (is.null(temp_sf)) { return(invisible(NULL)) }
-
-      return(temp_sf)
-    }
-
-    else if( (!(substr(x = code_tract, 1, 2) %in% temp_meta$code) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abbrev)
-              )&(!(paste0("U",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abbrev)
-                 )&(!(paste0("R",substr(x = code_tract, 1, 2)) %in% substr(temp_meta$code, 1, 3)) & !(toupper(substr(x = code_tract, 1, 2)) %in% temp_meta$code_abbrev))
-            ){
-
-      stop("Error: Invalid Value to argument code_tract.")
-
-    } else{
-
-      # list paths of files to download
-      if (temp_meta$year[1] <= 2007 & zone == "urban") {
-
-        if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("U",substr(code_tract, 1, 2)))$download_path) }
-        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
-
-      } else if (temp_meta$year[1] <= 2007 & zone == "rural") {
-
-        if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==paste0("R",substr(code_tract, 1, 2)))$download_path) }
-        if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
-
-      } else {
-
-      if (is.numeric(code_tract)){ file_url <- as.character(subset(temp_meta, code==substr(code_tract, 1, 2))$download_path) }
-      if (is.character(code_tract)){ file_url <- as.character(subset(temp_meta, code_abbrev==toupper(substr(code_tract, 1, 2)))$download_path) }
-
-        }
-      # download files
-      sf <- download_gpkg(file_url = file_url,
-                               showProgress = showProgress,
-                               cache = cache)
-
-      # check if download failed
-      if (is.null(sf)) { return(invisible(NULL)) }
-
-      if(nchar(code_tract)==2){
-        return(sf)
-
-      } else if(code_tract %in% sf$code_muni){    # Get Municipio
-        x <- code_tract
-        sf <- subset(sf, code_muni==x)
-        return(sf)
-      } else{
-        stop("Error: Invalid Value to argument code_tract.")
-      }
-    }
   }

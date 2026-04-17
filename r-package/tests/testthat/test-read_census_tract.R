@@ -5,29 +5,35 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
 
 
-test_that("read_census_tract", {
+testthat::test_that("read_census_tract", {
 
-  expect_true(is(  read_census_tract(code_tract = 11)  , "sf"))
-  expect_true(is(  read_census_tract(code_tract = 11, zone = "rural", year=2000)  , "sf"))
-  expect_true(is(  read_census_tract(code_tract = "AC", zone = "rural", year=2000)  , "sf"))
+  temp <- read_census_tract(year=2022, code_tract = 11)
+
+  testthat::expect_true(is(temp, "sf"))
+  testthat::expect_true(is(  read_census_tract(code_tract = 11, zone = "rural", year=2000)  , "sf"))
+  testthat::expect_true(is(  read_census_tract(code_tract = "AC", zone = "rural", year=2000)  , "sf"))
   # expect_true(is(  read_census_tract(code_tract = "AP", zone = "rural") , "sf"))
   # expect_true(is(  read_census_tract(code_tract = 11, zone = "urban", year=2000)  , "sf"))
-  expect_true(is(  read_census_tract(code_tract = "AP", zone = "urban", year=2000) , "sf"))
+  testthat::expect_true(is(  read_census_tract(code_tract = "AP", zone = "urban", year=2000) , "sf"))
   # expect_true(is(  read_census_tract(code_tract = "AP", zone = "urban", year=2010) , "sf"))
-  expect_true(is(  read_census_tract(code_tract = 'all', year = 2000)  , "sf"))
-  expect_true(is(  read_census_tract(code_tract = 1100023, year = 2000) , "sf"))
+  testthat::expect_true(is(  read_census_tract(code_tract = 'all', year = 2000)  , "sf"))
+  testthat::expect_true(is(  read_census_tract(code_tract = 1100023, year = 2000) , "sf"))
+
+  temp <- read_census_tract(year=2022, code_tract = "all", as_sf = FALSE)
+  testthat::expect_true(is(temp, "ArrowObject"))
 
 })
 
 
 # ERRORS
-test_that("read_census_tract", {
+testthat::test_that("read_census_tract", {
 
   # Wrong year and code
+  testthat::expect_error( read_census_tract(code_tract = "AC" ) )
   testthat::expect_error( read_census_tract( ) )
   testthat::expect_error(read_census_tract(code_tract=9999999, year=9999999))
 
- testthat::expect_error( read_census_tract(code_tract = "AP", year=2000, zone = "ABCD") )
+  testthat::expect_error( read_census_tract(code_tract = "AP", year=2000, zone = "ABCD") )
 
 
   # Wrong code
