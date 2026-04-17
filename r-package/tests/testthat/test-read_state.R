@@ -8,13 +8,13 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 test_that("read_state", {
 
   # read data
-  expect_true(is( read_state(code_state=11) , "sf"))
+  expect_true(is( read_state(code_state=11, year=2025) , "sf"))
   expect_true(is( read_state(code_state=11, year=1970) , "sf"))
   expect_true(is( read_state(code_state='all', year=1970) , "sf"))
   expect_true(is( read_state(code_state='AC', year=1970) , "sf"))
 
 
-  expect_true(is( read_state() , "sf"))
+  expect_true(is( read_state(year=1970) , "sf"))
   expect_true(is( read_state(code_state=11, year=2010) , "sf"))
   expect_true(is( read_state(code_state='all', year=2010) , "sf"))
   expect_true(is(  read_state(code_state='AC', year=2010) , "sf"))
@@ -40,6 +40,7 @@ test_that("read_state", {
 
   # Wrong year and code
   testthat::expect_error(read_state(code_state=9999999, year=9999999))
+  testthat::expect_error(read_state())
 
   # Wrong code
   testthat::expect_error( read_state(code_state=NULL, year=1991) ) # EXception

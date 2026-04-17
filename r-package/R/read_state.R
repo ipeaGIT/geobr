@@ -19,14 +19,14 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read specific state at a given year
-#'   uf <- read_state(code_state=12, year=2017)
-#'
-#' # Read specific state at a given year
-#'   uf <- read_state(code_state="SC", year=2000)
-#'
 #' # Read all states at a given year
-#'   ufs <- read_state(code_state="all", year=2024)
+#' ufs <- read_state(code_state="all", year = 2025)
+#'
+#' # Read specific state at a given year
+#' uf <- read_state(code_state="SC", year = 2025)
+#'
+#' # Read specific state at a given year
+#' uf <- read_state(code_state=12, year = 2025)
 #'
 read_state <- function(year = NULL,
                        code_state = "all",
