@@ -8,6 +8,7 @@ read_meso_region(
   year = NULL,
   code_meso = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -29,6 +30,9 @@ with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

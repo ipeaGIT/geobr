@@ -10,6 +10,7 @@
 #'        `code_micro="all"` (Default), the function downloads all micro regions of the
 #'        country.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -33,13 +34,14 @@
 read_micro_region <- function(year = NULL,
                               code_micro = "all",
                               simplified = TRUE,
+                              as_sf = TRUE,
                               showProgress = TRUE,
                               cache = TRUE,
                               verbose = TRUE){
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
-    geography="micro_region",
+    geography="microregions",
     year = year,
     simplified = simplified,
     verbose = verbose

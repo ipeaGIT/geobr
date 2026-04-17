@@ -10,6 +10,7 @@
 #'        `code_meso="all"` (Default), the function downloads all meso
 #'        regions of the country.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -33,6 +34,7 @@
 read_meso_region <- function(year = NULL,
                              code_meso = "all",
                              simplified = TRUE,
+                             as_sf = TRUE,
                              showProgress = TRUE,
                              cache = TRUE,
                              verbose = TRUE){

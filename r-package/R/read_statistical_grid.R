@@ -1,15 +1,18 @@
 #' Download spatial data of IBGE's statistical grid
 #'
 #' @description
-#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Official gridded population estimate of Brazil.
 #'
 #' @template year
-#' @param code_grid If two-letter abbreviation or two-digit code of a state is
-#'                  passed, the function will load all grid quadrants that
-#'                  intersect with that state. If `code_grid="all"`, the grid of
-#'                  the whole country will be loaded. Users may also pass a
-#'                  grid quadrant id to load an specific quadrant. Quadrant ids
-#'                  can be consulted at `geobr::grid_state_correspondence_table`.
+#' @param code_muni The 7-digit identification code of a municipality. If if a
+#'                  two-digit identification code or a two-letter uppercase
+#'                  abbreviation of a state is passed (e.g. `33` or `"RJ"`), all
+#'                  grid cells of that state will be downloaded. Alternatively,
+#'                  if `code_muni = "all"`, the function downloads all the grid
+#'                  cells in the country are downloaded. Municipality
+#'                  identification codes can be consulted with the
+#'                  `geobr::lookup_muni()` function.
+
 #' @template as_sf
 #' @template showProgress
 #' @template cache
@@ -21,14 +24,22 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read a particular grid at a given year
-#' grid <- read_statistical_grid(code_grid = 45, year=2010)
 #'
 #' # Read the grid covering a given state at a given year
-#' state_grid <- read_statistical_grid(code_grid = "RJ")
+#' grid_rio <- read_statistical_grid(
+#'   year = 2022,
+#'   code_muni = "RJ"
+#'   )
 #'
-read_statistical_grid <- function(year = NULL,
-                                  code_grid,
+#' # Read the grid covering a given municipality at a given year
+#' grid_ssalvador <- read_statistical_grid(
+#'   year = 2022,
+#'   code_muni = 2927408,
+#'   year=2010
+#'   )
+#'
+read_statistical_grid <- function(year,
+                                  code_muni,
                                   as_sf = TRUE,
                                   showProgress = TRUE,
                                   cache = TRUE,
@@ -56,7 +67,7 @@ read_statistical_grid <- function(year = NULL,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # FILTER
-  temp_arrw <- filter_arrw(temp_arrw, code = code_grid)
+  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
 
   # convert to sf
   if(isTRUE(as_sf)){

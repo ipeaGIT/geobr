@@ -27,7 +27,7 @@ read_municipal_seat <- function(year = NULL,
 
   # Get metadata
   temp_meta <- select_metadata(
-    geography="municipal_seat",
+    geography="municipalseats",
     year = year,
     simplified = simplified,
     verbose = verbose

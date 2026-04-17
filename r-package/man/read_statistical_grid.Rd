@@ -5,8 +5,8 @@
 \title{Download spatial data of IBGE's statistical grid}
 \usage{
 read_statistical_grid(
-  year = NULL,
-  code_grid,
+  year,
+  code_muni,
   as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
@@ -17,12 +17,14 @@ read_statistical_grid(
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
 
-\item{code_grid}{If two-letter abbreviation or two-digit code of a state is
-passed, the function will load all grid quadrants that
-intersect with that state. If \code{code_grid="all"}, the grid of
-the whole country will be loaded. Users may also pass a
-grid quadrant id to load an specific quadrant. Quadrant ids
-can be consulted at \code{geobr::grid_state_correspondence_table}.}
+\item{code_muni}{The 7-digit identification code of a municipality. If if a
+two-digit identification code or a two-letter uppercase
+abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+grid cells of that state will be downloaded. Alternatively,
+if \code{code_muni = "all"}, the function downloads all the grid
+cells in the country are downloaded. Municipality
+identification codes can be consulted with the
+\code{geobr::lookup_muni()} function.}
 
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
 \verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
@@ -42,15 +44,23 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+Official gridded population estimate of Brazil.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
-# Read a particular grid at a given year
-grid <- read_statistical_grid(code_grid = 45, year=2010)
 
 # Read the grid covering a given state at a given year
-state_grid <- read_statistical_grid(code_grid = "RJ")
+grid_rio <- read_statistical_grid(
+  year = 2022,
+  code_muni = "RJ"
+  )
+
+# Read the grid covering a given municipality at a given year
+grid_ssalvador <- read_statistical_grid(
+  year = 2022,
+  code_muni = 2927408,
+  year=2010
+  )
 \dontshow{\}) # examplesIf}
 }
 \seealso{

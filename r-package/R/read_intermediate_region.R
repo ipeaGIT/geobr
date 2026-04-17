@@ -2,9 +2,9 @@
 #'
 #' @description
 #' The intermediate Geographic Areas are part of the geographic division of
-#' Brazil created in 2017 by IBGE. These regions were created to replace the
+#' Brazil created after 2017 by IBGE. These regions were created to replace the
 #' "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
-#' system "SIRGAS2000" and CRS(4674)
+#' system "SIRGAS2000" and CRS(4674).
 #'
 #' @template year
 #' @param code_intermediate 4-digit code of an intermediate region. If the
@@ -32,7 +32,7 @@
 #'   im <- read_intermediate_region(code_intermediate="AM")
 #'
 #'# Read all intermediate regions of the country
-#'   im <- read_intermediate_region()
+#'   im <- read_intermediate_region( )
 #'   im <- read_intermediate_region(code_intermediate="all")
 #'
 read_intermediate_region <- function(year = NULL,

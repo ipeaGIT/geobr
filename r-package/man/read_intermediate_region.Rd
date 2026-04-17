@@ -50,9 +50,9 @@ An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 The intermediate Geographic Areas are part of the geographic division of
-Brazil created in 2017 by IBGE. These regions were created to replace the
+Brazil created after 2017 by IBGE. These regions were created to replace the
 "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
-system "SIRGAS2000" and CRS(4674)
+system "SIRGAS2000" and CRS(4674).
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
@@ -64,7 +64,7 @@ system "SIRGAS2000" and CRS(4674)
   im <- read_intermediate_region(code_intermediate="AM")
 
 # Read all intermediate regions of the country
-  im <- read_intermediate_region()
+  im <- read_intermediate_region( )
   im <- read_intermediate_region(code_intermediate="all")
 \dontshow{\}) # examplesIf}
 }
