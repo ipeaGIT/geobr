@@ -521,7 +521,7 @@ download_metadata2 <- function(){
     temp_meta <- piggyback::pb_list(
       repo = "ipeaGIT/geobr",
       tag = geobr_env$data_release
-    ),
+    )
   )
 
   # check if download failed

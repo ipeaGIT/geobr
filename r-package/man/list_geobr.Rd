@@ -4,7 +4,11 @@
 \alias{list_geobr}
 \title{List all data sets available in the geobr package}
 \usage{
-list_geobr()
+list_geobr(wide = TRUE)
+}
+\arguments{
+\item{wide}{Whether the the output data frame should come in wide (\code{TRUE}) or
+long format (\code{FALSE}).}
 }
 \value{
 A \code{data.frame}

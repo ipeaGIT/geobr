@@ -1,17 +1,13 @@
 ---
 title: ""
-output:
-  github_document:
-    output_file: ../README.md
+output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  fig.path = "./man/figures/",
   out.width = "100%"
 )
 ```
@@ -39,12 +35,11 @@ The package is currently available in [**R**](https://CRAN.R-project.org/package
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 # From CRAN
 install.packages("geobr")
-library(geobr)
 
 # or use the development version with latest features
 utils::remove.packages('geobr')
 remotes::install_github("ipeaGIT/geobr", subdir = "r-package")
-library(geobr)
+
 ```
 
 obs. If you use **Linux**, you need to install a couple dependencies before installing the libraries `sf` and `geobr`. [More info here](https://github.com/r-spatial/sf#linux).
@@ -114,8 +109,6 @@ temp <- geobr::list_geobr() |>
     Source = source
     )
 
-```
-```{r eval=TRUE}
 knitr::kable(temp, format = "pipe")
 ```
 
