@@ -5,16 +5,17 @@
 \title{Download spatial data of indigenous lands in Brazil}
 \usage{
 read_indigenous_land(
-  date = NULL,
+  year = NULL,
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
 )
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
-and reads the data from the latest date available.}
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -22,6 +23,9 @@ with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -47,8 +51,8 @@ per year.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
-# Read all indigenous land in an specific date
-i <- read_indigenous_land(date=201907)
+# Read all indigenous land in an specific year
+i <- read_indigenous_land(year = 2024)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
