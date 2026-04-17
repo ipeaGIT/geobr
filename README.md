@@ -99,13 +99,6 @@ More examples
 
 # Available datasets:
 
-:point_right: **All datasets use geodetic reference system “SIRGAS2000”,
-CRS(4674).**
-
-``` r
-knitr::kable(temp, format = "pipe")
-```
-
 | Function | Geographies available | Source | Years available |
 |:---|:---|:---|:---|
 | read_amazon | Brazil’s Legal Amazon | MMA | 2019, 2020, 2021, 2022, 2024 |
@@ -136,6 +129,9 @@ knitr::kable(temp, format = "pipe")
 | read_urban_area | Urban footprints | IBGE | 2005, 2015 |
 | read_urban_concentrations | Urban concentration areas (concentrações urbanas) | IBGE | NA |
 | read_weighting_area | Census weighting area (área de ponderação) | IBGE | NA |
+
+point_right: **All datasets use geodetic reference system “SIRGAS2000”,
+CRS(4674).**
 
 ## Other functions:
 

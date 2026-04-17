@@ -34,7 +34,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports:
       checkmate,
       cli,
@@ -42,7 +42,7 @@ Imports:
       dplyr (>= 0.8-3),
       data.table,
       fs,
-      geoarrow,
+      geoarrow (>= 0.4.2),
       methods,
       piggyback,
       rlang,

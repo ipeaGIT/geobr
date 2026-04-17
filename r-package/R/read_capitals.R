@@ -28,11 +28,9 @@ read_capitals <- function(as_sf = TRUE,
                           cache = TRUE,
                           verbose = TRUE){
 
-
   # check input
-  if (!is.logical(as_sf)) { stop("'as_sf' must be of type 'logical'") }
-  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
-
+  checkmate::assert_logical(as_sf)
+  checkmate::assert_logical(showProgress)
 
   # base data.frame of capitals
   df <- data.frame(name_muni = c("S\u00e3o Paulo", "Rio de Janeiro", "Belo Horizonte",
@@ -68,10 +66,10 @@ read_capitals <- function(as_sf = TRUE,
     }
 
   if (isTRUE(as_sf)) {
-    temp_sf <- geobr::read_municipal_seat(showProgress = showProgress)
-    temp_sf <- subset(temp_sf, code_muni %in% df$code_muni)
-    rownames(temp_sf) <- NULL
-    return(temp_sf)
+    temp_sf <- geobr::read_municipal_seat(year = 2010, showProgress = showProgress, as_sf = FALSE) |>
+      dplyr::filter(code_muni %in% df$code_muni)
+
+    return( sf::st_as_sf(temp_sf) )
   }
 
 }

@@ -5,7 +5,7 @@
 \title{Download spatial data of municipal seats (sede dos municipios) of Brazil}
 \usage{
 read_municipal_seat(
-  year = NULL,
+  year,
   as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,

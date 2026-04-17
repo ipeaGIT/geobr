@@ -12,6 +12,7 @@
 #' @param zone For census tracts before 2010, 'urban' and 'rural' census tracts
 #'             are separate data sets.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -22,47 +23,50 @@
 #' @family general area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read rural census tracts for years before 2007
-#'   c <- read_census_tract(code_tract=5201108, year=2000, zone="rural")
 #'
 #' # Read all census tracts of a state at a given year
-#'   c <- read_census_tract(code_tract=53, year = 2010) # or
-#'   c <- read_census_tract(code_tract="DF", year = 2010)
-#'   plot(c)
+#' c <- read_census_tract(code_tract = "DF", year = 2022) # or
+#' c <- read_census_tract(code_tract = 53, year = 2022)
 #'
 #' # Read all census tracts of a municipality at a given year
-#'   c <- read_census_tract(, code_tract = 5201108)
-#'   plot(c)
+#' c <- read_census_tract(year = 2022, code_tract = 5201108)
 #'
 #' # Read all census tracts of the country at a given year
-#'   c <- read_census_tract(year=2010, code_tract="all")
+#' c <- read_census_tract(year = 2022, code_tract = "all")
 #'
-read_census_tract <- function(year = NULL,
+#' # Read rural census tracts for years before 2007
+#' c <- read_census_tract(code_tract = 5201108, year = 2000, zone = "rural")
+#'
+read_census_tract <- function(year,
                               code_tract,
                               zone = "urban",
                               simplified = TRUE,
+                              as_sf = TRUE,
                               showProgress = TRUE,
                               cache = TRUE,
                               verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="census_tract", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography = "censustracts",
+    year = year,
+    simplified = simplified
+    )
 
   # check if download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # Check zone input urban and rural inputs if year <=2007
-  if ( temp_meta$year[1] <= 2007){
+  if (temp_meta$year[1] <= 2007) {
 
-    if (zone == "urban") {message("Using data of Urban census tracts\n")
-                          temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "U", ] }
+    temp_meta <- temp_meta |>
+      dplyr::filter(geo %like% zone)
 
-    else if (zone == "rural") {message("Using data of Rural census tracts\n")
-                                       temp_meta <- temp_meta[substr(temp_meta[,3],1,1)== "R", ] }
-
-    else { stop( paste0("Error: Invalid Value to argument 'zone'. It must be either 'urban' or 'rural'")) }
+    if (nrow(temp_meta) == 0) {
+      cli::cli_abort("Invalid Value to argument 'zone'. It must be either 'urban' or 'rural'")
     }
 
+  }
 
 
   # Verify code_tract input

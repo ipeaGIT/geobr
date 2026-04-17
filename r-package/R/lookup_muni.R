@@ -58,10 +58,9 @@ lookup_muni <- function(year,
   }
 
   # download data
-  df <- geobr::read_municipality(
+  # df <- geobr::read_municipality(
+  df <- geobr::read_municipal_seat(
     year = year,
-    code_muni = "all",
-    simplified = TRUE,
     as_sf = FALSE
     ) |>
     sf::st_as_sf() |>

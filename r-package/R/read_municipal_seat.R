@@ -20,7 +20,7 @@
 #' # Read municipal seats in an specific year
 #' m <- read_municipal_seat(year = 2022)
 #'
-read_municipal_seat <- function(year = NULL,
+read_municipal_seat <- function(year,
                                 as_sf = TRUE,
                                 showProgress = TRUE,
                                 cache = TRUE,

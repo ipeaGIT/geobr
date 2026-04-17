@@ -102,7 +102,7 @@ select_metadata <- function(geography,
   if (is.null(metadata)) { return(invisible(NULL)) }
 
   # Select geo
-  temp_meta <- subset(metadata, geo == geography)
+  temp_meta <- subset(metadata, geo %like% geography)
 
   # Select year input
   temp_meta <- select_year_input(temp_meta, y=year, verbose)
@@ -646,3 +646,9 @@ arrow_read_dataset <- function(filename){ # nocov start
   return(temp_arrw)
 
 } # nocov end
+
+
+# place holder to use geoarrow becaue:
+#   Namespace in Imports field not imported from: 'geoarrow'
+#        All declared Imports should be used.
+geoarrow::as_geoarrow_vctr("POINT (0 1)")

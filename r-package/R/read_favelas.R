@@ -35,7 +35,7 @@
 #' # Read all favelas of a given state
 #' n <- read_favela(year = 2022, code_muni = "RJ")
 #'
-read_favela <- function(year = NULL,
+read_favela <- function(year,
                         code_muni = "all",
                         simplified = TRUE,
                         as_sf = TRUE,

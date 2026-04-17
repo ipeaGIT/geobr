@@ -55,15 +55,16 @@ Brazil created after 2017 by IBGE. These regions were created to replace the
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
+
 # Read an specific intermediate region
-in <- read_intermediate_region(code_intermediate=1202, year = 2024)
+inter <- read_intermediate_region(code_intermediate = 1202, year = 2024)
 
 # Read intermediate regions of a state
-in <- read_intermediate_region(code_intermediate="AM", year = 2024)
-in <- read_intermediate_region(code_intermediate=12, year = 2024)
+inter <- read_intermediate_region(code_intermediate = "AM", year = 2024)
+inter <- read_intermediate_region(code_intermediate = 12, year = 2024)
 
 # Read all intermediate regions of the country
-in <- read_intermediate_region(code_intermediate="all", year = 2024)
+inter <- read_intermediate_region(code_intermediate = "all", year = 2024)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

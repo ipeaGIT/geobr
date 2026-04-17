@@ -23,15 +23,16 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#'
 #' # Read an specific intermediate region
-#' in <- read_intermediate_region(code_intermediate=1202, year = 2024)
+#' inter <- read_intermediate_region(code_intermediate = 1202, year = 2024)
 #'
 #' # Read intermediate regions of a state
-#' in <- read_intermediate_region(code_intermediate="AM", year = 2024)
-#' in <- read_intermediate_region(code_intermediate=12, year = 2024)
+#' inter <- read_intermediate_region(code_intermediate = "AM", year = 2024)
+#' inter <- read_intermediate_region(code_intermediate = 12, year = 2024)
 #'
 #' # Read all intermediate regions of the country
-#' in <- read_intermediate_region(code_intermediate="all", year = 2024)
+#' inter <- read_intermediate_region(code_intermediate = "all", year = 2024)
 #'
 read_intermediate_region <- function(year = NULL,
                                      code_intermediate = "all",

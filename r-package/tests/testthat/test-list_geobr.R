@@ -14,8 +14,14 @@ test_that("lookup_muni", {
   df <- list_geobr()
 
   # check number of cols
-  expect_equal(ncol(df), 4)
-  expect_true(is.data.frame(df))
+  testthat::expect_equal(ncol(df), 4)
+  testthat::expect_true(is.data.frame(df))
+
+
+  df_long <- list_geobr(wide = FALSE)
+  testthat::expect_true(nrow(df_long) > 190)
+
+
 
 })
 

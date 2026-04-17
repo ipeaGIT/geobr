@@ -1,5 +1,5 @@
 ---
-title: "Introduction to geobr (R)"
+title: "Intro to geobr (R)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to geobr (R)}
@@ -19,7 +19,12 @@ knitr::opts_chunk$set(
 ```
 
 
-The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and easy access to official spatial data sets of Brazil. The syntax of all **geobr** functions operate on a simple logic that allows users to easily download a wide variety of data sets with updated geometries and harmonized attributes and geographic projections across geographies and years. This vignette presents a quick intro to **geobr**.
+The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and 
+easy access to official spatial data sets of Brazil. The syntax of all **geobr** 
+functions operate on a simple logic that allows users to easily download a wide 
+variety of data sets with updated geometries and harmonized attributes and 
+geographic projections across geographies and years. This vignette presents a 
+quick intro to **geobr**.
 
 
 ## Installation
@@ -66,7 +71,8 @@ head(datasets)
 
 ## Download spatial data as `sf` objects
 
-The syntax of all *geobr* functions operate one the same logic, so the code to download the data becomes intuitive for the user. Here are a few examples.
+The syntax of all *geobr* functions operate one the same logic, so the code to 
+download the data becomes intuitive for the user. Here are a few examples.
 
 Download an specific geographic area at a given year:
 
@@ -200,8 +206,8 @@ to join these two databases.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # Read data.frame with life expectancy data
-df <- utils::read.csv2(system.file("extdata/br_states_lifexpect2017.csv", 
-                                   package = "geobr"), encoding = "UTF-8")
+df <- data.table::fread(system.file("extdata/br_states_lifexpect2017.csv", 
+                                   package = "geobr"))
 
 # join the databases
 states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
@@ -221,11 +227,14 @@ ggplot() +
 
 ```
 
-### Using **geobr** together with **censobr**
+# Using **geobr** together with **censobr**
 
-Following the same steps as above, we can use together **geobr** with our sister package [**censobr**](https://ipeagit.github.io/censobr/index.html) to map the proportion of households connected to a sewage network in Brazilian municipalities 
+Following the same steps as above, we can use together **geobr** with our sister 
+package [**censobr**](https://ipeagit.github.io/censobr/index.html) to map the
+proportion of households connected to a sewage network in Brazilian municipalities 
 
-First, we need to download households data from the Brazilian census using the `read_households()` function.
+First, we need to download households data from the Brazilian census using the 
+`read_households()` function.
 
 
 
@@ -240,7 +249,9 @@ hs <- read_households(
 
 ```
 
-Now we're going to (a) group observations by municipality, (b) get the number of households connected to a sewage network, (c) calculate the proportion of households connected, and (d) collect the results.
+Now we're going to (a) group observations by municipality, (b) get the number of 
+households connected to a sewage network, (c) calculate the proportion of 
+households connected, and (d) collect the results.
 
 ```{r, warning = FALSE}
 esg <- hs |> 
@@ -253,12 +264,15 @@ esg <- hs |>
 
 head(esg)
 ```
-Now we only need to download the geometries of Brazilian municipalities from **geobr**, merge the spatial data with our estimates and map the results.
+Now we only need to download the geometries of Brazilian municipalities from 
+**geobr**, merge the spatial data with our estimates and map the results.
 
 ```{r, warning = FALSE}
 # download municipality geometries
-muni_sf <- geobr::read_municipality(year = 2010,
-                                    showProgress = FALSE)
+muni_sf <- geobr::read_municipality(
+  year = 2010,
+  showProgress = FALSE
+  )
 
 # merge data
 esg_sf <- left_join(muni_sf, esg, by = 'code_muni')

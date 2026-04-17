@@ -16,6 +16,8 @@
 #'
 list_geobr <- function(wide = TRUE){
 
+  checkmate::assert_logical(wide)
+
   # download metadata
   metadata <- download_metadata2()
 
@@ -30,8 +32,6 @@ list_geobr <- function(wide = TRUE){
       dplyr::group_by(alias) |>
       dplyr::summarise( year = paste0(year, collapse = ', '))
   }
-
-
 
   datasets <- structure(list(
   Function = c(
@@ -74,9 +74,9 @@ list_geobr <- function(wide = TRUE){
    "Immediate region",
    "Municipality",
    "Municipality seats (sedes municipais)",
-   "Census weighting area (área de ponderação)",
-   "Census tract (setor censitário)",
-   "Statistical Grid (Gridded population)",
+   "Census weighting area (\u00e1rea de pondera\u00e7\u00e3o)",
+   "Census tract (setor censit\u00e1rio)",
+   "Statistical Grid (gridded population)",
    "Metropolitan areas",
    "Urban footprints",
    "Brazil's Legal Amazon",
@@ -89,8 +89,8 @@ list_geobr <- function(wide = TRUE){
    "Health regions and macro regions",
    "Neighborhood limits",
    "Schools",
-   "Historically comparable municipalities, aka Áreas mínimas comparáveis (AMCs)",
-   "Urban concentration areas (concentrações urbanas)",
+   "Historically comparable municipalities, aka \u00e1reas m\u00ednimas compar\u00e1veis (AMCs)",
+   "Urban concentration areas (concentra\u00e7\u00f5es urbanas)",
    "Population arrangements (arranjos populacionais)",
    "Favelas and urban communities"
  ),
