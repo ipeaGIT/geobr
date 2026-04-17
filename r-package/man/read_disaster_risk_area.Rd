@@ -7,6 +7,7 @@
 read_disaster_risk_area(
   year = NULL,
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -22,6 +23,9 @@ with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -51,7 +55,7 @@ about the methodology, see deails at \url{https://www.ibge.gov.br/geociencias/or
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all disaster risk areas in an specific year
-d <- read_disaster_risk_area(year=2010)
+d <- read_disaster_risk_area(year = 2010)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

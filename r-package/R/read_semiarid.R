@@ -1,9 +1,10 @@
 #' Download spatial data of the Brazilian Semiarid region
 #'
 #' @description
-#' This data set covers the whole of Brazilian Semiarid as defined in the resolution
-#' in  23/11/2017). The original data comes from the Brazilian Institute of Geography
-#' and Statistics (IBGE) and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
+#' This data set returns all the municipalities which are legally included in the
+#' Brazilian Semiarid, following changes in the national legislation. The original
+#' data comes from the Brazilian Institute of Geography and Statistics (IBGE)
+#' and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
 #'
 #' @template year
 #' @template simplified

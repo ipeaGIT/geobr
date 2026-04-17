@@ -13,13 +13,10 @@ test_that("read_semiarid", {
 
   # check sf object
   test_sf <- read_semiarid(year=2022)
-  expect_true(is(test_sf, "sf"))
+  testthat::expect_true(is(test_sf, "sf"))
 
-  test_sf <- read_semiarid()
-  expect_true(is(test_sf, "sf"))
-
-  test_arrw <- read_semiarid(as_sf = FALSE)
-  expect_true(is(test_arrw, "ArrowObject"))
+  test_arrw <- read_semiarid(year=2022, as_sf = FALSE)
+  testthat::expect_true(is(test_arrw, "ArrowObject"))
 
 
 })
@@ -31,6 +28,8 @@ test_that("read_semiarid", {
 test_that("read_semiarid", {
 
   # Wrong year
-  expect_error(read_semiarid(year=9999999))
+  testthat::expect_error(read_semiarid())
+
+  testthat::expect_error(read_semiarid(year=9999999))
 
 })

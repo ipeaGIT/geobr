@@ -13,6 +13,7 @@
 #'
 #' @template year
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -24,17 +25,18 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all disaster risk areas in an specific year
-#' d <- read_disaster_risk_area(year=2010)
+#' d <- read_disaster_risk_area(year = 2010)
 #'
 read_disaster_risk_area <- function(year = NULL,
                                     simplified = TRUE,
+                                    as_sf = TRUE,
                                     showProgress = TRUE,
                                     cache = TRUE,
                                     verbose = TRUE){
 
   # Get metadata
   temp_meta <- select_metadata(
-    geography="disaster_risk_area",
+    geography="disasterriskareas",
     year = year,
     simplified = simplified,
     verbose = verbose
