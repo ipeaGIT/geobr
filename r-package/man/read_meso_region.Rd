@@ -5,7 +5,7 @@
 \title{Download spatial data of meso regions}
 \usage{
 read_meso_region(
-  year = NULL,
+  year,
   code_meso = "all",
   simplified = TRUE,
   as_sf = TRUE,
@@ -54,14 +54,14 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read specific meso region at a given year
-  meso <- read_meso_region(code_meso=3301, year=2018)
+meso <- read_meso_region(code_meso=3301, year = 2018)
 
 # Read all meso regions of a state at a given year
-  meso <- read_meso_region(code_meso=12, year=2017)
-  meso <- read_meso_region(code_meso="AM", year=2000)
+meso <- read_meso_region(code_meso="AM", year = 2018)
+meso <- read_meso_region(code_meso=12, year = 2018)
 
 # Read all meso regions of the country at a given year
-  meso <- read_meso_region(code_meso="all", year=2010)
+meso <- read_meso_region(code_meso="all", year = 2018)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

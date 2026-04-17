@@ -22,16 +22,16 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific meso region at a given year
-#'   meso <- read_meso_region(code_meso=3301, year=2018)
+#' meso <- read_meso_region(code_meso=3301, year = 2018)
 #'
 #' # Read all meso regions of a state at a given year
-#'   meso <- read_meso_region(code_meso=12, year=2017)
-#'   meso <- read_meso_region(code_meso="AM", year=2000)
+#' meso <- read_meso_region(code_meso="AM", year = 2018)
+#' meso <- read_meso_region(code_meso=12, year = 2018)
 #'
 #' # Read all meso regions of the country at a given year
-#'   meso <- read_meso_region(code_meso="all", year=2010)
+#' meso <- read_meso_region(code_meso="all", year = 2018)
 #'
-read_meso_region <- function(year = NULL,
+read_meso_region <- function(year,
                              code_meso = "all",
                              simplified = TRUE,
                              as_sf = TRUE,

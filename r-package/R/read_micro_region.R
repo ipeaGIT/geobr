@@ -22,14 +22,14 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific micro region a given year
-#'   micro <- read_micro_region(code_micro=11008, year=2018)
+#' micro <- read_micro_region(code_micro=11008, year=2018)
 #'
 #' # Read micro regions of a state at a given year
-#'   micro <- read_micro_region(code_micro=12, year=2017)
-#'   micro <- read_micro_region(code_micro="AM", year=2000)
+#' micro <- read_micro_region(code_micro="AM", year=2018)
+#' micro <- read_micro_region(code_micro=12, year=2018)
 #'
 #' # Read all micro regions at a given year
-#'   micro <- read_micro_region(code_micro="all", year=2010)
+#'  micro <- read_micro_region(code_micro="all", year=2018)
 #'
 read_micro_region <- function(year = NULL,
                               code_micro = "all",
