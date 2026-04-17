@@ -1,8 +1,9 @@
 #' Download spatial data of Brazil's Immediate Geographic Areas
 #'
 #' @description
-#' The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
-#' were created to replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' The Immediate Geographic Areas are part of the geographic division of
+#' Brazil created after 2017 by IBGE. These regions were created to replace the
+#' "Micro Regions" division. Data at scale 1:250,000.
 #'
 #' @template year
 #' @param code_immediate 6-digit code of an immediate region. If the two-digit
@@ -23,15 +24,14 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific immediate region
-#' im <- read_immediate_region(code_immediate=110006)
+#' im <- read_immediate_region(code_immediate=110006, year = 2024)
 #'
 #' # Read immediate regions of a state
-#' im <- read_immediate_region(code_immediate=12)
-#' im <- read_immediate_region(code_immediate="AM")
+#' im <- read_immediate_region(code_immediate="AM", year = 2024)
+#' im <- read_immediate_region(code_immediate=12, year = 2024)
 #'
 #' # Read all immediate regions of the country
-#' im <- read_immediate_region()
-#' im <- read_immediate_region(code_immediate="all")
+#' im <- read_immediate_region(code_immediate="all", year = 2024)
 #'
 read_immediate_region <- function(year = NULL,
                                   code_immediate = "all",
@@ -63,7 +63,7 @@ read_immediate_region <- function(year = NULL,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # FILTER
-  temp_arrw <- filter_arrw(temp_arrw, code = code_immediate)
+  temp_arrw <- filter_arrw(temp_arrw, code = 11)
 
   # convert to sf
   if(isTRUE(as_sf)){

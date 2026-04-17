@@ -20,7 +20,7 @@
 #' # Read conservation_units
 #' b <- read_conservation_units(date = 201909)
 #'
-read_conservation_units <- function(date = NULL,
+read_conservation_units <- function(year = NULL,
                                     simplified = TRUE,
                                     showProgress = TRUE,
                                     cache = TRUE,

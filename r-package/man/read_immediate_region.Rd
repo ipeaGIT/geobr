@@ -49,21 +49,21 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-The Immediate Geographic Areas are part of the geographic division of Brazil created in 2017 by IBGE. These regions
-were created to replace the "Micro Regions" division. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+The Immediate Geographic Areas are part of the geographic division of
+Brazil created after 2017 by IBGE. These regions were created to replace the
+"Micro Regions" division. Data at scale 1:250,000.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read an specific immediate region
-im <- read_immediate_region(code_immediate=110006)
+im <- read_immediate_region(code_immediate=110006, year = 2024)
 
 # Read immediate regions of a state
-im <- read_immediate_region(code_immediate=12)
-im <- read_immediate_region(code_immediate="AM")
+im <- read_immediate_region(code_immediate="AM", year = 2024)
+im <- read_immediate_region(code_immediate=12, year = 2024)
 
 # Read all immediate regions of the country
-im <- read_immediate_region()
-im <- read_immediate_region(code_immediate="all")
+im <- read_immediate_region(code_immediate="all", year = 2024)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

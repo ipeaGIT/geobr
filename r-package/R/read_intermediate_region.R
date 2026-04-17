@@ -3,8 +3,7 @@
 #' @description
 #' The intermediate Geographic Areas are part of the geographic division of
 #' Brazil created after 2017 by IBGE. These regions were created to replace the
-#' "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
-#' system "SIRGAS2000" and CRS(4674).
+#' "Meso Regions" division. Data at scale 1:250,000.
 #'
 #' @template year
 #' @param code_intermediate 4-digit code of an intermediate region. If the
@@ -25,15 +24,14 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific intermediate region
-#'   im <- read_intermediate_region(code_intermediate=1202)
+#' in <- read_intermediate_region(code_intermediate=1202, year = 2024)
 #'
 #' # Read intermediate regions of a state
-#'   im <- read_intermediate_region(code_intermediate=12)
-#'   im <- read_intermediate_region(code_intermediate="AM")
+#' in <- read_intermediate_region(code_intermediate="AM", year = 2024)
+#' in <- read_intermediate_region(code_intermediate=12, year = 2024)
 #'
-#'# Read all intermediate regions of the country
-#'   im <- read_intermediate_region( )
-#'   im <- read_intermediate_region(code_intermediate="all")
+#' # Read all intermediate regions of the country
+#' in <- read_intermediate_region(code_intermediate="all", year = 2024)
 #'
 read_intermediate_region <- function(year = NULL,
                                      code_intermediate = "all",
@@ -45,7 +43,7 @@ read_intermediate_region <- function(year = NULL,
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
-    geography="immediateregions",
+    geography="intermediateregions",
     year = year,
     simplified = simplified,
     verbose = verbose
