@@ -24,6 +24,8 @@ list_geobr <- function(wide = TRUE){
   # select cols
   tempdf <- metadata |>
     dplyr::select(alias = geo, year) |>
+    dplyr::mutate(
+      alias = ifelse(alias %in% c('censustractsurbano', 'censustractsrural'), 'censustracts', alias)) |>
     unique()
 
   # reformat to wide
