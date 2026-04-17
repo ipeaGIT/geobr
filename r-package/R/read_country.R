@@ -17,8 +17,10 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific year
-#' br <- read_country(year = 2018)
+#' br_1872 <- read_country(year = 1872)
 #'
+#' br_2025 <- read_country(year = 2025)
+
 read_country <- function(year,
                          simplified = TRUE,
                          as_sf = TRUE,

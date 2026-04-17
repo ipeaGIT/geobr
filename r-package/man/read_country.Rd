@@ -47,7 +47,9 @@ Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(46
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read specific year
-br <- read_country(year = 2018)
+br_1872 <- read_country(year = 1872)
+
+br_2025 <- read_country(year = 2025)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
