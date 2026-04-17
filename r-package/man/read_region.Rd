@@ -58,6 +58,7 @@ Other area functions:
 \code{\link{read_comparable_areas}()},
 \code{\link{read_country}()},
 \code{\link{read_disaster_risk_area}()},
+\code{\link{read_favela}()},
 \code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},

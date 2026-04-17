@@ -4,15 +4,12 @@
 #' Official gridded population estimate of Brazil.
 #'
 #' @template year
-#' @param code_muni The 7-digit identification code of a municipality. If if a
-#'                  two-digit identification code or a two-letter uppercase
-#'                  abbreviation of a state is passed (e.g. `33` or `"RJ"`), all
-#'                  grid cells of that state will be downloaded. Alternatively,
-#'                  if `code_muni = "all"`, the function downloads all the grid
-#'                  cells in the country are downloaded. Municipality
-#'                  identification codes can be consulted with the
-#'                  `geobr::lookup_muni()` function.
-
+#' @param code_muni The 7-digit identification code of a municipality. If a
+#'        two-digit identification code or a two-letter uppercase abbreviation
+#'        of a state is passed (e.g. `33` or `"RJ"`), all grid cells of that
+#'        state will be downloaded. Alternatively, if `code_muni = "all"`, all
+#'        grid cells in the country are downloaded. Municipality identification
+#'        codes can be consulted with the `geobr::lookup_muni()` function.
 #' @template as_sf
 #' @template showProgress
 #' @template cache

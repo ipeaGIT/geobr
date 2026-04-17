@@ -20,11 +20,11 @@ and reads the data from the latest year available.}
 
 \item{code_muni}{The 7-digit identification code of a municipality. If
 \code{code_muni = "all"} (Default), the function downloads all the
-neighborhoods data available in the country. Alternatively, if a two-digit
-identification code or a two-letter uppercase abbreviation of a state
-is passed (e.g. \code{33} or \code{"RJ"}), all neighborhoods data of that state
-will be downloaded. Municipality identification codes can be consulted with
-the \code{geobr::lookup_muni()} function.}
+neighborhoods data available in the country. Alternatively, if a
+two-digit identification code or a two-letter uppercase abbreviation of
+a state is passed (e.g. \code{33} or \code{"RJ"}), all neighborhoods data of that
+state are downloaded. Municipality identification codes can be consulted
+with the \code{geobr::lookup_muni()} function.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -70,6 +70,7 @@ Other area functions:
 \code{\link{read_comparable_areas}()},
 \code{\link{read_country}()},
 \code{\link{read_disaster_risk_area}()},
+\code{\link{read_favela}()},
 \code{\link{read_health_facilities}()},
 \code{\link{read_health_region}()},
 \code{\link{read_immediate_region}()},
