@@ -4,9 +4,12 @@
 \alias{lookup_muni}
 \title{Look up municipality codes and names}
 \usage{
-lookup_muni(name_muni = NULL, code_muni = NULL)
+lookup_muni(year, name_muni = NULL, code_muni = NULL)
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
 \item{name_muni}{The municipality name to be looked up.}
 
 \item{code_muni}{The municipality code to be looked up.}
@@ -19,25 +22,36 @@ A \code{data.frame}
 }
 \description{
 Input a municipality \strong{name} \emph{or} \strong{code} and get the names
-and codes of the municipality's corresponding state, meso, micro, intermediate,
-and immediate regions
+and codes of the municipality.
 }
 \details{
 Only available from 2010 Census data so far
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
-# Get lookup table for municipality Rio de Janeiro
-mun <- lookup_muni(name_muni = "Rio de Janeiro")
+# Look for municipality Rio de Janeiro
+mun <- lookup_muni(
+  name_muni = "Rio de Janeiro",
+  year = 2022
+  )
 
-# Or you can get a lookup table for the same municipality searching for its code
-mun <- lookup_muni(code_muni = 3304557)
+# Look for a given municipality code
+mun <- lookup_muni(
+  code_muni = 3304557,
+  year = 2022
+  )
 
-# Get lookup table for all municipalities
-mun_all <- lookup_muni(name_muni = "all")
+# Get the lookup table for all municipalities
+mun_all <- lookup_muni(
+  name_muni = "all",
+  year = 2022
+  )
 
 # Or:
-mun_all <- lookup_muni(code_muni = "all")
+mun_all <- lookup_muni(
+  code_muni = "all",
+  year = 2022
+  )
 \dontshow{\}) # examplesIf}
 }
 \seealso{

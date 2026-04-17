@@ -11,10 +11,10 @@ testthat::skip_on_cran()
 test_that("lookup_muni", {
 
   # read data
-  test_sf <- lookup_muni(name_muni = "fortaleza")
-  test_sf2 <- lookup_muni(code_muni=2304400)
-  test_sf3 <- lookup_muni(name_muni="all")
-  test_sf4 <- lookup_muni(code_muni="all")
+  test_sf <- lookup_muni(name_muni = "fortaleza", year = 2010)
+  test_sf2 <- lookup_muni(code_muni=2304400, year = 2010)
+  test_sf3 <- lookup_muni(name_muni="all", year = 2010)
+  test_sf4 <- lookup_muni(code_muni="all", year = 2010)
 
   # check sf object
   expect_true(is(test_sf, "data.frame"))
@@ -23,11 +23,8 @@ test_that("lookup_muni", {
   expect_true(is(test_sf4, "data.frame"))
 
   # check number of cols
-  expect_equal( ncol(test_sf), 13)
+  expect_true( ncol(test_sf) >= 8)
 
-  # When using two arguments (supposed to give a warning)
-  expect_warning(lookup_muni(name_muni="fortaleza", code_muni=2304400))
-  expect_warning( lookup_muni(name_muni="arroz", code_muni=2304400) )
 
 })
 
@@ -42,6 +39,10 @@ test_that("lookup_muni", {
 
   # Wrong code
    expect_error(lookup_muni(code_muni=99999999))
+
+   # When using two arguments
+   expect_error(lookup_muni(name_muni="fortaleza", code_muni=2304400,year = 2010))
+   expect_error( lookup_muni(name_muni="arroz", code_muni=2304400,year = 2010) )
 
 })
 
