@@ -3,6 +3,10 @@
 - Now all functions download data from the latest year available, by default.
 - Fix url redundancy to avoid internet connection problems.
 
+# Breaking changes
+
+- The `geom` column has been renamed to `geometry` for consistency
+
 
 **Major changes**
 - The function `list_geobr()` now has a boolean argument `wide`, so users can choose whether 
