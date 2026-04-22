@@ -5,7 +5,7 @@
 \title{Download spatial data of indigenous lands in Brazil}
 \usage{
 read_indigenous_land(
-  year = NULL,
+  year,
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,
@@ -43,7 +43,7 @@ An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 The data set covers the whole of Brazil and it includes indigenous lands from
-all ethnicities and in different stages of demarcation. The original data
+all ethnic groups and at different stages of demarcation. The original data
 comes from the National Indian Foundation (FUNAI) and can be found at
 \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}. Although original data is
 updated monthly, the geobr package will only keep the data for a few months
@@ -52,7 +52,7 @@ per year.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all indigenous land in an specific year
-i <- read_indigenous_land(year = 2024)
+i <- read_indigenous_land(year = 2025)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
