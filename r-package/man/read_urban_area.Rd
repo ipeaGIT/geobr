@@ -18,12 +18,11 @@ read_urban_area(
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
 
-\item{code_muni}{The 7-digit identification code of a municipality. If
-\code{code_muni = "all"} (Default), the function downloads all the urban
-footprints data available in the country. Alternatively, if a
-two-digit identification code or a two-letter uppercase abbreviation of
-a state is passed (e.g. \code{33} or \code{"RJ"}), all urban footprints of that
-state are downloaded. Municipality identification codes can be consulted
+\item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
+(Default), the function downloads all the data available in the
+country. Alternatively, if a two-digit state code or a two-letter
+uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+data of that state are downloaded. Municipality codes can be consulted
 with the \code{geobr::lookup_muni()} function.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function

@@ -59,12 +59,12 @@ read_comparable_areas <- function(start_year = 1970,
 
   # subset based on end_year
   target_year <- paste0(start_year, '_', end_year)
-  file_url <- file_url[ file_url %like% target_year]
+  file_url <- file_url[ grep(target_year, file_url)]
 
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # # download files
+  # temp_sf <- download_gpkg(file_url = file_url,
+  #                          showProgress = showProgress,
+  #                          cache = cache)
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }

@@ -9,6 +9,7 @@
 #' the function will load all weighting areas of that state. If `code_weighting="all"`,
 #' all weighting areas of the country are loaded.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -37,6 +38,7 @@
 read_weighting_area <- function(year,
                                 code_weighting,
                                 simplified = TRUE,
+                                as_sf = TRUE,
                                 showProgress = TRUE,
                                 cache = TRUE,
                                 verbose = TRUE){

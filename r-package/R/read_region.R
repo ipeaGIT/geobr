@@ -28,7 +28,7 @@ read_region <- function(year,
 
   # Get metadata with data url addresses
   temp_meta <- select_metadata(
-    geography="regions",
+    geography = "regions",
     year = year,
     simplified = simplified,
     verbose = verbose

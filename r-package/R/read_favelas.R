@@ -7,13 +7,7 @@
 #' see details at \url{https://biblioteca.ibge.gov.br/visualizacao/livros/liv102134.pdf}
 #'
 #' @template year
-#' @param code_muni The 7-digit identification code of a municipality. If
-#'        `code_muni = "all"` (Default), the function downloads all the
-#'        favelas data available in the country. Alternatively, if a
-#'        two-digit identification code or a two-letter uppercase abbreviation
-#'        of a state is passed (e.g. `33` or `"RJ"`), all favelas data of that
-#'        state are downloaded. Municipality identification codes can be
-#'        consulted with the `geobr::lookup_muni()` function.
+#' @template code_muni
 #' @template simplified
 #' @template as_sf
 #' @template showProgress

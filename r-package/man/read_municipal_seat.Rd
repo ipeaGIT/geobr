@@ -6,6 +6,7 @@
 \usage{
 read_municipal_seat(
   year,
+  code_muni = "all",
   as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
@@ -15,6 +16,13 @@ read_municipal_seat(
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
+
+\item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
+(Default), the function downloads all the data available in the
+country. Alternatively, if a two-digit state code or a two-letter
+uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+data of that state are downloaded. Municipality codes can be consulted
+with the \code{geobr::lookup_muni()} function.}
 
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
 \verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}

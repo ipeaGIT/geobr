@@ -14,6 +14,13 @@ read_conservation_units(
 )
 }
 \arguments{
+\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
+and reads the data from the latest year available.}
+
+\item{code_state}{The two-digit code of a state or a two-letter uppercase
+abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
+default), the function downloads all states.}
+
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
 with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
@@ -31,9 +38,6 @@ the data again and overwrite the local file.}
 
 \item{verbose}{A logical. Whether the function should print informative
 messages. Defaults to \code{TRUE}.}
-
-\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
-and reads the data from the latest date available.}
 }
 \value{
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}

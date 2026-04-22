@@ -7,11 +7,11 @@
 filter_arrw(temp_arrw = parent.frame()$temp_arrw, code)
 }
 \arguments{
+\item{temp_arrw}{An internal arrow table}
+
 \item{code}{The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
 default), the function downloads all states.}
-
-\item{temp_sf}{An internal simple feature or data.frame}
 }
 \value{
 A simple feature \code{sf} or \code{data.frame}.

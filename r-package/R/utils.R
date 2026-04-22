@@ -16,14 +16,14 @@ message_failed <- "A file must have been corrupted during download. Please resta
 #'        dataset with 'simplified' geometry (Defaults to `TRUE`)
 #' @keywords internal
 select_geometry_type <- function(temp_meta,
-                                 simplified_geometry){
+                                 simplified_geometry){ # nocov start
 
   checkmate::assert_logical(simplified_geometry)
 
   temp_meta <- subset(temp_meta, simplified == simplified_geometry)
 
   return(temp_meta)
-}
+} # nocov end
 
 
 
@@ -38,7 +38,7 @@ select_geometry_type <- function(temp_meta,
 #'
 select_year_input <- function(temp_meta,
                               y= parent.frame()$year,
-                              verbose = parent.frame()$verbose){
+                              verbose = parent.frame()$verbose){ # nocov start
 
   checkmate::assert_logical(verbose)
 
@@ -69,7 +69,7 @@ select_year_input <- function(temp_meta,
       )
 
     }
-}
+} # nocov end
 
 
 #' Select metadata
@@ -92,7 +92,7 @@ select_year_input <- function(temp_meta,
 select_metadata <- function(geography,
                             year = parent.frame()$year,
                             simplified = parent.frame()$simplified,
-                            verbose = parent.frame()$verbose){
+                            verbose = parent.frame()$verbose){ # nocov start
 
   # download metadata
   # metadata <- download_metadata()
@@ -111,242 +111,8 @@ select_metadata <- function(geography,
   temp_meta <- select_geometry_type(temp_meta, simplified_geometry=simplified)
 
   return(temp_meta)
-}
-
-
-#' Support function to download metadata internally used in geobr
-#'
-#'
-#' @keywords internal
-#' @examples \dontrun{ if (interactive()) {
-#' df <- download_metadata()
-#' }}
-download_metadata <- function(){ # nocov start
-
-  # create tempfile to save metadata
-  tempf <- fs::path(fs::path_temp(), "metadata_geobr_gpkg.csv")
-
-  # IF metadata has already been successfully downloaded
-  if (file.exists(tempf) & file.info(tempf)$size != 0) {
-
-  } else {
-
-  # test server connection with github
-  metadata_link <- 'https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/metadata_1.7.0_gpkg.csv'
-  try( silent = TRUE,
-       check_con <- check_connection(metadata_link, silent = TRUE)
-  )
-
-  # if connection with github fails, try connection with ipea
-  if (is.null(check_con) | isFALSE(check_con)) {
-    metadata_link <- 'https://www.ipea.gov.br/geobr/metadata/metadata_1.7.0_gpkg.csv'
-    try( silent = TRUE,
-         check_con <- check_connection(metadata_link, silent = FALSE)
-    )
-
-    if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
-  }
-
-  # download metadata to temp file
-  try( silent = TRUE,
-       downloaded_files <- curl::multi_download(
-         urls = metadata_link,
-         destfiles = tempf,
-         resume = TRUE,
-         progress = FALSE
-       )
-  )
-
-  # if anything fails, return NULL
-  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
-    cli::cli_alert_danger(message_failed)
-    return(invisible(NULL))
-    }
-  }
-
-  # read metadata
-  # metadata <- data.table::fread(tempf, stringsAsFactors=FALSE)
-  metadata <- utils::read.csv(tempf, stringsAsFactors=FALSE)
-
-  # check if data was read Ok
-  if (nrow(metadata)==0) {
-    cli::cli_alert_danger(message_failed)
-    return(invisible(NULL))
-  }
-
-  return(metadata)
 } # nocov end
 
-
-
-#' Download geopackage to tempdir
-#'
-#' @param file_url A string with the file_url address of a geobr dataset
-#' @template showProgress
-#' @template cache
-#' @keywords internal
-#'
-download_gpkg <- function(file_url = parent.frame()$file_url,
-                          showProgress = parent.frame()$showProgress,
-                          cache = parent.frame()$cache){
-
-  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
-  if (!is.logical(cache)) { stop("'cache' must be of type 'logical'") }
-
-  # get backup links
-  filenames <- basename(file_url)
-  file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
-
-  # dest files
-  # temps <- paste0(fs::path_temp(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-  temps <- fs::path(fs::path_temp(), basename(file_url))
-
-  # test connection with server1
-    try( silent = TRUE, check_con <- check_connection(file_url[1], silent = TRUE))
-
-    # if server1 fails, replace url and test connection with server2
-    if (is.null(check_con) | isFALSE(check_con)) {
-      file_url <- file_url2
-      try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
-      if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
-    }
-
-  # # this is necessary to silence download message when reading local file
-  # if(file.exists(temps) & isTRUE(cache)){
-  #   showProgress <- FALSE
-  # }
-
-  # download files
-  try(silent = TRUE,
-      downloaded_files <- curl::multi_download(
-        urls = file_url,
-        destfiles = temps,
-        progress = showProgress,
-        resume = cache
-        )
-      )
-
-  # if anything fails, return NULL
-  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
-    cli::cli_alert_danger(message_failed)
-    return(invisible(NULL))
-  }
-
-  # load gpkg
-  temp_sf <- load_gpkg(temps) #
-  return(temp_sf)
-}
-
-
-
-#' Download geopackage to tempdir
-#'
-#' @param file_url A string with the file_url address of a geobr dataset
-#' @template showProgress
-#' @template cache
-#' @keywords internal
-#'
-download_geopackage <- function(file_url = parent.frame()$file_url,
-                             showProgress = parent.frame()$showProgress,
-                             cache = parent.frame()$cache){
-
-  # check input
-  checkmate::assert_logical(showProgress)
-  checkmate::assert_logical(cache)
-
-  # get backup links
-  filenames <- basename(file_url)
-  file_url2 <- paste0('https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/', filenames)
-
-  # dest files
-  # temps <- paste0(fs::path_temp(),"/", unlist(lapply(strsplit(file_url,"/"),tail,n=1L)))
-  temps <- fs::path(fs::path_temp(), basename(file_url))
-
-  # test connection with server1
-  try( silent = TRUE, check_con <- check_connection(file_url[1], silent = TRUE))
-
-  # if server1 fails, replace url and test connection with server2
-  if (is.null(check_con) | isFALSE(check_con)) {
-    file_url <- file_url2
-    try( silent = TRUE, check_con <- check_connection(file_url[1], silent = FALSE))
-    if (is.null(check_con) | isFALSE(check_con)) { return(invisible(NULL)) }
-  }
-
-  # # this is necessary to silence download message when reading local file
-  # if(file.exists(temps) & isTRUE(cache)){
-  #   showProgress <- FALSE
-  # }
-
-  # download files
-  try(silent = TRUE,
-      downloaded_files <- curl::multi_download(
-        urls = file_url,
-        destfiles = temps,
-        progress = showProgress,
-        resume = cache
-      )
-  )
-
-  # if anything fails, return NULL
-  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
-    cli::cli_alert_danger(message_failed)
-    return(invisible(NULL))
-  }
-
-  # load gpkg
-  temp_sf <- load_gpkg(temps) #
-  return(temp_sf)
-}
-
-
-
-
-
-#' Load geopackage from tempdir to global environment
-#'
-#' @param temps The address of a gpkg file stored in tempdir. Defaults to NULL
-#' @keywords internal
-#'
-load_gpkg <- function(temps=NULL){
-
-  ### one single file
-
-  if (length(temps)==1) {
-
-    # read sf
-    temp_sf <- sf::st_read(temps, quiet=TRUE)
-  }
-
-  else if(length(temps) > 1){
-
-    # read files and pile them up
-    files <- lapply(X=temps, FUN= sf::st_read, quiet=TRUE)
-    # temp_sf <- sf::st_as_sf(data.table::rbindlist(files, fill = TRUE)) # do.call('rbind', files)
-    temp_sf <- dplyr::bind_rows(files)
-
-    # closes issue 284
-    col1 <- names(temp_sf)[1]
-    temp_sf <- subset(temp_sf, get(col1) != 'data_table_sf_bug')
-
-    # remove data.table from object class. Closes #279.
-    class(temp_sf) <- c("sf", "data.frame")
-
-  }
-
-  # check if data was read Ok
-  if (nrow(temp_sf)==0) {
-    cli::cli_alert_danger(message_failed)
-    return(invisible(NULL))
-  }
-  return(temp_sf)
-
-  # load gpkg to memory
-  temp_sf <- load_gpkg(temps)
-  return(temp_sf)
-}
-
-
-# nocov end
 
 
 
@@ -409,7 +175,6 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
 } # nocov end
 
 
-
 #' Check if vector only has numeric characters
 #'
 #' @description
@@ -423,10 +188,9 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
 numbers_only <- function(x){ !grepl("\\D", x) } # nocov
 
 
-
 #' Filter data set to return specific states
 #'
-#' @param temp_sf An internal simple feature or data.frame
+#' @param temp_arrw An internal arrow table
 #' @param code The two-digit code of a state or a two-letter uppercase
 #'             abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
 #'             default), the function downloads all states.
@@ -487,8 +251,14 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 
 
 
-
-download_metadata2 <- function(){
+#' Support function to download metadata internally used in geobr
+#'
+#' @keywords internal
+#' @examples \dontrun{ if (interactive()) {
+#' df <- download_metadata2()
+#' }
+#' }
+download_metadata2 <- function(){ # nocov start
 
   # path to tempfile of metadata
   tempf <- fs::path(fs::path_temp(), "metadata_geobr_gpkg.parquet")
@@ -497,7 +267,7 @@ download_metadata2 <- function(){
   if (file.exists(tempf) & file.info(tempf)$size != 0) {
 
     # read temp metadata
-    temp_meta <- arrow_read_dataset(tempf)
+    temp_meta <- arrow_open_dataset(tempf) |> dplyr::collect()
 
     # check if data was read Ok
     if (nrow(temp_meta)==0) {
@@ -549,7 +319,7 @@ download_metadata2 <- function(){
   arrow::write_parquet(temp_meta, tempf)
 
   return(temp_meta)
-}
+} # nocov end
 
 
 
@@ -562,7 +332,7 @@ download_metadata2 <- function(){
 #'
 download_parquet <- function(filename_to_download,
                              showProgress = parent.frame()$showProgress,
-                             cache = parent.frame()$cache) {
+                             cache = parent.frame()$cache) { # nocov start
 
   # check input
   checkmate::assert_logical(showProgress)
@@ -600,7 +370,7 @@ download_parquet <- function(filename_to_download,
   # load parquet
   temp_arrw <- arrow_open_dataset(temp_full_file_path) #
   return(temp_arrw)
-}
+} # nocov end
 
 
 
@@ -629,30 +399,6 @@ arrow_open_dataset <- function(filename){ # nocov start
 
 
 
-#' Safely use arrow to read a Parquet file
-#'
-#' This function handles some failure modes, including if the Parquet file is
-#' corrupted.
-#'
-#' @param filename A local Parquet file
-#' @return An `arrow::Dataset`
-#'
-#' @keywords internal
-arrow_read_dataset <- function(filename){ # nocov start
-
-  temp_arrw <- NULL
-  try(silent = TRUE,
-      temp_arrw <- arrow::read_parquet(filename)
-  )
-
-  if(is.null(temp_arrw)){
-    cli::cli_alert_danger(message_failed)
-  }
-
-  return(temp_arrw)
-
-} # nocov end
-
 convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
 
   checkmate::assert_logical(as_sf)
@@ -668,4 +414,4 @@ convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
 # place holder to use geoarrow becaue:
 #   Namespace in Imports field not imported from: 'geoarrow'
 #        All declared Imports should be used.
-geoarrow::as_geoarrow_vctr("POINT (0 1)")
+geoarrow::as_geoarrow_vctr("POINT (0 1)") # nocov

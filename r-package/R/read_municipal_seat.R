@@ -7,6 +7,7 @@
 #' Brazilian Institute of Geography and Statistics (IBGE).
 #'
 #' @template year
+#' @template code_muni
 #' @template as_sf
 #' @template showProgress
 #' @template cache
@@ -21,6 +22,7 @@
 #' m <- read_municipal_seat(year = 2022)
 #'
 read_municipal_seat <- function(year,
+                                code_muni = "all",
                                 as_sf = TRUE,
                                 showProgress = TRUE,
                                 cache = TRUE,
@@ -46,6 +48,9 @@ read_municipal_seat <- function(year,
 
   # check if download failed
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
 
   # convert to sf
   output <- convert_arrow2sf(temp_arrw, as_sf)

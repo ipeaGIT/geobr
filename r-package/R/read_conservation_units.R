@@ -5,7 +5,8 @@
 #' conservation units present in Brazilian territory. The last update of the data
 #' was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
 #'
-#' @template date
+#' @template year
+#' @template code_state
 #' @template simplified
 #' @template showProgress
 #' @template cache

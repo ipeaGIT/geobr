@@ -60,7 +60,7 @@ read_census_tract <- function(year,
   if (temp_meta$year[1] <= 2007) {
 
     temp_meta <- temp_meta |>
-      dplyr::filter(geo %like% zone)
+      dplyr::filter(grepl(zone, geo))
 
     if (nrow(temp_meta) == 0) {
       cli::cli_abort("Invalid Value to argument 'zone'. It must be either 'urban' or 'rural'")
