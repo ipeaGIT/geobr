@@ -5,7 +5,7 @@
 \title{Download spatial data of urbanized areas in Brazil}
 \usage{
 read_urban_area(
-  year = NULL,
+  year,
   code_muni = "all",
   simplified = TRUE,
   as_sf = TRUE,

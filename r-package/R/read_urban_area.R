@@ -28,7 +28,7 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' d <- read_urban_area(year = 2015)
 #'
-read_urban_area <- function(year = NULL,
+read_urban_area <- function(year,
                             code_muni = "all",
                             simplified = TRUE,
                             as_sf = TRUE,
