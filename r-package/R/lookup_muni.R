@@ -99,7 +99,43 @@ lookup_muni <- function(year,
       lookup_filter <- df |>
         dplyr::filter(name_muni_formatted == x)
 
-      # erro ?
+      # tenta match probabilistico
+      if (nrow(lookup_filter) == 0) {
+
+        conn <- duckdb::dbConnect(duckdb::duckdb())
+        DBI::dbWriteTable(conn, name = "munis", value = df)
+
+        query <- glue::glue("
+          SELECT
+            code_muni,
+            name_muni_formatted,
+            similarity,
+            RANK() OVER (
+              PARTITION BY code_muni
+              ORDER BY similarity DESC
+            ) AS rank_num
+          FROM (
+            SELECT
+              code_muni,
+              name_muni_formatted,
+              CAST(jaro_similarity('{x}', name_muni_formatted) AS NUMERIC(5,3)) AS similarity
+            FROM munis
+          ) t
+          WHERE similarity > 0.9
+        ")
+
+        df_prob <- DBI::dbGetQuery(conn, query)
+
+        # filter code muni
+        if (nrow(df_prob) > 0) {
+          lookup_filter <- df |>
+            dplyr::filter(name_muni_formatted == df_prob$name_muni_formatted)
+        }
+      }
+
+
+
+      # erro, muni nao encontrado
       if (nrow(lookup_filter) == 0) {
         cli::cli_abort("Please insert a valid municipality name.")
         }

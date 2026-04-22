@@ -40,6 +40,8 @@ Imports:
       cli,
       curl (>= 5.0.0),
       dplyr (>= 0.8-3),
+      DBI,
+      duckdb,
       data.table,
       fs,
       geoarrow (>= 0.4.2),

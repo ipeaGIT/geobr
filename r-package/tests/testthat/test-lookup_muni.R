@@ -25,6 +25,9 @@ test_that("lookup_muni", {
   # check number of cols
   expect_true( ncol(test_sf) >= 8)
 
+  # probabilistic
+  test_sf5 <- lookup_muni(name_muni="rio de janeira", year = 2022)
+  expect_true(is(test_sf5, "data.frame"))
 
 })
 
@@ -35,7 +38,7 @@ test_that("lookup_muni", {
    expect_error(lookup_muni())
 
   # Wrong name
-   expect_error(lookup_muni(name_muni="arroz"))
+   expect_error(lookup_muni(name_muni="arroz", year = 2022))
 
   # Wrong code
    expect_error(lookup_muni(code_muni=99999999))
