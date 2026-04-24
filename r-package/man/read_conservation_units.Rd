@@ -5,21 +5,17 @@
 \title{Download spatial data of Brazilian environmental conservation units}
 \usage{
 read_conservation_units(
-  year,
-  code_state = "all",
+  date,
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
-and reads the data from the latest year available.}
-
-\item{code_state}{The two-digit code of a state or a two-letter uppercase
-abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
-default), the function downloads all states.}
+\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
+and reads the data from the latest date available.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -27,6 +23,9 @@ with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -44,13 +43,13 @@ An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 This data set covers the whole of Brazil and it includes the polygons of all
-conservation units present in Brazilian territory. The last update of the data
-was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
+conservation units present in Brazilian territory. The original data and data
+dictionary can be found comes from MMA and can be found at "https://dados.mma.gov.br/dataset/unidadesdeconservacao".
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read conservation_units
-b <- read_conservation_units(year = 2025)
+uc <- read_conservation_units(date = 202503)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

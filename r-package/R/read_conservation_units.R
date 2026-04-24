@@ -2,12 +2,12 @@
 #'
 #' @description
 #' This data set covers the whole of Brazil and it includes the polygons of all
-#' conservation units present in Brazilian territory. The last update of the data
-#' was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
+#' conservation units present in Brazilian territory. The original data and data
+#' dictionary can be found comes from MMA and can be found at "https://dados.mma.gov.br/dataset/unidadesdeconservacao".
 #'
-#' @template year
-#' @template code_state
+#' @template date
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -19,11 +19,11 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read conservation_units
-#' b <- read_conservation_units(year = 2025)
+#' uc <- read_conservation_units(date = 202503)
 #'
-read_conservation_units <- function(year,
-                                    code_state = "all",
+read_conservation_units <- function(date,
                                     simplified = TRUE,
+                                    as_sf = TRUE,
                                     showProgress = TRUE,
                                     cache = TRUE,
                                     verbose = TRUE){
@@ -31,7 +31,7 @@ read_conservation_units <- function(year,
   # Get metadata
   temp_meta <- select_metadata(
     geography="conservationunits",
-    year = year,
+    year = date,
     simplified = simplified,
     verbose = verbose
   )
