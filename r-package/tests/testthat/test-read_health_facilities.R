@@ -11,16 +11,19 @@ testthat::skip_on_cran()
 test_that("read_health_facilities", {
 
   # read data
-  test_sf <- read_health_facilities(showProgress = FALSE)
+  test_sf <- read_health_facilities(date = 202604)
 
   # check sf object
-  expect_true(is(test_sf, "sf"))
+  testthat::expect_true(is(test_sf, "sf"))
 
   # read data
-  test_sf_202303 <- read_health_facilities(date = 202303)
+  test_sf_ac <- read_health_facilities(date = 202604, code_state="AC", as_sf = F)
 
   # check number of observations
-  expect_equal(nrow(test_sf_202303), 517629)
+  testthat::expect_true(nrow(test_sf) > nrow(test_sf_ac))
+
+  test_sf_ac <- read_health_facilities(date = 202604, code_state=11, as_sf = F)
+  testthat::expect_true(is(test_sf_ac, "ArrowObject"))
 
 })
 
@@ -29,6 +32,12 @@ test_that("read_health_facilities", {
 
 # ERRORS and messagens  -----------------------
 test_that("read_health_facilities", {
+
+  # no date input
+  testthat::expect_error(read_health_facilities(code_state="AC"))
+
+  # wrong state input
+  testthat::expect_error(read_health_facilities(code_state="banana"))
 
   # Wrong date
   testthat::expect_error(read_health_facilities(date = 9999999))

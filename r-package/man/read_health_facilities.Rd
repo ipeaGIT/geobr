@@ -5,7 +5,8 @@
 \title{Download geolocated data of health facilities}
 \usage{
 read_health_facilities(
-  date = NULL,
+  date,
+  code_state,
   as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
@@ -15,6 +16,10 @@ read_health_facilities(
 \arguments{
 \item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
 and reads the data from the latest date available.}
+
+\item{code_state}{The two-digit code of a state or a two-letter uppercase
+abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
+default), the function downloads all states.}
 
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
 \verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
@@ -43,15 +48,24 @@ considering a radius of 5,000 meters. When the coordinate is not correct,
 further searches are done in other systems of the Ministry of Health and in
 web services like Google Maps. Finally, if the coordinates have been correctly
 obtained in this process, the coordinates of the municipal head office are
-used. The geocode source used is registered in the database in a specific
-column \code{data_source}. Periodically the coordinates are revised with the
-objective of improving the quality of the data." The date of the last data
-update is registered in the database in the columns \code{date_update} and
+used." Whenever possible, geobr uses the spatial coordinates from CNES. Only
+when CNES coordinates are not available, then geobr uses the spatial
+coordinates found via geocoding with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
+The source of the spatial coordinates is registered in the data in a specific
+column \code{coords_source}. Periodically the coordinates are revised with the
+objective of improving the quality of the data. The date of the last data
+update is registered in the data in the columns \code{date_update} and
 \code{year_update}. More information in the CNES data set available at \url{https://dados.gov.br/}.
 These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
+# Read health facilities of a given state
+h <- read_health_facilities(
+  date = 202604,
+  code_state = "PA"
+  )
+
 # Read all health facilities of the whole country
 h <- read_health_facilities(date = 202604)
 \dontshow{\}) # examplesIf}

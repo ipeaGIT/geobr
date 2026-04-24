@@ -10,14 +10,18 @@
 #' further searches are done in other systems of the Ministry of Health and in
 #' web services like Google Maps. Finally, if the coordinates have been correctly
 #' obtained in this process, the coordinates of the municipal head office are
-#' used. The geocode source used is registered in the database in a specific
-#' column `data_source`. Periodically the coordinates are revised with the
-#' objective of improving the quality of the data." The date of the last data
-#' update is registered in the database in the columns `date_update` and
+#' used." Whenever possible, geobr uses the spatial coordinates from CNES. Only
+#' when CNES coordinates are not available, then geobr uses the spatial
+#' coordinates found via geocoding with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
+#' The source of the spatial coordinates is registered in the data in a specific
+#' column `coords_source`. Periodically the coordinates are revised with the
+#' objective of improving the quality of the data. The date of the last data
+#' update is registered in the data in the columns `date_update` and
 #' `year_update`. More information in the CNES data set available at \url{https://dados.gov.br/}.
 #' These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
 #'
 #' @template date
+#' @template code_state
 #' @template as_sf
 #' @template showProgress
 #' @template cache
@@ -29,10 +33,17 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#' # Read health facilities of a given state
+#' h <- read_health_facilities(
+#'   date = 202604,
+#'   code_state = "PA"
+#'   )
+#'
 #' # Read all health facilities of the whole country
 #' h <- read_health_facilities(date = 202604)
 #'
-read_health_facilities <- function(date = NULL,
+read_health_facilities <- function(date,
+                                   code_state,
                                    as_sf = TRUE,
                                    showProgress = TRUE,
                                    cache = TRUE,
@@ -42,7 +53,7 @@ read_health_facilities <- function(date = NULL,
   temp_meta <- select_metadata(
     geography="healthfacilities",
     year = date,
-    simplified = simplified,
+    simplified = FALSE,
     verbose = verbose
   )
 
@@ -58,6 +69,9 @@ read_health_facilities <- function(date = NULL,
 
   # check if download failed
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # convert to sf
   output <- convert_arrow2sf(temp_arrw, as_sf)
