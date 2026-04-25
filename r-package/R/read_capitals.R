@@ -66,7 +66,10 @@ read_capitals <- function(as_sf = TRUE,
     }
 
   if (isTRUE(as_sf)) {
-    temp_sf <- geobr::read_municipal_seat(year = 2010, showProgress = showProgress, as_sf = FALSE) |>
+    temp_sf <- geobr::read_municipal_seat(
+      year = 2010,
+      showProgress = showProgress,
+      as_sf = FALSE) |>
       dplyr::filter(code_muni %in% df$code_muni)
 
     return( sf::st_as_sf(temp_sf) )
