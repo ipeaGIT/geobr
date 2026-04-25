@@ -5,9 +5,11 @@
 \title{Download spatial data of Brazilian health regions and health macro regions}
 \usage{
 read_health_region(
-  year = NULL,
+  year,
+  code_state = "all",
   macro = FALSE,
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -16,6 +18,10 @@ read_health_region(
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
+
+\item{code_state}{The two-digit code of a state or a two-letter uppercase
+abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
+default), the function downloads all states.}
 
 \item{macro}{Logic. If \code{FALSE} (default), the function downloads health
 regions data. If \code{TRUE}, the function downloads macro regions data.}
@@ -26,6 +32,9 @@ with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -42,19 +51,20 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Health regions are used to guide the the regional and state planning of health services.
-Macro health regions, in particular, are used to guide the planning of high complexity
-health services. These services involve larger economics of scale and are concentrated in
-few municipalities because they are generally more technology intensive, costly and face
-shortages of specialized professionals. A macro region comprises one or more health regions.
+Health regions are used to guide the the regional and state planning of health
+services. Macro health regions, in particular, are used to guide the planning
+of high complexity #' health services. These services involve larger economics
+of scale and are concentrated in few municipalities because they are generally
+more technology intensive, costly and face shortages of specialized
+professionals. A macro region comprises one or more health regions.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all health regions for a given year
-hr <- read_health_region( year=2013 )
+hr <- read_health_region(year = 2024 )
 
 # Read all macro health regions
-mhr <- read_health_region( year=2013, macro =TRUE)
+mhr <- read_health_region(year=2024, macro =TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
