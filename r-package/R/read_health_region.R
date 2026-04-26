@@ -10,12 +10,12 @@
 #'
 #' @template year
 #' @template code_state
-#' @param group_by String. When `group_by = NULL` (Default), the function return
-#'                 the geometries of municipalities. When `group_by = "micro"`,
-#'                 the results are aggragated to return polygons of micri health
-#'                 regions. Alternatively, `group_by = "macro"` returns polygons
-#'                 of macro health regions.
-#' @param macro Deprecated.
+#' @param group_by String. When `group_by = NULL` (Default), the function returns
+#'        the geometries of municipalities. When `group_by = "micro"`, the output
+#'        geometries are aggregated to return polygons of micro health regions.
+#'        Alternatively, `group_by = "macro"` returns polygons of macro health
+#'        regions.
+#' @param macro The argument `macro` has been deprecated.
 #' @template simplified
 #' @template as_sf
 #' @template showProgress
@@ -46,13 +46,20 @@
 read_health_region <- function(year,
                                code_state = "all",
                                group_by = NULL,
-                               macro = FALSE,
+                               macro = NULL,
                                simplified = TRUE,
                                as_sf = TRUE,
                                showProgress = TRUE,
                                cache = TRUE,
                                verbose = TRUE){
 
+
+  if (!is.null(macro)) {
+    cli::cli_abort(c(
+      "Argument deprecated",
+      "x" = "The `macro` argument is deprecated. Use `group_by` instead."
+    ))
+  }
 
   # check input
   allowed <- c("micro", "macro")

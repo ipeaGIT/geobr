@@ -8,7 +8,7 @@ read_health_region(
   year,
   code_state = "all",
   group_by = NULL,
-  macro = FALSE,
+  macro = NULL,
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,
@@ -24,13 +24,13 @@ and reads the data from the latest year available.}
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
 default), the function downloads all states.}
 
-\item{group_by}{String. When \code{group_by = NULL} (Default), the function return
-the geometries of municipalities. When \code{group_by = "micro"},
-the results are aggragated to return polygons of micri health
-regions. Alternatively, \code{group_by = "macro"} returns polygons
-of macro health regions.}
+\item{group_by}{String. When \code{group_by = NULL} (Default), the function returns
+the geometries of municipalities. When \code{group_by = "micro"}, the output
+geometries are aggregated to return polygons of micro health regions.
+Alternatively, \code{group_by = "macro"} returns polygons of macro health
+regions.}
 
-\item{macro}{Deprecated.}
+\item{macro}{The argument \code{macro} has been deprecated.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
