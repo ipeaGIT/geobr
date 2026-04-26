@@ -59,6 +59,12 @@ aggregations of the census tracts from the Brazilian census.
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read neighborhoods of Brazilian municipalities
 n <- read_neighborhood(year = 2022)
+
+# Read neighborhoods of two municipalities, Recife and Porto Alegre in this example
+r <- read_neighborhood(
+  year = 2022,
+  code_muni = c(2611606, 4314902)
+  )
 \dontshow{\}) # examplesIf}
 }
 \seealso{
