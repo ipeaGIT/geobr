@@ -10,8 +10,12 @@
 #'
 #' @template year
 #' @template code_state
-#' @param macro Logic. If `FALSE` (default), the function downloads health
-#'        regions data. If `TRUE`, the function downloads macro regions data.
+#' @param group_by String. When `group_by = NULL` (Default), the function return
+#'                 the geometries of municipalities. When `group_by = "micro"`,
+#'                 the results are aggragated to return polygons of micri health
+#'                 regions. Alternatively, `group_by = "macro"` returns polygons
+#'                 of macro health regions.
+#' @param macro Deprecated.
 #' @template simplified
 #' @template as_sf
 #' @template showProgress
@@ -24,14 +28,24 @@
 #' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read all health regions for a given year
-#' hr <- read_health_region(year = 2024 )
+#' # Read health regions for a given year
+#' health_muni <- read_health_region(year = 2024)
 #'
-#' # Read all macro health regions
-#' mhr <- read_health_region(year=2024, macro =TRUE)
+#' # Read health regions with the geometries of micro regions
+#' health_micro <- read_health_region(
+#'   year = 2024,
+#'   group_by = "micro"
+#'   )
+#'
+#' # Read health regions with the geometries of micro regions
+#' health_macro <- read_health_region(
+#'   year = 2024,
+#'   group_by = "macro"
+#' )
 #'
 read_health_region <- function(year,
                                code_state = "all",
+                               group_by = NULL,
                                macro = FALSE,
                                simplified = TRUE,
                                as_sf = TRUE,
@@ -39,10 +53,15 @@ read_health_region <- function(year,
                                cache = TRUE,
                                verbose = TRUE){
 
-  if(!is.logical(macro)){stop(paste0("Parameter 'macro' must be either TRUE or FALSE"))}
 
-  # determine which geography to use
-  temp_geo <- ifelse(macro==TRUE, "health_region_macro", "health_region")
+  # check input
+  allowed <- c("micro", "macro")
+  if (!all(group_by %in% allowed)) {
+    cli::cli_abort(c(
+      "`group_by` must be one of: {.val {allowed}}.",
+      "x" = "Invalid value{?s}: {.val {setdiff(group_by, allowed)}}."
+    ))
+  }
 
   # Get metadata
   temp_meta <- select_metadata(
@@ -66,17 +85,59 @@ read_health_region <- function(year,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # FILTER
-  temp_arrw <- filter_arrw(temp_arrw, code = code_state)
+  output <- filter_arrw(temp_arrw, code = code_state)
+
+  # group by
+  if (!is.null(group_by)) {
+
+    # convert to sf
+    temp <- convert_arrow2sf(output, TRUE)
+
+    all_cols <- names(temp)
+
+    if(group_by=="micro"){
+      group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_macroregion|name_health_macroregion', all_cols)]
+    } else {
+      group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_region|name_health_region', all_cols)]
+    }
+
+    output <- duckspatial::ddbs_union_agg(
+      x = temp,
+      by = group_cols
+      ) |>
+      duckspatial::ddbs_collect() |>
+      sfheaders::sf_remove_holes()
+  }
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, as_sf)
+  output <- convert_arrow2sf(output, as_sf)
 
   return(output)
+
+
+}
+
+# all_cols <- names(mhr)
+#
+# if(isFALSE(macro)){
+#   group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_macroregion|name_health_macroregion', all_cols)]
+# } else {
+#   group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_region|name_health_region', all_cols)]
+# }
+#
+# a <- duckspatial::ddbs_union_agg(
+#   x = mhr,
+#   by = group_cols #c("code_health_macroregion","name_health_macroregion") #group_cols
+#   ) |>
+#   duckspatial::ddbs_collect() |>
+#   sfheaders::sf_remove_holes()
 
 # a <- duckspatial::ddbs_union_agg(x = output, by = "code_health_region") |>
 #   duckspatial::ddbs_collect() |>
 #   sfheaders::sf_remove_holes()
 # mapview::mapview(a)
 
-}
+# head(a)
+# nrow(a)
+# mapview::mapview(a)
 

@@ -42,6 +42,7 @@ Imports:
       dplyr (>= 0.8-3),
       DBI,
       duckdb,
+      duckspatial(>= 1.0.0),
       fs,
       glue,
       geoarrow (>= 0.4.2),
@@ -49,6 +50,7 @@ Imports:
       piggyback,
       rlang,
       sf (>= 0.9-3),
+      sfheaders,
       stringr,
       utils
 Suggests:

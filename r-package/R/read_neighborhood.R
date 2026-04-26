@@ -33,7 +33,7 @@ read_neighborhood <- function(year = NULL,
 
   # Get metadata
   temp_meta <- select_metadata(
-    geography="neighborhood",
+    geography="neighborhoods",
     year = year,
     simplified = simplified,
     verbose = verbose
