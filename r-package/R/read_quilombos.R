@@ -41,22 +41,22 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all quilombola areas in an specific date
-#' q <- read_quilombola_lands(date = 202605)
+#' q <- read_quilombola_land(date = 202605)
 #'
 #' # Read the quilombola areas in an given state
-#' ba <- read_quilombola_lands(date = 202605, code_state = "BA")
+#' ba <- read_quilombola_land(date = 202605, code_state = "BA")
 #'
-read_quilombola_lands <- function(date,
-                                  code_state = "all",
-                                  simplified = TRUE,
-                                  as_sf = TRUE,
-                                  showProgress = TRUE,
-                                  cache = TRUE,
-                                  verbose = TRUE){
+read_quilombola_land <- function(date,
+                                 code_state = "all",
+                                 simplified = TRUE,
+                                 as_sf = TRUE,
+                                 showProgress = TRUE,
+                                 cache = TRUE,
+                                 verbose = TRUE){
 
   # Get metadata
   temp_meta <- select_metadata(
-    geography="quilombolalands",
+    geography = "quilombolalands",
     year = date,
     simplified = simplified,
     verbose = verbose

@@ -140,7 +140,7 @@ check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metad
   assign("has_internet_via_proxy", TRUE, environment(curl::has_internet))
 
   # Check if user has internet connection
-  if (!curl::has_internet()) {
+  if (!httr2::is_online()) {
     if (isFALSE(silent)) {
       cli::cli_alert_danger("No internet connection.")
     }
@@ -340,31 +340,51 @@ download_parquet <- function(filename_to_download,
                              cache = parent.frame()$cache) { # nocov start
 
   # check input
-  checkmate::assert_logical(showProgress)
-  checkmate::assert_logical(cache)
+  checkmate::assert_logical(showProgress, len = 1, any.missing = FALSE)
+  checkmate::assert_logical(cache, len = 1, any.missing = FALSE)
 
-  # Defining our temporary directory
+  # create temp directory
   temp_dest_dir <- fs::path_temp("geobr")
-
-  # Creating the temporary folder effectively
   fs::dir_create(path = temp_dest_dir, recurse = TRUE)
 
-  # Creating path + filename and saving to "temporary_filename"
-  temp_full_file_path <- paste0(temp_dest_dir, "/", filename_to_download)
+  # create to local file
+  temp_full_file_path <- fs::path(temp_dest_dir, filename_to_download)
 
-  # downloading the file
-  try(silent=T,
-      suppressMessages(
-        piggyback::pb_download(
-          file = filename_to_download,
-          repo = "ipeaGIT/geobr",
-          tag = geobr_env$data_release,
-          dest = temp_dest_dir,
-          show_progress = showProgress,
-          overwrite = !cache
-          )
+  # if file already exists, open and return parquet
+  if (isTRUE(cache) && file.exists(temp_full_file_path)) {
+    temp_arrw <- arrow_open_dataset(temp_full_file_path)
+    return(temp_arrw)
+  }
+
+  # download file otherwise
+
+    # build url
+    file_url <- paste0(
+      "https://github.com/ipeaGIT/geobr/releases/download/",
+      geobr_env$data_release,
+      "/", filename_to_download
       )
-  )
+
+    # prep request
+    try(silent=T,
+      req <- httr2::request(file_url) |>
+        httr2::req_options(
+          timeout = 500,
+          ssl_verifypeer = 0L
+        ))
+
+    # add progress bar
+    if (isTRUE(showProgress)) {
+      try(silent=T,
+          req <- req |> httr2::req_progress()
+          )
+    }
+
+    # download file
+    try(silent=T,
+        req |>
+          httr2::req_perform(path = temp_full_file_path)
+        )
 
   # Halt function if download failed
   if (!file.exists(temp_full_file_path)) {

@@ -46,6 +46,7 @@ Imports:
       fs,
       glue,
       geoarrow (>= 0.4.2),
+      httr2,
       methods,
       piggyback,
       rlang,
