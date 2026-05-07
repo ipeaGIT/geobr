@@ -40,6 +40,10 @@ Other contributors:
 \itemize{
   \item Caio Nogueira Goncalves [contributor]
   \item Cecilia do Lago [contributor]
+  \item Filipe Cavalcanti [contributor]
+  \item Arthur Bazolli [contributor]
+  \item Lucas Gelape [contributor]
+  \item Rafael Lopes [contributor]
   \item Paulo Henrique Fernandes de Araujo [contributor]
   \item Guilherme Duarte Carvalho [contributor]
   \item Rodrigo Almeida de Arruda [contributor]

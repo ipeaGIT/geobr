@@ -1,19 +1,69 @@
-# geobr v1.9.1999999999 dev
+# geobr v2.0.0 dev
 
-- Now all functions download data from the latest year available, by default.
-- Fix url redundancy to avoid internet connection problems.
+New functions:
+
+- `read_pooling_places()` with data of pooling places (source: TSE) Closes [#184](https://github.com/ipeaGIT/geobr/issues/184) and [#242](https://github.com/ipeaGIT/geobr/issues/242).
+- `read_quilombola_lands()` with data of officialy recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipeaGIT/geobr/issues/242).
+- `read_favela()` with data of favelas and urban communities (source: IBGE) Closes [#387](https://github.com/ipeaGIT/geobr/issues/387).
+- `remove_islands()` to remove islands from Brazil. Closes [#412](https://github.com/ipeaGIT/geobr/issues/412).
+
+
 
 # Breaking changes
 
+- The `year` and `date` arguments cannot be `NULL` anymore, they must specified.
+This is intentional so user become more conscious of historical changes to the data.
 - The `geom` column has been renamed to `geometry` for consistency
+- The `read_health_region()` has been completely rewritten to allow users return 
+more detailed output if needed
+- Functions like `read_schools()` and `read_health_facilities()` now use a 
+combination of official spatial coordinates and coordinates found using the 
+[{geocodebr}](https://github.com/ipeaGIT/geocodebr/) package to improve spatial 
+accuracy. See documentation of these functions.
+- The function `lookup_muni()` now has a `year` parameter. Closes [#401](https://github.com/ipeaGIT/geobr/issues/401).
 
 
 **Major changes**
-- The function `list_geobr()` now has a boolean argument `wide`, so users can choose whether 
-the output should be presented in wide or long format.
+
+- Data files are now saved in `.parquet`. This improved performance to download 
+and to read files, and allow integration with gearrow. Closes [#290]()
+- The function `list_geobr()` now has a boolean argument `wide`, so users can 
+choose whether the output should be presented in wide or long format.
+- The function `lookup_muni()` now uses probabilistic match to find municipality
+names that users might input with typos. Closes [#406](https://github.com/ipeaGIT/geobr/issues/406).
+
+- New argument `verbose`..... #400
+
+
+
+**Minor changes**
+
+- Several data fixes and data updates, addressing the following issues: 
+247,249 ...
+
+
+
+
+
+**New co-author**
+
+- Rogerio Barbosa
+
+**New contributors**
+
+- Cecilia do Lago
+- Arthur Bazolli
+- Filipe Cavalcanti
+- Lucas Gelape
+- Rafael Lopes
+
+**New funding / institutional support**
+
+- ITpS - Instituto Todos pela Saúde
+
+
 
 # geobr v1.9.1
-
 
 **Minor changes**
 
