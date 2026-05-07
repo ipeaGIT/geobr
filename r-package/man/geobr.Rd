@@ -44,6 +44,7 @@ Other contributors:
   \item Arthur Bazolli [contributor]
   \item Lucas Gelape [contributor]
   \item Rafael Lopes [contributor]
+  \item Vinicius Oike [contributor]
   \item Paulo Henrique Fernandes de Araujo [contributor]
   \item Guilherme Duarte Carvalho [contributor]
   \item Rodrigo Almeida de Arruda [contributor]

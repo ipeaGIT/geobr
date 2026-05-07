@@ -56,6 +56,7 @@ names that users might input with typos. Closes [#406](https://github.com/ipeaGI
 - Filipe Cavalcanti
 - Lucas Gelape
 - Rafael Lopes
+- Vinicius Oike
 
 **New funding / institutional support**
 
