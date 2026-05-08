@@ -20,7 +20,7 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' uc <- read_urban_concentrations(year=2015)
 #'
-read_urban_concentrations <- function(year = NULL,
+read_urban_concentrations <- function(year,
                                       simplified = TRUE,
                                       showProgress = TRUE,
                                       cache = TRUE,

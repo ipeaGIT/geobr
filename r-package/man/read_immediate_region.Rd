@@ -5,7 +5,7 @@
 \title{Download spatial data of Brazil's Immediate Geographic Areas}
 \usage{
 read_immediate_region(
-  year = NULL,
+  year,
   code_immediate = "all",
   simplified = TRUE,
   as_sf = TRUE,

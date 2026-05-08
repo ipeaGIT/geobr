@@ -5,7 +5,7 @@
 \title{Download spatial data of micro regions}
 \usage{
 read_micro_region(
-  year = NULL,
+  year,
   code_micro = "all",
   simplified = TRUE,
   as_sf = TRUE,

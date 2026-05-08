@@ -5,7 +5,7 @@
 \title{Download population arrangements in Brazil}
 \usage{
 read_pop_arrangements(
-  year = NULL,
+  year,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE,

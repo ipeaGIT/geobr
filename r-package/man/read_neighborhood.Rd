@@ -5,7 +5,7 @@
 \title{Download spatial data of neighborhood limits of Brazilian municipalities}
 \usage{
 read_neighborhood(
-  year = NULL,
+  year,
   code_muni = "all",
   simplified = TRUE,
   as_sf = TRUE,

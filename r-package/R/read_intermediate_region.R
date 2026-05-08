@@ -33,7 +33,7 @@
 #' # Read all intermediate regions of the country
 #' inter <- read_intermediate_region(code_intermediate = "all", year = 2024)
 #'
-read_intermediate_region <- function(year = NULL,
+read_intermediate_region <- function(year,
                                      code_intermediate = "all",
                                      simplified = TRUE,
                                      as_sf = TRUE,

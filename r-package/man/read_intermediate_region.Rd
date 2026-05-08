@@ -5,7 +5,7 @@
 \title{Download spatial data of Brazil's Intermediate Geographic Areas}
 \usage{
 read_intermediate_region(
-  year = NULL,
+  year,
   code_intermediate = "all",
   simplified = TRUE,
   as_sf = TRUE,

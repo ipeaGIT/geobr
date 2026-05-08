@@ -20,7 +20,7 @@
 #' # Read Brazilian Legal Amazon
 #' a <- read_amazon(year = 2024)
 #'
-read_amazon <- function(year = NULL,
+read_amazon <- function(year,
                         simplified = TRUE,
                         as_sf = TRUE,
                         showProgress = TRUE,

@@ -33,7 +33,7 @@
 #' # Read disaster risk areas in a given state
 #' d <- read_disaster_risk_area(year = 2010, code_muni = "AC")
 
-read_disaster_risk_area <- function(year = NULL,
+read_disaster_risk_area <- function(year,
                                     code_muni = "all",
                                     simplified = TRUE,
                                     as_sf = TRUE,

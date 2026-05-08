@@ -5,7 +5,7 @@
 \title{Download spatial data of the Brazilian Semiarid region}
 \usage{
 read_semiarid(
-  year = NULL,
+  year,
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,

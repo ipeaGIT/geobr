@@ -5,7 +5,7 @@
 \title{Download spatial data of Brazil's Legal Amazon}
 \usage{
 read_amazon(
-  year = NULL,
+  year,
   simplified = TRUE,
   as_sf = TRUE,
   showProgress = TRUE,

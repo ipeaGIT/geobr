@@ -30,7 +30,7 @@
 #' # Read all micro regions at a given year
 #'  micro <- read_micro_region(code_micro="all", year=2018)
 #'
-read_micro_region <- function(year = NULL,
+read_micro_region <- function(year,
                               code_micro = "all",
                               simplified = TRUE,
                               as_sf = TRUE,

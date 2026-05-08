@@ -5,7 +5,7 @@
 \title{Download urban concentration areas in Brazil}
 \usage{
 read_urban_concentrations(
-  year = NULL,
+  year,
   simplified = TRUE,
   showProgress = TRUE,
   cache = TRUE,

@@ -32,7 +32,7 @@
 #' # Read all immediate regions of the country
 #' im <- read_immediate_region(code_immediate="all", year = 2024)
 #'
-read_immediate_region <- function(year = NULL,
+read_immediate_region <- function(year,
                                   code_immediate = "all",
                                   simplified = TRUE,
                                   as_sf = TRUE,

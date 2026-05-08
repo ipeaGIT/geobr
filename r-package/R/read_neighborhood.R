@@ -28,7 +28,7 @@
 #'   code_muni = c(2611606, 4314902)
 #'   )
 #'
-read_neighborhood <- function(year = NULL,
+read_neighborhood <- function(year,
                               code_muni = "all",
                               simplified = TRUE,
                               as_sf = TRUE,

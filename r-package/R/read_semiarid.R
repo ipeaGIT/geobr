@@ -21,7 +21,7 @@
 #' # read Brazilian semiarid
 #' sa <- read_semiarid(year = 2022)
 #'
-read_semiarid <- function(year = NULL,
+read_semiarid <- function(year,
                           simplified = TRUE,
                           as_sf = TRUE,
                           showProgress = TRUE,

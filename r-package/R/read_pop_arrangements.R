@@ -20,7 +20,7 @@
 #' # Read urban footprint of Brazilian cities in an specific year
 #' uc <- read_pop_arrangements(year=2015)
 #'
-read_pop_arrangements <- function(year = NULL,
+read_pop_arrangements <- function(year,
                                   simplified = TRUE,
                                   showProgress = TRUE,
                                   cache = TRUE,

@@ -5,7 +5,7 @@
 \title{Download spatial data of disaster risk areas}
 \usage{
 read_disaster_risk_area(
-  year = NULL,
+  year,
   code_muni = "all",
   simplified = TRUE,
   as_sf = TRUE,
