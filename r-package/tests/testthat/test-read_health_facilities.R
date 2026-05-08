@@ -17,12 +17,12 @@ test_that("read_health_facilities", {
   testthat::expect_true(is(test_sf, "sf"))
 
   # read data
-  test_sf_ac <- read_health_facilities(date = 202604, code_state="AC", as_sf = F)
+  test_sf_ac <- read_health_facilities(date = 202604, code_muni="AC", as_sf = F)
 
   # check number of observations
   testthat::expect_true(nrow(test_sf) > nrow(test_sf_ac))
 
-  test_sf_ac <- read_health_facilities(date = 202604, code_state=11, as_sf = F)
+  test_sf_ac <- read_health_facilities(date = 202604, code_muni=11, as_sf = F)
   testthat::expect_true(is(test_sf_ac, "ArrowObject"))
 
 })
@@ -34,10 +34,10 @@ test_that("read_health_facilities", {
 test_that("read_health_facilities", {
 
   # no date input
-  testthat::expect_error(read_health_facilities(code_state="AC"))
+  testthat::expect_error(read_health_facilities(code_muni="AC"))
 
   # wrong state input
-  testthat::expect_error(read_health_facilities(code_state="banana"))
+  testthat::expect_error(read_health_facilities(code_muni="banana"))
 
   # Wrong date
   testthat::expect_error(read_health_facilities(date = 9999999))
