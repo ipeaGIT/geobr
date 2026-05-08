@@ -9,6 +9,7 @@
 #' the data for a few months per year.
 #'
 #' @template year
+#' @template code_state
 #' @template simplified
 #' @template as_sf
 #' @template showProgress
@@ -24,6 +25,7 @@
 #' i <- read_indigenous_land(year = 2025)
 #'
 read_indigenous_land <- function(year,
+                                 code_state = "all",
                                  simplified = TRUE,
                                  as_sf = TRUE,
                                  showProgress = TRUE,
@@ -50,6 +52,9 @@ read_indigenous_land <- function(year,
 
   # check if download failed
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # convert to sf
   output <- convert_arrow2sf(temp_arrw, as_sf)
