@@ -25,4 +25,3 @@ uf <- cep_to_state(cep = '69900-000')
 uf <- cep_to_state(cep = '69900000')
 \dontshow{\}) # examplesIf}
 }
-\concept{cep functions}

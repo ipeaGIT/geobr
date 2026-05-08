@@ -1,7 +1,7 @@
 #' Download spatial data of Brazilian states
 #'
 #' @description
-#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Brazilian states
 #'
 #' @template year
 #' @template code_state

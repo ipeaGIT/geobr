@@ -6,7 +6,7 @@
 \usage{
 read_health_facilities(
   date,
-  code_state,
+  code_muni = "all",
   as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
@@ -17,9 +17,12 @@ read_health_facilities(
 \item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
 and reads the data from the latest date available.}
 
-\item{code_state}{The two-digit code of a state or a two-letter uppercase
-abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
-default), the function downloads all states.}
+\item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
+(Default), the function downloads all the data available in the
+country. Alternatively, if a two-digit state code or a two-letter
+uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+data of that state are downloaded. Municipality codes can be consulted
+with the \code{geobr::lookup_muni()} function.}
 
 \item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
 \verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
@@ -39,62 +42,32 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data comes from the National Registry of Healthcare facilities (Cadastro
+Data comes from the National Registry of Health Facilities (Cadastro
 Nacional de Estabelecimentos de Saude - CNES), originally collected by the
-Brazilian Ministry of Health. According to the Ministry of Health: "The
-coordinates of each facility were obtained by CNES and validated by means of
-space operations. These operations verify if the point is in the municipality,
-considering a radius of 5,000 meters. When the coordinate is not correct,
-further searches are done in other systems of the Ministry of Health and in
-web services like Google Maps. Finally, if the coordinates have been correctly
-obtained in this process, the coordinates of the municipal head office are
-used." Whenever possible, geobr uses the spatial coordinates from CNES. Only
-when CNES coordinates are not available, then geobr uses the spatial
-coordinates found via geocoding with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
-The source of the spatial coordinates is registered in the data in a specific
-column \code{coords_source}. Periodically the coordinates are revised with the
-objective of improving the quality of the data. The date of the last data
-update is registered in the data in the columns \code{date_update} and
-\code{year_update}. More information in the CNES data set available at \url{https://dados.gov.br/}.
-These data use Geodetic reference system "SIRGAS2000" and CRS(4674).
+Brazilian Ministry of Health.
+The spatial coordinates used in geobr are a combination of the coordinates
+produced by the original data producer and the coordinates found via geocoding
+with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
+Whenever the distance between the coordinates from both sources is smaller than
+800 meters, geobr uses coordinates from the data producer. When the distance
+between the two sources is greater than 800 meters and the results from
+geocodebr have a precision level finer than 800 meters, geobr uses the
+coordinates from geocodebr. When the coordinates from the original source are
+missing, geobr also uses geocodebr coordinates, regardless of precision level.
+The source of the spatial coordinates used in each observation is registered
+in the data in a specific column \code{coords_source}. Additional columns
+indicating the precision level of geocodebr geocoding are also included in
+the data.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read health facilities of a given state
 h <- read_health_facilities(
   date = 202604,
-  code_state = "PA"
+  code_muni = "PA"
   )
 
 # Read all health facilities of the whole country
 h <- read_health_facilities(date = 202604)
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_favela}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

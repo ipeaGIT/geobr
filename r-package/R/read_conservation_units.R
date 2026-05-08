@@ -15,7 +15,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family general area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read conservation_units

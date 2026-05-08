@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_census_tract.R
 \name{read_census_tract}
 \alias{read_census_tract}
-\title{Download spatial data of census tracts of the Brazilian Population Census}
+\title{Download spatial data of census tracts}
 \usage{
 read_census_tract(
   year,
@@ -53,7 +53,7 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Download spatial data of census tracts of the Brazilian Population Census
+Data of census tracts (setores censitários) of the Brazilian Population Census
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
@@ -72,8 +72,3 @@ c <- read_census_tract(year = 2022, code_tract = "all")
 c <- read_census_tract(code_tract = 5201108, year = 2000, zone = "rural")
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other general area functions: 
-\code{\link{read_conservation_units}()}
-}
-\concept{general area functions}

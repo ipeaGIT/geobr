@@ -7,8 +7,8 @@
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a
 #'        two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
 #'        "RJ") the function will load all micro regions of that state. If
-#'        `code_micro="all"` (Default), the function downloads all micro regions of the
-#'        country.
+#'        `code_micro="all"` (Default), the function downloads all micro regions
+#'        of the country.
 #' @template simplified
 #' @template as_sf
 #' @template showProgress
@@ -18,7 +18,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific micro region a given year

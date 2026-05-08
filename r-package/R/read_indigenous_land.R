@@ -4,9 +4,9 @@
 #' The data set covers the whole of Brazil and it includes indigenous lands from
 #' all ethnic groups and at different stages of demarcation. The original data
 #' comes from the National Indian Foundation (FUNAI) and can be found at
-#' \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}. Although original data is
-#' updated monthly, the geobr package will only keep the data for a few months
-#' per year.
+#' \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}.
+#' Although original data is updated monthly, the geobr package will only keep
+#' the data for a few months per year.
 #'
 #' @template year
 #' @template simplified
@@ -18,7 +18,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all indigenous land in an specific year

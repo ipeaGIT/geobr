@@ -1,10 +1,8 @@
 #' Download spatial data of Brazilian biomes
 #'
 #' @description
-#' This data set includes  polygons of all biomes present in Brazilian territory
-#' and coastal area. The latest data set dates to 2019 and it is available at
-#' scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
-#' data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
+#' This data set includes  polygons of all biomes present in the Brazilian territory
+#' and coastal area. Data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 #'
 #' @template year
 #' @template simplified
@@ -16,7 +14,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read biomes

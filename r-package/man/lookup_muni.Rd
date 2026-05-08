@@ -54,8 +54,3 @@ mun_all <- lookup_muni(
   )
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other support functions: 
-\code{\link{list_geobr}()}
-}
-\concept{support functions}

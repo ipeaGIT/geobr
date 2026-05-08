@@ -1,7 +1,8 @@
-#' Download spatial data of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census
+#' Download spatial data of census weighting areas
 #'
 #' @description
-#' Only 2010 data is currently available.
+#' Data of Census Weighting Areas (area de ponderação) of the Brazilian
+#' Population Census
 #'
 #' @template year
 #' @param code_weighting The 7-digit code of a Municipality. If the two-digit code
@@ -18,7 +19,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific weighting area at a given year

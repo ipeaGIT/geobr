@@ -1,7 +1,7 @@
-#' Download spatial data of census tracts of the Brazilian Population Census
+#' Download spatial data of census tracts
 #'
 #' @description
-#' Download spatial data of census tracts of the Brazilian Population Census
+#' Data of census tracts (setores censitários) of the Brazilian Population Census
 #'
 #' @template year
 #' @param code_tract The 7-digit code of a Municipality. If the two-digit code
@@ -20,7 +20,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family general area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #'

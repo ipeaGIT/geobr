@@ -1,7 +1,7 @@
 #' Download spatial data of Brazilian municipalities
 #'
 #' @description
-#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
+#' Brazilian municipalities
 #'
 #' @template year
 #' @template code_muni
@@ -17,7 +17,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific municipality at a given year

@@ -21,8 +21,3 @@ Returns a data frame with all datasets available in the geobr package
 df <- list_geobr()
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other support functions: 
-\code{\link{lookup_muni}()}
-}
-\concept{support functions}

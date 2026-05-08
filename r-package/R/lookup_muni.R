@@ -13,7 +13,6 @@
 #' @return A `data.frame`
 #'
 #' @export
-#' @family support functions
 #'
 #' @details Only available from 2010 Census data so far
 #'

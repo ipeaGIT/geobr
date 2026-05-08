@@ -52,8 +52,3 @@ dictionary can be found comes from MMA and can be found at "https://dados.mma.go
 uc <- read_conservation_units(date = 202503)
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other general area functions: 
-\code{\link{read_census_tract}()}
-}
-\concept{general area functions}

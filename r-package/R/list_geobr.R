@@ -9,7 +9,6 @@
 #' @return A `data.frame`
 #'
 #' @export
-#' @family support functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' df <- list_geobr()

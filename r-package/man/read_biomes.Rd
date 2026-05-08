@@ -42,10 +42,8 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-This data set includes  polygons of all biomes present in Brazilian territory
-and coastal area. The latest data set dates to 2019 and it is available at
-scale 1:250.000. The 2004 data set is at the scale 1:5.000.000. The original
-data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
+This data set includes  polygons of all biomes present in the Brazilian territory
+and coastal area. Data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
@@ -53,31 +51,3 @@ data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biom
 b <- read_biomes(year = 2025)
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_favela}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

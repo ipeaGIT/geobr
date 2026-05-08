@@ -1,7 +1,7 @@
 #' Download spatial data of Brazil Regions
 #'
 #' @description
-#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+#' Brazil macro regions
 #'
 #' @template year
 #' @template simplified
@@ -13,7 +13,6 @@
 #' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific year
