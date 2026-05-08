@@ -42,13 +42,23 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data comes from the School Census collected by INEP, the National Institute
-for Educational Studies and Research Anisio Teixeira. The date of the last
-data update is registered in the database in the column 'date_update'. These
-data uses Geodetic reference system "SIRGAS2000" and CRS(4674). The coordinates
-of each school if collected by INEP. Periodically the coordinates are revised
-with the objective of improving the quality of the data. More information
-available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
+Data comes from the Catalogue of Schools Census, organized by the National
+Institute for Educational Studies and Research Anisio Teixeira (INEP). The
+date of the last data update is registered in the database in the column
+\code{"date_update"}. More information available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}.
+The spatial coordinates used in geobr are a combination of the coordinates
+produced by the original data producer and the coordinates found via geocoding
+with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
+Whenever the distance between the coordinates from both sources is smaller than
+800 meters, geobr uses coordinates from the data producer. When the distance
+between the two sources is greater than 800 meters and the results from
+geocodebr have a precision level finer than 800 meters, geobr uses the
+coordinates from geocodebr. When the coordinates from the original source are
+missing, geobr also uses geocodebr coordinates, regardless of precision level.
+The source of the spatial coordinates used in each observation is registered
+in the data in a specific column \code{coords_source}. Additional columns
+indicating the precision level of geocodebr geocoding are also included in
+the data.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
