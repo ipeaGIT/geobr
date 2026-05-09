@@ -20,6 +20,8 @@ combination of official spatial coordinates and coordinates found using the
 [{geocodebr}](https://github.com/ipeaGIT/geocodebr/) package to improve spatial 
 accuracy. See documentation of these functions.
 - The function `lookup_muni()` now has a `year` parameter. Closes [#401](https://github.com/ipeaGIT/geobr/issues/401).
+- The function and data `read_comparable_areas()` will be going under  major 
+changes. For now, this function is temporarily suspended.
 
 **Major changes**
 

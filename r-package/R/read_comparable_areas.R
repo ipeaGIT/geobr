@@ -38,6 +38,11 @@ read_comparable_areas <- function(start_year = 1970,
                                   cache = TRUE,
                                   verbose = TRUE){
 
+  cli::cli_alert_danger(
+    "We will be making major changes to this data set and function. For now, this function is temporarily suspended."
+  )
+  return(invisible(NULL))
+
   # tests
   years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010)
 
