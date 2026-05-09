@@ -42,10 +42,9 @@ messages. Defaults to \code{TRUE}.}
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data comes from the Catalogue of Schools Census, organized by the National
-Institute for Educational Studies and Research Anisio Teixeira (INEP). The
-date of the last data update is registered in the database in the column
-\code{"date_update"}. More information available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}.
+Data comes from the School Census and Catalogue of Schools, organized by the
+National Institute for Educational Studies and Research Anisio Teixeira (INEP).
+More information available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}.
 The spatial coordinates used in geobr are a combination of the coordinates
 produced by the original data producer and the coordinates found via geocoding
 with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
@@ -63,6 +62,18 @@ the data.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all schools in the country
-s <- read_schools( year = 2020)
+s <- read_schools(year = 2020)
+
+# Read all schools in a given state
+s <- read_schools(
+  year = 2020,
+  code_muni = "AC"
+  )
+
+# Read all schools in a given municipality
+s <- read_schools(
+  year = 2020,
+  code_muni = 1200401
+  )
 \dontshow{\}) # examplesIf}
 }
