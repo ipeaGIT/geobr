@@ -15,8 +15,9 @@ select_year_input(
 
 \item{y}{Year of the dataset (passed by red_ function)}
 
-\item{verbose}{A logical. Whether the function should print informative
-messages. Defaults to \code{TRUE}.}
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \description{
 Select year input

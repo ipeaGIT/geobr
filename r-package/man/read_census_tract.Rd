@@ -46,8 +46,9 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 
-\item{verbose}{A logical. Whether the function should print informative
-messages. Defaults to \code{TRUE}.}
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \value{
 An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
