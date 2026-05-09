@@ -4,8 +4,10 @@ context("remove_islands")
 skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
 
+br <- read_country(year = 2022)
+
+
 testthat::test_that("remove_islands", {
-  br <- geobr::read_country(year = 2022)
 
   result <- remove_islands(br)
 
@@ -34,7 +36,7 @@ testthat::test_that("remove_islands", {
 
 
 # ERRORS and messagens  -----------------------
-test_that("read_region", {
+test_that("remove_islands", {
 
   sf::st_crs(br) <- NA
   expect_error(remove_islands(br))

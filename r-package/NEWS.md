@@ -40,7 +40,7 @@ names that users might input with typos. Closes [#406](https://github.com/ipeaGI
 **Minor changes**
 
 - Several data fixes and data updates, addressing the following issues: 182, 247, 
-249, 267, 333, 340, 361, 369, 379, 384, 388, 389, 390, 391, 393, 404, 407.
+249, 250, 267, 333, 340, 361, 369, 379, 384, 388, 389, 390, 391, 393, 404, 407.
 
 **New co-author**
 
