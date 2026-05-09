@@ -2,18 +2,20 @@
 
 New functions:
 
-- `read_pooling_places()` with data of pooling places (source: TSE) Closes [#184](https://github.com/ipeaGIT/geobr/issues/184) and [#242](https://github.com/ipeaGIT/geobr/issues/242).
-- `read_quilombola_lands()` with data of officialy recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipeaGIT/geobr/issues/242).
 - `read_favela()` with data of favelas and urban communities (source: IBGE) Closes [#387](https://github.com/ipeaGIT/geobr/issues/387).
+- `read_polling_places()` with data of pooling places (source: TSE) Closes [#184](https://github.com/ipeaGIT/geobr/issues/184) and [#242](https://github.com/ipeaGIT/geobr/issues/242).
+- `read_quilombola_lands()` with data of officialy recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipeaGIT/geobr/issues/242).
 - `remove_islands()` to remove islands from Brazil. Closes [#412](https://github.com/ipeaGIT/geobr/issues/412).
-
 
 
 # Breaking changes
 
-- The `year` and `date` arguments cannot be `NULL` anymore, they must specified.
-This is intentional so user become more conscious of historical changes to the data.
+- The `year` and `date` arguments can no longer be `NULL`; they must be explicitly 
+specified. This change is intentional and is meant to encourage users to be more 
+mindful of historical changes in the data.
 - The `geom` column has been renamed to `geometry` for consistency
+
+
 - The `read_health_region()` has been completely rewritten to allow users return 
 more detailed output if needed
 - Functions like `read_schools()` and `read_health_facilities()` now use a 
@@ -27,20 +29,23 @@ accuracy. See documentation of these functions.
 
 - Data files are now saved in `.parquet`. This improved performance to download 
 and to read files, and allow integration with gearrow. Closes [#290]()
+- All functions have a new argument `as_sf`. If `TRUE` (the default), the function 
+returns an ⁠sf data.frame⁠. If `FALSE`, the function returns an arrow dataset. Closes [#290](https://github.com/ipeaGIT/geobr/issues/290).
+- All functions have a new argument `verbose`. If `TRUE` (the default), the 
+function prints informative messages and shows download progress bar. If `FALSE`,
+the function is silent. Closes [#400](https://github.com/ipeaGIT/geobr/issues/400).
 - The function `list_geobr()` now has a boolean argument `wide`, so users can 
 choose whether the output should be presented in wide or long format.
 - The function `lookup_muni()` now uses probabilistic match to find municipality
 names that users might input with typos. Closes [#406](https://github.com/ipeaGIT/geobr/issues/406).
 
-- New argument `verbose`..... #400
 
 
 
 **Minor changes**
 
-- Several data fixes and data updates, addressing the following issues: 
-247,249 ...
-
+- Several data fixes and data updates, addressing the following issues: 182, 247, 
+249, 267, 333, 340, 361, 369, 379, 384, 388, 389, 390, 391, 393, 404, 407.
 
 
 
