@@ -27,6 +27,7 @@ list_geobr <- function(wide = TRUE){
       alias = ifelse(alias %in% c('censustractsurbano', 'censustractsrural'), 'censustracts', alias)) |>
     unique()
 
+
   # reformat to wide
   if (isTRUE(wide)) {
     tempdf <- tempdf |>
@@ -63,7 +64,9 @@ list_geobr <- function(wide = TRUE){
     "read_comparable_areas",
     "read_urban_concentrations",
     "read_pop_arrangements",
-    "read_favelas"
+    "read_favelas",
+    "read_polling_places",
+    "read_quilombola_lands"
     ),
  geography = c(
    "Country",
@@ -93,7 +96,9 @@ list_geobr <- function(wide = TRUE){
    "Historically comparable municipalities, aka \u00e1reas m\u00ednimas compar\u00e1veis (AMCs)",
    "Urban concentration areas (concentra\u00e7\u00f5es urbanas)",
    "Population arrangements (arranjos populacionais)",
-   "Favelas and urban communities"
+   "Favelas and urban communities",
+   "Voting places",
+   "Quilombola lands officialy recognized"
  ),
  source = c(
    "IBGE",
@@ -114,7 +119,8 @@ list_geobr <- function(wide = TRUE){
    "IBGE",
    "MMA",
    "CEMADEN and IBGE",
-   "FUNAI","IBGE",
+   "FUNAI",
+   "IBGE",
    "CNES, DataSUS",
    "DataSUS",
    "IBGE",
@@ -122,7 +128,9 @@ list_geobr <- function(wide = TRUE){
    "IBGE",
    "IBGE",
    "IBGE",
-   "IBGE"
+   "IBGE",
+   "TSE",
+   "Incra"
    ),
 
  alias = c(
@@ -138,31 +146,39 @@ list_geobr <- function(wide = TRUE){
    "weightingareas",
    "censustracts",
    "statsgrid",
-   "metroareas",
+   "metroarea",
    "urbanareas",
    "amazonialegal",
    "biomes",
    "conservationunits",
    "disasterriskareas",
    "indigenouslands",
-   "read_semiarid",
+   "semiarid",
    "healthfacilities",
    "healthregions",
    "neighborhoods",
-   "read_schools",
+   "schools",
    "read_comparable_areas",
-   "urbanconcentrations",
    "poparrangements",
-   "favelas"
+   "poparrangements",
+   "favelas",
+   "pollingplaces",
+   "quilombolalands"
  )
  ),
- row.names = c(NA, 28L),
+ row.names = c(NA, 30L),
  class = "data.frame"
  )
 
   df <- dplyr::left_join(datasets, tempdf, by  = 'alias') |>
     dplyr::arrange(alias) |>
     dplyr::select(-alias)
+
+  # AMCS temporarily suspended
+  df <- df |>
+    dplyr::mutate(
+      year = ifelse(Function=="read_comparable_areas", "temporarily suspended", year)
+    )
 
   return(df)
 }
