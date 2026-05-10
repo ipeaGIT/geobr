@@ -265,7 +265,7 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 download_metadata2 <- function(){ # nocov start
 
   # path to tempfile of metadata
-  tempf <- fs::path(fs::path_temp(), "metadata_geobr_gpkg.parquet")
+  tempf <- fs::path(fs::path_temp("geobr"), "metadata_geobr_gpkg.parquet")
 
   # IF metadata has already been successfully downloaded
   if (file.exists(tempf) & file.info(tempf)$size != 0) {

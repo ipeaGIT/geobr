@@ -56,7 +56,7 @@ library(ggplot2)
 
 ### Available data sets
 
-The geobr package covers more than 25 spatial data sets, including a variety of 
+The geobr package currently covers 30 spatial data sets, including a variety of 
 political-administrative and statistical areas used in Brazil. You can view what 
 data sets are available using the `list_geobr()` function.
 

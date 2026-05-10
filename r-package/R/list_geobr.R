@@ -1,7 +1,7 @@
 #' List all data sets available in the geobr package
 #'
 #' @description
-#' Returns a data frame with all datasets available in the geobr package
+#' Returns a data frame with all data sets available in the geobr package
 #'
 #' @param wide Whether the the output data frame should come in wide (`TRUE`) or
 #'        long format (`FALSE`).

@@ -14,7 +14,7 @@ long format (\code{FALSE}).}
 A \code{data.frame}
 }
 \description{
-Returns a data frame with all datasets available in the geobr package
+Returns a data frame with all data sets available in the geobr package
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
