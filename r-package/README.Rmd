@@ -99,6 +99,8 @@ More examples [here](https://github.com/ipeaGIT/geobr/tree/master/python-package
 
 # Available datasets:
 
+You can check all the data sets available with ``list_geobr()`
+
 :point_right:  **All datasets use geodetic reference system "SIRGAS2000", CRS(4674).** 
 
 ```{r eval=TRUE, message=FALSE, warning=FALSE, echo=FALSE}
@@ -113,25 +115,20 @@ knitr::kable(temp, format = "pipe")
 ```
 
 
-## Other functions:
+## Other support functions:
 
 | Function | Action|
 |-----|-----|
 | `list_geobr` | List all datasets available in the geobr package |
-|`lookup_muni`| Look up municipality codes by their name, or the other way around |
-|`grid_state_correspondence_table`| Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
+| `lookup_muni` | Look up municipality codes by their name, or the other way around |
+| `remove_islands` | Removes distant oceanic islands from Brazil |
+| `grid_state_correspondence_table` | Loads a correspondence table indicating what quadrants of IBGE's statistical grid intersect with each state |
 | `cep_to_state` | Determine the state of a given CEP postal code |
 | ... | ... |
 
 Note 1. Data sets and Functions marked with "dev" are only available in the development version of `geobr`.
 
 Note 2. Most data sets are available at scale 1:250,000 (see documentation for details).
- 
-
-'*' Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
-
-* [Quadro geográfico de referência para produção, análise e disseminação de estatísticas](https://www.ibge.gov.br/geociencias/organizacao-do-territorio/analises-do-territorio/24233-quadro-geografico-de-referencia-para-producao-analise-e-disseminacao-de-estatisticas.html?=&t=o-que-e)
-* Outros arquivos e recortes estão disponiveis em [ftp://geoftp.ibge.gov.br/](ftp://geoftp.ibge.gov.br/).
 
 
 # Contributing to geobr
