@@ -22,6 +22,8 @@ accuracy. See documentation of these functions.
 - The function `lookup_muni()` now has a `year` parameter. Closes [#401](https://github.com/ipeaGIT/geobr/issues/401).
 - The function and data `read_comparable_areas()` will be going under  major 
 changes. For now, this function is temporarily suspended.
+- The only year available so far for the functions `read_urban_concentrations()` 
+and `read_pop_arrangements()`is 2010, and not 2015.
 
 **Major changes**
 
@@ -36,6 +38,8 @@ the function is silent. Closes [#400](https://github.com/ipeaGIT/geobr/issues/40
 choose whether the output should be presented in wide or long format.
 - The function `lookup_muni()` now uses probabilistic match to find municipality
 names that users might input with typos. Closes [#406](https://github.com/ipeaGIT/geobr/issues/406).
+- Several functions now include the column `code_state` to allow users to filter
+the data directly in the function call.
 
 **Minor changes**
 

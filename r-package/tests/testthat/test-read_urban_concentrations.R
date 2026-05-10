@@ -11,10 +11,10 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 test_that("read_urban_concentrations", {
 
   # read data and check sf object
-  test_sf <- read_urban_concentrations()
+  test_sf <- read_urban_concentrations(year = 2010)
   expect_true(is(test_sf, "sf"))
 
-  test_sf <- read_urban_concentrations(year = 2015)
+  test_sf <- read_urban_concentrations(year = 2010, code_state = 11)
   expect_true(is(test_sf, "sf"))
 
 
@@ -26,6 +26,7 @@ test_that("read_urban_concentrations", {
 test_that("read_urban_concentrations", {
 
   # Wrong year
+  expect_error(read_urban_concentrations())
   expect_error(read_urban_concentrations(year=9999999))
 
 })
