@@ -1,5 +1,4 @@
 ############# Support functions for geobr
-# nocov start
 
 # globals
 geobr_data_release <- 'v2.0.0'
@@ -431,7 +430,7 @@ convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
   # place holder to use geoarrow becaue:
   #   Namespace in Imports field not imported from: 'geoarrow'
   #        All declared Imports should be used.
-  temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)") # nocov
+  temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)")
 
 
   if(isTRUE(as_sf)){
