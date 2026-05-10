@@ -11,15 +11,16 @@ reference:
   - title: "Political administrative"
   - contents:
     - read_capitals
+    - read_country
     - read_municipal_seat
     - read_municipality
-    - read_immediate_region
     - read_intermediate_region
+    - read_immediate_region
     - read_micro_region
     - read_meso_region
-    - read_state
     - read_region
-    - read_country
+    - read_state
+    - read_polling_places
   - title: "Statistical areas"
   - contents:
     - read_statistical_grid
@@ -40,6 +41,7 @@ reference:
   - title: "Urban"
   - contents:
     - read_neighborhood
+    - read_favela
     - read_urban_area
     - read_metro_area
     - read_urban_concentrations
@@ -47,10 +49,12 @@ reference:
   - title: "Miscellaneous"
   - contents:
     - read_indigenous_land
+    - read_quilombola_lands
     - read_comparable_areas
     - cep_to_state
   - title: "Support functions"
   - contents:
     - lookup_muni
     - list_geobr
+    - remove_islands
     - grid_state_correspondence_table
