@@ -57,8 +57,7 @@ grid_rio <- read_statistical_grid(
 # Read the grid covering a given municipality at a given year
 grid_ssalvador <- read_statistical_grid(
   year = 2022,
-  code_muni = 2927408,
-  year=2010
+  code_muni = 2927408
   )
 \dontshow{\}) # examplesIf}
 }

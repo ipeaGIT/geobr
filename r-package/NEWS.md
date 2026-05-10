@@ -38,8 +38,14 @@ the function is silent. Closes [#400](https://github.com/ipeaGIT/geobr/issues/40
 choose whether the output should be presented in wide or long format.
 - The function `lookup_muni()` now uses probabilistic match to find municipality
 names that users might input with typos. Closes [#406](https://github.com/ipeaGIT/geobr/issues/406).
-- Several functions now include the column `code_state` to allow users to filter
-the data directly in the function call.
+- The following functions now include the column `code_state` to allow users 
+to filter the data directly in the function call: `read_indigenous_land()`,
+`read_metro_area()`, `read_pop_arrangements()` and `read_urban_concentrations()`.
+- The following functions now include the column `code_muni` to allow users 
+to filter the data directly in the function call: `read_disaster_risk_area()`,
+`read_health_facilities()`, `read_neighborhood`(), `read_statistical_grid()` and 
+`read_schools()`.
+
 
 **Minor changes**
 

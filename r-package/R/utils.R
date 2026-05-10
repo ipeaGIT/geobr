@@ -428,6 +428,12 @@ convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
 
   checkmate::assert_logical(as_sf)
 
+  # place holder to use geoarrow becaue:
+  #   Namespace in Imports field not imported from: 'geoarrow'
+  #        All declared Imports should be used.
+  temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)") # nocov
+
+
   if(isTRUE(as_sf)){
     temp_arrw <- sf::st_as_sf(temp_arrw)
   }
@@ -436,7 +442,3 @@ convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
 } # nocov end
 
 
-# place holder to use geoarrow becaue:
-#   Namespace in Imports field not imported from: 'geoarrow'
-#        All declared Imports should be used.
-geoarrow::as_geoarrow_vctr("POINT (0 1)") # nocov
