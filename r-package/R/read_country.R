@@ -1,44 +1,53 @@
 #' Download spatial data of Brazil's national borders
 #'
 #' @description
-#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
+#' National borders
 #'
 #' @template year
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific year
-#' br <- read_country(year = 2018)
+#' br_1872 <- read_country(year = 1872)
 #'
-read_country <- function(year = NULL,
+#' br_2025 <- read_country(year = 2025)
+
+read_country <- function(year,
                          simplified = TRUE,
+                         as_sf = TRUE,
                          showProgress = TRUE,
-                         cache = TRUE){
+                         cache = TRUE,
+                         verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="country", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="country",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
-  # # check if download failed
-  # if (is.null(temp_meta)) { return(invisible(NULL)) }
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
 
 }

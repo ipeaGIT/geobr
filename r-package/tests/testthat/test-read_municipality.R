@@ -10,8 +10,8 @@ test_that("read_municipality", {
   # read data
   test_1970 <- read_municipality(code_muni=1100205, year=1970)
   test_2010 <- read_municipality(code_muni=1100205, year=2010)
-  test_latest <- read_municipality(code_muni=1100205, year=NULL)
-  test_latest11 <- read_municipality(code_muni=11, year=NULL)
+  test_latest <- read_municipality(code_muni="RO", year=2010)
+  test_latest11 <- read_municipality(code_muni=11, year=2010)
 
   # check sf object
   testthat::expect_true(is(test_1970, "sf"))
@@ -27,7 +27,7 @@ test_that("read_municipality", {
   testthat::expect_true(is(  read_municipality(code_muni='AC', year=1970) , "sf"))
   testthat::expect_true(is(  read_municipality(code_muni=1100205, year=1970) , "sf"))
 
-  testthat::expect_true(is(  read_municipality() , "sf"))
+  testthat::expect_true(is(  read_municipality(year=2010) , "sf"))
   testthat::expect_true(is(  read_municipality( year=2010) , "sf"))
   # testthat::expect_true(is(  read_municipality(code_muni=11, year=2010) , "sf"))
   testthat::expect_true(is(  read_municipality(code_muni=11, year=2010, simplified = F) , "sf"))
@@ -46,8 +46,8 @@ test_that("read_municipality", {
   testthat::expect_true(n22t > n22f)
 
   # test cache
-  cache_true <- system.time(read_municipality(cache = TRUE))
-  cache_false <- system.time(read_municipality(cache = FALSE))
+  cache_true <- system.time(read_municipality(year=2010, cache = TRUE))
+  cache_false <- system.time(read_municipality(year=2010, cache = FALSE))
   cache_false[[3]] > cache_true[[3]]
 })
 
@@ -70,14 +70,14 @@ test_that("read_municipality", {
 
   # Wrong year
   testthat::expect_error(read_municipality( year=9999999))
-  testthat::expect_error(read_municipality( year='SASa'))
-  testthat::expect_error(read_municipality( showProgress = 'aaaaa'))
-  testthat::expect_error(read_municipality( showProgress = NULL))
-  testthat::expect_error(read_municipality( simplified = 'aaaaa'))
-  testthat::expect_error(read_municipality( simplified = NULL))
-  testthat::expect_error(read_municipality( cache = 'aaaaa'))
-  testthat::expect_error(read_municipality( cache = NULL))
-  testthat::expect_error(read_municipality( keep_areas_operacionais = 'aaaaa'))
-  testthat::expect_error(read_municipality( keep_areas_operacionais = NULL))
+  testthat::expect_error(read_municipality(year=2010, year='SASa'))
+  testthat::expect_error(read_municipality(year=2010, showProgress = 'aaaaa'))
+  testthat::expect_error(read_municipality(year=2010, showProgress = NULL))
+  testthat::expect_error(read_municipality(year=2010, simplified = 'aaaaa'))
+  testthat::expect_error(read_municipality(year=2010, simplified = NULL))
+  testthat::expect_error(read_municipality(year=2010, cache = 'aaaaa'))
+  testthat::expect_error(read_municipality(year=2010, cache = NULL))
+  testthat::expect_error(read_municipality(year=2010, keep_areas_operacionais = 'aaaaa'))
+  testthat::expect_error(read_municipality(year=2010, keep_areas_operacionais = NULL))
 
 })

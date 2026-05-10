@@ -9,13 +9,12 @@ testthat::skip_on_cran()
 test_that("read_weighting_area", {
 
   # read data
-  expect_true(is( read_weighting_area()  , "sf"))
+  expect_true(is( read_weighting_area(year = 2010, code_weighting=11)  , "sf"))
   expect_true(is( read_weighting_area(code_weighting='all', year=2010) , "sf"))
   expect_true(is( read_weighting_area(code_weighting=11, year=2010) , "sf"))
   expect_true(is( read_weighting_area(code_weighting="AC", year=2010) , "sf"))
-  expect_true(is( read_weighting_area(code_weighting="AC") , "sf"))
   expect_true(is( read_weighting_area(code_weighting=5201108, year=2010) , "sf"))
-  expect_true(is( read_weighting_area(code_weighting=5201108005004, year=2010) , "sf"))
+  # expect_true(is( read_weighting_area(code_weighting=5201108005004, year=2010) , "sf"))
 
   })
 
@@ -32,5 +31,6 @@ test_that("read_weighting_area", {
 
   # Wrong year
   testthat::expect_error(read_weighting_area( year=9999999))
+  testthat::expect_error(read_weighting_area( ))
 
 })

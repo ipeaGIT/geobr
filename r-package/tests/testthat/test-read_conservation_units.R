@@ -10,7 +10,7 @@ testthat::skip_on_cran()
 test_that("read_conservation_units", {
 
   # read data
-  expect_true(is(  read_conservation_units() , "sf"))
+  expect_true(is(  read_conservation_units(date = 202503) , "sf"))
 
 })
 
@@ -20,6 +20,7 @@ test_that("read_conservation_units", {
 test_that("read_conservation_units", {
 
   # Wrong date
+  testthat::expect_error(read_conservation_units())
   testthat::expect_error(read_conservation_units(date=9999999))
   testthat::expect_error(read_conservation_units(date="xxx"))
   testthat::expect_error(read_conservation_units(tp="xxx"))

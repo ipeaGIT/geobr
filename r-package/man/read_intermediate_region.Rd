@@ -5,11 +5,13 @@
 \title{Download spatial data of Brazil's Intermediate Geographic Areas}
 \usage{
 read_intermediate_region(
-  year = NULL,
+  year,
   code_intermediate = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -29,6 +31,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -36,56 +41,30 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
 The intermediate Geographic Areas are part of the geographic division of
-Brazil created in 2017 by IBGE. These regions were created to replace the
-"Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
-system "SIRGAS2000" and CRS(4674)
+Brazil created after 2017 by IBGE. These regions were created to replace the
+"Meso Regions" division. Data at scale 1:250,000.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
+
 # Read an specific intermediate region
-  im <- read_intermediate_region(code_intermediate=1202)
+inter <- read_intermediate_region(code_intermediate = 1202, year = 2024)
 
 # Read intermediate regions of a state
-  im <- read_intermediate_region(code_intermediate=12)
-  im <- read_intermediate_region(code_intermediate="AM")
+inter <- read_intermediate_region(code_intermediate = "AM", year = 2024)
+inter <- read_intermediate_region(code_intermediate = 12, year = 2024)
 
 # Read all intermediate regions of the country
-  im <- read_intermediate_region()
-  im <- read_intermediate_region(code_intermediate="all")
+inter <- read_intermediate_region(code_intermediate = "all", year = 2024)
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_area}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

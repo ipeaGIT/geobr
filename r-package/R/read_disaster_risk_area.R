@@ -12,37 +12,62 @@
 #' about the methodology, see deails at \url{https://www.ibge.gov.br/geociencias/organizacao-do-territorio/tipologias-do-territorio/21538-populacao-em-areas-de-risco-no-brasil.html}
 #'
 #' @template year
+#' @template code_muni
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read all disaster risk areas in an specific year
-#' d <- read_disaster_risk_area(year=2010)
+#' d <- read_disaster_risk_area(year = 2010)
 #'
-read_disaster_risk_area <- function(year = NULL,
+#' # Read disaster risk areas in a given municipality
+#' d <- read_disaster_risk_area(year = 2010, code_muni = 2927408)
+#'
+#' # Read disaster risk areas in a given state
+#' d <- read_disaster_risk_area(year = 2010, code_muni = "AC")
+
+read_disaster_risk_area <- function(year,
+                                    code_muni = "all",
                                     simplified = TRUE,
+                                    as_sf = TRUE,
                                     showProgress = TRUE,
-                                    cache = TRUE){
+                                    cache = TRUE,
+                                    verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="disaster_risk_area", year=year, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # Get metadata
+  temp_meta <- select_metadata(
+    geography="disasterriskareas",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
+
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
+
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
+
 }

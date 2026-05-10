@@ -2,41 +2,55 @@
 #'
 #' @description
 #' This data set covers the whole of Brazil and it includes the polygons of all
-#' conservation units present in Brazilian territory. The last update of the data
-#' was 09-2019. The original data comes from MMA and can be found at "http://mapas.mma.gov.br/i3geo/datadownload.htm".
+#' conservation units present in Brazilian territory. The original data and data
+#' dictionary can be found comes from MMA and can be found at "https://dados.mma.gov.br/dataset/unidadesdeconservacao".
 #'
 #' @template date
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family general area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read conservation_units
-#' b <- read_conservation_units(date = 201909)
+#' uc <- read_conservation_units(date = 202503)
 #'
-read_conservation_units <- function(date = NULL,
+read_conservation_units <- function(date,
                                     simplified = TRUE,
+                                    as_sf = TRUE,
                                     showProgress = TRUE,
-                                    cache = TRUE){
+                                    cache = TRUE,
+                                    verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="conservation_units", year=date, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # Get metadata
+  temp_meta <- select_metadata(
+    geography="conservationunits",
+    year = date,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
+
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
+
 }

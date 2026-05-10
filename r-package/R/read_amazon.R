@@ -7,39 +7,49 @@
 #'
 #' @template year
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read Brazilian Legal Amazon
-#' a <- read_amazon(year = 2012)
+#' a <- read_amazon(year = 2024)
 #'
-read_amazon <- function(year = NULL,
+read_amazon <- function(year,
                         simplified = TRUE,
+                        as_sf = TRUE,
                         showProgress = TRUE,
-                        cache = TRUE){
+                        cache = TRUE,
+                        verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="amazonia_legal", year=year, simplified=simplified)
-
-  # # check if download failed
-  # if (is.null(temp_meta)) { return(invisible(NULL)) }
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # Get metadata
+  temp_meta <- select_metadata(
+    geography="amazonialegal",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
+
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
 }

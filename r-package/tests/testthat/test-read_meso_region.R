@@ -8,15 +8,14 @@ testthat::skip_on_cran()
 test_that("read_meso_region", {
 
   # read data
-  expect_true(is(read_meso_region(code_meso="AC"), "sf"))
-  expect_true(is(read_meso_region(code_meso="AC", year=2010), "sf"))
-  # expect_true(is(read_meso_region(code_meso=11, year=2010), "sf"))
-  expect_true(is(read_meso_region(code_meso="all", year=2010) , "sf"))
+  expect_true(is(read_meso_region(code_meso="AC", year=2018), "sf"))
+  # expect_true(is(read_meso_region(code_meso=11, year=2018), "sf"))
+  expect_true(is(read_meso_region(code_meso="all", year=2018) , "sf"))
   expect_true(is(read_meso_region(code_meso=12, year=2017) , "sf"))
   expect_true(is(read_meso_region(code_meso="AM", year=2000) , "sf"))
 
 
-  test_meso_code <-  read_meso_region(code_meso=1401, year=2010)
+  test_meso_code <-  read_meso_region(code_meso=1401, year=2018)
 
   # check sf object
   expect_true(is(test_meso_code, "sf"))
@@ -39,5 +38,6 @@ test_that("read_meso_region", {
 
   # Wrong year
   expect_error(read_meso_region( year=9999999))
+  expect_error(read_meso_region( ))
 
 })

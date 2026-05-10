@@ -15,7 +15,6 @@
 #' @aliases geobr-package
 #'
 #' @importFrom utils "tail"
-#' @importFrom data.table "%like%"
 #' @importFrom curl "has_internet"
 #' @importFrom methods is
 #'
@@ -43,9 +42,15 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010', # nocov s
                                                         'group_by',
                                                         'showProgress',
                                                         'year',
-                                                        'url2'
+                                                        'url2',
+                                                        'as_sf',
+                                                        'file_name',
+                                                        'name_muni_formatted',
+                                                        'simplified',
+                                                        'alias',
+                                                        'date',
+                                                        'temp_sf',
+                                                        'code_pop_arrangement',
+                                                        'code_urban_concentration'
                                                         )) # nocov end
 
-.onLoad <- function(lib, pkg) { # nocov star
-  requireNamespace("sf")
-} # nocov end

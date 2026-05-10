@@ -4,7 +4,11 @@
 \alias{list_geobr}
 \title{List all data sets available in the geobr package}
 \usage{
-list_geobr()
+list_geobr(wide = TRUE)
+}
+\arguments{
+\item{wide}{Whether the the output data frame should come in wide (\code{TRUE}) or
+long format (\code{FALSE}).}
 }
 \value{
 A \code{data.frame}
@@ -13,12 +17,7 @@ A \code{data.frame}
 Returns a data frame with all datasets available in the geobr package
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 df <- list_geobr()
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other support functions: 
-\code{\link{lookup_muni}()}
-}
-\concept{support functions}

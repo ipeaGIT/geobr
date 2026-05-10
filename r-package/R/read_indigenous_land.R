@@ -2,44 +2,63 @@
 #'
 #' @description
 #' The data set covers the whole of Brazil and it includes indigenous lands from
-#' all ethnicities and in different stages of demarcation. The original data
+#' all ethnic groups and at different stages of demarcation. The original data
 #' comes from the National Indian Foundation (FUNAI) and can be found at
-#' \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}. Although original data is
-#' updated monthly, the geobr package will only keep the data for a few months
-#' per year.
+#' \url{https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas}.
+#' Although original data is updated monthly, the geobr package will only keep
+#' the data for a few months per year.
 #'
-#' @template date
+#' @template year
+#' @template code_state
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read all indigenous land in an specific date
-#' i <- read_indigenous_land(date=201907)
+#' # Read all indigenous land in an specific year
+#' i <- read_indigenous_land(year = 2025)
 #'
-read_indigenous_land <- function(date = NULL,
+read_indigenous_land <- function(year,
+                                 code_state = "all",
                                  simplified = TRUE,
+                                 as_sf = TRUE,
                                  showProgress = TRUE,
-                                 cache = TRUE){
+                                 cache = TRUE,
+                                 verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="indigenous_land", year=date, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # Get metadata
+  temp_meta <- select_metadata(
+    geography="indigenouslands",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
+
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_state)
+
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
+
 }

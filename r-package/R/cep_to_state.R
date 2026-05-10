@@ -9,7 +9,6 @@
 #' @return A character string with a state abbreviation.
 #'
 #' @export
-#' @family cep functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' uf <- cep_to_state(cep = '69900-000')

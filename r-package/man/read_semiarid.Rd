@@ -5,10 +5,12 @@
 \title{Download spatial data of the Brazilian Semiarid region}
 \usage{
 read_semiarid(
-  year = NULL,
+  year,
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -22,6 +24,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -29,47 +34,23 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-This data set covers the whole of Brazilian Semiarid as defined in the resolution
-in  23/11/2017). The original data comes from the Brazilian Institute of Geography
-and Statistics (IBGE) and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
+This data set returns all the municipalities which are legally included in the
+Brazilian Semiarid, following changes in the national legislation. The original
+data comes from the Brazilian Institute of Geography and Statistics (IBGE)
+and can be found at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads}
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Read Brazilian semiarid
-a <- read_semiarid(year=2017)
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
+# read Brazilian semiarid
+sa <- read_semiarid(year = 2022)
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_area}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

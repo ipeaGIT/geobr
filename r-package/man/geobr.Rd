@@ -33,11 +33,18 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Caio Nogueira Goncalves
+  \item Rogério Jerônimo Barbosa
 }
 
 Other contributors:
 \itemize{
+  \item Caio Nogueira Goncalves [contributor]
+  \item Cecilia do Lago [contributor]
+  \item Filipe Cavalcanti [contributor]
+  \item Arthur Bazolli [contributor]
+  \item Lucas Gelape [contributor]
+  \item Rafael Lopes [contributor]
+  \item Vinicius Oike [contributor]
   \item Paulo Henrique Fernandes de Araujo [contributor]
   \item Guilherme Duarte Carvalho [contributor]
   \item Rodrigo Almeida de Arruda [contributor]
@@ -52,6 +59,7 @@ Other contributors:
   \item Daniel Ferreira [contributor]
   \item Marcus Saraiva [contributor]
   \item Beatriz Milz (\href{https://orcid.org/0000-0002-3064-4486}{ORCID}) [contributor]
+  \item ITpS - Instituto Todos pela Saúde [funder]
   \item Ipea - Institue for Applied Economic Research [copyright holder, funder]
 }
 

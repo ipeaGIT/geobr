@@ -8,13 +8,12 @@ testthat::skip_on_cran()
 test_that("read_micro_region", {
 
   # read data
-  expect_true(is(  read_micro_region(code_micro="AC") , "sf"))
-  expect_true(is(  read_micro_region(code_micro="AC", year=2010) , "sf"))
-  # expect_true(is(  read_micro_region(code_micro=11, year=2010) , "sf"))
-  expect_true(is(  read_micro_region(code_micro="all", year=2010)  , "sf"))
+  expect_true(is(  read_micro_region(code_micro="AC", year=2018) , "sf"))
+  # expect_true(is(  read_micro_region(code_micro=11, year=2018) , "sf"))
+  expect_true(is(  read_micro_region(code_micro="all", year=2018)  , "sf"))
 
   # check filter
-  test_filter <-  read_micro_region(code_micro=11008, year=2010)
+  test_filter <-  read_micro_region(code_micro=11008, year=2018)
   expect_equal( nrow(test_filter), 1)
 
 })
@@ -32,5 +31,6 @@ test_that("read_micro_region", {
 
   # Wrong year
   expect_error(read_micro_region( year=9999999))
+  expect_error(read_micro_region( ))
 
 })

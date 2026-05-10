@@ -6,15 +6,14 @@
 #' with the names and codes of state capitals. Data downloaded for the latest
 #' available year.
 #'
-#' @param as_sf Logic `FALSE` or `TRUE`, indicating whether the function should
-#'        return a spatial data in `sf` format (Defaults to `TRUE`) or in a
-#'        `data.frame` format without spatial information (`FALSE`).
+#' @template as_sf
 #' @template showProgress
+#' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object or a `"data.frame"`
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read spatial data with the  municipal seats of state capitals
@@ -24,12 +23,13 @@
 #' capitals_df <- read_capitals(as_sf = FALSE)
 #'
 read_capitals <- function(as_sf = TRUE,
-                          showProgress = TRUE){
+                          showProgress = TRUE,
+                          cache = TRUE,
+                          verbose = TRUE){
 
   # check input
-  if (!is.logical(as_sf)) { stop("'as_sf' must be of type 'logical'") }
-  if (!is.logical(showProgress)) { stop("'showProgress' must be of type 'logical'") }
-
+  checkmate::assert_logical(as_sf)
+  checkmate::assert_logical(showProgress)
 
   # base data.frame of capitals
   df <- data.frame(name_muni = c("S\u00e3o Paulo", "Rio de Janeiro", "Belo Horizonte",
@@ -65,10 +65,13 @@ read_capitals <- function(as_sf = TRUE,
     }
 
   if (isTRUE(as_sf)) {
-    temp_sf <- geobr::read_municipal_seat(showProgress = showProgress)
-    temp_sf <- subset(temp_sf, code_muni %in% df$code_muni)
-    rownames(temp_sf) <- NULL
-    return(temp_sf)
+    temp_sf <- geobr::read_municipal_seat(
+      year = 2010,
+      showProgress = showProgress,
+      as_sf = FALSE) |>
+      dplyr::filter(code_muni %in% df$code_muni)
+
+    return( sf::st_as_sf(temp_sf) )
   }
 
 }

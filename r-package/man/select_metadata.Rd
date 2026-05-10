@@ -4,7 +4,12 @@
 \alias{select_metadata}
 \title{Select metadata}
 \usage{
-select_metadata(geography, year = NULL, simplified = NULL)
+select_metadata(
+  geography,
+  year = parent.frame()$year,
+  simplified = parent.frame()$simplified,
+  verbose = parent.frame()$verbose
+)
 }
 \arguments{
 \item{geography}{Which geography will be downloaded.}

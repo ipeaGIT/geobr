@@ -2,9 +2,8 @@
 #'
 #' @description
 #' The intermediate Geographic Areas are part of the geographic division of
-#' Brazil created in 2017 by IBGE. These regions were created to replace the
-#' "Meso Regions" division. Data at scale 1:250,000, using Geodetic reference
-#' system "SIRGAS2000" and CRS(4674)
+#' Brazil created after 2017 by IBGE. These regions were created to replace the
+#' "Meso Regions" division. Data at scale 1:250,000.
 #'
 #' @template year
 #' @param code_intermediate 4-digit code of an intermediate region. If the
@@ -13,68 +12,63 @@
 #'        regions of that state. If `code_intermediate="all"` (Default), the
 #'        function downloads all intermediate regions of the country.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#'
 #' # Read an specific intermediate region
-#'   im <- read_intermediate_region(code_intermediate=1202)
+#' inter <- read_intermediate_region(code_intermediate = 1202, year = 2024)
 #'
 #' # Read intermediate regions of a state
-#'   im <- read_intermediate_region(code_intermediate=12)
-#'   im <- read_intermediate_region(code_intermediate="AM")
+#' inter <- read_intermediate_region(code_intermediate = "AM", year = 2024)
+#' inter <- read_intermediate_region(code_intermediate = 12, year = 2024)
 #'
-#'# Read all intermediate regions of the country
-#'   im <- read_intermediate_region()
-#'   im <- read_intermediate_region(code_intermediate="all")
+#' # Read all intermediate regions of the country
+#' inter <- read_intermediate_region(code_intermediate = "all", year = 2024)
 #'
-read_intermediate_region <- function(year = NULL,
+read_intermediate_region <- function(year,
                                      code_intermediate = "all",
                                      simplified = TRUE,
+                                     as_sf = TRUE,
                                      showProgress = TRUE,
-                                     cache = TRUE){
+                                     cache = TRUE,
+                                     verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="intermediate_regions", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="intermediateregions",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
-  # check if download failed
+  # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
   # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  ## FILTERS
-  y <- code_intermediate
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_intermediate)
 
-  # input "all"
-  if(code_intermediate=="all"){
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
 
-    # abbrev_state
-  } else if(code_intermediate %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
+  return(output)
 
-    # code_state
-  } else if(code_intermediate %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
 
-    # code_intermediate
-  } else if(code_intermediate %in% temp_sf$code_intermediate){
-    temp_sf <- subset(temp_sf, code_intermediate == y)
-
-  } else {stop(paste0("Error: Invalid Value to argument 'code_intermediate'",collapse = " "))}
-
-  return(temp_sf)
 }

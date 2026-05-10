@@ -11,8 +11,10 @@ testthat::skip_on_cran()
 test_that("read_pop_arrangements", {
 
   # read data and check sf object
-  test_sf <- read_pop_arrangements()
+  test_sf <- read_pop_arrangements(year = 2010)
+  expect_true(is(test_sf, "sf"))
 
+  test_sf <- read_pop_arrangements(year = 2010, code_state = 11)
   expect_true(is(test_sf, "sf"))
 
 })
@@ -23,6 +25,7 @@ test_that("read_pop_arrangements", {
 test_that("read_pop_arrangements", {
 
   # Wrong year
+  expect_error(read_pop_arrangements())
   expect_error(read_pop_arrangements(year=9999999))
 
 })

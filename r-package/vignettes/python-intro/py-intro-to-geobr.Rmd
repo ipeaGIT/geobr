@@ -1,5 +1,5 @@
 ---
-title: "Introduction to geobr (Python)"
+title: "Intro to geobr (Python)"
 output: rmarkdown::html_vignette
 ---
 

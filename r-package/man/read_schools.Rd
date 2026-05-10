@@ -4,11 +4,28 @@
 \alias{read_schools}
 \title{Download geolocated data of schools}
 \usage{
-read_schools(year = NULL, showProgress = TRUE, cache = TRUE)
+read_schools(
+  year,
+  code_muni = "all",
+  as_sf = TRUE,
+  showProgress = TRUE,
+  cache = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
+
+\item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
+(Default), the function downloads all the data available in the
+country. Alternatively, if a two-digit state code or a two-letter
+uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+data of that state are downloaded. Municipality codes can be consulted
+with the \code{geobr::lookup_muni()} function.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -17,51 +34,47 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data comes from the School Census collected by INEP, the National Institute
-for Educational Studies and Research Anisio Teixeira. The date of the last
-data update is registered in the database in the column 'date_update'. These
-data uses Geodetic reference system "SIRGAS2000" and CRS(4674). The coordinates
-of each school if collected by INEP. Periodically the coordinates are revised
-with the objective of improving the quality of the data. More information
-available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
+Data comes from the School Census and Catalogue of Schools, organized by the
+National Institute for Educational Studies and Research Anisio Teixeira (INEP).
+More information available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}.
+The spatial coordinates used in geobr are a combination of the coordinates
+produced by the original data producer and the coordinates found via geocoding
+with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
+Whenever the distance between the coordinates from both sources is smaller than
+800 meters, geobr uses coordinates from the data producer. When the distance
+between the two sources is greater than 800 meters and the results from
+geocodebr have a precision level finer than 800 meters, geobr uses the
+coordinates from geocodebr. When the coordinates from the original source are
+missing, geobr also uses geocodebr coordinates, regardless of precision level.
+The source of the spatial coordinates used in each observation is registered
+in the data in a specific column \code{coords_source}. Additional columns
+indicating the precision level of geocodebr geocoding are also included in
+the data.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read all schools in the country
-s <- read_schools( year = 2020)
+s <- read_schools(year = 2020)
+
+# Read all schools in a given state
+s <- read_schools(
+  year = 2020,
+  code_muni = "AC"
+  )
+
+# Read all schools in a given municipality
+s <- read_schools(
+  year = 2020,
+  code_muni = 1200401
+  )
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_area}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

@@ -2,14 +2,16 @@
 % Please edit documentation in R/read_weighting_area.R
 \name{read_weighting_area}
 \alias{read_weighting_area}
-\title{Download spatial data of Census Weighting Areas (area de ponderacao) of the Brazilian Population Census}
+\title{Download spatial data of census weighting areas}
 \usage{
 read_weighting_area(
-  year = NULL,
+  year,
   code_weighting = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -18,8 +20,9 @@ and reads the data from the latest year available.}
 
 \item{code_weighting}{The 7-digit code of a Municipality. If the two-digit code
 or a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or "RJ")
-the function will load all weighting areas of that state. If \code{code_weighting="all"},
-all weighting areas of the country are loaded.}
+the function will load all weighting areas of that state. If
+\code{code_weighting="all"} (the default), all weighting areas of the country are
+loaded.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -28,6 +31,9 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
+
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
 \item{cache}{Logical. Whether the function should read the data cached
@@ -35,57 +41,42 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Only 2010 data is currently available.
+Data of Census Weighting Areas (area de ponderação) of the Brazilian
+Population Census
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read specific weighting area at a given year
-w <- read_weighting_area(code_weighting=5201108005004, year=2010)
+w <- read_weighting_area(
+  code_weighting = 5201108005004,
+  year = 2010
+  )
 
 # Read all weighting areas of a state at a given year
-w <- read_weighting_area(code_weighting=53, year=2010) # or
-w <- read_weighting_area(code_weighting="DF", year=2010)
-plot(w)
+w <- read_weighting_area(
+  code_weighting = "DF",
+  year = 2010
+  )
 
 # Read all weighting areas of a municipality at a given year
-w <- read_weighting_area(code_weighting=5201108, year=2010)
-plot(w)
+w <- read_weighting_area(
+  code_weighting = 5201108,
+  year = 2010
+  )
 
 # Read all weighting areas of the country at a given year
-w <- read_weighting_area(code_weighting="all", year=2010)
+w <- read_weighting_area(
+  code_weighting = "all",
+  year = 2010
+  )
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_area}()},
-\code{\link{read_urban_concentrations}()}
-}
-\concept{area functions}

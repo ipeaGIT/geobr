@@ -5,11 +5,13 @@
 \title{Download spatial data of Brazilian municipalities}
 \usage{
 read_municipality(
-  year = NULL,
+  year,
   code_muni = "all",
   simplified = TRUE,
+  as_sf = TRUE,
   showProgress = TRUE,
   cache = TRUE,
+  verbose = TRUE,
   keep_areas_operacionais = FALSE
 )
 }
@@ -17,13 +19,12 @@ read_municipality(
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
 
-\item{code_muni}{The 7-digit identification code of a municipality. If
-\code{code_muni = "all"} (Default), the function downloads all
-municipalities of the country. Alternatively, if a two-digit
-identification code or a two-letter uppercase abbreviation of a state
-is passed (e.g. \code{33} or \code{"RJ"}), all municipalities of that state will
-be downloaded. Municipality identification codes can be consulted with
-the \code{geobr::lookup_muni()} function.}
+\item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
+(Default), the function downloads all the data available in the
+country. Alternatively, if a two-digit state code or a two-letter
+uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+data of that state are downloaded. Municipality codes can be consulted
+with the \code{geobr::lookup_muni()} function.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set
@@ -31,6 +32,9 @@ with 'simplified' geometry. Defaults to \code{TRUE}. For spatial analysis and
 statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -40,18 +44,22 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
 
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
+
 \item{keep_areas_operacionais}{Logic. Whether the function should keep the
 polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
 do Sul (considered as areas estaduais operacionais). Defaults to \code{FALSE}.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
+Brazilian municipalities
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read specific municipality at a given year
 mun <- read_municipality(code_muni = 1200179, year = 2017)
 
@@ -63,32 +71,3 @@ mun <- read_municipality(code_muni = "RJ", year = 2010)
 mun <- read_municipality(code_muni = "all", year = 2018)
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_statistical_grid}()},
-\code{\link{read_urban_area}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

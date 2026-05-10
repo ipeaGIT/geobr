@@ -9,11 +9,10 @@ testthat::skip_on_cran()
 test_that("read_intermediate_region", {
 
   # read data
-  expect_true(is(  read_intermediate_region() , "sf"))
-  expect_true(is(  read_intermediate_region(code_intermediate = 11) , "sf"))
-  expect_true(is(  read_intermediate_region(code_intermediate = "AC") , "sf"))
+  expect_true(is(  read_intermediate_region(code_intermediate = 11, year=2024) , "sf"))
+  expect_true(is(  read_intermediate_region(code_intermediate = "AC", year=2024) , "sf"))
 
-  test_code_muni <- read_intermediate_region(code_intermediate =  1201)
+  test_code_muni <- read_intermediate_region(code_intermediate = 1201, year=2024)
 
   # check number of rows
   testthat::expect_equal(nrow(test_code_muni), 1)
@@ -28,6 +27,7 @@ test_that("read_intermediate_region", {
 
 
   # Wrong year
+  testthat::expect_error(read_intermediate_region())
   testthat::expect_error(read_intermediate_region(year = 9999999))
   testthat::expect_error(read_intermediate_region(year = "xxx"))
 

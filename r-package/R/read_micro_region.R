@@ -7,87 +7,64 @@
 #' @param code_micro 5-digit code of a micro region. If the two-digit code or a
 #'        two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
 #'        "RJ") the function will load all micro regions of that state. If
-#'        `code_micro="all"` (Default), the function downloads all micro regions of the
-#'        country.
+#'        `code_micro="all"` (Default), the function downloads all micro regions
+#'        of the country.
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific micro region a given year
-#'   micro <- read_micro_region(code_micro=11008, year=2018)
+#' micro <- read_micro_region(code_micro=11008, year=2018)
 #'
 #' # Read micro regions of a state at a given year
-#'   micro <- read_micro_region(code_micro=12, year=2017)
-#'   micro <- read_micro_region(code_micro="AM", year=2000)
+#' micro <- read_micro_region(code_micro="AM", year=2018)
+#' micro <- read_micro_region(code_micro=12, year=2018)
 #'
 #' # Read all micro regions at a given year
-#'   micro <- read_micro_region(code_micro="all", year=2010)
+#'  micro <- read_micro_region(code_micro="all", year=2018)
 #'
-read_micro_region <- function(year = NULL,
+read_micro_region <- function(year,
                               code_micro = "all",
                               simplified = TRUE,
+                              as_sf = TRUE,
                               showProgress = TRUE,
-                              cache = TRUE){
+                              cache = TRUE,
+                              verbose = TRUE){
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="micro_region", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="microregions",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
-  # check if download failed
+  # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # Verify code_micro input
-  if (!any(code_micro == 'all' |
-           code_micro %in% temp_meta$code |
-           substring(code_micro, 1, 2) %in% temp_meta$code |
-           code_micro %in% temp_meta$code_abbrev
-           )) {
-    stop("Error: Invalid Value to argument code_micro.")
-    }
-
-  # get file url
-  if (code_micro=="all") {
-    file_url <- as.character(temp_meta$download_path)
-
-  } else if (is.numeric(code_micro)) { # if using numeric code_micro
-    file_url <- as.character(subset(temp_meta, code==substr(code_micro, 1, 2))$download_path)
-
-  } else if (is.character(code_micro)) { # if using chacracter code_abbrev
-    file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_micro, 1, 2))$download_path)
-    }
-
-  # download gpkg
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # download files
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  ## FILTERS
-  y <- code_micro
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_micro)
 
-  # input "all"
-  if(code_micro=="all"){
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
 
-    # abbrev_state
-  } else if(code_micro %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
+  return(output)
 
-    # code_state
-  } else if(code_micro %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
-
-    # code_micro
-  } else if(code_micro %in% temp_sf$code_micro){
-    temp_sf <- subset(temp_sf, code_micro == y)
-
-  } else {stop(paste0("Error: Invalid Value to argument 'code_micro'",collapse = " "))}
-
-  return(temp_sf)
 }

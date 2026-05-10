@@ -5,22 +5,27 @@
 \title{Download spatial data of IBGE's statistical grid}
 \usage{
 read_statistical_grid(
-  year = 2010,
-  code_grid,
+  year,
+  code_muni,
+  as_sf = TRUE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
 \item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
 and reads the data from the latest year available.}
 
-\item{code_grid}{If two-letter abbreviation or two-digit code of a state is
-passed, the function will load all grid quadrants that
-intersect with that state. If \code{code_grid="all"}, the grid of
-the whole country will be loaded. Users may also pass a
-grid quadrant id to load an specific quadrant. Quadrant ids
-can be consulted at \code{geobr::grid_state_correspondence_table}.}
+\item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
+(Default), the function downloads all the data available in the
+country. Alternatively, if a two-digit state code or a two-letter
+uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
+data of that state are downloaded. Municipality codes can be consulted
+with the \code{geobr::lookup_muni()} function.}
+
+\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
+\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -29,48 +34,30 @@ locally, which is faster. Defaults to \code{cache = TRUE}. By default,
 \code{geobr} stores data files in a temporary directory that exists only
 within each R session. If \code{cache = FALSE}, the function will download
 the data again and overwrite the local file.}
+
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \value{
-An \verb{"sf" "data.frame"} object
+An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 }
 \description{
-Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+Official gridded population estimate of Brazil.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Read a particular grid at a given year
-grid <- read_statistical_grid(code_grid = 45, year=2010)
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 
 # Read the grid covering a given state at a given year
-state_grid <- read_statistical_grid(code_grid = "RJ")
+grid_rio <- read_statistical_grid(
+  year = 2022,
+  code_muni = "RJ"
+  )
+
+# Read the grid covering a given municipality at a given year
+grid_ssalvador <- read_statistical_grid(
+  year = 2022,
+  code_muni = 2927408
+  )
 \dontshow{\}) # examplesIf}
 }
-\seealso{
-Other area functions: 
-\code{\link{read_amazon}()},
-\code{\link{read_biomes}()},
-\code{\link{read_capitals}()},
-\code{\link{read_comparable_areas}()},
-\code{\link{read_country}()},
-\code{\link{read_disaster_risk_area}()},
-\code{\link{read_health_facilities}()},
-\code{\link{read_health_region}()},
-\code{\link{read_immediate_region}()},
-\code{\link{read_indigenous_land}()},
-\code{\link{read_intermediate_region}()},
-\code{\link{read_meso_region}()},
-\code{\link{read_metro_area}()},
-\code{\link{read_micro_region}()},
-\code{\link{read_municipal_seat}()},
-\code{\link{read_municipality}()},
-\code{\link{read_neighborhood}()},
-\code{\link{read_pop_arrangements}()},
-\code{\link{read_region}()},
-\code{\link{read_schools}()},
-\code{\link{read_semiarid}()},
-\code{\link{read_state}()},
-\code{\link{read_urban_area}()},
-\code{\link{read_urban_concentrations}()},
-\code{\link{read_weighting_area}()}
-}
-\concept{area functions}

@@ -15,8 +15,9 @@
 #' @template simplified
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @details
 #' These data sets are generated based on the original Stata code developed by
@@ -26,7 +27,6 @@
 #'   47(1), 215-229. https://doi.org/10.1590/0101-416147182phe
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #'   amc <- read_comparable_areas(start_year=1970, end_year=2010)
@@ -35,7 +35,13 @@ read_comparable_areas <- function(start_year = 1970,
                                   end_year = 2010,
                                   simplified = TRUE,
                                   showProgress = TRUE,
-                                  cache = TRUE){
+                                  cache = TRUE,
+                                  verbose = TRUE){
+
+  cli::cli_alert_danger(
+    "We will be making major changes to this data set and function. For now, this function is temporarily suspended."
+  )
+  return(invisible(NULL))
 
   # tests
   years_available <- c(1872,1900,1911,1920,1933,1940,1950,1960,1970,1980,1991,2000,2010)
@@ -57,12 +63,12 @@ read_comparable_areas <- function(start_year = 1970,
 
   # subset based on end_year
   target_year <- paste0(start_year, '_', end_year)
-  file_url <- file_url[ file_url %like% target_year]
+  file_url <- file_url[ grep(target_year, file_url)]
 
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # # download files
+  # temp_sf <- download_gpkg(file_url = file_url,
+  #                          showProgress = showProgress,
+  #                          cache = cache)
 
   # check if download failed
   if (is.null(temp_sf)) { return(invisible(NULL)) }

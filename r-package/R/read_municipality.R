@@ -1,27 +1,22 @@
 #' Download spatial data of Brazilian municipalities
 #'
 #' @description
-#' Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
+#' Brazilian municipalities
 #'
 #' @template year
-#' @param code_muni The 7-digit identification code of a municipality. If
-#'        `code_muni = "all"` (Default), the function downloads all
-#'        municipalities of the country. Alternatively, if a two-digit
-#'        identification code or a two-letter uppercase abbreviation of a state
-#'        is passed (e.g. `33` or `"RJ"`), all municipalities of that state will
-#'        be downloaded. Municipality identification codes can be consulted with
-#'        the `geobr::lookup_muni()` function.
+#' @template code_muni
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #' @param keep_areas_operacionais Logic. Whether the function should keep the
 #'        polygons of Lagoas dos Patos and Lagoa Mirim in the State of Rio Grande
 #'        do Sul (considered as areas estaduais operacionais). Defaults to `FALSE`.
-
-#' @return An `"sf" "data.frame"` object
+#'
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read specific municipality at a given year
@@ -34,11 +29,13 @@
 #' # Read all municipalities of the country at a given year
 #' mun <- read_municipality(code_muni = "all", year = 2018)
 #'
-read_municipality <- function(year = NULL,
+read_municipality <- function(year,
                               code_muni = "all",
                               simplified = TRUE,
+                              as_sf = TRUE,
                               showProgress = TRUE,
                               cache = TRUE,
+                              verbose = TRUE,
                               keep_areas_operacionais = FALSE) {
 
   # check input
@@ -46,65 +43,43 @@ read_municipality <- function(year = NULL,
 
 
   # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="municipality", year=year, simplified=simplified)
+  temp_meta <- select_metadata(
+    geography="municipalities",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
-  # check if download failed
+  # check if metadata download failed
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  # check code_muni exists in metadata
-  if (!any(code_muni == 'all' |
-           code_muni %in% temp_meta$code |
-           substring(code_muni, 1, 2) %in% temp_meta$code |
-           code_muni %in% temp_meta$code_abbrev |
-           (temp_meta$year[1] < 1992 & temp_meta$code %in% "mu")
-  )) {
-    stop("Error: Invalid Value to argument code_muni.")
-  }
-
-  # get file url
-  if (code_muni=="all" | temp_meta$year[1] < 1992) {
-    file_url <- as.character(temp_meta$download_path)
-
-  } else if (is.numeric(code_muni)) { # if using numeric code_muni
-    file_url <- as.character(subset(temp_meta, code==substr(code_muni, 1, 2))$download_path)
-
-  } else if (is.character(code_muni)) { # if using chacracter code_abbrev
-    file_url <- as.character(subset(temp_meta, code_abbrev==substr(code_muni, 1, 2))$download_path)
-  }
-
-  # download gpkg
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # download files
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress,
+    cache
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
-  ## FILTERS
-  y <- code_muni
-
-  # input "all"
-  if(code_muni=="all"){
-
-    # abbrev_state
-  } else if(code_muni %in% temp_sf$abbrev_state){
-    temp_sf <- subset(temp_sf, abbrev_state == y)
-
-    # code_state
-  } else if(code_muni %in% temp_sf$code_state){
-    temp_sf <- subset(temp_sf, code_state == y)
-
-    # code_muni
-  } else if(code_muni %in% temp_sf$code_muni){
-    temp_sf <- subset(temp_sf, code_muni == y)
-
-  } else {stop(paste0("Error: Invalid Value to argument 'code_muni'",collapse = " "))}
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
 
   # keep_areas_operacionais
-  if(isFALSE(keep_areas_operacionais)){
-    temp_sf <- subset(temp_sf, code_muni != 4300001)
-    temp_sf <- subset(temp_sf, code_muni != 4300002)
+  if (isFALSE(keep_areas_operacionais)) {
+    temp_arrw <- temp_arrw |>
+      dplyr::filter(code_muni != 4300001) |>
+      dplyr::filter(code_muni != 4300002) |>
+      dplyr::compute()
     }
 
-  return(temp_sf)
-  }
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
+
+}
+
+
+

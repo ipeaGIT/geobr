@@ -1,42 +1,68 @@
 #' Download spatial data of neighborhood limits of Brazilian municipalities
 #'
 #' @description
-#' This data set includes the neighborhood limits of 720 Brazilian municipalities.
-#' It is based on aggregations of the census tracts from the Brazilian
-#' census. Only 2010 data is currently available.
+#' This data set includes the neighborhood limits of Brazilian municipalities.
+#' The data is only available for those municipalities where neighborhood
+#' information was collected in the population census. The data set is based on
+#' aggregations of the census tracts from the Brazilian census.
 #'
 #' @template year
+#' @template code_muni
 #' @template simplified
+#' @template as_sf
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
-#' @return An `"sf" "data.frame"` object
+#' @return An `"sf" "data.frame"` OR an `ArrowObject`
 #'
 #' @export
-#' @family area functions
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read neighborhoods of Brazilian municipalities
-#' n <- read_neighborhood(year=2010)
+#' n <- read_neighborhood(year = 2022)
 #'
-read_neighborhood <- function(year = NULL,
+#' # Read neighborhoods of two municipalities, Recife and Porto Alegre in this example
+#' r <- read_neighborhood(
+#'   year = 2022,
+#'   code_muni = c(2611606, 4314902)
+#'   )
+#'
+read_neighborhood <- function(year,
+                              code_muni = "all",
                               simplified = TRUE,
+                              as_sf = TRUE,
                               showProgress = TRUE,
-                              cache = TRUE){
+                              cache = TRUE,
+                              verbose = TRUE){
 
-  # Get metadata with data url addresses
-  temp_meta <- select_metadata(geography="neighborhood", year=year, simplified=simplified)
-
-  # list paths of files to download
-  file_url <- as.character(temp_meta$download_path)
-
-  # download files
-  temp_sf <- download_gpkg(file_url = file_url,
-                           showProgress = showProgress,
-                           cache = cache)
+  # Get metadata
+  temp_meta <- select_metadata(
+    geography="neighborhoods",
+    year = year,
+    simplified = simplified,
+    verbose = verbose
+  )
 
   # check if download failed
-  if (is.null(temp_sf)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) }
 
-  return(temp_sf)
+  # download file and open arrow dataset
+  temp_arrw <- download_parquet(
+    filename_to_download = temp_meta$file_name,
+    showProgress = showProgress,
+    cache = cache
+  )
+
+  # check if download failed
+  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+
+  # FILTER
+  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
+
+  # convert to sf
+  output <- convert_arrow2sf(temp_arrw, as_sf)
+
+  return(output)
+
 }

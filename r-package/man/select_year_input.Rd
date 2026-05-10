@@ -4,12 +4,20 @@
 \alias{select_year_input}
 \title{Select year input}
 \usage{
-select_year_input(temp_meta, y = year)
+select_year_input(
+  temp_meta,
+  y = parent.frame()$year,
+  verbose = parent.frame()$verbose
+)
 }
 \arguments{
 \item{temp_meta}{A dataframe with the file_url addresses of geobr datasets}
 
 \item{y}{Year of the dataset (passed by red_ function)}
+
+\item{verbose}{A logical. If \code{TRUE} (the default), the function prints
+informative messages and shows download progress bar. If \code{FALSE}, the
+function is silent.}
 }
 \description{
 Select year input
