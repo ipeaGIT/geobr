@@ -1,5 +1,5 @@
 ---
-title: "Intro to geobr (R)"
+title: "Introductio to geobr (R)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to geobr (R)}
