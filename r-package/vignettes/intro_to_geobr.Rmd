@@ -79,15 +79,15 @@ Download an specific geographic area at a given year:
 ```{r message=FALSE, warning=FALSE}
 # State of Sergige
 state <- read_state(
-  code_state="SE",
-  year=2018,
+  year = 2022,
+  code_state = "SE",
   showProgress = FALSE
   )
 
 # Municipality of Sao Paulo
 muni <- read_municipality(
-  code_muni = 3550308, 
   year = 2022, 
+  code_muni = 3550308, 
   showProgress = FALSE
   )
 
@@ -102,27 +102,21 @@ Download all geographic areas within a state at a given year:
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # All municipalities in the state of Minas Gerais
 muni <- read_municipality(
-  code_muni = "MG", 
   year = 2022,
+  code_muni = "MG", 
   showProgress = FALSE
   )
-
-# # All census tracts in the state of Rio de Janeiro
-# cntr <- read_census_tract(
-#   code_tract = "RJ", 
-#   year = 2022,
-#   showProgress = FALSE
-#   )
 
 head(muni)
 ```
 
-If the parameter `code_` is not passed to the function, geobr returns the data for the whole country by default.
+If the parameter `code_` is not passed to the function, geobr returns the data 
+for the whole country by default.
 
 ```{r message=FALSE, warning=FALSE}
-# read all intermediate regions
-inter <- read_intermediate_region(
-  year = 2025,
+# read all schools
+inter <- read_schools(
+  year = 2022,
   showProgress = FALSE
   )
 
@@ -139,10 +133,10 @@ head(states)
 ## Important note about data resolution
 
 All functions to download polygon data such as states, municipalities etc. have 
-a `simplified` argument. When `simplified = FALSE`, geobr will return the 
+a `simplified` argument. When `simplified = FALSE`, geobr returns the 
 original data set with high resolution at detailed geographic scale (see 
-documentation). By default, however, `simplified = TRUE` and geobr returns data 
-set geometries with simplified borders to improve speed of downloading and 
+documentation). By default, however, `simplified = TRUE` and geobr returns data
+geometries with simplified borders to improve speed of downloading and 
 plotting the data.
 
 
@@ -175,8 +169,8 @@ Plot all the municipalities of a particular state, such as Rio de Janeiro:
 
 # Download all municipalities of Rio
 all_muni <- read_municipality(
-  code_muni = "RJ", 
   year= 2022,
+  code_muni = "RJ", 
   showProgress = FALSE
   )
 
@@ -192,7 +186,7 @@ ggplot() +
 
 ## Thematic maps
 
-The next step is to combine  data from ***geobr*** package with other data sets 
+The next step is to combine  data from **geobr** package with other data sets 
 to create thematic maps. In this first example, we will be using data from the 
 (Atlas of Human Development (by Ipea/FJP and UNPD) to create a choropleth map 
 showing the spatial variation of **Life Expectancy at birth** across Brazilian 
@@ -200,17 +194,22 @@ states.
 
 #### Merge external data
 
-First, we need a `data.frame` with estimates of Life Expectancy and merge it to 
-our spatial database. The two-digit abbreviation of state name is our key column 
-to join these two databases.
+First, we need a `data.frame` with estimates of Life Expectancy. We then need to 
+merge this table to our spatial database. The two-digit abbreviation of state name 
+is our key column to join these two data sets.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # Read data.frame with life expectancy data
-df <- data.table::fread(system.file("extdata/br_states_lifexpect2017.csv", 
-                                   package = "geobr"))
+df <- data.table::fread(
+  system.file("extdata/br_states_lifexpect2017.csv", package = "geobr")
+  )
 
 # join the databases
-states <- dplyr::left_join(states, df, by = c("name_state" = "uf"))
+states <- dplyr::left_join(
+  x = states, 
+  y = df, 
+  by = c("name_state" = "uf")
+  )
 
 ```
 
@@ -235,8 +234,6 @@ proportion of households connected to a sewage network in Brazilian municipaliti
 
 First, we need to download households data from the Brazilian census using the 
 `read_households()` function.
-
-
 
 ```{r}
 library(censobr)
