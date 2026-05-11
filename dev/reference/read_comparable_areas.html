@@ -30,8 +30,8 @@ geobr team."><meta name="robots" content="noindex"></head><body>
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro_to_geobr.html">Introduction to geobr (R)</a></li>
-    <li><a class="dropdown-item" href="../articles/python-intro/py-intro-to-geobr.html">Introduction to geobr (Python)</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro_to_geobr.html">Introductio to geobr (R)</a></li>
+    <li><a class="dropdown-item" href="../articles/python-intro/py-intro-to-geobr.html">Intro to geobr (Python)</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -73,7 +73,8 @@ Ehrl (2017) <a href="https://doi.org/10.1590/0101-416147182phe" class="external-
 <span>  end_year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -111,10 +112,16 @@ locally, which is faster. Defaults to <code>cache = TRUE</code>. By default,
 within each R session. If <code>cache = FALSE</code>, the function will download
 the data again and overwrite the local file.</p></dd>
 
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>A logical. If <code>TRUE</code> (the default), the function prints
+informative messages and shows download progress bar. If <code>FALSE</code>, the
+function is silent.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An <code>"sf" "data.frame"</code> object</p>
+    <p>An <code>"sf" "data.frame"</code> OR an <code>ArrowObject</code></p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -123,40 +130,11 @@ Philipp Ehrl. If you use these data, please cite:</p><ul><li><p>Ehrl, P. (2017).
 aggregation of Brazilian municipalities. Estudos Econômicos (São Paulo),
 47(1), 215-229. https://doi.org/10.1590/0101-416147182phe</p></li>
 </ul></div>
-    <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other area functions:
-<code><a href="read_amazon.html">read_amazon</a>()</code>,
-<code><a href="read_biomes.html">read_biomes</a>()</code>,
-<code><a href="read_capitals.html">read_capitals</a>()</code>,
-<code><a href="read_country.html">read_country</a>()</code>,
-<code><a href="read_disaster_risk_area.html">read_disaster_risk_area</a>()</code>,
-<code><a href="read_health_facilities.html">read_health_facilities</a>()</code>,
-<code><a href="read_health_region.html">read_health_region</a>()</code>,
-<code><a href="read_immediate_region.html">read_immediate_region</a>()</code>,
-<code><a href="read_indigenous_land.html">read_indigenous_land</a>()</code>,
-<code><a href="read_intermediate_region.html">read_intermediate_region</a>()</code>,
-<code><a href="read_meso_region.html">read_meso_region</a>()</code>,
-<code><a href="read_metro_area.html">read_metro_area</a>()</code>,
-<code><a href="read_micro_region.html">read_micro_region</a>()</code>,
-<code><a href="read_municipal_seat.html">read_municipal_seat</a>()</code>,
-<code><a href="read_municipality.html">read_municipality</a>()</code>,
-<code><a href="read_neighborhood.html">read_neighborhood</a>()</code>,
-<code><a href="read_pop_arrangements.html">read_pop_arrangements</a>()</code>,
-<code><a href="read_region.html">read_region</a>()</code>,
-<code><a href="read_schools.html">read_schools</a>()</code>,
-<code><a href="read_semiarid.html">read_semiarid</a>()</code>,
-<code><a href="read_state.html">read_state</a>()</code>,
-<code><a href="read_statistical_grid.html">read_statistical_grid</a>()</code>,
-<code><a href="read_urban_area.html">read_urban_area</a>()</code>,
-<code><a href="read_urban_concentrations.html">read_urban_concentrations</a>()</code>,
-<code><a href="read_weighting_area.html">read_weighting_area</a>()</code></p></div>
-    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="va">amc</span> <span class="op">&lt;-</span> <span class="fu">read_comparable_areas</span><span class="op">(</span>start_year<span class="op">=</span><span class="fl">1970</span>, end_year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using year/date 1970</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> We will be making major changes to this data set and function. For now, this function is temporarily suspended.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -164,11 +142,11 @@ aggregation of Brazilian municipalities. Estudos Econômicos (São Paulo),
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Rafael H. M. Pereira, Caio Nogueira Goncalves, Ipea - Institue for Applied Economic Research.</p>
+  <p>Developed by Rafael H. M. Pereira, Rogério Jerônimo Barbosa, ITpS - Instituto Todos pela Saúde, Ipea - Institue for Applied Economic Research.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

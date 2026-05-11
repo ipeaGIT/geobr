@@ -18,8 +18,8 @@
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro_to_geobr.html">Introduction to geobr (R)</a></li>
-    <li><a class="dropdown-item" href="../articles/python-intro/py-intro-to-geobr.html">Introduction to geobr (Python)</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro_to_geobr.html">Introductio to geobr (R)</a></li>
+    <li><a class="dropdown-item" href="../articles/python-intro/py-intro-to-geobr.html">Intro to geobr (Python)</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -44,14 +44,46 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.9.1999999999" id="geobr-v191999999999-dev">geobr v1.9.1999999999 dev<a class="anchor" aria-label="anchor" href="#geobr-v191999999999-dev"></a></h2>
-<p><strong>Major changes</strong></p>
-<ul><li>Now all functions download data from the latest year available by default. Closes <a href="https://github.com/ipeaGIT/geobr/issues/378" class="external-link">#378</a>.</li>
+<h2 class="pkg-version" data-toc-text="2.0.0" id="geobr-v200-dev">geobr v2.0.0 dev<a class="anchor" aria-label="anchor" href="#geobr-v200-dev"></a></h2>
+<p><strong>New functions</strong></p>
+<ul><li>
+<code><a href="../reference/read_favela.html">read_favela()</a></code> with data of favelas and urban communities (source: IBGE) Closes <a href="https://github.com/ipeaGIT/geobr/issues/387" class="external-link">#387</a>.</li>
+<li>
+<code><a href="../reference/read_polling_places.html">read_polling_places()</a></code> with data of pooling places (source: TSE) Closes <a href="https://github.com/ipeaGIT/geobr/issues/184" class="external-link">#184</a> and <a href="https://github.com/ipeaGIT/geobr/issues/242" class="external-link">#242</a>.</li>
+<li>
+<code>read_quilombola_lands()</code> with data of officialy recognized quilombola lands (source: INCRA) <a href="https://github.com/ipeaGIT/geobr/issues/242" class="external-link">Closes </a><a href="https://github.com/ipeaGIT/geobr/issues/242" class="external-link">#242</a>.</li>
+<li>
+<code><a href="../reference/remove_islands.html">remove_islands()</a></code> to remove islands from Brazil. Closes <a href="https://github.com/ipeaGIT/geobr/issues/412" class="external-link">#412</a>.</li>
+</ul><p><strong>Breaking changes</strong></p>
+<ul><li>The <code>year</code> and <code>date</code> arguments can no longer be <code>NULL</code>; they must be explicitly specified. This change is intentional and is meant to encourage users to be more mindful of historical changes in the data.</li>
+<li>The <code>geom</code> column has been renamed to <code>geometry</code> for consistency</li>
+<li>The <code><a href="../reference/read_health_region.html">read_health_region()</a></code> has been completely rewritten to allow users return more detailed output if needed</li>
+<li>Functions like <code><a href="../reference/read_schools.html">read_schools()</a></code> and <code><a href="../reference/read_health_facilities.html">read_health_facilities()</a></code> now use a combination of official spatial coordinates and coordinates found using the <a href="https://github.com/ipeaGIT/geocodebr/" class="external-link">{geocodebr}</a> package to improve spatial accuracy. See documentation of these functions.</li>
+<li>The function <code><a href="../reference/lookup_muni.html">lookup_muni()</a></code> now has a <code>year</code> parameter. Closes <a href="https://github.com/ipeaGIT/geobr/issues/401" class="external-link">#401</a>.</li>
+<li>The function and data <code><a href="../reference/read_comparable_areas.html">read_comparable_areas()</a></code> will be going under major changes. For now, this function is temporarily suspended.</li>
+<li>The only year available so far for the functions <code><a href="../reference/read_urban_concentrations.html">read_urban_concentrations()</a></code> and <code><a href="../reference/read_pop_arrangements.html">read_pop_arrangements()</a></code>is 2010, and not 2015.</li>
+</ul><p><strong>Major changes</strong></p>
+<ul><li>Data files are now saved in <code>.parquet</code>. This improved performance to download and to read files, and allow integration with gearrow. Closes <a href="">#290</a>
+</li>
+<li>All functions have a new argument <code>as_sf</code>. If <code>TRUE</code> (the default), the function returns an ⁠sf data.frame⁠. If <code>FALSE</code>, the function returns an arrow dataset. Closes <a href="https://github.com/ipeaGIT/geobr/issues/290" class="external-link">#290</a>.</li>
+<li>All functions have a new argument <code>verbose</code>. If <code>TRUE</code> (the default), the function prints informative messages and shows download progress bar. If <code>FALSE</code>, the function is silent. Closes <a href="https://github.com/ipeaGIT/geobr/issues/400" class="external-link">#400</a>.</li>
+<li>The function <code><a href="../reference/list_geobr.html">list_geobr()</a></code> now has a boolean argument <code>wide</code>, so users can choose whether the output should be presented in wide or long format.</li>
+<li>The function <code><a href="../reference/lookup_muni.html">lookup_muni()</a></code> now uses probabilistic match to find municipality names that users might input with typos. Closes <a href="https://github.com/ipeaGIT/geobr/issues/406" class="external-link">#406</a>.</li>
+<li>The following functions now include the column <code>code_state</code> to allow users to filter the data directly in the function call: <code><a href="../reference/read_indigenous_land.html">read_indigenous_land()</a></code>, <code><a href="../reference/read_metro_area.html">read_metro_area()</a></code>, <code><a href="../reference/read_pop_arrangements.html">read_pop_arrangements()</a></code> and <code><a href="../reference/read_urban_concentrations.html">read_urban_concentrations()</a></code>.</li>
+<li>The following functions now include the column <code>code_muni</code> to allow users to filter the data directly in the function call: <code><a href="../reference/read_disaster_risk_area.html">read_disaster_risk_area()</a></code>, <code><a href="../reference/read_health_facilities.html">read_health_facilities()</a></code>, <code>read_neighborhood</code>(), <code><a href="../reference/read_statistical_grid.html">read_statistical_grid()</a></code> and <code><a href="../reference/read_schools.html">read_schools()</a></code>.</li>
 </ul><p><strong>Minor changes</strong></p>
-<ul><li>Fix url redundancy to avoid internet connection problems.</li>
-</ul><p><strong>New data</strong></p>
-<ul><li>neighborhoods 2022</li>
-<li>updated census tracts for 2022</li>
+<ul><li>Several data fixes and data updates, addressing the following issues: 182, 247, 249, 250, 267, 333, 340, 361, 369, 379, 384, 388, 389, 390, 391, 393, 404, 407.</li>
+</ul><p><strong>New co-author</strong></p>
+<ul><li>Rogerio Barbosa</li>
+</ul><p><strong>New contributors</strong></p>
+<ul><li>Cecilia do Lago</li>
+<li>Arthur Bazolli</li>
+<li>Filipe Cavalcanti</li>
+<li>Lucas Gelape</li>
+<li>Rafael Lopes</li>
+<li>Vinicius Oike</li>
+</ul><p><strong>New funding / institutional support</strong></p>
+<ul><li>Instituto Todos pela Saúde (ITpS)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.9.1" id="geobr-v191">geobr v1.9.1<a class="anchor" aria-label="anchor" href="#geobr-v191"></a></h2><p class="text-muted">CRAN release: 2024-09-06</p>
@@ -69,7 +101,7 @@
 <ul><li>Function <code><a href="../reference/read_health_facilities.html">read_health_facilities()</a></code> now has a new parameter <code>date</code>, which will allow users to access data for different dates of reference. The plan is to have at least one update of this data set per year. Closes <a href="https://github.com/ipeaGIT/geobr/issues/334" class="external-link">#334</a>.</li>
 <li>Functions <code><a href="../reference/read_urban_area.html">read_urban_area()</a></code> and <code><a href="../reference/read_metro_area.html">read_metro_area()</a></code> now have a new parameter <code>code_state</code>, which will allow users to filter selected states. Closes <a href="https://github.com/ipeaGIT/geobr/issues/338" class="external-link">#338</a></li>
 </ul><p><strong>Bug fix</strong></p>
-<ul><li>Using <code><a href="https://rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist()</a></code> to rind data was throwing errors when some observations were of class <code>POLYGONS</code> and others were <code>MULTIPOLYGONS</code>. This has now been replaced with <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> at a very small performance penalty. Closes <a href="https://github.com/ipeaGIT/geobr/issues/346" class="external-link">#346</a>.</li>
+<ul><li>Using <code><a href="https://rdrr.io/pkg/data.table/man/rbindlist.html" class="external-link">data.table::rbindlist()</a></code> to rind data was throwing errors when some observations were of class <code>POLYGONS</code> and others were <code>MULTIPOLYGONS</code>. This has now been replaced with <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> at a very small performance penalty. Closes <a href="https://github.com/ipeaGIT/geobr/issues/346" class="external-link">#346</a>.</li>
 </ul><p><strong>New data</strong></p>
 <ul><li>schools for 2023</li>
 <li>health facilities for 202303</li>
@@ -101,7 +133,7 @@
 <li>fixed bug from conflicts between <code>plotly</code> and <code>data.table</code>. <a href="https://github.com/ipeaGIT/geobr/issues/279" class="external-link">Closes </a><a href="https://github.com/ipeaGIT/geobr/issues/279" class="external-link">#279</a>.</li>
 <li>fixed bug in <code><a href="../reference/cep_to_state.html">cep_to_state()</a></code> function. <a href="https://github.com/ipeaGIT/geobr/issues/317" class="external-link">Closes </a><a href="https://github.com/ipeaGIT/geobr/issues/317" class="external-link">#317</a>.</li>
 <li>fixed bug in progress bar. <a href="https://github.com/ipeaGIT/geobr/issues/154" class="external-link">Closes </a><a href="https://github.com/ipeaGIT/geobr/issues/154" class="external-link">#154</a>.</li>
-<li>The <code><a href="../reference/lookup_muni.html">lookup_muni()</a></code> and <code><a href="../reference/download_metadata.html">download_metadata()</a></code> functions are now more robust to internet connection failures.</li>
+<li>The <code><a href="../reference/lookup_muni.html">lookup_muni()</a></code> and <code>download_metadata()</code> functions are now more robust to internet connection failures.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.7.0" id="geobr-v170">geobr v1.7.0<a class="anchor" aria-label="anchor" href="#geobr-v170"></a></h2><p class="text-muted">CRAN release: 2022-08-16</p>
@@ -284,11 +316,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Rafael H. M. Pereira, Caio Nogueira Goncalves, Ipea - Institue for Applied Economic Research.</p>
+  <p>Developed by Rafael H. M. Pereira, Rogério Jerônimo Barbosa, ITpS - Instituto Todos pela Saúde, Ipea - Institue for Applied Economic Research.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
