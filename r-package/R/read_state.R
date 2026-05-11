@@ -43,7 +43,7 @@ read_state <- function(year = NULL,
   )
 
   # check if metadata download failed
-  if (is.null(temp_meta)) { return(invisible(NULL)) }
+  if (is.null(temp_meta)) { return(invisible(NULL)) } # nocov
 
   # download files
   temp_arrw <- download_parquet(
@@ -53,7 +53,7 @@ read_state <- function(year = NULL,
     )
 
   # check if download failed
-  if (is.null(temp_arrw)) { return(invisible(NULL)) }
+  if (is.null(temp_arrw)) { return(invisible(NULL)) } # nocov
 
   # FILTER
   temp_arrw <- filter_arrw(temp_arrw, code = code_state)
