@@ -10,11 +10,10 @@
 #'
 #' @template year
 #' @template code_state
-#' @param group_by String. When `group_by = NULL` (Default), the function returns
-#'        the geometries of municipalities. When `group_by = "micro"`, the output
-#'        geometries are aggregated to return polygons of micro health regions.
-#'        Alternatively, `group_by = "macro"` returns polygons of macro health
-#'        regions.
+#' @param geometry_level String. Spatial level of the output geometries. Use
+#'        `"municipality"` to return municipal geometries (default), `"micro"`
+#'        to aggregate geometries by health region, or `"macro"` to aggregate
+#'        geometries by health macroregion.
 #' @param macro The argument `macro` has been deprecated.
 #' @template simplified
 #' @template as_sf
@@ -27,24 +26,24 @@
 #' @export
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Read health regions for a given year
+#' # Read municipalities with info on health regions
 #' health_muni <- read_health_region(year = 2024)
 #'
-#' # Read health regions with the geometries of micro regions
+#' # Read the geometries of micro regions
 #' health_micro <- read_health_region(
 #'   year = 2024,
-#'   group_by = "micro"
+#'   geometry_level = "micro"
 #'   )
 #'
-#' # Read health regions with the geometries of micro regions
+#' # Read the geometries of macro regions
 #' health_macro <- read_health_region(
 #'   year = 2024,
-#'   group_by = "macro"
+#'   geometry_level = "macro"
 #' )
 #'
 read_health_region <- function(year,
                                code_state = "all",
-                               group_by = NULL,
+                               geometry_level = "municipality",
                                macro = NULL,
                                simplified = TRUE,
                                as_sf = TRUE,
@@ -56,16 +55,17 @@ read_health_region <- function(year,
   if (!is.null(macro)) {
     cli::cli_abort(c(
       "Argument deprecated",
-      "x" = "The `macro` argument is deprecated. Use `group_by` instead."
+      "x" = "The `macro` argument is deprecated. Use `geometry_level` instead."
     ))
   }
 
+
   # check input
-  allowed <- c("micro", "macro")
-  if (!all(group_by %in% allowed)) {
+  allowed <- c("municipality", "micro", "macro")
+  if (!all(geometry_level %in% allowed)) {
     cli::cli_abort(c(
-      "`group_by` must be one of: {.val {allowed}}.",
-      "x" = "Invalid value{?s}: {.val {setdiff(group_by, allowed)}}."
+      "`geometry_level` must be one of: {.val {allowed}}.",
+      "x" = "Invalid value{?s}: {.val {setdiff(geometry_level, allowed)}}."
     ))
   }
 
@@ -93,15 +93,22 @@ read_health_region <- function(year,
   # FILTER
   output <- filter_arrw(temp_arrw, code = code_state)
 
-  # group by
-  if (!is.null(group_by)) {
+  # geometry_level
+  if (geometry_level=="municipality") {
 
+    # convert to sf
+    output <- convert_arrow2sf(output, as_sf)
+
+    return(output)
+  }
+
+  # if micro or macro, perform aggregation
     # convert to sf
     temp <- convert_arrow2sf(output, TRUE)
 
     all_cols <- names(temp)
 
-    if(group_by=="micro"){
+    if(geometry_level=="micro"){
       group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_macroregion|name_health_macroregion', all_cols)]
     } else {
       group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_region|name_health_region', all_cols)]
@@ -113,37 +120,10 @@ read_health_region <- function(year,
       ) |>
       duckspatial::ddbs_collect() |>
       sfheaders::sf_remove_holes()
-  }
 
   # convert to sf
   output <- convert_arrow2sf(output, as_sf)
 
   return(output)
 
-
 }
-
-# all_cols <- names(mhr)
-#
-# if(isFALSE(macro)){
-#   group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_macroregion|name_health_macroregion', all_cols)]
-# } else {
-#   group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_region|name_health_region', all_cols)]
-# }
-#
-# a <- duckspatial::ddbs_union_agg(
-#   x = mhr,
-#   by = group_cols #c("code_health_macroregion","name_health_macroregion") #group_cols
-#   ) |>
-#   duckspatial::ddbs_collect() |>
-#   sfheaders::sf_remove_holes()
-
-# a <- duckspatial::ddbs_union_agg(x = output, by = "code_health_region") |>
-#   duckspatial::ddbs_collect() |>
-#   sfheaders::sf_remove_holes()
-# mapview::mapview(a)
-
-# head(a)
-# nrow(a)
-# mapview::mapview(a)
-

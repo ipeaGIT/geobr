@@ -51,6 +51,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010', # nocov s
                                                         'date',
                                                         'temp_sf',
                                                         'code_pop_arrangement',
-                                                        'code_urban_concentration'
+                                                        'code_urban_concentration',
+                                                        'Function'
                                                         )) # nocov end
 

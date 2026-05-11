@@ -7,7 +7,7 @@
 read_health_region(
   year,
   code_state = "all",
-  group_by = NULL,
+  geometry_level = "municipality",
   macro = NULL,
   simplified = TRUE,
   as_sf = TRUE,
@@ -24,11 +24,10 @@ and reads the data from the latest year available.}
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
 default), the function downloads all states.}
 
-\item{group_by}{String. When \code{group_by = NULL} (Default), the function returns
-the geometries of municipalities. When \code{group_by = "micro"}, the output
-geometries are aggregated to return polygons of micro health regions.
-Alternatively, \code{group_by = "macro"} returns polygons of macro health
-regions.}
+\item{geometry_level}{String. Spatial level of the output geometries. Use
+\code{"municipality"} to return municipal geometries (default), \code{"micro"}
+to aggregate geometries by health region, or \code{"macro"} to aggregate
+geometries by health macroregion.}
 
 \item{macro}{The argument \code{macro} has been deprecated.}
 
@@ -67,19 +66,19 @@ professionals. A macro region comprises one or more health regions.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
-# Read health regions for a given year
+# Read municipalities with info on health regions
 health_muni <- read_health_region(year = 2024)
 
-# Read health regions with the geometries of micro regions
+# Read the geometries of micro regions
 health_micro <- read_health_region(
   year = 2024,
-  group_by = "micro"
+  geometry_level = "micro"
   )
 
-# Read health regions with the geometries of micro regions
+# Read the geometries of macro regions
 health_macro <- read_health_region(
   year = 2024,
-  group_by = "macro"
+  geometry_level = "macro"
 )
 \dontshow{\}) # examplesIf}
 }

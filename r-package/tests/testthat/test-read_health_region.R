@@ -10,8 +10,8 @@ test_that("read_health_region", {
 
   # read data
   test_sf_muni <- read_health_region(year = 2024)
-  test_sf_micro <- read_health_region(year = 2024, group_by = "micro")
-  test_sf_macro <- read_health_region(year = 2024, group_by = "macro")
+  test_sf_micro <- read_health_region(year = 2024, geometry_level = "micro")
+  test_sf_macro <- read_health_region(year = 2024, geometry_level = "macro")
 
   # check sf object
   testthat::expect_true(is(test_sf_muni, "sf"))
@@ -33,6 +33,10 @@ test_that("read_health_region", {
   testthat::expect_error(read_health_region())
   testthat::expect_error(read_health_region(year=9999999))
   testthat::expect_error(read_health_region(year="xxx"))
+
+
+  # wrong geometry level
+  testthat::expect_error( read_health_region(year = 2024, geometry_level = "banana"))
 
   # deprecated macro argument
   testthat::expect_error( read_health_region(year = 2024, macro = T))

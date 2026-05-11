@@ -49,7 +49,7 @@ reference:
   - title: "Miscellaneous"
   - contents:
     - read_indigenous_land
-    - read_quilombola_lands
+    - read_quilombola_land
     - read_comparable_areas
     - cep_to_state
   - title: "Support functions"
