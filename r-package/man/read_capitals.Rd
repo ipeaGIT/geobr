@@ -4,11 +4,11 @@
 \alias{read_capitals}
 \title{Download data of state capitals}
 \usage{
-read_capitals(as_sf = TRUE, showProgress = TRUE, cache = TRUE, verbose = TRUE)
+read_capitals(output = "sf", showProgress = TRUE, cache = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
-\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
+\item{output}{String. Whether the output should be an \code{"sf"} object loaded to
+memory (the default), or an \code{"arrow"} arrow data set.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -34,9 +34,6 @@ available year.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Read spatial data with the  municipal seats of state capitals
-capitals_sf <- read_capitals(as_sf = TRUE)
-
-# Read simple data.frame of state capitals
-capitals_df <- read_capitals(as_sf = FALSE)
+capitals_sf <- read_capitals(output = "sf")
 \dontshow{\}) # examplesIf}
 }

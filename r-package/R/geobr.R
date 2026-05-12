@@ -43,7 +43,6 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c('brazil_2010', # nocov s
                                                         'showProgress',
                                                         'year',
                                                         'url2',
-                                                        'as_sf',
                                                         'file_name',
                                                         'name_muni_formatted',
                                                         'simplified',

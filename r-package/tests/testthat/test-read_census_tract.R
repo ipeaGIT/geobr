@@ -19,7 +19,7 @@ testthat::test_that("read_census_tract", {
   testthat::expect_true(is(  read_census_tract(code_tract = 'all', year = 2000)  , "sf"))
   testthat::expect_true(is(  read_census_tract(code_tract = 1100023, year = 2000) , "sf"))
 
-  temp <- read_census_tract(year=2022, code_tract = "all", as_sf = FALSE)
+  temp <- read_census_tract(year=2022, code_tract = "all", output = "arrow")
   testthat::expect_true(is(temp, "ArrowObject"))
 
 })

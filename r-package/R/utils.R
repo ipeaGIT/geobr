@@ -424,9 +424,16 @@ arrow_open_dataset <- function(filename){ # nocov start
 
 
 
-convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
+convert_arrow2sf <- function(temp_arrw, output){ # nocov start
 
-  checkmate::assert_logical(as_sf)
+  # check input
+  allowed <- c("sf", "arrow")
+  if (!all(output %in% allowed)) {
+    cli::cli_abort(c(
+      "`output` must be one of: {.val {allowed}}.",
+      "x" = "Invalid value{?s}: {.val {setdiff(output, allowed)}}."
+    ))
+  }
 
   # place holder to use geoarrow becaue:
   #   Namespace in Imports field not imported from: 'geoarrow'
@@ -434,7 +441,7 @@ convert_arrow2sf <- function(temp_arrw, as_sf){ # nocov start
   temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)")
 
 
-  if(isTRUE(as_sf)){
+  if(output=="sf"){
     temp_arrw <- sf::st_as_sf(temp_arrw)
   }
 

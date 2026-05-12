@@ -11,7 +11,7 @@
 #' @template year
 #' @template code_state
 #' @template simplified
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -32,7 +32,7 @@
 read_metro_area <- function(year,
                             code_state = "all",
                             simplified = TRUE,
-                            as_sf = TRUE,
+                            output = "sf",
                             showProgress = TRUE,
                             cache = TRUE,
                             verbose = TRUE){
@@ -62,9 +62,7 @@ read_metro_area <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # convert to sf
-  if(isTRUE(as_sf)){
-    temp_arrw <- sf::st_as_sf(temp_arrw)
-  }
+  temp <- convert_arrow2sf(temp_arrw, output)
 
-  return(temp_arrw)
+  return(temp)
 }

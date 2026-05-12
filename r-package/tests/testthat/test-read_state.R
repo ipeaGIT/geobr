@@ -24,7 +24,7 @@ test_that("read_state", {
   test_code <- read_state(code_state=11, year=2010)
   testthat::expect_true(is(test_code, "sf"))
 
-  test_arrw <- read_state(code_state=11, year=2024, as_sf = FALSE)
+  test_arrw <- read_state(code_state=11, year=2024, output = "arrow")
   expect_true(is(test_arrw, "ArrowObject"))
 
   # check number of rows in ouput
@@ -50,7 +50,12 @@ test_that("read_state", {
    testthat::expect_error(read_state(code_state="AC_ABCD"))
 
   # Wrong year
+   testthat::expect_error(read_state())
    testthat::expect_error(read_state( year=9999999))
    testthat::expect_error(read_state(showProgress = 'aaaa'))
+
+   # wrong output format
+   testthat::expect_error(read_state(year=2024, output = "banana"))
+
 
 })

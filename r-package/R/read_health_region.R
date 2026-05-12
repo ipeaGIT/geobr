@@ -16,7 +16,7 @@
 #'        geometries by health macroregion.
 #' @param macro The argument `macro` has been deprecated.
 #' @template simplified
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -46,7 +46,7 @@ read_health_region <- function(year,
                                geometry_level = "municipality",
                                macro = NULL,
                                simplified = TRUE,
-                               as_sf = TRUE,
+                               output = "sf",
                                showProgress = TRUE,
                                cache = TRUE,
                                verbose = TRUE){
@@ -91,20 +91,20 @@ read_health_region <- function(year,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # FILTER
-  output <- filter_arrw(temp_arrw, code = code_state)
+  temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # geometry_level
   if (geometry_level=="municipality") {
 
     # convert to sf
-    output <- convert_arrow2sf(output, as_sf)
+    temp <- convert_arrow2sf(temp_arrw, output)
 
-    return(output)
+    return(temp)
   }
 
   # if micro or macro, perform aggregation
     # convert to sf
-    temp <- convert_arrow2sf(output, TRUE)
+    temp <- convert_arrow2sf(temp_arrw, "sf")
 
     all_cols <- names(temp)
 
@@ -114,7 +114,7 @@ read_health_region <- function(year,
       group_cols <- all_cols[!grepl('geometry|code_muni|name_muni|code_health_region|name_health_region', all_cols)]
     }
 
-    output <- duckspatial::ddbs_union_agg(
+    temp <- duckspatial::ddbs_union_agg(
       x = temp,
       by = group_cols
       ) |>
@@ -122,8 +122,8 @@ read_health_region <- function(year,
       sfheaders::sf_remove_holes()
 
   # convert to sf
-  output <- convert_arrow2sf(output, as_sf)
+    temp <- convert_arrow2sf(temp, output)
 
-  return(output)
+  return(temp)
 
 }

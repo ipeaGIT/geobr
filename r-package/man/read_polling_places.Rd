@@ -7,7 +7,7 @@
 read_polling_places(
   year,
   code_muni = "all",
-  as_sf = TRUE,
+  output = "sf",
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -24,8 +24,8 @@ uppercase abbreviation of a state is passed (e.g. \code{33} or \code{"RJ"}), all
 data of that state are downloaded. Municipality codes can be consulted
 with the \code{geobr::lookup_muni()} function.}
 
-\item{as_sf}{Logic. If \code{TRUE} (the default), the function returns an
-\verb{sf data.frame}. If \code{FALSE}, the function returns an arrow dataset.}
+\item{output}{String. Whether the output should be an \code{"sf"} object loaded to
+memory (the default), or an \code{"arrow"} arrow data set.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

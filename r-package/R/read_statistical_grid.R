@@ -5,7 +5,7 @@
 #'
 #' @template year
 #' @template code_muni
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -30,7 +30,7 @@
 #'
 read_statistical_grid <- function(year,
                                   code_muni,
-                                  as_sf = TRUE,
+                                  output = "sf",
                                   showProgress = TRUE,
                                   cache = TRUE,
                                   verbose = TRUE){
@@ -60,8 +60,8 @@ read_statistical_grid <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, as_sf)
+  temp <- convert_arrow2sf(temp_arrw, output)
 
-  return(output)
+  return(temp)
 
   }

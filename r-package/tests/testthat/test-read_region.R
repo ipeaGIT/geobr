@@ -20,7 +20,7 @@ test_that("read_region", {
   # check number of rows
   expect_equal(nrow(test_sf), 5)
 
-  test_arrw <- read_region(year = 2023, as_sf = FALSE)
+  test_arrw <- read_region(year = 2023, output ="arrow")
   expect_true(is(test_arrw, "ArrowObject"))
 
   })
@@ -34,5 +34,8 @@ test_that("read_region", {
   # Wrong year
   expect_error(read_region())
   expect_error(read_region(year=9999999))
+
+  # Wrong output
+  expect_error(read_region(year = 2023, output ="banana"))
 
 })

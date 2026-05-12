@@ -17,11 +17,11 @@ test_that("read_favela", {
 
 
   # Read all favelas of a given municipality
-  n <- read_favela(year = 2022, code_muni = 2927408, as_sf = FALSE)
+  n <- read_favela(year = 2022, code_muni = 2927408, output = "arrow")
   testthat::expect_true( nrow(n) == 262)
 
   # Read all favelas of a given state
-  n <- read_favela(year = 2022, code_muni = "RJ", as_sf = FALSE)
+  n <- read_favela(year = 2022, code_muni = "RJ", output = "arrow")
   testthat::expect_true( nrow(n) == 1724)
 
 
@@ -39,7 +39,7 @@ test_that("read_favela", {
   testthat::expect_error(read_favela(tp="xxx"))
 
   testthat::expect_error(
-    read_favela(year = 2022, code_muni = "RJ", as_sf = "banana")
+    read_favela(year = 2022, code_muni = "RJ", output = "banana")
   )
 
 })

@@ -12,7 +12,7 @@ test_that("read_capitals", {
   expect_true(is( read_capitals(), "sf"))
 
   # check df output
-  expect_true(is( read_capitals(as_sf = FALSE), "data.frame"))
+  expect_true(is( read_capitals(output = "arrow"), "ArrowObject"))
 
 })
 

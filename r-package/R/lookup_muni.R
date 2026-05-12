@@ -60,9 +60,8 @@ lookup_muni <- function(year,
   # df <- geobr::read_municipality(
   df <- geobr::read_municipal_seat(
     year = year,
-    as_sf = FALSE
+    output = "sf"
     ) |>
-    sf::st_as_sf() |>
     sf::st_drop_geometry()
 
   # return ALL -----------------------------------------------------------------------

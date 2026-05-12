@@ -12,7 +12,7 @@
 #'        regions of that state. If `code_intermediate="all"` (Default), the
 #'        function downloads all intermediate regions of the country.
 #' @template simplified
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -36,7 +36,7 @@
 read_intermediate_region <- function(year,
                                      code_intermediate = "all",
                                      simplified = TRUE,
-                                     as_sf = TRUE,
+                                     output = "sf",
                                      showProgress = TRUE,
                                      cache = TRUE,
                                      verbose = TRUE){
@@ -66,9 +66,9 @@ read_intermediate_region <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = code_intermediate)
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, as_sf)
+  temp <- convert_arrow2sf(temp_arrw, output)
 
-  return(output)
+  return(temp)
 
 
 }

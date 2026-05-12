@@ -29,8 +29,8 @@ and `read_pop_arrangements()`is 2010, and not 2015.
 
 - Data files are now saved in `.parquet`. This improved performance to download 
 and to read files, and allow integration with gearrow. Closes [#290]()
-- All functions have a new argument `as_sf`. If `TRUE` (the default), the function 
-returns an ⁠sf data.frame⁠. If `FALSE`, the function returns an arrow dataset. Closes [#290](https://github.com/ipeaGIT/geobr/issues/290).
+- Most functions have a new argument `output`, which allow users to choose whether
+functions should return an `"sf"` to memory (default) or an `"arrow"` table.
 - All functions have a new argument `verbose`. If `TRUE` (the default), the 
 function prints informative messages and shows download progress bar. If `FALSE`,
 the function is silent. Closes [#400](https://github.com/ipeaGIT/geobr/issues/400).

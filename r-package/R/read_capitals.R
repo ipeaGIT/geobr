@@ -6,7 +6,7 @@
 #' with the names and codes of state capitals. Data downloaded for the latest
 #' available year.
 #'
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -17,18 +17,14 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read spatial data with the  municipal seats of state capitals
-#' capitals_sf <- read_capitals(as_sf = TRUE)
+#' capitals_sf <- read_capitals(output = "sf")
 #'
-#' # Read simple data.frame of state capitals
-#' capitals_df <- read_capitals(as_sf = FALSE)
-#'
-read_capitals <- function(as_sf = TRUE,
+read_capitals <- function(output = "sf",
                           showProgress = TRUE,
                           cache = TRUE,
                           verbose = TRUE){
 
   # check input
-  checkmate::assert_logical(as_sf)
   checkmate::assert_logical(showProgress)
 
   # base data.frame of capitals
@@ -59,19 +55,13 @@ read_capitals <- function(as_sf = TRUE,
 
   df <- df[order(df$code_muni, decreasing = FALSE), ]
 
-  # output
-  if (isFALSE(as_sf)) {
-    return(df)
-    }
 
-  if (isTRUE(as_sf)) {
-    temp_sf <- geobr::read_municipal_seat(
-      year = 2010,
-      showProgress = showProgress,
-      as_sf = FALSE) |>
-      dplyr::filter(code_muni %in% df$code_muni)
+  temp_output <- geobr::read_municipal_seat(
+    code_muni = df$code_muni,
+    year = 2010,
+    showProgress = showProgress,
+    output = output
+    )
 
-    return( sf::st_as_sf(temp_sf) )
-  }
-
+  return( temp_output )
 }

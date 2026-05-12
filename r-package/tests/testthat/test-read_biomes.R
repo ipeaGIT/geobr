@@ -19,7 +19,7 @@ test_that("read_biomes", {
   # check number of micro
   testthat::expect_equal( nrow(test_sf0), 6)
 
-  test_arrw <- read_biomes(year = 2025, as_sf = FALSE)
+  test_arrw <- read_biomes(year = 2025, output = "arrow")
   expect_true(is(test_arrw, "ArrowObject"))
 
 

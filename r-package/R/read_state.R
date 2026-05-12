@@ -6,7 +6,7 @@
 #' @template year
 #' @template code_state
 #' @template simplified
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -29,7 +29,7 @@
 read_state <- function(year = NULL,
                        code_state = "all",
                        simplified  = TRUE,
-                       as_sf = TRUE,
+                       output = "sf",
                        showProgress = TRUE,
                        cache = TRUE,
                        verbose = TRUE){
@@ -59,8 +59,8 @@ read_state <- function(year = NULL,
   temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, as_sf)
+  temp <- convert_arrow2sf(temp_arrw, output)
 
-  return(output)
+  return(temp)
 
   }

@@ -15,7 +15,7 @@ test_that("read_semiarid", {
   test_sf <- read_semiarid(year=2022)
   testthat::expect_true(is(test_sf, "sf"))
 
-  test_arrw <- read_semiarid(year=2022, as_sf = FALSE)
+  test_arrw <- read_semiarid(year=2022, output = "arrow")
   testthat::expect_true(is(test_arrw, "ArrowObject"))
 
 
@@ -29,7 +29,13 @@ test_that("read_semiarid", {
 
   # Wrong year
   testthat::expect_error(read_semiarid())
-
   testthat::expect_error(read_semiarid(year=9999999))
+
+  # Wrong output
+  testthat::expect_error(read_semiarid(year=2022, output = "banana"))
+
+
+
+
 
 })

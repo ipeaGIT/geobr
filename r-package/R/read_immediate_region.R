@@ -12,7 +12,7 @@
 #'        If `code_immediate="all"` (Default), the function downloads all
 #'        immediate regions of the country.
 #' @template simplified
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -35,7 +35,7 @@
 read_immediate_region <- function(year,
                                   code_immediate = "all",
                                   simplified = TRUE,
-                                  as_sf = TRUE,
+                                  output = "sf",
                                   showProgress = TRUE,
                                   cache = TRUE,
                                   verbose = TRUE){
@@ -65,9 +65,9 @@ read_immediate_region <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = 11)
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, as_sf)
+  temp <- convert_arrow2sf(temp_arrw, output)
 
-  return(output)
+  return(temp)
 
 
 }

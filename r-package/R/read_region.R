@@ -5,7 +5,7 @@
 #'
 #' @template year
 #' @template simplified
-#' @template as_sf
+#' @template output
 #' @template showProgress
 #' @template cache
 #' @template verbose
@@ -20,7 +20,7 @@
 #'
 read_region <- function(year,
                         simplified = TRUE,
-                        as_sf = TRUE,
+                        output = "sf",
                         showProgress = TRUE,
                         cache = TRUE,
                         verbose = TRUE){
@@ -44,11 +44,7 @@ read_region <- function(year,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, as_sf)
+  temp <- convert_arrow2sf(temp_arrw, output)
 
-  return(output)
-
-
+  return(temp)
 }
-
-
