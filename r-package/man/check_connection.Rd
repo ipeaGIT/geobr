@@ -5,7 +5,7 @@
 \title{Check internet connection with Ipea server}
 \usage{
 check_connection(
-  url = "https://github.com/ipea/geobr/releases/download/",
+  url = "https://github.com/ipea/geobr_prep_data/releases",
   silent = FALSE
 )
 }
