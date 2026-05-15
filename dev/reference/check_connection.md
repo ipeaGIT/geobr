@@ -6,7 +6,7 @@ Checks if there is an internet connection with Ipea server.
 
 ``` r
 check_connection(
-  url = "https://github.com/ipea/geobr/releases/download/",
+  url = "https://github.com/ipea/geobr_prep_data/releases",
   silent = FALSE
 )
 ```
