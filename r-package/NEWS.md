@@ -3,8 +3,8 @@
 **New functions**
 
 - `read_favela()` with data of favelas and urban communities (source: IBGE) Closes [#387](https://github.com/ipeaGIT/geobr/issues/387).
-- `read_polling_places()` with data of pooling places (source: TSE) Closes [#184](https://github.com/ipeaGIT/geobr/issues/184) and [#242](https://github.com/ipeaGIT/geobr/issues/242).
-- `read_quilombola_lands()` with data of officialy recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipeaGIT/geobr/issues/242).
+- `read_polling_places()` with data of polling places (source: TSE) Closes [#184](https://github.com/ipeaGIT/geobr/issues/184) and [#242](https://github.com/ipeaGIT/geobr/issues/242).
+- `read_quilombola_lands()` with data of officially recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipeaGIT/geobr/issues/242).
 - `remove_islands()` to remove islands from Brazil. Closes [#412](https://github.com/ipeaGIT/geobr/issues/412).
 
 **Breaking changes**
