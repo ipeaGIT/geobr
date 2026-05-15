@@ -170,7 +170,12 @@ list_geobr <- function(wide = TRUE){
  class = "data.frame"
  )
 
-  df <- dplyr::left_join(datasets, tempdf, by  = 'alias') |>
+  df <- dplyr::left_join(
+    x = datasets,
+    y = tempdf,
+    by  = 'alias',
+    relationship = "many-to-many"
+    ) |>
     dplyr::arrange(alias) |>
     dplyr::select(-alias)
 

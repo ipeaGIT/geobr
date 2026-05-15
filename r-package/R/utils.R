@@ -127,8 +127,10 @@ select_metadata <- function(geography,
 #'
 #' @keywords internal
 #'
-check_connection <- function(url = 'https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv',
+check_connection <- function(url = 'https://github.com/ipea/geobr_prep_data/releases',
                              silent = FALSE){ # nocov start
+
+  # https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv'
   # url <- 'https://google.com/'               # ok
   # url <- 'https://www.google.com:81/'   # timeout
   # url <- 'https://httpbin.org/status/300' # error
@@ -285,7 +287,7 @@ download_metadata2 <- function(){ # nocov start
 
 
   # test server connection with github
-  metadata_link <- paste0("https://github.com/ipeaGIT/geobr/")
+  metadata_link <- paste0("https://github.com/ipea/geobr_prep_data/")
   try( silent = TRUE,
        check_con <- check_connection(metadata_link, silent = FALSE)
        )
@@ -300,7 +302,7 @@ download_metadata2 <- function(){ # nocov start
 
   try(silent = TRUE,
     temp_meta <- piggyback::pb_list(
-      repo = "ipeaGIT/geobr",
+      repo = "ipea/geobr_prep_data",
       tag = geobr_env$data_release
     )
   )
@@ -358,16 +360,21 @@ download_parquet <- function(filename_to_download,
 
   # download file otherwise
 
-    # build url
-    file_url <- paste0(
-      "https://github.com/ipeaGIT/geobr/releases/download/",
+    # build url1 and backup url2
+    file_url1 <- paste0(
+      "https://github.com/ipea/geobr_prep_data/releases/download/",
       geobr_env$data_release,
       "/", filename_to_download
       )
 
+    file_url2 <- paste0(
+      "https://www.ipea.gov.br/geobr/data_v2.0.0/",
+      filename_to_download
+    )
+
     # prep request
     try(silent=T,
-      req <- httr2::request(file_url) |>
+      req <- httr2::request(file_url1) |>
         httr2::req_options(
           timeout = 500,
           ssl_verifypeer = 0L
@@ -385,6 +392,32 @@ download_parquet <- function(filename_to_download,
         req |>
           httr2::req_perform(path = temp_full_file_path)
         )
+
+    # if url1 does not work, fallback to url2
+    if (!file.exists(temp_full_file_path)) {
+
+        # prep request
+        try(silent=T,
+            req <- httr2::request(file_url2) |>
+              httr2::req_options(
+                timeout = 500,
+                ssl_verifypeer = 0L
+              ))
+
+        # add progress bar
+        if (isTRUE(showProgress)) {
+          try(silent=T,
+              req <- req |> httr2::req_progress()
+          )
+        }
+
+        # download file
+        try(silent=T,
+            req |>
+              httr2::req_perform(path = temp_full_file_path)
+        )
+      }
+
 
   # Halt function if download failed
   if (!file.exists(temp_full_file_path)) {
@@ -443,6 +476,9 @@ convert_arrow2sf <- function(temp_arrw, output){ # nocov start
 
   if(output=="sf"){
     temp_arrw <- sf::st_as_sf(temp_arrw)
+
+    # temporary fix because arrow does capture CRS info from parquet
+    sf::st_crs(temp_arrw) <- 4674
   }
 
   return(temp_arrw)

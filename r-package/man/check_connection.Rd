@@ -5,7 +5,7 @@
 \title{Check internet connection with Ipea server}
 \usage{
 check_connection(
-  url = "https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv",
+  url = "https://github.com/ipea/geobr/releases/download/",
   silent = FALSE
 )
 }
