@@ -11,18 +11,18 @@ testthat::skip_on_cran()
 test_that("read_health_facilities", {
 
   # read data
-  test_sf <- read_health_facilities(date = 202604)
+  test_sf <- read_health_facilities(date = 202601)
 
   # check sf object
   testthat::expect_true(is(test_sf, "sf"))
 
   # read data
-  test_sf_ac <- read_health_facilities(date = 202604, code_muni="AC", output = "arrow")
+  test_sf_ac <- read_health_facilities(date = 202601, code_muni="AC", output = "arrow")
 
   # check number of observations
   testthat::expect_true(nrow(test_sf) > nrow(test_sf_ac))
 
-  test_sf_ac <- read_health_facilities(date = 202604, code_muni=11, output = "arrow")
+  test_sf_ac <- read_health_facilities(date = 202601, code_muni=11, output = "arrow")
   testthat::expect_true(is(test_sf_ac, "ArrowObject"))
 
 })

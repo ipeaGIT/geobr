@@ -32,12 +32,12 @@
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read health facilities of a given state
 #' h <- read_health_facilities(
-#'   date = 202604,
+#'   date = 202601,
 #'   code_muni = "PA"
 #'   )
 #'
 #' # Read all health facilities of the whole country
-#' h <- read_health_facilities(date = 202604)
+#' h <- read_health_facilities(date = 202601)
 #'
 read_health_facilities <- function(date,
                                    code_muni = "all",
