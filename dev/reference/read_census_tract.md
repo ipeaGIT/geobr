@@ -11,7 +11,7 @@ read_census_tract(
   code_tract,
   zone = "urban",
   simplified = TRUE,
-  as_sf = TRUE,
+  output = "sf",
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -47,10 +47,10 @@ read_census_tract(
   simplified by removing vertices of borders using `st_simplify{sf}`
   preserving topology with a `dTolerance` of 100.
 
-- as_sf:
+- output:
 
-  Logic. If `TRUE` (the default), the function returns an
-  `sf data.frame`. If `FALSE`, the function returns an arrow dataset.
+  String. Whether the output should be an `"sf"` object loaded to memory
+  (the default), or an `"arrow"` arrow data set.
 
 - showProgress:
 

@@ -11,7 +11,7 @@ the Brazilian Institute of Geography and Statistics (IBGE).
 read_municipal_seat(
   year,
   code_muni = "all",
-  as_sf = TRUE,
+  output = "sf",
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -36,10 +36,10 @@ read_municipal_seat(
   [`geobr::lookup_muni()`](https://ipeagit.github.io/geobr/dev/reference/lookup_muni.md)
   function.
 
-- as_sf:
+- output:
 
-  Logic. If `TRUE` (the default), the function returns an
-  `sf data.frame`. If `FALSE`, the function returns an arrow dataset.
+  String. Whether the output should be an `"sf"` object loaded to memory
+  (the default), or an `"arrow"` arrow data set.
 
 - showProgress:
 

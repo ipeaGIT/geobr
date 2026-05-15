@@ -59,16 +59,16 @@ available year.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_capitals</span><span class="op">(</span>as_sf <span class="op">=</span> <span class="cn">TRUE</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_capitals</span><span class="op">(</span>output <span class="op">=</span> <span class="st">"sf"</span>, showProgress <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-as-sf">as_sf<a class="anchor" aria-label="anchor" href="#arg-as-sf"></a></dt>
-<dd><p>Logic. If <code>TRUE</code> (the default), the function returns an
-<code>sf data.frame</code>. If <code>FALSE</code>, the function returns an arrow dataset.</p></dd>
+<dl><dt id="arg-output">output<a class="anchor" aria-label="anchor" href="#arg-output"></a></dt>
+<dd><p>String. Whether the output should be an <code>"sf"</code> object loaded to
+memory (the default), or an <code>"arrow"</code> arrow data set.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>
@@ -97,11 +97,8 @@ function is silent.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Read spatial data with the  municipal seats of state capitals</span></span></span>
-<span class="r-in"><span><span class="va">capitals_sf</span> <span class="op">&lt;-</span> <span class="fu">read_capitals</span><span class="op">(</span>as_sf <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">capitals_sf</span> <span class="op">&lt;-</span> <span class="fu">read_capitals</span><span class="op">(</span>output <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 2010</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Read simple data.frame of state capitals</span></span></span>
-<span class="r-in"><span><span class="va">capitals_df</span> <span class="op">&lt;-</span> <span class="fu">read_capitals</span><span class="op">(</span>as_sf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

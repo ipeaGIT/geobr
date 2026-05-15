@@ -6,7 +6,7 @@ Checks if there is an internet connection with Ipea server.
 
 ``` r
 check_connection(
-  url = "https://www.ipea.gov.br/geobr/metadata/metadata_gpkg.csv",
+  url = "https://github.com/ipea/geobr/releases/download/",
   silent = FALSE
 )
 ```

@@ -23,7 +23,7 @@ geocodebr geocoding are also included in the data.
 read_health_facilities(
   date,
   code_muni = "all",
-  as_sf = TRUE,
+  output = "sf",
   showProgress = TRUE,
   cache = TRUE,
   verbose = TRUE
@@ -48,10 +48,10 @@ read_health_facilities(
   [`geobr::lookup_muni()`](https://ipeagit.github.io/geobr/dev/reference/lookup_muni.md)
   function.
 
-- as_sf:
+- output:
 
-  Logic. If `TRUE` (the default), the function returns an
-  `sf data.frame`. If `FALSE`, the function returns an arrow dataset.
+  String. Whether the output should be an `"sf"` object loaded to memory
+  (the default), or an `"arrow"` arrow data set.
 
 - showProgress:
 
@@ -80,12 +80,12 @@ An `"sf" "data.frame"` OR an `ArrowObject`
 ``` r
 # Read health facilities of a given state
 h <- read_health_facilities(
-  date = 202604,
+  date = 202601,
   code_muni = "PA"
   )
-#> ℹ Using year/date 202604
+#> ℹ Using year/date 202601
 
 # Read all health facilities of the whole country
-h <- read_health_facilities(date = 202604)
-#> ℹ Using year/date 202604
+h <- read_health_facilities(date = 202601)
+#> ℹ Using year/date 202601
 ```

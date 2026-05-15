@@ -54,7 +54,7 @@
 <span>  <span class="va">year</span>,</span>
 <span>  code_micro <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  simplified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  as_sf <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"sf"</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -87,9 +87,9 @@ simplified by removing vertices of borders using <code>st_simplify{sf}</code> pr
 topology with a <code>dTolerance</code> of 100.</p></dd>
 
 
-<dt id="arg-as-sf">as_sf<a class="anchor" aria-label="anchor" href="#arg-as-sf"></a></dt>
-<dd><p>Logic. If <code>TRUE</code> (the default), the function returns an
-<code>sf data.frame</code>. If <code>FALSE</code>, the function returns an arrow dataset.</p></dd>
+<dt id="arg-output">output<a class="anchor" aria-label="anchor" href="#arg-output"></a></dt>
+<dd><p>String. Whether the output should be an <code>"sf"</code> object loaded to
+memory (the default), or an <code>"arrow"</code> arrow data set.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>

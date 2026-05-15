@@ -65,7 +65,7 @@
 </ul><p><strong>Major changes</strong></p>
 <ul><li>Data files are now saved in <code>.parquet</code>. This improved performance to download and to read files, and allow integration with gearrow. Closes <a href="">#290</a>
 </li>
-<li>All functions have a new argument <code>as_sf</code>. If <code>TRUE</code> (the default), the function returns an ⁠sf data.frame⁠. If <code>FALSE</code>, the function returns an arrow dataset. Closes <a href="https://github.com/ipeaGIT/geobr/issues/290" class="external-link">#290</a>.</li>
+<li>Most functions have a new argument <code>output</code>, which allow users to choose whether functions should return an <code>"sf"</code> to memory (default) or an <code>"arrow"</code> table.</li>
 <li>All functions have a new argument <code>verbose</code>. If <code>TRUE</code> (the default), the function prints informative messages and shows download progress bar. If <code>FALSE</code>, the function is silent. Closes <a href="https://github.com/ipeaGIT/geobr/issues/400" class="external-link">#400</a>.</li>
 <li>The function <code><a href="../reference/list_geobr.html">list_geobr()</a></code> now has a boolean argument <code>wide</code>, so users can choose whether the output should be presented in wide or long format.</li>
 <li>The function <code><a href="../reference/lookup_muni.html">lookup_muni()</a></code> now uses probabilistic match to find municipality names that users might input with typos. Closes <a href="https://github.com/ipeaGIT/geobr/issues/406" class="external-link">#406</a>.</li>

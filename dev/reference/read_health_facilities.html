@@ -98,7 +98,7 @@ the data.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_health_facilities</span><span class="op">(</span></span>
 <span>  <span class="va">date</span>,</span>
 <span>  code_muni <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  as_sf <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"sf"</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -123,9 +123,9 @@ data of that state are downloaded. Municipality codes can be consulted
 with the <code><a href="lookup_muni.html">geobr::lookup_muni()</a></code> function.</p></dd>
 
 
-<dt id="arg-as-sf">as_sf<a class="anchor" aria-label="anchor" href="#arg-as-sf"></a></dt>
-<dd><p>Logic. If <code>TRUE</code> (the default), the function returns an
-<code>sf data.frame</code>. If <code>FALSE</code>, the function returns an arrow dataset.</p></dd>
+<dt id="arg-output">output<a class="anchor" aria-label="anchor" href="#arg-output"></a></dt>
+<dd><p>String. Whether the output should be an <code>"sf"</code> object loaded to
+memory (the default), or an <code>"arrow"</code> arrow data set.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>
@@ -155,14 +155,14 @@ function is silent.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Read health facilities of a given state</span></span></span>
 <span class="r-in"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">read_health_facilities</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  date <span class="op">=</span> <span class="fl">202604</span>,</span></span>
+<span class="r-in"><span>  date <span class="op">=</span> <span class="fl">202601</span>,</span></span>
 <span class="r-in"><span>  code_muni <span class="op">=</span> <span class="st">"PA"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 202604</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 202601</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read all health facilities of the whole country</span></span></span>
-<span class="r-in"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">read_health_facilities</span><span class="op">(</span>date <span class="op">=</span> <span class="fl">202604</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 202604</span>
+<span class="r-in"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">read_health_facilities</span><span class="op">(</span>date <span class="op">=</span> <span class="fl">202601</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 202601</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
