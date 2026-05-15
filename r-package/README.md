@@ -99,6 +99,8 @@ More examples
 
 # Available datasets:
 
+You can check all the data sets available with \``list_geobr()`
+
 | Function | Geographies available | Source | Years available |
 |:---|:---|:---|:---|
 | read_amazon | Brazil’s Legal Amazon | MMA | 2019, 2020, 2021, 2022, 2024 |
@@ -108,7 +110,7 @@ More examples
 | read_country | Country | IBGE | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
 | read_disaster_risk_area | Disaster risk areas | CEMADEN and IBGE | 2010 |
 | read_favelas | Favelas and urban communities | IBGE | 2022 |
-| read_health_facilities | Health facilities | CNES, DataSUS | 201704, 201707, 201710, 201801, 201804, 201807, 201810, 201901, 201904, 201907, 201910, 202001, 202004, 202007, 202010, 202101, 202104, 202107, 202110, 202201, 202204, 202207, 202210, 202301, 202304, 202307, 202310, 202401, 202404, 202407, 202410, 202501, 202504, 202507, 202510, 202601, 202604 |
+| read_health_facilities | Health facilities | CNES, DataSUS | 201704, 201707, 201710, 201801, 201804, 201807, 201810, 201901, 201904, 201907, 201910, 202001, 202004, 202007, 202010, 202101, 202104, 202107, 202110, 202201, 202204, 202207, 202210, 202301, 202304, 202307, 202310, 202401, 202404, 202407, 202410, 202501, 202504, 202507, 202510, 202601 |
 | read_health_region | Health regions and macro regions | DataSUS | 1991, 1994, 1997, 2001, 2005, 2013, 2023, 2024, 2025 |
 | read_immediate_region | Immediate region | IBGE | 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
 | read_indigenous_land | Indigenous lands | FUNAI | 2016, 2017, 2018, 2019, 2022, 2024, 2025 |
@@ -135,7 +137,7 @@ More examples
 point_right: **All datasets use geodetic reference system “SIRGAS2000”,
 CRS(4674).**
 
-## Other functions:
+## Other support functions:
 
 | Function | Action |
 |----|----|
@@ -151,14 +153,6 @@ the development version of `geobr`.
 
 Note 2. Most data sets are available at scale 1:250,000 (see
 documentation for details).
-
-’\*’ Longitudinal Database refers to áreas mínimas comparáveis (AMCs)
-
-- [Quadro geográfico de referência para produção, análise e disseminação
-  de
-  estatísticas](https://www.ibge.gov.br/geociencias/organizacao-do-territorio/analises-do-territorio/24233-quadro-geografico-de-referencia-para-producao-analise-e-disseminacao-de-estatisticas.html?=&t=o-que-e)
-- Outros arquivos e recortes estão disponiveis em
-  <ftp://geoftp.ibge.gov.br/>.
 
 # Contributing to geobr
 
