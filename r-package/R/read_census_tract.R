@@ -56,10 +56,10 @@ read_census_tract <- function(year,
   if (is.null(temp_meta)) { return(invisible(NULL)) }
 
   # Check zone input urban and rural inputs if year <=2007
-  if (temp_meta$year[1] <= 2007) {
+  if (year <= 2007) {
 
     temp_meta <- temp_meta |>
-      dplyr::filter(grepl(zone, geo))
+      dplyr::filter(grepl(zone, file_name))
 
     if (nrow(temp_meta) == 0) {
       cli::cli_abort("Invalid Value to argument 'zone'. It must be either 'urban' or 'rural'")
