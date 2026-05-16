@@ -41,6 +41,7 @@ LazyData: TRUE
 Depends:
     R (>= 4.1.0)
 Imports:
+      arrow (>= 20.0.0),
       checkmate,
       cli,
       curl (>= 5.0.0),
@@ -60,7 +61,6 @@ Imports:
       stringr,
       utils
 Suggests:
-    arrow (>= 15.0.1),
     censobr (>= 0.3.2),
     covr,
     data.table,
