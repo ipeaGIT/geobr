@@ -8,11 +8,11 @@
   with data of favelas and urban communities (source: IBGE) Closes
   [\#387](https://github.com/ipeaGIT/geobr/issues/387).
 - [`read_polling_places()`](https://ipeagit.github.io/geobr/dev/reference/read_polling_places.md)
-  with data of pooling places (source: TSE) Closes
+  with data of polling places (source: TSE) Closes
   [\#184](https://github.com/ipeaGIT/geobr/issues/184) and
   [\#242](https://github.com/ipeaGIT/geobr/issues/242).
-- `read_quilombola_lands()` with data of officialy recognized quilombola
-  lands (source: INCRA)
+- `read_quilombola_lands()` with data of officially recognized
+  quilombola lands (source: INCRA)
   [Closes](https://github.com/ipeaGIT/geobr/issues/242)
   [\#242](https://github.com/ipeaGIT/geobr/issues/242).
 - [`remove_islands()`](https://ipeagit.github.io/geobr/dev/reference/remove_islands.md)

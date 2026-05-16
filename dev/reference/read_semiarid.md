@@ -4,7 +4,7 @@ This data set returns all the municipalities which are legally included
 in the Brazilian Semiarid, following changes in the national
 legislation. The original data comes from the Brazilian Institute of
 Geography and Statistics (IBGE) and can be found at
-<https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html?=&t=downloads>
+<https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15974-semiarido-brasileiro.html>
 
 ## Usage
 

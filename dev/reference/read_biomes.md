@@ -2,7 +2,7 @@
 
 This data set includes polygons of all biomes present in the Brazilian
 territory and coastal area. Data comes from IBGE. More information at
-<https://www.ibge.gov.br/apps/biomas/>
+<https://www.ibge.gov.br/geociencias/cartas-e-mapas/informacoes-ambientais/15842-biomas.html>
 
 ## Usage
 
