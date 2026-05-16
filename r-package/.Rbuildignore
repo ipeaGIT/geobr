@@ -15,6 +15,7 @@
 ^NEWS\.md$
 ^\.travis\.yml$
 ^README\.md$
+^README\.Rmd$
 ^geobr_logo_b\.svg$
 ^_pkgdown\.yml$
 ^docs$
