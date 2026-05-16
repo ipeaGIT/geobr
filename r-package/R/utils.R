@@ -468,11 +468,6 @@ convert_arrow2sf <- function(temp_arrw, output){ # nocov start
     ))
   }
 
-  # place holder to use geoarrow becaue:
-  #   Namespace in Imports field not imported from: 'geoarrow'
-  #        All declared Imports should be used.
-  temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)")
-
 
   if(output=="sf"){
     temp_arrw <- sf::st_as_sf(temp_arrw)

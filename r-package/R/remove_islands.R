@@ -46,8 +46,12 @@ remove_islands <- function(x){
   )
 
   br_offcoast <- br_offcoast_path |>
+    # duckspatial::ddbs_open_dataset() |>
+    # duckspatial::ddbs_collect()
     arrow::open_dataset() |>
     sf::st_as_sf()
+
+  sf::st_crs(br_offcoast) <- 4674
 
   # Fix eventual invalid geometries from input
   x <- duckspatial::ddbs_make_valid(x)
@@ -58,6 +62,11 @@ remove_islands <- function(x){
     y = br_offcoast
     ) |>
     duckspatial::ddbs_collect()
+
+  # place holder to use geoarrow becaue:
+  #   Namespace in Imports field not imported from: 'geoarrow'
+  #        All declared Imports should be used.
+  temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)")
 
   return(no_islands)
 }

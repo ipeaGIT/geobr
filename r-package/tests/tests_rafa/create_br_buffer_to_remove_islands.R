@@ -2,6 +2,7 @@ library(dplyr)
 library(sf)
 library(geoarrow)
 library(arrow)
+library(duckspatial)
 
 br <- read_country(year=2022, simplified = TRUE)
 br$year <- NULL
@@ -12,7 +13,7 @@ br_buffer <- br |>
   st_buffer(dist = 20000) |> # 20 Km
   st_transform(4674)
 
-arrow::write_parquet(br_buffer, "br_buffer.parquet")
+# arrow::write_parquet(br_buffer, "br_buffer.parquet")
 # mapview(br) + br_buffer
 
 
@@ -27,3 +28,11 @@ br_offcoast <- sf::st_difference(costa, br_buffer) |>
 mapview(br) + costa + br_offcoast
 
 arrow::write_parquet(br_offcoast, "br_offcoast.parquet")
+
+duckspatial::ddbs_write_dataset(
+  data = br_offcoast,
+  path = "br_offcoast.parquet",
+  crs = "EPSG:4674",
+  overwrite = T,
+  quiet = TRUE
+)
