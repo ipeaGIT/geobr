@@ -3,7 +3,7 @@
 #' @description
 #' This function reads the official data on the population arrangements (Arranjos
 #' Populacionais) in Brazil. Original data by the Brazilian Institute of Geography
-#' and Statistics (IBGE). More information about the methodology at \url{https://www.ibge.gov.br/apps/arranjos_populacionais/2015/pdf/publicacao.pdf}
+#' and Statistics (IBGE). More information about the methodology at \url{https://www.ibge.gov.br/geociencias/organizacao-do-territorio/divisao-regional/15782-arranjos-populacionais-e-concentracoes-urbanas-do-brasil.html}
 #'
 #' @template year
 #' @template code_state

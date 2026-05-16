@@ -2,7 +2,7 @@
 #'
 #' @description
 #' This data set includes  polygons of all biomes present in the Brazilian territory
-#' and coastal area. Data comes from IBGE. More information at \url{https://www.ibge.gov.br/apps/biomas/}
+#' and coastal area. Data comes from IBGE. More information at \url{https://www.ibge.gov.br/geociencias/cartas-e-mapas/informacoes-ambientais/15842-biomas.html}
 #'
 #' @template year
 #' @template simplified
