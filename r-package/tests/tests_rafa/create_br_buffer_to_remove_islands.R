@@ -34,5 +34,6 @@ duckspatial::ddbs_write_dataset(
   path = "br_offcoast.parquet",
   crs = "EPSG:4674",
   overwrite = T,
+  parquet_compression = "uncompressed",
   quiet = TRUE
 )
