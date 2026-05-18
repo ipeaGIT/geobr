@@ -46,12 +46,7 @@ remove_islands <- function(x){
   )
 
   br_offcoast <- br_offcoast_path |>
-    # duckspatial::ddbs_open_dataset() |>
-    # duckspatial::ddbs_collect()
-    arrow::open_dataset() |>
-    sf::st_as_sf()
-
-  sf::st_crs(br_offcoast) <- 4674
+    duckspatial::ddbs_open_dataset()
 
   # Fix eventual invalid geometries from input
   x <- duckspatial::ddbs_make_valid(x)

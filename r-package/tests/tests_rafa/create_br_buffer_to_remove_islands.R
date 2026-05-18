@@ -20,20 +20,23 @@ br_buffer <- br |>
 costa <- geobr::read_biomes(year = 2019) |>
   filter(name_biome=="Sistema Costeiro")
 
+st_crs(costa) <- 4674
 
 br_offcoast <- sf::st_difference(costa, br_buffer) |>
-  sf::st_simplify(preserveTopology = T, dTolerance = 1000)
+  sf::st_simplify(preserveTopology = T, dTolerance = 1000) |>
+  select(year)
 
 
-mapview(br) + costa + br_offcoast
+mapview::mapview(br) + costa + br_offcoast
 
-arrow::write_parquet(br_offcoast, "br_offcoast.parquet")
+class(br_offcoast) <- setdiff(class(br_offcoast), c("tbl_df", "tbl"))
+
 
 duckspatial::ddbs_write_dataset(
   data = br_offcoast,
-  path = "br_offcoast.parquet",
+  path = "./inst/extdata/br_offcoast.parquet",
   crs = "EPSG:4674",
   overwrite = T,
-  parquet_compression = "uncompressed",
+  parquet_compression = "SNAPPY",
   quiet = TRUE
 )
