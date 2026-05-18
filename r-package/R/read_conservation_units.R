@@ -49,7 +49,7 @@ read_conservation_units <- function(date,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # convert to sf
-  temp <- convert_arrow2sf(temp_arrw, output)
+  temp <- convert_output(temp_arrw, output)
 
   return(temp)
 

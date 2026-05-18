@@ -226,7 +226,7 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 
   # filter by the first column whose name starts with "code_".
   if (all(numbers_only(code)) && all(nchar(code)>3)) {
-    filter_col <- grep("^code_", names(temp_arrw), value = TRUE)[1] # code_
+    filter_col <- grep("^code_", colnames(temp_arrw), value = TRUE)[1] # code_
   }
 
   # filter by code_muni
@@ -242,11 +242,13 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 
   # filter
   temp_arrw <- temp_arrw |>
-    dplyr::filter( !!rlang::sym(filter_col) %in% code ) |>
-    dplyr::compute()
+    dplyr::filter( !!rlang::sym(filter_col) %in% code )
+  # |> duckspatial::ddbs_compute()
 
-  # check
-  if  (nrow(temp_arrw) == 0){
+  # check number of rows
+  # if  (nrow(temp_arrw) == 0){
+  nrows <- dplyr::count(temp_arrw) |> dplyr::collect()
+  if  (nrows$n == 0){
     cli::cli_abort("Invalid value to argument `code_`.")
   }
 
@@ -274,7 +276,7 @@ download_metadata2 <- function(){ # nocov start
   if (file.exists(tempf) & file.info(tempf)$size != 0) {
 
     # read temp metadata
-    temp_meta <- arrow_open_dataset(tempf) |> dplyr::collect()
+    temp_meta <- geobr_open_dataset(tempf) |> dplyr::collect()
 
     # check if data was read Ok
     if (nrow(temp_meta)==0) {
@@ -354,7 +356,7 @@ download_parquet <- function(filename_to_download,
 
   # if file already exists, open and return parquet
   if (isTRUE(cache) && file.exists(temp_full_file_path)) {
-    temp_arrw <- arrow_open_dataset(temp_full_file_path)
+    temp_arrw <- geobr_open_dataset(temp_full_file_path)
     return(temp_arrw)
   }
 
@@ -426,41 +428,43 @@ download_parquet <- function(filename_to_download,
   }
 
   # load parquet
-  temp_arrw <- arrow_open_dataset(temp_full_file_path) #
-  return(temp_arrw)
-} # nocov end
+  temp <- geobr_open_dataset(temp_full_file_path)
+
+  return(temp)
+
+  } # nocov end
 
 
 
-#' Safely use arrow to open a Parquet file
+#' Safely opens a Parquet file
 #'
 #' This function handles some failure modes, including if the Parquet file is
 #' corrupted.
 #'
 #' @param filename A local Parquet file
-#' @return An `arrow::Dataset`
+#' @return An `duckspatial_df`
 #'
 #' @keywords internal
-arrow_open_dataset <- function(filename){ # nocov start
+geobr_open_dataset <- function(filename){ # nocov start
 
-  temp_arrw <- NULL
+  temp <- NULL
   try(silent = TRUE,
-    temp_arrw <- arrow::open_dataset(filename)
+    temp <- duckspatial::ddbs_open_dataset(filename)
   )
 
-  if(is.null(temp_arrw)){
+  if(is.null(temp)){
     cli::cli_alert_danger(message_failed)
   }
 
-  return(temp_arrw)
+  return(temp)
 } # nocov end
 
 
-
-convert_arrow2sf <- function(temp_arrw, output){ # nocov start
+# convert output to sf, duckdb or arrow
+convert_output <- function(temp, output){ # nocov start
 
   # check input
-  allowed <- c("sf", "arrow")
+  allowed <- c("sf", "arrow", "duckdb")
   if (!all(output %in% allowed)) {
     cli::cli_abort(c(
       "`output` must be one of: {.val {allowed}}.",
@@ -468,15 +472,25 @@ convert_arrow2sf <- function(temp_arrw, output){ # nocov start
     ))
   }
 
-
+  # sf
   if(output=="sf"){
-    temp_arrw <- sf::st_as_sf(temp_arrw)
-
-    # temporary fix because arrow does capture CRS info from parquet
-    sf::st_crs(temp_arrw) <- 4674
+    temp <- sf::st_as_sf(temp)
   }
 
-  return(temp_arrw)
+  # arrow
+  if(output=="arrow"){
+    # temp <- duckspatial:::as_arrow_table.duckspatial_df(temp)
+    stream <- nanoarrow::as_nanoarrow_array_stream(temp)
+    temp <- arrow::as_arrow_table(stream)
+  }
+
+  # # duckdb = do nothing
+  # if(output=="duckdb"){
+  #
+  # }
+
+  return(temp)
+
 } # nocov end
 
 

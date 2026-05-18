@@ -24,6 +24,9 @@ test_that("read_state", {
   test_code <- read_state(code_state=11, year=2010)
   testthat::expect_true(is(test_code, "sf"))
 
+  test_duck <- read_state(code_state=11, year=2024, output = "duckdb")
+  expect_true(is(test_duck, "duckspatial_df"))
+
   test_arrw <- read_state(code_state=11, year=2024, output = "arrow")
   expect_true(is(test_arrw, "ArrowObject"))
 

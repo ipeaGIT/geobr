@@ -14,6 +14,9 @@ test_that("read_capitals", {
   # check df output
   expect_true(is( read_capitals(output = "arrow"), "ArrowObject"))
 
+  # check df output
+  expect_true(is( read_capitals(output = "duckdb"), "duckspatial_df"))
+
 })
 
 

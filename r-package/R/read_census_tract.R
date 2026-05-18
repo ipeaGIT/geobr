@@ -24,8 +24,7 @@
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #'
 #' # Read all census tracts of a state at a given year
-#' c <- read_census_tract(code_tract = "DF", year = 2022) # or
-#' c <- read_census_tract(code_tract = 53, year = 2022)
+#' c <- read_census_tract(year = 2022, code_tract = "DF")
 #'
 #' # Read all census tracts of a municipality at a given year
 #' c <- read_census_tract(year = 2022, code_tract = 5201108)
@@ -34,7 +33,11 @@
 #' c <- read_census_tract(year = 2022, code_tract = "all")
 #'
 #' # Read rural census tracts for years before 2007
-#' c <- read_census_tract(code_tract = 5201108, year = 2000, zone = "rural")
+#' c <- read_census_tract(
+#'   year = 2000,
+#'   code_tract = 5201108,
+#'   zone = "rural"
+#'   )
 #'
 read_census_tract <- function(year,
                               code_tract,
@@ -85,7 +88,7 @@ read_census_tract <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = code_tract)
 
   # convert to sf
-  temp <- convert_arrow2sf(temp_arrw, output)
+  temp <- convert_output(temp_arrw, output)
 
   return(temp)
 

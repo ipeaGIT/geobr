@@ -97,14 +97,14 @@ read_health_region <- function(year,
   if (geometry_level=="municipality") {
 
     # convert to sf
-    temp <- convert_arrow2sf(temp_arrw, output)
+    temp <- convert_output(temp_arrw, output)
 
     return(temp)
   }
 
   # if micro or macro, perform aggregation
     # convert to sf
-    temp <- convert_arrow2sf(temp_arrw, "sf")
+    temp <- convert_output(temp_arrw, "sf")
 
     all_cols <- names(temp)
 
@@ -122,7 +122,7 @@ read_health_region <- function(year,
       sfheaders::sf_remove_holes()
 
   # convert to sf
-    temp <- convert_arrow2sf(temp, output)
+    temp <- convert_output(temp, output)
 
   return(temp)
 

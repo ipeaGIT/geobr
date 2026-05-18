@@ -1,7 +1,12 @@
-── R CMD check results ────────────────────────────────────────────────────── geobr 1.9.1.9000 ────
-Duration: 24m 30.3s
+── R CMD check results ─────────────────────────── geobr 2.0.0 ────
+Duration: 10m 27.9s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+
+- fixed urls in a few function docs. All urls work.
+- fixed error in function `remove_islands()`
+- parquet files are now compressed using "snappy", which is natively available in Arrow
 
 # geobr v2.0.0 dev
 

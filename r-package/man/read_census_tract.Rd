@@ -35,8 +35,12 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
-\item{output}{String. Whether the output should be an \code{"sf"} object loaded to
-memory (the default), or an \code{"arrow"} arrow data set.}
+\item{output}{String. Type of object returned by the function. Defaults to
+\code{"sf"}, which loads the data into memory as an sf object. Alternatively,
+\code{"duckdb"} returns a lazy spatial table backed by DuckDB via the
+duckspatial package, and \code{"arrow"} returns an Arrow dataset. Both
+\code{"duckdb"} and \code{"arrow"} support out-of-memory processing of large
+data sets.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 
@@ -60,8 +64,7 @@ Data of census tracts (setores censitários) of the Brazilian Population Census
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 
 # Read all census tracts of a state at a given year
-c <- read_census_tract(code_tract = "DF", year = 2022) # or
-c <- read_census_tract(code_tract = 53, year = 2022)
+c <- read_census_tract(year = 2022, code_tract = "DF")
 
 # Read all census tracts of a municipality at a given year
 c <- read_census_tract(year = 2022, code_tract = 5201108)
@@ -70,6 +73,10 @@ c <- read_census_tract(year = 2022, code_tract = 5201108)
 c <- read_census_tract(year = 2022, code_tract = "all")
 
 # Read rural census tracts for years before 2007
-c <- read_census_tract(code_tract = 5201108, year = 2000, zone = "rural")
+c <- read_census_tract(
+  year = 2000,
+  code_tract = 5201108,
+  zone = "rural"
+  )
 \dontshow{\}) # examplesIf}
 }

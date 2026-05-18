@@ -58,10 +58,10 @@ remove_islands <- function(x){
     ) |>
     duckspatial::ddbs_collect()
 
-  # place holder to use geoarrow becaue:
-  #   Namespace in Imports field not imported from: 'geoarrow'
-  #        All declared Imports should be used.
-  temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)")
+  # # place holder to use geoarrow becaue:
+  # #   Namespace in Imports field not imported from: 'geoarrow'
+  # #        All declared Imports should be used.
+  # temp <- geoarrow::as_geoarrow_vctr("POINT (0 1)")
 
   return(no_islands)
 }

@@ -79,7 +79,7 @@ read_quilombola_land <- function(date,
   temp_arrw <- filter_arrw(temp_arrw, code = code_state)
 
   # convert to sf
-  temp <- convert_arrow2sf(temp_arrw, output)
+  temp <- convert_output(temp_arrw, output)
 
   return(temp)
 

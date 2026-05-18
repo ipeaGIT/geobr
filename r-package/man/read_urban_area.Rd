@@ -32,8 +32,12 @@ statistics users should set \code{simplified = FALSE}. Borders have been
 simplified by removing vertices of borders using \verb{st_simplify\{sf\}} preserving
 topology with a \code{dTolerance} of 100.}
 
-\item{output}{String. Whether the output should be an \code{"sf"} object loaded to
-memory (the default), or an \code{"arrow"} arrow data set.}
+\item{output}{String. Type of object returned by the function. Defaults to
+\code{"sf"}, which loads the data into memory as an sf object. Alternatively,
+\code{"duckdb"} returns a lazy spatial table backed by DuckDB via the
+duckspatial package, and \code{"arrow"} returns an Arrow dataset. Both
+\code{"duckdb"} and \code{"arrow"} support out-of-memory processing of large
+data sets.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display progress bar.}
 

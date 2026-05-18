@@ -30,30 +30,29 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
             )
 URL: https://ipeagit.github.io/geobr/, https://github.com/ipeaGIT/geobr
 BugReports: https://github.com/ipeaGIT/geobr/issues 
-Description: Easy access to official spatial data sets of Brazil as 'sf' objects 
-             or geoarrow tables in R. The package includes a wide range of 
-             geospatial data available at various geographic scales and for 
-             various years with harmonized attributes, projection and fixed 
-             topology.
+Description: Easy access to official spatial data sets of Brazil. The package 
+             offers a wide range of spatial data sets available at various 
+             geographic scales and for various years with harmonized attributes, 
+             projection and fixed topology. All functions allow for seamless
+             integration sf, DuckDB and Arrow.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 4.1.0)
 Imports:
-      arrow (>= 20.0.0),
       checkmate,
       cli,
       curl (>= 5.0.0),
       dplyr (>= 0.8-3),
       DBI,
       duckdb,
-      duckspatial(>= 1.0.0),
+      duckspatial(>= 1.1.0),
       fs,
       glue,
-      geoarrow (>= 0.4.2),
       httr2,
       methods,
+      nanoarrow,
       piggyback,
       rlang,
       sf (>= 0.9-3),
@@ -61,9 +60,11 @@ Imports:
       stringr,
       utils
 Suggests:
+    arrow (>= 20.0.0),
     censobr (>= 0.3.2),
     covr,
     data.table,
+    geoarrow (>= 0.4.2),
     ggplot2 (>= 3.3.1),
     knitr,
     rmarkdown,

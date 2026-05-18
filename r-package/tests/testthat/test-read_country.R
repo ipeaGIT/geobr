@@ -16,6 +16,9 @@ test_that("read_country", {
   # check sf object
   testthat::expect_true(is(test_sf, "sf"))
 
+  test_duck <- read_country(year=2020, output = "duckdb")
+  expect_true(is(test_duck, "duckspatial_df"))
+
   test_arrw <- read_country(year=2020, output = "arrow")
   expect_true(is(test_arrw, "ArrowObject"))
 

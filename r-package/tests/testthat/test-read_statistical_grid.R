@@ -18,6 +18,10 @@ test_that("read_statistical_grid", {
 
   testthat::expect_true(is(temp, "ArrowObject"))
 
+
+  temp <- read_statistical_grid(year=2010, code_muni=2927408, output = "duckdb")
+  testthat::expect_true(is(temp, "duckspatial_df"))
+
   temp <- read_statistical_grid(year=2010, code_muni=2927408, output = "sf")
 
   testthat::expect_true("sf"  %in% class(temp))
@@ -45,6 +49,5 @@ test_that("read_statistical_grid", {
   testthat::expect_error(
     read_statistical_grid(year=2022, code_muni="AC", output = "banana")
     )
-
 
 })

@@ -61,7 +61,7 @@ read_neighborhood <- function(year,
   temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
 
   # convert to sf
-  temp <- convert_arrow2sf(temp_arrw, output)
+  temp <- convert_output(temp_arrw, output)
 
   return(temp)
 

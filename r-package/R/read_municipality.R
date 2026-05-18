@@ -75,7 +75,7 @@ read_municipality <- function(year,
     }
 
   # convert to sf
-  output <- convert_arrow2sf(temp_arrw, output)
+  output <- convert_output(temp_arrw, output)
 
   return(output)
 
