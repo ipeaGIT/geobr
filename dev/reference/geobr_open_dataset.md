@@ -1,4 +1,4 @@
-# Safely use arrow to open a Parquet file
+# Safely opens a Parquet file
 
 This function handles some failure modes, including if the Parquet file
 is corrupted.
@@ -6,7 +6,7 @@ is corrupted.
 ## Usage
 
 ``` r
-arrow_open_dataset(filename)
+geobr_open_dataset(filename)
 ```
 
 ## Arguments
@@ -17,5 +17,4 @@ arrow_open_dataset(filename)
 
 ## Value
 
-An
-[`arrow::Dataset`](https://arrow.apache.org/docs/r/reference/Dataset.html)
+An `duckspatial_df`

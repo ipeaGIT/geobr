@@ -49,8 +49,12 @@ read_census_tract(
 
 - output:
 
-  String. Whether the output should be an `"sf"` object loaded to memory
-  (the default), or an `"arrow"` arrow data set.
+  String. Type of object returned by the function. Defaults to `"sf"`,
+  which loads the data into memory as an sf object. Alternatively,
+  `"duckdb"` returns a lazy spatial table backed by DuckDB via the
+  duckspatial package, and `"arrow"` returns an Arrow dataset. Both
+  `"duckdb"` and `"arrow"` support out-of-memory processing of large
+  data sets.
 
 - showProgress:
 
@@ -79,9 +83,7 @@ An `"sf" "data.frame"` OR an `ArrowObject`
 ``` r
 
 # Read all census tracts of a state at a given year
-c <- read_census_tract(code_tract = "DF", year = 2022) # or
-#> ℹ Using year/date 2022
-c <- read_census_tract(code_tract = 53, year = 2022)
+c <- read_census_tract(year = 2022, code_tract = "DF")
 #> ℹ Using year/date 2022
 
 # Read all census tracts of a municipality at a given year
@@ -93,6 +95,10 @@ c <- read_census_tract(year = 2022, code_tract = "all")
 #> ℹ Using year/date 2022
 
 # Read rural census tracts for years before 2007
-c <- read_census_tract(code_tract = 5201108, year = 2000, zone = "rural")
+c <- read_census_tract(
+  year = 2000,
+  code_tract = 5201108,
+  zone = "rural"
+  )
 #> ℹ Using year/date 2000
 ```

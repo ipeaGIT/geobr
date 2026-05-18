@@ -3,11 +3,10 @@
 ![logo](https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/geobr_logo_b.png?raw=true)![logo](https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/geobr_logo_y.png?raw=true)
 
 geobr is a computational package to download official spatial data sets
-of Brazil. The package includes a wide range of geospatial data in
-geopackage format (like shapefiles but better), available at various
-geographic scales and for various years with harmonized attributes,
-projection and topology (see detailed list of available data sets
-below).
+of Brazil. The package covers a wide range of spatial data sets,
+available at various geographic scales and for various years with
+harmonized attributes, projection and fixed topology (see detailed list
+of available data sets below).
 
 The package is currently available in
 [**R**](https://CRAN.R-project.org/package=geobr) and
@@ -127,7 +126,7 @@ You can check all the data sets available with
 | read_schools | Schools | INEP | 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
 | read_semiarid | Semi Arid region | IBGE | 2005, 2017, 2021, 2022 |
 | read_state | States | IBGE | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
-| read_statistical_grid | Statistical Grid (gridded population) | IBGE | 2010, 2022 |
+| read_statistical_grid | Statistical Grid (gridded population) | IBGE | 2010 |
 | read_urban_area | Urban footprints | IBGE | 2005, 2015, 2019 |
 | read_weighting_area | Census weighting area (área de ponderação) | IBGE | 2010 |
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## geobr v2.0.0 dev
+## geobr v2.0.0
 
 **New functions**
 

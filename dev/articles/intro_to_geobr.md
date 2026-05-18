@@ -1,16 +1,18 @@
 # Introductio to geobr (R)
 
 The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick
-and easy access to official spatial data sets of Brazil. The syntax of
-all **geobr** functions operate on a simple logic that allows users to
-easily download a wide variety of data sets with updated geometries and
-harmonized attributes and geographic projections across geographies and
-years. This vignette presents a quick intro to **geobr**.
+and easy access to official spatial data sets of Brazil. The package
+offers a wide range of spatial data sets available at various geographic
+scales and for various years with harmonized attributes, projection and
+fixed topology. All **geobr** functions follow a simple and consistent
+syntax that allows users to seamlessly download data and work with it
+either in memory using sf or out of memory using DuckDB and Arrow. This
+vignette presents a quick intro to **geobr**.
 
 ### Installation
 
-You can install geobr from CRAN or the development version to use the
-latest features.
+You can install **geobr** from CRAN or the development version to use
+the latest features.
 
 ``` r
 
@@ -64,17 +66,17 @@ head(datasets)
 #> 6                                                                                                                                                             2010
 ```
 
-### Download spatial data as `sf` objects
+#### Basic syntax
 
-The syntax of all *geobr* functions operate one the same logic, so the
-code to download the data becomes intuitive for the user. Here are a few
-examples.
+The syntax of all *geobr* functions operate on the same simple logic, so
+the code to download the data becomes intuitive for the user. Here are a
+few examples.
 
 Download an specific geographic area at a given year:
 
 ``` r
 
-# State of Sergige
+# State of Sergipe
 state <- read_state(
   year = 2022,
   code_state = "SE",
@@ -132,23 +134,19 @@ head(states)
 #> Dimension:     XY
 #> Bounding box:  xmin: -73.98681 ymin: -13.6937 xmax: -46.06151 ymax: 5.26962
 #> Geodetic CRS:  SIRGAS 2000
-#>   code_state name_state abbrev_state code_region name_region year
-#> 1         11   Rondônia           RO           1       Norte 2025
-#> 2         12       Acre           AC           1       Norte 2025
-#> 3         13   Amazonas           AM           1       Norte 2025
-#> 4         14    Roraima           RR           1       Norte 2025
-#> 5         15       Pará           PA           1       Norte 2025
-#> 6         16      Amapá           AP           1       Norte 2025
-#>                         geometry
-#> 1 POLYGON ((-60.77415 -13.661...
-#> 2 POLYGON ((-68.444 -11.04576...
-#> 3 POLYGON ((-67.32582 -9.5923...
-#> 4 POLYGON ((-61.46517 -0.6601...
-#> 5 MULTIPOLYGON (((-50.10534 -...
-#> 6 MULTIPOLYGON (((-49.89785 1...
+#> # A tibble: 6 × 7
+#>   code_state name_state abbrev_state code_region name_region  year
+#>        <dbl> <chr>      <chr>              <dbl> <chr>       <dbl>
+#> 1         11 Rondônia   RO                     1 Norte        2025
+#> 2         12 Acre       AC                     1 Norte        2025
+#> 3         13 Amazonas   AM                     1 Norte        2025
+#> 4         14 Roraima    RR                     1 Norte        2025
+#> 5         15 Pará       PA                     1 Norte        2025
+#> 6         16 Amapá      AP                     1 Norte        2025
+#> # ℹ 1 more variable: geometry <GEOMETRY [°]>
 ```
 
-### Important note about data resolution
+#### Important note about data resolution
 
 All functions to download polygon data such as states, municipalities
 etc. have a `simplified` argument. When `simplified = FALSE`, geobr
@@ -202,6 +200,38 @@ ggplot() +
 
 ![](intro_to_geobr_files/figure-html/unnamed-chunk-9-1.png)
 
+### Lazy evaluation with DuckDB and Arrow
+
+By default, all functions in geobr use `output = "sf"` and return `sf`
+objects loaded into memory. In some cases, however, it may be preferable
+to process data out of memory for faster and more memory-efficient
+computation, particularly when working with large spatial data sets.
+
+To support these workflows, users can set `output = "duckdb"` to return
+a lazy `duckspatial_df` object. This allows data to be analyzed with
+DuckDB using the [{duckspatial}](https://cidree.github.io/duckspatial/)
+package, enabling efficient out-of-memory spatial operations using a
+syntax similar to {sf}.
+
+Alternatively, users can set `output = "arrow"` to return an Arrow
+dataset, which can be integrated with the Arrow ecosystem for scalable
+analytical workflows.
+
+``` r
+
+# return duckdb duckspatial_df
+muni_duck <- geobr::read_municipality(
+  year = 2022, 
+  output = "duckdb"
+  )
+
+# return arrow table
+muni_arrow <- geobr::read_municipality(
+  year = 2022, 
+  output = "arrow"
+  )
+```
+
 ### Thematic maps
 
 The next step is to combine data from **geobr** package with other data
@@ -244,7 +274,7 @@ ggplot() +
     no_axis
 ```
 
-![](intro_to_geobr_files/figure-html/unnamed-chunk-11-1.png)
+![](intro_to_geobr_files/figure-html/unnamed-chunk-12-1.png)
 
 ## Using **geobr** together with **censobr**
 
@@ -328,4 +358,4 @@ ggplot() +
   theme_void()
 ```
 
-![](intro_to_geobr_files/figure-html/unnamed-chunk-14-1.png)
+![](intro_to_geobr_files/figure-html/unnamed-chunk-15-1.png)
