@@ -15,11 +15,11 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' library(geobr)
 #' library(sf)
 #'
-#' br <- read_country(year=2022)
+#' br <- read_country(year = 1991)
 #'
 #' br_no_islands <- remove_islands(br)
 #'

@@ -4,9 +4,12 @@ Duration: 10m 27.9s
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 
+
 - fixed urls in a few function docs. All urls work.
-- fixed error in function `remove_islands()`
+- fixed error in function `remove_islands()`, shorter time to run example
 - parquet files are now compressed using "snappy", which is natively available in Arrow
+- I'm resubmtting the pacakge because it is not showing up on the CRAN incoming dashboard
+
 
 # geobr v2.0.0 dev
 

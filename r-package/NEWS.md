@@ -28,9 +28,13 @@ and `read_pop_arrangements()`is 2010, and not 2015.
 **Major changes**
 
 - Data files are now saved in `.parquet`. This improved performance to download 
-and to read files, and allow integration with gearrow. Closes [#290]()
-- Most functions have a new argument `output`, which allow users to choose whether
-functions should return an `"sf"` to memory (default) or an `"arrow"` table.
+and to read files, and allow integration with ducdkDB via {duckspatial} and with
+Arrow via {gearrow}. Closes [#290](https://github.com/ipeaGIT/geobr/issues/290)
+- Most functions have a new argument `output`, which allow users to choose the
+output format. `"sf"` returns an `sf` to memory (default),  `"duckdb"` returns a 
+lazy spatial table backed by DuckDB via the duckspatial package, and `"arrow"` 
+returns an Arrow dataset. Both `"duckdb"` and `"arrow"` support out-of-memory 
+processing of large data sets.
 - All functions have a new argument `verbose`. If `TRUE` (the default), the 
 function prints informative messages and shows download progress bar. If `FALSE`,
 the function is silent. Closes [#400](https://github.com/ipeaGIT/geobr/issues/400).

@@ -22,12 +22,14 @@ focus on the continental territory of Brazil and exclude distant oceanic
 islands.
 }
 \examples{
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 library(geobr)
 library(sf)
 
-br <- read_country(year=2022)
+br <- read_country(year = 1991)
 
 br_no_islands <- remove_islands(br)
 
 plot(br)
+\dontshow{\}) # examplesIf}
 }
