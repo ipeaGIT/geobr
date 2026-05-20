@@ -174,7 +174,7 @@ to **geobr**. The **geobr** package makes different contributions to the communi
 
 Original shapefiles are created by official government institutions. The **geobr** 
 package is developed by a team at the Institute for Applied Economic Research (Ipea), 
-Brazil. If you want to cite this package, you can cite it as:
+Brazil. The package received support from Instituto Todos pela Saúde (ITpS). If you want to cite this package, you can cite it as:
 
 * Pereira, R.H.M.; Barbosa, R.J.; et. all (2026) **geobr: Download Official Spatial Data Sets of Brazil**. v2.0.0 GitHub repository - https://github.com/ipeaGIT/geobr.
 
