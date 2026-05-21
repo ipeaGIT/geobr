@@ -1,12 +1,11 @@
-"""Tests for code_muni / code_state filtering via mocked downloads."""
-
-import importlib
+"""Tests for code filtering through the v2 read pipeline."""
 
 import geopandas as gpd
+import pandas as pd
 import pytest
 from shapely.geometry import Point
 
-from geobr._filter import filter_by_code
+from geobr.utils import read_geobr_v2
 
 
 @pytest.fixture
@@ -22,27 +21,17 @@ def mock_gdf():
     )
 
 
-def test_read_schools_filter(mock_gdf, monkeypatch):
-    mod = importlib.import_module("geobr.read_schools")
-    monkeypatch.setattr(
-        mod,
-        "read_geobr_hybrid",
-        lambda *a, **k: filter_by_code(mock_gdf, k.get("code", "all")),
-    )
-    from geobr import read_schools
+def test_read_geobr_v2_applies_code_filter(mock_gdf, monkeypatch, tmp_path):
+    path = tmp_path / "schools.parquet"
+    mock_gdf.to_parquet(path)
 
-    out = read_schools(year=2020, code_muni="RJ")
+    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False):
+        return pd.Series({"file_name": path.name, "geo": geography, "year": year})
+
+    monkeypatch.setattr("geobr.utils.select_metadata_v2", fake_select_metadata_v2)
+    monkeypatch.setattr("geobr.utils.download_parquet", lambda fn, **k: path)
+    monkeypatch.setattr("geobr._cache.is_cached", lambda fn: True)
+
+    out = read_geobr_v2("schools", 2020, code="RJ")
     assert len(out) == 1
-
-
-def test_read_conservation_units_filter(mock_gdf, monkeypatch):
-    mod = importlib.import_module("geobr.read_conservation_units")
-    monkeypatch.setattr(
-        mod,
-        "read_geobr_hybrid",
-        lambda *a, **k: filter_by_code(mock_gdf, k.get("code", "all")),
-    )
-    from geobr import read_conservation_units
-
-    out = read_conservation_units(date=201909, code_state=33)
-    assert len(out) == 1
+    assert out.iloc[0]["abbrev_state"] == "RJ"
