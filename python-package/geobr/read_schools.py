@@ -1,44 +1,34 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_hybrid
 
 
-def read_schools(year=2020, verbose=False):
-    r"""Download geolocated data of schools
-
-    Data comes from the School Census collected by INEP, the National Institute
-    for Educational Studies and Research Anisio Teixeira. The date of the last
-    data update is registered in the database in the column 'date_update'. These
-    data uses Geodetic reference system "SIRGAS2000" and CRS(4674). The coordinates
-    of each school if collected by INEP. Periodically the coordinates are revised
-    with the objective of improving the quality of the data. More information
-    available at \url{https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas/}
+def read_schools(
+    year: int = 2020,
+    code_muni: str = "all",
+    simplified: bool = False,
+    output: str = "sf",
+    show_progress: bool = True,
+    cache: bool = True,
+    verbose: bool = False,
+):
+    """Download geolocated school data (INEP).
 
     Parameters
     ----------
-    year : int, optional
-        Year of the data, by default 2020
-    verbose : bool, optional
-        by default False
-
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_schools
-
-    # Read specific state at a given year
-    >>> df = read_schools(year=2020)
+    year : int
+        Year of the data.
+    code_muni : str or int
+        Municipality code, state abbrev, or ``"all"``.
+    simplified, output, show_progress, cache, verbose
+        Standard geobr options.
     """
-
-    metadata = select_metadata("schools", year=year, simplified=False)
-
-    gdf = download_gpkg(metadata)
-
-    return gdf
+    return read_geobr_hybrid(
+        "schools",
+        "schools",
+        year,
+        code=code_muni,
+        simplified=simplified,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )

@@ -1,44 +1,34 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_hybrid
 
 
-def read_metro_area(year=2018, simplified=True, verbose=False):
-    """ Download shape files of official metropolitan areas in Brazil as an sf object.
-    
-     The function returns the shapes of municipalities grouped by their respective metro areas.
- Metropolitan areas are created by each state in Brazil. The data set includes the municipalities that belong to
- all metropolitan areas in the country according to state legislation in each year. Orignal data were generated
- by Institute of Geography. Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674).
+def read_metro_area(
+    year: int = 2018,
+    code_state: str = "all",
+    simplified: bool = True,
+    verbose: bool = False,
+    output: str = "sf",
+    show_progress: bool = True,
+    cache: bool = True,
+):
+    """Download metropolitan area polygons grouped by metro region.
 
     Parameters
     ----------
-    year : int, optional
-        Year of the data, by default 2018
-    simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
-    verbose : bool, optional
-        by default False
-    
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-    
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_metro_area
-
-    # Read specific state at a given year
-    >>> df = read_metro_area(year=2018)
+    year : int
+        Year of the data.
+    code_state : str or int
+        State abbrev, two-digit code, or ``"all"``.
+    simplified, verbose, output, show_progress, cache
+        Standard geobr options.
     """
-
-    metadata = select_metadata("metropolitan_area", year=year, simplified=simplified)
-
-    gdf = download_gpkg(metadata)
-
-    return gdf
+    return read_geobr_hybrid(
+        "metropolitanarea",
+        "metropolitan_area",
+        year,
+        code=code_state,
+        simplified=simplified,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )

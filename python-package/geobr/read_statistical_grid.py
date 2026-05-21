@@ -5,7 +5,44 @@ from numpy import unique
 from pandas import read_csv
 
 
-def read_statistical_grid(code_grid="all", year=2010, simplified=False, verbose=False):
+def read_statistical_grid(
+    code_muni="all",
+    year=2010,
+    simplified=False,
+    verbose=False,
+    code_grid=None,
+    output: str = "sf",
+    show_progress: bool = True,
+    cache: bool = True,
+):
+    """Download IBGE statistical grid data.
+
+    Parameters
+    ----------
+    code_muni : str or int
+        State abbrev, municipality code, grid quadrant id, or ``"all"``.
+    year : int
+        Year of the data.
+    code_grid : str or int, optional
+        Deprecated alias for ``code_muni``.
+    """
+    if code_grid is not None:
+        code_muni = code_grid
+    return _read_statistical_grid_impl(
+        code_muni=code_muni,
+        year=year,
+        simplified=simplified,
+        verbose=verbose,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+    )
+
+
+def _read_statistical_grid_impl(
+    code_muni="all", year=2010, simplified=False, verbose=False,
+    output="sf", show_progress=True, cache=True,
+):
     r"""Download spatial data of IBGE's statistical grid
 
         @description
@@ -65,11 +102,23 @@ def read_statistical_grid(code_grid="all", year=2010, simplified=False, verbose=
             file, encoding="latin-1", dtype=dtypes
         )
 
-    # Test if code_grid input is null
-    if code_grid == None:
-        sys.exit("Value to argument 'code_grid' cannot be NULL")
+    from geobr.utils import read_geobr_hybrid
 
-    # if code_grid=="all", read the entire country
+    if code_muni not in ("all", None) and isinstance(code_muni, int) and len(str(code_muni)) == 7:
+        return read_geobr_hybrid(
+            "statsgrid", "statistical_grid", year,
+            code=code_muni, simplified=simplified, output=output,
+            show_progress=show_progress, cache=cache, verbose=verbose,
+        )
+
+    if code_muni in ("all", None):
+        code_grid = "all"
+    else:
+        code_grid = code_muni
+
+    if code_grid is None:
+        sys.exit("Value to argument 'code_muni' cannot be NULL")
+
     if code_grid == "all":
         if verbose:
             print("Loading data for the whole country. This might take a few minutes.")
