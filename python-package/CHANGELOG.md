@@ -2,6 +2,36 @@
 
 -------------------------------------------------------
 
+# 0.3.0 (unreleased)
+
+## Foundation (Phase 0)
+* Core dependencies include `pyarrow` and `rapidfuzz` (Arrow output and fuzzy `lookup_muni`)
+* Optional extra: `geobr[duckdb]` (alias `geobr[all]`)
+* Parquet v2.0.0 download pipeline (`download_metadata_v2`, `download_parquet`, disk cache)
+* Shared helpers: `_filter`, `_output`, `_cache`, `read_geobr_v2`, `read_geobr_hybrid`
+
+### Phase 1 — Agent 1
+* `read_capitals`, `read_favela`, `read_polling_places`, `read_quilombola_land`
+* `cep_to_state`, `remove_islands`
+
+### Phase 1 — Agent 2
+* `code_muni` filtering: `read_schools`, `read_health_facilities`, `read_neighborhood`, `read_disaster_risk_area`, `read_statistical_grid`
+* `keep_areas_operacionais` on `read_municipality`
+
+### Phase 1 — Agent 3
+* `code_state` filtering: `read_indigenous_land`, `read_metro_area`, `read_pop_arrangements`, `read_urban_concentrations`, `read_conservation_units`
+* Default year 2010 for pop arrangements / urban concentrations
+
+### Phase 1 — Agent 4
+* `lookup_muni(year=...)`, fuzzy name match via rapidfuzz
+* `list_geobr(wide=)` returns DataFrame
+* `read_health_region(geometry_level=, code_state=)`
+
+### Phase 1 — Agent 5
+* `output="duckdb"` and `output="arrow"` via `convert_output`
+
+-------------------------------------------------------
+
 # 0.1.10
 * Enforces correct data types to certain variables (issue #260)
 * Changes package manager to poetry
