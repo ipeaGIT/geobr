@@ -26,5 +26,10 @@ from .read_intermediate_region import read_intermediate_region
 from .read_urban_concentrations import read_urban_concentrations
 from .read_schools import read_schools
 from .read_comparable_areas import read_comparable_areas
-from .read_biomes import read_biomes
 from .read_statistical_grid import read_statistical_grid
+from .read_capitals import read_capitals
+from .read_favela import read_favela
+from .read_polling_places import read_polling_places
+from .read_quilombola_land import read_quilombola_land
+from .cep_to_state import cep_to_state
+from .remove_islands import remove_islands
