@@ -342,63 +342,22 @@ def _load_geo_dataset(
             f"Geography {geo!r} cannot be auto-loaded. Available: {available}."
         )
 
-    read_fn_name = loader["read_fn"]
-    read_mod = importlib.import_module("geobr")
-    read_fn = getattr(read_mod, read_fn_name)
-    year_param = loader.get("year_param", "year")
+    from geobr.utils import read_geobr_hybrid, read_geobr_v2
 
-    kwargs: dict[str, Any] = {
-        year_param: year,
-        "simplified": simplified,
-        "output": "duckdb",
-        "show_progress": False,
-        "cache": True,
-        "connection": connection,
-        "view_name": view_name,
-    }
-    if read_fn_name not in ("read_state", "read_biomes", "read_country", "read_region"):
-        kwargs.setdefault("code_muni", code) if "code_muni" in read_fn.__code__.co_varnames else None
-    if "code_state" in read_fn.__code__.co_varnames:
-        kwargs["code_state"] = code
-    elif "code_muni" in read_fn.__code__.co_varnames and "code_muni" not in kwargs:
-        kwargs["code_muni"] = code
-
-    # Drop kwargs the target function does not accept.
-    accepted = read_fn.__code__.co_varnames[: read_fn.__code__.co_argcount]
-    filtered = {k: v for k, v in kwargs.items() if k in accepted}
-
-    try:
-        result = read_fn(**filtered)
-    except TypeError:
-        filtered.pop("connection", None)
-        filtered.pop("view_name", None)
-        from geobr.utils import read_geobr_hybrid, read_geobr_v2
-
-        if loader.get("v2_only") or loader.get("gpkg") is None:
-            result = read_geobr_v2(
-                geography=loader["v2"],
-                year=year,
-                code=code,
-                simplified=simplified,
-                output="duckdb",
-                show_progress=False,
-                cache=True,
-                connection=connection,
-                view_name=view_name,
-            )
-        else:
-            result = read_geobr_hybrid(
-                loader["v2"],
-                loader["gpkg"],
-                year,
-                code=code,
-                simplified=simplified,
-                output="duckdb",
-                show_progress=False,
-                cache=True,
-                connection=connection,
-                view_name=view_name,
-            )
+    common = dict(
+        year=year,
+        code=code,
+        simplified=simplified,
+        output="duckdb",
+        show_progress=False,
+        cache=True,
+        connection=connection,
+        view_name=view_name,
+    )
+    if loader.get("v2_only") or loader.get("gpkg") is None:
+        result = read_geobr_v2(geography=loader["v2"], **common)
+    else:
+        result = read_geobr_hybrid(loader["v2"], loader["gpkg"], **common)
 
     _track_registration(connection, geo, view_name, year)
     return result
@@ -415,17 +374,21 @@ def _resolve_missing_table(table_name: str, connection) -> None:
                 UserWarning,
                 stacklevel=4,
             )
-    else:
-        available = _available_years(geo)
-        if available and int(year) not in available:
-            raise ValueError(
-                f"Year {year} not available for {geo}. "
-                f"Available years: {', '.join(str(y) for y in available)}."
-            )
+        suffixed = f"{geo}_{year}"
+        tables = {row[0] for row in connection.execute("SHOW TABLES").fetchall()}
+        if suffixed not in tables:
+            _load_geo_dataset(geo, int(year), connection=connection)
+        _register_alias(geo, int(year), connection)
+        return
+
+    available = _available_years(geo)
+    if available and int(year) not in available:
+        raise ValueError(
+            f"Year {year} not available for {geo}. "
+            f"Available years: {', '.join(str(y) for y in available)}."
+        )
 
     _load_geo_dataset(geo, int(year), connection=connection)
-    if is_bare:
-        _register_alias(geo, int(year), connection)
 
 
 def query(
@@ -498,9 +461,17 @@ def to_geopandas(
         f"ST_AsWKB({safe_geom}) AS __geom_wkb "
         f"FROM {source}"
     ).df()
-    geometries = df.pop("__geom_wkb").apply(
-        lambda v: from_wkb(v) if v is not None else None
-    )
+
+    def _to_geom(value):
+        if value is None:
+            return None
+        if isinstance(value, (bytes, bytearray, memoryview)):
+            return from_wkb(bytes(value))
+        if hasattr(value, "tobytes"):
+            return from_wkb(value.tobytes())
+        return from_wkb(value)
+
+    geometries = df.pop("__geom_wkb").apply(_to_geom)
     return gpd.GeoDataFrame(df, geometry=geometries, crs="EPSG:4674")
 
 
