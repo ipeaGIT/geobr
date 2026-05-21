@@ -26,5 +26,50 @@ from .read_intermediate_region import read_intermediate_region
 from .read_urban_concentrations import read_urban_concentrations
 from .read_schools import read_schools
 from .read_comparable_areas import read_comparable_areas
-from .read_biomes import read_biomes
 from .read_statistical_grid import read_statistical_grid
+from geobr._duckdb_backend import (
+    GeoBrDuckDB,
+    duckdb_connection,
+    query,
+    register_dataset,
+    session,
+    to_geopandas,
+)
+
+__all__ = [
+    "read_state",
+    "read_amazon",
+    "read_biomes",
+    "read_country",
+    "read_municipal_seat",
+    "read_region",
+    "read_semiarid",
+    "read_disaster_risk_area",
+    "read_metro_area",
+    "read_conservation_units",
+    "read_urban_area",
+    "read_health_facilities",
+    "read_indigenous_land",
+    "read_immediate_region",
+    "list_geobr",
+    "read_census_tract",
+    "read_meso_region",
+    "read_micro_region",
+    "read_municipality",
+    "read_weighting_area",
+    "read_neighborhood",
+    "read_health_region",
+    "read_pop_arrangements",
+    "lookup_muni",
+    "read_intermediate_region",
+    "read_urban_concentrations",
+    "read_schools",
+    "read_comparable_areas",
+    "read_statistical_grid",
+    "duckdb_connection",
+    "query",
+    "session",
+    "register_dataset",
+    "to_geopandas",
+    "GeoBrDuckDB",
+]
