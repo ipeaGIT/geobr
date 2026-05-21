@@ -3,7 +3,7 @@ title: "Intro to geobr (Python)"
 output: rmarkdown::html_vignette
 ---
 
-The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and easy access to official spatial data sets of Brazil. The syntax of all **geobr** functions operate on a simple logic that allows users to easily download a wide variety of data sets with updated geometries and harmonized attributes and geographic projections across geographies and years. This vignette presents a quick intro to **geobr**.
+The [**geobr**](https://github.com/ipea/geobr) package provides quick and easy access to official spatial data sets of Brazil. The syntax of all **geobr** functions operate on a simple logic that allows users to easily download a wide variety of data sets with updated geometries and harmonized attributes and geographic projections across geographies and years. This vignette presents a quick intro to **geobr**.
 
 ## Installation
 
@@ -263,7 +263,7 @@ First, we need a `DataFrame` with estimates of Life Expectancy and merge it to o
 
 ```python
 # Read DataFrame with life expectancy data
-data_url = "https://raw.githubusercontent.com/ipeaGIT/geobr/master/r-package/inst/extdata/br_states_lifexpect2017.csv"
+data_url = "https://raw.githubusercontent.com/ipea/geobr/master/r-package/inst/extdata/br_states_lifexpect2017.csv"
 
 df = pd.read_csv(data_url, index_col=0)
 
