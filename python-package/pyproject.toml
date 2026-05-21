@@ -15,6 +15,7 @@ dependencies = [
     "geopandas>=1.0.0,<=1.1",
     "shapely>=1.7.0,<=2.1.0",
     "requests<3.0.0,>=2.25.1",
+    "urllib3<2.0.0,>=1.26.0",
     "lxml<6.0.0,>=5.1.0",
     "html5lib==1.1",
     "pyarrow>=15.0.0",
@@ -70,8 +71,8 @@ exclude = '''
 )
 '''
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "pytest<7.0,>=6.0",
     "pytest-xdist>=3.5.0",
     "jinja2<4.0.0,>=3.1.4",

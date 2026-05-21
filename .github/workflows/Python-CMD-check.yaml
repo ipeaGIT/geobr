@@ -68,3 +68,34 @@ jobs:
         shell: bash
         working-directory: python-package
         run: uv run pytest -n auto ./tests -m "not network"
+
+  Python-network-check:
+    runs-on: ubuntu-latest
+    name: network tests (ubuntu, duckdb)
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out geobr
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        shell: bash
+        working-directory: python-package
+        run: |
+          uv sync
+          uv pip install -e ".[duckdb]"
+
+      - name: Run network tests
+        shell: bash
+        working-directory: python-package
+        run: uv run pytest ./tests -m network -v

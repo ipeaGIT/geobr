@@ -489,6 +489,11 @@ def read_geobr_v2(
     )
 
 
+def _simplified_attempts(preferred: bool) -> list[bool]:
+    """Try preferred flag first; when True was requested, also try original geometry."""
+    return [True, False] if preferred else [False]
+
+
 def read_geobr_hybrid(
     geography_v2: str,
     geography_gpkg: str,
@@ -503,27 +508,43 @@ def read_geobr_hybrid(
     view_name: Optional[str] = None,
 ):
     """Try v2 parquet pipeline; fall back to legacy gpkg on failure."""
-    try:
-        return read_geobr_v2(
-            geography_v2,
-            year,
-            code=code,
-            simplified=simplified,
-            output=output,
-            show_progress=show_progress,
-            cache=cache,
-            verbose=verbose,
-            connection=connection,
-            view_name=view_name,
-        )
-    except (ValueError, ConnectionError, KeyError):
-        metadata = select_metadata(geography_gpkg, year=year, simplified=simplified)
-        gdf = download_gpkg(metadata)
-        if code != "all":
-            from geobr._filter import filter_by_code
+    last_exc = None
+    for simp in _simplified_attempts(simplified):
+        try:
+            return read_geobr_v2(
+                geography_v2,
+                year,
+                code=code,
+                simplified=simp,
+                output=output,
+                show_progress=show_progress,
+                cache=cache,
+                verbose=verbose,
+                connection=connection,
+                view_name=view_name,
+            )
+        except (ValueError, ConnectionError, KeyError) as exc:
+            last_exc = exc
 
-            gdf = filter_by_code(gdf, code)
-        return gdf
+    for simp in _simplified_attempts(simplified):
+        try:
+            metadata = select_metadata(
+                geography_gpkg, year=year, simplified=simp
+            )
+            gdf = download_gpkg(metadata)
+            if code != "all":
+                from geobr._filter import filter_by_code
+
+                gdf = filter_by_code(gdf, code)
+            return gdf
+        except Exception as exc:
+            last_exc = exc
+
+    if last_exc is not None:
+        raise last_exc
+    raise ValueError(
+        f"Could not load {geography_v2!r} for year {year}."
+    )
 
 
 def strip_accents(text):
