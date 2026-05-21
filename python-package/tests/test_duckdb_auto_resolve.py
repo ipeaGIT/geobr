@@ -118,3 +118,29 @@ def test_auto_resolve_bare_download_warns(monkeypatch, duckdb_conn, tmp_path):
         count = query("SELECT count(*) FROM schools", connection=duckdb_conn).fetchone()[0]
     assert count == 1
     assert calls == [2020]
+
+
+def test_auto_resolve_schools_retries_non_simplified(monkeypatch, duckdb_conn, tmp_path):
+    from shapely.geometry import Point
+
+    path = write_geom_parquet(
+        tmp_path / "schools_2020.parquet",
+        {"code_school": [101, 102]},
+        geometry=[Point(0, 0), Point(1, 1)],
+    )
+    simplified_calls = []
+
+    def fake_read_geobr_v2(geography, year, *, simplified, output, connection, view_name, **kwargs):
+        simplified_calls.append(simplified)
+        if simplified:
+            raise ValueError("No simplified data for schools in year 2020.")
+        register_geom_view(connection, view_name, path)
+        return connection.sql(f'SELECT * FROM "{view_name}"')
+
+    patch_module_attr(monkeypatch, "geobr.utils", "read_geobr_v2", fake_read_geobr_v2)
+    monkeypatch.setattr("geobr._duckdb_backend._known_geos", lambda: {"schools"})
+    monkeypatch.setattr("geobr._duckdb_backend._available_years", lambda geo: [2020])
+
+    count = query("SELECT count(*) FROM schools_2020", connection=duckdb_conn).fetchone()[0]
+    assert count == 2
+    assert simplified_calls == [True, False]

@@ -31,3 +31,15 @@ def test_download_metadata_v2_live():
     assert "file_name" in meta.columns
     assert "geo" in meta.columns
     assert len(meta) > 0
+
+
+@pytest.mark.network
+def test_schools_v2_has_no_simplified_parquet():
+    meta = download_metadata_v2()
+    schools_2020 = meta[(meta["geo"] == "schools") & (meta["year"] == 2020)]
+    assert len(schools_2020) == 1
+    assert not schools_2020.iloc[0]["simplified"]
+    assert "simplified" not in schools_2020.iloc[0]["file_name"]
+
+    with pytest.raises(ValueError, match="No simplified data for schools"):
+        select_metadata_v2("schools", 2020, simplified=True)
