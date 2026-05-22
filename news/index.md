@@ -2,6 +2,8 @@
 
 ## geobr v2.0.0
 
+CRAN release: 2026-05-20
+
 **New functions**
 
 - [`read_favela()`](https://ipeagit.github.io/geobr/reference/read_favela.md)
