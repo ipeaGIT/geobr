@@ -290,6 +290,7 @@ download_metadata2 <- function(){ # nocov start
 
   # test server connection with github
   metadata_link <- paste0("https://github.com/ipea/geobr_prep_data/")
+  check_con <- NULL
   try( silent = TRUE,
        check_con <- check_connection(metadata_link, silent = FALSE)
        )
