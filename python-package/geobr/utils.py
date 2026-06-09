@@ -14,6 +14,8 @@ from io import StringIO
 
 from geobr.constants import DataTypes
 from geobr._cache import cached_path, is_cached
+from geobr._duckdb_backend import read_filter_parquet_relation, duckdb_connection
+from geobr._output import convert_output
 
 MIRRORS = ["https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/"]
 GEOBR_DATA_RELEASE = "v2.0.0"
@@ -355,15 +357,14 @@ def _download_file(urls, dest: Path, show_progress: bool = False) -> bool:
 
 
 @lru_cache(maxsize=1)
-def download_metadata_v2():
-    """Download and parse v2.0.0 release file list from GitHub (mirrors R download_metadata2)."""
+def download_metadata_v2() -> pd.DataFrame:
+    """Download and parse latest release file list from GitHub (mirrors R download_metadata2)."""
     cache_meta = cached_path("metadata_geobr_v2.parquet")
     if cache_meta.exists() and cache_meta.stat().st_size > 0:
         return pd.read_parquet(cache_meta)
-
+    # Try to read latest release
     api_url = (
-        "https://api.github.com/repos/ipea/geobr_prep_data/releases/tags/"
-        f"{GEOBR_DATA_RELEASE}"
+        "https://api.github.com/repos/ipea/geobr_prep_data/releases/latest"
     )
     try:
         resp = requests.get(api_url, timeout=60)
@@ -372,12 +373,14 @@ def download_metadata_v2():
         rows = []
         for asset in assets:
             fname = asset.get("name", "")
+            url = asset.get("browser_download_url", "")
             if not fname.endswith(".parquet"):
                 continue
-            rows.append({"file_name": fname})
+            rows.append({"file_name": fname, "download_url": url})
         if not rows:
+            # if latest download fails, fallback to `GEOBR_DATA_RELEASE`
             release_url = (
-                f"https://api.github.com/repos/ipea/geobr_prep_data/releases"
+                "https://api.github.com/repos/ipea/geobr_prep_data/releases"
             )
             resp2 = requests.get(release_url, timeout=60)
             resp2.raise_for_status()
@@ -407,7 +410,7 @@ def download_metadata_v2():
     return temp_meta
 
 
-def select_metadata_v2(geography, year, simplified=True, verbose=False):
+def select_metadata_v2(geography, year, simplified=True, verbose=False) -> pd.Series:
     """Filter v2 metadata by geography, year, and simplified flag."""
     metadata = download_metadata_v2()
     temp_meta = metadata[metadata["geo"] == geography].copy()
@@ -438,15 +441,16 @@ def select_metadata_v2(geography, year, simplified=True, verbose=False):
 
 def download_parquet(
     filename_to_download: str,
+    download_url: str,
     show_progress: bool = True,
     cache: bool = True,
 ) -> Path:
-    """Download a parquet file from geobr_prep_data v2.0.0. Returns local path."""
+    """Download a parquet file from lates geobr_prep_data release. Returns a local path."""
     dest = cached_path(filename_to_download)
     if cache and is_cached(filename_to_download):
         return dest
     urls = [
-        f"{GEOBR_PREP_DATA_BASE}/{filename_to_download}",
+        download_url,
         f"{IPEA_FALLBACK_BASE}/{filename_to_download}",
     ]
     if not _download_file(urls, dest, show_progress=show_progress):
@@ -462,7 +466,7 @@ def read_geobr_v2(
     year: int,
     code: str = "all",
     simplified: bool = True,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,
@@ -470,21 +474,29 @@ def read_geobr_v2(
     view_name: Optional[str] = None,
 ):
     """Shared v2 read pipeline: metadata -> parquet -> filter -> convert output."""
-    from geobr._output import convert_output
-
     row = select_metadata_v2(geography, year, simplified=simplified, verbose=verbose)
     path = download_parquet(
         row["file_name"],
+        row["download_url"],
         show_progress=show_progress,
         cache=cache,
     )
-    if output == "duckdb" and view_name is None:
+    if view_name is None:
         view_name = f"{geography}_{year}"
-    return convert_output(
+
+    conn = connection or duckdb_connection()
+
+    relation = read_filter_parquet_relation(
         path,
-        output=output,
         filter_code=code,
-        connection=connection,
+        connection=conn,
+        view_name=view_name,
+    )
+
+    return convert_output(
+        relation,
+        output=output,
+        connection=conn,
         view_name=view_name,
     )
 
@@ -495,7 +507,7 @@ def read_geobr_hybrid(
     year: int,
     code: str = "all",
     simplified: bool = True,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,

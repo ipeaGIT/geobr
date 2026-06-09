@@ -5,6 +5,8 @@ import pandas as pd
 import pytest
 from shapely.geometry import Point, Polygon
 
+from geobr._duckdb_backend import duckdb_connection, _reset_shared_connection
+
 
 @pytest.fixture
 def sample_gdf():
@@ -42,11 +44,8 @@ def patch_module_attr(monkeypatch, module_path: str, attr: str, value):
 
 @pytest.fixture
 def duckdb_conn():
-    pytest.importorskip("duckdb")
-    from geobr._duckdb_backend import _create_connection, _reset_shared_connection
-
     _reset_shared_connection()
-    conn = _create_connection()
+    conn = duckdb_connection()
     yield conn
     conn.close()
     _reset_shared_connection()
