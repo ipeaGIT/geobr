@@ -497,7 +497,6 @@ def read_geobr_v2(
         relation,
         output=output,
         connection=conn,
-        view_name=view_name,
     )
 
 

@@ -61,7 +61,6 @@ def read_filter_parquet_relation(
     view_name: Optional[str] = None,
 ):
     """Return a DuckDB relation over a parquet file."""
-    print(f"O filter code é {filter_code}")
     if view_name:
         register_dataset(view_name, path, connection=connection)
         source = f'"{view_name.replace(chr(34), chr(34) * 2)}"'
