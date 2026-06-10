@@ -22,22 +22,13 @@ jobs:
   Python-CMD-check:
     runs-on: ${{ matrix.os }}
 
-    name: ${{ matrix.os }} (${{ matrix.python-version }}${{ matrix.extras != '' && format(', {0}', matrix.extras) || '' }})
+    name: ${{ matrix.os }} (${{ matrix.python-version }})
 
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         python-version: ["3.10", "3.11", "3.12", "3.13"]
-        extras: [""]
-        include:
-          # Optional DuckDB extra: ubuntu only to keep CI cost reasonable.
-          - os: ubuntu-latest
-            python-version: "3.11"
-            extras: all
-          - os: ubuntu-latest
-            python-version: "3.12"
-            extras: all
 
     steps:
       - name: Check out geobr
@@ -56,13 +47,7 @@ jobs:
       - name: Install dependencies
         shell: bash
         working-directory: python-package
-        run: |
-          uv sync
-          if [ -n "${{ matrix.extras }}" ]; then
-            uv pip install -e ".[${{ matrix.extras }}]"
-          else
-            uv pip install -e .
-          fi
+        run: uv sync --frozen
 
       - name: Run tests
         shell: bash

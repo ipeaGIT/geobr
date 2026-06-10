@@ -3,7 +3,7 @@ import importlib
 import geopandas as gpd
 import pandas as pd
 import pytest
-from shapely.geometry import Point, Polygon
+from shapely.geometry import Point
 
 from geobr._duckdb_backend import duckdb_connection, _reset_shared_connection
 
@@ -46,6 +46,7 @@ def patch_module_attr(monkeypatch, module_path: str, attr: str, value):
 def duckdb_conn():
     _reset_shared_connection()
     conn = duckdb_connection()
+    conn.execute("SET threads TO 1;")
     yield conn
     conn.close()
     _reset_shared_connection()
