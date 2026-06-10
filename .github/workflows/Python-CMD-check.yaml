@@ -52,4 +52,4 @@ jobs:
       - name: Run tests
         shell: bash
         working-directory: python-package
-        run: uv run pytest -n auto ./tests -m "not network"
+        run: uv run pytest -n 2 ./tests -m "not network"
