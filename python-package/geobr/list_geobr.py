@@ -18,7 +18,7 @@ def list_geobr():
     """
 
     try:
-        html_data = get("https://github.com/ipeaGIT/geobr/blob/master/README.md").text
+        html_data = get("https://github.com/ipeaGIT/geobr/blob/v1.9.1/README.md").text
         find_emoji = html_data.index("👉")
         html_data =  html_data[find_emoji:]
         escaped_data = html_data.replace("\\u003c", "<").replace("\\u003e", ">")

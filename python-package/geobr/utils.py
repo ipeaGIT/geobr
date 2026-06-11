@@ -1,5 +1,8 @@
 import os
+import re
 from functools import lru_cache
+from pathlib import Path
+from typing import Optional
 from urllib.error import HTTPError
 import tempfile
 
@@ -10,8 +13,16 @@ import unicodedata
 from io import StringIO
 
 from geobr.constants import DataTypes
+from geobr._cache import cached_path, is_cached
+from geobr._duckdb_backend import read_filter_parquet_relation, duckdb_connection
+from geobr._output import convert_output
 
 MIRRORS = ["https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/"]
+GEOBR_DATA_RELEASE = "v2.0.0"
+GEOBR_PREP_DATA_BASE = (
+    f"https://github.com/ipea/geobr_prep_data/releases/download/{GEOBR_DATA_RELEASE}"
+)
+IPEA_FALLBACK_BASE = "https://www.ipea.gov.br/geobr/data_v2.0.0"
 
 
 def _get_unique_values(_df, column):
@@ -306,6 +317,224 @@ def test_options(choosen, name, allowed=None, not_allowed=None):
                 f"Invalid value to argument '{name}'. "
                 f"It cannot be {' or '.join(change_type_list(allowed))}"
             )
+
+
+def _download_file(urls, dest: Path, show_progress: bool = False) -> bool:
+    """Try URLs in order; write to dest. Return True on success."""
+    for url in urls:
+        try:
+            response = requests.get(url, stream=True, timeout=500, verify=False)
+            if response.status_code != 200:
+                continue
+            total = int(response.headers.get("content-length", 0))
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            if show_progress and total > 0:
+                try:
+                    from tqdm import tqdm
+
+                    with open(dest, "wb") as f, tqdm(
+                        total=total, unit="B", unit_scale=True, desc=dest.name
+                    ) as bar:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            if chunk:
+                                f.write(chunk)
+                                bar.update(len(chunk))
+                except ImportError:
+                    with open(dest, "wb") as f:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            if chunk:
+                                f.write(chunk)
+            else:
+                with open(dest, "wb") as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+            if dest.exists() and dest.stat().st_size > 0:
+                return True
+        except Exception:
+            continue
+    return False
+
+
+@lru_cache(maxsize=1)
+def download_metadata_v2() -> pd.DataFrame:
+    """Download and parse latest release file list from GitHub (mirrors R download_metadata2)."""
+    cache_meta = cached_path("metadata_geobr_v2.parquet")
+    if cache_meta.exists() and cache_meta.stat().st_size > 0:
+        return pd.read_parquet(cache_meta)
+    # Try to read latest release
+    api_url = (
+        "https://api.github.com/repos/ipea/geobr_prep_data/releases/latest"
+    )
+    try:
+        resp = requests.get(api_url, timeout=60)
+        resp.raise_for_status()
+        assets = resp.json().get("assets", [])
+        rows = []
+        for asset in assets:
+            fname = asset.get("name", "")
+            url = asset.get("browser_download_url", "")
+            if not fname.endswith(".parquet"):
+                continue
+            rows.append({"file_name": fname, "download_url": url})
+        if not rows:
+            # if latest download fails, fallback to `GEOBR_DATA_RELEASE`
+            release_url = (
+                "https://api.github.com/repos/ipea/geobr_prep_data/releases"
+            )
+            resp2 = requests.get(release_url, timeout=60)
+            resp2.raise_for_status()
+            for release in resp2.json():
+                if release.get("tag_name") == GEOBR_DATA_RELEASE:
+                    for asset in release.get("assets", []):
+                        fname = asset.get("name", "")
+                        if fname.endswith(".parquet"):
+                            rows.append({"file_name": fname})
+                    break
+        if not rows:
+            raise ConnectionError("Could not list geobr_prep_data v2.0.0 assets.")
+        temp_meta = pd.DataFrame(rows)
+    except Exception as e:
+        raise ConnectionError(
+            "Failed to download v2 metadata. Check your internet connection."
+        ) from e
+
+    temp_meta["geo"] = temp_meta["file_name"].str.extract(r"^([^_]+)", expand=False)
+    temp_meta["year"] = pd.to_numeric(
+        temp_meta["file_name"].str.extract(r"(\d+)", expand=False), errors="coerce"
+    )
+    temp_meta["simplified"] = temp_meta["file_name"].str.contains(
+        "simplified", case=False, na=False
+    )
+    temp_meta.to_parquet(cache_meta, index=False)
+    return temp_meta
+
+
+def select_metadata_v2(geography, year, simplified=True, verbose=False) -> pd.Series:
+    """Filter v2 metadata by geography, year, and simplified flag."""
+    metadata = download_metadata_v2()
+    temp_meta = metadata[metadata["geo"] == geography].copy()
+    if len(temp_meta) == 0:
+        available = ", ".join(sorted(metadata["geo"].unique()))
+        raise ValueError(
+            f"Geography {geography!r} not found in v2 metadata. Available: {available}"
+        )
+    years_available = sorted(temp_meta["year"].dropna().unique())
+    if year is None:
+        year = int(max(years_available))
+    elif int(year) not in [int(y) for y in years_available]:
+        raise ValueError(
+            f"Data currently available only for the following year/date: "
+            f"{', '.join(str(int(y)) for y in years_available)}."
+        )
+    if verbose:
+        print(f"Using year/date {year}")
+    temp_meta = temp_meta[temp_meta["year"] == int(year)]
+    temp_meta = temp_meta[temp_meta["simplified"] == bool(simplified)]
+    if len(temp_meta) == 0:
+        raise ValueError(
+            f"No {'simplified' if simplified else 'original'} data for "
+            f"{geography} in year {year}."
+        )
+    return temp_meta.iloc[0]
+
+
+def download_parquet(
+    filename_to_download: str,
+    download_url: str,
+    show_progress: bool = True,
+    cache: bool = True,
+) -> Path:
+    """Download a parquet file from lates geobr_prep_data release. Returns a local path."""
+    dest = cached_path(filename_to_download)
+    if cache and is_cached(filename_to_download):
+        return dest
+    urls = [
+        download_url,
+        f"{IPEA_FALLBACK_BASE}/{filename_to_download}",
+    ]
+    if not _download_file(urls, dest, show_progress=show_progress):
+        raise ConnectionError(
+            "A file may have been corrupted during download. "
+            "Please try again or report at https://github.com/ipeaGIT/geobr/issues"
+        )
+    return dest
+
+
+def read_geobr_v2(
+    geography: str,
+    year: int,
+    code: str = "all",
+    simplified: bool = True,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+    verbose: bool = False,
+    connection=None,
+    view_name: Optional[str] = None,
+):
+    """Shared v2 read pipeline: metadata -> parquet -> filter -> convert output."""
+    row = select_metadata_v2(geography, year, simplified=simplified, verbose=verbose)
+    path = download_parquet(
+        row["file_name"],
+        row["download_url"],
+        show_progress=show_progress,
+        cache=cache,
+    )
+    if view_name is None:
+        view_name = f"{geography}_{year}"
+
+    conn = connection or duckdb_connection()
+
+    relation = read_filter_parquet_relation(
+        path,
+        filter_code=code,
+        connection=conn,
+        view_name=view_name,
+    )
+
+    return convert_output(
+        relation,
+        output=output,
+        connection=conn,
+    )
+
+
+def read_geobr_hybrid(
+    geography_v2: str,
+    geography_gpkg: str,
+    year: int,
+    code: str = "all",
+    simplified: bool = True,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+    verbose: bool = False,
+    connection=None,
+    view_name: Optional[str] = None,
+):
+    """Try v2 parquet pipeline; fall back to legacy gpkg on failure."""
+    try:
+        return read_geobr_v2(
+            geography_v2,
+            year,
+            code=code,
+            simplified=simplified,
+            output=output,
+            show_progress=show_progress,
+            cache=cache,
+            verbose=verbose,
+            connection=connection,
+            view_name=view_name,
+        )
+    except (ValueError, ConnectionError, KeyError):
+        metadata = select_metadata(geography_gpkg, year=year, simplified=simplified)
+        gdf = download_gpkg(metadata)
+        if code != "all":
+            from geobr._filter import filter_by_code
+
+            gdf = filter_by_code(gdf, code)
+        return gdf
 
 
 def strip_accents(text):
