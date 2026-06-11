@@ -22,7 +22,7 @@ jobs:
   Python-CMD-check:
     runs-on: ${{ matrix.os }}
 
-    name: ${{ matrix.os }} (${{ matrix.python-version }})
+    name: ${{ matrix.os }} (${{ matrix.python-version }}${{ matrix.extras != '' && format(', {0}', matrix.extras) || '' }})
 
     strategy:
       fail-fast: false
