@@ -1,3 +1,10 @@
+# geobr (development version)
+
+**Bug fixes**
+
+- Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake.
+
+
 # geobr v2.0.0
 
 **New functions**

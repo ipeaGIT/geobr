@@ -23,14 +23,14 @@
 #'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Read an specific immediate region
-#' im <- read_immediate_region(code_immediate=110006, year = 2024)
+#' im <- read_immediate_region(code_immediate = 110006, year = 2024)
 #'
 #' # Read immediate regions of a state
-#' im <- read_immediate_region(code_immediate="AM", year = 2024)
-#' im <- read_immediate_region(code_immediate=12, year = 2024)
+#' im <- read_immediate_region(code_immediate = "AM", year = 2024)
+#' im <- read_immediate_region(code_immediate = 12, year = 2024)
 #'
 #' # Read all immediate regions of the country
-#' im <- read_immediate_region(code_immediate="all", year = 2024)
+#' im <- read_immediate_region(code_immediate = "all", year = 2024)
 #'
 read_immediate_region <- function(year,
                                   code_immediate = "all",
@@ -62,7 +62,7 @@ read_immediate_region <- function(year,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # FILTER
-  temp_arrw <- filter_arrw(temp_arrw, code = 11)
+  temp_arrw <- filter_arrw(temp_arrw, code = code_immediate)
 
   # convert to sf
   temp <- convert_output(temp_arrw, output)
