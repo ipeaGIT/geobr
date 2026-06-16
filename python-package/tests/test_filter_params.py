@@ -9,7 +9,7 @@ def test_read_geobr_v2_applies_code_state_filter(sample_gdf, monkeypatch, tmp_pa
     path = tmp_path / "schools.parquet"
     sample_gdf.to_parquet(path)
 
-    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False):
+    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False, zone=None):
         return pd.Series({"file_name": path.name, "download_url": "", "geo": geography, "year": year})
 
     monkeypatch.setattr("geobr.utils.select_metadata_v2", fake_select_metadata_v2)
@@ -25,7 +25,7 @@ def test_read_geobr_v2_applies_code_muni_filter(sample_gdf, monkeypatch, tmp_pat
     path = tmp_path / "schools.parquet"
     sample_gdf.to_parquet(path)
 
-    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False):
+    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False, zone=None):
         return pd.Series({"file_name": path.name, "download_url": "", "geo": geography, "year": year})
 
     monkeypatch.setattr("geobr.utils.select_metadata_v2", fake_select_metadata_v2)
@@ -41,7 +41,7 @@ def test_read_geobr_v2_applies_multiple_codes_filter(sample_gdf, monkeypatch, tm
     path = tmp_path / "schools.parquet"
     sample_gdf.to_parquet(path)
 
-    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False):
+    def fake_select_metadata_v2(geography, year, simplified=True, verbose=False, zone=None):
         return pd.Series({"file_name": path.name, "download_url": "", "geo": geography, "year": year})
 
     monkeypatch.setattr("geobr.utils.select_metadata_v2", fake_select_metadata_v2)

@@ -410,7 +410,7 @@ def download_metadata_v2() -> pd.DataFrame:
     return temp_meta
 
 
-def select_metadata_v2(geography, year, simplified=True, verbose=False) -> pd.Series:
+def select_metadata_v2(geography, year, simplified=True, verbose=False, zone=None) -> pd.Series:
     """Filter v2 metadata by geography, year, and simplified flag."""
     metadata = download_metadata_v2()
     temp_meta = metadata[metadata["geo"] == geography].copy()
@@ -436,6 +436,11 @@ def select_metadata_v2(geography, year, simplified=True, verbose=False) -> pd.Se
             f"No {'simplified' if simplified else 'original'} data for "
             f"{geography} in year {year}."
         )
+
+    # used for read_census_tract
+    if zone:
+        temp_meta = temp_meta[temp_meta["file_name"].str.contains(zone)]
+
     return temp_meta.iloc[0]
 
 
@@ -472,9 +477,10 @@ def read_geobr_v2(
     verbose: bool = False,
     connection=None,
     view_name: Optional[str] = None,
+    zone=None,
 ):
     """Shared v2 read pipeline: metadata -> parquet -> filter -> convert output."""
-    row = select_metadata_v2(geography, year, simplified=simplified, verbose=verbose)
+    row = select_metadata_v2(geography, year, simplified=simplified, verbose=verbose, zone=zone)
     path = download_parquet(
         row["file_name"],
         row["download_url"],

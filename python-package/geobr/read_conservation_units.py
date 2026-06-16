@@ -1,12 +1,12 @@
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
 
 
 def read_conservation_units(
-    date: int = 201909,
+    date: int,
     code_state: str = "all",
     simplified: bool = True,
     verbose: bool = False,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
 ):
@@ -21,9 +21,8 @@ def read_conservation_units(
     simplified, verbose, output, show_progress, cache
         Standard geobr options.
     """
-    return read_geobr_hybrid(
+    return read_geobr_v2(
         "conservationunits",
-        "conservation_units",
         date,
         code=code_state,
         simplified=simplified,

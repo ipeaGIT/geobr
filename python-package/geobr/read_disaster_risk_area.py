@@ -1,11 +1,11 @@
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
 
 
 def read_disaster_risk_area(
-    year: int = 2010,
+    year: int,
     code_muni: str = "all",
     simplified: bool = True,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,
@@ -21,9 +21,8 @@ def read_disaster_risk_area(
     simplified, output, show_progress, cache, verbose
         Standard geobr options.
     """
-    return read_geobr_hybrid(
+    return read_geobr_v2(
         "disasterriskareas",
-        "disaster_risk_area",
         year,
         code=code_muni,
         simplified=simplified,

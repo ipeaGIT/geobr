@@ -1,11 +1,11 @@
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
 
 
 def read_neighborhood(
-    year: int = 2022,
+    year: int,
     code_muni: str = "all",
     simplified: bool = True,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,
@@ -21,9 +21,8 @@ def read_neighborhood(
     simplified, output, show_progress, cache, verbose
         Standard geobr options.
     """
-    return read_geobr_hybrid(
+    return read_geobr_v2(
         "neighborhoods",
-        "neighborhood",
         year,
         code=code_muni,
         simplified=simplified,

@@ -1,12 +1,14 @@
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
+from geobr._output import convert_output
+from geobr._duckdb_backend import duckdb_connection
 
 
 def read_pop_arrangements(
-    year: int = 2010,
+    year: InterruptedError,
     code_state: str = "all",
     simplified: bool = True,
     verbose: bool = False,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
 ):
@@ -21,14 +23,21 @@ def read_pop_arrangements(
     simplified, verbose, output, show_progress, cache
         Standard geobr options.
     """
-    return read_geobr_hybrid(
-        "poparrengements",
-        "pop_arrengements",
+    relation = read_geobr_v2(
+        "poparrangements",
         year,
         code=code_state,
         simplified=simplified,
-        output=output,
+        output="duckdb",
         show_progress=show_progress,
         cache=cache,
         verbose=verbose,
     )
+
+    conn = duckdb_connection()
+
+    relation = conn.sql(
+        "SELECT * FROM relation WHERE code_pop_arrangement IS NOT NULL"
+    )
+
+    return convert_output(relation, output, conn)

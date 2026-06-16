@@ -1,12 +1,12 @@
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
 
 
 def read_indigenous_land(
-    date: int = 201907,
+    year: int,
     code_state: str = "all",
     simplified: bool = True,
     verbose: bool = False,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
 ):
@@ -14,17 +14,16 @@ def read_indigenous_land(
 
     Parameters
     ----------
-    date : int
-        Date in YYYYMM format.
+    year : int
+        Year of the data.
     code_state : str or int
         State abbrev, two-digit code, or ``"all"``.
     simplified, verbose, output, show_progress, cache
         Standard geobr options.
     """
-    return read_geobr_hybrid(
-        "indigenousland",
-        "indigenous_land",
-        date,
+    return read_geobr_v2(
+        "indigenouslands",
+        year,
         code=code_state,
         simplified=simplified,
         output=output,

@@ -1,11 +1,11 @@
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
 
 
 def read_schools(
-    year: int = 2020,
+    year: int,
     code_muni: str = "all",
     simplified: bool = False,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,
@@ -21,8 +21,7 @@ def read_schools(
     simplified, output, show_progress, cache, verbose
         Standard geobr options.
     """
-    return read_geobr_hybrid(
-        "schools",
+    return read_geobr_v2(
         "schools",
         year,
         code=code_muni,

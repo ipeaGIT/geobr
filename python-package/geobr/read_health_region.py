@@ -1,20 +1,18 @@
-from __future__ import annotations
-
 import warnings
 
-import geopandas as gpd
-
-from geobr.utils import read_geobr_hybrid
+from geobr.utils import read_geobr_v2
+from geobr._output import convert_output
+from geobr._duckdb_backend import duckdb_connection
 
 
 def read_health_region(
-    year: int = 2024,
+    year: int,
     code_state: str = "all",
     geometry_level: str = "municipality",
     macro=None,
     simplified: bool = True,
     verbose: bool = False,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
 ):
@@ -47,55 +45,73 @@ def read_health_region(
             f"`geometry_level` must be one of: {list(allowed)}. Got: {geometry_level!r}"
         )
 
-    gdf = read_geobr_hybrid(
+    relation = read_geobr_v2(
         "healthregions",
-        "health_region",
         year,
         code=code_state,
         simplified=simplified,
-        output="sf",
+        output="duckdb",
         show_progress=show_progress,
         cache=cache,
         verbose=verbose,
     )
 
-    if geometry_level == "municipality":
-        if output != "sf":
-            from geobr._output import convert_output
-            from geobr._cache import cached_path
-            from geobr.utils import select_metadata_v2, download_parquet
+    conn = duckdb_connection()
 
-            row = select_metadata_v2("healthregions", year, simplified, verbose)
-            path = download_parquet(row["file_name"], show_progress, cache)
-            return convert_output(path, output=output, filter_code=code_state)
-        return gdf
+    if geometry_level == "municipality":
+        return convert_output(relation, output, conn)
+
+    all_cols = relation.columns
 
     if geometry_level == "micro":
         group_cols = [
             c
-            for c in gdf.columns
+            for c in all_cols
             if c != "geometry"
             and c not in ("code_muni", "name_muni", "code_health_macroregion", "name_health_macroregion")
         ]
     else:
         group_cols = [
             c
-            for c in gdf.columns
+            for c in all_cols
             if c != "geometry"
             and c not in ("code_muni", "name_muni", "code_health_region", "name_health_region")
         ]
 
-    dissolved = gdf.dissolve(by=group_cols, as_index=False)
-    dissolved = gpd.GeoDataFrame(dissolved, geometry="geometry", crs=gdf.crs)
+    group_cols_str = ", ".join(group_cols)
 
-    if output != "sf":
-        import tempfile
-        from pathlib import Path
-        from geobr._output import convert_output
+    # Aggregate results and remove holes
+    query = f"""
+        WITH aggregated AS (
+            -- perform the standard union aggregation
+            SELECT 
+                {group_cols_str},
+                ST_Union_Agg(geometry) AS geom
+            FROM relation
+            GROUP BY {group_cols_str}
+        ),
+        unwrapped_polygons AS (
+            -- flatten multipolygons into separate rows of simple polygons
+            SELECT 
+                {group_cols_str},
+                (UNNEST(ST_Dump(geom))).geom AS single_geom
+            FROM aggregated
+        ),
+        holes_removed AS (
+            -- remove holes from the simple polygons using the outer ring
+            SELECT 
+                {group_cols_str},
+                ST_MakePolygon(ST_ExteriorRing(single_geom)) AS clean_geom
+            FROM unwrapped_polygons
+        )
+        -- recollect the cleaned parts back into the final shapes
+        SELECT 
+            {group_cols_str},
+            ST_Union_Agg(clean_geom) AS geometry
+        FROM holes_removed
+        GROUP BY {group_cols_str};
+        """
 
-        with tempfile.NamedTemporaryFile(suffix=".parquet", delete=False) as fp:
-            tmp = Path(fp.name)
-        dissolved.to_parquet(tmp)
-        return convert_output(tmp, output=output, filter_code="all")
+    relation = conn.sql(query)
 
-    return dissolved
+    return convert_output(relation, output, conn)

@@ -5,7 +5,9 @@ from geobr import read_amazon
 
 def test_read_amazon():
 
-    assert isinstance(read_amazon(), gpd.geodataframe.GeoDataFrame)
+    gdf = read_amazon(2024)
+    assert isinstance(gdf, gpd.geodataframe.GeoDataFrame)
+    assert not gdf.empty
 
     with pytest.raises(Exception):
         read_amazon(year=9999999)

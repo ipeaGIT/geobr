@@ -1,42 +1,29 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_v2
 
-
-def read_amazon(year=2012, simplified=True, verbose=False):
-    """ Download official data of Brazil's Legal Amazon as an sf object.
-    
-     This data set covers the whole of Brazil's Legal Amazon as defined in the federal law n. 12.651/2012). The original
- data comes from the Brazilian Ministry of Environment (MMA) and can be found at http://mapas.mma.gov.br/i3geo/datadownload.htm .
+def read_amazon(
+    year: int,
+    simplified: bool = True,
+    verbose: bool = False,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+):
+    """Download official Brazil's Legal Amazon data (Brazilian Ministry of Environment - MMA).
 
     Parameters
     ----------
-    year : int, optional
-        Year of the data, by default 2012
-    simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
-    verbose : bool, optional
-        by default False
-    
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-    
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_amazon
-
-    # Read specific state at a given year
-    >>> df = read_amazon(year=2012)
+    year : int
+        Year of the data.
+    simplified, verbose, output, show_progress, cache
+        Standard geobr options.
     """
 
-    metadata = select_metadata("amazonia_legal", year=year, simplified=simplified)
-
-    gdf = download_gpkg(metadata)
-
-    return gdf
+    return read_geobr_v2(
+        "amazonialegal",
+        year,
+        simplified=simplified,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )
