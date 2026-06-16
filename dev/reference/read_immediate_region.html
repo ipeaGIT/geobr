@@ -11,7 +11,7 @@ Brazil created after 2017 by IBGE. These regions were created to replace the
 
     <a class="navbar-brand me-2" href="../index.html">geobr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.9.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,17 +128,17 @@ function is silent.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Read an specific immediate region</span></span></span>
-<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="fl">110006</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate <span class="op">=</span> <span class="fl">110006</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 2024</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read immediate regions of a state</span></span></span>
-<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="st">"AM"</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate <span class="op">=</span> <span class="st">"AM"</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 2024</span>
-<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="fl">12</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate <span class="op">=</span> <span class="fl">12</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 2024</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Read all immediate regions of the country</span></span></span>
-<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate<span class="op">=</span><span class="st">"all"</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu">read_immediate_region</span><span class="op">(</span>code_immediate <span class="op">=</span> <span class="st">"all"</span>, year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using year/date 2024</span>
 </code></pre></div>
     </div>

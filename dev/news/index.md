@@ -1,6 +1,16 @@
 # Changelog
 
+## geobr (development version)
+
+**Bug fixes**
+
+- Fix bug in
+  [`read_immediate_region()`](https://ipeagit.github.io/geobr/dev/reference/read_immediate_region.md)
+  which was hardcoded to read state 11 by mistake.
+
 ## geobr v2.0.0
+
+CRAN release: 2026-05-20
 
 **New functions**
 
@@ -54,11 +64,15 @@
 **Major changes**
 
 - Data files are now saved in `.parquet`. This improved performance to
-  download and to read files, and allow integration with gearrow. Closes
-  [\#290](https://ipeagit.github.io/geobr/dev/news/)
+  download and to read files, and allow integration with ducdkDB via
+  {duckspatial} and with Arrow via {gearrow}. Closes
+  [\#290](https://github.com/ipeaGIT/geobr/issues/290)
 - Most functions have a new argument `output`, which allow users to
-  choose whether functions should return an `"sf"` to memory (default)
-  or an `"arrow"` table.
+  choose the output format. `"sf"` returns an `sf` to memory (default),
+  `"duckdb"` returns a lazy spatial table backed by DuckDB via the
+  duckspatial package, and `"arrow"` returns an Arrow dataset. Both
+  `"duckdb"` and `"arrow"` support out-of-memory processing of large
+  data sets.
 - All functions have a new argument `verbose`. If `TRUE` (the default),
   the function prints informative messages and shows download progress
   bar. If `FALSE`, the function is silent. Closes

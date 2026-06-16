@@ -34,8 +34,8 @@ library(geobr)
 library(sf)
 #> Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE
 
-br <- read_country(year=2022)
-#> ℹ Using year/date 2022
+br <- read_country(year = 1991)
+#> ℹ Using year/date 1991
 
 br_no_islands <- remove_islands(br)
 
