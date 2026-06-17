@@ -44,7 +44,7 @@ build_script:
     $ErrorActionPreference = "Stop"
     Push-Location $env:PKGDIR
     try {
-      travis-tool.sh install_deps
+      bash -c "./travis-tool.sh install_deps"
     } finally {
       Pop-Location
     }
@@ -54,7 +54,7 @@ test_script:
     $ErrorActionPreference = "Stop"
     Push-Location $env:PKGDIR
     try {
-      travis-tool.sh run_tests
+      bash -c "./travis-tool.sh run_tests"
     } finally {
       Pop-Location
     }

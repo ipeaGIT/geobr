@@ -6,7 +6,7 @@ from geobr.utils import read_geobr_v2
 def read_polling_places(
     year: int,
     code_muni: str = "all",
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,

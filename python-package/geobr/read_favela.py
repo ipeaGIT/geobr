@@ -7,7 +7,7 @@ def read_favela(
     year: int,
     code_muni: str = "all",
     simplified: bool = True,
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,
