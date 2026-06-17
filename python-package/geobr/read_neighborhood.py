@@ -1,39 +1,33 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_v2
 
 
-def read_neighborhood(year=2010, simplified=True, verbose=False):
-    """ Download neighborhood limits of Brazilian municipalities as a geopandas geodataframe object
-    
+def read_neighborhood(
+    year: int,
+    code_muni: str = "all",
+    simplified: bool = True,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+    verbose: bool = False,
+):
+    """Download neighborhood limits of Brazilian municipalities.
+
     Parameters
     ----------
-    year : int, optional
-        Year of the data, by default 2010
-    simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
-    verbose : bool, optional
-        by default False
-    
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-    
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_neighborhood
-
-    # Read specific neighborhoods at a given year
-    >>> df = read_neighborhood(year=2010)
+    year : int
+        Year of the data.
+    code_muni : str or int
+        Municipality code, state abbrev, or ``"all"``.
+    simplified, output, show_progress, cache, verbose
+        Standard geobr options.
     """
-
-    metadata = select_metadata("neighborhood", year=year, simplified=simplified)
-
-    gdf = download_gpkg(metadata)
-
-    return gdf
+    return read_geobr_v2(
+        "neighborhoods",
+        year,
+        code=code_muni,
+        simplified=simplified,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )

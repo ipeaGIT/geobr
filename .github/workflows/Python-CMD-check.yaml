@@ -22,7 +22,7 @@ jobs:
   Python-CMD-check:
     runs-on: ${{ matrix.os }}
 
-    name: ${{ matrix.os }} (${{ matrix.python-version }})
+    name: ${{ matrix.os }} (${{ matrix.python-version }}${{ matrix.extras != '' && format(', {0}', matrix.extras) || '' }})
 
     strategy:
       fail-fast: false
@@ -52,4 +52,4 @@ jobs:
       - name: Run tests
         shell: bash
         working-directory: python-package
-        run: uv run pytest -n 2 ./tests -m "not network"
+        run: uv run pytest -n 2 --durations=10 -s ./tests -m "not network"

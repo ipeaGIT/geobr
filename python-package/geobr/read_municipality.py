@@ -1,83 +1,56 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_v2
+from geobr._output import convert_output
+from geobr._duckdb_backend import duckdb_connection
+
+# IBGE operational water areas in RS (Lagoa dos Patos / Lagoa Mirim) — code_muni placeholders
+_RS_OPERATIONAL_CODES = [4300001, 4300002]
 
 
-def read_municipality(code_muni="all", year=2010, simplified=True, verbose=False):
-    """Download shape files of Brazilian municipalities as sf objects.
-
-     Data at scale 1:250,000, using Geodetic reference system "SIRGAS2000" and CRS(4674)
+def read_municipality(
+    year,
+    code_muni="all",
+    simplified=True,
+    verbose=False,
+    keep_areas_operacionais=False,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+):
+    """Download shape files of Brazilian municipalities.
 
     Parameters
     ----------
-    code_muni:
-        The 7-digit code of a municipality. If the two-digit code or a two-letter uppercase abbreviation of
-        a state is passed, (e.g. 33 or "RJ") the function will load all municipalities of that state.
-        If code_muni="all", all municipalities of the country will be loaded.
-    year : int, optional
-        Year of the data, by default 2010
-    simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset
-        with high resolution or a dataset with 'simplified' borders (Default)
-    verbose : bool, optional
-        by default False
-
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_municipality
-
-    # Read specific meso region at a given year
-    >>> df = read_municipality(code_muni=1200179, year=2018)
-
-    # Read all meso regions of a state at a given year
-    >>> df = read_municipality(code_muni=12, year=2017)
-    >>> df = read_municipality(code_muni="AM", year=2000)
-
-    # Read all meso regions of the country at a given year
-    >>> df = read_municipality(code_muni="all", year=2010)
+    code_muni : str or int
+        Municipality code, state code/abbrev, or ``"all"``.
+    year : int
+        Year of the data.
+    simplified : bool
+        Use simplified geometry when True.
+    verbose : bool
+        Print progress messages.
+    keep_areas_operacionais : bool
+        Keep Lagoa dos Patos / Lagoa Mirim operational polygons in RS.
+    output, show_progress, cache
+        Standard geobr v2 options.
     """
 
-    metadata = select_metadata("municipality", year=year, simplified=simplified)
+    relation = read_geobr_v2(
+        "municipalities",
+        year,
+        code=code_muni,
+        simplified=simplified,
+        output="duckdb",
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )
 
-    if year < 1992:
+    conn = duckdb_connection()
 
-        return download_gpkg(metadata)
-
-    if code_muni == "all":
-
-        if verbose:
-            print("Loading data for the whole country. This might take a few minutes.")
-
-        return download_gpkg(metadata)
-
-    metadata = metadata[
-        metadata[["code", "code_abbrev"]].apply(
-            lambda x: str(code_muni)[:2] in str(x["code"])
-            or str(code_muni)[:2]  # if number e.g. 12
-            in str(x["code_abbrev"]),  # if UF e.g. RO
-            1,
+    if not keep_areas_operacionais and "code_muni" in relation.columns:
+        exclude_codes = ", ".join([f"'{c}'" for c in _RS_OPERATIONAL_CODES])
+        relation = conn.sql(
+            f"SELECT * FROM relation WHERE CAST(code_muni AS BIGINT) NOT IN ({exclude_codes})"
         )
-    ]
 
-    if not len(metadata):
-        raise Exception("Invalid Value to argument code_muni.")
-
-    gdf = download_gpkg(metadata)
-
-    if len(str(code_muni)) == 2:
-        return gdf
-
-    elif code_muni in gdf["code_muni"].tolist():
-        return gdf.query(f"code_muni == {code_muni}")
-
-    else:
-        raise Exception("Invalid Value to argument code_muni.")
-    return gdf
+    return convert_output(relation, output, conn)

@@ -1,8 +1,16 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_v2
 
 
-def read_municipal_seat(year=2010, verbose=False):
-    """ Download official data of municipal seats (sede dos municipios) in Brazil as an sf object.
+def read_municipal_seat(
+    year: int,
+    code_muni: str = "all",
+    simplified: bool = False,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+    verbose: bool = False,
+):
+    """ Download spatial data of municipal seats (sede dos municipios) in Brazil (IBGE).
     
      This function reads the official data on the municipal seats (sede dos municipios) of Brazil.
  The data brings the spatial coordinates (lat lon) of of municipal seats for various years
@@ -11,31 +19,21 @@ def read_municipal_seat(year=2010, verbose=False):
 
     Parameters
     ----------
-    year : int, optional
-        Year of the data, by default 2010
-    verbose : bool, optional
-        by default False
-    
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-    
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_municipal_seat
-
-    # Read specific state at a given year
-    >>> df = read_municipal_seat(year=2010)
+    year : int
+        Year of the data.
+    code_weighting : str or int
+        Municipality code, state abbrev, or ``"all"``.
+    simplified, output, show_progress, cache, verbose
+        Standard geobr options.
     """
 
-    metadata = select_metadata("municipal_seat", year=year)
-
-    gdf = download_gpkg(metadata)
-
-    return gdf
+    return read_geobr_v2(
+        "municipalseats",
+        year,
+        code=code_muni,
+        simplified=simplified,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )

@@ -1,44 +1,33 @@
-from geobr.utils import select_metadata, download_gpkg
+from geobr.utils import read_geobr_v2
 
 
-def read_indigenous_land(date=201907, simplified=True, verbose=False):
-    """ Download official data of indigenous lands as an sf object.
-    
-     The data set covers the whole of Brazil and it includes indigenous lands from all ethnicities and
- in different stages of demarcation. The original data comes from the National Indian Foundation (FUNAI)
- and can be found at http://www.funai.gov.br/index.php/shape. Although original data is updated monthly,
- the geobr package will only keep the data for a few months per year.
+def read_indigenous_land(
+    year: int,
+    code_state: str = "all",
+    simplified: bool = True,
+    verbose: bool = False,
+    output: str = "gpd",
+    show_progress: bool = True,
+    cache: bool = True,
+):
+    """Download official indigenous land data (FUNAI).
 
     Parameters
     ----------
-    date : int, optional
-        A date numer in YYYYMM format, by default 201907
-    simplified: boolean, by default True
-        Data 'type', indicating whether the function returns the 'original' dataset 
-        with high resolution or a dataset with 'simplified' borders (Default)
-    verbose : bool, optional
-        by default False
-    
-    Returns
-    -------
-    gpd.GeoDataFrame
-        Metadata and geopackage of selected states
-    
-    Raises
-    ------
-    Exception
-        If parameters are not found or not well defined
-
-    Example
-    -------
-    >>> from geobr import read_indigenous_land
-
-    # Read specific state at a given year
-    >>> df = read_indigenous_land(date=201907)
+    year : int
+        Year of the data.
+    code_state : str or int
+        State abbrev, two-digit code, or ``"all"``.
+    simplified, verbose, output, show_progress, cache
+        Standard geobr options.
     """
-
-    metadata = select_metadata("indigenous_land", year=date, simplified=simplified)
-
-    gdf = download_gpkg(metadata)
-
-    return gdf
+    return read_geobr_v2(
+        "indigenouslands",
+        year,
+        code=code_state,
+        simplified=simplified,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose,
+    )

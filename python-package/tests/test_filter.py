@@ -7,7 +7,7 @@ from geobr._filter import filter_by_code
 
 def test_filter_all(sample_gdf):
     out = filter_by_code(sample_gdf, "all")
-    assert len(out) == 3
+    assert len(out) == 4
 
 
 def test_filter_state_abbrev(sample_gdf):

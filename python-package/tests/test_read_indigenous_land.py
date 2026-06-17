@@ -5,7 +5,9 @@ from geobr import read_indigenous_land
 
 def test_read_indigenous_land():
 
-    assert isinstance(read_indigenous_land(), gpd.geodataframe.GeoDataFrame)
+    gdf = read_indigenous_land(year=2025, code_state="AP")
+    assert isinstance(gdf, gpd.GeoDataFrame)
+    assert not gdf.empty
 
     with pytest.raises(Exception):
         read_indigenous_land(year=9999999)

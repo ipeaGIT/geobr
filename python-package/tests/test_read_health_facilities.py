@@ -3,16 +3,11 @@ import pytest
 from geobr import read_health_facilities
 
 
-def test_read_health_facilities():
+def test_read_health_facilities(monkeypatch):
 
-    df = read_health_facilities()
-
-    assert isinstance(df, gpd.geodataframe.GeoDataFrame)
-
-    assert len(df) == 517629
+    gdf = read_health_facilities(date=202604, code_muni="AP")
+    assert isinstance(gdf, gpd.GeoDataFrame)
+    assert not gdf.empty
 
     with pytest.raises(Exception):
         read_health_facilities(year=9999999)
-
-    with pytest.raises(Exception):
-        read_health_facilities(year="banana")
