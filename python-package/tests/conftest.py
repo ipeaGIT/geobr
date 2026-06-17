@@ -3,6 +3,7 @@ import importlib
 import geopandas as gpd
 import pandas as pd
 import pytest
+from pathlib import Path
 from shapely.geometry import Point
 
 from geobr._duckdb_backend import duckdb_connection, _reset_shared_connection
@@ -10,15 +11,16 @@ from geobr._duckdb_backend import duckdb_connection, _reset_shared_connection
 
 @pytest.fixture
 def sample_gdf():
-    """Minimal GeoDataFrame for filter tests."""
+    """Minimal GeoDataFrame for filter and reading tests."""
     return gpd.GeoDataFrame(
         {
-            "code_muni": [3304557, 3550308, 2927408],
-            "abbrev_state": ["RJ", "SP", "BA"],
-            "code_state": [33, 35, 29],
-            "name_muni": ["Rio de Janeiro", "São Paulo", "Salvador"],
+            "code_muni": [3304557, 3550308, 2927408, 1600303],
+            "abbrev_state": ["RJ", "SP", "BA", "AP"],
+            "code_state": [33, 35, 29, 16],
+            "name_muni": ["Rio de Janeiro", "São Paulo", "Salvador", "Macapá"],
+            "code_pop_arrangement": [3304557, 3550308, 2927408, 1600303],
         },
-        geometry=[Point(0, 0), Point(1, 1), Point(2, 2)],
+        geometry=[Point(0, 0), Point(1, 1), Point(2, 2), Point(3, 3)],
         crs="EPSG:4674",
     )
 
@@ -33,6 +35,32 @@ def sample_metadata_v2():
             "simplified": [True, True],
         }
     )
+
+
+@pytest.fixture
+def parquet_path(tmp_path, sample_gdf):
+    path = tmp_path / "test.parquet"
+    sample_gdf.to_parquet(path)
+    return path
+
+
+@pytest.fixture(autouse=True)
+def mock_download_metadata_v2(monkeypatch):
+    mod = importlib.import_module("geobr.utils")
+    dir = Path(__file__).parent
+    metadata_path = dir/"samples"/"metadata_geobr_v2.parquet"
+
+    def _mock_func():
+        return pd.read_parquet(metadata_path)
+
+    monkeypatch.setattr(mod, "download_metadata_v2", _mock_func)
+
+
+@pytest.fixture(autouse=True)
+def mock_download_parquet(monkeypatch, parquet_path):
+    mod = importlib.import_module("geobr.utils")
+
+    monkeypatch.setattr(mod, "download_parquet", lambda *a, **kw: Path(parquet_path))
 
 
 def patch_module_attr(monkeypatch, module_path: str, attr: str, value):
