@@ -58,7 +58,12 @@ read_neighborhood <- function(year,
   if (is.null(temp_arrw)) { return(invisible(NULL)) }
 
   # FILTER
-  temp_arrw <- filter_arrw(temp_arrw, code = code_muni)
+  temp_arrw <- filter_arrw(
+    temp_arrw,
+    code = code_muni,
+    code_arg = "code_muni",
+    empty_msg = "No neighborhood data available for the requested `code_muni` and year."
+  )
 
   # convert to sf
   temp <- convert_output(temp_arrw, output)

@@ -205,7 +205,9 @@ numbers_only <- function(x){ !grepl("\\D", x) } # nocov
 #'
 #' @keywords internal
 filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
-                        code){ # nocov start
+                        code,
+                        code_arg = "code_",
+                        empty_msg = NULL){ # nocov start
 
   # all states
   if (any(code == 'all')) {return(temp_arrw)}
@@ -237,7 +239,7 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 
   # check
   if (is.null(filter_col)) {
-    cli::cli_abort("Invalid value to argument `code_`.")
+    cli::cli_abort("Invalid value to argument `{code_arg}`.")
     }
 
   # filter
@@ -249,7 +251,11 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
   # if  (nrow(temp_arrw) == 0){
   nrows <- dplyr::count(temp_arrw) |> dplyr::collect()
   if  (nrows$n == 0){
-    cli::cli_abort("Invalid value to argument `code_`.")
+    if (is.null(empty_msg)) {
+      empty_msg <- "Invalid value to argument `{code_arg}`."
+    }
+
+    cli::cli_abort(empty_msg)
   }
 
   return(temp_arrw)
