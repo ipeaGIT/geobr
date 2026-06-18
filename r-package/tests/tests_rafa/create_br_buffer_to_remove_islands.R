@@ -22,18 +22,58 @@ costa <- geobr::read_biomes(year = 2019) |>
 
 st_crs(costa) <- 4674
 
+
 br_offcoast <- sf::st_difference(costa, br_buffer) |>
   sf::st_simplify(preserveTopology = T, dTolerance = 1000) |>
   select(year)
 
 
-mapview::mapview(br) + costa + br_offcoast
+# arquipelago de Trindade e Martim Vaz
+# trindade <- st_as_sf(
+#   data.frame(lon = -29.3304281, lat = -20.503874),
+#   coords = c("lon", "lat"),
+#   crs = 4674
+# )
+#
+# mapview::mapview(br) + costa + br_offcoast + trindade
+# # mapview::mapview(trindade) + br
 
-class(br_offcoast) <- setdiff(class(br_offcoast), c("tbl_df", "tbl"))
+bb <- st_bbox(br_offcoast)
+strip <- st_as_sfc(st_bbox(c(xmin = bb[["xmin"]], xmax = -28,
+                             ymin = bb[["ymin"]], ymax = bb[["ymax"]]),
+                           crs = st_crs(br_offcoast)))
+
+big_chunk <- st_union(br_offcoast, strip)
+
+# mapview::mapview(br) + costa + br_offcoast + big_chunk
+
+# remove country and costa from chunk
+
+br_offcoast2 <- duckspatial::ddbs_difference(
+  x = big_chunk,
+  y = br_buffer) |>
+  duckspatial::ddbs_collect()
+
+
+br_offcoast2 <- duckspatial::ddbs_difference(
+  x = br_offcoast2,
+  y = costa) |>
+  duckspatial::ddbs_collect()
+
+# mapview::mapview(br) + costa + br_offcoast2 + br_offcoast + big_chunk + br_offcoast3
+
+br_offcoast3 <- duckspatial::ddbs_union(br_offcoast, br_offcoast2) |>
+  duckspatial::ddbs_collect() |>
+  sfheaders::sf_remove_holes()
+
+# mapview::mapview(br) + br_offcoast + br_offcoast2 + br_offcoast3
+
+
+class(br_offcoast3) <- setdiff(class(br_offcoast3), c("tbl_df", "tbl"))
 
 
 duckspatial::ddbs_write_dataset(
-  data = br_offcoast,
+  data = br_offcoast3,
   path = "./inst/extdata/br_offcoast.parquet",
   crs = "EPSG:4674",
   overwrite = T,
