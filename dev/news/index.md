@@ -7,6 +7,9 @@
 - Fix bug in
   [`read_immediate_region()`](https://ipeagit.github.io/geobr/dev/reference/read_immediate_region.md)
   which was hardcoded to read state 11 by mistake.
+- The function
+  [`remove_islands()`](https://ipeagit.github.io/geobr/dev/reference/remove_islands.md)
+  now correctly drops the arquipelago de Trindade e Martim Vaz
 
 ## geobr v2.0.0
 
