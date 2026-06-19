@@ -2,6 +2,7 @@
 
 **Bug fixes**
 
+- Moves the {arrow} package from "Suggests" to "Imports".
 - Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake.
 - The function `remove_islands()` now correctly drops the arquipelago de Trindade e Martim Vaz
 
