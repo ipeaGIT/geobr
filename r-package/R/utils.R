@@ -259,6 +259,41 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 
 
 
+#' List geobr release assets from GitHub's public release page
+#'
+#' @keywords internal
+#'
+list_geobr_release_assets <- function(){ # nocov start
+
+  release_assets_url <- paste0(
+    "https://github.com/ipea/geobr_prep_data/releases/expanded_assets/",
+    geobr_env$data_release
+  )
+
+  response <- try(curl::curl_fetch_memory(release_assets_url), silent = TRUE)
+
+  if (inherits(response, "try-error") || response$status_code != 200L) {
+    return(NULL)
+  }
+
+  release_page <- rawToChar(response$content)
+  asset_pattern <- paste0(
+    "/ipea/geobr_prep_data/releases/download/",
+    geobr_env$data_release,
+    "/[^\"]+\\.parquet"
+  )
+  asset_urls <- unique(regmatches(release_page, gregexpr(asset_pattern, release_page))[[1]])
+
+  if (length(asset_urls) == 0L) {
+    return(NULL)
+  }
+
+  data.frame(
+    file_name = basename(utils::URLdecode(asset_urls)),
+    stringsAsFactors = FALSE
+  )
+} # nocov end
+
 #' Support function to download metadata internally used in geobr
 #'
 #' @keywords internal
@@ -301,6 +336,10 @@ download_metadata2 <- function(){ # nocov start
   }
 
   # download metadata to temp file
+  metadata_failed <- paste0(
+    "Could not download geobr metadata from GitHub. ",
+    "Please check your internet connection or try again later."
+  )
   temp_meta <- NULL
 
   try(silent = TRUE,
@@ -310,9 +349,13 @@ download_metadata2 <- function(){ # nocov start
     )
   )
 
+  if (is.null(temp_meta)) {
+    temp_meta <- list_geobr_release_assets()
+  }
+
   # check if download failed
   if (is.null(temp_meta)) {
-    cli::cli_alert_danger(message_failed)
+    cli::cli_alert_danger(metadata_failed)
     return(invisible(NULL))
   }
 
