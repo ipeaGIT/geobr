@@ -15,8 +15,7 @@ read_quilombola_land(
 )
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
-and reads the data from the latest date available.}
+\item{date}{Numeric. Date of the data in \code{YYYYMM} format.}
 
 \item{code_state}{The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the

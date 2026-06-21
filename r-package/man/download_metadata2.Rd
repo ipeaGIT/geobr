@@ -9,10 +9,4 @@ download_metadata2()
 \description{
 Support function to download metadata internally used in geobr
 }
-\examples{
-\dontrun{ if (interactive()) {
-df <- download_metadata2()
-}
-}
-}
 \keyword{internal}

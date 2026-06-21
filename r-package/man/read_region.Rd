@@ -14,8 +14,7 @@ read_region(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
-and reads the data from the latest year available.}
+\item{year}{Numeric. Year of the data in \code{YYYY} format.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

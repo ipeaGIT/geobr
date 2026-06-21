@@ -15,8 +15,7 @@ read_intermediate_region(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
-and reads the data from the latest year available.}
+\item{year}{Numeric. Year of the data in \code{YYYY} format.}
 
 \item{code_intermediate}{4-digit code of an intermediate region. If the
 two-digit code or a two-letter uppercase abbreviation of a state is

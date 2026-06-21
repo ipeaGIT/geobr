@@ -14,8 +14,7 @@ read_polling_places(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
-and reads the data from the latest year available.}
+\item{year}{Numeric. Year of the data in \code{YYYY} format.}
 
 \item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
 (Default), the function downloads all the data available in the
