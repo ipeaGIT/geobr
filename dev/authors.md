@@ -47,6 +47,8 @@
 
 - **Marcus Saraiva**. Contributor.
 
+- **Maken Rosa**. Contributor.
+
 - **Beatriz Milz**. Contributor.
   [](https://orcid.org/0000-0002-3064-4486)
 

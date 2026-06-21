@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   intro_to_geobr: intro_to_geobr.html
   python-intro/py-intro-to-geobr: python-intro/py-intro-to-geobr.html
-last_built: 2026-06-21T18:58Z
+last_built: 2026-06-21T19:04Z
 urls:
   reference: https://ipeagit.github.io/geobr/reference
   article: https://ipeagit.github.io/geobr/articles
