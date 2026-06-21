@@ -70,6 +70,6 @@ Suggests:
     rmarkdown,
     scales,
     testthat
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0
