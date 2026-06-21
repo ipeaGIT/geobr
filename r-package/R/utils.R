@@ -149,7 +149,7 @@ check_connection <- function(url = 'https://github.com/ipea/geobr_prep_data/rele
   }
 
   # Message for connection issues
-  msg <- "Problem connecting to data server. Please try again in a few minutes."
+  msg <- "Problem connecting to data server. Please try again in a few minutes and make sure you have internet connection."
 
   # Test server connection using curl
   handle <- curl::new_handle(ssl_verifypeer = FALSE)
