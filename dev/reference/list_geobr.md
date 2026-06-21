@@ -23,5 +23,5 @@ A `data.frame`
 
 ``` r
 df <- list_geobr()
-#> ⠙ 2 items, page 1 | 2ms
+#> ⠙ 2 items, page 1 | 3ms
 ```
