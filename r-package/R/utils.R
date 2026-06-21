@@ -257,57 +257,16 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 } # nocov end
 
 
-
-
-#' List geobr release assets from GitHub's public release page
-#'
-#' @keywords internal
-#'
-list_geobr_release_assets <- function(){ # nocov start
-
-  release_assets_url <- paste0(
-    "https://github.com/ipea/geobr_prep_data/releases/expanded_assets/",
-    geobr_env$data_release
-  )
-
-  response <- try(curl::curl_fetch_memory(release_assets_url), silent = TRUE)
-
-  if (inherits(response, "try-error") || response$status_code != 200L) {
-    return(NULL)
-  }
-
-  release_page <- rawToChar(response$content)
-  asset_pattern <- paste0(
-    "/ipea/geobr_prep_data/releases/download/",
-    geobr_env$data_release,
-    "/[^\"]+\\.parquet"
-  )
-  asset_urls <- unique(regmatches(release_page, gregexpr(asset_pattern, release_page))[[1]])
-
-  if (length(asset_urls) == 0L) {
-    return(NULL)
-  }
-
-  data.frame(
-    file_name = basename(utils::URLdecode(asset_urls)),
-    stringsAsFactors = FALSE
-  )
-} # nocov end
-
 #' Support function to download metadata internally used in geobr
 #'
 #' @keywords internal
-#' @examples \dontrun{ if (interactive()) {
-#' df <- download_metadata2()
-#' }
-#' }
 download_metadata2 <- function(){ # nocov start
 
   # path to tempfile of metadata
   dir.create(fs::path_temp("geobr"), showWarnings = FALSE)
   tempf <- fs::path(fs::path_temp("geobr"), "metadata_geobr_gpkg.parquet")
 
-  # IF metadata has already been successfully downloaded
+  # simplyr return metada IF it has already been successfully downloaded
   if (file.exists(tempf) & file.info(tempf)$size != 0) {
 
     # read temp metadata
@@ -324,40 +283,42 @@ download_metadata2 <- function(){ # nocov start
 
 
   # test server connection with github
-  metadata_link <- paste0("https://github.com/ipea/geobr_prep_data/")
-  check_con <- NULL
-  try( silent = TRUE,
-       check_con <- check_connection(metadata_link, silent = FALSE)
-       )
-
-  # if server fails, fail gracefully
-  if (is.null(check_con) | isFALSE(check_con)) {
-    return(invisible(NULL))
-  }
+  metadata_link <- paste0(
+    "https://github.com/ipea/geobr_prep_data/releases/expanded_assets/",
+    geobr_env$data_release
+  )
 
   # download metadata to temp file
-  metadata_failed <- paste0(
-    "Could not download geobr metadata from GitHub. ",
-    "Please check your internet connection or try again later."
-  )
   temp_meta <- NULL
 
-  try(silent = TRUE,
-    temp_meta <- piggyback::pb_list(
-      repo = "ipea/geobr_prep_data",
-      tag = geobr_env$data_release
-    )
+  response <- try(curl::curl_fetch_memory(metadata_link), silent = TRUE)
+
+  metadata_failed <- paste0(
+    "Could not download geobr metadata. ",
+    "Please check your internet connection or try again later."
   )
 
-  if (is.null(temp_meta)) {
-    temp_meta <- list_geobr_release_assets()
+  if (inherits(response, "try-error") || response$status_code != 200L) {
+    cli::cli_alert_danger(metadata_failed)
+    return(NULL)
   }
 
-  # check if download failed
-  if (is.null(temp_meta)) {
+  release_page <- rawToChar(response$content)
+
+  # get only parquet files
+  asset_pattern <- "/[^\"]+\\.parquet"
+
+  asset_urls <- unique(regmatches(release_page, gregexpr(asset_pattern, release_page))[[1]])
+
+  if (length(asset_urls) == 0L) {
     cli::cli_alert_danger(metadata_failed)
-    return(invisible(NULL))
+    return(NULL)
   }
+
+  temp_meta <- data.frame(
+    file_name = basename(utils::URLdecode(asset_urls)),
+    stringsAsFactors = FALSE
+  )
 
   # parse metadata
   temp_meta <- temp_meta |>
@@ -373,7 +334,6 @@ download_metadata2 <- function(){ # nocov start
 
   return(temp_meta)
 } # nocov end
-
 
 
 #' Download parquet to tempdir
