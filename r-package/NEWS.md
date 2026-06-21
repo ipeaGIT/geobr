@@ -4,7 +4,8 @@
 
 - Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake.
 - The function `remove_islands()` now correctly drops the arquipelago de Trindade e Martim Vaz
-
+- Fix documentation of arguments `year` and `date`.
+- Make the internal function that downloads geobr metadata more robust and removes the dependency from piggyback
 
 # geobr v2.0.0
 
