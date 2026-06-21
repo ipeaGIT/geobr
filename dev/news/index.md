@@ -10,6 +10,9 @@
 - The function
   [`remove_islands()`](https://ipeagit.github.io/geobr/dev/reference/remove_islands.md)
   now correctly drops the arquipelago de Trindade e Martim Vaz
+- Fix documentation of arguments `year` and `date`.
+- Make the internal function that downloads geobr metadata more robust
+  and removes the dependency from piggyback
 
 ## geobr v2.0.0
 
