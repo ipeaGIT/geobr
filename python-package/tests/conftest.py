@@ -56,7 +56,7 @@ def mock_download_metadata_v2(monkeypatch):
     monkeypatch.setattr(mod, "download_metadata_v2", _mock_func)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def mock_download_parquet(monkeypatch, parquet_path):
     mod = importlib.import_module("geobr.utils")
 
