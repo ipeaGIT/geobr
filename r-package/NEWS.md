@@ -3,8 +3,11 @@
 **Bug fixes**
 
 - Moves the {arrow} package from "Suggests" to "Imports".
-- Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake.
+- Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake. Closes [#436](https://github.com/ipeaGIT/geobr/issues/436).
 - The function `remove_islands()` now correctly drops the arquipelago de Trindade e Martim Vaz
+- Fix documentation of arguments `year` and `date`.
+- Make the internal function that downloads geobr metadata more robust and removes the dependency from piggyback
+- More informative message when a municipality does not have neighborhood data. Closes [#424](https://github.com/ipeaGIT/geobr/issues/424).
 
 
 # geobr v2.0.0

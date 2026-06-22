@@ -14,8 +14,7 @@ read_health_facilities(
 )
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
-and reads the data from the latest date available.}
+\item{date}{Numeric. Date of the data in \code{YYYYMM} format.}
 
 \item{code_muni}{The 7-digit code of a municipality. If \code{code_muni = "all"}
 (Default), the function downloads all the data available in the

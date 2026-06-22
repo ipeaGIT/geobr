@@ -24,6 +24,7 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
 	          person(given="Alessandro", family="Samuel-Rosa", role="ctb"),
 	          person(given="Daniel", family="Ferreira", role="ctb"),
 	          person(given="Marcus", family="Saraiva", role="ctb"),
+	          person(given="Maken ", family="Rosa", role="ctb"),
             person(given="Beatriz", family="Milz", , role = "ctb", comment = c(ORCID = "0000-0002-3064-4486")),
             person("ITpS - Instituto Todos pela Saúde", role = "fnd"),
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd"))
@@ -54,7 +55,6 @@ Imports:
       httr2,
       methods,
       nanoarrow,
-      piggyback,
       rlang,
       sf (>= 0.9-3),
       sfheaders,
@@ -70,6 +70,6 @@ Suggests:
     rmarkdown,
     scales,
     testthat
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0

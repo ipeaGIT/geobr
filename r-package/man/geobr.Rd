@@ -33,6 +33,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Rafael H. M. Pereira \email{rafa.pereira.br@gmail.com} (\href{https://orcid.org/0000-0003-2125-7465}{ORCID})
   \item Rogério Jerônimo Barbosa
 }
 
@@ -58,6 +59,7 @@ Other contributors:
   \item Alessandro Samuel-Rosa [contributor]
   \item Daniel Ferreira [contributor]
   \item Marcus Saraiva [contributor]
+  \item Maken Rosa [contributor]
   \item Beatriz Milz (\href{https://orcid.org/0000-0002-3064-4486}{ORCID}) [contributor]
   \item ITpS - Instituto Todos pela Saúde [funder]
   \item Ipea - Institue for Applied Economic Research [copyright holder, funder]

@@ -16,8 +16,7 @@ read_census_tract(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
-and reads the data from the latest year available.}
+\item{year}{Numeric. Year of the data in \code{YYYY} format.}
 
 \item{code_tract}{The 7-digit code of a Municipality. If the two-digit code
 or a two-letter uppercase abbreviation of a state is passed, (e.g. 33

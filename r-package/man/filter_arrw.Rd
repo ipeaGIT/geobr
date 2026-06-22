@@ -4,7 +4,11 @@
 \alias{filter_arrw}
 \title{Filter data set to return specific states}
 \usage{
-filter_arrw(temp_arrw = parent.frame()$temp_arrw, code)
+filter_arrw(
+  temp_arrw = parent.frame()$temp_arrw,
+  code,
+  error_message = "Invalid value to argument `code_`."
+)
 }
 \arguments{
 \item{temp_arrw}{An internal arrow table}
@@ -12,6 +16,8 @@ filter_arrw(temp_arrw = parent.frame()$temp_arrw, code)
 \item{code}{The two-digit code of a state or a two-letter uppercase
 abbreviation (e.g. 33 or "RJ"). If \code{code_state="all"} (the
 default), the function downloads all states.}
+
+\item{error_message}{A string with the error message to be printed}
 }
 \value{
 A simple feature \code{sf} or \code{data.frame}.

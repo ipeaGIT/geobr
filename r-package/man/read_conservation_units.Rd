@@ -14,8 +14,7 @@ read_conservation_units(
 )
 }
 \arguments{
-\item{date}{Numeric. Date of the data in YYYYMM format. It defaults to \code{NULL}
-and reads the data from the latest date available.}
+\item{date}{Numeric. Date of the data in \code{YYYYMM} format.}
 
 \item{simplified}{Logic \code{FALSE} or \code{TRUE}, indicating whether the function
 should return the data set with 'original' spatial resolution or a data set

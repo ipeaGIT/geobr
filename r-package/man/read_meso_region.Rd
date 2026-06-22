@@ -15,8 +15,7 @@ read_meso_region(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of the data in YYYY format. It defaults to \code{NULL}
-and reads the data from the latest year available.}
+\item{year}{Numeric. Year of the data in \code{YYYY} format.}
 
 \item{code_meso}{The 4-digit code of a meso region. If the two-digit code or
 a two-letter uppercase abbreviation of a state is passed, (e.g. 33 or
