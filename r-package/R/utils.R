@@ -200,12 +200,15 @@ numbers_only <- function(x){ !grepl("\\D", x) } # nocov
 #' @param code The two-digit code of a state or a two-letter uppercase
 #'             abbreviation (e.g. 33 or "RJ"). If `code_state="all"` (the
 #'             default), the function downloads all states.
+#' @param error_message A string with the error message to be printed
 #'
 #' @return A simple feature `sf` or `data.frame`.
 #'
 #' @keywords internal
 filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
-                        code){ # nocov start
+                        code,
+                        error_message = "Invalid value to argument `code_`."
+                        ){ # nocov start
 
   # all states
   if (any(code == 'all')) {return(temp_arrw)}
@@ -237,7 +240,7 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
 
   # check
   if (is.null(filter_col)) {
-    cli::cli_abort("Invalid value to argument `code_`.")
+    cli::cli_abort(error_message)
     }
 
   # filter
@@ -249,7 +252,7 @@ filter_arrw <- function(temp_arrw = parent.frame()$temp_arrw,
   # if  (nrow(temp_arrw) == 0){
   nrows <- dplyr::count(temp_arrw) |> dplyr::collect()
   if  (nrows$n == 0){
-    cli::cli_abort("Invalid value to argument `code_`.")
+    cli::cli_abort(error_message)
   }
 
   return(temp_arrw)
