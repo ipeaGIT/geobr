@@ -51,7 +51,7 @@ def cep_to_state(cep: str) -> str:
     if not isinstance(cep, str):
         raise ValueError("Error: 'cep' must have class 'character' / str.")
 
-    cep = re.sub(r"-", "", cep)
+    cep = re.sub(r"[-.]", "", cep)
     if len(cep) != 8:
         raise ValueError("'cep' must have 8 digits.")
 

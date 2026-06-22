@@ -33,3 +33,4 @@ from .read_polling_places import read_polling_places
 from .read_quilombola_land import read_quilombola_land
 from .cep_to_state import cep_to_state
 from .remove_islands import remove_islands
+from .grid_state_correspondence_table import grid_state_correspondence_table

@@ -3,7 +3,7 @@ import pytest
 from geobr import read_health_facilities
 
 
-def test_read_health_facilities(monkeypatch):
+def test_read_health_facilities():
 
     gdf = read_health_facilities(date=202604, code_muni="AP")
     assert isinstance(gdf, gpd.GeoDataFrame)

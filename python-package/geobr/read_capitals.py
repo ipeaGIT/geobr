@@ -38,7 +38,7 @@ _CAPITALS = pd.DataFrame(
 
 
 def read_capitals(
-    output: str = "sf",
+    output: str = "gpd",
     show_progress: bool = True,
     cache: bool = True,
     verbose: bool = False,
@@ -56,30 +56,12 @@ def read_capitals(
         Year for municipal seat geometries (default 2010).
     """
     codes = _CAPITALS["code_muni"].tolist()
-    if output == "sf":
-        gdf = read_municipal_seat(year=year, verbose=verbose)
-        gdf = gdf[gdf["code_muni"].isin(codes)]
-        return gdf.sort_values("code_muni").reset_index(drop=True)
 
-    from geobr.utils import read_geobr_v2
-
-    results = []
-    for code in codes:
-        part = read_geobr_v2(
-            geography="municipalseat",
-            year=year,
-            code=code,
-            simplified=True,
-            output=output,
-            show_progress=show_progress,
-            cache=cache,
-            verbose=False,
-        )
-        results.append(part)
-    if output == "sf":
-        import geopandas as gpd
-
-        return gpd.GeoDataFrame(
-            pd.concat(results, ignore_index=True)
-        ).sort_values("code_muni").reset_index(drop=True)
-    return results
+    return read_municipal_seat(
+        year=year,
+        code_muni=codes,
+        output=output,
+        show_progress=show_progress,
+        cache=cache,
+        verbose=verbose
+    )

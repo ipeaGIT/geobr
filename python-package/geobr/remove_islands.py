@@ -33,7 +33,7 @@ def remove_islands(x: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     offcoast = gpd.read_parquet(_offcoast_path())
     if offcoast.crs is None or offcoast.crs.to_epsg() != 4674:
         offcoast = offcoast.set_crs(4674)
-
+    
     x = x.copy()
     x["geometry"] = x.geometry.make_valid()
     result = gpd.overlay(x, offcoast, how="difference")
