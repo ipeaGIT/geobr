@@ -49,13 +49,15 @@ An \verb{"sf" "data.frame"} OR an \code{ArrowObject}
 \description{
 Data comes from the Superior Electoral Court (TSE).
 The spatial coordinates used in geobr are a combination of the coordinates
-produced by the original data producer and the coordinates found via geocoding
+created by the original data producer and the coordinates found via geocoding
 with the geocodebr package \url{https://CRAN.R-project.org/package=geocodebr}.
 Whenever the distance between the coordinates from both sources is smaller than
 800 meters, geobr uses coordinates from the data producer. When the distance
 between the two sources is greater than 800 meters and the results from
 geocodebr have a precision level finer than 800 meters, geobr uses the
-coordinates from geocodebr. When the coordinates from the original source are
+coordinates from geocodebr. The original data producer (TSE) assigned
+coordinates of \code{c(-1, -1)} to a all polling places located outside of Brazil.
+When the coordinates from the original source are
 missing, geobr also uses geocodebr coordinates, regardless of precision level.
 The source of the spatial coordinates used in each observation is registered
 in the data in a specific column \code{coords_source}. Additional columns
