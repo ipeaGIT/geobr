@@ -44,9 +44,9 @@ _CATALOG = pd.DataFrame(
             "intermediateregions", "immediateregions", "municipalities",
             "municipalseats", "weightingareas", "censustracts", "statsgrid",
             "metroarea", "urbanareas", "amazonialegal", "biomes",
-            "conservationunits", "disasterriskareas", "indigenousland",
+            "conservationunits", "disasterriskareas", "indigenouslands",
             "semiarid", "healthfacilities", "healthregions", "neighborhoods",
-            "schools", "amc", "urbanconcentrations", "poparrengements",
+            "schools", "amc", "poparrangements", "poparrangements",
             "favelas", "pollingplaces", "quilombolalands",
         ],
     }
@@ -84,18 +84,8 @@ def list_geobr(wide: bool = True) -> pd.DataFrame:
     if wide:
         return out
 
-    rows = []
-    for _, row in out.iterrows():
-        raw = row.get("years_available")
-        if raw is None or (isinstance(raw, float) and pd.isna(raw)):
-            years = []
-        else:
-            years = str(raw).split(", ")
-        if not years or years == [""]:
-            rows.append(row.to_dict())
-        else:
-            for y in years:
-                r = row.to_dict()
-                r["year"] = y.strip()
-                rows.append(r)
-    return pd.DataFrame(rows)
+    out["year"] = out["years_available"].fillna("").str.split(", ")
+    out_expandido = out.explode("year")
+    out_expandido["year"] = out_expandido["year"].str.strip()
+    out_expandido = out_expandido.drop(columns=["years_available"])
+    return out_expandido
