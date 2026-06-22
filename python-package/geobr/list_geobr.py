@@ -67,27 +67,12 @@ def list_geobr(wide: bool = True) -> pd.DataFrame:
         Dataset catalog joined with available years.
     """
     try:
-<<<<<<< HEAD
-        html_data = get("https://github.com/ipeaGIT/geobr/blob/v1.9.1/README.md").text
-        find_emoji = html_data.index("👉")
-        html_data =  html_data[find_emoji:]
-        escaped_data = html_data.replace("\\u003c", "<").replace("\\u003e", ">")
-        tables = re.findall("<table>(.+?)</table>", escaped_data)
-        available_datasets = "<table>" + tables[0].replace("\\n", "") + "</table>"
-        df = pd.DataFrame(pd.read_html(StringIO(available_datasets))[0])
-
-    except HTTPError:
-        print(
-            "Geobr url functions list is broken"
-            'Please report an issue at "https://github.com/ipeaGIT/geobr/issues"'
-=======
         meta = download_metadata_v2()
         years_df = (
             meta.groupby("geo")["year"]
             .apply(lambda s: ", ".join(str(int(y)) for y in sorted(s.dropna().unique())))
             .reset_index()
             .rename(columns={"geo": "alias", "year": "years_available"})
->>>>>>> 34cb522a (Improve list_geobr catalog and lookup_muni fuzzy matching.)
         )
         out = _CATALOG.merge(years_df, on="alias", how="left")
         if "years_available" not in out.columns:
