@@ -4,6 +4,7 @@
 
 **Bug fixes**
 
+- Moves the {arrow} package from “Suggests” to “Imports”.
 - Fix bug in
   [`read_immediate_region()`](https://ipeagit.github.io/geobr/dev/reference/read_immediate_region.md)
   which was hardcoded to read state 11 by mistake. Closes
