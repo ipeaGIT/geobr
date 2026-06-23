@@ -4,6 +4,14 @@
 
 **Bug fixes**
 
+- Requires duckdb (\>= 1.5.1)
+
+## geobr v2.0.1
+
+CRAN release: 2026-06-23
+
+**Bug fixes**
+
 - Moves the {arrow} package from “Suggests” to “Imports”.
 - Fix bug in
   [`read_immediate_region()`](https://ipeagit.github.io/geobr/dev/reference/read_immediate_region.md)
