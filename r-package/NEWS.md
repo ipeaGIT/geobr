@@ -1,3 +1,11 @@
+# geobr (development version)
+
+
+**Bug fixes**
+
+- Requires duckdb (>= 1.5.1)
+
+
 # geobr v2.0.1
 
 **Bug fixes**
