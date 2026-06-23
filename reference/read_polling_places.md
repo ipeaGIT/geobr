@@ -1,7 +1,7 @@
 # Download geolocated data of polling places
 
 Data comes from the Superior Electoral Court (TSE). The spatial
-coordinates used in geobr are a combination of the coordinates produced
+coordinates used in geobr are a combination of the coordinates created
 by the original data producer and the coordinates found via geocoding
 with the geocodebr package
 <https://CRAN.R-project.org/package=geocodebr>. Whenever the distance
@@ -9,12 +9,14 @@ between the coordinates from both sources is smaller than 800 meters,
 geobr uses coordinates from the data producer. When the distance between
 the two sources is greater than 800 meters and the results from
 geocodebr have a precision level finer than 800 meters, geobr uses the
-coordinates from geocodebr. When the coordinates from the original
-source are missing, geobr also uses geocodebr coordinates, regardless of
-precision level. The source of the spatial coordinates used in each
-observation is registered in the data in a specific column
-`coords_source`. Additional columns indicating the precision level of
-geocodebr geocoding are also included in the data.
+coordinates from geocodebr. The original data producer (TSE) assigned
+coordinates of `c(-1, -1)` to a all polling places located outside of
+Brazil. When the coordinates from the original source are missing, geobr
+also uses geocodebr coordinates, regardless of precision level. The
+source of the spatial coordinates used in each observation is registered
+in the data in a specific column `coords_source`. Additional columns
+indicating the precision level of geocodebr geocoding are also included
+in the data.
 
 ## Usage
 
@@ -33,8 +35,7 @@ read_polling_places(
 
 - year:
 
-  Numeric. Year of the data in YYYY format. It defaults to `NULL` and
-  reads the data from the latest year available.
+  Numeric. Year of the data in `YYYY` format.
 
 - code_muni:
 

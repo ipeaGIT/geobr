@@ -29,6 +29,9 @@ Useful links:
 
 Authors:
 
+- Rafael H. M. Pereira <rafa.pereira.br@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-2125-7465))
+
 - Rogério Jerônimo Barbosa
 
 Other contributors:
@@ -72,6 +75,8 @@ Other contributors:
 - Daniel Ferreira \[contributor\]
 
 - Marcus Saraiva \[contributor\]
+
+- Maken Rosa \[contributor\]
 
 - Beatriz Milz ([ORCID](https://orcid.org/0000-0002-3064-4486))
   \[contributor\]

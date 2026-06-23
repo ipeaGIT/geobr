@@ -22,8 +22,7 @@ read_immediate_region(
 
 - year:
 
-  Numeric. Year of the data in YYYY format. It defaults to `NULL` and
-  reads the data from the latest year available.
+  Numeric. Year of the data in `YYYY` format.
 
 - code_immediate:
 
@@ -77,16 +76,16 @@ An `"sf" "data.frame"` OR an `ArrowObject`
 
 ``` r
 # Read an specific immediate region
-im <- read_immediate_region(code_immediate=110006, year = 2024)
+im <- read_immediate_region(code_immediate = 110006, year = 2024)
 #> ℹ Using year/date 2024
 
 # Read immediate regions of a state
-im <- read_immediate_region(code_immediate="AM", year = 2024)
+im <- read_immediate_region(code_immediate = "AM", year = 2024)
 #> ℹ Using year/date 2024
-im <- read_immediate_region(code_immediate=12, year = 2024)
+im <- read_immediate_region(code_immediate = 12, year = 2024)
 #> ℹ Using year/date 2024
 
 # Read all immediate regions of the country
-im <- read_immediate_region(code_immediate="all", year = 2024)
+im <- read_immediate_region(code_immediate = "all", year = 2024)
 #> ℹ Using year/date 2024
 ```
