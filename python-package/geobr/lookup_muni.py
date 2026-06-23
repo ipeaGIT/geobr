@@ -1,111 +1,88 @@
+from __future__ import annotations
+
+import pandas as pd
+from rapidfuzz.distance import Jaro
+
 from geobr import utils
 
 
-def lookup_muni(name_muni=None, code_muni=None, verbose=False):
-    """Lookup municipality codes and names.
+def _format_name(name: str) -> str:
+    name = str(name).lower().strip()
+    return utils.strip_accents(name)
 
-    By default, it looks for all municipalities. You can also use 'all' to in
-    `name_muni` or `code_muni` to get all municipalities.
 
-    Input a municipality NAME or CODE and get the names and codes of
-    the municipality's corresponding state, meso, micro, intermediate, and
-    immediate regions. You should not select both code_muni and name_muni
+def _fuzzy_match_name(df: pd.DataFrame, name: str, threshold: float = 0.9) -> pd.DataFrame:
+    formatted = df["name_muni"].apply(_format_name)
+    target = _format_name(name)
+    scores = formatted.apply(lambda x: Jaro.similarity(target, x))
+    matches = df[scores > threshold]
+    if len(matches) == 0:
+        return matches
+    best_idx = scores.idxmax()
+    return df.loc[[best_idx]]
+
+
+def lookup_muni(
+    year: int = 2010,
+    name_muni=None,
+    code_muni=None,
+    verbose: bool = False,
+) -> pd.DataFrame:
+    """Lookup municipality codes and administrative region codes.
 
     Parameters
     ----------
-
+    year : int
+        Year of municipal seat reference data.
     name_muni : str, optional
-    The municipality name to be looked up
-
-    code_muni: str, optional
-    The municipality code to be looked up
-
-    verbose : bool, optional
-    by default False
+        Municipality name to look up.
+    code_muni : str or int, optional
+        Municipality code to look up.
+    verbose : bool
+        Print informational messages.
 
     Returns
     -------
-    pd.DataFram
-    13 columns identifying the geographies information of that municipality
-
-    Details Only available from 2010 Census data so far
-
-    Raise
-    -------
-    Exception if code_muni or name_muni cannot be found
-
-    Example
-    -------
-    >>> import geobr
-
-    # Lookup table for municipality of Rio de Janeiro
-    >>> mun = lookup_muni('Rio de Janeiro)
-    or
-    >>> mun = lookup_muni(3304557)
-
-    # lookup table for all municipalities
-    >>> mun_all = lookup_muni()
+    pandas.DataFrame
+        Municipality and region identifiers (geometry dropped).
     """
-    # Get metadata with data url addresses
-    temp_meta = utils.select_metadata(geo="lookup_muni", year=2010)
-
-    # Read DataFrame available at provided url
-    lookup_table = utils.download_metadata(
-        temp_meta.loc[:, "download_path"].to_list()[0]
-    )
-    lookup_table["name_muni_format"] = lookup_table["name_muni_format"].str.lower()
-
-    # Search by inputs
-    if (
-        code_muni == "all"
-        or name_muni == "all"
-        or (code_muni is None and name_muni is None)
-    ):
-        if verbose:
-            print(f"Returning results for all municipalities")
-        return lookup_table.iloc[:, :-1]
-
-    elif code_muni is not None:
-        if name_muni is not None:
-            if verbose:
-                print("Ignoring argument name_muni")
-        try:
-            output = lookup_table[lookup_table["code_muni"] == int(code_muni)].iloc[
-                :, :-1
-            ]
-            if verbose:
-                print(
-                    "Returning results for municipality ",
-                    f'{output.loc[:, "name_muni"].to_list()[0]}',
-                )
-            return output
-
-        except KeyError:
-            raise Exception(
-                f"The `code_muni` argument {code_muni}",
-                "was not found in the database.",
+    if name_muni is not None and code_muni is not None:
+        if name_muni != "all" and code_muni != "all":
+            raise ValueError(
+                "Arguments 'name_muni' and 'code_muni' cannot be used at the same time."
             )
 
-    elif name_muni is not None:
-        # Cleaning from accents and turning into lower cases without spaces
-        name_muni = utils.strip_accents(str(name_muni).lower().strip())
-        output = lookup_table[lookup_table["name_muni_format"] == name_muni]
+    if name_muni is None and code_muni is None:
+        raise ValueError("Please insert a valid municipality name or code.")
 
-        if len(output) == 0:
-            if verbose:
-                print("Please insert a valid municipality name")
-            raise Exception(
-                f"The `name_muni` argument {name_muni} ",
-                "was not found in the database.",
-            )
-        else:
-            if verbose:
-                print(
-                    "Returning results for municipality"
-                    f'{output.loc[:, "name_muni"].to_list()[0]}'
-                )
-            return output.iloc[:, :-1]
+    from geobr.read_municipal_seat import read_municipal_seat
 
-    elif code_muni == "all" and name_muni == "all":
+    gdf = read_municipal_seat(year=year, verbose=verbose)
+    df = pd.DataFrame(gdf.drop(columns="geometry", errors="ignore"))
+
+    if name_muni == "all" or code_muni == "all":
         if verbose:
-            print("Please insert either a municipality ", "name or a municipality code")
+            print("Returning results for all municipalities")
+        return df
+
+    if code_muni is not None:
+        code = int(code_muni)
+        out = df[df["code_muni"] == code]
+        if len(out) == 0:
+            raise ValueError(f"Please insert a valid municipality code: {code_muni}")
+        if verbose:
+            print(f"Returning results for municipality {out['name_muni'].iloc[0]}")
+        return out
+
+    formatted_target = _format_name(name_muni)
+    df["_fmt"] = df["name_muni"].apply(_format_name)
+    out = df[df["_fmt"] == formatted_target].drop(columns="_fmt", errors="ignore")
+
+    if len(out) == 0:
+        out = _fuzzy_match_name(df.drop(columns="_fmt", errors="ignore"), name_muni)
+        if len(out) == 0:
+            raise ValueError("Please insert a valid municipality name.")
+
+    if verbose:
+        print(f"Returning results for municipality {out['name_muni'].iloc[0]}")
+    return out.drop(columns="_fmt", errors="ignore")
