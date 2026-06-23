@@ -1,4 +1,4 @@
-# geobr (development version)
+# geobr v2.0.1
 
 **Bug fixes**
 
