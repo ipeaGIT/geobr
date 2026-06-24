@@ -1,6 +1,5 @@
 import pytest
-
-pytest.importorskip("duckdb")
+import warnings
 
 from geobr._duckdb_backend import _reset_shared_connection, query
 from tests.conftest import patch_module_attr, register_geom_view, write_geom_parquet
@@ -52,10 +51,11 @@ def test_auto_resolve_bare_registered_no_warning(monkeypatch, duckdb_conn, tmp_p
     monkeypatch.setattr("geobr._duckdb_backend._known_geos", lambda: {"schools"})
     monkeypatch.setattr("geobr._duckdb_backend._available_years", lambda geo: [2020])
 
-    with pytest.warns(None) as record:
+    with warnings.catch_warnings(record=True) as record:
+        warnings.simplefilter("always")
         count = query("SELECT count(*) FROM schools", connection=duckdb_conn).fetchone()[0]
     assert count == 1
-    assert not record.list
+    assert not record
 
 
 def test_auto_resolve_bare_cached_warns(monkeypatch, duckdb_conn, tmp_path):

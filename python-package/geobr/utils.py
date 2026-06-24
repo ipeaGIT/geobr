@@ -1,5 +1,4 @@
 import os
-import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional
@@ -119,8 +118,6 @@ def select_year(metadata, year):
         year = max(metadata["year"])
 
     elif year not in list(metadata["year"]):
-
-        years = ", ".join([str(i) for i in metadata["year"].unique()])
 
         raise Exception(
             "Error: Invalid Value to argument 'year/date'. "

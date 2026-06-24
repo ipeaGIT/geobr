@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib
 import re
 import warnings
 from pathlib import Path
@@ -55,12 +54,12 @@ _GEO_LOADERS: dict[str, dict[str, Any]] = {
         "read_fn": "read_metro_area",
     },
     "urbanconcentrations": {
-        "v2": "urbanconcentrations",
+        "v2": "poparrangements",
         "gpkg": "urban_concentrations",
         "read_fn": "read_urban_concentrations",
     },
-    "poparrengements": {
-        "v2": "poparrengements",
+    "poparrangements": {
+        "v2": "poparrangements",
         "gpkg": "pop_arrengements",
         "read_fn": "read_pop_arrangements",
     },
@@ -132,17 +131,6 @@ _GEO_LOADERS: dict[str, dict[str, Any]] = {
 }
 
 
-def _require_duckdb():
-    try:
-        import duckdb
-    except ImportError as e:
-        raise ImportError(
-            "Optional dependency 'duckdb' is required for DuckDB features. "
-            "Install with: pip install geobr[duckdb]"
-        ) from e
-    return duckdb
-
-
 def _setup_connection(conn) -> None:
     for stmt in (
         "INSTALL spatial",
@@ -157,7 +145,6 @@ def _setup_connection(conn) -> None:
 
 
 def _create_connection():
-    duckdb = _require_duckdb()
     conn = duckdb.connect()
     _setup_connection(conn)
     return conn
@@ -457,7 +444,6 @@ def to_geopandas(
 ):
     """Convert a DuckDB relation or view to a GeoDataFrame."""
     import geopandas as gpd
-    import pandas as pd
     from shapely import from_wkb
 
     conn = connection or duckdb_connection()
