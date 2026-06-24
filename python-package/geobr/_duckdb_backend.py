@@ -132,6 +132,17 @@ _GEO_LOADERS: dict[str, dict[str, Any]] = {
 }
 
 
+def _require_duckdb():
+    try:
+        import duckdb
+    except ImportError as e:
+        raise ImportError(
+            "Optional dependency 'duckdb' is required for DuckDB features. "
+            "Install with: pip install geobr[duckdb]"
+        ) from e
+    return duckdb
+
+
 def _setup_connection(conn) -> None:
     for stmt in (
         "INSTALL spatial",
@@ -146,6 +157,7 @@ def _setup_connection(conn) -> None:
 
 
 def _create_connection():
+    duckdb = _require_duckdb()
     conn = duckdb.connect()
     _setup_connection(conn)
     return conn
