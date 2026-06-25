@@ -70,7 +70,7 @@ exclude = '''
 
 [dependency-groups]
 dev = [
-    "pytest<7.0,>=6.0",
+    "pytest>=6.0,<10.0",
     "pytest-xdist>=3.5.0",
     "jinja2<4.0.0,>=3.1.4",
     "fire<1.0.0,>=0.5.0",
