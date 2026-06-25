@@ -8,6 +8,8 @@ license = {text = "MIT"}
 authors = [
     {name = "João Carabetta"},
     {name = "Rafael H. M. Pereira"},
+    {name = "Camila Gonçalves de Brito"},
+    {name = "Rogério Jerônimo Barbosa"},
     {name = "Caio Nogueira Goncalves"},
     {name = "Bernardo Furtado"},
 ]
