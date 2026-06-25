@@ -42,16 +42,12 @@ directory (run `uv init` first if you don't have a `pyproject.toml` yet):
 
 ``` bash
 uv add geobr
-
-# DuckDB SQL API and spatial analysis
-uv add "geobr[duckdb]"
 ```
 
 Alternatively, with pip:
 
 ``` bash
 pip install geobr
-pip install "geobr[duckdb]"
 ```
 
 *Windows users:*
@@ -112,7 +108,7 @@ analyze snapshots directly in SQL.
 
 ## Python, DuckDB SQL and spatial analysis
 
-Install the optional DuckDB extra, then run SQL across geobr snapshots.
+Run SQL across geobr snapshots.
 Missing views are downloaded automatically on first use.
 
 ``` python
