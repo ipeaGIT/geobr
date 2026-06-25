@@ -2,8 +2,6 @@ import importlib
 
 import geopandas as gpd
 from shapely.geometry import Point
-from pathlib import Path
-
 
 from geobr.read_capitals import read_capitals, _CAPITALS
 
