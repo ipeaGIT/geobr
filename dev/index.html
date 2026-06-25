@@ -107,14 +107,21 @@ geobr is a computational package to download official spatial data sets of Brazi
 <div class="section level2">
 <h2 id="installation-python">Installation Python<a class="anchor" aria-label="anchor" href="#installation-python"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
+<p><a href="https://docs.astral.sh/uv/" class="external-link">uv</a> is the recommended installer. From your project directory (run <code>uv init</code> first if you don’t have a <code>pyproject.toml</code> yet):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">uv</span> add geobr</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># DuckDB SQL API and spatial analysis</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ex">uv</span> add <span class="st">"geobr[duckdb]"</span></span></code></pre></div>
+<p>Alternatively, with pip:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install geobr</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"geobr[duckdb]"</span></span></code></pre></div>
 <p><em>Windows users:</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> geo_env</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">conda</span> activate geo_env  </span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--env</span> <span class="at">--add</span> channels conda-forge  </span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--env</span> <span class="at">--set</span> channel_priority strict  </span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="ex">conda</span> install python=3 geopandas  </span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> geo_env</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">conda</span> activate geo_env  </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--env</span> <span class="at">--add</span> channels conda-forge  </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--env</span> <span class="at">--set</span> channel_priority strict  </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="ex">conda</span> install python=3 geopandas  </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="ex">uv</span> add geobr</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
@@ -124,7 +131,7 @@ geobr is a computational package to download official spatial data sets of Brazi
 <div class="section level2">
 <h2 id="r-reading-the-data-as-an-sf-object">R, reading the data as an <code>sf</code> object<a class="anchor" aria-label="anchor" href="#r-reading-the-data-as-an-sf-object"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ipeagit.github.io/geobr/">geobr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Read specific municipality at a given year</span></span>
@@ -141,18 +148,43 @@ geobr is a computational package to download official spatial data sets of Brazi
 <div class="section level2">
 <h2 id="python-reading-the-data-as-a-geopandas-object">Python, reading the data as a <code>geopandas</code> object<a class="anchor" aria-label="anchor" href="#python-reading-the-data-as-a-geopandas-object"></a>
 </h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">from</span> geobr <span class="im">import</span> read_municipality</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># Read specific municipality at a given year</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">1200179</span>, year<span class="op">=</span><span class="dv">2017</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># Read all municipalities of given state at a given year</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">33</span>, year<span class="op">=</span><span class="dv">2010</span>) <span class="co"># or</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"RJ"</span>, year<span class="op">=</span><span class="dv">2010</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># Read all municipalities in the country at a given year</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="dv">2018</span>)</span></code></pre></div>
-<p>More examples <a href="https://github.com/ipeaGIT/geobr/tree/master/python-package/examples" class="external-link">here</a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">from</span> geobr <span class="im">import</span> read_municipality</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># Read specific municipality at a given year</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">1200179</span>, year<span class="op">=</span><span class="dv">2017</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># Read all municipalities of given state at a given year</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="dv">33</span>, year<span class="op">=</span><span class="dv">2010</span>) <span class="co"># or</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"RJ"</span>, year<span class="op">=</span><span class="dv">2010</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># Read all municipalities in the country at a given year</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>mun <span class="op">=</span> read_municipality(code_muni<span class="op">=</span><span class="st">"all"</span>, year<span class="op">=</span><span class="dv">2018</span>)</span></code></pre></div>
+<p>Since v0.3.0, the Python package uses a hybrid GeoParquet pipeline (with GeoPackage fallback). For DuckDB workflows, use <code>query()</code> to load and analyze snapshots directly in SQL.</p>
+</div>
+<div class="section level2">
+<h2 id="python-duckdb-sql-and-spatial-analysis">Python, DuckDB SQL and spatial analysis<a class="anchor" aria-label="anchor" href="#python-duckdb-sql-and-spatial-analysis"></a>
+</h2>
+<p>Install the optional DuckDB extra, then run SQL across geobr snapshots. Missing views are downloaded automatically on first use.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">from</span> geobr <span class="im">import</span> query, to_geopandas</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># Filter a snapshot (auto-downloads states_2020 on first use)</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>query(<span class="st">"""</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="st">    SELECT name_state, abbrev_state</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="st">    FROM states_2020</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="st">    WHERE abbrev_state = 'RJ'</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co"># Spatial join across datasets</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>query(<span class="st">"""</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="st">    SELECT count(*) AS schools_in_amazon</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="st">    FROM schools_2020 s</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="st">    JOIN biomes_2019 b ON ST_Within(s.geometry, b.geometry)</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="st">    WHERE b.name_biome ILIKE '%Amaz%'</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co"># Round-trip to GeoPandas for plotting</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>gdf <span class="op">=</span> to_geopandas(<span class="st">"states_2020"</span>)</span></code></pre></div>
+<p>More examples in <a href="https://github.com/ipeaGIT/geobr/tree/master/python-package/examples" class="external-link">python-package/examples</a>, including <a href="https://github.com/ipeaGIT/geobr/blob/master/python-package/examples/duckdb_demo.ipynb" class="external-link">duckdb_demo.ipynb</a>.</p>
 </div>
 </div>
 <div class="section level1">
@@ -378,6 +410,14 @@ geobr is a computational package to download official spatial data sets of Brazi
 <td>Look up municipality codes by their name, or the other way around</td>
 </tr>
 <tr>
+<td><code>query</code></td>
+<td>Run SQL on geobr snapshots with DuckDB (Python, v0.3.0+)</td>
+</tr>
+<tr>
+<td><code>to_geopandas</code></td>
+<td>Convert a DuckDB view or relation to GeoPandas (Python, v0.3.0+)</td>
+</tr>
+<tr>
 <td><code>remove_islands</code></td>
 <td>Removes distant oceanic islands from Brazil</td>
 </tr>
@@ -416,6 +456,7 @@ geobr is a computational package to download official spatial data sets of Brazi
 <li>Harmonized attributes and geographic projections across geographies and years</li>
 <li>Option to download geometries with simplified borders for fast rendering</li>
 <li>Option to download geometries as geoarrow objects out of memory</li>
+<li>DuckDB SQL API for cross-dataset spatial analysis in Python (v0.3.0+)</li>
 <li>Stable version published on CRAN for R users, and on PyPI for Python users</li>
 </ul>
 </div>

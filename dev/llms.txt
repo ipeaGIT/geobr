@@ -32,8 +32,22 @@ here](https://github.com/r-spatial/sf#linux).
 
 ## Installation Python
 
+[uv](https://docs.astral.sh/uv/) is the recommended installer. From your
+project directory (run `uv init` first if you don’t have a
+`pyproject.toml` yet):
+
+``` bash
+uv add geobr
+
+# DuckDB SQL API and spatial analysis
+uv add "geobr[duckdb]"
+```
+
+Alternatively, with pip:
+
 ``` bash
 pip install geobr
+pip install "geobr[duckdb]"
 ```
 
 *Windows users:*
@@ -44,7 +58,7 @@ conda activate geo_env
 conda config --env --add channels conda-forge  
 conda config --env --set channel_priority strict  
 conda install python=3 geopandas  
-pip install geobr
+uv add geobr
 ```
 
 # Basic Usage
@@ -89,8 +103,41 @@ mun = read_municipality(code_muni="RJ", year=2010)
 mun = read_municipality(code_muni="all", year=2018)
 ```
 
-More examples
-[here](https://github.com/ipeaGIT/geobr/tree/master/python-package/examples)
+Since v0.3.0, the Python package uses a hybrid GeoParquet pipeline (with
+GeoPackage fallback). For DuckDB workflows, use `query()` to load and
+analyze snapshots directly in SQL.
+
+## Python, DuckDB SQL and spatial analysis
+
+Install the optional DuckDB extra, then run SQL across geobr snapshots.
+Missing views are downloaded automatically on first use.
+
+``` python
+from geobr import query, to_geopandas
+
+# Filter a snapshot (auto-downloads states_2020 on first use)
+query("""
+    SELECT name_state, abbrev_state
+    FROM states_2020
+    WHERE abbrev_state = 'RJ'
+""").df()
+
+# Spatial join across datasets
+query("""
+    SELECT count(*) AS schools_in_amazon
+    FROM schools_2020 s
+    JOIN biomes_2019 b ON ST_Within(s.geometry, b.geometry)
+    WHERE b.name_biome ILIKE '%Amaz%'
+""").df()
+
+# Round-trip to GeoPandas for plotting
+gdf = to_geopandas("states_2020")
+```
+
+More examples in
+[python-package/examples](https://github.com/ipeaGIT/geobr/tree/master/python-package/examples),
+including
+[duckdb_demo.ipynb](https://github.com/ipeaGIT/geobr/blob/master/python-package/examples/duckdb_demo.ipynb).
 
 # Available datasets:
 
@@ -139,6 +186,8 @@ CRS(4674).**
 |----|----|
 | `list_geobr` | List all datasets available in the geobr package |
 | `lookup_muni` | Look up municipality codes by their name, or the other way around |
+| `query` | Run SQL on geobr snapshots with DuckDB (Python, v0.3.0+) |
+| `to_geopandas` | Convert a DuckDB view or relation to GeoPandas (Python, v0.3.0+) |
 | `remove_islands` | Removes distant oceanic islands from Brazil |
 | `grid_state_correspondence_table` | Loads a correspondence table indicating what quadrants of IBGE’s statistical grid intersect with each state |
 | `cep_to_state` | Determine the state of a given CEP postal code |
@@ -175,6 +224,7 @@ contributions to the community, including for example:
 - Option to download geometries with simplified borders for fast
   rendering
 - Option to download geometries as geoarrow objects out of memory
+- DuckDB SQL API for cross-dataset spatial analysis in Python (v0.3.0+)
 - Stable version published on CRAN for R users, and on PyPI for Python
   users
 
