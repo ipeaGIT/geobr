@@ -108,13 +108,9 @@ geobr is a computational package to download official spatial data sets of Brazi
 <h2 id="installation-python">Installation Python<a class="anchor" aria-label="anchor" href="#installation-python"></a>
 </h2>
 <p><a href="https://docs.astral.sh/uv/" class="external-link">uv</a> is the recommended installer. From your project directory (run <code>uv init</code> first if you don’t have a <code>pyproject.toml</code> yet):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">uv</span> add geobr</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># DuckDB SQL API and spatial analysis</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ex">uv</span> add <span class="st">"geobr[duckdb]"</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">uv</span> add geobr</span></code></pre></div>
 <p>Alternatively, with pip:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install geobr</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"geobr[duckdb]"</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install geobr</span></code></pre></div>
 <p><em>Windows users:</em></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> geo_env</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">conda</span> activate geo_env  </span>
@@ -164,7 +160,7 @@ geobr is a computational package to download official spatial data sets of Brazi
 <div class="section level2">
 <h2 id="python-duckdb-sql-and-spatial-analysis">Python, DuckDB SQL and spatial analysis<a class="anchor" aria-label="anchor" href="#python-duckdb-sql-and-spatial-analysis"></a>
 </h2>
-<p>Install the optional DuckDB extra, then run SQL across geobr snapshots. Missing views are downloaded automatically on first use.</p>
+<p>Run SQL across geobr snapshots. Missing views are downloaded automatically on first use.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">from</span> geobr <span class="im">import</span> query, to_geopandas</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># Filter a snapshot (auto-downloads states_2020 on first use)</span></span>
