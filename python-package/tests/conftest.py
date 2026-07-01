@@ -19,6 +19,7 @@ def sample_gdf():
             "code_state": [33, 35, 29, 16],
             "name_muni": ["Rio de Janeiro", "São Paulo", "Salvador", "Macapá"],
             "code_pop_arrangement": [3304557, 3550308, 2927408, 1600303],
+            "code_alt": [3304, 3550, 2927, 1600],
         },
         geometry=[Point(0, 0), Point(1, 1), Point(2, 2), Point(3, 3)],
         crs="EPSG:4674",
