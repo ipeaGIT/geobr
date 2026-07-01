@@ -1,4 +1,4 @@
-from geobr.utils import read_geobr_v2, test_options
+from geobr.utils import read_geobr_v2
 
 
 def read_census_tract(
@@ -25,7 +25,11 @@ def read_census_tract(
         Standard geobr options.
     """
 
-    test_options(zone, "zone", allowed=["urban", "rural"])
+    allowed = ("urban", "rural")
+    if zone not in allowed:
+        raise ValueError(
+            f"`zone` must be one of: {list(allowed)}. Got: {zone!r}"
+        )
 
     zone_name = None
 

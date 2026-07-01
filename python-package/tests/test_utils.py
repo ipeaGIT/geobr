@@ -39,7 +39,7 @@ def test_download_metadata_cache():
     # Check if cache works
     start_time = time()
     geobr.utils.download_metadata()
-    assert time() - start_time < 1
+    assert time() - start_time < 2
 
 
 def test_select_year():

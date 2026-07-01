@@ -48,15 +48,12 @@ def cep_to_state(cep: str) -> str:
     """
     if cep is None:
         raise ValueError("Error: 'cep' cannot be None.")
-    if not isinstance(cep, str):
-        raise ValueError("Error: 'cep' must have class 'character' / str.")
 
-    cep = re.sub(r"[-.]", "", cep)
-    if len(cep) != 8:
-        raise ValueError("'cep' must have 8 digits.")
-
+    cep = re.sub(r"[-.]", "", str(cep))
     if not cep.isdigit():
         raise ValueError("'cep' input must have numerical digits.")
+    if len(cep) != 8:
+        raise ValueError("'cep' must have 8 digits.")
 
     cep_num = int(cep)
     for state, (lo, hi) in _CEP_RANGES:

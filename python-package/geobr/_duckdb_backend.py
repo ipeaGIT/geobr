@@ -508,7 +508,18 @@ def read_filter_parquet_relation(
             f"SELECT * FROM {source} WHERE CAST(code_state AS INTEGER) IN ({codes_sql})"
         )
 
-    return connection.sql(f"SELECT * FROM {source}")
+    rel = connection.sql(f"SELECT * FROM {source}")
+
+    if str(code).isdigit() and len(str(code)) > 3:
+        code_cols = [c for c in rel.columns if c.startswith("code_") and c not in ["code_state", "code_muni"]]
+        for code_col in code_cols:
+            len_alvo = rel.aggregate(f"max(length(CAST(CAST({code_col} as BIGINT) as VARCHAR)))").fetchone()[0]
+            if len_alvo == len(str(code)):
+                filter_col = code_col
+                codes_sql = ", ".join(map(str, codes))
+                return connection.sql(f"SELECT * FROM {source} WHERE CAST({filter_col} AS INTEGER) IN ({codes_sql})")
+
+    return rel
 
 
 class GeoBrDuckDB:

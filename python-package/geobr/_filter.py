@@ -71,9 +71,11 @@ def filter_by_code(
             filter_col = "code_muni"
             codes = [int(c) for c in codes]
     elif all(_numbers_only(c) and len(str(c)) > 3 for c in codes):
-        code_cols = [c for c in gdf.columns if c.startswith("code_")]
+        code_cols = [c for c in gdf.columns if c.startswith("code_") and c not in ["code_state", "code_muni"]]
         if code_cols:
-            filter_col = code_cols[0]
+            for code_col in code_cols:
+                if gdf[code_col].astype(str).str.len().max() == len(str(codes[0])):
+                    filter_col = code_col
 
     if filter_col is None:
         raise ValueError("Invalid value to argument `code_` / `code_muni` / `code_state`.")
@@ -92,6 +94,9 @@ def filter_by_code(
             result = gdf[gdf[filter_col].astype(str).isin([str(c) for c in codes_num])]
     else:
         result = gdf[gdf[filter_col].isin(codes)]
+        if len(result) == 0:
+            codes_num = [int(c) for c in codes]
+            result = gdf[gdf[filter_col].astype(str).isin([str(c) for c in codes_num])]
 
     if len(result) == 0:
         raise ValueError("Invalid value to argument `code_` / `code_muni` / `code_state`.")
