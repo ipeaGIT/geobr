@@ -62,6 +62,6 @@ jobs:
           fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
           token: ${{ secrets.CODECOV_TOKEN }}
           working-directory: python-package
-          files: ./python-package/coverage.xml
+          files: ./coverage.xml
           flags: python
           name: codecov-python
