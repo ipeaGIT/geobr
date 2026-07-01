@@ -15,14 +15,14 @@ projection and fixed topology.
 
 Please check the vignettes for more on the package usage:
 \itemize{
-\item Introduction to geobr (R) on the \href{https://ipeagit.github.io/geobr/articles/intro_to_geobr.html}{website}.
+\item Introduction to geobr (R) on the \href{https://ipea.github.io/geobr/articles/intro_to_geobr.html}{website}.
 }
 }
 
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://ipeagit.github.io/geobr/}
+  \item \url{https://ipea.github.io/geobr/}
   \item \url{https://github.com/ipea/geobr}
   \item Report bugs at \url{https://github.com/ipea/geobr/issues}
 }

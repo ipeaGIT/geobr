@@ -29,7 +29,7 @@ Authors@R: c(person(given="Rafael H. M.", family="Pereira", email="rafa.pereira.
             person("ITpS - Instituto Todos pela Saúde", role = "fnd"),
             person("Ipea - Institue for Applied Economic Research", role = c("cph", "fnd"))
             )
-URL: https://ipeagit.github.io/geobr/, https://github.com/ipea/geobr
+URL: https://ipea.github.io/geobr/, https://github.com/ipea/geobr
 BugReports: https://github.com/ipea/geobr/issues 
 Description: Easy access to official spatial data sets of Brazil. The package 
              offers a wide range of spatial data sets available at various 

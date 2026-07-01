@@ -228,7 +228,7 @@ contributions to the community, including for example:
 
 - Africa: [afrimapr](https://afrimapr.github.io/afrimapr.website/)
 - Argentina: [geoAr](https://github.com/PoliticaArgentina/geoAr)
-- Brazil: [geobr](https://ipeagit.github.io/geobr/)
+- Brazil: [geobr](https://ipea.github.io/geobr/)
 - Canada:
   [cancensus](https://mountainmath.github.io/cancensus/index.html)
 - Chile: [chilemapas](https://pacha.dev/chilemapas/)

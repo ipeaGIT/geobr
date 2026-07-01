@@ -8,7 +8,7 @@
 #' @section Usage:
 #' Please check the vignettes for more on the package usage:
 #' - Introduction to geobr (R) on the [website](
-#' https://ipeagit.github.io/geobr/articles/intro_to_geobr.html).
+#' https://ipea.github.io/geobr/articles/intro_to_geobr.html).
 #'
 #' @docType package
 #' @name geobr
