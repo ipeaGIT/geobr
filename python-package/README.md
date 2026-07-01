@@ -35,42 +35,6 @@ It adds:
 
 ! Be aware that if the function that you are adding is more complicated than the template. So, always double check !
 
-
-
-
-## Translation Status
-
-| Function                  | Translated? | Easy? |
-| ------------------------- | ----------- | ----- |
-| read_amazon               | Yes         | Super |
-| read_biomes               | Yes         | Super |
-| read_census_tract         | Yes         | No    |
-| read_comparable_areas     | Yes         | Yes   |
-| read_conservation_units   | Yes         | Super |
-| read_country              | Yes         | Super |
-| read_disaster_risk_area   | Yes         | Super |
-| read_health_facilities    | Yes         | Super |
-| read_health_region        | Yes         | Super |
-| read_immediate_region     | Yes         | Yes   |
-| read_indigenous_land      | Yes         | Super |
-| read_intermediate_region  | Yes         | Yes   |
-| read_meso_region          | Yes         | No    |
-| read_metro_area           | Yes         | Super |
-| read_micro_region         | Yes         | No    |
-| read_municipal_seat       | Yes         | Super |
-| read_municipality         | Yes         | No    |
-| read_region               | Yes         | Super |
-| read_semiarid             | Yes         | Super |
-| read_state                | Yes         | Super |
-| read_statistical_grid     | Yes         | No    |
-| read_urban_area           | Yes         | Super |
-| read_urban_concentrations | Yes         | Super |
-| read_weighting_area       | Yes         | No    |
-| list_geobr                | Yes         | Yes   |
-| lookup_muni               | Yes         | No    |
-| read_neighborhood         | Yes         | Yes   |
-
-
 # Release new version
 
 ```
