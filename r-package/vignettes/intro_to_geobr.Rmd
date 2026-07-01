@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ```
 
-The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick and 
+The [**geobr**](https://github.com/ipea/geobr) package provides quick and 
 easy access to official spatial data sets of Brazil. The package offers a wide 
 range of spatial data sets available at various geographic scales and for various 
 years with harmonized attributes, projection and fixed topology. All **geobr** 
@@ -37,7 +37,7 @@ install.packages("geobr")
 
 # Development version
 utils::remove.packages('geobr')
-devtools::install_github("ipeaGIT/geobr", subdir = "r-package")
+devtools::install_github("ipea/geobr", subdir = "r-package")
 
 ```
 

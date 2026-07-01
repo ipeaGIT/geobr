@@ -11,21 +11,21 @@
 **Bug fixes**
 
 - Moves the {arrow} package from "Suggests" to "Imports".
-- Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake. Closes [#436](https://github.com/ipeaGIT/geobr/issues/436).
+- Fix bug in `read_immediate_region()` which was hardcoded to read state 11 by mistake. Closes [#436](https://github.com/ipea/geobr/issues/436).
 - The function `remove_islands()` now correctly drops the arquipelago de Trindade e Martim Vaz
 - Fix documentation of arguments `year` and `date`.
 - Make the internal function that downloads geobr metadata more robust and removes the dependency from piggyback
-- More informative message when a municipality does not have neighborhood data. Closes [#424](https://github.com/ipeaGIT/geobr/issues/424).
+- More informative message when a municipality does not have neighborhood data. Closes [#424](https://github.com/ipea/geobr/issues/424).
 
 
 # geobr v2.0.0
 
 **New functions**
 
-- `read_favela()` with data of favelas and urban communities (source: IBGE) Closes [#387](https://github.com/ipeaGIT/geobr/issues/387).
-- `read_polling_places()` with data of polling places (source: TSE) Closes [#184](https://github.com/ipeaGIT/geobr/issues/184) and [#242](https://github.com/ipeaGIT/geobr/issues/242).
-- `read_quilombola_lands()` with data of officially recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipeaGIT/geobr/issues/242).
-- `remove_islands()` to remove islands from Brazil. Closes [#412](https://github.com/ipeaGIT/geobr/issues/412).
+- `read_favela()` with data of favelas and urban communities (source: IBGE) Closes [#387](https://github.com/ipea/geobr/issues/387).
+- `read_polling_places()` with data of polling places (source: TSE) Closes [#184](https://github.com/ipea/geobr/issues/184) and [#242](https://github.com/ipea/geobr/issues/242).
+- `read_quilombola_lands()` with data of officially recognized quilombola lands (source: INCRA) [Closes #242](https://github.com/ipea/geobr/issues/242).
+- `remove_islands()` to remove islands from Brazil. Closes [#412](https://github.com/ipea/geobr/issues/412).
 
 **Breaking changes**
 
@@ -37,9 +37,9 @@ mindful of historical changes in the data.
 more detailed output if needed
 - Functions like `read_schools()` and `read_health_facilities()` now use a 
 combination of official spatial coordinates and coordinates found using the 
-[{geocodebr}](https://github.com/ipeaGIT/geocodebr/) package to improve spatial 
+[{geocodebr}](https://github.com/ipea/geocodebr/) package to improve spatial 
 accuracy. See documentation of these functions.
-- The function `lookup_muni()` now has a `year` parameter. Closes [#401](https://github.com/ipeaGIT/geobr/issues/401).
+- The function `lookup_muni()` now has a `year` parameter. Closes [#401](https://github.com/ipea/geobr/issues/401).
 - The function and data `read_comparable_areas()` will be going under  major 
 changes. For now, this function is temporarily suspended.
 - The only year available so far for the functions `read_urban_concentrations()` 
@@ -49,7 +49,7 @@ and `read_pop_arrangements()`is 2010, and not 2015.
 
 - Data files are now saved in `.parquet`. This improved performance to download 
 and to read files, and allow integration with ducdkDB via {duckspatial} and with
-Arrow via {gearrow}. Closes [#290](https://github.com/ipeaGIT/geobr/issues/290)
+Arrow via {gearrow}. Closes [#290](https://github.com/ipea/geobr/issues/290)
 - Most functions have a new argument `output`, which allow users to choose the
 output format. `"sf"` returns an `sf` to memory (default),  `"duckdb"` returns a 
 lazy spatial table backed by DuckDB via the duckspatial package, and `"arrow"` 
@@ -57,11 +57,11 @@ returns an Arrow dataset. Both `"duckdb"` and `"arrow"` support out-of-memory
 processing of large data sets.
 - All functions have a new argument `verbose`. If `TRUE` (the default), the 
 function prints informative messages and shows download progress bar. If `FALSE`,
-the function is silent. Closes [#400](https://github.com/ipeaGIT/geobr/issues/400).
+the function is silent. Closes [#400](https://github.com/ipea/geobr/issues/400).
 - The function `list_geobr()` now has a boolean argument `wide`, so users can 
 choose whether the output should be presented in wide or long format.
 - The function `lookup_muni()` now uses probabilistic match to find municipality
-names that users might input with typos. Closes [#406](https://github.com/ipeaGIT/geobr/issues/406).
+names that users might input with typos. Closes [#406](https://github.com/ipea/geobr/issues/406).
 - The following functions now include the column `code_state` to allow users 
 to filter the data directly in the function call: `read_indigenous_land()`,
 `read_metro_area()`, `read_pop_arrangements()` and `read_urban_concentrations()`.
@@ -151,7 +151,7 @@ to filter the data directly in the function call: `read_disaster_risk_area()`,
 
 **New function**
 
-- `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. [Closes #243](https://github.com/ipeaGIT/geobr/issues/243)
+- `read_capitals()` to download either a spatial `sf` object with the location of the municipal seats (sede dos municipios) of state capitals, or a `data.frame` with the names of codes of state capitals. [Closes #243](https://github.com/ipea/geobr/issues/243)
 
 **Minor changes**
 
@@ -159,10 +159,10 @@ to filter the data directly in the function call: `read_disaster_risk_area()`,
 
 **Bug fixes**
 
-- fixed bug from conflict between `sf` and `data.table` that was messing with plot extent. [Closes #284](https://github.com/ipeaGIT/geobr/issues/284).
-- fixed bug from conflicts between `plotly` and `data.table`. [Closes #279](https://github.com/ipeaGIT/geobr/issues/279).
-- fixed bug in `cep_to_state()` function. [Closes #317](https://github.com/ipeaGIT/geobr/issues/317).
-- fixed bug in progress bar. [Closes #154](https://github.com/ipeaGIT/geobr/issues/154).
+- fixed bug from conflict between `sf` and `data.table` that was messing with plot extent. [Closes #284](https://github.com/ipea/geobr/issues/284).
+- fixed bug from conflicts between `plotly` and `data.table`. [Closes #279](https://github.com/ipea/geobr/issues/279).
+- fixed bug in `cep_to_state()` function. [Closes #317](https://github.com/ipea/geobr/issues/317).
+- fixed bug in progress bar. [Closes #154](https://github.com/ipea/geobr/issues/154).
 - The `lookup_muni()` and `download_metadata()` functions are now more robust to internet connection failures.
 
 
