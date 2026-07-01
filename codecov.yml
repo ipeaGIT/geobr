@@ -6,10 +6,26 @@ ignore:
 coverage:
   status:
     project:
-      default:
+      default: false
+      r:
         target: auto
         threshold: 1%
+        flags:
+          - r
+      python:
+        target: auto
+        threshold: 1%
+        flags:
+          - python
     patch:
-      default:
+      default: false
+      r:
         target: auto
         threshold: 1%
+        flags:
+          - r
+      python:
+        target: auto
+        threshold: 1%
+        flags:
+          - python

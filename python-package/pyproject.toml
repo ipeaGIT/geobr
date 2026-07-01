@@ -12,7 +12,6 @@ authors = [
     {name = "Rogério Jerônimo Barbosa"},
     {name = "Caio Nogueira Goncalves"},
     {name = "Bernardo Furtado"},
-    {name = "Camila Goncavels de Brito"},
 ]
 dependencies = [
     "geopandas>=1.0.0,<=1.1.2",
