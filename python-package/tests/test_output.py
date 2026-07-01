@@ -42,3 +42,7 @@ def test_convert_output_duckdb(duckdb_relation, duckdb_conn):
     assert "geometry" in column_types
     assert column_types["geometry"] == "GEOMETRY('EPSG:4674')"
 
+
+def test_convert_output_invalid_format(duckdb_relation, duckdb_conn):
+    with pytest.raises(ValueError, match="must be one of"):
+        convert_output(duckdb_relation, output="invalid", connection=duckdb_conn)

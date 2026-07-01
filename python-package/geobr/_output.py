@@ -54,5 +54,3 @@ def convert_output(
 
     if output == "arrow":
         return non_geo_relation.to_arrow_table()
-
-    raise ValueError(f"Unknown output: {output}")

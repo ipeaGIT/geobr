@@ -295,27 +295,6 @@ def select_metadata(geo, simplified=None, year=False):
     return metadata
 
 
-def change_type_list(lst, astype=str):
-    return [astype(l) for l in lst]
-
-
-def test_options(choosen, name, allowed=None, not_allowed=None):
-
-    if allowed is not None:
-        if choosen not in allowed:
-            raise Exception(
-                f"Invalid value to argument '{name}'. "
-                f"It must be either {' or '.join(change_type_list(allowed))}"
-            )
-
-    if not_allowed is not None:
-        if choosen in not_allowed:
-            raise Exception(
-                f"Invalid value to argument '{name}'. "
-                f"It cannot be {' or '.join(change_type_list(allowed))}"
-            )
-
-
 def _download_file(urls, dest: Path, show_progress: bool = False) -> bool:
     """Try URLs in order; write to dest. Return True on success."""
     for url in urls:

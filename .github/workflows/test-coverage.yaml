@@ -51,3 +51,4 @@ jobs:
           disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
           working-directory: r-package
+          flags: r

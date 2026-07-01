@@ -49,7 +49,19 @@ jobs:
         working-directory: python-package
         run: uv sync --frozen
 
-      - name: Run tests
+      - name: Run tests with coverage
         shell: bash
         working-directory: python-package
-        run: uv run pytest -n 2 --durations=10 -s ./tests -m "not network"
+        run: |
+          uv run --with pytest-cov pytest -n 2 --cov=geobr --cov-report=xml --durations=10 -s ./tests -m "not network"
+
+      - name: Upload coverage to Codecov
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          working-directory: python-package
+          files: ./coverage.xml
+          flags: python
+          name: codecov-python
