@@ -1,0 +1,76 @@
+# AppVeyor: Windows R CMD check for r-package only.
+# Python CI runs in GitHub Actions (.github/workflows/Python-CMD-check.yaml).
+# R also runs on Windows via GitHub Actions (.github/workflows/R-CMD-check.yaml).
+
+only_commits:
+  files:
+    - r-package/**
+
+skip_commits:
+  files:
+    - python-package/**
+    - .github/**
+    - mcp-server/**
+
+environment:
+  global:
+    R_REMOTES_STANDALONE: true
+    PKGDIR: r-package
+  matrix:
+    - R_VERSION: release
+      R_ARCH: x64
+
+init:
+  ps: |
+    $ErrorActionPreference = "Stop"
+    Get-Date
+
+install:
+  ps: |
+    $ErrorActionPreference = "Stop"
+    if (-not (Test-Path r-appveyor-scripts)) {
+      New-Item -ItemType Directory -Force -Path r-appveyor-scripts | Out-Null
+    }
+    if (-not (Test-Path r-appveyor-scripts/appveyor-tool.ps1)) {
+      Invoke-WebRequest -UseBasicParsing `
+        -Uri "https://raw.githubusercontent.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1" `
+        -OutFile "r-appveyor-scripts/appveyor-tool.ps1"
+    }
+    Import-Module .\r-appveyor-scripts\appveyor-tool.ps1
+    Bootstrap
+
+build_script:
+  ps: |
+    $ErrorActionPreference = "Stop"
+    Push-Location $env:PKGDIR
+    try {
+      InstallDeps
+    } finally {
+      Pop-Location
+    }
+
+test_script:
+  ps: |
+    $ErrorActionPreference = "Stop"
+    Push-Location $env:PKGDIR
+    try {
+      RunTests
+    } finally {
+      Pop-Location
+    }
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+artifacts:
+  - path: r-package\*.Rcheck\**\*.log
+    name: Logs
+  - path: r-package\*.Rcheck\**\*.out
+    name: Logs
+  - path: r-package\*.Rcheck\**\*.fail
+    name: Logs
+  - path: r-package\*.Rcheck\**\*.Rout
+    name: Logs
+  - path: r-package\*_*.zip
+    name: Bits
