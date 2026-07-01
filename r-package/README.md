@@ -37,6 +37,16 @@ here](https://github.com/r-spatial/sf#linux).
 
 ## Installation Python
 
+[uv](https://docs.astral.sh/uv/) is the recommended installer. From your
+project directory (run `uv init` first if you don’t have a
+`pyproject.toml` yet):
+
+``` bash
+uv add geobr
+```
+
+Alternatively, with pip:
+
 ``` bash
 pip install geobr
 ```
@@ -49,7 +59,7 @@ conda activate geo_env
 conda config --env --add channels conda-forge  
 conda config --env --set channel_priority strict  
 conda install python=3 geopandas  
-pip install geobr
+uv add geobr
 ```
 
 # Basic Usage
@@ -93,8 +103,41 @@ mun = read_municipality(code_muni="RJ", year=2010)
 mun = read_municipality(code_muni="all", year=2018)
 ```
 
-More examples
-[here](https://github.com/ipea/geobr/tree/master/python-package/examples)
+Since v0.3.0, the Python package uses a hybrid GeoParquet pipeline (with
+GeoPackage fallback). For DuckDB workflows, use `query()` to load and
+analyze snapshots directly in SQL.
+
+## Python, DuckDB SQL and spatial analysis
+
+Run SQL across geobr snapshots. Missing views are downloaded
+automatically on first use.
+
+``` python
+from geobr import query, to_geopandas
+
+# Filter a snapshot (auto-downloads states_2020 on first use)
+query("""
+    SELECT name_state, abbrev_state
+    FROM states_2020
+    WHERE abbrev_state = 'RJ'
+""").df()
+
+# Spatial join across datasets
+query("""
+    SELECT count(*) AS schools_in_amazon
+    FROM schools_2020 s
+    JOIN biomes_2019 b ON ST_Within(s.geometry, b.geometry)
+    WHERE b.name_biome ILIKE '%Amaz%'
+""").df()
+
+# Round-trip to GeoPandas for plotting
+gdf = to_geopandas("states_2020")
+```
+
+More examples in
+[python-package/examples](https://github.com/ipea/geobr/tree/master/python-package/examples),
+including
+[duckdb_demo.ipynb](https://github.com/ipea/geobr/blob/master/python-package/examples/duckdb_demo.ipynb).
 
 # Available datasets:
 

@@ -1,8 +1,8 @@
 
 # geobr: Download Official Spatial Data Sets of Brazil
 
-<img align="right" src="https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/geobr_logo_b.png?raw=true" alt="logo" width="140">
-<img align="right" src="https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/geobr_logo_y.png?raw=true" alt="logo" width="140">
+<img align="right" src="https://github.com/ipea/geobr/blob/master/r-package/man/figures/geobr_logo_b.png?raw=true" alt="logo" width="140">
+<img align="right" src="https://github.com/ipea/geobr/blob/master/r-package/man/figures/geobr_logo_y.png?raw=true" alt="logo" width="140">
 <p align="justify">
 
 geobr is a computational package to download official spatial data sets
@@ -18,7 +18,7 @@ The package is currently available in
 
 | ***R*** | ***Python*** | ***Repo*** |
 |----|----|----|
-| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](https://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![R Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/tree/master/graph/badge.svg?flag=r)](https://app.codecov.io/gh/ipeaGIT/geobr/tree/master?flags%5B0%5D=r) <br /> [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) <br /> [![R build status](https://github.com/ipeaGIT/geobr/workflows/R-CMD-check/badge.svg)](https://github.com/ipeaGIT/geobr/actions) | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) <br /> [![Downloads](https://static.pepy.tech/badge/geobr)](https://pepy.tech/project/geobr) <br /> [![Downloads](https://static.pepy.tech/badge/geobr/month)](https://pepy.tech/project/geobr) <br /> [![Python Codecov test coverage](https://codecov.io/gh/ipeaGIT/geobr/branch/master/graph/badge.svg?flag=python)](https://app.codecov.io/gh/ipeaGIT/geobr/tree/master?flags%5B0%5D=python) <br /> [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) <br /> [![Python build status](https://github.com/ipeaGIT/geobr/workflows/Python-CMD-check/badge.svg)](https://github.com/ipeaGIT/geobr/actions) | <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipeaGIT/geobr.svg?color=orange"> <br /> <br /> [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) |
+| [![CRAN/METACRAN Version](https://www.r-pkg.org/badges/version/geobr)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/geobr?color=blue)](https://CRAN.R-project.org/package=geobr) <br /> [![CRAN/METACRAN downloads per month](https://cranlogs.r-pkg.org/badges/geobr?color=yellow)](https://CRAN.R-project.org/package=geobr) <br /> [![Codecov test coverage](https://codecov.io/gh/ipea/geobr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ipea/geobr?branch=master) <br /> [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) <br /> [![R build status](https://github.com/ipea/geobr/workflows/R-CMD-check/badge.svg)](https://github.com/ipea/geobr/actions) | [![PyPI version](https://badge.fury.io/py/geobr.svg)](https://badge.fury.io/py/geobr) <br /> [![Downloads](https://static.pepy.tech/badge/geobr)](https://pepy.tech/project/geobr) <br /> [![Downloads](https://static.pepy.tech/badge/geobr/month)](https://pepy.tech/project/geobr) <br /> [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) <br /> [![Python build status](https://github.com/ipea/geobr/workflows/Python-CMD-check/badge.svg)](https://github.com/ipea/geobr/actions) | <img alt="GitHub stars" src="https://img.shields.io/github/stars/ipea/geobr.svg?color=orange"> <br /> <br /> [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) |
 
 ## Installation R
 
@@ -28,7 +28,7 @@ install.packages("geobr")
 
 # or use the development version with latest features
 utils::remove.packages('geobr')
-remotes::install_github("ipeaGIT/geobr", subdir = "r-package")
+remotes::install_github("ipea/geobr", subdir = "r-package")
 ```
 
 obs. If you use **Linux**, you need to install a couple dependencies
@@ -37,8 +37,9 @@ here](https://github.com/r-spatial/sf#linux).
 
 ## Installation Python
 
-[uv](https://docs.astral.sh/uv/) is the recommended installer. From your project
-directory (run `uv init` first if you don't have a `pyproject.toml` yet):
+[uv](https://docs.astral.sh/uv/) is the recommended installer. From your
+project directory (run `uv init` first if you don’t have a
+`pyproject.toml` yet):
 
 ``` bash
 uv add geobr
@@ -108,8 +109,8 @@ analyze snapshots directly in SQL.
 
 ## Python, DuckDB SQL and spatial analysis
 
-Run SQL across geobr snapshots.
-Missing views are downloaded automatically on first use.
+Run SQL across geobr snapshots. Missing views are downloaded
+automatically on first use.
 
 ``` python
 from geobr import query, to_geopandas
@@ -134,8 +135,9 @@ gdf = to_geopandas("states_2020")
 ```
 
 More examples in
-[python-package/examples](https://github.com/ipeaGIT/geobr/tree/master/python-package/examples),
-including [duckdb_demo.ipynb](https://github.com/ipeaGIT/geobr/blob/master/python-package/examples/duckdb_demo.ipynb).
+[python-package/examples](https://github.com/ipea/geobr/tree/master/python-package/examples),
+including
+[duckdb_demo.ipynb](https://github.com/ipea/geobr/blob/master/python-package/examples/duckdb_demo.ipynb).
 
 # Available datasets:
 
@@ -150,7 +152,7 @@ You can check all the data sets available with \``list_geobr()`
 | read_country | Country | IBGE | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
 | read_disaster_risk_area | Disaster risk areas | CEMADEN and IBGE | 2010 |
 | read_favelas | Favelas and urban communities | IBGE | 2022 |
-| read_health_facilities | Health facilities | CNES, DataSUS | 201704, 201707, 201710, 201801, 201804, 201807, 201810, 201901, 201904, 201907, 201910, 202001, 202004, 202007, 202010, 202101, 202104, 202107, 202110, 202201, 202204, 202207, 202210, 202301, 202304, 202307, 202310, 202401, 202404, 202407, 202410, 202501, 202504, 202507, 202510, 202601 |
+| read_health_facilities | Health facilities | CNES, DataSUS | 201704, 201707, 201710, 201801, 201804, 201807, 201810, 201901, 201904, 201907, 201910, 202001, 202004, 202007, 202010, 202101, 202104, 202107, 202110, 202201, 202204, 202207, 202210, 202301, 202304, 202307, 202310, 202401, 202404, 202407, 202410, 202501, 202504, 202507, 202510, 202601, 202604 |
 | read_health_region | Health regions and macro regions | DataSUS | 1991, 1994, 1997, 2001, 2005, 2013, 2023, 2024, 2025 |
 | read_immediate_region | Immediate region | IBGE | 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
 | read_indigenous_land | Indigenous lands | FUNAI | 2016, 2017, 2018, 2019, 2022, 2024, 2025 |
@@ -170,7 +172,7 @@ You can check all the data sets available with \``list_geobr()`
 | read_schools | Schools | INEP | 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
 | read_semiarid | Semi Arid region | IBGE | 2005, 2017, 2021, 2022 |
 | read_state | States | IBGE | 1872, 1900, 1911, 1920, 1933, 1940, 1950, 1960, 1970, 1980, 1991, 2000, 2001, 2010, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 |
-| read_statistical_grid | Statistical Grid (gridded population) | IBGE | 2010 |
+| read_statistical_grid | Statistical Grid (gridded population) | IBGE | 2010, 2022 |
 | read_urban_area | Urban footprints | IBGE | 2005, 2015, 2019 |
 | read_weighting_area | Census weighting area (área de ponderação) | IBGE | 2010 |
 
@@ -183,8 +185,6 @@ CRS(4674).**
 |----|----|
 | `list_geobr` | List all datasets available in the geobr package |
 | `lookup_muni` | Look up municipality codes by their name, or the other way around |
-| `query` | Run SQL on geobr snapshots with DuckDB (Python, v0.3.0+) |
-| `to_geopandas` | Convert a DuckDB view or relation to GeoPandas (Python, v0.3.0+) |
 | `remove_islands` | Removes distant oceanic islands from Brazil |
 | `grid_state_correspondence_table` | Loads a correspondence table indicating what quadrants of IBGE’s statistical grid intersect with each state |
 | `cep_to_state` | Determine the state of a given CEP postal code |
@@ -200,7 +200,7 @@ documentation for details).
 
 If you would like to contribute to geobr and add new functions or data
 sets, please check this
-[guide](https://github.com/ipeaGIT/geobr/blob/master/CONTRIBUTING.md) to
+[guide](https://github.com/ipea/geobr/blob/master/CONTRIBUTING.md) to
 propose your contribution.
 
 ------------------------------------------------------------------------
@@ -221,7 +221,6 @@ contributions to the community, including for example:
 - Option to download geometries with simplified borders for fast
   rendering
 - Option to download geometries as geoarrow objects out of memory
-- DuckDB SQL API for cross-dataset spatial analysis in Python (v0.3.0+)
 - Stable version published on CRAN for R users, and on PyPI for Python
   users
 
@@ -246,13 +245,14 @@ contributions to the community, including for example:
 
 ------------------------------------------------------------------------
 
-# Credits <img align="right" src="https://github.com/ipeaGIT/geobr/blob/master/r-package/man/figures/ipea_logo.png?raw=true" alt="ipea" width="300">
+# Credits <img align="right" src="https://github.com/ipea/geobr/blob/master/r-package/man/figures/ipea_logo.png?raw=true" alt="ipea" width="300">
 
 Original shapefiles are created by official government institutions. The
 **geobr** package is developed by a team at the Institute for Applied
-Economic Research (Ipea), Brazil. If you want to cite this package, you
+Economic Research (Ipea), Brazil. The package received support from
+Instituto Todos pela Saúde (ITpS). If you want to cite this package, you
 can cite it as:
 
 - Pereira, R.H.M.; Barbosa, R.J.; et. all (2026) **geobr: Download
   Official Spatial Data Sets of Brazil**. v2.0.0 GitHub repository -
-  <https://github.com/ipeaGIT/geobr>.
+  <https://github.com/ipea/geobr>.
