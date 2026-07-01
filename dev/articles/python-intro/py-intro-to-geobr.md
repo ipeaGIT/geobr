@@ -1,6 +1,6 @@
 # Intro to geobr (Python)
 
-The [**geobr**](https://github.com/ipeaGIT/geobr) package provides quick
+The [**geobr**](https://github.com/ipea/geobr) package provides quick
 and easy access to official spatial data sets of Brazil. The package
 offers a wide range of spatial data sets available at various geographic
 scales and for various years with harmonized attributes, projection and
@@ -182,7 +182,7 @@ our key column to join these two databases.
 
 ``` python
 # Read DataFrame with life expectancy data
-data_url = "https://raw.githubusercontent.com/ipeaGIT/geobr/master/r-package/inst/extdata/br_states_lifexpect2017.csv"
+data_url = "https://raw.githubusercontent.com/ipea/geobr/master/r-package/inst/extdata/br_states_lifexpect2017.csv"
 
 df = pd.read_csv(data_url, index_col=0)
 

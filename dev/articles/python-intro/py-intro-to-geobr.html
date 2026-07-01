@@ -44,7 +44,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ipeaGIT/geobr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ipea/geobr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -69,16 +69,16 @@
       <h1>Intro to geobr (Python)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/geobr/blob/master/vignettes/python-intro/py-intro-to-geobr.Rmd" class="external-link"><code>vignettes/python-intro/py-intro-to-geobr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ipea/geobr/blob/master/vignettes/python-intro/py-intro-to-geobr.Rmd" class="external-link"><code>vignettes/python-intro/py-intro-to-geobr.Rmd</code></a></small>
       <div class="d-none name"><code>py-intro-to-geobr.Rmd</code></div>
     </div>
 
     
     
-<p>The <a href="https://github.com/ipeaGIT/geobr" class="external-link"><strong>geobr</strong></a>
-package provides quick and easy access to official spatial data sets of
-Brazil. The package offers a wide range of spatial data sets available
-at various geographic scales and for various years with harmonized
+<p>The <a href="https://github.com/ipea/geobr" class="external-link"><strong>geobr</strong></a> package
+provides quick and easy access to official spatial data sets of Brazil.
+The package offers a wide range of spatial data sets available at
+various geographic scales and for various years with harmonized
 attributes, projection and fixed topology. All <strong>geobr</strong>
 functions follow a simple and consistent syntax that allows users to
 seamlessly download data and work with it either in memory using
@@ -285,7 +285,7 @@ Expectancy and merge it to our spatial database. The two-digit
 abbreviation of state name is our key column to join these two
 databases.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Read DataFrame with life expectancy data</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>data_url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/ipeaGIT/geobr/master/r-package/inst/extdata/br_states_lifexpect2017.csv"</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>data_url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/ipea/geobr/master/r-package/inst/extdata/br_states_lifexpect2017.csv"</span></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(data_url, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
