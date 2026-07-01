@@ -53,8 +53,7 @@ jobs:
         shell: bash
         working-directory: python-package
         run: |
-          pip install pytest-cov 
-          uv run pytest -n 2 --cov=geobr --cov-report=xml --durations=10 -s ./tests -m "not network"
+          uv run --with pytest-cov pytest -n 2 --cov=geobr --cov-report=xml --durations=10 -s ./tests -m "not network"
 
       - name: Upload coverage to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
@@ -63,6 +62,6 @@ jobs:
           fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
           token: ${{ secrets.CODECOV_TOKEN }}
           working-directory: python-package
-          files: ./coverage.xml
+          files: ./python-package/coverage.xml
           flags: python
           name: codecov-python
