@@ -99,9 +99,8 @@ mun = read_municipality(code_muni="RJ", year=2010)
 mun = read_municipality(code_muni="all", year=2018)
 ```
 
-Since v0.3.0, the Python package uses a hybrid GeoParquet pipeline (with
-GeoPackage fallback). For DuckDB workflows, use `query()` to load and
-analyze snapshots directly in SQL.
+Since v1.0.0, the Python package uses a GeoParquet pipeline. For DuckDB
+workflows, use `query()` to load and analyze snapshots directly in SQL.
 
 ## Python, DuckDB SQL and spatial analysis
 
