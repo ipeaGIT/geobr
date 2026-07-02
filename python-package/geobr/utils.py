@@ -16,7 +16,7 @@ from geobr._cache import cached_path, is_cached
 from geobr._duckdb_backend import read_filter_parquet_relation, duckdb_connection
 from geobr._output import convert_output
 
-MIRRORS = ["https://github.com/ipeaGIT/geobr/releases/download/v1.7.0/"]
+MIRRORS = ["https://github.com/ipea/geobr/releases/download/v1.7.0/"]
 GEOBR_DATA_RELEASE = "v2.0.0"
 GEOBR_PREP_DATA_BASE = (
     f"https://github.com/ipea/geobr_prep_data/releases/download/{GEOBR_DATA_RELEASE}"
@@ -44,7 +44,7 @@ def url_solver(url):
             continue
 
     raise ConnectionError(
-        "No mirrors are active. Please report to https://github.com/ipeaGIT/geobr/issues"
+        "No mirrors are active. Please report to https://github.com/ipea/geobr/issues"
     )
 
 
@@ -87,7 +87,7 @@ def download_metadata(
             "Perhaps this is an internet connection problem."
             "If this is not a connection problem in your network, "
             " please try geobr again in a few minutes. "
-            "Please report to https://github.com/ipeaGIT/geobr/issues"
+            "Please report to https://github.com/ipea/geobr/issues"
         )
 
 
@@ -179,7 +179,7 @@ def load_gpkg(url):
 
         raise Exception(
             "Some internal url is broken."
-            "Please report to https://github.com/ipeaGIT/geobr/issues"
+            "Please report to https://github.com/ipea/geobr/issues"
         ) from e
 
     # This below does not work in Windows -- see the Docs
@@ -437,7 +437,7 @@ def download_parquet(
     if not _download_file(urls, dest, show_progress=show_progress):
         raise ConnectionError(
             "A file may have been corrupted during download. "
-            "Please try again or report at https://github.com/ipeaGIT/geobr/issues"
+            "Please try again or report at https://github.com/ipea/geobr/issues"
         )
     return dest
 
